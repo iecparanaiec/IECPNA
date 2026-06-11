@@ -38,6 +38,38 @@ export default function NewsPage() {
       desc: "Espacio exclusivo en el evento tecnológico más grande de Latinoamérica en el CPC.",
       fullDesc: "Durante los días 11 y 12 de Junio, el IEC participará con un espacio exclusivo en Campus Party, el evento de tecnología, innovación y emprendimiento más grande de Latinoamérica. Estaremos presentes en el CPC (Centro Provincial de Convenciones) de Paraná, compartiendo nuestra visión sobre la educación tecnológica y la transformación digital aplicada. Ademas nuestro CEO, Goró Agustín, será uno de los Speakers del evento en el escenario principal.",
       img: "../image/noticia-campus.jpg"
+    },
+    {
+      type: "Masterclass",
+      date: "Miércoles 17 de Junio, 2026",
+      title: "Masterclass IA: Especial Mujeres Empresarias",
+      desc: "Cómo hacer en 1 hora lo que hoy te lleva 10. Especial para mujeres empresarias y profesionales.",
+      fullDesc: "Masterclass gratuita sobre Inteligencia Artificial especialmente pensada para mujeres empresarias y profesionales. Aprendé cómo hacer en 1 hora lo que hoy te lleva 10. Miércoles 17/06 de 20:00 a 21:30 hs. Cupos limitados. Instituto IEC · Gualeguaychú 449. En colaboración con CeCIP (Centro Comercial e Industrial de Paraná).",
+      img: "../image/evento-masterclass-mujeres.png"
+    },
+    {
+      type: "Masterclass",
+      date: "Miércoles 24 de Junio, 2026",
+      title: "Masterclass IA: Cómo hacer en 1 hora lo que hoy te lleva 10",
+      desc: "Menos teoría, más resultados: taller práctico de IA aplicada a tus tareas diarias.",
+      fullDesc: "Masterclass gratuita sobre Inteligencia Artificial. Menos teoría, más resultados: taller práctico de IA aplicada a tus tareas diarias. Aprendé cómo hacer en 1 hora lo que hoy te lleva 10. Miércoles 24/06 de 20:00 a 21:30 hs. Cupos limitados. Instituto IEC · Gualeguaychú 449. En colaboración con JEP (Jóvenes Empresarios Paraná) y CeCIP (Centro Comercial e Industrial de Paraná).",
+      img: "../image/evento-masterclass-1hora.png"
+    },
+    {
+      type: "Clase Gratuita",
+      date: "Lunes 29 de Junio, 2026",
+      title: "IA Kids: Robótica y Programación con IA",
+      desc: "Clase gratuita de robótica y programación con inteligencia artificial para niños.",
+      fullDesc: "Clase gratuita de robótica y programación con inteligencia artificial pensada para los más chicos. IA Kids es una experiencia diseñada para que los niños descubran el mundo de la tecnología de forma divertida. Lunes 29/06 de 18:00 a 19:30 hs. Cupo limitado. Instituto IEC · Gualeguaychú 449.",
+      img: "../image/evento-ia-kids.png"
+    },
+    {
+      type: "Clase Gratuita",
+      date: "Martes 30 de Junio, 2026",
+      title: "Robótica y Programación para Adolescentes",
+      desc: "Clase gratuita de robótica y programación con IA orientada a adolescentes.",
+      fullDesc: "Clase gratuita de robótica y programación para adolescentes. Una oportunidad para que los jóvenes se sumerjan en el mundo de la inteligencia artificial, la robótica y la programación de la mano de nuestro equipo. Martes 30/06 de 15:30 a 17:00 hs. Cupo limitado. Instituto IEC · Gualeguaychú 449.",
+      img: "../image/evento-clase-adolescentes.png"
     }
   ];
 
