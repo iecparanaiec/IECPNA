@@ -1,0 +1,417 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>INGENIA BY IEC</title>
+  <script src="https://cdn.tailwindcss.com/3.4.17"></script>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <script src="https://cdn.jsdelivr.net/npm/lucide@0.263.0/dist/umd/lucide.min.js"></script>
+  <style>
+    * { font-family: 'DM Sans', sans-serif; }
+    .slide { display: none; width: 100%; height: 100vh; height: calc(100 * min(var(--vh, 1vh), 1vh)); overflow-y: auto; }
+    .slide.active { display: flex; }
+    .dot.active { background: #0ea5e9; transform: scale(1.3); }
+    .check-item::before { content: '✓'; color: #0ea5e9; font-weight: 700; margin-right: 0.5rem; }
+
+    .img-container {
+      position: relative;
+      width: 100%;
+      padding-top: 75%;
+      border-radius: 1.25rem;
+      overflow: hidden;
+      box-shadow: 0 12px 30px rgba(0, 0, 0, 0.08), 0 4px 10px rgba(0, 0, 0, 0.02);
+      transition: transform 0.25s ease, box-shadow 0.3s ease;
+      background: #ffffff;
+    }
+    .img-container:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 20px 40px rgba(14, 165, 233, 0.15), 0 8px 20px rgba(0, 0, 0, 0.05);
+    }
+    .img-container img {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.4s ease;
+    }
+    .img-container:hover img { transform: scale(1.02); }
+    .img-badge {
+      position: absolute;
+      bottom: 12px;
+      left: 16px;
+      background: rgba(10, 30, 61, 0.7);
+      backdrop-filter: blur(6px);
+      padding: 6px 14px;
+      border-radius: 60px;
+      color: white;
+      font-size: 0.7rem;
+      font-weight: 600;
+      letter-spacing: 0.3px;
+      border: 1px solid rgba(255,255,255,0.15);
+    }
+    .glass-card {
+      background: rgba(255, 255, 255, 0.7);
+      backdrop-filter: blur(12px);
+      border: 1px solid rgba(255, 255, 255, 0.3);
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.06);
+    }
+    .glass-card-dark {
+      background: rgba(10, 30, 61, 0.6);
+      backdrop-filter: blur(12px);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+    }
+    .hover-lift {
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    .hover-lift:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.12);
+    }
+    .bg-pattern-dots {
+      background-image: radial-gradient(rgba(14, 165, 233, 0.06) 1px, transparent 1px);
+      background-size: 24px 24px;
+    }
+    @media (max-width: 768px) {
+      .img-container { padding-top: 65%; }
+      .img-badge { font-size: 0.6rem; padding: 4px 12px; bottom: 8px; left: 10px; }
+    }
+    @media (max-width: 640px) {
+      .slide { height: 100vh; height: calc(100 * min(var(--vh, 1vh), 1vh)); }
+    }
+  </style>
+</head>
+<body class="w-full overflow-hidden relative">
+  <!-- Navegación -->
+  <button id="prev-btn" class="fixed left-3 md:left-4 top-1/2 -translate-y-1/2 z-50 bg-white/90 hover:bg-white shadow-lg rounded-full w-10 h-10 flex items-center justify-center transition" onclick="changeSlide(-1)">
+    <i data-lucide="chevron-left" style="width:20px;height:20px;color:#1e3a5f"></i>
+  </button>
+  <button id="next-btn" class="fixed right-3 md:right-4 top-1/2 -translate-y-1/2 z-50 bg-white/90 hover:bg-white shadow-lg rounded-full w-10 h-10 flex items-center justify-center transition" onclick="changeSlide(1)">
+    <i data-lucide="chevron-right" style="width:20px;height:20px;color:#1e3a5f"></i>
+  </button>
+  <div id="dots" class="fixed bottom-4 left-1/2 -translate-x-1/2 z-50 flex gap-2">
+    <button class="dot w-3 h-3 rounded-full bg-gray-300 transition" onclick="goSlide(0)"></button>
+    <button class="dot w-3 h-3 rounded-full bg-gray-300 transition" onclick="goSlide(1)"></button>
+    <button class="dot w-3 h-3 rounded-full bg-gray-300 transition" onclick="goSlide(2)"></button>
+    <button class="dot w-3 h-3 rounded-full bg-gray-300 transition" onclick="goSlide(3)"></button>
+    <button class="dot w-3 h-3 rounded-full bg-gray-300 transition" onclick="goSlide(4)"></button>
+  </div>
+
+  <!-- SLIDE 1 -->
+  <section class="slide active flex-col" id="slide-0">
+    <div class="w-full h-full relative flex flex-col">
+      <div class="absolute inset-0 z-0">
+        <img data-template-id="slide1-bg" class="canva-image w-full h-full object-cover" loading="lazy" src="https://i.postimg.cc/gk6mXZL2/pexels-vanessa-loring-7869084.jpg" alt="fondo" />
+        <div class="absolute inset-0 bg-gradient-to-r from-[#0a1e3d]/90 via-[#0a1e3d]/75 to-[#0a1e3d]/40"></div>
+      </div>
+      <div class="relative z-10 flex flex-col justify-center h-full px-6 md:px-16 py-12 max-w-3xl">
+        <h1 data-template-id="slide1-title" class="canva-text text-white font-extrabold tracking-tight text-4xl md:text-6xl"><span class="text-white">INGEN</span><span class="text-sky-300">IA</span><span class="text-white"> BY IEC</span></h1>
+        <p data-template-id="slide1-subtitle" class="canva-text text-sky-300 mt-2 font-medium text-xl">Talleres de Robótica e Inteligencia Artificial</p>
+        <p data-template-id="slide1-tagline" class="canva-text text-sky-100 mt-1 italic">Aprendé creando, innová con tecnología</p>
+        <p data-template-id="slide1-desc" class="canva-text text-gray-200 mt-6 leading-relaxed">En IngenIA by IEC formamos a la próxima generación de creadores. Con robótica, programación e IA, desarrollamos el pensamiento lógico y la creatividad en un entorno práctico y divertido.</p>
+        <div class="mt-6 flex flex-wrap gap-3">
+          <span data-template-id="s1-icon-rob" class="canva-tag bg-sky-500/20 text-sky-200 px-3 py-1 rounded-full text-sm font-medium">🤖 Robótica</span>
+          <span data-template-id="s1-icon-prog" class="canva-tag bg-sky-500/20 text-sky-200 px-3 py-1 rounded-full text-sm font-medium">💻 Programación</span>
+          <span data-template-id="s1-icon-ia" class="canva-tag bg-sky-500/20 text-sky-200 px-3 py-1 rounded-full text-sm font-medium">🧠 IA</span>
+          <span data-template-id="s1-icon-elec" class="canva-tag bg-sky-500/20 text-sky-200 px-3 py-1 rounded-full text-sm font-medium">⚡ Electrónica</span>
+          <span data-template-id="s1-icon-innov" class="canva-tag bg-sky-500/20 text-sky-200 px-3 py-1 rounded-full text-sm font-medium">🚀 Innovación</span>
+        </div>
+        <blockquote data-template-id="slide1-quote" class="canva-text mt-8 border-l-4 border-sky-400 pl-4 text-white font-bold text-lg italic">"La tecnología no es solo el futuro, es el presente que construimos juntos."</blockquote>
+      </div>
+    </div>
+  </section>
+
+  <!-- SLIDE 2 -->
+  <section class="slide flex-col" id="slide-1">
+    <div class="w-full h-full flex flex-col md:flex-row relative bg-gradient-to-br from-[#0a1e3d] via-[#1a3a6a] to-[#0a1e3d] overflow-hidden">
+      <div class="absolute inset-0 bg-pattern-dots opacity-30"></div>
+      <div class="absolute top-0 right-0 w-1/2 h-full bg-gradient-to-l from-sky-400/10 to-transparent"></div>
+      <div class="absolute bottom-0 left-0 w-1/3 h-1/2 bg-gradient-to-t from-sky-300/5 to-transparent rounded-full blur-3xl"></div>
+      
+      <div class="flex-1 flex flex-col justify-center px-6 md:px-14 py-10 relative z-10 text-white">
+        <div class="inline-block bg-sky-400/20 backdrop-blur px-4 py-1 rounded-full text-sky-200 font-semibold text-sm mb-4 w-fit">✨ Metodología innovadora</div>
+        <h2 data-template-id="slide2-title" class="canva-text font-extrabold text-3xl md:text-5xl leading-tight">¿Por qué <span class="text-sky-300">IngenIA</span>?</h2>
+        <p data-template-id="slide2-subtitle" class="canva-text text-sky-300 font-medium mt-2 text-lg">Aprendizaje basado en proyectos reales</p>
+        <p data-template-id="slide2-desc" class="canva-text text-gray-200 mt-4 leading-relaxed text-base">Cada clase es un desafío que despierta la curiosidad, fomenta el trabajo en equipo y desarrolla habilidades del siglo XXI.</p>
+        <ul class="mt-5 space-y-3">
+          <li data-template-id="s2-b1" class="canva-text flex items-start gap-3 text-gray-200"><span class="text-sky-300 text-xl">🧠</span> Desarrollo de pensamiento computacional</li>
+          <li data-template-id="s2-b2" class="canva-text flex items-start gap-3 text-gray-200"><span class="text-sky-300 text-xl">🤖</span> Robótica educativa con kits profesionales</li>
+          <li data-template-id="s2-b3" class="canva-text flex items-start gap-3 text-gray-200"><span class="text-sky-300 text-xl">⚡</span> Introducción a la inteligencia artificial</li>
+          <li data-template-id="s2-b4" class="canva-text flex items-start gap-3 text-gray-200"><span class="text-sky-300 text-xl">🚀</span> Proyectos colaborativos y competencias</li>
+          <li data-template-id="s2-b5" class="canva-text flex items-start gap-3 text-gray-200"><span class="text-sky-300 text-xl">🎯</span> Acompañamiento personalizado</li>
+        </ul>
+        <div data-template-id="slide2-highlight" class="canva-card mt-6 bg-white/10 backdrop-blur border border-white/20 rounded-xl p-4 text-gray-200 text-sm leading-relaxed">🌟 Clases semanales de 1.5 horas · Grupos reducidos · Material incluido</div>
+        <blockquote data-template-id="slide2-quote" class="canva-text mt-5 border-l-4 border-sky-400 pl-4 text-sky-100 font-bold italic text-lg">"La mejor forma de aprender tecnología es creándola."</blockquote>
+      </div>
+      <div class="w-full md:w-2/5 relative min-h-[300px] md:min-h-0">
+        <img data-template-id="slide2-img" class="canva-image w-full h-full object-cover" loading="lazy" src="https://i.postimg.cc/3RdJtbNJ/image-7b77baab.png" alt="clase" />
+        <div class="absolute inset-0 bg-gradient-to-t from-[#0a1e3d]/60 to-transparent"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SLIDE 3 -->
+  <section class="slide flex-col" id="slide-2">
+    <div class="w-full h-full flex flex-col bg-gradient-to-br from-[#0a1e3d] via-[#142d4e] to-[#0a1e3d] overflow-y-auto relative">
+      <div class="absolute inset-0 bg-pattern-dots opacity-20"></div>
+      <div class="text-center pt-6 md:pt-10 px-4 relative z-10">
+        <span class="inline-block bg-sky-400/20 backdrop-blur px-4 py-1 rounded-full text-sky-200 font-semibold text-sm mb-2">🔬 Infraestructura</span>
+        <h2 data-template-id="slide3-title" class="canva-text text-white font-extrabold text-3xl md:text-4xl">Nuestros laboratorios</h2>
+        <p data-template-id="slide3-subtitle" class="canva-text text-sky-300 font-medium mt-1 text-lg">Espacios equipados con tecnología de vanguardia</p>
+      </div>
+
+      <div class="flex-1 grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8 px-4 md:px-10 py-4 md:py-6 max-w-6xl mx-auto w-full relative z-10">
+        <div class="flex flex-col">
+          <h3 data-template-id="slide3-lab1-title" class="canva-text text-white font-bold text-xl mb-1">🤖 Laboratorio de Robótica</h3>
+          <p data-template-id="slide3-lab1-desc" class="canva-text text-gray-300 text-sm leading-relaxed mb-3">30 puestos de trabajo equipados con microprocesadores, sensores, actuadores y kits de desarrollo para proyectos de electrónica y robótica.</p>
+          <div class="img-container border-2 border-sky-400/20">
+            <img data-template-id="slide3-lab1-img" class="canva-image" loading="lazy" src="https://i.postimg.cc/TwLfVLNQ/Whats-App-Image-2026-05-17-at-8-39-17-PM.jpg" alt="laboratorio robótica" />
+            <span class="img-badge">⚙️ 30 puestos · Microprocesadores</span>
+          </div>
+        </div>
+
+        <div class="flex flex-col">
+          <h3 data-template-id="slide3-lab2-title" class="canva-text text-white font-bold text-xl mb-1">🧠 IA + Impresión 3D</h3>
+          <p data-template-id="slide3-lab2-desc" class="canva-text text-gray-300 text-sm leading-relaxed mb-3">Laboratorio especializado en inteligencia artificial con estaciones de trabajo de alto rendimiento y área de impresión 3D para materializar prototipos.</p>
+          <div class="img-container border-2 border-sky-400/20">
+            <img data-template-id="slide3-lab2-img" class="canva-image" loading="lazy" src="https://i.postimg.cc/wvVZs6gN/image-5f78829b.png" alt="laboratorio IA e impresión 3D" />
+            <span class="img-badge">🖨️ Impresión 3D · Estaciones IA</span>
+          </div>
+        </div>
+      </div>
+
+      <blockquote data-template-id="slide3-quote" class="canva-text text-center pb-5 px-4 text-sky-200 font-bold italic text-sm md:text-base relative z-10">"Dos laboratorios, infinitas posibilidades. Aprendé haciendo en un entorno único."</blockquote>
+    </div>
+  </section>
+
+  <!-- SLIDE 4 -->
+  <section class="slide flex-col" id="slide-3">
+    <div class="w-full h-full flex flex-col bg-gradient-to-br from-[#1a1a2e] via-[#16213e] to-[#0a1e3d] overflow-y-auto relative">
+      <div class="absolute inset-0 bg-pattern-dots opacity-20"></div>
+      <div class="absolute top-0 left-0 w-1/2 h-1/2 bg-gradient-to-br from-sky-500/5 to-transparent rounded-full blur-3xl"></div>
+
+      <div class="text-center pt-6 md:pt-10 px-4 relative z-10">
+        <span class="inline-block bg-sky-400/20 backdrop-blur px-4 py-1 rounded-full text-sky-200 font-semibold text-sm mb-2">
+          🚀 Programas
+        </span>
+        <h2 data-template-id="slide4-title" class="canva-text text-white font-extrabold text-3xl md:text-4xl">
+          Elegí tu <span class="text-sky-300">camino de innovación</span>
+        </h2>
+        <p class="text-gray-300 max-w-3xl mx-auto mt-3 text-sm md:text-base">
+          Cada alumno desarrolla proyectos propios, avanza a su ritmo y construye un recorrido tecnológico personalizado utilizando robótica, programación, diseño digital e inteligencia artificial.
+        </p>
+      </div>
+
+      <div class="flex-1 grid grid-cols-1 md:grid-cols-2 gap-6 px-4 md:px-10 py-4 max-w-6xl mx-auto w-full relative z-10">
+
+        <!-- KIDS -->
+        <div data-template-id="slide4-kids-card" class="canva-card rounded-2xl p-6 flex flex-col glass-card-dark hover-lift border border-white/10">
+          <div class="flex items-center gap-3 mb-2">
+            <img data-template-id="slide4-kids-img"
+                 class="canva-image w-16 h-16 rounded-full object-cover border-2 border-sky-400"
+                 loading="lazy"
+                 src="https://img.magnific.com/foto-gratis/ninos-haciendo-robot_23-2148863407.jpg?semt=ais_hybrid&w=740&q=80"
+                 alt="kids" />
+            <div>
+              <h3 data-template-id="slide4-kids-title" class="canva-text font-bold text-xl text-white">
+                IngenIA Kids
+              </h3>
+              <p data-template-id="slide4-kids-age" class="canva-text text-sm text-sky-300 font-medium">
+                8 a 12 años
+              </p>
+            </div>
+          </div>
+          <p data-template-id="slide4-kids-desc" class="canva-text text-sm mt-2 text-gray-300">
+            Un espacio donde los más pequeños exploran la tecnología creando proyectos adaptados a sus intereses mientras desarrollan habilidades para el futuro.
+          </p>
+          <h4 class="text-sky-300 font-semibold mt-4 mb-2">Objetivos del Taller</h4>
+          <ul class="mt-2 space-y-1.5 text-sm">
+            <li class="canva-text flex items-center gap-2 text-gray-300"><span class="text-sky-300">▸</span> Desarrollar pensamiento lógico y creatividad</li>
+            <li class="canva-text flex items-center gap-2 text-gray-300"><span class="text-sky-300">▸</span> Crear proyectos utilizando herramientas de Inteligencia Artificial</li>
+            <li class="canva-text flex items-center gap-2 text-gray-300"><span class="text-sky-300">▸</span> Diseñar personajes, objetos y modelos 3D</li>
+            <li class="canva-text flex items-center gap-2 text-gray-300"><span class="text-sky-300">▸</span> Construir y programar robots educativos</li>
+            <li class="canva-text flex items-center gap-2 text-gray-300"><span class="text-sky-300">▸</span> Crear videojuegos, animaciones y experiencias interactivas</li>
+            <li class="canva-text flex items-center gap-2 text-gray-300"><span class="text-sky-300">▸</span> Avanzar mediante desafíos y proyectos personalizados</li>
+          </ul>
+        </div>
+
+        <!-- TEENS -->
+        <div data-template-id="slide4-teens-card" class="canva-card rounded-2xl p-6 flex flex-col glass-card-dark hover-lift border border-white/10">
+          <div class="flex items-center gap-3 mb-2">
+            <img data-template-id="slide4-teens-img"
+                 class="canva-image w-16 h-16 rounded-full object-cover border-2 border-sky-400"
+                 loading="lazy"
+                 src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?w=200&q=80"
+                 alt="teens" />
+            <div>
+              <h3 data-template-id="slide4-teens-title" class="canva-text font-bold text-xl text-white">
+                IngenIA Teens
+              </h3>
+              <p data-template-id="slide4-teens-age" class="canva-text text-sm text-sky-300 font-medium">
+                13 a 17 años
+              </p>
+            </div>
+          </div>
+          <p data-template-id="slide4-teens-desc" class="canva-text text-sm mt-2 text-gray-300">
+            Un laboratorio de innovación donde los estudiantes desarrollan proyectos tecnológicos reales utilizando programación, robótica e Inteligencia Artificial como herramientas de creación.
+          </p>
+          <h4 class="text-sky-300 font-semibold mt-4 mb-2">Objetivos del Taller</h4>
+          <ul class="mt-2 space-y-1.5 text-sm">
+            <li class="canva-text flex items-center gap-2 text-gray-300"><span class="text-sky-300">▸</span> Diseñar y desarrollar proyectos tecnológicos propios</li>
+            <li class="canva-text flex items-center gap-2 text-gray-300"><span class="text-sky-300">▸</span> Crear aplicaciones, sistemas y páginas web asistidos por IA</li>
+            <li class="canva-text flex items-center gap-2 text-gray-300"><span class="text-sky-300">▸</span> Diseñar modelos y prototipos 3D con herramientas tradicionales y de IA</li>
+            <li class="canva-text flex items-center gap-2 text-gray-300"><span class="text-sky-300">▸</span> Programar microcontroladores, sensores y sistemas automatizados</li>
+            <li class="canva-text flex items-center gap-2 text-gray-300"><span class="text-sky-300">▸</span> Integrar robótica, electrónica e Inteligencia Artificial en proyectos reales</li>
+            <li class="canva-text flex items-center gap-2 text-gray-300"><span class="text-sky-300">▸</span> Construir un recorrido personalizado según sus intereses y objetivos</li>
+          </ul>
+        </div>
+
+      </div>
+
+      <p data-template-id="slide4-footer"
+         class="canva-text text-center pb-5 px-4 font-semibold text-sm text-gray-400 relative z-10">
+        En IngenIA by IEC no todos hacen lo mismo. Cada alumno desarrolla proyectos propios, avanza a su ritmo y aprende utilizando las tecnologías que hoy están transformando el mundo.
+      </p>
+    </div>
+  </section>
+
+  <!-- SLIDE 5 -->
+  <section class="slide flex-col" id="slide-4">
+    <div class="w-full min-h-full flex flex-col bg-gradient-to-br from-[#0a1e3d] to-[#143d6b] text-white px-4 md:px-8 py-6 md:py-10 overflow-y-auto">
+      <div class="text-center mb-4 md:mb-6">
+        <span class="inline-block bg-sky-400/20 backdrop-blur px-4 py-1 rounded-full text-sky-200 font-semibold text-sm mb-2">🚀 Inscribite ahora</span>
+        <h2 data-template-id="slide5-title" class="canva-text font-extrabold text-3xl md:text-4xl">¡Sumate a IngenIA!</h2>
+        <p data-template-id="slide5-subtitle" class="canva-text text-sky-300 font-medium mt-1">Preinscripción 2026</p>
+        <p data-template-id="slide5-desc" class="canva-text text-gray-300 mt-3 max-w-2xl mx-auto text-sm leading-relaxed">Completá el formulario y nos contactamos para coordinar una clase de prueba.</p>
+      </div>
+      <div class="max-w-5xl mx-auto w-full grid grid-cols-1 lg:grid-cols-2 gap-6">
+        <div class="space-y-4">
+          <div>
+            <h3 data-template-id="slide5-inc-title" class="canva-text font-bold text-sky-300 mb-2 text-lg">¿Qué incluye?</h3>
+            <ul class="space-y-2 text-sm text-gray-200">
+              <li data-template-id="s5i1" class="canva-text flex items-center gap-2"><span class="text-sky-400">✓</span> Kit de robótica incluido</li>
+              <li data-template-id="s5i2" class="canva-text flex items-center gap-2"><span class="text-sky-400">✓</span> Acceso a plataforma online</li>
+              <li data-template-id="s5i3" class="canva-text flex items-center gap-2"><span class="text-sky-400">✓</span> Certificado oficial IEC</li>
+              <li data-template-id="s5i4" class="canva-text flex items-center gap-2"><span class="text-sky-400">✓</span> Eventos y competencias</li>
+              <li data-template-id="s5i5" class="canva-text flex items-center gap-2"><span class="text-sky-400">✓</span> Soporte continuo</li>
+              <li data-template-id="s5i6" class="canva-text flex items-center gap-2"><span class="text-sky-400">✓</span> Clases en vivo</li>
+              <li data-template-id="s5i7" class="canva-text flex items-center gap-2"><span class="text-sky-400">✓</span> Proyectos grupales</li>
+            </ul>
+          </div>
+          <div class="space-y-1 text-sm mt-2">
+            <a href="https://wa.me/5493434295937" target="_blank" rel="noopener noreferrer" data-template-id="slide5-wa" class="canva-text block hover:text-sky-300 transition p-2 rounded-lg bg-white/5 hover:bg-white/10">📱 WhatsApp: +54 9 343 466-4964</a>
+            <a href="mailto:iecparana@gmail.com" data-template-id="slide5-email" class="canva-text block hover:text-sky-300 transition p-2 rounded-lg bg-white/5 hover:bg-white/10">✉️ iecparana@gmail.com</a>
+            <a href="https://instagram.com/iecparana" target="_blank" rel="noopener noreferrer" data-template-id="slide5-ig" class="canva-text block hover:text-sky-300 transition p-2 rounded-lg bg-white/5 hover:bg-white/10">📷 @iecparana</a>
+            <a href="https://www.iec-ia.com.ar" target="_blank" rel="noopener noreferrer" data-template-id="slide5-web" class="canva-text block hover:text-sky-300 transition p-2 rounded-lg bg-white/5 hover:bg-white/10">🌐 www.iec-ia.com.ar</a>
+          </div>
+        </div>
+        <div class="bg-white/10 backdrop-blur rounded-2xl p-5 md:p-6 border border-white/20">
+          <h3 data-template-id="slide5-form-title" class="canva-text font-bold text-center mb-3 text-lg">Preinscripción</h3>
+          <form id="enrollment-form" class="space-y-3">
+            <div>
+              <label data-template-id="form-label-name" for="f-nombre" class="canva-text text-xs text-sky-200 font-medium">Nombre completo</label>
+              <input id="f-nombre" name="nombre" type="text" required class="w-full mt-1 px-3 py-2 rounded-lg bg-white/10 border border-white/20 text-white text-sm placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-sky-400" placeholder="Ej: Juan Pérez" />
+            </div>
+            <div>
+              <label data-template-id="form-label-edad" for="f-edad" class="canva-text text-xs text-sky-200 font-medium">Edad</label>
+              <input id="f-edad" name="edad" type="number" min="6" max="18" required class="w-full mt-1 px-3 py-2 rounded-lg bg-white/10 border border-white/20 text-white text-sm placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-sky-400" placeholder="6-18" />
+            </div>
+            <div>
+              <label data-template-id="form-label-tutor" for="f-tutor" class="canva-text text-xs text-sky-200 font-medium">Nombre del tutor</label>
+              <input id="f-tutor" name="tutor" type="text" required class="w-full mt-1 px-3 py-2 rounded-lg bg-white/10 border border-white/20 text-white text-sm placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-sky-400" placeholder="Ej: María López" />
+            </div>
+            <div>
+              <label data-template-id="form-label-tel" for="f-telefono" class="canva-text text-xs text-sky-200 font-medium">Teléfono</label>
+              <input id="f-telefono" name="telefono" type="tel" required class="w-full mt-1 px-3 py-2 rounded-lg bg-white/10 border border-white/20 text-white text-sm placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-sky-400" placeholder="+54 9 343 466-4964" />
+            </div>
+            <div>
+              <label data-template-id="form-label-email" for="f-email" class="canva-text text-xs text-sky-200 font-medium">Correo electrónico</label>
+              <input id="f-email" name="email" type="email" required class="w-full mt-1 px-3 py-2 rounded-lg bg-white/10 border border-white/20 text-white text-sm placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-sky-400" placeholder="tucorreo@ejemplo.com" />
+            </div>
+            <div>
+              <label data-template-id="form-label-taller" for="f-taller" class="canva-text text-xs text-sky-200 font-medium">Programa de interés</label>
+              <select id="f-taller" name="taller" required class="w-full mt-1 px-3 py-2 rounded-lg bg-white/10 border border-white/20 text-white text-sm focus:outline-none focus:ring-2 focus:ring-sky-400">
+                <option value="">Seleccionar...</option>
+                <option value="IngenIA Kids">IngenIA Kids</option>
+                <option value="IngenIA Teens">IngenIA Teens</option>
+              </select>
+            </div>
+            <div>
+              <label data-template-id="form-label-comments" for="f-comentarios" class="canva-text text-xs text-sky-200 font-medium">Comentarios</label>
+              <textarea id="f-comentarios" name="comentarios" rows="2" class="w-full mt-1 px-3 py-2 rounded-lg bg-white/10 border border-white/20 text-white text-sm placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-sky-400" placeholder="Consultas, horarios, etc."></textarea>
+            </div>
+            <button data-template-id="form-submit-btn" type="submit" class="canva-button w-full py-3 rounded-xl font-bold text-sm transition hover:opacity-90 bg-gradient-to-r from-sky-500 to-blue-500 text-white shadow-lg">QUIERO INSCRIBIRME</button>
+            <div id="form-status" class="text-center text-sm mt-2 hidden"></div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <script>
+    let current = 0;
+    const slides = document.querySelectorAll('.slide');
+    const dots = document.querySelectorAll('.dot');
+
+    function goSlide(i) {
+      slides[current].classList.remove('active');
+      dots[current].classList.remove('active');
+      current = i;
+      slides[current].classList.add('active');
+      dots[current].classList.add('active');
+    }
+    function changeSlide(d) {
+      let next = current + d;
+      if (next < 0) next = slides.length - 1;
+      if (next >= slides.length) next = 0;
+      goSlide(next);
+    }
+    dots[0].classList.add('active');
+
+    document.addEventListener('keydown', e => {
+      if (e.key === 'ArrowRight') changeSlide(1);
+      if (e.key === 'ArrowLeft') changeSlide(-1);
+    });
+
+    document.getElementById('enrollment-form').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const btn = e.target.querySelector('[type="submit"]');
+      const status = document.getElementById('form-status');
+      btn.disabled = true;
+      btn.textContent = 'Enviando...';
+      status.classList.add('hidden');
+
+      const data = {
+        nombre: document.getElementById('f-nombre').value,
+        edad: document.getElementById('f-edad').value,
+        tutor: document.getElementById('f-tutor').value,
+        telefono: document.getElementById('f-telefono').value,
+        email: document.getElementById('f-email').value,
+        taller: document.getElementById('f-taller').value,
+        comentarios: document.getElementById('f-comentarios').value
+      };
+
+      try {
+        await fetch('https://n8n.smarteco.com.ar/webhook/ingenia', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(data)
+        });
+        status.textContent = '✓ ¡Preinscripción enviada con éxito!';
+        status.className = 'text-center text-sm mt-2 text-green-300';
+        e.target.reset();
+      } catch {
+        status.textContent = 'Error al enviar. Intente nuevamente.';
+        status.className = 'text-center text-sm mt-2 text-red-300';
+      }
+      btn.disabled = false;
+      btn.textContent = 'QUIERO INSCRIBIRME';
+      status.classList.remove('hidden');
+    });
+
+    lucide.createIcons();
+  </script>
+</body>
+</html>
