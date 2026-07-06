@@ -23,6 +23,7 @@ import NewsPage from './pages/NewsPage';
 import FactorIAPage from './pages/FactorIAPage';
 import IngeniaPage from './pages/IngeniaPage';
 import AromaPage from './pages/AromaPage';
+import SecretariadoMedicoPage from './pages/SecretariadoMedicoPage';
 
 function ScrollToTop() {
   const { pathname } = useLocation();
@@ -67,6 +68,7 @@ export default function App() {
             <Route path="/contacto" element={<ContactPage />} />
             <Route path="/ingenia" element={<IngeniaPage />} />
             <Route path="/aroma" element={<AromaPage />} />
+            <Route path="/secretariado_medico" element={<SecretariadoMedicoPage />} />
           </Routes>
         </main>
 
