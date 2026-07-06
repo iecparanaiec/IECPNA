@@ -25,6 +25,7 @@ import IngeniaPage from './pages/IngeniaPage';
 import AromaPage from './pages/AromaPage';
 import SecretariadoMedicoPage from './pages/SecretariadoMedicoPage';
 
+// Rutas secretas (sin nav): /ingenia, /aroma, /secretariado_medico
 function ScrollToTop() {
   const { pathname } = useLocation();
   useEffect(() => {
