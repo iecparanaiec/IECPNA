@@ -1,0 +1,599 @@
+<!doctype html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Inteligencia Operativa para Taller Integral | IEC Automation & co+nexus</title>
+    <script src="https://cdn.tailwindcss.com/3.4.17"></script>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
+    <script src="https://cdn.jsdelivr.net/npm/lucide@0.263.0/dist/umd/lucide.min.js"></script>
+    <style>
+        * { font-family: 'DM Sans', sans-serif; }
+        html, body { margin: 0; padding: 0; }
+        body { background: #0a0e1a; }
+        .slide {
+            display: none;
+            width: 100%;
+            min-height: 100vh;
+            height: 100vh;
+            overflow-y: auto;
+            overflow-x: hidden;
+            padding: 2rem 1.5rem;
+            box-sizing: border-box;
+            scroll-behavior: smooth;
+        }
+        .slide.active { display: flex; }
+        .dot.active { background: #0ea5e9; transform: scale(1.3); }
+        .glass-card {
+            background: rgba(255, 255, 255, 0.08);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.12);
+        }
+        .gradient-text {
+            background: linear-gradient(135deg, #38bdf8, #60a5fa, #818cf8);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .bg-pattern {
+            background-image:
+                linear-gradient(90deg, transparent 0 47%, rgba(14,165,233,0.16) 48%, transparent 49% 100%),
+                linear-gradient(0deg, transparent 0 47%, rgba(59,130,246,0.11) 48%, transparent 49% 100%),
+                repeating-linear-gradient(90deg, transparent 0 90px, rgba(56,189,248,0.10) 91px, transparent 93px),
+                repeating-linear-gradient(0deg, transparent 0 78px, rgba(96,165,250,0.08) 79px, transparent 81px),
+                radial-gradient(circle at 20% 50%, rgba(56, 189, 248, 0.08) 0%, transparent 45%),
+                radial-gradient(circle at 80% 80%, rgba(59, 130, 246, 0.07) 0%, transparent 45%),
+                radial-gradient(circle at 50% 10%, rgba(129, 140, 248, 0.06) 0%, transparent 40%);
+            background-size: 220px 220px, 180px 180px, 280px 280px, 260px 260px, auto, auto, auto;
+        }
+        .bg-pattern::after {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background-image:
+                radial-gradient(circle, rgba(56,189,248,0.35) 0 1px, transparent 2px),
+                linear-gradient(135deg, transparent 0 42%, rgba(14,165,233,0.10) 43%, transparent 45% 100%);
+            background-size: 34px 34px, 320px 320px;
+            opacity: .55;
+        }
+        .pulse-border { animation: pulse-border 2s ease-in-out infinite; }
+        @keyframes pulse-border {
+            0%, 100% { border-color: rgba(56, 189, 248, 0.25); }
+            50% { border-color: rgba(14, 165, 233, 0.65); }
+        }
+        .scrollbar-soft::-webkit-scrollbar { width: 8px; }
+        .scrollbar-soft::-webkit-scrollbar-thumb { background: rgba(56, 189, 248, .35); border-radius: 999px; }
+        .chip { background: rgba(255,255,255,.06); border: 1px solid rgba(255,255,255,.08); }
+        .number-badge {
+            background: linear-gradient(135deg, rgba(14,165,233,.28), rgba(59,130,246,.18));
+            border: 1px solid rgba(56,189,248,.28);
+        }
+        @media (max-width: 640px) {
+            .slide { padding: 1.2rem 0.8rem 4rem; }
+            .text-7xl { font-size: 2.8rem; }
+            .text-6xl { font-size: 2.45rem; }
+            .text-5xl { font-size: 2rem; }
+            .text-4xl { font-size: 1.8rem; }
+            .text-3xl { font-size: 1.5rem; }
+        }
+        @media (min-width: 641px) and (max-width: 768px) {
+            .slide { padding: 1.5rem 1.2rem 4rem; }
+        }
+    </style>
+</head>
+<body class="w-full relative bg-[#0a0e1a]">
+
+    <!-- Navegación -->
+    <button id="prev-btn" class="fixed left-2 md:left-5 top-1/2 -translate-y-1/2 z-50 bg-white/10 hover:bg-white/20 backdrop-blur border border-white/10 rounded-full w-10 h-10 md:w-11 md:h-11 flex items-center justify-center transition text-white" onclick="changeSlide(-1)">
+        <i data-lucide="chevron-left" style="width:20px;height:20px;"></i>
+    </button>
+    <button id="next-btn" class="fixed right-2 md:right-5 top-1/2 -translate-y-1/2 z-50 bg-white/10 hover:bg-white/20 backdrop-blur border border-white/10 rounded-full w-10 h-10 md:w-11 md:h-11 flex items-center justify-center transition text-white" onclick="changeSlide(1)">
+        <i data-lucide="chevron-right" style="width:20px;height:20px;"></i>
+    </button>
+
+    <div id="dots" class="fixed bottom-4 left-1/2 -translate-x-1/2 z-50 flex gap-2 flex-wrap justify-center px-2 max-w-[92vw]"></div>
+
+    <!-- SLIDE 1: PORTADA -->
+    <section class="slide active flex-col items-center justify-center min-h-screen bg-gradient-to-br from-[#0a0e1a] via-[#0f1a2e] to-[#0a0e1a] text-center relative overflow-y-auto overflow-x-hidden">
+        <div class="absolute inset-0 bg-pattern opacity-70"></div>
+        <div class="absolute top-0 left-0 w-1/2 h-1/2 bg-gradient-to-r from-sky-500/10 to-transparent rounded-full blur-3xl"></div>
+        <div class="absolute bottom-0 right-0 w-1/2 h-1/2 bg-gradient-to-l from-blue-500/10 to-transparent rounded-full blur-3xl"></div>
+        <div class="relative z-10 max-w-5xl mx-auto w-full px-4">
+            <div class="flex items-center justify-center gap-4 md:gap-6 mb-4 md:mb-6">
+                <img src="https://i.postimg.cc/jSkQKpRK/Diseno-sin-titulo-2026-05-15T105828-195.png" alt="IEC Logo" class="h-12 md:h-18 lg:h-20 object-contain" />
+                <div class="h-10 md:h-14 w-px bg-white/20"></div>
+                <img src="https://i.postimg.cc/MKt5BY8Q/Diseno-sin-titulo-2026-05-17T213222-434.png" alt="co+nexus Logo" class="h-12 md:h-18 lg:h-20 object-contain" />
+            </div>
+            <div class="inline-block px-4 py-1.5 md:px-5 md:py-2 rounded-full border border-sky-400/30 bg-sky-400/10 text-sky-300 text-xs md:text-sm font-semibold tracking-wider mb-4 md:mb-6">⚙️ PROPUESTA IEC AUTOMATION & CO+NEXUS</div>
+            <h1 class="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-black text-white leading-tight mb-3 md:mb-4">INTELIGENCIA <span class="gradient-text">OPERATIVA</span></h1>
+            <p class="text-base sm:text-lg md:text-xl lg:text-2xl text-gray-300 max-w-3xl mx-auto mb-4 md:mb-6 px-2">Transformación administrativa, comercial y gerencial para un taller integral de vehículos</p>
+            <div class="flex flex-wrap justify-center gap-3 md:gap-4 mb-4 md:mb-6">
+                <div class="px-4 py-2 md:px-6 md:py-3 bg-gradient-to-r from-sky-500/20 to-blue-500/20 rounded-xl border border-sky-400/30"><span class="text-white font-bold text-sm md:text-lg">📊 Datos en tiempo real</span></div>
+                <div class="px-4 py-2 md:px-6 md:py-3 bg-blue-400/10 rounded-xl border border-blue-400/30"><span class="text-blue-300 font-bold text-sm md:text-lg">🤖 IA aplicada</span></div>
+                <div class="px-4 py-2 md:px-6 md:py-3 bg-amber-400/10 rounded-xl border border-amber-400/30 pulse-border"><span class="text-amber-300 font-bold text-sm md:text-lg">⚡ Automatización</span></div>
+            </div>
+            <div class="glass-card rounded-2xl p-4 md:p-6 max-w-3xl mx-auto border border-white/5">
+                <p class="text-sm md:text-lg text-gray-200">No venimos a reemplazar el sistema actual. Venimos a potenciarlo con una capa de inteligencia que conecte administración, clientes, taller, bancos, tarjetas, stock y decisiones gerenciales.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- SLIDE 2: DIAGNÓSTICO -->
+    <section class="slide flex-col items-center justify-center min-h-screen bg-gradient-to-b from-[#0a0e1a] to-[#0f1a2e] relative overflow-y-auto overflow-x-hidden">
+        <div class="absolute inset-0 bg-pattern opacity-40"></div>
+        <div class="relative z-10 max-w-5xl mx-auto w-full px-4">
+            <h2 class="text-3xl sm:text-4xl md:text-5xl font-bold text-white mb-3 md:mb-4">PUNTO DE PARTIDA: <span class="gradient-text">LO QUE DETECTAMOS</span></h2>
+            <p class="text-gray-300 text-base md:text-lg mb-4 md:mb-6 max-w-4xl">La empresa ya cuenta con una base digital importante mediante Acount Soft, pero todavía existen procesos críticos que dependen de intervención manual, llamados, carga administrativa y decisiones concentradas en los dueños.</p>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-3 md:gap-4">
+                <div class="glass-card rounded-2xl p-5 md:p-6 border border-white/5">
+                    <h3 class="text-sky-300 font-bold text-lg md:text-xl mb-3">Fricciones actuales</h3>
+                    <ul class="text-gray-300 space-y-2 text-sm md:text-base">
+                        <li>• Tiempo excesivo en bancos, tarjetas y administración.</li>
+                        <li>• Atención telefónica con alta demanda operativa.</li>
+                        <li>• Cobros de cuentas corrientes manuales.</li>
+                        <li>• Presupuestos y seguimiento comercial dispersos.</li>
+                        <li>• Errores humanos y mala planificación.</li>
+                    </ul>
+                </div>
+                <div class="glass-card rounded-2xl p-5 md:p-6 border border-white/5 bg-gradient-to-br from-sky-500/5 to-blue-500/5">
+                    <h3 class="text-blue-300 font-bold text-lg md:text-xl mb-3">Oportunidad estratégica</h3>
+                    <p class="text-gray-300 text-sm md:text-base">Construir un Centro de Inteligencia Operativa que conecte información, automatice tareas repetitivas y permita tomar decisiones con datos vivos.</p>
+                    <div class="mt-4 p-3 md:p-4 bg-blue-400/10 rounded-xl border border-blue-400/20">
+                        <span class="text-blue-300 font-semibold">🎯 Enfoque:</span>
+                        <span class="text-gray-200"> integrar, automatizar y escalar sin romper lo que ya funciona.</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SLIDE 3: VISIÓN -->
+    <section class="slide flex-col items-center justify-center min-h-screen bg-gradient-to-b from-[#0f1a2e] to-[#0a0e1a] relative overflow-y-auto overflow-x-hidden">
+        <div class="absolute inset-0 bg-pattern opacity-40"></div>
+        <div class="relative z-10 max-w-5xl mx-auto w-full px-4">
+            <h2 class="text-3xl sm:text-4xl md:text-5xl font-bold text-white mb-3 md:mb-4">LA PROPUESTA: <span class="gradient-text">CENTRO DE INTELIGENCIA OPERATIVA</span></h2>
+            <div class="glass-card rounded-2xl p-5 md:p-8 border border-white/5 mb-5 md:mb-6">
+                <p class="text-gray-200 text-base md:text-xl">Una capa superior de gestión que tome los datos que ya existen en el negocio, los conecte con automatizaciones y los convierta en acciones, reportes, alertas y decisiones.</p>
+            </div>
+            <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-3">
+                <div class="bg-white/5 rounded-xl p-4 border border-white/5 text-center"><span class="text-3xl block mb-2">🧾</span><p class="text-gray-200 text-sm">ERP actual registra</p></div>
+                <div class="bg-white/5 rounded-xl p-4 border border-white/5 text-center"><span class="text-3xl block mb-2">🔗</span><p class="text-gray-200 text-sm">Integraciones conectan</p></div>
+                <div class="bg-white/5 rounded-xl p-4 border border-white/5 text-center"><span class="text-3xl block mb-2">🤖</span><p class="text-gray-200 text-sm">IA interpreta</p></div>
+                <div class="bg-white/5 rounded-xl p-4 border border-white/5 text-center"><span class="text-3xl block mb-2">⚡</span><p class="text-gray-200 text-sm">Automatizaciones ejecutan</p></div>
+            </div>
+            <div class="mt-5 p-4 md:p-5 rounded-2xl border border-sky-400/20 bg-sky-400/10">
+                <p class="text-sky-200 text-sm md:text-lg font-semibold">El objetivo no es tener más pantallas. El objetivo es que la información fluya sola y que el equipo tenga menos carga operativa.</p>
+            </div>
+        </div>
+    </section>
+
+
+    <!-- SLIDE 4: EQUIPO DE TRABAJO -->
+    <section class="slide flex-col items-center justify-center min-h-screen bg-gradient-to-b from-[#0a0e1a] to-[#0f1a2e] relative overflow-y-auto overflow-x-hidden">
+        <div class="absolute inset-0 bg-pattern opacity-40"></div>
+        <div class="relative z-10 max-w-5xl mx-auto w-full px-4">
+            <h2 class="text-3xl sm:text-4xl md:text-5xl font-bold text-white mb-4 text-center">EQUIPO DE <span class="gradient-text">TRABAJO CONJUNTO</span></h2>
+            <p class="text-gray-300 text-base md:text-lg mb-6 text-center max-w-4xl mx-auto">La propuesta se presenta como una alianza de trabajo entre IEC Automation y co+nexus, integrando desarrollo tecnológico, automatización, inteligencia artificial, procesos y visión operativa.</p>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div class="glass-card rounded-2xl p-6 border border-white/5 text-center">
+                    <img src="https://i.postimg.cc/jSkQKpRK/Diseno-sin-titulo-2026-05-15T105828-195.png" alt="IEC Logo" class="h-16 md:h-20 mx-auto mb-4 object-contain" />
+                    <h3 class="text-sky-300 font-bold text-xl mb-2">IEC Automation</h3>
+                    <p class="text-gray-300 text-sm md:text-base">Diseño de soluciones tecnológicas, automatización de procesos, inteligencia operativa y desarrollo de sistemas aplicados a la gestión empresarial.</p>
+                </div>
+                <div class="glass-card rounded-2xl p-6 border border-sky-400/20 bg-gradient-to-br from-sky-500/5 to-blue-500/5 text-center">
+                    <img src="https://i.postimg.cc/MKt5BY8Q/Diseno-sin-titulo-2026-05-17T213222-434.png" alt="co+nexus Logo" class="h-16 md:h-20 mx-auto mb-4 object-contain" />
+                    <h3 class="text-blue-300 font-bold text-xl mb-2">co+nexus</h3>
+                    <p class="text-gray-300 text-sm md:text-base">Acompañamiento estratégico, integración de procesos, análisis de información y construcción de soluciones orientadas a la mejora continua.</p>
+                </div>
+            </div>
+            <div class="mt-5 glass-card rounded-2xl p-5 border border-white/5">
+                <p class="text-gray-200 text-sm md:text-lg text-center"><span class="text-sky-300 font-bold">En conjunto:</span> una propuesta integral para conectar sistemas, ordenar procesos, automatizar tareas y convertir datos en decisiones.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- SLIDE 4: PILAR 1 -->
+    <section class="slide flex-col items-center justify-center min-h-screen bg-gradient-to-b from-[#0a0e1a] to-[#0f1a2e] relative overflow-y-auto overflow-x-hidden">
+        <div class="absolute inset-0 bg-pattern opacity-40"></div>
+        <div class="relative z-10 max-w-5xl mx-auto w-full px-4">
+            <div class="flex flex-wrap items-center gap-3 mb-4"><span class="text-4xl">🏦</span><span class="text-sky-300 font-bold text-lg">PILAR 1</span></div>
+            <h2 class="text-3xl sm:text-4xl md:text-5xl font-bold text-white mb-5">INTELIGENCIA <span class="gradient-text">ADMINISTRATIVA</span></h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div class="glass-card rounded-2xl p-5 border border-white/5">
+                    <h3 class="text-red-300 font-bold text-lg mb-3">Problema detectado</h3>
+                    <ul class="text-gray-300 text-sm md:text-base space-y-2">
+                        <li>• Mucho tiempo dedicado a bancos y tarjetas.</li>
+                        <li>• Imputación manual de cobros.</li>
+                        <li>• Control de cuentas corrientes mediante llamados o envío de facturas.</li>
+                        <li>• Carga posterior para IVA y libros contables.</li>
+                    </ul>
+                </div>
+                <div class="glass-card rounded-2xl p-5 border border-sky-400/20 bg-gradient-to-br from-sky-500/5 to-blue-500/5">
+                    <h3 class="text-sky-300 font-bold text-lg mb-3">Solución IEC Automation & co+nexus</h3>
+                    <ul class="text-gray-300 text-sm md:text-base space-y-2">
+                        <li>• Módulo de conciliación bancaria y tarjetas.</li>
+                        <li>• Detección automática de acreditaciones.</li>
+                        <li>• Clasificación de movimientos, comisiones, retenciones e impuestos.</li>
+                        <li>• Exportación o sincronización con Acount Soft.</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="mt-5 glass-card rounded-2xl p-4 border border-white/5">
+                <p class="text-gray-200 text-sm md:text-lg"><span class="text-sky-300 font-bold">Impacto esperado:</span> menos horas administrativas, menos errores humanos y mayor velocidad para cerrar la información financiera del día.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- SLIDE 5: PILAR 2 -->
+    <section class="slide flex-col items-center justify-center min-h-screen bg-gradient-to-b from-[#0f1a2e] to-[#0a0e1a] relative overflow-y-auto overflow-x-hidden">
+        <div class="absolute inset-0 bg-pattern opacity-40"></div>
+        <div class="relative z-10 max-w-5xl mx-auto w-full px-4">
+            <div class="flex flex-wrap items-center gap-3 mb-4"><span class="text-4xl">📈</span><span class="text-sky-300 font-bold text-lg">PILAR 2</span></div>
+            <h2 class="text-3xl sm:text-4xl md:text-5xl font-bold text-white mb-5">INTELIGENCIA <span class="gradient-text">COMERCIAL</span></h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div class="glass-card rounded-2xl p-5 border border-white/5">
+                    <h3 class="text-red-300 font-bold text-lg mb-3">Problema detectado</h3>
+                    <ul class="text-gray-300 text-sm md:text-base space-y-2">
+                        <li>• No existe seguimiento constante de clientes.</li>
+                        <li>• Dificultad para detectar clientes que dejaron de venir.</li>
+                        <li>• Oportunidades comerciales perdidas por falta de alertas.</li>
+                        <li>• Presupuestos sin seguimiento automatizado.</li>
+                    </ul>
+                </div>
+                <div class="glass-card rounded-2xl p-5 border border-sky-400/20 bg-gradient-to-br from-sky-500/5 to-blue-500/5">
+                    <h3 class="text-sky-300 font-bold text-lg mb-3">Solución IEC Automation & co+nexus</h3>
+                    <ul class="text-gray-300 text-sm md:text-base space-y-2">
+                        <li>• CRM inteligente conectado al historial del cliente.</li>
+                        <li>• Segmentación automática por frecuencia, servicio y último contacto.</li>
+                        <li>• Alertas de clientes inactivos.</li>
+                        <li>• Campañas de recuperación y seguimiento por WhatsApp.</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="mt-5 glass-card rounded-2xl p-4 border border-white/5">
+                <p class="text-gray-200 text-sm md:text-lg"><span class="text-sky-300 font-bold">Impacto esperado:</span> recuperación de clientes, mayor recurrencia y más ventas sin depender únicamente del llamado manual.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- SLIDE 6: PILAR 3 -->
+    <section class="slide flex-col items-center justify-center min-h-screen bg-gradient-to-b from-[#0a0e1a] to-[#0f1a2e] relative overflow-y-auto overflow-x-hidden">
+        <div class="absolute inset-0 bg-pattern opacity-40"></div>
+        <div class="relative z-10 max-w-5xl mx-auto w-full px-4">
+            <div class="flex flex-wrap items-center gap-3 mb-4"><span class="text-4xl">📞</span><span class="text-sky-300 font-bold text-lg">PILAR 3</span></div>
+            <h2 class="text-3xl sm:text-4xl md:text-5xl font-bold text-white mb-5">INTELIGENCIA DE <span class="gradient-text">ATENCIÓN</span></h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div class="glass-card rounded-2xl p-5 border border-white/5">
+                    <h3 class="text-red-300 font-bold text-lg mb-3">Problema detectado</h3>
+                    <ul class="text-gray-300 text-sm md:text-base space-y-2">
+                        <li>• La mayoría de los turnos se coordinan por teléfono.</li>
+                        <li>• La administración responde consultas repetitivas.</li>
+                        <li>• El cliente depende del llamado para saber estado, disponibilidad o factura.</li>
+                        <li>• Se pierde tiempo operativo en tareas de bajo valor.</li>
+                    </ul>
+                </div>
+                <div class="glass-card rounded-2xl p-5 border border-sky-400/20 bg-gradient-to-br from-sky-500/5 to-blue-500/5">
+                    <h3 class="text-sky-300 font-bold text-lg mb-3">Solución IEC Automation & co+nexus</h3>
+                    <ul class="text-gray-300 text-sm md:text-base space-y-2">
+                        <li>• Asistente IA por WhatsApp para consultas frecuentes.</li>
+                        <li>• Gestión de turnos y recordatorios automáticos.</li>
+                        <li>• Envío de factura, saldo y estado del vehículo.</li>
+                        <li>• Derivación a humano solo cuando sea necesario.</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="mt-5 glass-card rounded-2xl p-4 border border-white/5">
+                <p class="text-gray-200 text-sm md:text-lg"><span class="text-sky-300 font-bold">Impacto esperado:</span> menor carga telefónica, mejor experiencia del cliente y administración enfocada en tareas más importantes.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- SLIDE 7: PILAR 4 -->
+    <section class="slide flex-col items-center justify-center min-h-screen bg-gradient-to-b from-[#0f1a2e] to-[#0a0e1a] relative overflow-y-auto overflow-x-hidden">
+        <div class="absolute inset-0 bg-pattern opacity-40"></div>
+        <div class="relative z-10 max-w-5xl mx-auto w-full px-4">
+            <div class="flex flex-wrap items-center gap-3 mb-4"><span class="text-4xl">🚗</span><span class="text-sky-300 font-bold text-lg">PILAR 4</span></div>
+            <h2 class="text-3xl sm:text-4xl md:text-5xl font-bold text-white mb-5">INTELIGENCIA DEL <span class="gradient-text">TALLER</span></h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div class="glass-card rounded-2xl p-5 border border-white/5">
+                    <h3 class="text-red-300 font-bold text-lg mb-3">Problema detectado</h3>
+                    <ul class="text-gray-300 text-sm md:text-base space-y-2">
+                        <li>• El vehículo recorre distintas áreas sin trazabilidad digital completa.</li>
+                        <li>• Los encargados informan al final del proceso.</li>
+                        <li>• La facturación depende de que administración reciba la información.</li>
+                        <li>• Puede haber demoras o errores de comunicación interna.</li>
+                    </ul>
+                </div>
+                <div class="glass-card rounded-2xl p-5 border border-sky-400/20 bg-gradient-to-br from-sky-500/5 to-blue-500/5">
+                    <h3 class="text-sky-300 font-bold text-lg mb-3">Solución IEC Automation & co+nexus</h3>
+                    <ul class="text-gray-300 text-sm md:text-base space-y-2">
+                        <li>• Orden de trabajo digital por vehículo.</li>
+                        <li>• Estados: ingresado, diagnóstico, en proceso, finalizado, facturado y entregado.</li>
+                        <li>• Carga desde celular por cada área.</li>
+                        <li>• Avisos automáticos a administración y cliente.</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="mt-5 glass-card rounded-2xl p-4 border border-white/5">
+                <p class="text-gray-200 text-sm md:text-lg"><span class="text-sky-300 font-bold">Impacto esperado:</span> mayor control del taller, menos demoras internas y mejor coordinación entre operación y administración.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- SLIDE 8: PILAR 5 -->
+    <section class="slide flex-col items-center justify-center min-h-screen bg-gradient-to-b from-[#0a0e1a] to-[#0f1a2e] relative overflow-y-auto overflow-x-hidden">
+        <div class="absolute inset-0 bg-pattern opacity-40"></div>
+        <div class="relative z-10 max-w-5xl mx-auto w-full px-4">
+            <div class="flex flex-wrap items-center gap-3 mb-4"><span class="text-4xl">📊</span><span class="text-sky-300 font-bold text-lg">PILAR 5</span></div>
+            <h2 class="text-3xl sm:text-4xl md:text-5xl font-bold text-white mb-5">INTELIGENCIA <span class="gradient-text">GERENCIAL</span></h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div class="glass-card rounded-2xl p-5 border border-white/5">
+                    <h3 class="text-red-300 font-bold text-lg mb-3">Problema detectado</h3>
+                    <ul class="text-gray-300 text-sm md:text-base space-y-2">
+                        <li>• Hay datos en el sistema, pero no siempre convertidos en indicadores accionables.</li>
+                        <li>• Los dueños concentran compras, pagos y decisiones bancarias.</li>
+                        <li>• Falta visibilidad rápida para decidir sin revisar múltiples fuentes.</li>
+                        <li>• Necesidad de ver stock, clientes y rentabilidad en tiempo real.</li>
+                    </ul>
+                </div>
+                <div class="glass-card rounded-2xl p-5 border border-sky-400/20 bg-gradient-to-br from-sky-500/5 to-blue-500/5">
+                    <h3 class="text-sky-300 font-bold text-lg mb-3">Solución IEC Automation & co+nexus</h3>
+                    <ul class="text-gray-300 text-sm md:text-base space-y-2">
+                        <li>• Dashboard gerencial conectado a ventas, compras, stock y cuentas corrientes.</li>
+                        <li>• Indicadores por período, rubro, cliente y tipo de servicio.</li>
+                        <li>• Alertas de desvíos, vencimientos y decisiones pendientes.</li>
+                        <li>• Reporte ejecutivo automático diario o semanal.</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="mt-5 glass-card rounded-2xl p-4 border border-white/5">
+                <p class="text-gray-200 text-sm md:text-lg"><span class="text-sky-300 font-bold">Impacto esperado:</span> decisiones más rápidas, mejor control de rentabilidad y menor dependencia operativa de los dueños.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- SLIDE 9: PILAR 6 -->
+    <section class="slide flex-col items-center justify-center min-h-screen bg-gradient-to-b from-[#0f1a2e] to-[#0a0e1a] relative overflow-y-auto overflow-x-hidden">
+        <div class="absolute inset-0 bg-pattern opacity-40"></div>
+        <div class="relative z-10 max-w-5xl mx-auto w-full px-4">
+            <div class="flex flex-wrap items-center gap-3 mb-4"><span class="text-4xl">🧠</span><span class="text-sky-300 font-bold text-lg">PILAR 6</span></div>
+            <h2 class="text-3xl sm:text-4xl md:text-5xl font-bold text-white mb-5">INTELIGENCIA <span class="gradient-text">PREDICTIVA</span></h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div class="glass-card rounded-2xl p-5 border border-white/5">
+                    <h3 class="text-red-300 font-bold text-lg mb-3">Problema detectado</h3>
+                    <ul class="text-gray-300 text-sm md:text-base space-y-2">
+                        <li>• Las compras y el stock tienden a resolverse de forma reactiva.</li>
+                        <li>• El objetivo de tener stock completo requiere anticipación.</li>
+                        <li>• La planificación deficiente genera pérdidas de rentabilidad.</li>
+                        <li>• No se explota el histórico para anticipar demanda.</li>
+                    </ul>
+                </div>
+                <div class="glass-card rounded-2xl p-5 border border-sky-400/20 bg-gradient-to-br from-sky-500/5 to-blue-500/5">
+                    <h3 class="text-sky-300 font-bold text-lg mb-3">Solución IEC Automation & co+nexus</h3>
+                    <ul class="text-gray-300 text-sm md:text-base space-y-2">
+                        <li>• IA para analizar historial de ventas, servicios y repuestos.</li>
+                        <li>• Recomendaciones de compra por rotación y estacionalidad.</li>
+                        <li>• Alertas de faltantes futuros.</li>
+                        <li>• Detección de clientes con riesgo de abandono.</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="mt-5 glass-card rounded-2xl p-4 border border-white/5">
+                <p class="text-gray-200 text-sm md:text-lg"><span class="text-sky-300 font-bold">Impacto esperado:</span> menos compras urgentes, mejor disponibilidad de repuestos y planificación basada en datos reales.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- SLIDE 10: PILAR 7 -->
+    <section class="slide flex-col items-center justify-center min-h-screen bg-gradient-to-b from-[#0a0e1a] to-[#0f1a2e] relative overflow-y-auto overflow-x-hidden">
+        <div class="absolute inset-0 bg-pattern opacity-40"></div>
+        <div class="relative z-10 max-w-5xl mx-auto w-full px-4">
+            <div class="flex flex-wrap items-center gap-3 mb-4"><span class="text-4xl">💰</span><span class="text-sky-300 font-bold text-lg">PILAR 7</span></div>
+            <h2 class="text-3xl sm:text-4xl md:text-5xl font-bold text-white mb-5">INTELIGENCIA <span class="gradient-text">FINANCIERA</span></h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div class="glass-card rounded-2xl p-5 border border-white/5">
+                    <h3 class="text-red-300 font-bold text-lg mb-3">Problema detectado</h3>
+                    <ul class="text-gray-300 text-sm md:text-base space-y-2">
+                        <li>• Pagos, compras y cuentas bancarias dependen mucho de los dueños.</li>
+                        <li>• La información financiera exige revisión constante.</li>
+                        <li>• La toma de decisiones se vuelve lenta y concentrada.</li>
+                        <li>• Se requiere separar ventas, impuestos, tarjetas y movimientos bancarios.</li>
+                    </ul>
+                </div>
+                <div class="glass-card rounded-2xl p-5 border border-sky-400/20 bg-gradient-to-br from-sky-500/5 to-blue-500/5">
+                    <h3 class="text-sky-300 font-bold text-lg mb-3">Solución IEC Automation & co+nexus</h3>
+                    <ul class="text-gray-300 text-sm md:text-base space-y-2">
+                        <li>• Reporte financiero automático diario.</li>
+                        <li>• Flujo de fondos, ingresos, egresos y cuentas pendientes.</li>
+                        <li>• Alertas de vencimientos, pagos críticos y desvíos.</li>
+                        <li>• Resumen impositivo y bancario para gestión contable.</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="mt-5 glass-card rounded-2xl p-4 border border-white/5">
+                <p class="text-gray-200 text-sm md:text-lg"><span class="text-sky-300 font-bold">Impacto esperado:</span> control financiero más claro, menos tareas concentradas y mayor autonomía administrativa.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- SLIDE 11: PILAR 8 -->
+    <section class="slide flex-col items-center justify-center min-h-screen bg-gradient-to-b from-[#0f1a2e] to-[#0a0e1a] relative overflow-y-auto overflow-x-hidden">
+        <div class="absolute inset-0 bg-pattern opacity-40"></div>
+        <div class="relative z-10 max-w-5xl mx-auto w-full px-4">
+            <div class="flex flex-wrap items-center gap-3 mb-4"><span class="text-4xl">📁</span><span class="text-sky-300 font-bold text-lg">PILAR 8</span></div>
+            <h2 class="text-3xl sm:text-4xl md:text-5xl font-bold text-white mb-5">INTELIGENCIA <span class="gradient-text">DOCUMENTAL</span></h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div class="glass-card rounded-2xl p-5 border border-white/5">
+                    <h3 class="text-red-300 font-bold text-lg mb-3">Problema detectado</h3>
+                    <ul class="text-gray-300 text-sm md:text-base space-y-2">
+                        <li>• Facturas, presupuestos, comprobantes y documentos pueden quedar dispersos.</li>
+                        <li>• Administración invierte tiempo buscando información.</li>
+                        <li>• La trazabilidad documental por cliente o vehículo no siempre está centralizada.</li>
+                        <li>• El envío de documentación suele ser manual.</li>
+                    </ul>
+                </div>
+                <div class="glass-card rounded-2xl p-5 border border-sky-400/20 bg-gradient-to-br from-sky-500/5 to-blue-500/5">
+                    <h3 class="text-sky-300 font-bold text-lg mb-3">Solución IEC Automation & co+nexus</h3>
+                    <ul class="text-gray-300 text-sm md:text-base space-y-2">
+                        <li>• Carpeta digital por cliente, vehículo y orden de trabajo.</li>
+                        <li>• Asociación automática de facturas, presupuestos y comprobantes.</li>
+                        <li>• Búsqueda inteligente de documentación.</li>
+                        <li>• Envío automático de archivos al cliente.</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="mt-5 glass-card rounded-2xl p-4 border border-white/5">
+                <p class="text-gray-200 text-sm md:text-lg"><span class="text-sky-300 font-bold">Impacto esperado:</span> menos pérdida de tiempo, mejor trazabilidad y mayor orden administrativo.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- SLIDE 12: PILAR 9 -->
+    <section class="slide flex-col items-center justify-center min-h-screen bg-gradient-to-b from-[#0a0e1a] to-[#0f1a2e] relative overflow-y-auto overflow-x-hidden">
+        <div class="absolute inset-0 bg-pattern opacity-40"></div>
+        <div class="relative z-10 max-w-5xl mx-auto w-full px-4">
+            <div class="flex flex-wrap items-center gap-3 mb-4"><span class="text-4xl">⚡</span><span class="text-sky-300 font-bold text-lg">PILAR 9</span></div>
+            <h2 class="text-3xl sm:text-4xl md:text-5xl font-bold text-white mb-5">AUTOMATIZACIÓN DE <span class="gradient-text">PROCESOS</span></h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div class="glass-card rounded-2xl p-5 border border-white/5">
+                    <h3 class="text-red-300 font-bold text-lg mb-3">Problema detectado</h3>
+                    <ul class="text-gray-300 text-sm md:text-base space-y-2">
+                        <li>• Muchas tareas se activan manualmente entre áreas.</li>
+                        <li>• La administración espera información del taller para facturar.</li>
+                        <li>• Hay riesgo de demoras, olvidos y errores humanos.</li>
+                        <li>• Los procesos no siempre disparan acciones automáticas.</li>
+                    </ul>
+                </div>
+                <div class="glass-card rounded-2xl p-5 border border-sky-400/20 bg-gradient-to-br from-sky-500/5 to-blue-500/5">
+                    <h3 class="text-sky-300 font-bold text-lg mb-3">Solución IEC Automation & co+nexus</h3>
+                    <ul class="text-gray-300 text-sm md:text-base space-y-2">
+                        <li>• Flujos automáticos entre taller, administración y cliente.</li>
+                        <li>• Trabajo finalizado → aviso a administración → factura → WhatsApp al cliente.</li>
+                        <li>• Encuesta post servicio y seguimiento automático.</li>
+                        <li>• Actualización automática de indicadores.</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="mt-5 glass-card rounded-2xl p-4 border border-white/5">
+                <p class="text-gray-200 text-sm md:text-lg"><span class="text-sky-300 font-bold">Impacto esperado:</span> operación más rápida, menos intervención manual y procesos medibles de punta a punta.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- SLIDE 13: ROADMAP -->
+    <section class="slide flex-col items-center justify-center min-h-screen bg-gradient-to-b from-[#0f1a2e] to-[#0a0e1a] relative overflow-y-auto overflow-x-hidden">
+        <div class="absolute inset-0 bg-pattern opacity-40"></div>
+        <div class="relative z-10 max-w-5xl mx-auto w-full px-4">
+            <h2 class="text-3xl sm:text-4xl md:text-5xl font-bold text-white mb-5 text-center">ROADMAP DE <span class="gradient-text">IMPLEMENTACIÓN</span></h2>
+            <div class="grid grid-cols-1 md:grid-cols-5 gap-3">
+                <div class="glass-card rounded-2xl p-4 border border-white/5"><div class="number-badge w-10 h-10 rounded-full flex items-center justify-center text-white font-black mb-3">1</div><h3 class="text-sky-300 font-bold mb-2">Integración</h3><p class="text-gray-300 text-sm">Relevamiento técnico de Acount Soft, bancos, tarjetas y fuentes de datos.</p></div>
+                <div class="glass-card rounded-2xl p-4 border border-white/5"><div class="number-badge w-10 h-10 rounded-full flex items-center justify-center text-white font-black mb-3">2</div><h3 class="text-sky-300 font-bold mb-2">Administración</h3><p class="text-gray-300 text-sm">Conciliación, imputaciones, IVA, tarjetas y reportes financieros.</p></div>
+                <div class="glass-card rounded-2xl p-4 border border-white/5"><div class="number-badge w-10 h-10 rounded-full flex items-center justify-center text-white font-black mb-3">3</div><h3 class="text-sky-300 font-bold mb-2">Atención</h3><p class="text-gray-300 text-sm">Turnos, WhatsApp IA, seguimiento comercial y clientes inactivos.</p></div>
+                <div class="glass-card rounded-2xl p-4 border border-white/5"><div class="number-badge w-10 h-10 rounded-full flex items-center justify-center text-white font-black mb-3">4</div><h3 class="text-sky-300 font-bold mb-2">Control</h3><p class="text-gray-300 text-sm">Tableros gerenciales, trazabilidad del taller e indicadores vivos.</p></div>
+                <div class="glass-card rounded-2xl p-4 border border-white/5"><div class="number-badge w-10 h-10 rounded-full flex items-center justify-center text-white font-black mb-3">5</div><h3 class="text-sky-300 font-bold mb-2">IA Predictiva</h3><p class="text-gray-300 text-sm">Compras sugeridas, stock, abandono de clientes y recomendaciones.</p></div>
+            </div>
+            <div class="mt-5 p-4 rounded-2xl bg-blue-400/10 border border-blue-400/20">
+                <p class="text-blue-100 text-sm md:text-lg font-semibold text-center">Implementación progresiva: primero el dolor más urgente, después la inteligencia completa del negocio.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- SLIDE 14: BENEFICIOS -->
+    <section class="slide flex-col items-center justify-center min-h-screen bg-gradient-to-b from-[#0a0e1a] to-[#0f1a2e] relative overflow-y-auto overflow-x-hidden">
+        <div class="absolute inset-0 bg-pattern opacity-40"></div>
+        <div class="relative z-10 max-w-5xl mx-auto w-full px-4">
+            <h2 class="text-3xl md:text-5xl font-bold text-white mb-3 text-center">BENEFICIOS <span class="gradient-text">ESPERADOS</span></h2>
+            <p class="text-gray-300 text-center text-sm md:text-base mb-5">Resultados concretos que debería generar el proyecto en la operación diaria.</p>
+            <div class="grid grid-cols-2 md:grid-cols-3 gap-3 md:gap-4">
+                <div class="bg-white/5 rounded-xl p-4 border border-white/5 text-center"><span class="text-3xl block mb-2">⏱️</span><span class="text-gray-200 text-sm">Menos tiempo administrativo</span></div>
+                <div class="bg-white/5 rounded-xl p-4 border border-white/5 text-center"><span class="text-3xl block mb-2">✅</span><span class="text-gray-200 text-sm">Menos errores humanos</span></div>
+                <div class="bg-white/5 rounded-xl p-4 border border-white/5 text-center"><span class="text-3xl block mb-2">💳</span><span class="text-gray-200 text-sm">Cobros más ordenados</span></div>
+                <div class="bg-white/5 rounded-xl p-4 border border-white/5 text-center"><span class="text-3xl block mb-2">📲</span><span class="text-gray-200 text-sm">Clientes mejor atendidos</span></div>
+                <div class="bg-white/5 rounded-xl p-4 border border-white/5 text-center"><span class="text-3xl block mb-2">📦</span><span class="text-gray-200 text-sm">Stock más previsible</span></div>
+                <div class="bg-white/5 rounded-xl p-4 border border-white/5 text-center"><span class="text-3xl block mb-2">🧭</span><span class="text-gray-200 text-sm">Decisiones con datos</span></div>
+            </div>
+            <div class="glass-card rounded-2xl p-5 md:p-6 border border-white/5 mt-5 bg-gradient-to-r from-sky-500/5 to-blue-500/5">
+                <p class="text-gray-200 text-base md:text-lg text-center"><span class="text-sky-300 font-bold">Resultado esperado:</span> una empresa más liviana, más medible, más automatizada y menos dependiente de tareas manuales.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- SLIDE 15: CIERRE -->
+    <section class="slide flex-col items-center justify-center min-h-screen bg-gradient-to-br from-[#0a0e1a] via-[#0f1a2e] to-[#0a0e1a] text-center relative overflow-y-auto overflow-x-hidden">
+        <div class="absolute inset-0 bg-pattern opacity-50"></div>
+        <div class="absolute top-0 right-0 w-1/2 h-1/2 bg-gradient-to-l from-sky-500/10 to-transparent rounded-full blur-3xl"></div>
+        <div class="relative z-10 max-w-4xl mx-auto px-4">
+            <div class="flex items-center justify-center gap-4 md:gap-6 mb-4 md:mb-6">
+                <img src="https://i.postimg.cc/jSkQKpRK/Diseno-sin-titulo-2026-05-15T105828-195.png" alt="IEC Logo" class="h-12 md:h-18 lg:h-20 object-contain" />
+                <div class="h-10 md:h-14 w-px bg-white/20"></div>
+                <img src="https://i.postimg.cc/MKt5BY8Q/Diseno-sin-titulo-2026-05-17T213222-434.png" alt="co+nexus Logo" class="h-12 md:h-18 lg:h-20 object-contain" />
+            </div>
+            <div class="text-5xl md:text-7xl mb-3 md:mb-4">⚙️</div>
+            <h2 class="text-3xl sm:text-4xl md:text-6xl font-black text-white leading-tight mb-2 md:mb-4">DEL CONTROL MANUAL A LA <span class="gradient-text">INTELIGENCIA OPERATIVA</span></h2>
+            <div class="glass-card rounded-2xl p-5 md:p-8 border border-white/5 max-w-2xl mx-auto">
+                <p class="text-lg md:text-2xl font-bold text-white">INTEGRAR · AUTOMATIZAR · MEDIR · DECIDIR</p>
+                <p class="text-gray-300 text-sm md:text-base mt-2">IEC Automation & co+nexus convierten procesos administrativos y operativos en sistemas inteligentes, conectados y escalables.</p>
+                <div class="mt-4 flex flex-wrap justify-center gap-2 md:gap-3 text-xs md:text-sm">
+                    <span class="px-3 py-1.5 md:px-4 md:py-2 bg-sky-400/20 rounded-full border border-sky-400/30 text-sky-300">🏛️ IEC Automation</span>
+                    <span class="px-3 py-1.5 md:px-4 md:py-2 bg-blue-400/20 rounded-full border border-blue-400/30 text-blue-300">🤖 co+nexus + IA</span>
+                </div>
+            </div>
+            <p class="text-gray-400 mt-4 md:mt-6 text-xs md:text-sm">Transformamos datos en decisiones. Transformamos procesos en ventaja competitiva.</p>
+        </div>
+    </section>
+
+    <script>
+        let current = 0;
+        const slides = document.querySelectorAll('.slide');
+        const dotsContainer = document.getElementById('dots');
+
+        slides.forEach((_, index) => {
+            const dot = document.createElement('button');
+            dot.className = 'dot w-2.5 h-2.5 md:w-3 md:h-3 rounded-full bg-white/30 transition';
+            dot.setAttribute('aria-label', `Ir a la diapositiva ${index + 1}`);
+            dot.onclick = () => goSlide(index);
+            dotsContainer.appendChild(dot);
+        });
+
+        const dots = document.querySelectorAll('.dot');
+
+        function goSlide(i) {
+            slides[current].classList.remove('active');
+            dots[current].classList.remove('active');
+            current = i;
+            slides[current].classList.add('active');
+            dots[current].classList.add('active');
+            window.scrollTo(0, 0);
+        }
+
+        function changeSlide(d) {
+            let next = current + d;
+            if (next < 0) next = slides.length - 1;
+            if (next >= slides.length) next = 0;
+            goSlide(next);
+        }
+
+        dots[0].classList.add('active');
+
+        document.addEventListener('keydown', e => {
+            if (e.key === 'ArrowRight') changeSlide(1);
+            if (e.key === 'ArrowLeft') changeSlide(-1);
+        });
+
+        let touchStartX = 0;
+        let touchEndX = 0;
+        document.addEventListener('touchstart', e => {
+            touchStartX = e.changedTouches[0].screenX;
+        });
+        document.addEventListener('touchend', e => {
+            touchEndX = e.changedTouches[0].screenX;
+            const diff = touchStartX - touchEndX;
+            if (Math.abs(diff) > 50) {
+                if (diff > 0) changeSlide(1);
+                else changeSlide(-1);
+            }
+        });
+
+        lucide.createIcons();
+    </script>
+</body>
+</html>
