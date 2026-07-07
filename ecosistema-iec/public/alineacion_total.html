@@ -67,6 +67,45 @@
             background: linear-gradient(135deg, rgba(14,165,233,.28), rgba(59,130,246,.18));
             border: 1px solid rgba(56,189,248,.28);
         }
+
+        .mockup-shell {
+            background: linear-gradient(135deg, rgba(15, 23, 42, .96), rgba(15, 26, 46, .92));
+            border: 1px solid rgba(56, 189, 248, .22);
+            box-shadow: 0 24px 80px rgba(0,0,0,.35);
+        }
+        .mockup-tab.active {
+            background: linear-gradient(135deg, rgba(14,165,233,.35), rgba(59,130,246,.25));
+            border-color: rgba(56,189,248,.55);
+            color: #e0f2fe;
+        }
+        .mockup-panel { display: none; }
+        .mockup-panel.active { display: block; }
+        .kpi-card {
+            background: rgba(255,255,255,.06);
+            border: 1px solid rgba(255,255,255,.09);
+        }
+        .mini-bar {
+            height: 8px;
+            border-radius: 999px;
+            background: rgba(255,255,255,.08);
+            overflow: hidden;
+        }
+        .mini-bar span {
+            display: block;
+            height: 100%;
+            background: linear-gradient(90deg, #38bdf8, #60a5fa, #818cf8);
+            border-radius: 999px;
+        }
+        .flow-step {
+            background: rgba(255,255,255,.055);
+            border: 1px solid rgba(255,255,255,.09);
+        }
+        .flow-step.active {
+            border-color: rgba(56,189,248,.65);
+            background: rgba(14,165,233,.14);
+            box-shadow: 0 0 30px rgba(14,165,233,.10);
+        }
+
         @media (max-width: 640px) {
             .slide { padding: 1.2rem 0.8rem 4rem; }
             .text-7xl { font-size: 2.8rem; }
@@ -101,7 +140,7 @@
             <div class="flex items-center justify-center gap-4 md:gap-6 mb-4 md:mb-6">
                 <img src="https://i.postimg.cc/jSkQKpRK/Diseno-sin-titulo-2026-05-15T105828-195.png" alt="IEC Logo" class="h-12 md:h-18 lg:h-20 object-contain" />
                 <div class="h-10 md:h-14 w-px bg-white/20"></div>
-                <img src="https://i.postimg.cc/MKt5BY8Q/Diseno-sin-titulo-2026-05-17T213222-434.png" alt="co+nexus Logo" class="h-12 md:h-18 lg:h-20 object-contain" />
+                <img src="https://i.postimg.cc/7ZZk1XGm/Logo-co-nexus-t.png" alt="co+nexus Logo" class="h-12 md:h-18 lg:h-20 object-contain" />
             </div>
             <div class="inline-block px-4 py-1.5 md:px-5 md:py-2 rounded-full border border-sky-400/30 bg-sky-400/10 text-sky-300 text-xs md:text-sm font-semibold tracking-wider mb-4 md:mb-6">⚙️ PROPUESTA IEC AUTOMATION & CO+NEXUS</div>
             <h1 class="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-black text-white leading-tight mb-3 md:mb-4">INTELIGENCIA <span class="gradient-text">OPERATIVA</span></h1>
@@ -180,7 +219,7 @@
                     <p class="text-gray-300 text-sm md:text-base">Diseño de soluciones tecnológicas, automatización de procesos, inteligencia operativa y desarrollo de sistemas aplicados a la gestión empresarial.</p>
                 </div>
                 <div class="glass-card rounded-2xl p-6 border border-sky-400/20 bg-gradient-to-br from-sky-500/5 to-blue-500/5 text-center">
-                    <img src="https://i.postimg.cc/MKt5BY8Q/Diseno-sin-titulo-2026-05-17T213222-434.png" alt="co+nexus Logo" class="h-16 md:h-20 mx-auto mb-4 object-contain" />
+                    <img src="https://i.postimg.cc/7ZZk1XGm/Logo-co-nexus-t.png" alt="co+nexus Logo" class="h-16 md:h-20 mx-auto mb-4 object-contain" />
                     <h3 class="text-blue-300 font-bold text-xl mb-2">co+nexus</h3>
                     <p class="text-gray-300 text-sm md:text-base">Acompañamiento estratégico, integración de procesos, análisis de información y construcción de soluciones orientadas a la mejora continua.</p>
                 </div>
@@ -525,7 +564,7 @@
             <div class="flex items-center justify-center gap-4 md:gap-6 mb-4 md:mb-6">
                 <img src="https://i.postimg.cc/jSkQKpRK/Diseno-sin-titulo-2026-05-15T105828-195.png" alt="IEC Logo" class="h-12 md:h-18 lg:h-20 object-contain" />
                 <div class="h-10 md:h-14 w-px bg-white/20"></div>
-                <img src="https://i.postimg.cc/MKt5BY8Q/Diseno-sin-titulo-2026-05-17T213222-434.png" alt="co+nexus Logo" class="h-12 md:h-18 lg:h-20 object-contain" />
+                <img src="https://i.postimg.cc/7ZZk1XGm/Logo-co-nexus-t.png" alt="co+nexus Logo" class="h-12 md:h-18 lg:h-20 object-contain" />
             </div>
             <div class="text-5xl md:text-7xl mb-3 md:mb-4">⚙️</div>
             <h2 class="text-3xl sm:text-4xl md:text-6xl font-black text-white leading-tight mb-2 md:mb-4">DEL CONTROL MANUAL A LA <span class="gradient-text">INTELIGENCIA OPERATIVA</span></h2>
@@ -540,6 +579,342 @@
             <p class="text-gray-400 mt-4 md:mt-6 text-xs md:text-sm">Transformamos datos en decisiones. Transformamos procesos en ventaja competitiva.</p>
         </div>
     </section>
+
+
+
+
+    <!-- SLIDE FINAL: MAQUETA INTERACTIVA -->
+    <section class="slide flex-col items-center justify-start min-h-screen bg-gradient-to-b from-[#0a0e1a] to-[#0f1a2e] relative overflow-y-auto scrollbar-soft">
+        <div class="absolute inset-0 bg-pattern opacity-40"></div>
+        <div class="relative z-10 max-w-6xl mx-auto w-full px-4 pb-10">
+            <div class="text-center mb-4 md:mb-6">
+                <div class="flex items-center justify-center gap-4 md:gap-6 mb-4 md:mb-5">
+                    <img src="https://i.postimg.cc/jSkQKpRK/Diseno-sin-titulo-2026-05-15T105828-195.png" alt="IEC Logo" class="h-10 md:h-14 object-contain" />
+                    <div class="h-9 md:h-12 w-px bg-white/20"></div>
+                    <img src="https://i.postimg.cc/7ZZk1XGm/Logo-co-nexus-t.png" alt="co+nexus Logo" class="h-10 md:h-14 object-contain" />
+                </div>
+                <h2 class="text-3xl sm:text-4xl md:text-5xl font-bold text-white">ERP DE <span class="gradient-text">INTELIGENCIA OPERATIVA</span></h2>
+                <p class="text-gray-300 text-sm md:text-lg mt-2 max-w-4xl mx-auto">Maqueta interactiva de una plataforma pensada para automatizar procesos administrativos: carga de archivos, lectura OCR, facturación, contacto con externos, seguimiento de cuentas, validaciones y tableros de decisión.</p>
+            </div>
+
+            <div class="mockup-shell rounded-3xl overflow-hidden">
+                <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-3 p-4 border-b border-white/10 bg-white/[.035]">
+                    <div>
+                        <p class="text-sky-300 text-xs font-bold tracking-widest uppercase">IEC Automation & co+nexus · ERP + IA + Automatización Operativa</p>
+                        <h3 class="text-white text-xl md:text-2xl font-black">Centro de Inteligencia Operativa</h3>
+                    </div>
+                    <div class="flex flex-wrap gap-2 text-xs">
+                        <span class="px-3 py-1.5 rounded-full bg-green-400/10 border border-green-400/25 text-green-300">● Automatizaciones activas</span>
+                        <span class="px-3 py-1.5 rounded-full bg-sky-400/10 border border-sky-400/25 text-sky-300">OCR inteligente</span>
+                        <span class="px-3 py-1.5 rounded-full bg-blue-400/10 border border-blue-400/25 text-blue-300">Contactos externos</span>
+                        <span class="px-3 py-1.5 rounded-full bg-amber-400/10 border border-amber-400/25 text-amber-300">Aprobaciones pendientes</span>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 lg:grid-cols-[270px_1fr]">
+                    <aside class="p-4 border-b lg:border-b-0 lg:border-r border-white/10 bg-white/[.025]">
+                        <div class="space-y-2">
+                            <button onclick="showMockupPanel('resumen')" class="mockup-tab active w-full text-left px-4 py-3 rounded-xl border border-white/10 text-gray-300 text-sm font-semibold transition">🏠 Panel central</button>
+                            <button onclick="showMockupPanel('ocr')" class="mockup-tab w-full text-left px-4 py-3 rounded-xl border border-white/10 text-gray-300 text-sm font-semibold transition">📄 OCR y archivos</button>
+                            <button onclick="showMockupPanel('facturacion')" class="mockup-tab w-full text-left px-4 py-3 rounded-xl border border-white/10 text-gray-300 text-sm font-semibold transition">🧾 Facturación inteligente</button>
+                            <button onclick="showMockupPanel('externos')" class="mockup-tab w-full text-left px-4 py-3 rounded-xl border border-white/10 text-gray-300 text-sm font-semibold transition">🌐 Contacto con externos</button>
+                            <button onclick="showMockupPanel('cobranzas')" class="mockup-tab w-full text-left px-4 py-3 rounded-xl border border-white/10 text-gray-300 text-sm font-semibold transition">💬 Cobranzas automáticas</button>
+                            <button onclick="showMockupPanel('workflow')" class="mockup-tab w-full text-left px-4 py-3 rounded-xl border border-white/10 text-gray-300 text-sm font-semibold transition">⚡ Diseñador de flujos</button>
+                            <button onclick="showMockupPanel('aprobaciones')" class="mockup-tab w-full text-left px-4 py-3 rounded-xl border border-white/10 text-gray-300 text-sm font-semibold transition">✅ Aprobaciones</button>
+                            <button onclick="showMockupPanel('tablero')" class="mockup-tab w-full text-left px-4 py-3 rounded-xl border border-white/10 text-gray-300 text-sm font-semibold transition">📊 Tablero gerencial</button>
+                        </div>
+                        <div class="mt-4 p-4 rounded-2xl bg-sky-400/10 border border-sky-400/20">
+                            <p class="text-sky-300 text-xs font-bold mb-1">ASISTENTE OPERATIVO</p>
+                            <p class="text-gray-200 text-sm">“Se detectaron 5 comprobantes nuevos. Puedo leerlos, clasificarlos, asociarlos al cliente y preparar la acción administrativa correspondiente.”</p>
+                        </div>
+                    </aside>
+
+                    <main class="p-4 md:p-5">
+                        <!-- PANEL CENTRAL -->
+                        <div id="mockup-resumen" class="mockup-panel active">
+                            <div class="grid grid-cols-2 md:grid-cols-4 gap-3 mb-4">
+                                <div class="kpi-card rounded-2xl p-4"><p class="text-gray-400 text-xs">Archivos procesados</p><p class="text-white text-2xl font-black">128</p><p class="text-green-300 text-xs mt-1">este mes</p></div>
+                                <div class="kpi-card rounded-2xl p-4"><p class="text-gray-400 text-xs">Facturas sugeridas</p><p class="text-white text-2xl font-black">34</p><p class="text-sky-300 text-xs mt-1">desde órdenes y archivos</p></div>
+                                <div class="kpi-card rounded-2xl p-4"><p class="text-gray-400 text-xs">Contactos externos</p><p class="text-white text-2xl font-black">212</p><p class="text-blue-300 text-xs mt-1">mensajes automatizados</p></div>
+                                <div class="kpi-card rounded-2xl p-4"><p class="text-gray-400 text-xs">Aprobaciones</p><p class="text-white text-2xl font-black">9</p><p class="text-amber-300 text-xs mt-1">requieren humano</p></div>
+                            </div>
+
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                <div class="glass-card rounded-2xl p-4 border border-white/5">
+                                    <h4 class="text-sky-300 font-bold mb-3">Bandeja inteligente de procesos</h4>
+                                    <div class="space-y-2 text-sm">
+                                        <div class="p-3 rounded-xl bg-green-400/10 border border-green-400/20 text-green-100">📄 18 comprobantes leídos por OCR y listos para imputar.</div>
+                                        <div class="p-3 rounded-xl bg-sky-400/10 border border-sky-400/20 text-sky-100">🧾 12 facturas preparadas automáticamente desde trabajos finalizados.</div>
+                                        <div class="p-3 rounded-xl bg-blue-400/10 border border-blue-400/20 text-blue-100">🌐 24 clientes/proveedores contactados sin intervención manual.</div>
+                                        <div class="p-3 rounded-xl bg-amber-400/10 border border-amber-400/20 text-amber-100">⚠️ 5 casos requieren aprobación antes de ejecutarse.</div>
+                                    </div>
+                                </div>
+
+                                <div class="glass-card rounded-2xl p-4 border border-white/5">
+                                    <h4 class="text-blue-300 font-bold mb-3">Automatizaciones disponibles</h4>
+                                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 text-sm">
+                                        <div class="p-3 rounded-xl bg-white/5 border border-white/5 text-gray-200">📄 Lectura OCR de facturas</div>
+                                        <div class="p-3 rounded-xl bg-white/5 border border-white/5 text-gray-200">🧾 Facturación automática</div>
+                                        <div class="p-3 rounded-xl bg-white/5 border border-white/5 text-gray-200">💬 Reclamo de cuentas corrientes</div>
+                                        <div class="p-3 rounded-xl bg-white/5 border border-white/5 text-gray-200">📲 Seguimiento por WhatsApp</div>
+                                        <div class="p-3 rounded-xl bg-white/5 border border-white/5 text-gray-200">📦 Pedido a proveedores</div>
+                                        <div class="p-3 rounded-xl bg-white/5 border border-white/5 text-gray-200">✅ Validación humana</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- OCR Y ARCHIVOS -->
+                        <div id="mockup-ocr" class="mockup-panel">
+                            <div class="grid grid-cols-1 md:grid-cols-[1fr_1.2fr] gap-4">
+                                <div class="glass-card rounded-2xl p-4 border border-white/5">
+                                    <h4 class="text-sky-300 font-bold mb-3">Carga inteligente de archivos</h4>
+                                    <div class="border-2 border-dashed border-sky-400/30 rounded-2xl p-6 text-center bg-sky-400/5">
+                                        <div class="text-5xl mb-3">📤</div>
+                                        <p class="text-white font-bold">Subir facturas, remitos, comprobantes o extractos</p>
+                                        <p class="text-gray-400 text-sm mt-1">PDF · JPG · PNG · Excel · CSV</p>
+                                        <button class="mt-4 px-4 py-2 rounded-xl bg-sky-500/80 text-white font-bold text-sm">Seleccionar archivos</button>
+                                    </div>
+                                    <div class="mt-4 space-y-2 text-sm">
+                                        <div class="p-3 rounded-xl bg-white/5 border border-white/5 text-gray-200">📎 factura_proveedor_1842.pdf <span class="text-green-300">· leído</span></div>
+                                        <div class="p-3 rounded-xl bg-white/5 border border-white/5 text-gray-200">📎 comprobante_transferencia.jpg <span class="text-sky-300">· clasificando</span></div>
+                                        <div class="p-3 rounded-xl bg-white/5 border border-white/5 text-gray-200">📎 resumen_tarjetas.xlsx <span class="text-amber-300">· requiere revisión</span></div>
+                                    </div>
+                                </div>
+
+                                <div class="glass-card rounded-2xl p-4 border border-white/5">
+                                    <h4 class="text-blue-300 font-bold mb-3">Lectura OCR + extracción automática</h4>
+                                    <div class="grid grid-cols-1 md:grid-cols-2 gap-3 text-sm">
+                                        <div class="p-3 rounded-xl bg-white/5 border border-white/5">
+                                            <p class="text-gray-400">Proveedor detectado</p>
+                                            <p class="text-white font-bold">Repuestos del Litoral S.A.</p>
+                                        </div>
+                                        <div class="p-3 rounded-xl bg-white/5 border border-white/5">
+                                            <p class="text-gray-400">CUIT</p>
+                                            <p class="text-white font-bold">30-00000000-1</p>
+                                        </div>
+                                        <div class="p-3 rounded-xl bg-white/5 border border-white/5">
+                                            <p class="text-gray-400">Importe total</p>
+                                            <p class="text-white font-bold">$ 486.200</p>
+                                        </div>
+                                        <div class="p-3 rounded-xl bg-white/5 border border-white/5">
+                                            <p class="text-gray-400">IVA detectado</p>
+                                            <p class="text-white font-bold">$ 84.374</p>
+                                        </div>
+                                        <div class="p-3 rounded-xl bg-white/5 border border-white/5">
+                                            <p class="text-gray-400">Categoría sugerida</p>
+                                            <p class="text-sky-300 font-bold">Compra de repuestos</p>
+                                        </div>
+                                        <div class="p-3 rounded-xl bg-white/5 border border-white/5">
+                                            <p class="text-gray-400">Acción recomendada</p>
+                                            <p class="text-green-300 font-bold">Cargar a compras</p>
+                                        </div>
+                                    </div>
+                                    <div class="mt-4 p-4 rounded-2xl bg-sky-400/10 border border-sky-400/20">
+                                        <p class="text-sky-100 text-sm"><b>Automatización:</b> al subir un archivo, el sistema lo lee, extrae datos, valida inconsistencias, lo clasifica y prepara su carga en administración.</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- FACTURACION -->
+                        <div id="mockup-facturacion" class="mockup-panel">
+                            <div class="grid grid-cols-1 md:grid-cols-4 gap-3 mb-4">
+                                <div class="kpi-card rounded-2xl p-4"><p class="text-gray-400 text-xs">Órdenes finalizadas</p><p class="text-white text-2xl font-black">14</p></div>
+                                <div class="kpi-card rounded-2xl p-4"><p class="text-gray-400 text-xs">Facturas listas</p><p class="text-white text-2xl font-black">12</p></div>
+                                <div class="kpi-card rounded-2xl p-4"><p class="text-gray-400 text-xs">Requieren control</p><p class="text-white text-2xl font-black">2</p></div>
+                                <div class="kpi-card rounded-2xl p-4"><p class="text-gray-400 text-xs">Tiempo ahorrado</p><p class="text-white text-2xl font-black">3.5 h</p></div>
+                            </div>
+
+                            <div class="glass-card rounded-2xl p-4 border border-white/5 mb-4">
+                                <h4 class="text-sky-300 font-bold mb-3">Interfaz de facturación inteligente</h4>
+                                <div class="grid grid-cols-1 md:grid-cols-6 gap-2 text-center text-xs md:text-sm">
+                                    <div class="flow-step active rounded-xl p-3">🚗<p class="text-white font-bold">Trabajo finalizado</p></div>
+                                    <div class="flow-step active rounded-xl p-3">🧠<p class="text-white font-bold">Valida ítems</p></div>
+                                    <div class="flow-step active rounded-xl p-3">🧾<p class="text-white font-bold">Prepara factura</p></div>
+                                    <div class="flow-step active rounded-xl p-3">💳<p class="text-white font-bold">Asocia cobro</p></div>
+                                    <div class="flow-step rounded-xl p-3">📲<p class="text-white font-bold">Envía al cliente</p></div>
+                                    <div class="flow-step rounded-xl p-3">📊<p class="text-white font-bold">Actualiza tablero</p></div>
+                                </div>
+                            </div>
+
+                            <div class="glass-card rounded-2xl p-4 border border-white/5 overflow-x-auto">
+                                <h4 class="text-blue-300 font-bold mb-3">Facturas sugeridas</h4>
+                                <table class="w-full text-sm text-left">
+                                    <thead class="text-gray-400 border-b border-white/10"><tr><th class="py-2">Origen</th><th>Cliente</th><th>Servicio/Concepto</th><th>Validación</th><th>Acción</th></tr></thead>
+                                    <tbody class="text-gray-200">
+                                        <tr class="border-b border-white/5"><td class="py-3">Orden de trabajo</td><td>Transporte Norte</td><td>Alineación camión</td><td class="text-green-300">Lista</td><td>Emitir y enviar</td></tr>
+                                        <tr class="border-b border-white/5"><td class="py-3">OCR comprobante</td><td>Particular</td><td>Balanceo</td><td class="text-green-300">Lista</td><td>Asociar pago</td></tr>
+                                        <tr><td class="py-3">Presupuesto aprobado</td><td>Flota Sur</td><td>Servicio mixto</td><td class="text-amber-300">Revisar ítems</td><td>Enviar a aprobación</td></tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+
+                        <!-- CONTACTO CON EXTERNOS -->
+                        <div id="mockup-externos" class="mockup-panel">
+                            <div class="grid grid-cols-1 md:grid-cols-3 gap-3 mb-4">
+                                <div class="kpi-card rounded-2xl p-4"><p class="text-gray-400 text-xs">Clientes contactados</p><p class="text-white text-2xl font-black">148</p><p class="text-green-300 text-xs">mes actual</p></div>
+                                <div class="kpi-card rounded-2xl p-4"><p class="text-gray-400 text-xs">Proveedores contactados</p><p class="text-white text-2xl font-black">34</p><p class="text-sky-300 text-xs">pedidos y consultas</p></div>
+                                <div class="kpi-card rounded-2xl p-4"><p class="text-gray-400 text-xs">Respuestas registradas</p><p class="text-white text-2xl font-black">81%</p><p class="text-blue-300 text-xs">trazabilidad completa</p></div>
+                            </div>
+
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                <div class="glass-card rounded-2xl p-4 border border-white/5">
+                                    <h4 class="text-sky-300 font-bold mb-3">Automatización de contacto externo</h4>
+                                    <div class="space-y-2 text-sm">
+                                        <div class="p-3 rounded-xl bg-white/5 border border-white/5 text-gray-200">📲 Cliente con factura pendiente → mensaje automático personalizado.</div>
+                                        <div class="p-3 rounded-xl bg-white/5 border border-white/5 text-gray-200">📦 Stock bajo → solicitud de cotización a proveedor.</div>
+                                        <div class="p-3 rounded-xl bg-white/5 border border-white/5 text-gray-200">🚗 Trabajo finalizado → aviso al cliente con detalle y factura.</div>
+                                        <div class="p-3 rounded-xl bg-white/5 border border-white/5 text-gray-200">⭐ Servicio entregado → encuesta y pedido de reseña.</div>
+                                    </div>
+                                </div>
+
+                                <div class="glass-card rounded-2xl p-4 border border-white/5">
+                                    <h4 class="text-blue-300 font-bold mb-3">Centro de mensajes</h4>
+                                    <div class="space-y-3 text-sm">
+                                        <div class="p-4 rounded-2xl bg-green-400/10 border border-green-400/20">
+                                            <p class="text-green-100"><b>Cliente:</b> “Perfecto, paso a retirar a las 17.”</p>
+                                            <p class="text-gray-400 text-xs mt-1">Acción automática: actualizar entrega y avisar a recepción.</p>
+                                        </div>
+                                        <div class="p-4 rounded-2xl bg-sky-400/10 border border-sky-400/20">
+                                            <p class="text-sky-100"><b>Proveedor:</b> “Tenemos stock, entrega mañana.”</p>
+                                            <p class="text-gray-400 text-xs mt-1">Acción automática: crear sugerencia de compra.</p>
+                                        </div>
+                                        <div class="p-4 rounded-2xl bg-amber-400/10 border border-amber-400/20">
+                                            <p class="text-amber-100"><b>Cliente cuenta corriente:</b> sin respuesta.</p>
+                                            <p class="text-gray-400 text-xs mt-1">Acción automática: reintentar en 48 hs y escalar si no responde.</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- COBRANZAS -->
+                        <div id="mockup-cobranzas" class="mockup-panel">
+                            <div class="grid grid-cols-1 md:grid-cols-3 gap-3 mb-4">
+                                <div class="kpi-card rounded-2xl p-4"><p class="text-gray-400 text-xs">Saldo vencido</p><p class="text-white text-2xl font-black">$ 1.38M</p></div>
+                                <div class="kpi-card rounded-2xl p-4"><p class="text-gray-400 text-xs">Clientes a contactar</p><p class="text-white text-2xl font-black">18</p></div>
+                                <div class="kpi-card rounded-2xl p-4"><p class="text-gray-400 text-xs">Mensajes preparados</p><p class="text-white text-2xl font-black">18</p></div>
+                            </div>
+
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                <div class="glass-card rounded-2xl p-4 border border-white/5">
+                                    <h4 class="text-sky-300 font-bold mb-3">Interfaz de gestión de cuentas corrientes</h4>
+                                    <div class="space-y-2 text-sm">
+                                        <div class="p-3 rounded-xl bg-white/5 border border-white/5 text-gray-200">1. El sistema detecta vencimientos y saldos abiertos.</div>
+                                        <div class="p-3 rounded-xl bg-white/5 border border-white/5 text-gray-200">2. Clasifica por antigüedad, monto e historial del cliente.</div>
+                                        <div class="p-3 rounded-xl bg-white/5 border border-white/5 text-gray-200">3. Genera mensajes personalizados y adjunta documentación.</div>
+                                        <div class="p-3 rounded-xl bg-white/5 border border-white/5 text-gray-200">4. Registra respuestas y crea tareas de seguimiento.</div>
+                                    </div>
+                                </div>
+
+                                <div class="glass-card rounded-2xl p-4 border border-white/5">
+                                    <h4 class="text-blue-300 font-bold mb-3">Mensaje sugerido por IA</h4>
+                                    <div class="p-4 rounded-2xl bg-green-400/10 border border-green-400/20">
+                                        <p class="text-green-100 text-sm">Hola, buen día. Te escribimos desde administración para avisarte que figura pendiente la factura N° 0004-1842 por $86.500 correspondiente al servicio realizado. Te dejamos el comprobante y medios de pago. Cualquier diferencia, respondé este mensaje y lo revisamos.</p>
+                                    </div>
+                                    <div class="mt-3 flex flex-wrap gap-2 text-xs">
+                                        <button class="px-3 py-2 rounded-xl bg-sky-500/80 text-white font-bold">Enviar</button>
+                                        <button class="px-3 py-2 rounded-xl bg-white/10 text-gray-200 border border-white/10">Editar</button>
+                                        <button class="px-3 py-2 rounded-xl bg-amber-400/10 text-amber-200 border border-amber-400/20">Requiere aprobación</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- DISEÑADOR DE FLUJOS -->
+                        <div id="mockup-workflow" class="mockup-panel">
+                            <div class="glass-card rounded-2xl p-4 border border-white/5 mb-4">
+                                <h4 class="text-sky-300 font-bold mb-3">Diseñador visual de automatizaciones</h4>
+                                <div class="grid grid-cols-1 md:grid-cols-5 gap-3 text-center text-sm">
+                                    <div class="flow-step active rounded-2xl p-3"><span class="text-2xl">📥</span><p class="text-white font-bold mt-1">Disparador</p><p class="text-gray-400 text-xs">Archivo subido</p></div>
+                                    <div class="flow-step active rounded-2xl p-3"><span class="text-2xl">📄</span><p class="text-white font-bold mt-1">OCR</p><p class="text-gray-400 text-xs">leer datos</p></div>
+                                    <div class="flow-step active rounded-2xl p-3"><span class="text-2xl">🧠</span><p class="text-white font-bold mt-1">IA</p><p class="text-gray-400 text-xs">clasificar</p></div>
+                                    <div class="flow-step rounded-2xl p-3"><span class="text-2xl">✅</span><p class="text-white font-bold mt-1">Regla</p><p class="text-gray-400 text-xs">validar monto</p></div>
+                                    <div class="flow-step rounded-2xl p-3"><span class="text-2xl">⚡</span><p class="text-white font-bold mt-1">Acción</p><p class="text-gray-400 text-xs">cargar / avisar</p></div>
+                                </div>
+                            </div>
+
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                <div class="glass-card rounded-2xl p-4 border border-white/5">
+                                    <h4 class="text-blue-300 font-bold mb-3">Flujos prearmados</h4>
+                                    <div class="space-y-2 text-sm">
+                                        <div class="p-3 rounded-xl bg-white/5 border border-white/5 text-gray-200">📄 Factura proveedor → OCR → compras → cuenta corriente.</div>
+                                        <div class="p-3 rounded-xl bg-white/5 border border-white/5 text-gray-200">🚗 Trabajo finalizado → factura → WhatsApp → tablero.</div>
+                                        <div class="p-3 rounded-xl bg-white/5 border border-white/5 text-gray-200">📦 Stock bajo → pedido proveedor → aprobación compra.</div>
+                                        <div class="p-3 rounded-xl bg-white/5 border border-white/5 text-gray-200">💳 Movimiento banco → conciliación → alerta de diferencia.</div>
+                                    </div>
+                                </div>
+
+                                <div class="glass-card rounded-2xl p-4 border border-white/5">
+                                    <h4 class="text-sky-300 font-bold mb-3">Reglas de negocio</h4>
+                                    <div class="space-y-2 text-sm">
+                                        <div class="p-3 rounded-xl bg-green-400/10 border border-green-400/20 text-green-100">Si el monto coincide → aprobar automáticamente.</div>
+                                        <div class="p-3 rounded-xl bg-amber-400/10 border border-amber-400/20 text-amber-100">Si hay diferencia mayor al 3% → pedir revisión.</div>
+                                        <div class="p-3 rounded-xl bg-sky-400/10 border border-sky-400/20 text-sky-100">Si el proveedor no responde → reintentar en 24 hs.</div>
+                                        <div class="p-3 rounded-xl bg-blue-400/10 border border-blue-400/20 text-blue-100">Si el cliente confirma → actualizar estado y calendario.</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- APROBACIONES -->
+                        <div id="mockup-aprobaciones" class="mockup-panel">
+                            <div class="grid grid-cols-1 md:grid-cols-3 gap-3 mb-4">
+                                <div class="kpi-card rounded-2xl p-4"><p class="text-gray-400 text-xs">Pendientes</p><p class="text-white text-2xl font-black">9</p></div>
+                                <div class="kpi-card rounded-2xl p-4"><p class="text-gray-400 text-xs">Críticas</p><p class="text-white text-2xl font-black">3</p></div>
+                                <div class="kpi-card rounded-2xl p-4"><p class="text-gray-400 text-xs">Aprobadas hoy</p><p class="text-white text-2xl font-black">21</p></div>
+                            </div>
+
+                            <div class="glass-card rounded-2xl p-4 border border-white/5 overflow-x-auto">
+                                <h4 class="text-sky-300 font-bold mb-3">Bandeja de validación humana</h4>
+                                <table class="w-full text-sm text-left">
+                                    <thead class="text-gray-400 border-b border-white/10"><tr><th class="py-2">Caso</th><th>Motivo</th><th>Riesgo</th><th>Recomendación IA</th><th>Acción</th></tr></thead>
+                                    <tbody class="text-gray-200">
+                                        <tr class="border-b border-white/5"><td class="py-3">Compra proveedor</td><td>Monto superior al promedio</td><td class="text-amber-300">Medio</td><td>Solicitar segunda cotización</td><td>Aprobar / rechazar</td></tr>
+                                        <tr class="border-b border-white/5"><td class="py-3">Factura cliente</td><td>Diferencia en ítems</td><td class="text-red-300">Alto</td><td>Revisar orden de trabajo</td><td>Derivar a admin</td></tr>
+                                        <tr><td class="py-3">Cuenta corriente</td><td>Cliente frecuente vencido</td><td class="text-sky-300">Bajo</td><td>Enviar recordatorio amable</td><td>Enviar</td></tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+
+                        <!-- TABLERO -->
+                        <div id="mockup-tablero" class="mockup-panel">
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                <div class="glass-card rounded-2xl p-4 border border-white/5">
+                                    <h4 class="text-sky-300 font-bold mb-3">Indicadores de eficiencia administrativa</h4>
+                                    <div class="space-y-3 text-sm">
+                                        <div><div class="flex justify-between text-gray-300 mb-1"><span>Carga manual reducida</span><span>68%</span></div><div class="mini-bar"><span style="width:68%"></span></div></div>
+                                        <div><div class="flex justify-between text-gray-300 mb-1"><span>Documentos clasificados automáticamente</span><span>91%</span></div><div class="mini-bar"><span style="width:91%"></span></div></div>
+                                        <div><div class="flex justify-between text-gray-300 mb-1"><span>Contactos externos automatizados</span><span>74%</span></div><div class="mini-bar"><span style="width:74%"></span></div></div>
+                                        <div><div class="flex justify-between text-gray-300 mb-1"><span>Procesos con trazabilidad completa</span><span>83%</span></div><div class="mini-bar"><span style="width:83%"></span></div></div>
+                                    </div>
+                                </div>
+
+                                <div class="glass-card rounded-2xl p-4 border border-white/5">
+                                    <h4 class="text-blue-300 font-bold mb-3">Informe gerencial automático</h4>
+                                    <div class="bg-white/5 rounded-2xl p-4 border border-white/5">
+                                        <p class="text-gray-400 text-xs mb-2">Resumen generado</p>
+                                        <p class="text-sky-100 text-sm">Hoy el principal ahorro operativo se generó por lectura automática de comprobantes y facturación desde órdenes finalizadas. Se recomienda revisar 3 aprobaciones críticas, activar cobranza de 18 cuentas vencidas y solicitar reposición a 4 proveedores por stock bajo.</p>
+                                    </div>
+                                    <div class="mt-3 flex flex-wrap gap-2 text-xs">
+                                        <button class="px-3 py-2 rounded-xl bg-sky-500/80 text-white font-bold">Enviar a dirección</button>
+                                        <button class="px-3 py-2 rounded-xl bg-white/10 text-gray-200 border border-white/10">Descargar PDF</button>
+                                        <button class="px-3 py-2 rounded-xl bg-white/10 text-gray-200 border border-white/10">Ver detalle</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </main>
+                </div>
+            </div>
+
+            <p class="text-gray-500 text-center text-xs md:text-sm mt-4">Maqueta demostrativa. Los datos son simulados y las interfaces se adaptarían a los procesos reales de la empresa, integrando ERP actual, archivos, canales de contacto, reglas internas y tableros gerenciales.</p>
+        </div>
+    </section>
+
 
     <script>
         let current = 0;
@@ -592,6 +967,18 @@
                 else changeSlide(-1);
             }
         });
+
+
+        function showMockupPanel(panelName) {
+            const panels = document.querySelectorAll('.mockup-panel');
+            const tabs = document.querySelectorAll('.mockup-tab');
+            panels.forEach(panel => panel.classList.remove('active'));
+            tabs.forEach(tab => tab.classList.remove('active'));
+            const selected = document.getElementById('mockup-' + panelName);
+            if (selected) selected.classList.add('active');
+            const clicked = Array.from(tabs).find(tab => tab.getAttribute('onclick') && tab.getAttribute('onclick').includes("'" + panelName + "'"));
+            if (clicked) clicked.classList.add('active');
+        }
 
         lucide.createIcons();
     </script>
