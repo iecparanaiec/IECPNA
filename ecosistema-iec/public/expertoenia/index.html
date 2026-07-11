@@ -112,15 +112,15 @@
     };
 
     const classes = [
-      { roman:"0", title:"Clase Bonus · Acceso a Google", subtitle:"Creación, ingreso y organización de las cuentas de Google", icon:"key-round", href:"./clase_0.html" },
-      { roman:"I", title:"Inteligencia Artificial: Tu Mejor Aliada", subtitle:"Introducción, evolución tecnológica, aplicaciones y primeros pasos", icon:"brain-circuit", href:"./clase_1.html", video:"https://canva.link/dfl392m7639dcwp", videoLabel:"Ver presentación" },
-      { roman:"II", title:"Introducción a ChatGPT", subtitle:"Interfaz, comunicación, archivos, prompts e implementación laboral", icon:"message-square-text", href:"./clase_2.html", video:"https://www.youtube.com/watch?v=lylT_xg0z5w" },
-      { roman:"III", title:"Emprendimiento con IA", subtitle:"Creación integral de un emprendimiento y desarrollo web", icon:"rocket", href:"./clase_3.html", video:"https://www.youtube.com/watch?v=Jmr3BDUPOXQ" },
-      { roman:"IV", title:"Canva IA y Diseño Inteligente", subtitle:"Contenido editable, presentaciones, formularios y códigos QR", icon:"palette", href:"./clase_4.html", video:"https://www.youtube.com/watch?v=KBL08u6Qf34" },
-      { roman:"V", title:"NotebookLM y Fuentes Confiables", subtitle:"Investigación, fuentes, chat, estudio y resúmenes de audio", icon:"notebook-tabs", href:"./clase_5.html", video:"https://www.youtube.com/watch?v=Mn9r07wJjbc" },
-      { roman:"VI", title:"Ingeniería de Prompts y AI Studio Live", subtitle:"JSON, prompts profesionales, voz y pantalla compartida", icon:"braces", href:"./clase_6.html", video:"https://www.youtube.com/watch?v=K1_UCUmB-m8" },
-      { roman:"VII", title:"Creación de Guías y Agentes", subtitle:"Google AI Studio, instrucciones de sistema y prototipado", icon:"bot", href:"./clase_7.html", video:"https://www.youtube.com/watch?v=7cQzTj2Waig" },
-      { roman:"VIII", title:"Proyecto Final Integrador", subtitle:"Integración de las diez herramientas en una solución completa", icon:"trophy", href:"./clase_8.html" }
+      { roman:"0", title:"Clase Bonus · Acceso a Google", subtitle:"Creación, ingreso y organización de las cuentas de Google", icon:"key-round", href:"/expertoenia/clase_0.html" },
+      { roman:"I", title:"Inteligencia Artificial: Tu Mejor Aliada", subtitle:"Introducción, evolución tecnológica, aplicaciones y primeros pasos", icon:"brain-circuit", href:"https://canva.link/dfl392m7639dcwp", video:"https://canva.link/dfl392m7639dcwp", videoLabel:"Ver presentación" },
+      { roman:"II", title:"Introducción a ChatGPT", subtitle:"Interfaz, comunicación, archivos, prompts e implementación laboral", icon:"message-square-text", href:"/expertoenia/clase_2.html", video:"https://www.youtube.com/watch?v=lylT_xg0z5w" },
+      { roman:"III", title:"Emprendimiento con IA", subtitle:"Creación integral de un emprendimiento y desarrollo web", icon:"rocket", href:"/expertoenia/clase_3.html", video:"https://www.youtube.com/watch?v=Jmr3BDUPOXQ" },
+      { roman:"IV", title:"Canva IA y Diseño Inteligente", subtitle:"Contenido editable, presentaciones, formularios y códigos QR", icon:"palette", href:"/expertoenia/clase_4.html", video:"https://www.youtube.com/watch?v=KBL08u6Qf34" },
+      { roman:"V", title:"NotebookLM y Fuentes Confiables", subtitle:"Investigación, fuentes, chat, estudio y resúmenes de audio", icon:"notebook-tabs", href:"/expertoenia/clase_5.html", video:"https://www.youtube.com/watch?v=Mn9r07wJjbc" },
+      { roman:"VI", title:"Ingeniería de Prompts y AI Studio Live", subtitle:"JSON, prompts profesionales, voz y pantalla compartida", icon:"braces", href:"/expertoenia/clase_6.html", video:"https://www.youtube.com/watch?v=K1_UCUmB-m8" },
+      { roman:"VII", title:"Creación de Guías y Agentes", subtitle:"Google AI Studio, instrucciones de sistema y prototipado", icon:"bot", href:"/expertoenia/clase_7.html", video:"https://www.youtube.com/watch?v=7cQzTj2Waig" },
+      { roman:"VIII", title:"Proyecto Final Integrador", subtitle:"Integración de las diez herramientas en una solución completa", icon:"trophy", href:"/expertoenia/clase_8.html" }
     ];
 
     const splash = document.getElementById("splash");
@@ -137,9 +137,11 @@
     function renderClasses(){
       const list=document.getElementById("class-list");
       list.innerHTML=classes.map(c=>{
-        const main = `<a href="${c.href}" class="text-left min-w-0 flex-1"><h2 class="text-white font-black text-base md:text-lg group-hover:text-sky-200 transition">${c.title}</h2><p class="text-gray-400 text-xs md:text-sm mt-1">${c.subtitle}</p></a>`;
+        const externalClass = /^https?:\/\//i.test(c.href);
+        const classTarget = externalClass ? ' target="_blank" rel="noopener noreferrer"' : '';
+        const main = `<a href="${c.href}"${classTarget} class="text-left min-w-0 flex-1"><h2 class="text-white font-black text-base md:text-lg group-hover:text-sky-200 transition">${c.title}</h2><p class="text-gray-400 text-xs md:text-sm mt-1">${c.subtitle}</p></a>`;
         const video = c.video ? `<a href="${c.video}" target="_blank" rel="noopener" class="w-10 h-10 rounded-xl bg-red-500/12 hover:bg-red-500/22 border border-red-400/20 text-red-300 flex items-center justify-center transition" title="${c.videoLabel || 'Ver tutorial'}" aria-label="${c.videoLabel || 'Ver tutorial'}"><i data-lucide="play" class="w-4 h-4 fill-current"></i></a>` : '';
-        return `<article class="class-card group glass rounded-2xl p-4 flex items-center gap-3 md:gap-4"><div class="roman">${c.roman}</div><div class="w-9 h-9 rounded-xl bg-white/5 flex items-center justify-center text-sky-300 hidden sm:flex"><i data-lucide="${c.icon}" class="w-5 h-5"></i></div>${main}<div class="flex gap-2 flex-none">${video}<a href="${c.href}" class="w-10 h-10 rounded-xl bg-sky-500/15 hover:bg-sky-500/25 border border-sky-400/20 text-sky-300 flex items-center justify-center transition" title="Abrir clase" aria-label="Abrir ${c.title}"><i data-lucide="arrow-up-right" class="w-4 h-4"></i></a></div></article>`;
+        return `<article class="class-card group glass rounded-2xl p-4 flex items-center gap-3 md:gap-4"><div class="roman">${c.roman}</div><div class="w-9 h-9 rounded-xl bg-white/5 flex items-center justify-center text-sky-300 hidden sm:flex"><i data-lucide="${c.icon}" class="w-5 h-5"></i></div>${main}<div class="flex gap-2 flex-none">${video}<a href="${c.href}"${classTarget} class="w-10 h-10 rounded-xl bg-sky-500/15 hover:bg-sky-500/25 border border-sky-400/20 text-sky-300 flex items-center justify-center transition" title="Abrir clase" aria-label="Abrir ${c.title}"><i data-lucide="arrow-up-right" class="w-4 h-4"></i></a></div></article>`;
       }).join("");
     }
 
