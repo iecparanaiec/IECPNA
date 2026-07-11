@@ -1,0 +1,872 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Clase 1 del curso Experto en Aplicaciones Prácticas con IA del Instituto IEC." />
+  <title>Clase 1 · Inteligencia Artificial: Tu Mejor Aliada | Instituto IEC</title>
+  <script src="https://cdn.tailwindcss.com/3.4.17"></script>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
+  <script src="https://cdn.jsdelivr.net/npm/lucide@0.263.0/dist/umd/lucide.min.js"></script>
+  <style>
+    *{box-sizing:border-box;font-family:"DM Sans",sans-serif}
+    html,body{margin:0;width:100%;min-height:100%;background:#0a0e1a}
+    body{overflow:hidden}
+    .slide{display:none;width:100%;min-height:100vh;height:100vh;overflow-y:auto;padding:2rem 1.5rem 6.5rem;scroll-behavior:smooth}
+    .slide.active{display:flex;animation:slideIn .35s ease-out;-webkit-overflow-scrolling:touch}
+    @keyframes slideIn{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
+    .glass-card{background:rgba(255,255,255,.075);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border:1px solid rgba(255,255,255,.12);box-shadow:0 18px 45px rgba(0,0,0,.18)}
+    .gradient-text{background:linear-gradient(135deg,#38bdf8,#818cf8);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
+    .bg-pattern{background-image:radial-gradient(circle at 20% 45%,rgba(56,189,248,.07) 0%,transparent 42%),radial-gradient(circle at 82% 78%,rgba(129,140,248,.07) 0%,transparent 42%)}
+    .dot.active{background:#38bdf8;transform:scale(1.3);box-shadow:0 0 12px rgba(56,189,248,.75)}
+    .nav-button:disabled{opacity:.35;cursor:not-allowed}
+    .prompt-box{background:rgba(15,26,46,.92);border:1px solid rgba(56,189,248,.28);box-shadow:inset 0 0 30px rgba(56,189,248,.03)}
+    .flow-arrow{color:#38bdf8}
+    @media(max-width:640px){.slide{padding:1.2rem .8rem 7rem}.text-7xl{font-size:2.65rem!important}.text-6xl{font-size:2.35rem!important}.text-5xl{font-size:2rem!important}.text-4xl{font-size:1.72rem!important}.text-3xl{font-size:1.42rem!important}}
+    @media print{
+      @page{size:A4;margin:14mm}
+      html,body{background:#fff!important;color:#111!important;overflow:visible!important}
+      body{display:block!important}
+      #progress-wrap,#prev-btn,#next-btn,#footer-nav,#print-button,#back-button{display:none!important}
+      .slide,.slide.active{display:block!important;width:100%!important;min-height:auto!important;height:auto!important;overflow:visible!important;padding:0!important;margin:0 0 14mm 0!important;background:#fff!important;color:#111!important;page-break-after:always;break-after:page;animation:none!important}
+      .slide:last-of-type{page-break-after:auto;break-after:auto}
+      .slide>.absolute{display:none!important}
+      .slide>.relative{position:relative!important;z-index:1!important}
+      .glass-card,.prompt-box,.bg-white\/5,.bg-black\/25,[class*="bg-sky-"],[class*="bg-indigo-"],[class*="bg-emerald-"],[class*="bg-amber-"],[class*="bg-red-"]{background:#fff!important;box-shadow:none!important}
+      .glass-card,.prompt-box,[class*="border-white"],[class*="border-sky"],[class*="border-indigo"],[class*="border-emerald"],[class*="border-amber"],[class*="border-red"]{border-color:#cbd5e1!important}
+      .text-white,.text-gray-100,.text-gray-200,.text-gray-300,.text-gray-400,.text-gray-500{color:#111827!important}
+      .text-sky-300{color:#0369a1!important}.text-indigo-300{color:#4338ca!important}.text-emerald-300{color:#047857!important}.text-amber-300{color:#b45309!important}.text-red-300{color:#b91c1c!important}
+      .gradient-text{background:none!important;-webkit-text-fill-color:#0f172a!important;color:#0f172a!important}
+      button{display:none!important} img{filter:none!important}
+    }
+  </style>
+</head>
+<body class="relative bg-[#0a0e1a]">
+  <div id="progress-wrap" class="fixed top-0 left-0 right-0 z-[70] h-1 bg-white/5"><div id="progress-bar" class="h-full bg-gradient-to-r from-sky-400 to-indigo-400 transition-all duration-300" style="width:0%"></div></div>
+  <a id="back-button" href="index.html" class="fixed top-4 left-4 z-[80] px-4 py-2 rounded-xl bg-white/10 hover:bg-white/20 backdrop-blur border border-white/10 text-white text-xs md:text-sm font-bold flex items-center gap-2 transition"><i data-lucide="arrow-left" class="w-4 h-4"></i>Volver al menú</a>
+  <button id="print-button" class="fixed top-4 right-4 z-[80] px-4 py-2 rounded-xl bg-white/10 hover:bg-white/20 backdrop-blur border border-white/10 text-white text-xs md:text-sm font-bold flex items-center gap-2 transition" onclick="window.print()"><i data-lucide="printer" class="w-4 h-4"></i>Imprimir manual</button>
+  <button id="prev-btn" class="nav-button fixed left-2 md:left-5 top-1/2 -translate-y-1/2 z-50 bg-white/10 hover:bg-white/20 backdrop-blur border border-white/10 rounded-full w-10 h-10 md:w-12 md:h-12 flex items-center justify-center transition text-white" onclick="changeSlide(-1)"><i data-lucide="chevron-left"></i></button>
+  <button id="next-btn" class="nav-button fixed right-2 md:right-5 top-1/2 -translate-y-1/2 z-50 bg-white/10 hover:bg-white/20 backdrop-blur border border-white/10 rounded-full w-10 h-10 md:w-12 md:h-12 flex items-center justify-center transition text-white" onclick="changeSlide(1)"><i data-lucide="chevron-right"></i></button>
+  <div id="footer-nav" class="fixed bottom-3 left-1/2 -translate-x-1/2 z-50 flex flex-col items-center gap-2 w-[92%] max-w-4xl"><div id="dots" class="flex gap-1.5 md:gap-2 flex-wrap justify-center px-2"></div><div class="px-3 py-1 rounded-full bg-black/30 border border-white/10 text-[10px] md:text-xs text-gray-300"><span id="current-number">1</span> / <span id="total-number">34</span></div></div>
+  <section class="slide active flex-col items-center justify-center bg-gradient-to-br from-[#0a0e1a] via-[#0f1a2e] to-[#0a0e1a] relative overflow-hidden">
+      <div class="absolute inset-0 bg-pattern opacity-60"></div>
+      <div class="relative z-10 max-w-5xl mx-auto w-full px-4">
+        
+  <div class="text-center">
+    <img src="https://i.postimg.cc/jSkQKpRK/Diseno-sin-titulo-2026-05-15T105828-195.png"
+      alt="Instituto IEC" class="h-14 md:h-20 lg:h-24 mx-auto mb-5 object-contain" />
+    <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-sky-400/30 bg-sky-400/10 text-sky-300 text-xs md:text-sm font-bold tracking-wider mb-5">
+      <span>🤖</span> EXPERTO EN APLICACIONES PRÁCTICAS CON IA
+    </div>
+    <p class="text-sky-300 text-sm md:text-lg font-bold tracking-[.2em] uppercase mb-2">Clase 1</p>
+    <h1 class="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-black text-white leading-tight mb-4">
+      INTELIGENCIA ARTIFICIAL:<br><span class="gradient-text">TU MEJOR ALIADA</span>
+    </h1>
+    <p class="text-base md:text-xl text-gray-300 max-w-3xl mx-auto mb-6">
+      Un recorrido desde la electricidad y la electrónica hasta la IA, sus oportunidades, desafíos y primeras aplicaciones prácticas.
+    </p>
+    <div class="glass-card rounded-2xl p-5 max-w-3xl mx-auto">
+      <p class="text-gray-200 text-sm md:text-lg">Comprender de dónde viene la tecnología nos ayuda a usarla con criterio, confianza y responsabilidad.</p>
+    </div>
+  </div>
+
+      </div>
+    </section>
+<section class="slide flex-col items-center justify-center bg-gradient-to-b from-[#0a0e1a] to-[#0f1a2e] relative overflow-hidden">
+      <div class="absolute inset-0 bg-pattern opacity-60"></div>
+      <div class="relative z-10 max-w-5xl mx-auto w-full px-4">
+        
+  <h2 class="text-3xl md:text-5xl font-black text-white mb-5">¿QUÉ VAS A <span class="gradient-text">APRENDER?</span></h2>
+  <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+    <div class="glass-card rounded-2xl p-5 text-center">
+      <span class="text-4xl">⚡</span>
+      <h3 class="text-white font-black mt-3">Comprender la evolución tecnológica</h3>
+      <p class="text-gray-300 text-sm mt-2">Desde la electricidad hasta los microprocesadores.</p>
+    </div><div class="glass-card rounded-2xl p-5 text-center">
+      <span class="text-4xl">🤖</span>
+      <h3 class="text-white font-black mt-3">Entender qué es la IA</h3>
+      <p class="text-gray-300 text-sm mt-2">Conceptos básicos explicados con lenguaje sencillo.</p>
+    </div><div class="glass-card rounded-2xl p-5 text-center">
+      <span class="text-4xl">🧠</span>
+      <h3 class="text-white font-black mt-3">Conocer redes neuronales</h3>
+      <p class="text-gray-300 text-sm mt-2">Cómo aprenden a reconocer patrones.</p>
+    </div><div class="glass-card rounded-2xl p-5 text-center">
+      <span class="text-4xl">⚖️</span>
+      <h3 class="text-white font-black mt-3">Analizar oportunidades y riesgos</h3>
+      <p class="text-gray-300 text-sm mt-2">Beneficios, amenazas, ética y responsabilidad.</p>
+    </div><div class="glass-card rounded-2xl p-5 text-center">
+      <span class="text-4xl">🏥</span>
+      <h3 class="text-white font-black mt-3">Reconocer aplicaciones</h3>
+      <p class="text-gray-300 text-sm mt-2">Educación, medicina, empresas y vida cotidiana.</p>
+    </div><div class="glass-card rounded-2xl p-5 text-center">
+      <span class="text-4xl">💬</span>
+      <h3 class="text-white font-black mt-3">Dar los primeros pasos</h3>
+      <p class="text-gray-300 text-sm mt-2">Ingresar a ChatGPT y comenzar a investigar.</p>
+    </div>
+  </div>
+
+      </div>
+    </section>
+<section class="slide flex-col items-center justify-center bg-gradient-to-b from-[#0a0e1a] to-[#0f1a2e] relative overflow-hidden">
+      <div class="absolute inset-0 bg-pattern opacity-60"></div>
+      <div class="relative z-10 max-w-5xl mx-auto w-full px-4">
+        
+  <p class="text-sky-300 font-bold uppercase tracking-wider mb-2">El punto de partida</p>
+  <h2 class="text-3xl md:text-5xl font-black text-white mb-5">EL ÁTOMO: <span class="gradient-text">UNIDAD BÁSICA DE LA MATERIA</span></h2>
+  <div class="grid grid-cols-1 md:grid-cols-2 gap-5 items-center">
+    <div class="glass-card rounded-3xl p-6">
+      <div class="space-y-3 text-gray-200">
+        <p>• Los protones tienen carga positiva.</p>
+        <p>• Los neutrones no tienen carga.</p>
+        <p>• Los electrones tienen carga negativa.</p>
+        <p>• El núcleo contiene protones y neutrones.</p>
+        <p>• Los electrones se desplazan alrededor del núcleo.</p>
+      </div>
+    </div>
+    <div class="glass-card rounded-3xl p-8 text-center">
+      <div class="text-7xl mb-4">⚛️</div>
+      <p class="text-white font-black text-xl">La tecnología moderna comienza con el control de fenómenos físicos muy pequeños.</p>
+    </div>
+  </div>
+
+      </div>
+    </section>
+<section class="slide flex-col items-center justify-center bg-gradient-to-b from-[#0a0e1a] to-[#0f1a2e] relative overflow-hidden">
+      <div class="absolute inset-0 bg-pattern opacity-60"></div>
+      <div class="relative z-10 max-w-5xl mx-auto w-full px-4">
+        
+  <h2 class="text-3xl md:text-5xl font-black text-white mb-5">¿QUÉ ES LA <span class="gradient-text">ELECTRICIDAD?</span></h2>
+  <div class="glass-card rounded-3xl p-6 md:p-8 mb-5">
+    <p class="text-gray-200 text-lg md:text-2xl leading-relaxed">Es el movimiento de electrones a través de un conductor. Una fuente de energía impulsa ese movimiento y permite alimentar dispositivos.</p>
+  </div>
+  <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+    <div class="glass-card rounded-2xl p-5 text-center">
+      <span class="text-4xl">🔋</span>
+      <h3 class="text-white font-black mt-3">Fuente</h3>
+      <p class="text-gray-300 text-sm mt-2">Entrega energía al circuito.</p>
+    </div><div class="glass-card rounded-2xl p-5 text-center">
+      <span class="text-4xl">🔌</span>
+      <h3 class="text-white font-black mt-3">Conductor</h3>
+      <p class="text-gray-300 text-sm mt-2">Permite el movimiento de electrones.</p>
+    </div><div class="glass-card rounded-2xl p-5 text-center">
+      <span class="text-4xl">💡</span>
+      <h3 class="text-white font-black mt-3">Dispositivo</h3>
+      <p class="text-gray-300 text-sm mt-2">Transforma la energía en una función útil.</p>
+    </div>
+  </div>
+
+      </div>
+    </section>
+<section class="slide flex-col items-center justify-center bg-gradient-to-b from-[#0a0e1a] to-[#0f1a2e] relative overflow-hidden">
+      <div class="absolute inset-0 bg-pattern opacity-60"></div>
+      <div class="relative z-10 max-w-5xl mx-auto w-full px-4">
+        
+  <h2 class="text-3xl md:text-5xl font-black text-white mb-5">LA REVOLUCIÓN DE LA <span class="gradient-text">LUZ</span></h2>
+  <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+    <div class="glass-card rounded-3xl p-6">
+      <span class="text-6xl">💡</span>
+      <h3 class="text-white font-black text-2xl mt-4">La bombilla eléctrica</h3>
+      <p class="text-gray-300 mt-3">Cambió ciudades, hogares, horarios de trabajo y formas de producción.</p>
+    </div>
+    <div class="space-y-3">
+      <div class="glass-card rounded-xl p-4"><p class="text-white font-bold">Más seguridad</p><p class="text-gray-300 text-sm mt-1">Permitió iluminar espacios públicos y privados.</p></div>
+      <div class="glass-card rounded-xl p-4"><p class="text-white font-bold">Más productividad</p><p class="text-gray-300 text-sm mt-1">Amplió las posibilidades de trabajo y estudio.</p></div>
+      <div class="glass-card rounded-xl p-4"><p class="text-white font-bold">Nuevas industrias</p><p class="text-gray-300 text-sm mt-1">Aceleró la modernización tecnológica.</p></div>
+    </div>
+  </div>
+
+      </div>
+    </section>
+<section class="slide flex-col items-center justify-center bg-gradient-to-b from-[#0a0e1a] to-[#0f1a2e] relative overflow-hidden">
+      <div class="absolute inset-0 bg-pattern opacity-60"></div>
+      <div class="relative z-10 max-w-5xl mx-auto w-full px-4">
+        
+  <h2 class="text-3xl md:text-5xl font-black text-white mb-5">LOS PRIMEROS AVANCES <span class="gradient-text">ELECTRÓNICOS</span></h2>
+  <p class="text-gray-300 mb-5">Entre fines del siglo XIX y mediados del XX aparecieron componentes capaces de controlar la electricidad.</p>
+  <div class="grid grid-cols-2 md:grid-cols-5 gap-3">
+    <div class="glass-card rounded-2xl p-5 text-center">
+      <span class="text-4xl">〰️</span>
+      <h3 class="text-white font-black mt-3">Resistencias</h3>
+      <p class="text-gray-300 text-sm mt-2">Limitan corriente.</p>
+    </div><div class="glass-card rounded-2xl p-5 text-center">
+      <span class="text-4xl">🔋</span>
+      <h3 class="text-white font-black mt-3">Capacitores</h3>
+      <p class="text-gray-300 text-sm mt-2">Almacenan carga.</p>
+    </div><div class="glass-card rounded-2xl p-5 text-center">
+      <span class="text-4xl">➡️</span>
+      <h3 class="text-white font-black mt-3">Diodos</h3>
+      <p class="text-gray-300 text-sm mt-2">Dirigen corriente.</p>
+    </div><div class="glass-card rounded-2xl p-5 text-center">
+      <span class="text-4xl">🌀</span>
+      <h3 class="text-white font-black mt-3">Bobinas</h3>
+      <p class="text-gray-300 text-sm mt-2">Generan campos.</p>
+    </div><div class="glass-card rounded-2xl p-5 text-center">
+      <span class="text-4xl">📻</span>
+      <h3 class="text-white font-black mt-3">Válvulas</h3>
+      <p class="text-gray-300 text-sm mt-2">Amplifican señales.</p>
+    </div>
+  </div>
+
+      </div>
+    </section>
+<section class="slide flex-col items-center justify-center bg-gradient-to-b from-[#0a0e1a] to-[#0f1a2e] relative overflow-hidden">
+      <div class="absolute inset-0 bg-pattern opacity-60"></div>
+      <div class="relative z-10 max-w-5xl mx-auto w-full px-4">
+        
+  <h2 class="text-3xl md:text-5xl font-black text-white mb-5">EL TRANSISTOR: <span class="gradient-text">MOTOR DE LA NUEVA ERA</span></h2>
+  <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+    <div class="glass-card rounded-3xl p-7 text-center">
+      <span class="text-7xl">🔺</span>
+      <p class="text-white font-black text-xl mt-4">Pequeño componente capaz de controlar y amplificar señales eléctricas.</p>
+    </div>
+    <div class="space-y-3">
+      <div class="glass-card rounded-xl p-4 text-gray-200">Más pequeño que las válvulas.</div>
+      <div class="glass-card rounded-xl p-4 text-gray-200">Más eficiente y duradero.</div>
+      <div class="glass-card rounded-xl p-4 text-gray-200">Permitió miniaturizar circuitos.</div>
+      <div class="glass-card rounded-xl p-4 text-gray-200">Hizo posible la electrónica moderna.</div>
+    </div>
+  </div>
+
+      </div>
+    </section>
+<section class="slide flex-col items-center justify-center bg-gradient-to-b from-[#0a0e1a] to-[#0f1a2e] relative overflow-hidden">
+      <div class="absolute inset-0 bg-pattern opacity-60"></div>
+      <div class="relative z-10 max-w-5xl mx-auto w-full px-4">
+        
+  <h2 class="text-3xl md:text-5xl font-black text-white mb-5">MICROCONTROLADORES: <span class="gradient-text">CEREBROS ELECTRÓNICOS</span></h2>
+  <div class="glass-card rounded-3xl p-6 md:p-8 mb-5">
+    <p class="text-gray-200 text-lg md:text-xl">Con los circuitos integrados aparecieron dispositivos pequeños capaces de procesar datos, ejecutar instrucciones y controlar máquinas.</p>
+  </div>
+  <div class="grid grid-cols-2 md:grid-cols-4 gap-3">
+    <div class="glass-card rounded-2xl p-5 text-center">
+      <span class="text-4xl">🚗</span>
+      <h3 class="text-white font-black mt-3">Automóviles</h3>
+      <p class="text-gray-300 text-sm mt-2">Controlan sistemas internos.</p>
+    </div><div class="glass-card rounded-2xl p-5 text-center">
+      <span class="text-4xl">🏠</span>
+      <h3 class="text-white font-black mt-3">Hogar</h3>
+      <p class="text-gray-300 text-sm mt-2">Automatizan electrodomésticos.</p>
+    </div><div class="glass-card rounded-2xl p-5 text-center">
+      <span class="text-4xl">🏭</span>
+      <h3 class="text-white font-black mt-3">Industria</h3>
+      <p class="text-gray-300 text-sm mt-2">Gestionan máquinas y sensores.</p>
+    </div><div class="glass-card rounded-2xl p-5 text-center">
+      <span class="text-4xl">🤖</span>
+      <h3 class="text-white font-black mt-3">Robótica</h3>
+      <p class="text-gray-300 text-sm mt-2">Coordinan movimientos y decisiones.</p>
+    </div>
+  </div>
+
+      </div>
+    </section>
+<section class="slide flex-col items-center justify-center bg-gradient-to-b from-[#0a0e1a] to-[#0f1a2e] relative overflow-hidden">
+      <div class="absolute inset-0 bg-pattern opacity-60"></div>
+      <div class="relative z-10 max-w-5xl mx-auto w-full px-4">
+        
+  <h2 class="text-3xl md:text-5xl font-black text-white mb-5">MICROPROCESADORES: <span class="gradient-text">EL CEREBRO DIGITAL</span></h2>
+  <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+    <div class="glass-card rounded-3xl p-7 text-center"><span class="text-7xl">🧠</span><h3 class="text-white font-black text-2xl mt-4">Millones de transistores en un chip</h3></div>
+    <div class="glass-card rounded-3xl p-6">
+      <p class="text-gray-300 leading-relaxed">Ejecutan instrucciones, procesan datos y hacen posibles computadoras, teléfonos inteligentes y sistemas avanzados.</p>
+      <div class="mt-4 p-4 bg-sky-400/10 border border-sky-400/20 rounded-xl text-sky-300 font-bold">Sin microprocesadores no existiría la IA moderna.</div>
+    </div>
+  </div>
+
+      </div>
+    </section>
+<section class="slide flex-col items-center justify-center bg-gradient-to-b from-[#0a0e1a] to-[#0f1a2e] relative overflow-hidden">
+      <div class="absolute inset-0 bg-pattern opacity-60"></div>
+      <div class="relative z-10 max-w-5xl mx-auto w-full px-4">
+        
+  <h2 class="text-3xl md:text-5xl font-black text-white mb-5">LA IA: LA PRÓXIMA GRAN <span class="gradient-text">REVOLUCIÓN</span></h2>
+  <div class="glass-card rounded-3xl p-7 text-center mb-5">
+    <p class="text-white text-xl md:text-3xl font-black">Así como la electricidad y el transistor transformaron sus épocas, la IA está cambiando la nuestra.</p>
+  </div>
+  <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+    <div class="glass-card rounded-2xl p-5 text-center">
+      <span class="text-4xl">⚙️</span>
+      <h3 class="text-white font-black mt-3">Automatización</h3>
+      <p class="text-gray-300 text-sm mt-2">Realizar tareas con menos intervención manual.</p>
+    </div><div class="glass-card rounded-2xl p-5 text-center">
+      <span class="text-4xl">📈</span>
+      <h3 class="text-white font-black mt-3">Eficiencia</h3>
+      <p class="text-gray-300 text-sm mt-2">Procesar información a gran velocidad.</p>
+    </div><div class="glass-card rounded-2xl p-5 text-center">
+      <span class="text-4xl">🌍</span>
+      <h3 class="text-white font-black mt-3">Transformación</h3>
+      <p class="text-gray-300 text-sm mt-2">Cambiar industrias y actividades cotidianas.</p>
+    </div>
+  </div>
+
+      </div>
+    </section>
+<section class="slide flex-col items-center justify-center bg-gradient-to-b from-[#0a0e1a] to-[#0f1a2e] relative overflow-hidden">
+      <div class="absolute inset-0 bg-pattern opacity-60"></div>
+      <div class="relative z-10 max-w-5xl mx-auto w-full px-4">
+        
+  <h2 class="text-3xl md:text-5xl font-black text-white mb-5">¿QUÉ ES LA <span class="gradient-text">INTELIGENCIA ARTIFICIAL?</span></h2>
+  <div class="glass-card rounded-3xl p-6 md:p-8 mb-5">
+    <p class="text-gray-200 text-lg md:text-2xl leading-relaxed">Es un conjunto de tecnologías que permite a las máquinas realizar tareas asociadas con capacidades humanas: aprender, reconocer patrones, resolver problemas y tomar decisiones.</p>
+  </div>
+  <div class="grid grid-cols-2 md:grid-cols-4 gap-3">
+    <div class="glass-card rounded-2xl p-5 text-center">
+      <span class="text-4xl">📚</span>
+      <h3 class="text-white font-black mt-3">Aprender</h3>
+      <p class="text-gray-300 text-sm mt-2">Detectar relaciones en datos.</p>
+    </div><div class="glass-card rounded-2xl p-5 text-center">
+      <span class="text-4xl">🔍</span>
+      <h3 class="text-white font-black mt-3">Reconocer</h3>
+      <p class="text-gray-300 text-sm mt-2">Identificar imágenes, voz o patrones.</p>
+    </div><div class="glass-card rounded-2xl p-5 text-center">
+      <span class="text-4xl">🧩</span>
+      <h3 class="text-white font-black mt-3">Resolver</h3>
+      <p class="text-gray-300 text-sm mt-2">Proponer respuestas o soluciones.</p>
+    </div><div class="glass-card rounded-2xl p-5 text-center">
+      <span class="text-4xl">🎯</span>
+      <h3 class="text-white font-black mt-3">Decidir</h3>
+      <p class="text-gray-300 text-sm mt-2">Elegir según criterios y datos.</p>
+    </div>
+  </div>
+
+      </div>
+    </section>
+<section class="slide flex-col items-center justify-center bg-gradient-to-b from-[#0a0e1a] to-[#0f1a2e] relative overflow-hidden">
+      <div class="absolute inset-0 bg-pattern opacity-60"></div>
+      <div class="relative z-10 max-w-5xl mx-auto w-full px-4">
+        
+  <h2 class="text-3xl md:text-5xl font-black text-white mb-5">LA IA YA ESTÁ EN TU <span class="gradient-text">DÍA A DÍA</span></h2>
+  <div class="grid grid-cols-2 md:grid-cols-4 gap-3">
+    <div class="glass-card rounded-2xl p-5 text-center">
+      <span class="text-4xl">🎬</span>
+      <h3 class="text-white font-black mt-3">Recomendaciones</h3>
+      <p class="text-gray-300 text-sm mt-2">Series, música y contenidos.</p>
+    </div><div class="glass-card rounded-2xl p-5 text-center">
+      <span class="text-4xl">🗺️</span>
+      <h3 class="text-white font-black mt-3">Mapas</h3>
+      <p class="text-gray-300 text-sm mt-2">Rutas, tráfico y tiempos.</p>
+    </div><div class="glass-card rounded-2xl p-5 text-center">
+      <span class="text-4xl">📱</span>
+      <h3 class="text-white font-black mt-3">Asistentes</h3>
+      <p class="text-gray-300 text-sm mt-2">Comandos de voz y chatbots.</p>
+    </div><div class="glass-card rounded-2xl p-5 text-center">
+      <span class="text-4xl">📸</span>
+      <h3 class="text-white font-black mt-3">Cámaras</h3>
+      <p class="text-gray-300 text-sm mt-2">Mejora automática de imágenes.</p>
+    </div><div class="glass-card rounded-2xl p-5 text-center">
+      <span class="text-4xl">🛡️</span>
+      <h3 class="text-white font-black mt-3">Seguridad</h3>
+      <p class="text-gray-300 text-sm mt-2">Detección de fraude.</p>
+    </div><div class="glass-card rounded-2xl p-5 text-center">
+      <span class="text-4xl">🛒</span>
+      <h3 class="text-white font-black mt-3">Compras</h3>
+      <p class="text-gray-300 text-sm mt-2">Productos sugeridos.</p>
+    </div><div class="glass-card rounded-2xl p-5 text-center">
+      <span class="text-4xl">✉️</span>
+      <h3 class="text-white font-black mt-3">Correo</h3>
+      <p class="text-gray-300 text-sm mt-2">Filtros de spam y respuestas.</p>
+    </div><div class="glass-card rounded-2xl p-5 text-center">
+      <span class="text-4xl">🌐</span>
+      <h3 class="text-white font-black mt-3">Traducción</h3>
+      <p class="text-gray-300 text-sm mt-2">Procesamiento de idiomas.</p>
+    </div>
+  </div>
+
+      </div>
+    </section>
+<section class="slide flex-col items-center justify-center bg-gradient-to-b from-[#0a0e1a] to-[#0f1a2e] relative overflow-hidden">
+      <div class="absolute inset-0 bg-pattern opacity-60"></div>
+      <div class="relative z-10 max-w-5xl mx-auto w-full px-4">
+        
+  <h2 class="text-3xl md:text-5xl font-black text-white mb-5">¿QUÉ ES UNA <span class="gradient-text">RED NEURONAL?</span></h2>
+  <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+    <div class="glass-card rounded-3xl p-6">
+      <p class="text-gray-200 text-lg leading-relaxed">Es un modelo inspirado en el cerebro humano, compuesto por unidades artificiales conectadas que procesan información en capas.</p>
+    </div>
+    <div class="glass-card rounded-3xl p-6 text-center"><span class="text-7xl">🕸️</span><p class="text-white font-black text-xl mt-4">Entradas → procesamiento → salida</p></div>
+  </div>
+
+      </div>
+    </section>
+<section class="slide flex-col items-center justify-center bg-gradient-to-b from-[#0a0e1a] to-[#0f1a2e] relative overflow-hidden">
+      <div class="absolute inset-0 bg-pattern opacity-60"></div>
+      <div class="relative z-10 max-w-5xl mx-auto w-full px-4">
+        
+  <h2 class="text-3xl md:text-5xl font-black text-white mb-5">¿CÓMO <span class="gradient-text">FUNCIONA?</span></h2>
+  <div class="grid grid-cols-1 md:grid-cols-7 gap-3 items-center text-center">
+    <div class="glass-card rounded-2xl p-5 md:col-span-2"><span class="text-4xl">📥</span><p class="text-white font-bold mt-2">Recibe datos</p></div>
+    <div class="hidden md:flex justify-center"><i data-lucide="arrow-right" class="flow-arrow"></i></div>
+    <div class="glass-card rounded-2xl p-5 md:col-span-2"><span class="text-4xl">🧠</span><p class="text-white font-bold mt-2">Procesa patrones</p></div>
+    <div class="hidden md:flex justify-center"><i data-lucide="arrow-right" class="flow-arrow"></i></div>
+    <div class="glass-card rounded-2xl p-5 md:col-span-1"><span class="text-4xl">📤</span><p class="text-white font-bold mt-2">Genera salida</p></div>
+  </div>
+  <div class="mt-5 p-5 rounded-2xl bg-indigo-400/10 border border-indigo-400/20 text-center text-gray-200">Durante el entrenamiento, ajusta conexiones para reducir errores y mejorar resultados.</div>
+
+      </div>
+    </section>
+<section class="slide flex-col items-center justify-center bg-gradient-to-b from-[#0a0e1a] to-[#0f1a2e] relative overflow-hidden">
+      <div class="absolute inset-0 bg-pattern opacity-60"></div>
+      <div class="relative z-10 max-w-5xl mx-auto w-full px-4">
+        
+  <h2 class="text-3xl md:text-5xl font-black text-white mb-5">¿PARA QUÉ SIRVEN LAS <span class="gradient-text">REDES NEURONALES?</span></h2>
+  <div class="grid grid-cols-2 md:grid-cols-4 gap-3">
+    <div class="glass-card rounded-2xl p-5 text-center">
+      <span class="text-4xl">🖼️</span>
+      <h3 class="text-white font-black mt-3">Visión</h3>
+      <p class="text-gray-300 text-sm mt-2">Reconocer objetos e imágenes.</p>
+    </div><div class="glass-card rounded-2xl p-5 text-center">
+      <span class="text-4xl">🎙️</span>
+      <h3 class="text-white font-black mt-3">Voz</h3>
+      <p class="text-gray-300 text-sm mt-2">Comprender y generar audio.</p>
+    </div><div class="glass-card rounded-2xl p-5 text-center">
+      <span class="text-4xl">📝</span>
+      <h3 class="text-white font-black mt-3">Lenguaje</h3>
+      <p class="text-gray-300 text-sm mt-2">Interpretar y producir texto.</p>
+    </div><div class="glass-card rounded-2xl p-5 text-center">
+      <span class="text-4xl">🚘</span>
+      <h3 class="text-white font-black mt-3">Autonomía</h3>
+      <p class="text-gray-300 text-sm mt-2">Tomar decisiones en sistemas.</p>
+    </div><div class="glass-card rounded-2xl p-5 text-center">
+      <span class="text-4xl">🏥</span>
+      <h3 class="text-white font-black mt-3">Salud</h3>
+      <p class="text-gray-300 text-sm mt-2">Analizar estudios y patrones.</p>
+    </div><div class="glass-card rounded-2xl p-5 text-center">
+      <span class="text-4xl">🏭</span>
+      <h3 class="text-white font-black mt-3">Industria</h3>
+      <p class="text-gray-300 text-sm mt-2">Predecir fallas.</p>
+    </div><div class="glass-card rounded-2xl p-5 text-center">
+      <span class="text-4xl">📊</span>
+      <h3 class="text-white font-black mt-3">Datos</h3>
+      <p class="text-gray-300 text-sm mt-2">Detectar tendencias.</p>
+    </div><div class="glass-card rounded-2xl p-5 text-center">
+      <span class="text-4xl">🤖</span>
+      <h3 class="text-white font-black mt-3">Robótica</h3>
+      <p class="text-gray-300 text-sm mt-2">Coordinar acciones.</p>
+    </div>
+  </div>
+
+      </div>
+    </section>
+<section class="slide flex-col items-center justify-center bg-gradient-to-b from-[#0a0e1a] to-[#0f1a2e] relative overflow-hidden">
+      <div class="absolute inset-0 bg-pattern opacity-60"></div>
+      <div class="relative z-10 max-w-5xl mx-auto w-full px-4">
+        
+  <h2 class="text-3xl md:text-5xl font-black text-white mb-5">¿OPORTUNIDAD O <span class="gradient-text">AMENAZA?</span></h2>
+  <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+    <div class="rounded-3xl p-6 bg-emerald-400/10 border border-emerald-400/20">
+      <h3 class="text-emerald-300 font-black text-2xl">Oportunidades</h3>
+      <div class="mt-4 space-y-3 text-gray-200"><p>• Automatizar tareas.</p><p>• Mejorar eficiencia.</p><p>• Personalizar servicios.</p><p>• Acelerar descubrimientos.</p></div>
+    </div>
+    <div class="rounded-3xl p-6 bg-red-400/10 border border-red-400/20">
+      <h3 class="text-red-300 font-black text-2xl">Amenazas</h3>
+      <div class="mt-4 space-y-3 text-gray-200"><p>• Cambios laborales.</p><p>• Problemas de privacidad.</p><p>• Sesgos y errores.</p><p>• Dependencia tecnológica.</p></div>
+    </div>
+  </div>
+
+      </div>
+    </section>
+<section class="slide flex-col items-center justify-center bg-gradient-to-b from-[#0a0e1a] to-[#0f1a2e] relative overflow-hidden">
+      <div class="absolute inset-0 bg-pattern opacity-60"></div>
+      <div class="relative z-10 max-w-5xl mx-auto w-full px-4">
+        
+  <h2 class="text-3xl md:text-5xl font-black text-white mb-5">LA CLAVE: USO <span class="gradient-text">ÉTICO Y RESPONSABLE</span></h2>
+  <div class="glass-card rounded-3xl p-6 md:p-9 text-center mb-5">
+    <p class="text-white text-xl md:text-3xl font-black">Aprovechar el potencial de la IA sin comprometer la seguridad, la privacidad ni los valores humanos.</p>
+  </div>
+  <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+    <div class="glass-card rounded-2xl p-5 text-center">
+      <span class="text-4xl">🔎</span>
+      <h3 class="text-white font-black mt-3">Verificar</h3>
+      <p class="text-gray-300 text-sm mt-2">Revisar datos y respuestas.</p>
+    </div><div class="glass-card rounded-2xl p-5 text-center">
+      <span class="text-4xl">🔐</span>
+      <h3 class="text-white font-black mt-3">Proteger</h3>
+      <p class="text-gray-300 text-sm mt-2">Cuidar información personal.</p>
+    </div><div class="glass-card rounded-2xl p-5 text-center">
+      <span class="text-4xl">👤</span>
+      <h3 class="text-white font-black mt-3">Decidir</h3>
+      <p class="text-gray-300 text-sm mt-2">Mantener supervisión humana.</p>
+    </div>
+  </div>
+
+      </div>
+    </section>
+<section class="slide flex-col items-center justify-center bg-gradient-to-b from-[#0a0e1a] to-[#0f1a2e] relative overflow-hidden">
+      <div class="absolute inset-0 bg-pattern opacity-60"></div>
+      <div class="relative z-10 max-w-5xl mx-auto w-full px-4">
+        
+  <h2 class="text-3xl md:text-5xl font-black text-white mb-5">TRANSFORMACIÓN DIGITAL: <span class="gradient-text">LA IA ESTÁ AQUÍ</span></h2>
+  <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+    <div class="glass-card rounded-2xl p-5 text-center">
+      <span class="text-4xl">🚗</span>
+      <h3 class="text-white font-black mt-3">Automotriz</h3>
+      <p class="text-gray-300 text-sm mt-2">De vehículos mecánicos a sistemas eléctricos y autónomos.</p>
+    </div><div class="glass-card rounded-2xl p-5 text-center">
+      <span class="text-4xl">📱</span>
+      <h3 class="text-white font-black mt-3">Comunicaciones</h3>
+      <p class="text-gray-300 text-sm mt-2">De cartas y telégrafos a videollamadas instantáneas.</p>
+    </div><div class="glass-card rounded-2xl p-5 text-center">
+      <span class="text-4xl">🏥</span>
+      <h3 class="text-white font-black mt-3">Medicina</h3>
+      <p class="text-gray-300 text-sm mt-2">De tratamientos generales a diagnósticos y terapias personalizadas.</p>
+    </div>
+  </div>
+
+      </div>
+    </section>
+<section class="slide flex-col items-center justify-center bg-gradient-to-b from-[#0a0e1a] to-[#0f1a2e] relative overflow-hidden">
+      <div class="absolute inset-0 bg-pattern opacity-60"></div>
+      <div class="relative z-10 max-w-5xl mx-auto w-full px-4">
+        
+  <h2 class="text-3xl md:text-5xl font-black text-white mb-5">LA IA EN LA <span class="gradient-text">EDUCACIÓN</span></h2>
+  <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+    <div class="glass-card rounded-3xl p-6">
+      <h3 class="text-white font-black text-xl mb-3">Posibilidades</h3>
+      <div class="space-y-2 text-gray-300"><p>• Explicaciones personalizadas.</p><p>• Prácticas adaptadas.</p><p>• Creación de materiales.</p><p>• Apoyo a docentes y estudiantes.</p></div>
+    </div>
+    <div class="glass-card rounded-3xl p-6">
+      <h3 class="text-white font-black text-xl mb-3">Desafíos</h3>
+      <div class="space-y-2 text-gray-300"><p>• Aprender a verificar.</p><p>• Evitar copiar sin comprender.</p><p>• Proteger datos.</p><p>• Mantener pensamiento crítico.</p></div>
+    </div>
+  </div>
+
+      </div>
+    </section>
+<section class="slide flex-col items-center justify-center bg-gradient-to-b from-[#0a0e1a] to-[#0f1a2e] relative overflow-hidden">
+      <div class="absolute inset-0 bg-pattern opacity-60"></div>
+      <div class="relative z-10 max-w-5xl mx-auto w-full px-4">
+        
+  <h2 class="text-3xl md:text-5xl font-black text-white mb-5">IA EN LA MEDICINA: <span class="gradient-text">EL FUTURO DE LA SALUD</span></h2>
+  <div class="grid grid-cols-2 md:grid-cols-4 gap-3">
+    <div class="glass-card rounded-2xl p-5 text-center">
+      <span class="text-4xl">🔬</span>
+      <h3 class="text-white font-black mt-3">Diagnóstico</h3>
+      <p class="text-gray-300 text-sm mt-2">Analiza estudios e imágenes.</p>
+    </div><div class="glass-card rounded-2xl p-5 text-center">
+      <span class="text-4xl">🧬</span>
+      <h3 class="text-white font-black mt-3">Personalización</h3>
+      <p class="text-gray-300 text-sm mt-2">Adapta tratamientos.</p>
+    </div><div class="glass-card rounded-2xl p-5 text-center">
+      <span class="text-4xl">⌚</span>
+      <h3 class="text-white font-black mt-3">Monitoreo</h3>
+      <p class="text-gray-300 text-sm mt-2">Sigue datos en tiempo real.</p>
+    </div><div class="glass-card rounded-2xl p-5 text-center">
+      <span class="text-4xl">💊</span>
+      <h3 class="text-white font-black mt-3">Investigación</h3>
+      <p class="text-gray-300 text-sm mt-2">Apoya el desarrollo de medicamentos.</p>
+    </div>
+  </div>
+  <div class="mt-5 p-4 rounded-xl bg-amber-400/10 border border-amber-400/25 text-gray-200 text-center">La IA asiste a profesionales; no reemplaza la evaluación médica.</div>
+
+      </div>
+    </section>
+<section class="slide flex-col items-center justify-center bg-gradient-to-b from-[#0a0e1a] to-[#0f1a2e] relative overflow-hidden">
+      <div class="absolute inset-0 bg-pattern opacity-60"></div>
+      <div class="relative z-10 max-w-5xl mx-auto w-full px-4">
+        
+  <h2 class="text-3xl md:text-5xl font-black text-white mb-5">IA EN LA ADMINISTRACIÓN <span class="gradient-text">EMPRESARIAL</span></h2>
+  <div class="glass-card rounded-3xl p-6 mb-5">
+    <p class="text-gray-200 text-lg">La IA permite analizar datos, automatizar tareas y transformar la gestión tradicional en una administración más ágil y estratégica.</p>
+  </div>
+  <div class="grid grid-cols-2 md:grid-cols-4 gap-3">
+    <div class="glass-card rounded-2xl p-5 text-center">
+      <span class="text-4xl">💰</span>
+      <h3 class="text-white font-black mt-3">Finanzas</h3>
+      <p class="text-gray-300 text-sm mt-2">Presupuestos, riesgos y proyecciones.</p>
+    </div><div class="glass-card rounded-2xl p-5 text-center">
+      <span class="text-4xl">👥</span>
+      <h3 class="text-white font-black mt-3">RR. HH.</h3>
+      <p class="text-gray-300 text-sm mt-2">Selección, capacitación y análisis.</p>
+    </div><div class="glass-card rounded-2xl p-5 text-center">
+      <span class="text-4xl">⚙️</span>
+      <h3 class="text-white font-black mt-3">Operaciones</h3>
+      <p class="text-gray-300 text-sm mt-2">Procesos, stock y planificación.</p>
+    </div><div class="glass-card rounded-2xl p-5 text-center">
+      <span class="text-4xl">💬</span>
+      <h3 class="text-white font-black mt-3">Clientes</h3>
+      <p class="text-gray-300 text-sm mt-2">Atención y personalización.</p>
+    </div>
+  </div>
+
+      </div>
+    </section>
+<section class="slide flex-col items-center justify-center bg-gradient-to-b from-[#0a0e1a] to-[#0f1a2e] relative overflow-hidden">
+      <div class="absolute inset-0 bg-pattern opacity-60"></div>
+      <div class="relative z-10 max-w-5xl mx-auto w-full px-4">
+        
+  <h2 class="text-3xl md:text-5xl font-black text-white mb-5">EL NUEVO ROL DEL <span class="gradient-text">ADMINISTRADOR</span></h2>
+  <div class="grid grid-cols-1 md:grid-cols-5 gap-3 items-center text-center">
+    <div class="glass-card rounded-2xl p-5 md:col-span-2"><span class="text-4xl">🗂️</span><p class="text-white font-bold mt-2">Tareas operativas</p></div>
+    <div class="hidden md:flex justify-center"><i data-lucide="arrow-right" class="flow-arrow"></i></div>
+    <div class="glass-card rounded-2xl p-5 md:col-span-2"><span class="text-4xl">🎯</span><p class="text-white font-bold mt-2">Liderazgo estratégico</p></div>
+  </div>
+  <div class="mt-5 glass-card rounded-2xl p-5 text-center"><p class="text-gray-200 text-lg">La tecnología automatiza parte de la ejecución; las personas aportan criterio, dirección, creatividad y responsabilidad.</p></div>
+
+      </div>
+    </section>
+<section class="slide flex-col items-center justify-center bg-gradient-to-b from-[#0a0e1a] to-[#0f1a2e] relative overflow-hidden">
+      <div class="absolute inset-0 bg-pattern opacity-60"></div>
+      <div class="relative z-10 max-w-5xl mx-auto w-full px-4">
+        
+  <h2 class="text-3xl md:text-5xl font-black text-white mb-5">NUEVOS MODELOS DE <span class="gradient-text">EMPRESA</span></h2>
+  <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+    <div class="glass-card rounded-2xl p-5 text-center">
+      <span class="text-4xl">📊</span>
+      <h3 class="text-white font-black mt-3">Basadas en datos</h3>
+      <p class="text-gray-300 text-sm mt-2">Deciden con información actualizada.</p>
+    </div><div class="glass-card rounded-2xl p-5 text-center">
+      <span class="text-4xl">⚙️</span>
+      <h3 class="text-white font-black mt-3">Automatizadas</h3>
+      <p class="text-gray-300 text-sm mt-2">Reducen tareas repetitivas y errores.</p>
+    </div><div class="glass-card rounded-2xl p-5 text-center">
+      <span class="text-4xl">🔗</span>
+      <h3 class="text-white font-black mt-3">Conectadas</h3>
+      <p class="text-gray-300 text-sm mt-2">Integran personas, sistemas y procesos.</p>
+    </div>
+  </div>
+
+      </div>
+    </section>
+<section class="slide flex-col items-center justify-center bg-gradient-to-b from-[#0a0e1a] to-[#0f1a2e] relative overflow-hidden">
+      <div class="absolute inset-0 bg-pattern opacity-60"></div>
+      <div class="relative z-10 max-w-5xl mx-auto w-full px-4">
+        
+  <h2 class="text-3xl md:text-5xl font-black text-white mb-5">SMARTEO: <span class="gradient-text">TRANSFORMACIÓN INTEGRAL</span></h2>
+  <div class="glass-card rounded-3xl p-6 md:p-8 mb-5">
+    <p class="text-gray-200 text-lg md:text-xl">Modelo que combina estrategia, tecnología y procesos para transformar organizaciones tradicionales en sistemas inteligentes, eficientes y escalables.</p>
+  </div>
+  <div class="grid grid-cols-2 md:grid-cols-4 gap-3">
+    <div class="glass-card rounded-2xl p-5 text-center">
+      <span class="text-4xl">🔍</span>
+      <h3 class="text-white font-black mt-3">Diagnóstico</h3>
+      <p class="text-gray-300 text-sm mt-2">Comprender la situación.</p>
+    </div><div class="glass-card rounded-2xl p-5 text-center">
+      <span class="text-4xl">🧩</span>
+      <h3 class="text-white font-black mt-3">Optimización</h3>
+      <p class="text-gray-300 text-sm mt-2">Mejorar procesos.</p>
+    </div><div class="glass-card rounded-2xl p-5 text-center">
+      <span class="text-4xl">🤖</span>
+      <h3 class="text-white font-black mt-3">Automatización</h3>
+      <p class="text-gray-300 text-sm mt-2">Integrar tecnología e IA.</p>
+    </div><div class="glass-card rounded-2xl p-5 text-center">
+      <span class="text-4xl">🎓</span>
+      <h3 class="text-white font-black mt-3">Formación</h3>
+      <p class="text-gray-300 text-sm mt-2">Preparar a los equipos.</p>
+    </div>
+  </div>
+
+      </div>
+    </section>
+<section class="slide flex-col items-center justify-center bg-gradient-to-b from-[#0a0e1a] to-[#0f1a2e] relative overflow-hidden">
+      <div class="absolute inset-0 bg-pattern opacity-60"></div>
+      <div class="relative z-10 max-w-5xl mx-auto w-full px-4">
+        
+  <h2 class="text-3xl md:text-5xl font-black text-white mb-5">EL ECOSISTEMA <span class="gradient-text">IEC</span></h2>
+  <div class="grid grid-cols-1 md:grid-cols-7 gap-3 items-center text-center">
+    <div class="glass-card rounded-2xl p-5 md:col-span-2"><span class="text-4xl">👥</span><p class="text-white font-bold mt-2">Personas</p></div>
+    <div class="hidden md:flex justify-center"><i data-lucide="plus" class="flow-arrow"></i></div>
+    <div class="glass-card rounded-2xl p-5 md:col-span-2"><span class="text-4xl">⚙️</span><p class="text-white font-bold mt-2">Procesos</p></div>
+    <div class="hidden md:flex justify-center"><i data-lucide="plus" class="flow-arrow"></i></div>
+    <div class="glass-card rounded-2xl p-5 md:col-span-1"><span class="text-4xl">📊</span><p class="text-white font-bold mt-2">Datos</p></div>
+  </div>
+  <div class="mt-5 p-5 rounded-2xl bg-indigo-400/10 border border-indigo-400/20 text-center text-gray-200">La transformación no depende de una herramienta aislada, sino de un sistema coordinado.</div>
+
+      </div>
+    </section>
+<section class="slide flex-col items-center justify-center bg-gradient-to-b from-[#0a0e1a] to-[#0f1a2e] relative overflow-hidden">
+      <div class="absolute inset-0 bg-pattern opacity-60"></div>
+      <div class="relative z-10 max-w-5xl mx-auto w-full px-4">
+        
+  <h2 class="text-3xl md:text-5xl font-black text-white mb-5">TECNOLOGÍA Y HUMANIDAD <span class="gradient-text">INNOVANDO JUNTAS</span></h2>
+  <div class="glass-card rounded-3xl p-7 text-center">
+    <p class="text-white text-xl md:text-3xl font-black">La IA transforma cómo trabajamos, aprendemos y creamos. El desafío es utilizarla para potenciar capacidades humanas, no para abandonar el criterio propio.</p>
+  </div>
+
+      </div>
+    </section>
+<section class="slide flex-col items-center justify-center bg-gradient-to-b from-[#0a0e1a] to-[#0f1a2e] relative overflow-hidden">
+      <div class="absolute inset-0 bg-pattern opacity-60"></div>
+      <div class="relative z-10 max-w-5xl mx-auto w-full px-4">
+        
+  <p class="text-sky-300 font-bold uppercase tracking-wider mb-2">Primeros pasos</p>
+  <h2 class="text-3xl md:text-5xl font-black text-white mb-5">ACCEDER A <span class="gradient-text">CHATGPT</span></h2>
+  <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+    <div class="glass-card rounded-2xl p-5 text-center">
+      <span class="text-4xl">🌐</span>
+      <h3 class="text-white font-black mt-3">1. Abrir navegador</h3>
+      <p class="text-gray-300 text-sm mt-2">Chrome, Firefox, Safari u otro.</p>
+    </div><div class="glass-card rounded-2xl p-5 text-center">
+      <span class="text-4xl">🔎</span>
+      <h3 class="text-white font-black mt-3">2. Buscar ChatGPT</h3>
+      <p class="text-gray-300 text-sm mt-2">Ingresar al sitio oficial de la herramienta.</p>
+    </div><div class="glass-card rounded-2xl p-5 text-center">
+      <span class="text-4xl">🔐</span>
+      <h3 class="text-white font-black mt-3">3. Iniciar sesión</h3>
+      <p class="text-gray-300 text-sm mt-2">Crear una cuenta o utilizar una existente.</p>
+    </div>
+  </div>
+  <div class="mt-5 p-4 rounded-xl bg-amber-400/10 border border-amber-400/25 text-gray-200 text-center">La interfaz y el proceso de registro pueden cambiar con el tiempo.</div>
+
+      </div>
+    </section>
+<section class="slide flex-col items-center justify-center bg-gradient-to-b from-[#0a0e1a] to-[#0f1a2e] relative overflow-hidden">
+      <div class="absolute inset-0 bg-pattern opacity-60"></div>
+      <div class="relative z-10 max-w-5xl mx-auto w-full px-4">
+        
+  <h2 class="text-3xl md:text-5xl font-black text-white mb-5">TU PRIMERA CONVERSACIÓN CON <span class="gradient-text">CHATGPT</span></h2>
+  <div class="glass-card rounded-3xl p-5">
+    <div class="space-y-3">
+      <div class="ml-8 p-4 rounded-2xl bg-sky-400/10 border border-sky-400/20 text-gray-100">¿Qué es un sensor y cómo se utiliza en un robot?</div>
+      <div class="mr-8 p-4 rounded-2xl bg-white/5 border border-white/10 text-gray-200">Un sensor detecta cambios en el entorno y envía información para que el robot pueda actuar.</div>
+    </div>
+    <div class="mt-5 prompt-box rounded-2xl p-4 text-gray-500">Escribí una pregunta...</div>
+  </div>
+
+      </div>
+    </section>
+<section class="slide flex-col items-center justify-center bg-gradient-to-b from-[#0a0e1a] to-[#0f1a2e] relative overflow-hidden">
+      <div class="absolute inset-0 bg-pattern opacity-60"></div>
+      <div class="relative z-10 max-w-5xl mx-auto w-full px-4">
+        
+  <h2 class="text-3xl md:text-5xl font-black text-white mb-5">¡PROBÁ SIN <span class="gradient-text">MIEDO!</span></h2>
+  <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+    <div class="prompt-box rounded-3xl p-6">
+      <p class="text-sky-300 font-bold mb-3">Pregunta 1</p>
+      <p class="text-gray-100">“¿Qué es un sensor y cómo se usa en un robot?”</p>
+    </div>
+    <div class="prompt-box rounded-3xl p-6">
+      <p class="text-indigo-300 font-bold mb-3">Pregunta 2</p>
+      <p class="text-gray-100">“¿Qué es un archivo STL y por qué es importante en impresión 3D?”</p>
+    </div>
+  </div>
+  <div class="mt-5 glass-card rounded-2xl p-5 text-center text-gray-200">Anotá las respuestas, repreguntá y compará qué ocurre cuando agregás más contexto.</div>
+
+      </div>
+    </section>
+<section class="slide flex-col items-center justify-center bg-gradient-to-b from-[#0a0e1a] to-[#0f1a2e] relative overflow-hidden">
+      <div class="absolute inset-0 bg-pattern opacity-60"></div>
+      <div class="relative z-10 max-w-5xl mx-auto w-full px-4">
+        
+  <h2 class="text-3xl md:text-5xl font-black text-white mb-5">¿QUÉ ES UN <span class="gradient-text">PROMPT?</span></h2>
+  <div class="glass-card rounded-3xl p-6 md:p-8 mb-5">
+    <p class="text-gray-200 text-lg md:text-2xl">Es una instrucción o pregunta que orienta a la IA sobre la información o tarea que necesitamos.</p>
+  </div>
+  <div class="grid grid-cols-1 md:grid-cols-3 gap-3">
+    <div class="glass-card rounded-2xl p-5 text-center">
+      <span class="text-4xl">🎯</span>
+      <h3 class="text-white font-black mt-3">Qué necesito</h3>
+      <p class="text-gray-300 text-sm mt-2">Definir la tarea.</p>
+    </div><div class="glass-card rounded-2xl p-5 text-center">
+      <span class="text-4xl">🌎</span>
+      <h3 class="text-white font-black mt-3">En qué contexto</h3>
+      <p class="text-gray-300 text-sm mt-2">Explicar la situación.</p>
+    </div><div class="glass-card rounded-2xl p-5 text-center">
+      <span class="text-4xl">📐</span>
+      <h3 class="text-white font-black mt-3">Cómo lo quiero</h3>
+      <p class="text-gray-300 text-sm mt-2">Indicar formato y tono.</p>
+    </div>
+  </div>
+
+      </div>
+    </section>
+<section class="slide flex-col items-center justify-center bg-gradient-to-b from-[#0a0e1a] to-[#0f1a2e] relative overflow-hidden">
+      <div class="absolute inset-0 bg-pattern opacity-60"></div>
+      <div class="relative z-10 max-w-5xl mx-auto w-full px-4">
+        
+  <h2 class="text-3xl md:text-5xl font-black text-white mb-5">EJEMPLOS DE <span class="gradient-text">PROMPTS</span></h2>
+  <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+    <div class="prompt-box rounded-xl p-4 text-gray-100 text-sm">“¿Cuáles son las etapas clave de la gestión de proyectos?”</div>
+    <div class="prompt-box rounded-xl p-4 text-gray-100 text-sm">“¿Cómo puede la IA mejorar el reclutamiento?”</div>
+    <div class="prompt-box rounded-xl p-4 text-gray-100 text-sm">“¿Cómo puede optimizar un presupuesto empresarial?”</div>
+    <div class="prompt-box rounded-xl p-4 text-gray-100 text-sm">“¿Qué estrategias de marketing digital puedo aplicar?”</div>
+    <div class="prompt-box rounded-xl p-4 text-gray-100 text-sm md:col-span-2">“¿Cómo puede la IA mejorar la experiencia del cliente?”</div>
+  </div>
+
+      </div>
+    </section>
+<section class="slide flex-col items-center justify-center bg-gradient-to-b from-[#0a0e1a] to-[#0f1a2e] relative overflow-hidden">
+      <div class="absolute inset-0 bg-pattern opacity-60"></div>
+      <div class="relative z-10 max-w-5xl mx-auto w-full px-4">
+        
+  <h2 class="text-3xl md:text-5xl font-black text-white mb-5">ACTIVIDAD: IDEAR UN <span class="gradient-text">MICROEMPRENDIMIENTO</span></h2>
+  <div class="grid grid-cols-1 md:grid-cols-4 gap-3">
+    <div class="glass-card rounded-2xl p-5 text-center">
+      <span class="text-4xl">💡</span>
+      <h3 class="text-white font-black mt-3">1. Idear</h3>
+      <p class="text-gray-300 text-sm mt-2">Pensar un proyecto con ayuda de ChatGPT.</p>
+    </div><div class="glass-card rounded-2xl p-5 text-center">
+      <span class="text-4xl">🔍</span>
+      <h3 class="text-white font-black mt-3">2. Investigar</h3>
+      <p class="text-gray-300 text-sm mt-2">Analizar factibilidad, región y competencia.</p>
+    </div><div class="glass-card rounded-2xl p-5 text-center">
+      <span class="text-4xl">🧠</span>
+      <h3 class="text-white font-black mt-3">3. Planificar</h3>
+      <p class="text-gray-300 text-sm mt-2">Usar IA para organizar y diseñar el proyecto.</p>
+    </div><div class="glass-card rounded-2xl p-5 text-center">
+      <span class="text-4xl">📊</span>
+      <h3 class="text-white font-black mt-3">4. Presentar</h3>
+      <p class="text-gray-300 text-sm mt-2">Preparar un prototipo para compartir.</p>
+    </div>
+  </div>
+
+      </div>
+    </section>
+<section class="slide flex-col items-center justify-center bg-gradient-to-b from-[#0a0e1a] to-[#0f1a2e] relative overflow-hidden">
+      <div class="absolute inset-0 bg-pattern opacity-60"></div>
+      <div class="relative z-10 max-w-5xl mx-auto w-full px-4">
+        
+  <h2 class="text-3xl md:text-5xl font-black text-white mb-5">GUÍA PARA EL <span class="gradient-text">TRABAJO PRÁCTICO</span></h2>
+  <div class="glass-card rounded-3xl p-6">
+    <div class="space-y-4 text-gray-200">
+      <p><span class="text-sky-300 font-black">1.</span> Identificá intereses y problemas que te gustaría resolver.</p>
+      <p><span class="text-sky-300 font-black">2.</span> Seleccioná una idea que te entusiasme.</p>
+      <p><span class="text-sky-300 font-black">3.</span> Investigá herramientas de gestión.</p>
+      <p><span class="text-sky-300 font-black">4.</span> Explorá procesos que podrían automatizarse.</p>
+      <p><span class="text-sky-300 font-black">5.</span> Desarrollá un plan de acción.</p>
+      <p><span class="text-sky-300 font-black">6.</span> Prepará una presentación del proyecto.</p>
+    </div>
+  </div>
+
+      </div>
+    </section>
+<section class="slide flex-col items-center justify-center bg-gradient-to-br from-[#0a0e1a] via-[#0f1a2e] to-[#0a0e1a] relative overflow-hidden">
+      <div class="absolute inset-0 bg-pattern opacity-60"></div>
+      <div class="relative z-10 max-w-5xl mx-auto w-full px-4">
+        
+  <div class="text-center">
+    <img src="https://i.postimg.cc/jSkQKpRK/Diseno-sin-titulo-2026-05-15T105828-195.png"
+      alt="Instituto IEC" class="h-14 md:h-20 mx-auto mb-5 object-contain" />
+    <p class="text-sky-300 font-bold uppercase tracking-[.2em] text-sm mb-3">Cierre de la clase</p>
+    <h2 class="text-3xl sm:text-4xl md:text-6xl font-black text-white leading-tight mb-5">
+      LA IA NO VIENE A PENSAR POR VOS.<br><span class="gradient-text">VIENE A PENSAR CON VOS.</span>
+    </h2>
+    <div class="glass-card rounded-3xl p-6 md:p-8 max-w-4xl mx-auto">
+      <p class="text-white font-black text-lg md:text-2xl">Comprender la evolución tecnológica, hacer buenas preguntas y mantener una mirada crítica son los primeros pasos para convertir la IA en una verdadera aliada.</p>
+    </div>
+    <p class="text-gray-400 text-xs md:text-sm mt-6">Instituto IEC · Experto en Aplicaciones Prácticas con IA</p>
+  </div>
+
+      </div>
+    </section>
+  <script>
+    let current=0;
+    const slides=Array.from(document.querySelectorAll(".slide"));
+    const dotsContainer=document.getElementById("dots");
+    const progressBar=document.getElementById("progress-bar");
+    const currentNumber=document.getElementById("current-number");
+    const totalNumber=document.getElementById("total-number");
+    const prevButton=document.getElementById("prev-btn");
+    const nextButton=document.getElementById("next-btn");
+    totalNumber.textContent=slides.length;
+    slides.forEach((_,index)=>{const dot=document.createElement("button");dot.className="dot w-2 h-2 md:w-2.5 md:h-2.5 rounded-full bg-white/25 transition";dot.addEventListener("click",()=>goSlide(index));dotsContainer.appendChild(dot)});
+    const dots=Array.from(document.querySelectorAll(".dot"));
+    function updateUI(){dots.forEach((dot,index)=>dot.classList.toggle("active",index===current));currentNumber.textContent=current+1;progressBar.style.width=`${((current+1)/slides.length)*100}%`;prevButton.disabled=current===0;nextButton.disabled=current===slides.length-1}
+    function goSlide(index){if(index<0||index>=slides.length||index===current)return;slides[current].classList.remove("active");current=index;slides[current].classList.add("active");slides[current].scrollTop=0;window.scrollTo({top:0,left:0,behavior:"instant"});updateUI()}
+    function changeSlide(direction){goSlide(current+direction)}
+    document.addEventListener("keydown",e=>{if(["ArrowRight","PageDown"," "].includes(e.key)){e.preventDefault();changeSlide(1)}if(["ArrowLeft","PageUp"].includes(e.key)){e.preventDefault();changeSlide(-1)}if(e.key==="Home")goSlide(0);if(e.key==="End")goSlide(slides.length-1)});
+    let sx=0,sy=0;
+    document.addEventListener("touchstart",e=>{sx=e.changedTouches[0].screenX;sy=e.changedTouches[0].screenY},{passive:true});
+    document.addEventListener("touchend",e=>{const dx=sx-e.changedTouches[0].screenX,dy=sy-e.changedTouches[0].screenY;if(Math.abs(dx)>60&&Math.abs(dx)>Math.abs(dy))dx>0?changeSlide(1):changeSlide(-1)},{passive:true});
+    updateUI();lucide.createIcons();
+  </script>
+</body>
+</html>

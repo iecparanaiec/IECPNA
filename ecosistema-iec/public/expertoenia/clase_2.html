@@ -1,0 +1,1550 @@
+<!doctype html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="Clase 2 del curso Experto en Aplicaciones Prácticas con IA del Instituto IEC: Introducción a ChatGPT." />
+    <title>Clase 2 · Introducción a ChatGPT | Instituto IEC</title>
+
+    <script src="https://cdn.tailwindcss.com/3.4.17"></script>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
+    <script src="https://cdn.jsdelivr.net/npm/lucide@0.263.0/dist/umd/lucide.min.js"></script>
+
+    <style>
+        * {
+            box-sizing: border-box;
+            font-family: "DM Sans", sans-serif;
+        }
+
+        html,
+        body {
+            margin: 0;
+            width: 100%;
+            min-height: 100%;
+            background: #0a0e1a;
+        }
+
+        body {
+            overflow: hidden;
+        }
+
+        .slide {
+            display: none;
+            width: 100%;
+            min-height: 100vh;
+            height: 100vh;
+            overflow-y: auto;
+            padding: 2rem 1.5rem 6rem;
+            scroll-behavior: smooth;
+        }
+
+        .slide.active {
+            display: flex;
+            animation: slideIn 0.35s ease-out;
+            -webkit-overflow-scrolling: touch;
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .glass-card {
+            background: rgba(255, 255, 255, 0.075);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            box-shadow: 0 18px 45px rgba(0, 0, 0, 0.18);
+        }
+
+        .gradient-text {
+            background: linear-gradient(135deg, #38bdf8, #818cf8);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .bg-pattern {
+            background-image:
+                radial-gradient(circle at 20% 45%, rgba(56, 189, 248, 0.07) 0%, transparent 42%),
+                radial-gradient(circle at 82% 78%, rgba(129, 140, 248, 0.07) 0%, transparent 42%);
+        }
+
+        .dot.active {
+            background: #38bdf8;
+            transform: scale(1.3);
+            box-shadow: 0 0 12px rgba(56, 189, 248, 0.75);
+        }
+
+        .nav-button:disabled {
+            opacity: 0.35;
+            cursor: not-allowed;
+        }
+
+        .prompt-box {
+            background: rgba(15, 26, 46, 0.92);
+            border: 1px solid rgba(56, 189, 248, 0.28);
+            box-shadow: inset 0 0 30px rgba(56, 189, 248, 0.03);
+        }
+
+        .chat-user {
+            background: linear-gradient(135deg, rgba(14, 165, 233, 0.23), rgba(59, 130, 246, 0.13));
+            border: 1px solid rgba(56, 189, 248, 0.25);
+        }
+
+        .chat-ai {
+            background: rgba(255, 255, 255, 0.075);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .pulse-border {
+            animation: pulseBorder 2s ease-in-out infinite;
+        }
+
+        @keyframes pulseBorder {
+            0%, 100% { border-color: rgba(251, 191, 36, 0.2); }
+            50% { border-color: rgba(251, 191, 36, 0.65); }
+        }
+
+        .float-soft {
+            animation: floatSoft 5s ease-in-out infinite;
+        }
+
+        @keyframes floatSoft {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-8px); }
+        }
+
+        .scrollbar-thin::-webkit-scrollbar {
+            width: 7px;
+        }
+
+        .scrollbar-thin::-webkit-scrollbar-track {
+            background: rgba(255,255,255,0.03);
+        }
+
+        .scrollbar-thin::-webkit-scrollbar-thumb {
+            background: rgba(56, 189, 248, 0.35);
+            border-radius: 999px;
+        }
+
+        .slide-number {
+            min-width: 72px;
+        }
+
+        @media (max-width: 640px) {
+            .slide {
+                padding: 1.2rem 0.8rem 6.5rem;
+            }
+
+            .text-7xl {
+                font-size: 2.65rem !important;
+            }
+
+            .text-6xl {
+                font-size: 2.35rem !important;
+            }
+
+            .text-5xl {
+                font-size: 2rem !important;
+            }
+
+            .text-4xl {
+                font-size: 1.72rem !important;
+            }
+
+            .text-3xl {
+                font-size: 1.42rem !important;
+            }
+        }
+
+        .print-only {
+            display: none;
+        }
+
+        @media print {
+            @page {
+                size: A4;
+                margin: 14mm;
+            }
+
+            html,
+            body {
+                background: #ffffff !important;
+                color: #111827 !important;
+                overflow: visible !important;
+            }
+
+            body {
+                display: block !important;
+            }
+
+            #progress-wrap,
+            #prev-btn,
+            #next-btn,
+            #footer-nav,
+            #print-button {
+                display: none !important;
+            }
+
+            .slide,
+            .slide.active {
+                display: block !important;
+                width: 100% !important;
+                min-height: auto !important;
+                height: auto !important;
+                overflow: visible !important;
+                padding: 0 !important;
+                margin: 0 0 14mm 0 !important;
+                background: #ffffff !important;
+                color: #111827 !important;
+                page-break-after: always;
+                break-after: page;
+                animation: none !important;
+            }
+
+            .slide:last-of-type {
+                page-break-after: auto;
+                break-after: auto;
+            }
+
+            .slide > .absolute {
+                display: none !important;
+            }
+
+            .slide > .relative {
+                position: relative !important;
+                z-index: 1 !important;
+            }
+
+            .glass-card,
+            .prompt-box,
+            .chat-user,
+            .chat-ai,
+            .bg-white\/5,
+            .bg-black\/25,
+            [class*="bg-sky-"],
+            [class*="bg-indigo-"],
+            [class*="bg-emerald-"],
+            [class*="bg-amber-"],
+            [class*="bg-red-"],
+            [class*="bg-pink-"],
+            [class*="bg-cyan-"] {
+                background: #ffffff !important;
+                box-shadow: none !important;
+            }
+
+            .glass-card,
+            .prompt-box,
+            .chat-user,
+            .chat-ai,
+            [class*="border-white"],
+            [class*="border-sky"],
+            [class*="border-indigo"],
+            [class*="border-emerald"],
+            [class*="border-amber"],
+            [class*="border-red"],
+            [class*="border-pink"],
+            [class*="border-cyan"] {
+                border-color: #cbd5e1 !important;
+            }
+
+            .text-white,
+            .text-gray-100,
+            .text-gray-200,
+            .text-gray-300,
+            .text-gray-400,
+            .text-gray-500 {
+                color: #111827 !important;
+            }
+
+            .text-sky-300 {
+                color: #0369a1 !important;
+            }
+
+            .text-indigo-300 {
+                color: #4338ca !important;
+            }
+
+            .text-emerald-300 {
+                color: #047857 !important;
+            }
+
+            .text-amber-300 {
+                color: #b45309 !important;
+            }
+
+            .text-red-300 {
+                color: #b91c1c !important;
+            }
+
+            .text-pink-300 {
+                color: #be185d !important;
+            }
+
+            .text-cyan-300 {
+                color: #0e7490 !important;
+            }
+
+            .gradient-text {
+                background: none !important;
+                -webkit-text-fill-color: #0f172a !important;
+                color: #0f172a !important;
+            }
+
+            img {
+                filter: none !important;
+            }
+
+            button {
+                display: none !important;
+            }
+
+            .print-only {
+                display: block !important;
+            }
+
+            .no-print {
+                display: none !important;
+            }
+
+            h1,
+            h2,
+            h3,
+            h4,
+            p,
+            li,
+            span {
+                text-shadow: none !important;
+            }
+        }
+
+    </style>
+</head>
+
+<body class="relative bg-[#0a0e1a]">
+
+    <a href="index.html"
+   class="fixed top-4 left-4 z-[80] px-4 py-2 rounded-xl
+          bg-white/10 hover:bg-white/20 backdrop-blur
+          border border-white/10 text-white
+          text-xs md:text-sm font-bold
+          flex items-center gap-2 transition">
+    <i data-lucide="arrow-left" class="w-4 h-4"></i>
+    Volver al menú
+</a>
+    <!-- BOTÓN DE IMPRESIÓN -->
+    <button
+        id="print-button"
+        class="fixed top-4 right-4 z-[80] px-4 py-2 rounded-xl bg-white/10 hover:bg-white/20 backdrop-blur border border-white/10 text-white text-xs md:text-sm font-bold flex items-center gap-2 transition"
+        onclick="window.print()"
+        aria-label="Imprimir presentación">
+        <i data-lucide="printer" class="w-4 h-4"></i>
+        Imprimir manual
+    </button>
+
+<!-- BARRA DE PROGRESO -->
+    <div id="progress-wrap" class="fixed top-0 left-0 right-0 z-[70] h-1 bg-white/5">
+        <div id="progress-bar" class="h-full bg-gradient-to-r from-sky-400 to-indigo-400 transition-all duration-300" style="width:0%"></div>
+    </div>
+
+    <!-- NAVEGACIÓN -->
+    <button
+        id="prev-btn"
+        class="nav-button fixed left-2 md:left-5 top-1/2 -translate-y-1/2 z-50 bg-white/10 hover:bg-white/20 backdrop-blur border border-white/10 rounded-full w-10 h-10 md:w-12 md:h-12 flex items-center justify-center transition text-white"
+        onclick="changeSlide(-1)"
+        aria-label="Diapositiva anterior">
+        <i data-lucide="chevron-left" style="width:21px;height:21px;"></i>
+    </button>
+
+    <button
+        id="next-btn"
+        class="nav-button fixed right-2 md:right-5 top-1/2 -translate-y-1/2 z-50 bg-white/10 hover:bg-white/20 backdrop-blur border border-white/10 rounded-full w-10 h-10 md:w-12 md:h-12 flex items-center justify-center transition text-white"
+        onclick="changeSlide(1)"
+        aria-label="Diapositiva siguiente">
+        <i data-lucide="chevron-right" style="width:21px;height:21px;"></i>
+    </button>
+
+    <!-- INDICADOR -->
+    <div id="footer-nav" class="fixed bottom-3 left-1/2 -translate-x-1/2 z-50 flex flex-col items-center gap-2 w-[92%] max-w-4xl">
+        <div id="dots" class="flex gap-1.5 md:gap-2 flex-wrap justify-center px-2"></div>
+        <div class="slide-number px-3 py-1 rounded-full bg-black/30 border border-white/10 text-[10px] md:text-xs text-gray-300 text-center backdrop-blur">
+            <span id="current-number">1</span> / <span id="total-number">22</span>
+        </div>
+    </div>
+
+    <!-- SLIDE 1 -->
+    <section class="slide active flex-col items-center justify-center bg-gradient-to-br from-[#0a0e1a] via-[#0f1a2e] to-[#0a0e1a] text-center relative overflow-hidden">
+        <div class="absolute inset-0 bg-pattern opacity-80"></div>
+        <div class="absolute -top-32 -left-24 w-96 h-96 rounded-full bg-sky-500/10 blur-3xl"></div>
+        <div class="absolute -bottom-32 -right-24 w-96 h-96 rounded-full bg-indigo-500/10 blur-3xl"></div>
+
+        <div class="relative z-10 max-w-5xl mx-auto w-full px-4">
+            <img src="https://i.postimg.cc/jSkQKpRK/Diseno-sin-titulo-2026-05-15T105828-195.png"
+                 alt="Instituto IEC"
+                 class="h-14 md:h-20 lg:h-24 mx-auto mb-5 object-contain" />
+
+            <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-sky-400/30 bg-sky-400/10 text-sky-300 text-xs md:text-sm font-bold tracking-wider mb-5">
+                <span>🤖</span> EXPERTO EN APLICACIONES PRÁCTICAS CON IA
+            </div>
+
+            <p class="text-sky-300 text-sm md:text-lg font-bold tracking-[0.2em] uppercase mb-2">Clase 2</p>
+
+            <h1 class="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-black text-white leading-tight mb-4">
+                INTRODUCCIÓN A<br>
+                <span class="gradient-text">CHATGPT</span>
+            </h1>
+
+            <p class="text-base md:text-xl text-gray-300 max-w-3xl mx-auto mb-6">
+                Conocé la herramienta, aprendé a comunicarte con ella y descubrí cómo puede potenciar tu trabajo.
+            </p>
+
+            <div class="glass-card rounded-2xl p-4 md:p-6 max-w-3xl mx-auto">
+                <p class="text-gray-200 text-sm md:text-lg">
+                    En esta clase vamos a dar el primer paso para utilizar la Inteligencia Artificial de manera práctica, responsable y profesional.
+                </p>
+            </div>
+
+            <div class="mt-6 flex flex-wrap justify-center gap-2 md:gap-3 text-xs md:text-sm text-gray-300">
+                <span class="px-3 py-2 bg-white/5 border border-white/5 rounded-full">🧠 IA Generativa</span>
+                <span class="px-3 py-2 bg-white/5 border border-white/5 rounded-full">💬 Conversación</span>
+                <span class="px-3 py-2 bg-white/5 border border-white/5 rounded-full">✍️ Prompts</span>
+                <span class="px-3 py-2 bg-white/5 border border-white/5 rounded-full">💼 Aplicación laboral</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- SLIDE 2 -->
+    <section class="slide flex-col items-center justify-center bg-gradient-to-b from-[#0a0e1a] to-[#0f1a2e] relative">
+        <div class="absolute inset-0 bg-pattern opacity-50"></div>
+        <div class="relative z-10 max-w-5xl mx-auto w-full px-4">
+            <div class="flex items-center gap-3 mb-4">
+                <span class="text-3xl">🎯</span>
+                <p class="text-sky-300 font-bold text-sm md:text-base uppercase tracking-wider">Objetivos de aprendizaje</p>
+            </div>
+
+            <h2 class="text-3xl md:text-5xl font-black text-white mb-5">
+                ¿QUÉ VAS A <span class="gradient-text">APRENDER?</span>
+            </h2>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 md:gap-4">
+                <div class="glass-card rounded-2xl p-4 md:p-5 flex gap-3">
+                    <span class="text-2xl">🤖</span>
+                    <div>
+                        <h3 class="text-white font-bold">Comprender ChatGPT</h3>
+                        <p class="text-gray-300 text-sm mt-1">Qué es, para qué sirve y cuál es su relación con la IA generativa.</p>
+                    </div>
+                </div>
+
+                <div class="glass-card rounded-2xl p-4 md:p-5 flex gap-3">
+                    <span class="text-2xl">🧭</span>
+                    <div>
+                        <h3 class="text-white font-bold">Recorrer la interfaz</h3>
+                        <p class="text-gray-300 text-sm mt-1">Reconocer el menú, los chats, el área de escritura y las herramientas principales.</p>
+                    </div>
+                </div>
+
+                <div class="glass-card rounded-2xl p-4 md:p-5 flex gap-3">
+                    <span class="text-2xl">🎙️</span>
+                    <div>
+                        <h3 class="text-white font-bold">Comunicarse de varias formas</h3>
+                        <p class="text-gray-300 text-sm mt-1">Escribir, dictar con el micrófono y conversar mediante el modo de voz.</p>
+                    </div>
+                </div>
+
+                <div class="glass-card rounded-2xl p-4 md:p-5 flex gap-3">
+                    <span class="text-2xl">📎</span>
+                    <div>
+                        <h3 class="text-white font-bold">Trabajar con archivos</h3>
+                        <p class="text-gray-300 text-sm mt-1">Adjuntar documentos, imágenes y planillas para analizarlos o transformarlos.</p>
+                    </div>
+                </div>
+
+                <div class="glass-card rounded-2xl p-4 md:p-5 flex gap-3">
+                    <span class="text-2xl">✍️</span>
+                    <div>
+                        <h3 class="text-white font-bold">Crear mejores prompts</h3>
+                        <p class="text-gray-300 text-sm mt-1">Aprender a pedir con claridad para obtener respuestas más útiles.</p>
+                    </div>
+                </div>
+
+                <div class="glass-card rounded-2xl p-4 md:p-5 flex gap-3">
+                    <span class="text-2xl">💼</span>
+                    <div>
+                        <h3 class="text-white font-bold">Aplicar IA al trabajo</h3>
+                        <p class="text-gray-300 text-sm mt-1">Identificar tareas concretas que pueden mejorarse con Inteligencia Artificial.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SLIDE 3 -->
+    <section class="slide flex-col items-center justify-center bg-gradient-to-b from-[#0f1a2e] to-[#0a0e1a] relative">
+        <div class="absolute inset-0 bg-pattern opacity-50"></div>
+        <div class="relative z-10 max-w-5xl mx-auto w-full px-4">
+            <h2 class="text-3xl md:text-5xl font-black text-white mb-4">
+                ¿QUÉ ES LA <span class="gradient-text">INTELIGENCIA ARTIFICIAL?</span>
+            </h2>
+
+            <div class="glass-card rounded-2xl p-5 md:p-8 mb-5">
+                <p class="text-gray-200 text-base md:text-xl leading-relaxed">
+                    La Inteligencia Artificial es un conjunto de tecnologías capaces de analizar información, detectar patrones y generar resultados que normalmente asociamos con tareas humanas.
+                </p>
+            </div>
+
+            <p class="text-gray-300 mb-4">La usamos todos los días, muchas veces sin darnos cuenta:</p>
+
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-3">
+                <div class="bg-white/5 border border-white/5 rounded-xl p-4 text-center">
+                    <span class="text-3xl block mb-2">🗺️</span>
+                    <p class="text-white font-bold text-sm">Mapas y rutas</p>
+                    <p class="text-gray-400 text-xs mt-1">Calculan caminos y tiempos.</p>
+                </div>
+                <div class="bg-white/5 border border-white/5 rounded-xl p-4 text-center">
+                    <span class="text-3xl block mb-2">🎬</span>
+                    <p class="text-white font-bold text-sm">Recomendaciones</p>
+                    <p class="text-gray-400 text-xs mt-1">Sugieren videos o música.</p>
+                </div>
+                <div class="bg-white/5 border border-white/5 rounded-xl p-4 text-center">
+                    <span class="text-3xl block mb-2">📱</span>
+                    <p class="text-white font-bold text-sm">Cámaras</p>
+                    <p class="text-gray-400 text-xs mt-1">Mejoran fotos automáticamente.</p>
+                </div>
+                <div class="bg-white/5 border border-white/5 rounded-xl p-4 text-center">
+                    <span class="text-3xl block mb-2">🛡️</span>
+                    <p class="text-white font-bold text-sm">Seguridad</p>
+                    <p class="text-gray-400 text-xs mt-1">Detectan operaciones extrañas.</p>
+                </div>
+            </div>
+
+            <div class="mt-5 p-4 bg-sky-400/10 border border-sky-400/20 rounded-xl">
+                <p class="text-sky-300 font-bold">Idea clave:</p>
+                <p class="text-gray-200 text-sm md:text-base mt-1">La IA no es una sola aplicación. Es una tecnología presente en muchas herramientas diferentes.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- SLIDE 4 -->
+    <section class="slide flex-col items-center justify-center bg-gradient-to-b from-[#0a0e1a] to-[#0f1a2e] relative">
+        <div class="absolute inset-0 bg-pattern opacity-50"></div>
+        <div class="relative z-10 max-w-5xl mx-auto w-full px-4">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-5 items-center">
+                <div>
+                    <p class="text-sky-300 font-bold uppercase tracking-wider mb-2">Un nuevo tipo de herramienta</p>
+                    <h2 class="text-3xl md:text-5xl font-black text-white mb-4">
+                        ¿QUÉ ES LA <span class="gradient-text">IA GENERATIVA?</span>
+                    </h2>
+                    <p class="text-gray-300 text-base md:text-lg leading-relaxed">
+                        Es una forma de Inteligencia Artificial capaz de crear contenido nuevo a partir de una instrucción.
+                    </p>
+
+                    <div class="mt-5 glass-card rounded-2xl p-5">
+                        <p class="text-white font-bold mb-3">Puede generar:</p>
+                        <div class="grid grid-cols-2 gap-2 text-sm text-gray-300">
+                            <span class="p-2 bg-white/5 rounded-lg">📝 Textos</span>
+                            <span class="p-2 bg-white/5 rounded-lg">🖼️ Imágenes</span>
+                            <span class="p-2 bg-white/5 rounded-lg">🎵 Música</span>
+                            <span class="p-2 bg-white/5 rounded-lg">🎬 Videos</span>
+                            <span class="p-2 bg-white/5 rounded-lg">💻 Código</span>
+                            <span class="p-2 bg-white/5 rounded-lg">📊 Análisis</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="relative">
+                    <div class="glass-card rounded-3xl p-6 md:p-8 text-center float-soft">
+                        <div class="w-24 h-24 md:w-32 md:h-32 mx-auto rounded-full bg-gradient-to-br from-sky-400/30 to-indigo-400/30 border border-white/10 flex items-center justify-center mb-5">
+                            <span class="text-5xl md:text-6xl">✨</span>
+                        </div>
+                        <h3 class="text-white text-xl md:text-2xl font-black">Instrucción → Creación</h3>
+                        <p class="text-gray-300 mt-3 text-sm md:text-base">La persona expresa una necesidad y la IA genera una propuesta de respuesta.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SLIDE 5 -->
+    <section class="slide flex-col items-center justify-center bg-gradient-to-b from-[#0f1a2e] to-[#0a0e1a] relative">
+        <div class="absolute inset-0 bg-pattern opacity-50"></div>
+        <div class="relative z-10 max-w-5xl mx-auto w-full px-4">
+            <h2 class="text-3xl md:text-5xl font-black text-white mb-4">
+                ENTONCES… ¿QUÉ ES <span class="gradient-text">CHATGPT?</span>
+            </h2>
+
+            <div class="glass-card rounded-2xl p-5 md:p-8 mb-5">
+                <p class="text-gray-200 text-lg md:text-2xl leading-relaxed">
+                    ChatGPT es un asistente conversacional de Inteligencia Artificial con el que podemos interactuar utilizando lenguaje cotidiano.
+                </p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-3">
+                <div class="bg-white/5 border border-white/5 rounded-2xl p-5">
+                    <span class="text-3xl">💬</span>
+                    <h3 class="text-white font-bold mt-3">Conversacional</h3>
+                    <p class="text-gray-300 text-sm mt-2">Podemos hacer preguntas, repreguntar y continuar una idea dentro del mismo chat.</p>
+                </div>
+
+                <div class="bg-white/5 border border-white/5 rounded-2xl p-5">
+                    <span class="text-3xl">🧠</span>
+                    <h3 class="text-white font-bold mt-3">Flexible</h3>
+                    <p class="text-gray-300 text-sm mt-2">Puede explicar, resumir, organizar, comparar, redactar, analizar y proponer.</p>
+                </div>
+
+                <div class="bg-white/5 border border-white/5 rounded-2xl p-5">
+                    <span class="text-3xl">🛠️</span>
+                    <h3 class="text-white font-bold mt-3">Práctico</h3>
+                    <p class="text-gray-300 text-sm mt-2">Se adapta a tareas personales, educativas, laborales y profesionales.</p>
+                </div>
+            </div>
+
+            <div class="mt-5 p-4 rounded-xl border border-amber-400/25 bg-amber-400/10 pulse-border">
+                <p class="text-amber-300 font-bold">Importante</p>
+                <p class="text-gray-200 text-sm md:text-base mt-1">
+                    ChatGPT es un asistente, no una fuente infalible. Las respuestas importantes deben revisarse y verificarse.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- SLIDE 6 -->
+    <section class="slide flex-col items-center justify-center bg-gradient-to-b from-[#0a0e1a] to-[#0f1a2e] relative">
+        <div class="absolute inset-0 bg-pattern opacity-50"></div>
+        <div class="relative z-10 max-w-5xl mx-auto w-full px-4">
+            <h2 class="text-3xl md:text-5xl font-black text-white mb-3">
+                CONOCIENDO LA <span class="gradient-text">INTERFAZ</span>
+            </h2>
+            <p class="text-gray-300 mb-5">La pantalla puede cambiar con el tiempo, pero sus áreas principales mantienen una lógica similar.</p>
+
+            <div class="glass-card rounded-3xl p-3 md:p-5">
+                <div class="grid grid-cols-1 md:grid-cols-[230px_1fr] gap-3 min-h-[420px]">
+                    <div class="rounded-2xl bg-black/25 border border-white/10 p-3">
+                        <div class="flex items-center gap-2 p-3 rounded-xl bg-white/10 text-white text-sm font-bold">
+                            <i data-lucide="square-pen" class="w-4 h-4"></i>
+                            Nuevo chat
+                        </div>
+                        <div class="mt-2 flex items-center gap-2 p-3 rounded-xl text-gray-300 text-sm">
+                            <i data-lucide="search" class="w-4 h-4"></i>
+                            Buscar chats
+                        </div>
+                        <div class="mt-4 text-[10px] uppercase tracking-wider text-gray-500 px-2">Recientes</div>
+                        <div class="mt-2 space-y-1 text-xs text-gray-400">
+                            <div class="p-2 rounded-lg bg-white/5">Informe de ventas</div>
+                            <div class="p-2 rounded-lg">Ideas para mi trabajo</div>
+                            <div class="p-2 rounded-lg">Resumen de documento</div>
+                        </div>
+                        <div class="mt-auto pt-8 px-2 text-xs text-gray-500">Cuenta y configuración</div>
+                    </div>
+
+                    <div class="rounded-2xl bg-[#0a0e1a]/60 border border-white/10 p-4 md:p-6 flex flex-col">
+                        <div class="text-center mt-4 md:mt-10">
+                            <span class="text-5xl block mb-3">🤖</span>
+                            <h3 class="text-white font-black text-xl md:text-2xl">¿En qué puedo ayudarte?</h3>
+                        </div>
+
+                        <div class="mt-auto prompt-box rounded-2xl p-3 md:p-4">
+                            <p class="text-gray-500 text-sm">Escribí un mensaje...</p>
+                            <div class="flex justify-between items-center mt-4">
+                                <button class="w-9 h-9 rounded-full bg-white/5 border border-white/10 text-gray-300 flex items-center justify-center" aria-label="Adjuntar archivo">
+                                    <i data-lucide="plus" class="w-4 h-4"></i>
+                                </button>
+                                <div class="flex gap-2">
+                                    <button class="w-9 h-9 rounded-full bg-white/5 border border-white/10 text-gray-300 flex items-center justify-center" aria-label="Micrófono">
+                                        <i data-lucide="mic" class="w-4 h-4"></i>
+                                    </button>
+                                    <button class="w-9 h-9 rounded-full bg-sky-500 text-white flex items-center justify-center" aria-label="Enviar">
+                                        <i data-lucide="arrow-up" class="w-4 h-4"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SLIDE 7 -->
+    <section class="slide flex-col items-center justify-center bg-gradient-to-b from-[#0f1a2e] to-[#0a0e1a] relative">
+        <div class="absolute inset-0 bg-pattern opacity-50"></div>
+        <div class="relative z-10 max-w-5xl mx-auto w-full px-4">
+            <p class="text-sky-300 font-bold uppercase tracking-wider mb-2">Menú lateral izquierdo</p>
+            <h2 class="text-3xl md:text-5xl font-black text-white mb-5">
+                ORGANIZÁ TUS <span class="gradient-text">CONVERSACIONES</span>
+            </h2>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div class="glass-card rounded-2xl p-5 flex gap-4">
+                    <div class="w-12 h-12 rounded-xl bg-sky-400/15 border border-sky-400/20 flex items-center justify-center shrink-0">
+                        <i data-lucide="square-pen" class="text-sky-300"></i>
+                    </div>
+                    <div>
+                        <h3 class="text-white font-bold text-lg">Nuevo chat</h3>
+                        <p class="text-gray-300 text-sm mt-2">Inicia una conversación desde cero. Conviene usar un chat distinto para cada tema o proyecto.</p>
+                    </div>
+                </div>
+
+                <div class="glass-card rounded-2xl p-5 flex gap-4">
+                    <div class="w-12 h-12 rounded-xl bg-indigo-400/15 border border-indigo-400/20 flex items-center justify-center shrink-0">
+                        <i data-lucide="search" class="text-indigo-300"></i>
+                    </div>
+                    <div>
+                        <h3 class="text-white font-bold text-lg">Buscar chats</h3>
+                        <p class="text-gray-300 text-sm mt-2">Permite encontrar conversaciones anteriores utilizando palabras relacionadas con el contenido.</p>
+                    </div>
+                </div>
+
+                <div class="glass-card rounded-2xl p-5 flex gap-4">
+                    <div class="w-12 h-12 rounded-xl bg-emerald-400/15 border border-emerald-400/20 flex items-center justify-center shrink-0">
+                        <i data-lucide="history" class="text-emerald-300"></i>
+                    </div>
+                    <div>
+                        <h3 class="text-white font-bold text-lg">Chats recientes</h3>
+                        <p class="text-gray-300 text-sm mt-2">Muestran el historial de trabajo para retomar preguntas, documentos o proyectos.</p>
+                    </div>
+                </div>
+
+                <div class="glass-card rounded-2xl p-5 flex gap-4">
+                    <div class="w-12 h-12 rounded-xl bg-amber-400/15 border border-amber-400/20 flex items-center justify-center shrink-0">
+                        <i data-lucide="settings" class="text-amber-300"></i>
+                    </div>
+                    <div>
+                        <h3 class="text-white font-bold text-lg">Cuenta y configuración</h3>
+                        <p class="text-gray-300 text-sm mt-2">Contiene opciones de perfil, personalización, privacidad, apariencia y plan disponible.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="mt-5 p-4 rounded-xl bg-sky-400/10 border border-sky-400/20">
+                <p class="text-sky-300 font-bold">Buena práctica:</p>
+                <p class="text-gray-200 text-sm mt-1">Usá títulos y conversaciones separadas para evitar mezclar información de proyectos diferentes.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- SLIDE 8 -->
+    <section class="slide flex-col items-center justify-center bg-gradient-to-b from-[#0a0e1a] to-[#0f1a2e] relative">
+        <div class="absolute inset-0 bg-pattern opacity-50"></div>
+        <div class="relative z-10 max-w-5xl mx-auto w-full px-4">
+            <h2 class="text-3xl md:text-5xl font-black text-white mb-4">
+                EL ÁREA DE <span class="gradient-text">CONVERSACIÓN</span>
+            </h2>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-5 items-center">
+                <div class="space-y-3">
+                    <div class="chat-user rounded-2xl rounded-br-md p-4 ml-6">
+                        <p class="text-xs text-sky-300 font-bold mb-1">VOS</p>
+                        <p class="text-gray-100 text-sm md:text-base">Trabajo en un comercio. ¿Cómo podría usar IA para ahorrar tiempo?</p>
+                    </div>
+
+                    <div class="chat-ai rounded-2xl rounded-bl-md p-4 mr-6">
+                        <p class="text-xs text-indigo-300 font-bold mb-1">CHATGPT</p>
+                        <p class="text-gray-200 text-sm md:text-base">Podrías utilizarla para redactar respuestas, organizar productos, analizar consultas frecuentes y preparar publicaciones.</p>
+                    </div>
+
+                    <div class="chat-user rounded-2xl rounded-br-md p-4 ml-6">
+                        <p class="text-xs text-sky-300 font-bold mb-1">VOS</p>
+                        <p class="text-gray-100 text-sm md:text-base">Dame cinco ejemplos concretos para mi negocio.</p>
+                    </div>
+                </div>
+
+                <div class="glass-card rounded-2xl p-5 md:p-7">
+                    <h3 class="text-white font-black text-xl mb-4">Una conversación se construye</h3>
+                    <div class="space-y-4">
+                        <div class="flex gap-3">
+                            <span class="w-8 h-8 rounded-full bg-sky-400/20 text-sky-300 flex items-center justify-center font-black shrink-0">1</span>
+                            <p class="text-gray-300 text-sm">Hacés una primera consulta.</p>
+                        </div>
+                        <div class="flex gap-3">
+                            <span class="w-8 h-8 rounded-full bg-sky-400/20 text-sky-300 flex items-center justify-center font-black shrink-0">2</span>
+                            <p class="text-gray-300 text-sm">Leés y evaluás la respuesta.</p>
+                        </div>
+                        <div class="flex gap-3">
+                            <span class="w-8 h-8 rounded-full bg-sky-400/20 text-sky-300 flex items-center justify-center font-black shrink-0">3</span>
+                            <p class="text-gray-300 text-sm">Repreguntás, corregís o pedís más detalle.</p>
+                        </div>
+                        <div class="flex gap-3">
+                            <span class="w-8 h-8 rounded-full bg-sky-400/20 text-sky-300 flex items-center justify-center font-black shrink-0">4</span>
+                            <p class="text-gray-300 text-sm">Mejorás el resultado de forma progresiva.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SLIDE 9 -->
+    <section class="slide flex-col items-center justify-center bg-gradient-to-b from-[#0f1a2e] to-[#0a0e1a] relative">
+        <div class="absolute inset-0 bg-pattern opacity-50"></div>
+        <div class="relative z-10 max-w-5xl mx-auto w-full px-4">
+            <h2 class="text-3xl md:text-5xl font-black text-white mb-3 text-center">
+                TRES FORMAS DE <span class="gradient-text">COMUNICARTE</span>
+            </h2>
+            <p class="text-gray-300 text-center mb-6">Elegí la modalidad más cómoda según la tarea y el momento.</p>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                <div class="glass-card rounded-3xl p-6 text-center">
+                    <div class="w-20 h-20 mx-auto rounded-2xl bg-sky-400/15 border border-sky-400/20 flex items-center justify-center mb-4">
+                        <i data-lucide="keyboard" class="w-9 h-9 text-sky-300"></i>
+                    </div>
+                    <h3 class="text-white font-black text-xl">Escritura</h3>
+                    <p class="text-gray-300 text-sm mt-3">Ideal para pedidos precisos, textos largos, información técnica o instrucciones que querés revisar antes de enviar.</p>
+                </div>
+
+                <div class="glass-card rounded-3xl p-6 text-center">
+                    <div class="w-20 h-20 mx-auto rounded-2xl bg-indigo-400/15 border border-indigo-400/20 flex items-center justify-center mb-4">
+                        <i data-lucide="mic" class="w-9 h-9 text-indigo-300"></i>
+                    </div>
+                    <h3 class="text-white font-black text-xl">Dictado</h3>
+                    <p class="text-gray-300 text-sm mt-3">Permite hablar para convertir tu voz en texto. Es útil cuando querés expresar una idea rápidamente.</p>
+                </div>
+
+                <div class="glass-card rounded-3xl p-6 text-center">
+                    <div class="w-20 h-20 mx-auto rounded-2xl bg-emerald-400/15 border border-emerald-400/20 flex items-center justify-center mb-4">
+                        <i data-lucide="audio-lines" class="w-9 h-9 text-emerald-300"></i>
+                    </div>
+                    <h3 class="text-white font-black text-xl">Modo voz</h3>
+                    <p class="text-gray-300 text-sm mt-3">Genera una conversación oral más natural para practicar, aprender, pensar ideas o recibir explicaciones.</p>
+                </div>
+            </div>
+
+            <div class="mt-5 glass-card rounded-2xl p-4 text-center">
+                <p class="text-gray-200 text-sm md:text-base">
+                    La calidad de la respuesta depende más de la claridad de tu pedido que del medio utilizado.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- SLIDE 10 -->
+    <section class="slide flex-col items-center justify-center bg-gradient-to-b from-[#0a0e1a] to-[#0f1a2e] relative">
+        <div class="absolute inset-0 bg-pattern opacity-50"></div>
+        <div class="relative z-10 max-w-5xl mx-auto w-full px-4">
+            <div class="flex items-center gap-3 mb-3">
+                <span class="text-4xl">📎</span>
+                <div>
+                    <p class="text-sky-300 font-bold uppercase tracking-wider text-sm">Botón “más” o adjuntar</p>
+                    <h2 class="text-3xl md:text-5xl font-black text-white">
+                        TRABAJAR CON <span class="gradient-text">ARCHIVOS</span>
+                    </h2>
+                </div>
+            </div>
+
+            <p class="text-gray-300 mb-5">Podés incorporar material propio para que ChatGPT lo analice dentro de la conversación.</p>
+
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-3">
+                <div class="glass-card rounded-2xl p-4 text-center">
+                    <span class="text-4xl block mb-2">📄</span>
+                    <h3 class="text-white font-bold">PDF</h3>
+                    <p class="text-gray-400 text-xs mt-2">Resumir, extraer ideas o explicar contenido.</p>
+                </div>
+
+                <div class="glass-card rounded-2xl p-4 text-center">
+                    <span class="text-4xl block mb-2">📝</span>
+                    <h3 class="text-white font-bold">Documentos</h3>
+                    <p class="text-gray-400 text-xs mt-2">Corregir, reescribir o estructurar textos.</p>
+                </div>
+
+                <div class="glass-card rounded-2xl p-4 text-center">
+                    <span class="text-4xl block mb-2">📊</span>
+                    <h3 class="text-white font-bold">Planillas</h3>
+                    <p class="text-gray-400 text-xs mt-2">Interpretar datos, tablas o resultados.</p>
+                </div>
+
+                <div class="glass-card rounded-2xl p-4 text-center">
+                    <span class="text-4xl block mb-2">🖼️</span>
+                    <h3 class="text-white font-bold">Imágenes</h3>
+                    <p class="text-gray-400 text-xs mt-2">Describir, analizar o detectar elementos.</p>
+                </div>
+            </div>
+
+            <div class="mt-5 grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div class="p-4 rounded-xl bg-emerald-400/10 border border-emerald-400/20">
+                    <p class="text-emerald-300 font-bold">Ejemplo útil</p>
+                    <p class="text-gray-200 text-sm mt-2">“Analizá este documento y explicame sus cinco ideas principales con lenguaje sencillo.”</p>
+                </div>
+
+                <div class="p-4 rounded-xl bg-red-400/10 border border-red-400/20">
+                    <p class="text-red-300 font-bold">Cuidado</p>
+                    <p class="text-gray-200 text-sm mt-2">No compartas contraseñas, datos bancarios, información médica sensible o documentación confidencial sin autorización.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SLIDE 11 -->
+    <section class="slide flex-col items-center justify-center bg-gradient-to-b from-[#0f1a2e] to-[#0a0e1a] relative">
+        <div class="absolute inset-0 bg-pattern opacity-50"></div>
+        <div class="relative z-10 max-w-5xl mx-auto w-full px-4">
+            <h2 class="text-3xl md:text-5xl font-black text-white mb-4">
+                ¿QUÉ ES UN <span class="gradient-text">PROMPT?</span>
+            </h2>
+
+            <div class="glass-card rounded-3xl p-6 md:p-9 text-center mb-5">
+                <div class="w-20 h-20 mx-auto rounded-2xl bg-gradient-to-br from-sky-400/20 to-indigo-400/20 border border-white/10 flex items-center justify-center mb-4">
+                    <i data-lucide="message-square-text" class="w-9 h-9 text-sky-300"></i>
+                </div>
+                <p class="text-white text-xl md:text-3xl font-black">
+                    Un prompt es la instrucción, pregunta o pedido que le damos a una Inteligencia Artificial.
+                </p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-3 text-center">
+                <div class="bg-white/5 border border-white/5 rounded-xl p-4">
+                    <p class="text-sky-300 font-black text-lg">Lo que pedís</p>
+                    <p class="text-gray-400 text-sm mt-1">La tarea que necesitás realizar.</p>
+                </div>
+                <div class="bg-white/5 border border-white/5 rounded-xl p-4">
+                    <p class="text-indigo-300 font-black text-lg">Cómo lo explicás</p>
+                    <p class="text-gray-400 text-sm mt-1">El contexto y los detalles disponibles.</p>
+                </div>
+                <div class="bg-white/5 border border-white/5 rounded-xl p-4">
+                    <p class="text-emerald-300 font-black text-lg">Cómo querés recibirlo</p>
+                    <p class="text-gray-400 text-sm mt-1">El formato, tono y nivel de profundidad.</p>
+                </div>
+            </div>
+
+            <div class="mt-5 p-4 bg-sky-400/10 border border-sky-400/20 rounded-xl text-center">
+                <p class="text-gray-200 font-bold">Una instrucción más clara suele producir una respuesta más útil.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- SLIDE 12 -->
+    <section class="slide flex-col items-center justify-center bg-gradient-to-b from-[#0a0e1a] to-[#0f1a2e] relative">
+        <div class="absolute inset-0 bg-pattern opacity-50"></div>
+        <div class="relative z-10 max-w-5xl mx-auto w-full px-4">
+            <h2 class="text-3xl md:text-5xl font-black text-white mb-5">
+                ¿CÓMO FUNCIONA LA <span class="gradient-text">INTERACCIÓN?</span>
+            </h2>
+
+            <div class="grid grid-cols-1 md:grid-cols-7 gap-3 items-center text-center">
+                <div class="glass-card rounded-2xl p-5 md:col-span-2">
+                    <span class="text-4xl block mb-2">👤</span>
+                    <h3 class="text-white font-bold">Persona</h3>
+                    <p class="text-gray-400 text-xs mt-1">Tiene una necesidad o una idea.</p>
+                </div>
+
+                <div class="hidden md:flex justify-center">
+                    <i data-lucide="arrow-right" class="text-sky-300"></i>
+                </div>
+
+                <div class="glass-card rounded-2xl p-5 md:col-span-2 border-sky-400/20">
+                    <span class="text-4xl block mb-2">✍️</span>
+                    <h3 class="text-white font-bold">Prompt</h3>
+                    <p class="text-gray-400 text-xs mt-1">Expresa la tarea mediante una instrucción.</p>
+                </div>
+
+                <div class="hidden md:flex justify-center">
+                    <i data-lucide="arrow-right" class="text-sky-300"></i>
+                </div>
+
+                <div class="glass-card rounded-2xl p-5 md:col-span-1">
+                    <span class="text-4xl block mb-2">🤖</span>
+                    <h3 class="text-white font-bold">IA</h3>
+                    <p class="text-gray-400 text-xs mt-1">Procesa el pedido.</p>
+                </div>
+            </div>
+
+            <div class="flex justify-center my-4">
+                <i data-lucide="arrow-down" class="text-indigo-300 w-7 h-7"></i>
+            </div>
+
+            <div class="glass-card rounded-2xl p-5 max-w-3xl mx-auto text-center">
+                <span class="text-4xl block mb-2">📋</span>
+                <h3 class="text-white font-black text-xl">Respuesta generada</h3>
+                <p class="text-gray-300 text-sm mt-2">La persona la revisa, corrige, amplía o vuelve a preguntar.</p>
+            </div>
+
+            <div class="mt-5 p-4 rounded-xl bg-indigo-400/10 border border-indigo-400/20 text-center">
+                <p class="text-indigo-300 font-bold">El proceso es iterativo:</p>
+                <p class="text-gray-200 text-sm mt-1">No hace falta obtener el resultado perfecto en el primer intento.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- SLIDE 13 -->
+    <section class="slide flex-col items-center justify-center bg-gradient-to-b from-[#0f1a2e] to-[#0a0e1a] relative">
+        <div class="absolute inset-0 bg-pattern opacity-50"></div>
+        <div class="relative z-10 max-w-5xl mx-auto w-full px-4">
+            <h2 class="text-3xl md:text-5xl font-black text-white mb-5">
+                PEDIDO VAGO VS. <span class="gradient-text">PEDIDO CLARO</span>
+            </h2>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+                <div class="rounded-3xl p-5 md:p-7 bg-red-400/10 border border-red-400/20">
+                    <div class="flex items-center gap-3 mb-4">
+                        <span class="text-3xl">❌</span>
+                        <h3 class="text-red-300 font-black text-xl">Prompt poco claro</h3>
+                    </div>
+                    <div class="prompt-box rounded-2xl p-4">
+                        <p class="text-gray-100">“Haceme una publicación.”</p>
+                    </div>
+                    <p class="text-gray-300 text-sm mt-4">
+                        No indica para quién, sobre qué tema, con qué objetivo, en qué red social ni con qué tono.
+                    </p>
+                </div>
+
+                <div class="rounded-3xl p-5 md:p-7 bg-emerald-400/10 border border-emerald-400/20">
+                    <div class="flex items-center gap-3 mb-4">
+                        <span class="text-3xl">✅</span>
+                        <h3 class="text-emerald-300 font-black text-xl">Prompt más completo</h3>
+                    </div>
+                    <div class="prompt-box rounded-2xl p-4">
+                        <p class="text-gray-100 text-sm">
+                            “Creá una publicación para Instagram destinada a adultos de Paraná que quieran aprender Inteligencia Artificial. Usá un tono cercano, destacá beneficios laborales y cerrá con una invitación a consultar.”
+                        </p>
+                    </div>
+                    <p class="text-gray-300 text-sm mt-4">
+                        Define público, canal, objetivo, tema, tono y cierre esperado.
+                    </p>
+                </div>
+            </div>
+
+            <div class="mt-5 glass-card rounded-2xl p-4 text-center">
+                <p class="text-white font-bold">No se trata de escribir complicado. Se trata de explicar bien lo que necesitás.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- SLIDE 14 -->
+    <section class="slide flex-col items-center justify-center bg-gradient-to-b from-[#0a0e1a] to-[#0f1a2e] relative">
+        <div class="absolute inset-0 bg-pattern opacity-50"></div>
+        <div class="relative z-10 max-w-5xl mx-auto w-full px-4">
+            <p class="text-sky-300 font-bold uppercase tracking-wider mb-2">Método inicial</p>
+            <h2 class="text-3xl md:text-5xl font-black text-white mb-5">
+                FÓRMULA IEC PARA UN <span class="gradient-text">BUEN PROMPT</span>
+            </h2>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-3">
+                <div class="glass-card rounded-2xl p-4 text-center">
+                    <span class="text-3xl block mb-2">🌎</span>
+                    <p class="text-sky-300 font-black">Contexto</p>
+                    <p class="text-gray-400 text-xs mt-2">Explicá la situación.</p>
+                </div>
+
+                <div class="glass-card rounded-2xl p-4 text-center">
+                    <span class="text-3xl block mb-2">👤</span>
+                    <p class="text-indigo-300 font-black">Rol</p>
+                    <p class="text-gray-400 text-xs mt-2">Indicá desde qué mirada debe responder.</p>
+                </div>
+
+                <div class="glass-card rounded-2xl p-4 text-center">
+                    <span class="text-3xl block mb-2">🎯</span>
+                    <p class="text-emerald-300 font-black">Objetivo</p>
+                    <p class="text-gray-400 text-xs mt-2">Definí la tarea concreta.</p>
+                </div>
+
+                <div class="glass-card rounded-2xl p-4 text-center">
+                    <span class="text-3xl block mb-2">📐</span>
+                    <p class="text-amber-300 font-black">Formato</p>
+                    <p class="text-gray-400 text-xs mt-2">Pedí lista, tabla, mensaje o informe.</p>
+                </div>
+
+                <div class="glass-card rounded-2xl p-4 text-center sm:col-span-2 lg:col-span-1">
+                    <span class="text-3xl block mb-2">✨</span>
+                    <p class="text-pink-300 font-black">Detalles</p>
+                    <p class="text-gray-400 text-xs mt-2">Aclarar tono, extensión y público.</p>
+                </div>
+            </div>
+
+            <div class="mt-5 prompt-box rounded-2xl p-5">
+                <p class="text-xs text-sky-300 font-bold uppercase tracking-wider mb-2">Ejemplo completo</p>
+                <p class="text-gray-100 text-sm md:text-base leading-relaxed">
+                    “Soy responsable de un comercio de indumentaria. Actuá como asesor de atención al cliente. Creá cinco respuestas breves para consultas frecuentes por WhatsApp. Usá un tono amable, argentino y profesional. Presentalas en una lista numerada.”
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- SLIDE 15 -->
+    <section class="slide flex-col items-center justify-center bg-gradient-to-b from-[#0f1a2e] to-[#0a0e1a] relative">
+        <div class="absolute inset-0 bg-pattern opacity-50"></div>
+        <div class="relative z-10 max-w-5xl mx-auto w-full px-4">
+            <h2 class="text-3xl md:text-5xl font-black text-white mb-3">
+                PROMPTS SEGÚN TU <span class="gradient-text">ACTIVIDAD</span>
+            </h2>
+            <p class="text-gray-300 mb-5">La misma herramienta puede adaptarse a profesiones y oficios muy distintos.</p>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+                <div class="glass-card rounded-2xl p-4">
+                    <p class="text-sky-300 font-bold">👩‍🏫 Docencia</p>
+                    <p class="text-gray-300 text-sm mt-2">“Explicá este tema para alumnos adultos mediante ejemplos cotidianos y una actividad práctica.”</p>
+                </div>
+
+                <div class="glass-card rounded-2xl p-4">
+                    <p class="text-indigo-300 font-bold">⚖️ Administración jurídica</p>
+                    <p class="text-gray-300 text-sm mt-2">“Organizá esta información en un resumen claro, separando hechos, fechas y documentos pendientes.”</p>
+                </div>
+
+                <div class="glass-card rounded-2xl p-4">
+                    <p class="text-emerald-300 font-bold">🔧 Oficios técnicos</p>
+                    <p class="text-gray-300 text-sm mt-2">“Creá una lista de verificación para revisar una instalación antes de entregar el trabajo.”</p>
+                </div>
+
+                <div class="glass-card rounded-2xl p-4">
+                    <p class="text-amber-300 font-bold">🛍️ Comercio</p>
+                    <p class="text-gray-300 text-sm mt-2">“Prepará respuestas para preguntas frecuentes sobre precios, stock, envíos y medios de pago.”</p>
+                </div>
+
+                <div class="glass-card rounded-2xl p-4">
+                    <p class="text-pink-300 font-bold">📊 Administración</p>
+                    <p class="text-gray-300 text-sm mt-2">“Transformá estas notas desordenadas en un informe breve con tareas, responsables y fechas.”</p>
+                </div>
+
+                <div class="glass-card rounded-2xl p-4">
+                    <p class="text-cyan-300 font-bold">🏗️ Construcción y diseño</p>
+                    <p class="text-gray-300 text-sm mt-2">“Ayudame a redactar una propuesta para un cliente, detallando etapas, materiales y plazos.”</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SLIDE 16 -->
+    <section class="slide flex-col items-center justify-center bg-gradient-to-b from-[#0a0e1a] to-[#0f1a2e] relative">
+        <div class="absolute inset-0 bg-pattern opacity-50"></div>
+        <div class="relative z-10 max-w-5xl mx-auto w-full px-4">
+            <h2 class="text-3xl md:text-5xl font-black text-white mb-5">
+                ¿QUÉ PUEDE HACER POR <span class="gradient-text">TU TRABAJO?</span>
+            </h2>
+
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-3">
+                <div class="bg-white/5 border border-white/5 rounded-2xl p-4 text-center">
+                    <span class="text-3xl block mb-2">⏱️</span>
+                    <p class="text-white font-bold text-sm">Ahorrar tiempo</p>
+                    <p class="text-gray-400 text-xs mt-1">Borradores y tareas repetitivas.</p>
+                </div>
+                <div class="bg-white/5 border border-white/5 rounded-2xl p-4 text-center">
+                    <span class="text-3xl block mb-2">🧩</span>
+                    <p class="text-white font-bold text-sm">Ordenar ideas</p>
+                    <p class="text-gray-400 text-xs mt-1">Listas, planes y estructuras.</p>
+                </div>
+                <div class="bg-white/5 border border-white/5 rounded-2xl p-4 text-center">
+                    <span class="text-3xl block mb-2">📝</span>
+                    <p class="text-white font-bold text-sm">Redactar mejor</p>
+                    <p class="text-gray-400 text-xs mt-1">Mensajes, informes y propuestas.</p>
+                </div>
+                <div class="bg-white/5 border border-white/5 rounded-2xl p-4 text-center">
+                    <span class="text-3xl block mb-2">📚</span>
+                    <p class="text-white font-bold text-sm">Aprender</p>
+                    <p class="text-gray-400 text-xs mt-1">Explicaciones y práctica guiada.</p>
+                </div>
+                <div class="bg-white/5 border border-white/5 rounded-2xl p-4 text-center">
+                    <span class="text-3xl block mb-2">💡</span>
+                    <p class="text-white font-bold text-sm">Generar ideas</p>
+                    <p class="text-gray-400 text-xs mt-1">Opciones y alternativas.</p>
+                </div>
+                <div class="bg-white/5 border border-white/5 rounded-2xl p-4 text-center">
+                    <span class="text-3xl block mb-2">📊</span>
+                    <p class="text-white font-bold text-sm">Analizar</p>
+                    <p class="text-gray-400 text-xs mt-1">Información y documentos.</p>
+                </div>
+                <div class="bg-white/5 border border-white/5 rounded-2xl p-4 text-center">
+                    <span class="text-3xl block mb-2">🗣️</span>
+                    <p class="text-white font-bold text-sm">Comunicar</p>
+                    <p class="text-gray-400 text-xs mt-1">Adaptar tono y público.</p>
+                </div>
+                <div class="bg-white/5 border border-white/5 rounded-2xl p-4 text-center">
+                    <span class="text-3xl block mb-2">🔄</span>
+                    <p class="text-white font-bold text-sm">Mejorar procesos</p>
+                    <p class="text-gray-400 text-xs mt-1">Detectar pasos innecesarios.</p>
+                </div>
+            </div>
+
+            <div class="mt-5 glass-card rounded-2xl p-5 text-center">
+                <p class="text-gray-200 text-base md:text-lg">
+                    El primer objetivo no es automatizar todo: es encontrar una tarea concreta donde la IA pueda aportar valor.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- SLIDE 17 -->
+    <section class="slide flex-col items-center justify-center bg-gradient-to-b from-[#0f1a2e] to-[#0a0e1a] relative">
+        <div class="absolute inset-0 bg-pattern opacity-50"></div>
+        <div class="relative z-10 max-w-5xl mx-auto w-full px-4">
+            <div class="flex items-center gap-3 mb-3">
+                <span class="text-4xl">🧪</span>
+                <div>
+                    <p class="text-sky-300 font-bold uppercase tracking-wider text-sm">Actividad práctica 1</p>
+                    <h2 class="text-3xl md:text-5xl font-black text-white">
+                        PRESENTATE A <span class="gradient-text">CHATGPT</span>
+                    </h2>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-[1fr_1.2fr] gap-5 items-start">
+                <div class="glass-card rounded-2xl p-5">
+                    <h3 class="text-white font-black text-xl mb-4">Incluí estos datos:</h3>
+                    <div class="space-y-3 text-sm text-gray-300">
+                        <p class="flex gap-2"><span class="text-sky-300">1.</span> Tu nombre o cómo querés que te llame.</p>
+                        <p class="flex gap-2"><span class="text-sky-300">2.</span> Tu profesión, oficio o actividad.</p>
+                        <p class="flex gap-2"><span class="text-sky-300">3.</span> Las tareas que realizás habitualmente.</p>
+                        <p class="flex gap-2"><span class="text-sky-300">4.</span> Qué dificultades o pérdidas de tiempo tenés.</p>
+                        <p class="flex gap-2"><span class="text-sky-300">5.</span> Qué te gustaría aprender con IA.</p>
+                    </div>
+                </div>
+
+                <div class="prompt-box rounded-2xl p-5 md:p-6">
+                    <p class="text-xs text-emerald-300 font-bold uppercase tracking-wider mb-3">Prompt sugerido</p>
+                    <p class="text-gray-100 text-sm md:text-base leading-relaxed">
+                        “Hola. Me llamo ________. Trabajo como/en ________. Mis tareas principales son ________. Actualmente pierdo tiempo o tengo dificultades con ________. Quiero aprender a utilizar Inteligencia Artificial para ________. Haceme cinco preguntas para conocer mejor mi actividad y luego recomendame formas concretas en las que podrías ayudarme.”
+                    </p>
+                    <button onclick="copyText(this)" data-copy="Hola. Me llamo ________. Trabajo como/en ________. Mis tareas principales son ________. Actualmente pierdo tiempo o tengo dificultades con ________. Quiero aprender a utilizar Inteligencia Artificial para ________. Haceme cinco preguntas para conocer mejor mi actividad y luego recomendame formas concretas en las que podrías ayudarme."
+                            class="mt-4 px-4 py-2 rounded-xl bg-sky-500 hover:bg-sky-400 text-white text-xs font-bold transition">
+                        Copiar prompt
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SLIDE 18 -->
+    <section class="slide flex-col items-center justify-center bg-gradient-to-b from-[#0a0e1a] to-[#0f1a2e] relative">
+        <div class="absolute inset-0 bg-pattern opacity-50"></div>
+        <div class="relative z-10 max-w-5xl mx-auto w-full px-4">
+            <div class="flex items-center gap-3 mb-3">
+                <span class="text-4xl">🔍</span>
+                <div>
+                    <p class="text-sky-300 font-bold uppercase tracking-wider text-sm">Actividad práctica 2</p>
+                    <h2 class="text-3xl md:text-5xl font-black text-white">
+                        INVESTIGÁ TU <span class="gradient-text">ÁMBITO LABORAL</span>
+                    </h2>
+                </div>
+            </div>
+
+            <div class="prompt-box rounded-2xl p-5 md:p-7 mb-5">
+                <p class="text-xs text-sky-300 font-bold uppercase tracking-wider mb-3">Prompt principal</p>
+                <p class="text-gray-100 text-base md:text-lg leading-relaxed">
+                    “Analizá mi actividad laboral y explicame de qué maneras la Inteligencia Artificial podría ayudarme. Separá las oportunidades en: ahorro de tiempo, mejora de la atención, organización, creación de contenido, análisis de información y aprendizaje.”
+                </p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-3">
+                <div class="glass-card rounded-2xl p-4">
+                    <span class="text-2xl">🧠</span>
+                    <h3 class="text-white font-bold mt-2">Evaluá</h3>
+                    <p class="text-gray-300 text-sm mt-1">¿Las recomendaciones se relacionan realmente con tu trabajo?</p>
+                </div>
+                <div class="glass-card rounded-2xl p-4">
+                    <span class="text-2xl">💬</span>
+                    <h3 class="text-white font-bold mt-2">Repreguntá</h3>
+                    <p class="text-gray-300 text-sm mt-1">Pedí ejemplos más concretos o adaptados a tu realidad.</p>
+                </div>
+                <div class="glass-card rounded-2xl p-4">
+                    <span class="text-2xl">⭐</span>
+                    <h3 class="text-white font-bold mt-2">Seleccioná</h3>
+                    <p class="text-gray-300 text-sm mt-1">Elegí las tres ideas que podrían aportarte mayor valor.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SLIDE 19 -->
+    <section class="slide flex-col items-center justify-center bg-gradient-to-b from-[#0f1a2e] to-[#0a0e1a] relative">
+        <div class="absolute inset-0 bg-pattern opacity-50"></div>
+        <div class="relative z-10 max-w-5xl mx-auto w-full px-4">
+            <div class="flex items-center gap-3 mb-3">
+                <span class="text-4xl">✍️</span>
+                <div>
+                    <p class="text-sky-300 font-bold uppercase tracking-wider text-sm">Actividad práctica 3</p>
+                    <h2 class="text-3xl md:text-5xl font-black text-white">
+                        CREÁ TUS PRIMEROS <span class="gradient-text">5 PROMPTS</span>
+                    </h2>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-5 gap-3">
+                <div class="glass-card rounded-2xl p-4 text-center">
+                    <span class="text-3xl block mb-2">📝</span>
+                    <p class="text-white font-bold text-sm">Redacción</p>
+                    <p class="text-gray-400 text-xs mt-1">Mensaje, nota o informe.</p>
+                </div>
+                <div class="glass-card rounded-2xl p-4 text-center">
+                    <span class="text-3xl block mb-2">🗂️</span>
+                    <p class="text-white font-bold text-sm">Organización</p>
+                    <p class="text-gray-400 text-xs mt-1">Tareas, agenda o proceso.</p>
+                </div>
+                <div class="glass-card rounded-2xl p-4 text-center">
+                    <span class="text-3xl block mb-2">📚</span>
+                    <p class="text-white font-bold text-sm">Aprendizaje</p>
+                    <p class="text-gray-400 text-xs mt-1">Explicar un tema.</p>
+                </div>
+                <div class="glass-card rounded-2xl p-4 text-center">
+                    <span class="text-3xl block mb-2">💡</span>
+                    <p class="text-white font-bold text-sm">Ideas</p>
+                    <p class="text-gray-400 text-xs mt-1">Opciones para mejorar.</p>
+                </div>
+                <div class="glass-card rounded-2xl p-4 text-center">
+                    <span class="text-3xl block mb-2">📊</span>
+                    <p class="text-white font-bold text-sm">Análisis</p>
+                    <p class="text-gray-400 text-xs mt-1">Información o problema.</p>
+                </div>
+            </div>
+
+            <div class="mt-5 glass-card rounded-2xl p-5">
+                <h3 class="text-white font-black mb-3">Revisión entre compañeros</h3>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-3 text-sm">
+                    <p class="p-3 bg-white/5 rounded-xl text-gray-300">¿Se entiende con claridad qué se necesita?</p>
+                    <p class="p-3 bg-white/5 rounded-xl text-gray-300">¿Tiene suficiente contexto?</p>
+                    <p class="p-3 bg-white/5 rounded-xl text-gray-300">¿Indica cómo debe presentarse la respuesta?</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SLIDE 20 -->
+    <section class="slide flex-col items-center justify-center bg-gradient-to-b from-[#0a0e1a] to-[#0f1a2e] relative">
+        <div class="absolute inset-0 bg-pattern opacity-50"></div>
+        <div class="relative z-10 max-w-5xl mx-auto w-full px-4">
+            <h2 class="text-3xl md:text-5xl font-black text-white mb-5">
+                USO RESPONSABLE Y <span class="gradient-text">PENSAMIENTO CRÍTICO</span>
+            </h2>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div class="glass-card rounded-2xl p-5">
+                    <div class="flex items-center gap-3 mb-3">
+                        <span class="text-3xl">✅</span>
+                        <h3 class="text-emerald-300 font-black text-xl">Hacé esto</h3>
+                    </div>
+                    <div class="space-y-2 text-sm text-gray-300">
+                        <p>• Revisá siempre el resultado.</p>
+                        <p>• Pedí fuentes o verificá datos importantes.</p>
+                        <p>• Corregí errores y aportá tu experiencia.</p>
+                        <p>• Adaptá el contenido antes de utilizarlo.</p>
+                        <p>• Protegé la información personal y laboral.</p>
+                    </div>
+                </div>
+
+                <div class="glass-card rounded-2xl p-5">
+                    <div class="flex items-center gap-3 mb-3">
+                        <span class="text-3xl">🚫</span>
+                        <h3 class="text-red-300 font-black text-xl">Evitá esto</h3>
+                    </div>
+                    <div class="space-y-2 text-sm text-gray-300">
+                        <p>• Copiar y publicar sin leer.</p>
+                        <p>• Confiar automáticamente en cifras o leyes.</p>
+                        <p>• Cargar datos confidenciales sin autorización.</p>
+                        <p>• Usar la IA para reemplazar decisiones críticas.</p>
+                        <p>• Presentar contenido generado como trabajo propio sin revisión.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="mt-5 p-5 rounded-2xl bg-amber-400/10 border border-amber-400/25 text-center pulse-border">
+                <p class="text-amber-300 font-black text-lg">La responsabilidad final sigue siendo humana.</p>
+                <p class="text-gray-200 text-sm mt-2">La IA propone. La persona analiza, decide y se hace responsable del resultado.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- SLIDE 21 -->
+    <section class="slide flex-col items-center justify-center bg-gradient-to-b from-[#0f1a2e] to-[#0a0e1a] relative">
+        <div class="absolute inset-0 bg-pattern opacity-50"></div>
+        <div class="relative z-10 max-w-5xl mx-auto w-full px-4">
+            <div class="text-center mb-5">
+                <span class="text-5xl block mb-3">🏠</span>
+                <p class="text-sky-300 font-bold uppercase tracking-wider">Desafío para continuar practicando</p>
+                <h2 class="text-3xl md:text-5xl font-black text-white mt-2">
+                    ACTIVIDAD PARA EL <span class="gradient-text">HOGAR</span>
+                </h2>
+            </div>
+
+            <div class="glass-card rounded-3xl p-5 md:p-8 max-w-4xl mx-auto">
+                <h3 class="text-white font-black text-xl md:text-2xl mb-4">Conversá con ChatGPT durante al menos 30 minutos.</h3>
+
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-3">
+                    <div class="p-4 bg-white/5 rounded-xl">
+                        <span class="text-2xl">⏱️</span>
+                        <p class="text-white font-bold mt-2">Ahorro de tiempo</p>
+                        <p class="text-gray-400 text-xs mt-1">Investigá qué tareas repetitivas podría ayudarte a realizar.</p>
+                    </div>
+
+                    <div class="p-4 bg-white/5 rounded-xl">
+                        <span class="text-2xl">⚙️</span>
+                        <p class="text-white font-bold mt-2">Procesos</p>
+                        <p class="text-gray-400 text-xs mt-1">Identificá un proceso laboral que podría organizarse mejor.</p>
+                    </div>
+
+                    <div class="p-4 bg-white/5 rounded-xl">
+                        <span class="text-2xl">📚</span>
+                        <p class="text-white font-bold mt-2">Aprendizaje</p>
+                        <p class="text-gray-400 text-xs mt-1">Pedile que te enseñe algo relacionado con tu actividad.</p>
+                    </div>
+                </div>
+
+                <div class="mt-5 p-4 rounded-xl bg-sky-400/10 border border-sky-400/20">
+                    <p class="text-sky-300 font-bold">Para la próxima clase:</p>
+                    <p class="text-gray-200 text-sm mt-2">Traé tres ejemplos de conversaciones útiles, un prompt que te haya dado un buen resultado y una respuesta que hayas tenido que mejorar.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SLIDE 22 -->
+    <section class="slide flex-col items-center justify-center bg-gradient-to-br from-[#0a0e1a] via-[#0f1a2e] to-[#0a0e1a] text-center relative overflow-hidden">
+        <div class="absolute inset-0 bg-pattern opacity-70"></div>
+        <div class="absolute top-0 right-0 w-1/2 h-1/2 bg-indigo-500/10 rounded-full blur-3xl"></div>
+
+        <div class="relative z-10 max-w-5xl mx-auto w-full px-4">
+            <img src="https://i.postimg.cc/jSkQKpRK/Diseno-sin-titulo-2026-05-15T105828-195.png"
+                 alt="Instituto IEC"
+                 class="h-14 md:h-20 mx-auto mb-5 object-contain" />
+
+            <p class="text-sky-300 font-bold uppercase tracking-[0.2em] text-sm mb-3">Resumen de la clase</p>
+
+            <h2 class="text-3xl sm:text-4xl md:text-6xl font-black text-white leading-tight mb-5">
+                LA IA SE APRENDE<br>
+                <span class="gradient-text">USÁNDOLA</span>
+            </h2>
+
+            <div class="glass-card rounded-3xl p-5 md:p-8 max-w-4xl mx-auto">
+                <div class="grid grid-cols-2 md:grid-cols-3 gap-2 md:gap-3 text-xs md:text-sm">
+                    <span class="p-3 bg-white/5 rounded-xl text-gray-200">✔ Qué es la IA</span>
+                    <span class="p-3 bg-white/5 rounded-xl text-gray-200">✔ IA generativa</span>
+                    <span class="p-3 bg-white/5 rounded-xl text-gray-200">✔ Qué es ChatGPT</span>
+                    <span class="p-3 bg-white/5 rounded-xl text-gray-200">✔ Interfaz principal</span>
+                    <span class="p-3 bg-white/5 rounded-xl text-gray-200">✔ Archivos y voz</span>
+                    <span class="p-3 bg-white/5 rounded-xl text-gray-200">✔ Creación de prompts</span>
+                    <span class="p-3 bg-white/5 rounded-xl text-gray-200">✔ Aplicación laboral</span>
+                    <span class="p-3 bg-white/5 rounded-xl text-gray-200">✔ Uso responsable</span>
+                    <span class="p-3 bg-white/5 rounded-xl text-gray-200 col-span-2 md:col-span-1">✔ Práctica continua</span>
+                </div>
+
+                <p class="text-white font-black text-lg md:text-2xl mt-6">
+                    Cuanto mejor aprendamos a explicar lo que necesitamos, mejores resultados podremos construir.
+                </p>
+            </div>
+
+            <p class="text-gray-400 text-xs md:text-sm mt-6">
+                Instituto IEC · Experto en Aplicaciones Prácticas con IA
+            </p>
+        </div>
+    </section>
+
+    <script>
+        let current = 0;
+        const slides = Array.from(document.querySelectorAll(".slide"));
+        const dotsContainer = document.getElementById("dots");
+        const progressBar = document.getElementById("progress-bar");
+        const currentNumber = document.getElementById("current-number");
+        const totalNumber = document.getElementById("total-number");
+        const prevButton = document.getElementById("prev-btn");
+        const nextButton = document.getElementById("next-btn");
+
+        totalNumber.textContent = slides.length;
+
+        slides.forEach((_, index) => {
+            const dot = document.createElement("button");
+            dot.className = "dot w-2 h-2 md:w-2.5 md:h-2.5 rounded-full bg-white/25 transition";
+            dot.setAttribute("aria-label", `Ir a la diapositiva ${index + 1}`);
+            dot.addEventListener("click", () => goSlide(index));
+            dotsContainer.appendChild(dot);
+        });
+
+        const dots = Array.from(document.querySelectorAll(".dot"));
+
+        function updateUI() {
+            dots.forEach((dot, index) => {
+                dot.classList.toggle("active", index === current);
+            });
+
+            currentNumber.textContent = current + 1;
+            progressBar.style.width = `${((current + 1) / slides.length) * 100}%`;
+
+            prevButton.disabled = current === 0;
+            nextButton.disabled = current === slides.length - 1;
+        }
+
+        function goSlide(index) {
+            if (index < 0 || index >= slides.length || index === current) return;
+
+            slides[current].classList.remove("active");
+            current = index;
+            slides[current].classList.add("active");
+            slides[current].scrollTop = 0;
+            window.scrollTo({ top: 0, left: 0, behavior: "instant" });
+            updateUI();
+        }
+
+        function changeSlide(direction) {
+            goSlide(current + direction);
+        }
+
+        document.addEventListener("keydown", (event) => {
+            const activeTag = document.activeElement?.tagName?.toLowerCase();
+            if (["input", "textarea", "select"].includes(activeTag)) return;
+
+            if (event.key === "ArrowRight" || event.key === "PageDown" || event.key === " ") {
+                event.preventDefault();
+                changeSlide(1);
+            }
+
+            if (event.key === "ArrowLeft" || event.key === "PageUp") {
+                event.preventDefault();
+                changeSlide(-1);
+            }
+
+            if (event.key === "Home") {
+                event.preventDefault();
+                goSlide(0);
+            }
+
+            if (event.key === "End") {
+                event.preventDefault();
+                goSlide(slides.length - 1);
+            }
+        });
+
+        let touchStartX = 0;
+        let touchStartY = 0;
+
+        document.addEventListener("touchstart", (event) => {
+            touchStartX = event.changedTouches[0].screenX;
+            touchStartY = event.changedTouches[0].screenY;
+        }, { passive: true });
+
+        document.addEventListener("touchend", (event) => {
+            const touchEndX = event.changedTouches[0].screenX;
+            const touchEndY = event.changedTouches[0].screenY;
+            const diffX = touchStartX - touchEndX;
+            const diffY = touchStartY - touchEndY;
+
+            if (Math.abs(diffX) > 60 && Math.abs(diffX) > Math.abs(diffY)) {
+                if (diffX > 0) changeSlide(1);
+                else changeSlide(-1);
+            }
+        }, { passive: true });
+
+        async function copyText(button) {
+            const text = button.dataset.copy;
+            const original = button.textContent;
+
+            try {
+                await navigator.clipboard.writeText(text);
+                button.textContent = "¡Prompt copiado!";
+                button.classList.remove("bg-sky-500");
+                button.classList.add("bg-emerald-500");
+            } catch {
+                button.textContent = "Seleccioná y copiá manualmente";
+            }
+
+            setTimeout(() => {
+                button.textContent = original;
+                button.classList.add("bg-sky-500");
+                button.classList.remove("bg-emerald-500");
+            }, 1800);
+        }
+
+        updateUI();
+        lucide.createIcons();
+    </script>
+</body>
+</html>

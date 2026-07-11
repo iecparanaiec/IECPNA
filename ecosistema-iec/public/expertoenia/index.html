@@ -1,0 +1,165 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Campus del curso Experto en Aplicaciones Prácticas con IA - Instituto IEC" />
+  <title>Campus Experto en IA | Instituto IEC</title>
+  <script src="https://cdn.tailwindcss.com/3.4.17"></script>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
+  <script src="https://cdn.jsdelivr.net/npm/lucide@0.263.0/dist/umd/lucide.min.js"></script>
+  <style>
+    *{box-sizing:border-box;font-family:"DM Sans",sans-serif}
+    html,body{margin:0;min-height:100%;background:#080c17;color:#fff}
+    body{min-height:100vh;overflow-x:hidden}
+    .bg-pattern{background-image:radial-gradient(circle at 15% 20%,rgba(56,189,248,.12),transparent 34%),radial-gradient(circle at 85% 75%,rgba(129,140,248,.13),transparent 35%)}
+    .glass{background:rgba(255,255,255,.075);backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px);border:1px solid rgba(255,255,255,.12);box-shadow:0 24px 65px rgba(0,0,0,.28)}
+    .gradient-text{background:linear-gradient(135deg,#38bdf8,#818cf8);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
+    .screen{min-height:100vh}
+    .hidden-screen{display:none!important}
+    .splash-logo{animation:logoPulse 1.7s ease-in-out infinite}
+    @keyframes logoPulse{0%,100%{transform:scale(.96);opacity:.8}50%{transform:scale(1.06);opacity:1}}
+    .splash-ring{animation:ring 1.5s ease-out infinite}
+    @keyframes ring{0%{transform:scale(.7);opacity:.8}100%{transform:scale(1.45);opacity:0}}
+    .fade-in{animation:fadeIn .55s ease-out both}
+    @keyframes fadeIn{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:none}}
+    .class-card{transition:transform .22s ease,border-color .22s ease,background .22s ease,box-shadow .22s ease}
+    .class-card:hover{transform:translateY(-3px);border-color:rgba(56,189,248,.38);background:rgba(255,255,255,.095);box-shadow:0 22px 50px rgba(0,0,0,.28)}
+    .roman{width:50px;height:50px;border-radius:16px;background:linear-gradient(135deg,rgba(56,189,248,.19),rgba(129,140,248,.22));border:1px solid rgba(125,211,252,.23);display:flex;align-items:center;justify-content:center;font-weight:900;color:#bae6fd;flex:none}
+    .toast{position:fixed;left:50%;bottom:24px;transform:translateX(-50%);z-index:100;padding:12px 18px;border-radius:14px;background:rgba(15,23,42,.95);border:1px solid rgba(255,255,255,.14);box-shadow:0 20px 50px rgba(0,0,0,.35);opacity:0;pointer-events:none;transition:.25s}
+    .toast.show{opacity:1}
+    input:-webkit-autofill{-webkit-box-shadow:0 0 0 1000px #101827 inset!important;-webkit-text-fill-color:#fff!important}
+  </style>
+</head>
+<body class="bg-pattern">
+  <div class="fixed inset-0 pointer-events-none overflow-hidden">
+    <div class="absolute -top-40 -left-40 w-[520px] h-[520px] rounded-full bg-sky-500/5 blur-3xl"></div>
+    <div class="absolute -bottom-48 -right-36 w-[560px] h-[560px] rounded-full bg-indigo-500/5 blur-3xl"></div>
+  </div>
+
+  <!-- Splash -->
+  <section id="splash" class="screen flex items-center justify-center relative z-10">
+    <div class="text-center relative">
+      <div class="absolute inset-0 rounded-full border border-sky-300/30 splash-ring"></div>
+      <div class="w-40 h-40 md:w-52 md:h-52 rounded-full glass flex items-center justify-center mx-auto splash-logo p-7">
+        <img src="https://i.postimg.cc/jSkQKpRK/Diseno-sin-titulo-2026-05-15T105828-195.png" alt="Instituto IEC" class="w-full h-full object-contain" />
+      </div>
+      <p class="text-sky-300 font-bold tracking-[.25em] text-xs md:text-sm mt-7 uppercase">Cargando campus</p>
+      <div class="mt-4 w-44 h-1 bg-white/10 rounded-full overflow-hidden mx-auto"><div class="h-full bg-gradient-to-r from-sky-400 to-indigo-400 animate-pulse"></div></div>
+    </div>
+  </section>
+
+  <!-- Login -->
+  <section id="login-screen" class="screen hidden-screen flex items-center justify-center px-4 py-10 relative z-10">
+    <div class="glass rounded-[28px] p-6 md:p-9 w-full max-w-md fade-in">
+      <img src="https://i.postimg.cc/jSkQKpRK/Diseno-sin-titulo-2026-05-15T105828-195.png" alt="Instituto IEC" class="h-16 mx-auto object-contain mb-5" />
+      <p class="text-sky-300 text-xs font-black tracking-[.2em] uppercase text-center">Campus virtual</p>
+      <h1 class="text-3xl font-black text-center mt-2">Experto en <span class="gradient-text">Aplicaciones Prácticas con IA</span></h1>
+      <p class="text-gray-400 text-sm text-center mt-3">Ingresá con las credenciales habilitadas para acceder al contenido.</p>
+
+      <form id="login-form" class="mt-7 space-y-4" autocomplete="off">
+        <label class="block">
+          <span class="text-xs text-gray-300 font-bold">Usuario</span>
+          <div class="mt-2 flex items-center gap-3 rounded-2xl bg-black/20 border border-white/10 px-4 focus-within:border-sky-400/45 transition">
+            <i data-lucide="user" class="w-4 h-4 text-sky-300"></i>
+            <input id="username" type="text" class="w-full bg-transparent outline-none py-3.5 text-white placeholder:text-gray-600" placeholder="Ingresá tu usuario" required />
+          </div>
+        </label>
+        <label class="block">
+          <span class="text-xs text-gray-300 font-bold">Contraseña</span>
+          <div class="mt-2 flex items-center gap-3 rounded-2xl bg-black/20 border border-white/10 px-4 focus-within:border-sky-400/45 transition">
+            <i data-lucide="lock-keyhole" class="w-4 h-4 text-indigo-300"></i>
+            <input id="password" type="password" class="w-full bg-transparent outline-none py-3.5 text-white placeholder:text-gray-600" placeholder="Ingresá tu contraseña" required />
+            <button type="button" id="toggle-pass" class="text-gray-400 hover:text-white"><i data-lucide="eye" class="w-4 h-4"></i></button>
+          </div>
+        </label>
+        <p id="login-error" class="hidden text-red-300 text-xs p-3 rounded-xl bg-red-400/10 border border-red-400/20">Usuario o contraseña incorrectos.</p>
+        <button type="submit" class="w-full py-3.5 rounded-2xl bg-gradient-to-r from-sky-500 to-indigo-500 hover:brightness-110 text-white font-black flex items-center justify-center gap-2 transition">
+          <i data-lucide="log-in" class="w-4 h-4"></i> Ingresar al campus
+        </button>
+      </form>
+      <p class="text-[10px] text-gray-600 text-center mt-5">Acceso local sin base de datos. No utilizar como sistema de seguridad para información sensible.</p>
+    </div>
+  </section>
+
+  <!-- Campus -->
+  <main id="campus" class="hidden-screen relative z-10 min-h-screen px-4 py-8 md:py-12">
+    <div class="max-w-3xl mx-auto fade-in">
+      <header class="text-center mb-7">
+        <img src="https://i.postimg.cc/jSkQKpRK/Diseno-sin-titulo-2026-05-15T105828-195.png" alt="Instituto IEC" class="h-16 md:h-20 mx-auto object-contain" />
+        <div class="mt-4 inline-flex items-center gap-2 px-4 py-2 rounded-full bg-sky-400/10 border border-sky-400/20 text-sky-300 text-xs font-black tracking-wider uppercase"><i data-lucide="graduation-cap" class="w-4 h-4"></i> Campus de clases</div>
+        <h1 class="text-3xl md:text-5xl font-black mt-4">Experto en <span class="gradient-text">Aplicaciones Prácticas con IA</span></h1>
+        <p class="text-gray-400 mt-3 max-w-2xl mx-auto">Seleccioná una clase para abrir sus apuntes. Los videos se abren en YouTube en una nueva pestaña.</p>
+        <div class="mt-4 flex items-center justify-center gap-3 text-xs text-gray-400">
+          <span id="welcome-user" class="px-3 py-1.5 rounded-full bg-white/5 border border-white/10"></span>
+          <button id="logout" class="px-3 py-1.5 rounded-full bg-white/5 hover:bg-red-400/10 border border-white/10 hover:border-red-400/20 hover:text-red-300 transition">Cerrar sesión</button>
+        </div>
+      </header>
+
+      <section id="class-list" class="space-y-3"></section>
+
+      <footer class="text-center text-gray-600 text-xs py-8">Instituto IEC · Experto en Aplicaciones Prácticas con IA</footer>
+    </div>
+  </main>
+
+  <div id="toast" class="toast">Contenido próximamente disponible.</div>
+
+  <script>
+    const LOGO_DELAY = 1900;
+    const credentials = {
+      "Unimedica": "UnimedicaIEC",
+      "Expertoenia": "ExpertoeniaIEC"
+    };
+
+    const classes = [
+      { roman:"0", title:"Clase Bonus · Acceso a Google", subtitle:"Creación, ingreso y organización de las cuentas de Google", icon:"key-round", href:"clase_0.html" },
+      { roman:"I", title:"Inteligencia Artificial: Tu Mejor Aliada", subtitle:"Introducción, evolución tecnológica, aplicaciones y primeros pasos", icon:"brain-circuit", href:"clase_1.html", video:"https://canva.link/dfl392m7639dcwp", videoLabel:"Ver presentación" },
+      { roman:"II", title:"Introducción a ChatGPT", subtitle:"Interfaz, comunicación, archivos, prompts e implementación laboral", icon:"message-square-text", href:"clase_2.html", video:"https://www.youtube.com/watch?v=lylT_xg0z5w" },
+      { roman:"III", title:"Emprendimiento con IA", subtitle:"Creación integral de un emprendimiento y desarrollo web", icon:"rocket", href:"clase_3.html", video:"https://www.youtube.com/watch?v=Jmr3BDUPOXQ" },
+      { roman:"IV", title:"Canva IA y Diseño Inteligente", subtitle:"Contenido editable, presentaciones, formularios y códigos QR", icon:"palette", href:"clase_4.html", video:"https://www.youtube.com/watch?v=KBL08u6Qf34" },
+      { roman:"V", title:"NotebookLM y Fuentes Confiables", subtitle:"Investigación, fuentes, chat, estudio y resúmenes de audio", icon:"notebook-tabs", href:"clase_5.html", video:"https://www.youtube.com/watch?v=Mn9r07wJjbc" },
+      { roman:"VI", title:"Ingeniería de Prompts y AI Studio Live", subtitle:"JSON, prompts profesionales, voz y pantalla compartida", icon:"braces", href:"clase_6.html", video:"https://www.youtube.com/watch?v=K1_UCUmB-m8" },
+      { roman:"VII", title:"Creación de Guías y Agentes", subtitle:"Google AI Studio, instrucciones de sistema y prototipado", icon:"bot", href:"clase_7.html", video:"https://www.youtube.com/watch?v=7cQzTj2Waig" },
+      { roman:"VIII", title:"Proyecto Final Integrador", subtitle:"Integración de las diez herramientas en una solución completa", icon:"trophy", href:"clase_8.html" }
+    ];
+
+    const splash = document.getElementById("splash");
+    const login = document.getElementById("login-screen");
+    const campus = document.getElementById("campus");
+    const form = document.getElementById("login-form");
+    const error = document.getElementById("login-error");
+    const toast = document.getElementById("toast");
+
+    function showLogin(){ splash.classList.add("hidden-screen"); login.classList.remove("hidden-screen"); lucide.createIcons(); document.getElementById("username").focus(); }
+    function showCampus(user){ splash.classList.add("hidden-screen"); login.classList.add("hidden-screen"); campus.classList.remove("hidden-screen"); document.getElementById("welcome-user").textContent = `Sesión: ${user}`; renderClasses(); lucide.createIcons(); }
+    function notify(message){ toast.textContent=message; toast.classList.add("show"); setTimeout(()=>toast.classList.remove("show"),2200); }
+
+    function renderClasses(){
+      const list=document.getElementById("class-list");
+      list.innerHTML=classes.map(c=>{
+        const main = `<a href="${c.href}" class="text-left min-w-0 flex-1"><h2 class="text-white font-black text-base md:text-lg group-hover:text-sky-200 transition">${c.title}</h2><p class="text-gray-400 text-xs md:text-sm mt-1">${c.subtitle}</p></a>`;
+        const video = c.video ? `<a href="${c.video}" target="_blank" rel="noopener" class="w-10 h-10 rounded-xl bg-red-500/12 hover:bg-red-500/22 border border-red-400/20 text-red-300 flex items-center justify-center transition" title="${c.videoLabel || 'Ver tutorial'}" aria-label="${c.videoLabel || 'Ver tutorial'}"><i data-lucide="play" class="w-4 h-4 fill-current"></i></a>` : '';
+        return `<article class="class-card group glass rounded-2xl p-4 flex items-center gap-3 md:gap-4"><div class="roman">${c.roman}</div><div class="w-9 h-9 rounded-xl bg-white/5 flex items-center justify-center text-sky-300 hidden sm:flex"><i data-lucide="${c.icon}" class="w-5 h-5"></i></div>${main}<div class="flex gap-2 flex-none">${video}<a href="${c.href}" class="w-10 h-10 rounded-xl bg-sky-500/15 hover:bg-sky-500/25 border border-sky-400/20 text-sky-300 flex items-center justify-center transition" title="Abrir clase" aria-label="Abrir ${c.title}"><i data-lucide="arrow-up-right" class="w-4 h-4"></i></a></div></article>`;
+      }).join("");
+    }
+
+    setTimeout(()=>{
+      const saved=sessionStorage.getItem("iec_user");
+      saved ? showCampus(saved) : showLogin();
+    },LOGO_DELAY);
+
+    form.addEventListener("submit",e=>{
+      e.preventDefault();
+      const u=document.getElementById("username").value.trim();
+      const p=document.getElementById("password").value;
+      if(credentials[u]===p){ error.classList.add("hidden"); sessionStorage.setItem("iec_user",u); showCampus(u); }
+      else { error.classList.remove("hidden"); document.getElementById("password").value=""; document.getElementById("password").focus(); }
+    });
+
+    document.getElementById("toggle-pass").addEventListener("click",()=>{ const p=document.getElementById("password"); p.type=p.type==="password"?"text":"password"; });
+    document.getElementById("logout").addEventListener("click",()=>{ sessionStorage.removeItem("iec_user"); campus.classList.add("hidden-screen"); login.classList.remove("hidden-screen"); form.reset(); document.getElementById("username").focus(); });
+
+    lucide.createIcons();
+  </script>
+</body>
+</html>

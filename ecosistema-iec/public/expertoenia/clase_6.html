@@ -1,0 +1,1138 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Clase 6 del curso Experto en Aplicaciones Prácticas con IA del Instituto IEC: Ingeniería de Prompts, JSON y Google AI Studio Live." />
+  <title>Clase 6 · Ingeniería de Prompts y AI Studio Live | Instituto IEC</title>
+
+  <script src="https://cdn.tailwindcss.com/3.4.17"></script>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
+  <script src="https://cdn.jsdelivr.net/npm/lucide@0.263.0/dist/umd/lucide.min.js"></script>
+
+  <style>
+    * { box-sizing: border-box; font-family: "DM Sans", sans-serif; }
+    html, body { margin:0; width:100%; min-height:100%; background:#0a0e1a; }
+    body { overflow:hidden; }
+
+    .slide {
+      display:none;
+      width:100%;
+      min-height:100vh;
+      height:100vh;
+      overflow-y:auto;
+      padding:2rem 1.5rem 6.5rem;
+      scroll-behavior:smooth;
+    }
+
+    .slide.active {
+      display:flex;
+      animation:slideIn .35s ease-out;
+      -webkit-overflow-scrolling:touch;
+    }
+
+    @keyframes slideIn {
+      from { opacity:0; transform:translateY(10px); }
+      to { opacity:1; transform:translateY(0); }
+    }
+
+    .glass-card {
+      background:rgba(255,255,255,.075);
+      backdrop-filter:blur(12px);
+      -webkit-backdrop-filter:blur(12px);
+      border:1px solid rgba(255,255,255,.12);
+      box-shadow:0 18px 45px rgba(0,0,0,.18);
+    }
+
+    .gradient-text {
+      background:linear-gradient(135deg,#38bdf8,#818cf8);
+      -webkit-background-clip:text;
+      background-clip:text;
+      -webkit-text-fill-color:transparent;
+    }
+
+    .bg-pattern {
+      background-image:
+        radial-gradient(circle at 20% 45%,rgba(56,189,248,.07) 0%,transparent 42%),
+        radial-gradient(circle at 82% 78%,rgba(129,140,248,.07) 0%,transparent 42%);
+    }
+
+    .dot.active {
+      background:#38bdf8;
+      transform:scale(1.3);
+      box-shadow:0 0 12px rgba(56,189,248,.75);
+    }
+
+    .nav-button:disabled { opacity:.35; cursor:not-allowed; }
+
+    .prompt-box {
+      background:rgba(15,26,46,.92);
+      border:1px solid rgba(56,189,248,.28);
+      box-shadow:inset 0 0 30px rgba(56,189,248,.03);
+    }
+
+    .json-box {
+      background:#08111f;
+      border:1px solid rgba(129,140,248,.3);
+      color:#dbeafe;
+      font-family:ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,"Liberation Mono",monospace;
+      white-space:pre-wrap;
+      overflow-wrap:anywhere;
+    }
+
+    .key { color:#7dd3fc; }
+    .value { color:#86efac; }
+    .string { color:#fde68a; }
+
+    .pulse-border { animation:pulseBorder 2s ease-in-out infinite; }
+
+    @keyframes pulseBorder {
+      0%,100% { border-color:rgba(251,191,36,.2); }
+      50% { border-color:rgba(251,191,36,.65); }
+    }
+
+    .flow-arrow { color:#38bdf8; }
+    .print-only { display:none; }
+
+    @media (max-width:640px){
+      .slide{padding:1.2rem .8rem 7rem;}
+      .text-7xl{font-size:2.65rem!important}
+      .text-6xl{font-size:2.35rem!important}
+      .text-5xl{font-size:2rem!important}
+      .text-4xl{font-size:1.72rem!important}
+      .text-3xl{font-size:1.42rem!important}
+    }
+
+    @media print {
+      @page { size:A4; margin:14mm; }
+
+      html, body {
+        background:#fff!important;
+        color:#111!important;
+        overflow:visible!important;
+      }
+
+      body { display:block!important; }
+
+      #progress-wrap, #prev-btn, #next-btn, #footer-nav, #print-button, #back-button {
+        display:none!important;
+      }
+
+      .slide, .slide.active {
+        display:block!important;
+        width:100%!important;
+        min-height:auto!important;
+        height:auto!important;
+        overflow:visible!important;
+        padding:0!important;
+        margin:0 0 14mm 0!important;
+        background:#fff!important;
+        color:#111!important;
+        page-break-after:always;
+        break-after:page;
+        animation:none!important;
+      }
+
+      .slide:last-of-type { page-break-after:auto; break-after:auto; }
+      .slide > .absolute { display:none!important; }
+      .slide > .relative { position:relative!important; z-index:1!important; }
+
+      .glass-card, .prompt-box, .json-box, .bg-white\/5, .bg-black\/25,
+      [class*="bg-sky-"], [class*="bg-indigo-"], [class*="bg-emerald-"],
+      [class*="bg-amber-"], [class*="bg-red-"], [class*="bg-pink-"],
+      [class*="bg-cyan-"] {
+        background:#fff!important;
+        box-shadow:none!important;
+      }
+
+      .glass-card, .prompt-box, .json-box,
+      [class*="border-white"], [class*="border-sky"], [class*="border-indigo"],
+      [class*="border-emerald"], [class*="border-amber"], [class*="border-red"],
+      [class*="border-pink"], [class*="border-cyan"] {
+        border-color:#cbd5e1!important;
+      }
+
+      .text-white, .text-gray-100, .text-gray-200, .text-gray-300,
+      .text-gray-400, .text-gray-500 { color:#111827!important; }
+
+      .text-sky-300 { color:#0369a1!important; }
+      .text-indigo-300 { color:#4338ca!important; }
+      .text-emerald-300 { color:#047857!important; }
+      .text-amber-300 { color:#b45309!important; }
+      .text-red-300 { color:#b91c1c!important; }
+      .text-pink-300 { color:#be185d!important; }
+      .text-cyan-300 { color:#0e7490!important; }
+
+      .gradient-text {
+        background:none!important;
+        -webkit-text-fill-color:#0f172a!important;
+        color:#0f172a!important;
+      }
+
+      .json-box, .json-box * {
+        color:#111827!important;
+        font-family:ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,"Liberation Mono",monospace!important;
+      }
+
+      img { filter:none!important; }
+      button { display:none!important; }
+      .print-only { display:block!important; }
+      .no-print { display:none!important; }
+      h1,h2,h3,h4,p,li,span { text-shadow:none!important; }
+    }
+  </style>
+</head>
+
+<body class="relative bg-[#0a0e1a]">
+
+  <div id="progress-wrap" class="fixed top-0 left-0 right-0 z-[70] h-1 bg-white/5">
+    <div id="progress-bar" class="h-full bg-gradient-to-r from-sky-400 to-indigo-400 transition-all duration-300" style="width:0%"></div>
+  </div>
+
+  <a id="back-button"
+    href="index.html"
+    class="fixed top-4 left-4 z-[80] px-4 py-2 rounded-xl bg-white/10 hover:bg-white/20 backdrop-blur border border-white/10 text-white text-xs md:text-sm font-bold flex items-center gap-2 transition"
+    aria-label="Volver al menú de clases">
+    <i data-lucide="arrow-left" class="w-4 h-4"></i>
+    Volver al menú
+  </a>
+
+  <button id="print-button"
+    class="fixed top-4 right-4 z-[80] px-4 py-2 rounded-xl bg-white/10 hover:bg-white/20 backdrop-blur border border-white/10 text-white text-xs md:text-sm font-bold flex items-center gap-2 transition"
+    onclick="window.print()" aria-label="Imprimir presentación">
+    <i data-lucide="printer" class="w-4 h-4"></i>
+    Imprimir manual
+  </button>
+
+  <button id="prev-btn"
+    class="nav-button fixed left-2 md:left-5 top-1/2 -translate-y-1/2 z-50 bg-white/10 hover:bg-white/20 backdrop-blur border border-white/10 rounded-full w-10 h-10 md:w-12 md:h-12 flex items-center justify-center transition text-white"
+    onclick="changeSlide(-1)" aria-label="Diapositiva anterior">
+    <i data-lucide="chevron-left" style="width:21px;height:21px;"></i>
+  </button>
+
+  <button id="next-btn"
+    class="nav-button fixed right-2 md:right-5 top-1/2 -translate-y-1/2 z-50 bg-white/10 hover:bg-white/20 backdrop-blur border border-white/10 rounded-full w-10 h-10 md:w-12 md:h-12 flex items-center justify-center transition text-white"
+    onclick="changeSlide(1)" aria-label="Diapositiva siguiente">
+    <i data-lucide="chevron-right" style="width:21px;height:21px;"></i>
+  </button>
+
+  <div id="footer-nav" class="fixed bottom-3 left-1/2 -translate-x-1/2 z-50 flex flex-col items-center gap-2 w-[92%] max-w-4xl">
+    <div id="dots" class="flex gap-1.5 md:gap-2 flex-wrap justify-center px-2"></div>
+    <div class="px-3 py-1 rounded-full bg-black/30 border border-white/10 text-[10px] md:text-xs text-gray-300 text-center backdrop-blur">
+      <span id="current-number">1</span> / <span id="total-number">34</span>
+    </div>
+  </div>
+
+  <!-- 1 -->
+  <section class="slide active flex-col items-center justify-center bg-gradient-to-br from-[#0a0e1a] via-[#0f1a2e] to-[#0a0e1a] text-center relative overflow-hidden">
+    <div class="absolute inset-0 bg-pattern opacity-80"></div>
+    <div class="absolute -top-32 -left-24 w-96 h-96 rounded-full bg-sky-500/10 blur-3xl"></div>
+    <div class="absolute -bottom-32 -right-24 w-96 h-96 rounded-full bg-indigo-500/10 blur-3xl"></div>
+
+    <div class="relative z-10 max-w-5xl mx-auto w-full px-4">
+      <img src="https://i.postimg.cc/jSkQKpRK/Diseno-sin-titulo-2026-05-15T105828-195.png"
+        alt="Instituto IEC" class="h-14 md:h-20 lg:h-24 mx-auto mb-5 object-contain" />
+
+      <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-sky-400/30 bg-sky-400/10 text-sky-300 text-xs md:text-sm font-bold tracking-wider mb-5">
+        <span>🧠</span> EXPERTO EN APLICACIONES PRÁCTICAS CON IA
+      </div>
+
+      <p class="text-sky-300 text-sm md:text-lg font-bold tracking-[.2em] uppercase mb-2">Clase 6</p>
+
+      <h1 class="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-black text-white leading-tight mb-4">
+        INGENIERÍA DE PROMPTS<br><span class="gradient-text">Y AI STUDIO LIVE</span>
+      </h1>
+
+      <p class="text-base md:text-xl text-gray-300 max-w-3xl mx-auto mb-6">
+        Aprendé a diseñar instrucciones profesionales, estructurarlas en JSON y trabajar con una IA que puede acompañarte por voz y pantalla.
+      </p>
+
+      <div class="glass-card rounded-2xl p-4 md:p-6 max-w-3xl mx-auto">
+        <p class="text-gray-200 text-sm md:text-lg">
+          Hoy damos un salto: dejamos de escribir pedidos sueltos y comenzamos a construir instrucciones reutilizables, claras y confiables.
+        </p>
+      </div>
+
+      <div class="mt-6 flex flex-wrap justify-center gap-2 md:gap-3 text-xs md:text-sm text-gray-300">
+        <span class="px-3 py-2 bg-white/5 border border-white/5 rounded-full">✍️ Prompting</span>
+        <span class="px-3 py-2 bg-white/5 border border-white/5 rounded-full">🧱 JSON</span>
+        <span class="px-3 py-2 bg-white/5 border border-white/5 rounded-full">🎙️ Voz</span>
+        <span class="px-3 py-2 bg-white/5 border border-white/5 rounded-full">🖥️ Pantalla compartida</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- 2 -->
+  <section class="slide flex-col items-center justify-center bg-gradient-to-b from-[#0a0e1a] to-[#0f1a2e] relative">
+    <div class="absolute inset-0 bg-pattern opacity-50"></div>
+    <div class="relative z-10 max-w-5xl mx-auto w-full px-4">
+      <h2 class="text-3xl md:text-5xl font-black text-white mb-5">
+        ¿QUÉ VAS A <span class="gradient-text">APRENDER?</span>
+      </h2>
+
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 md:gap-4">
+        <div class="glass-card rounded-2xl p-4 flex gap-3"><span class="text-2xl">🧠</span><div><h3 class="text-white font-bold">Comprender la ingeniería de prompts</h3><p class="text-gray-300 text-sm mt-1">Pasar de pedir a diseñar instrucciones.</p></div></div>
+        <div class="glass-card rounded-2xl p-4 flex gap-3"><span class="text-2xl">🧩</span><div><h3 class="text-white font-bold">Reconocer una buena estructura</h3><p class="text-gray-300 text-sm mt-1">Contexto, rol, tarea, restricciones y formato.</p></div></div>
+        <div class="glass-card rounded-2xl p-4 flex gap-3"><span class="text-2xl">🧱</span><div><h3 class="text-white font-bold">Entender JSON</h3><p class="text-gray-300 text-sm mt-1">Leerlo sin necesidad de programar.</p></div></div>
+        <div class="glass-card rounded-2xl p-4 flex gap-3"><span class="text-2xl">🤖</span><div><h3 class="text-white font-bold">Pedirle JSON a ChatGPT</h3><p class="text-gray-300 text-sm mt-1">Usar la IA para estructurar instrucciones.</p></div></div>
+        <div class="glass-card rounded-2xl p-4 flex gap-3"><span class="text-2xl">🔄</span><div><h3 class="text-white font-bold">Adaptar prompts a otras herramientas</h3><p class="text-gray-300 text-sm mt-1">Canva, Lovable, NotebookLM y más.</p></div></div>
+        <div class="glass-card rounded-2xl p-4 flex gap-3"><span class="text-2xl">🖥️</span><div><h3 class="text-white font-bold">Explorar AI Studio Live</h3><p class="text-gray-300 text-sm mt-1">Recibir guía por voz y pantalla compartida.</p></div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 3 -->
+  <section class="slide flex-col items-center justify-center bg-gradient-to-b from-[#0f1a2e] to-[#0a0e1a] relative">
+    <div class="absolute inset-0 bg-pattern opacity-50"></div>
+    <div class="relative z-10 max-w-5xl mx-auto w-full px-4">
+      <h2 class="text-3xl md:text-5xl font-black text-white mb-4">
+        LA EVOLUCIÓN DEL <span class="gradient-text">ALUMNO</span>
+      </h2>
+
+      <div class="grid grid-cols-1 md:grid-cols-7 gap-3 items-center text-center">
+        <div class="glass-card rounded-2xl p-5 md:col-span-2"><span class="text-4xl">💬</span><p class="text-white font-bold mt-2">Pregunta simple</p></div>
+        <div class="hidden md:flex justify-center"><i data-lucide="arrow-right" class="flow-arrow"></i></div>
+        <div class="glass-card rounded-2xl p-5 md:col-span-2"><span class="text-4xl">✍️</span><p class="text-white font-bold mt-2">Prompt completo</p></div>
+        <div class="hidden md:flex justify-center"><i data-lucide="arrow-right" class="flow-arrow"></i></div>
+        <div class="glass-card rounded-2xl p-5 md:col-span-1"><span class="text-4xl">🧱</span><p class="text-white font-bold mt-2">JSON</p></div>
+      </div>
+
+      <div class="mt-5 p-5 rounded-2xl bg-sky-400/10 border border-sky-400/20 text-center">
+        <p class="text-white font-black text-xl">Cada etapa agrega claridad, control y posibilidad de reutilización.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 4 -->
+  <section class="slide flex-col items-center justify-center bg-gradient-to-b from-[#0a0e1a] to-[#0f1a2e] relative">
+    <div class="absolute inset-0 bg-pattern opacity-50"></div>
+    <div class="relative z-10 max-w-5xl mx-auto w-full px-4">
+      <h2 class="text-3xl md:text-5xl font-black text-white mb-4">
+        ¿QUÉ ES LA <span class="gradient-text">INGENIERÍA DE PROMPTS?</span>
+      </h2>
+
+      <div class="glass-card rounded-3xl p-6 md:p-9 text-center mb-5">
+        <p class="text-white text-xl md:text-3xl font-black">
+          Es el proceso de diseñar, probar y mejorar instrucciones para obtener resultados más útiles, consistentes y controlables.
+        </p>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-3">
+        <div class="bg-white/5 border border-white/5 rounded-2xl p-5 text-center"><span class="text-4xl">🎯</span><h3 class="text-white font-bold mt-3">Precisión</h3><p class="text-gray-300 text-sm mt-2">Definir exactamente qué se necesita.</p></div>
+        <div class="bg-white/5 border border-white/5 rounded-2xl p-5 text-center"><span class="text-4xl">🧩</span><h3 class="text-white font-bold mt-3">Estructura</h3><p class="text-gray-300 text-sm mt-2">Ordenar la información de forma lógica.</p></div>
+        <div class="bg-white/5 border border-white/5 rounded-2xl p-5 text-center"><span class="text-4xl">🔄</span><h3 class="text-white font-bold mt-3">Iteración</h3><p class="text-gray-300 text-sm mt-2">Probar, evaluar y mejorar.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 5 -->
+  <section class="slide flex-col items-center justify-center bg-gradient-to-b from-[#0f1a2e] to-[#0a0e1a] relative">
+    <div class="absolute inset-0 bg-pattern opacity-50"></div>
+    <div class="relative z-10 max-w-5xl mx-auto w-full px-4">
+      <h2 class="text-3xl md:text-5xl font-black text-white mb-4">
+        DE PROMPT CASUAL A <span class="gradient-text">PROMPT PROFESIONAL</span>
+      </h2>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+        <div class="rounded-3xl p-6 bg-red-400/10 border border-red-400/20">
+          <h3 class="text-red-300 font-black text-xl">Prompt casual</h3>
+          <div class="mt-4 prompt-box rounded-xl p-4"><p class="text-gray-100">“Haceme un flyer.”</p></div>
+          <p class="text-gray-300 text-sm mt-4">Depende demasiado de lo que la IA interprete.</p>
+        </div>
+
+        <div class="rounded-3xl p-6 bg-emerald-400/10 border border-emerald-400/20">
+          <h3 class="text-emerald-300 font-black text-xl">Prompt profesional</h3>
+          <div class="mt-4 prompt-box rounded-xl p-4"><p class="text-gray-100 text-sm">“Creá un flyer vertical para promocionar un curso de IA dirigido a adultos. Usá tono cercano, colores azul y violeta, título breve, tres beneficios y un llamado a la acción.”</p></div>
+          <p class="text-gray-300 text-sm mt-4">Reduce la ambigüedad y mejora el control.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 6 -->
+  <section class="slide flex-col items-center justify-center bg-gradient-to-b from-[#0a0e1a] to-[#0f1a2e] relative">
+    <div class="absolute inset-0 bg-pattern opacity-50"></div>
+    <div class="relative z-10 max-w-5xl mx-auto w-full px-4">
+      <h2 class="text-3xl md:text-5xl font-black text-white mb-4">
+        COMPONENTES DE UN <span class="gradient-text">BUEN PROMPT</span>
+      </h2>
+
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-3">
+        <div class="glass-card rounded-2xl p-4 text-center"><span class="text-3xl">🌎</span><p class="text-white font-bold mt-2">Contexto</p></div>
+        <div class="glass-card rounded-2xl p-4 text-center"><span class="text-3xl">👤</span><p class="text-white font-bold mt-2">Rol</p></div>
+        <div class="glass-card rounded-2xl p-4 text-center"><span class="text-3xl">🎯</span><p class="text-white font-bold mt-2">Objetivo</p></div>
+        <div class="glass-card rounded-2xl p-4 text-center"><span class="text-3xl">📋</span><p class="text-white font-bold mt-2">Tarea</p></div>
+        <div class="glass-card rounded-2xl p-4 text-center"><span class="text-3xl">🚧</span><p class="text-white font-bold mt-2">Restricciones</p></div>
+        <div class="glass-card rounded-2xl p-4 text-center"><span class="text-3xl">📐</span><p class="text-white font-bold mt-2">Formato</p></div>
+        <div class="glass-card rounded-2xl p-4 text-center"><span class="text-3xl">🗣️</span><p class="text-white font-bold mt-2">Tono</p></div>
+        <div class="glass-card rounded-2xl p-4 text-center"><span class="text-3xl">✅</span><p class="text-white font-bold mt-2">Criterios</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 7 -->
+  <section class="slide flex-col items-center justify-center bg-gradient-to-b from-[#0f1a2e] to-[#0a0e1a] relative">
+    <div class="absolute inset-0 bg-pattern opacity-50"></div>
+    <div class="relative z-10 max-w-5xl mx-auto w-full px-4">
+      <h2 class="text-3xl md:text-5xl font-black text-white mb-4">
+        ¿QUÉ ES <span class="gradient-text">JSON?</span>
+      </h2>
+
+      <div class="glass-card rounded-3xl p-6 md:p-8 mb-5 text-center">
+        <p class="text-white text-xl md:text-3xl font-black">
+          JSON es una forma ordenada de representar información mediante pares de nombre y valor.
+        </p>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-3">
+        <div class="glass-card rounded-2xl p-5 text-center"><span class="text-4xl">🏷️</span><h3 class="text-white font-bold mt-3">Clave</h3><p class="text-gray-300 text-sm mt-2">El nombre del dato.</p></div>
+        <div class="glass-card rounded-2xl p-5 text-center"><span class="text-4xl">📦</span><h3 class="text-white font-bold mt-3">Valor</h3><p class="text-gray-300 text-sm mt-2">La información asociada.</p></div>
+        <div class="glass-card rounded-2xl p-5 text-center"><span class="text-4xl">{ }</span><h3 class="text-white font-bold mt-3">Objeto</h3><p class="text-gray-300 text-sm mt-2">El conjunto organizado.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 8 -->
+  <section class="slide flex-col items-center justify-center bg-gradient-to-b from-[#0a0e1a] to-[#0f1a2e] relative">
+    <div class="absolute inset-0 bg-pattern opacity-50"></div>
+    <div class="relative z-10 max-w-5xl mx-auto w-full px-4">
+      <h2 class="text-3xl md:text-5xl font-black text-white mb-4">
+        JSON EXPLICADO <span class="gradient-text">SIN PROGRAMAR</span>
+      </h2>
+
+      <div class="json-box rounded-2xl p-5 md:p-7 text-sm md:text-base">
+{
+  <span class="key">"nombre"</span>: <span class="string">"Curso de IA"</span>,
+  <span class="key">"publico"</span>: <span class="string">"Adultos y jóvenes"</span>,
+  <span class="key">"objetivo"</span>: <span class="string">"Promocionar la inscripción"</span>,
+  <span class="key">"formato"</span>: <span class="string">"Flyer vertical"</span>
+}
+      </div>
+
+      <div class="mt-5 grid grid-cols-1 md:grid-cols-2 gap-3">
+        <div class="glass-card rounded-xl p-4"><p class="text-sky-300 font-bold">Clave</p><p class="text-gray-300 text-sm mt-1">“nombre”, “público”, “objetivo”, “formato”.</p></div>
+        <div class="glass-card rounded-xl p-4"><p class="text-emerald-300 font-bold">Valor</p><p class="text-gray-300 text-sm mt-1">La información concreta de cada campo.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 9 -->
+  <section class="slide flex-col items-center justify-center bg-gradient-to-b from-[#0f1a2e] to-[#0a0e1a] relative">
+    <div class="absolute inset-0 bg-pattern opacity-50"></div>
+    <div class="relative z-10 max-w-5xl mx-auto w-full px-4">
+      <h2 class="text-3xl md:text-5xl font-black text-white mb-4">
+        REGLAS BÁSICAS DE <span class="gradient-text">JSON</span>
+      </h2>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div class="glass-card rounded-2xl p-5">
+          <h3 class="text-white font-black text-xl mb-3">Se usa</h3>
+          <div class="space-y-2 text-gray-300 text-sm">
+            <p>• Llaves para abrir y cerrar.</p>
+            <p>• Claves entre comillas.</p>
+            <p>• Dos puntos entre clave y valor.</p>
+            <p>• Comas entre elementos.</p>
+            <p>• Corchetes para listas.</p>
+          </div>
+        </div>
+
+        <div class="glass-card rounded-2xl p-5">
+          <h3 class="text-white font-black text-xl mb-3">Se evita</h3>
+          <div class="space-y-2 text-gray-300 text-sm">
+            <p>• Coma final innecesaria.</p>
+            <p>• Comillas faltantes.</p>
+            <p>• Llaves sin cerrar.</p>
+            <p>• Mezclar instrucciones fuera del objeto.</p>
+            <p>• Claves ambiguas.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 10 -->
+  <section class="slide flex-col items-center justify-center bg-gradient-to-b from-[#0a0e1a] to-[#0f1a2e] relative">
+    <div class="absolute inset-0 bg-pattern opacity-50"></div>
+    <div class="relative z-10 max-w-5xl mx-auto w-full px-4">
+      <h2 class="text-3xl md:text-5xl font-black text-white mb-4">
+        NO VAMOS A <span class="gradient-text">ESCRIBIR JSON A MANO</span>
+      </h2>
+
+      <div class="glass-card rounded-3xl p-6 md:p-9 text-center mb-5">
+        <p class="text-white text-xl md:text-3xl font-black">
+          Vamos a aprender a pedirle a ChatGPT que lo genere, lo revise y lo adapte.
+        </p>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-3">
+        <div class="glass-card rounded-2xl p-5 text-center"><span class="text-4xl">🧠</span><h3 class="text-white font-bold mt-3">Vos pensás</h3><p class="text-gray-300 text-sm mt-2">Definís la intención.</p></div>
+        <div class="glass-card rounded-2xl p-5 text-center"><span class="text-4xl">🤖</span><h3 class="text-white font-bold mt-3">ChatGPT estructura</h3><p class="text-gray-300 text-sm mt-2">Convierte la idea en JSON.</p></div>
+        <div class="glass-card rounded-2xl p-5 text-center"><span class="text-4xl">✅</span><h3 class="text-white font-bold mt-3">Vos revisás</h3><p class="text-gray-300 text-sm mt-2">Controlás que represente tu pedido.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 11 -->
+  <section class="slide flex-col items-center justify-center bg-gradient-to-b from-[#0f1a2e] to-[#0a0e1a] relative">
+    <div class="absolute inset-0 bg-pattern opacity-50"></div>
+    <div class="relative z-10 max-w-5xl mx-auto w-full px-4">
+      <h2 class="text-3xl md:text-5xl font-black text-white mb-4">
+        PROMPT PARA PEDIR <span class="gradient-text">JSON</span>
+      </h2>
+
+      <div class="prompt-box rounded-3xl p-6 md:p-8">
+        <p class="text-gray-100 text-base md:text-lg leading-relaxed">
+          “Convertí el siguiente pedido en un JSON claro, válido y profesional para utilizarlo como prompt en otra herramienta de IA. Incluí contexto, objetivo, público, tarea, formato, tono, restricciones, elementos obligatorios y criterios de calidad. No agregues explicaciones fuera del JSON.”
+        </p>
+
+        <button onclick="copyText(this)" data-copy="Convertí el siguiente pedido en un JSON claro, válido y profesional para utilizarlo como prompt en otra herramienta de IA. Incluí contexto, objetivo, público, tarea, formato, tono, restricciones, elementos obligatorios y criterios de calidad. No agregues explicaciones fuera del JSON."
+          class="mt-4 px-4 py-2 rounded-xl bg-sky-500 hover:bg-sky-400 text-white text-xs font-bold transition no-print">Copiar prompt</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- 12 -->
+  <section class="slide flex-col items-center justify-center bg-gradient-to-b from-[#0a0e1a] to-[#0f1a2e] relative">
+    <div class="absolute inset-0 bg-pattern opacity-50"></div>
+    <div class="relative z-10 max-w-5xl mx-auto w-full px-4">
+      <h2 class="text-3xl md:text-5xl font-black text-white mb-4">
+        ESTRUCTURA JSON PARA <span class="gradient-text">PROMPTS</span>
+      </h2>
+
+      <div class="json-box rounded-2xl p-5 md:p-7 text-xs md:text-sm">
+{
+  <span class="key">"contexto"</span>: <span class="string">"Descripción de la situación"</span>,
+  <span class="key">"rol"</span>: <span class="string">"Especialista que debe representar la IA"</span>,
+  <span class="key">"objetivo"</span>: <span class="string">"Resultado principal esperado"</span>,
+  <span class="key">"publico_objetivo"</span>: <span class="string">"Personas destinatarias"</span>,
+  <span class="key">"tarea"</span>: <span class="string">"Acción concreta"</span>,
+  <span class="key">"formato_salida"</span>: <span class="string">"Tipo de resultado"</span>,
+  <span class="key">"tono"</span>: <span class="string">"Estilo de comunicación"</span>,
+  <span class="key">"restricciones"</span>: [
+    <span class="string">"Límite o condición 1"</span>,
+    <span class="string">"Límite o condición 2"</span>
+  ],
+  <span class="key">"criterios_calidad"</span>: [
+    <span class="string">"Criterio 1"</span>,
+    <span class="string">"Criterio 2"</span>
+  ]
+}
+      </div>
+    </div>
+  </section>
+
+  <!-- 13 -->
+  <section class="slide flex-col items-center justify-center bg-gradient-to-b from-[#0f1a2e] to-[#0a0e1a] relative">
+    <div class="absolute inset-0 bg-pattern opacity-50"></div>
+    <div class="relative z-10 max-w-5xl mx-auto w-full px-4">
+      <h2 class="text-3xl md:text-5xl font-black text-white mb-4">
+        EJEMPLO JSON PARA <span class="gradient-text">CANVA</span>
+      </h2>
+
+      <div class="json-box rounded-2xl p-5 md:p-7 text-xs md:text-sm">
+{
+  <span class="key">"herramienta"</span>: <span class="string">"Canva IA"</span>,
+  <span class="key">"objetivo"</span>: <span class="string">"Crear un flyer promocional"</span>,
+  <span class="key">"publico_objetivo"</span>: <span class="string">"Adultos interesados en IA"</span>,
+  <span class="key">"formato"</span>: <span class="string">"Flyer vertical para Instagram"</span>,
+  <span class="key">"estilo_visual"</span>: <span class="string">"Moderno y profesional"</span>,
+  <span class="key">"colores"</span>: [<span class="string">"#38bdf8"</span>, <span class="string">"#818cf8"</span>, <span class="string">"#0a0e1a"</span>],
+  <span class="key">"contenido_obligatorio"</span>: [
+    <span class="string">"Título"</span>,
+    <span class="string">"Tres beneficios"</span>,
+    <span class="string">"Llamado a la acción"</span>
+  ]
+}
+      </div>
+    </div>
+  </section>
+
+  <!-- 14 -->
+  <section class="slide flex-col items-center justify-center bg-gradient-to-b from-[#0a0e1a] to-[#0f1a2e] relative">
+    <div class="absolute inset-0 bg-pattern opacity-50"></div>
+    <div class="relative z-10 max-w-5xl mx-auto w-full px-4">
+      <h2 class="text-3xl md:text-5xl font-black text-white mb-4">
+        EJEMPLO JSON PARA <span class="gradient-text">LOVABLE</span>
+      </h2>
+
+      <div class="json-box rounded-2xl p-5 md:p-7 text-xs md:text-sm">
+{
+  <span class="key">"herramienta"</span>: <span class="string">"Lovable"</span>,
+  <span class="key">"tipo_proyecto"</span>: <span class="string">"Página web institucional"</span>,
+  <span class="key">"objetivo"</span>: <span class="string">"Generar consultas comerciales"</span>,
+  <span class="key">"secciones"</span>: [
+    <span class="string">"Inicio"</span>,
+    <span class="string">"Servicios"</span>,
+    <span class="string">"Beneficios"</span>,
+    <span class="string">"Preguntas frecuentes"</span>,
+    <span class="string">"Contacto"</span>
+  ],
+  <span class="key">"funcionalidades"</span>: [
+    <span class="string">"Formulario"</span>,
+    <span class="string">"Botón de WhatsApp"</span>,
+    <span class="string">"Diseño responsivo"</span>
+  ]
+}
+      </div>
+    </div>
+  </section>
+
+  <!-- 15 -->
+  <section class="slide flex-col items-center justify-center bg-gradient-to-b from-[#0f1a2e] to-[#0a0e1a] relative">
+    <div class="absolute inset-0 bg-pattern opacity-50"></div>
+    <div class="relative z-10 max-w-5xl mx-auto w-full px-4">
+      <h2 class="text-3xl md:text-5xl font-black text-white mb-4">
+        EJEMPLO JSON PARA <span class="gradient-text">NOTEBOOKLM</span>
+      </h2>
+
+      <div class="json-box rounded-2xl p-5 md:p-7 text-xs md:text-sm">
+{
+  <span class="key">"herramienta"</span>: <span class="string">"NotebookLM"</span>,
+  <span class="key">"objetivo"</span>: <span class="string">"Analizar fuentes del emprendimiento"</span>,
+  <span class="key">"pregunta_principal"</span>: <span class="string">"Detectar debilidades y contradicciones"</span>,
+  <span class="key">"usar_solo_fuentes"</span>: <span class="value">true</span>,
+  <span class="key">"resultado_esperado"</span>: [
+    <span class="string">"Hallazgo"</span>,
+    <span class="string">"Fuente de respaldo"</span>,
+    <span class="string">"Recomendación"</span>
+  ]
+}
+      </div>
+    </div>
+  </section>
+
+  <!-- 16 -->
+  <section class="slide flex-col items-center justify-center bg-gradient-to-b from-[#0a0e1a] to-[#0f1a2e] relative">
+    <div class="absolute inset-0 bg-pattern opacity-50"></div>
+    <div class="relative z-10 max-w-5xl mx-auto w-full px-4">
+      <h2 class="text-3xl md:text-5xl font-black text-white mb-4">
+        ¿POR QUÉ USAR <span class="gradient-text">JSON?</span>
+      </h2>
+
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-3">
+        <div class="glass-card rounded-2xl p-4 text-center"><span class="text-3xl">📚</span><p class="text-white font-bold mt-2">Orden</p></div>
+        <div class="glass-card rounded-2xl p-4 text-center"><span class="text-3xl">🎯</span><p class="text-white font-bold mt-2">Precisión</p></div>
+        <div class="glass-card rounded-2xl p-4 text-center"><span class="text-3xl">🔄</span><p class="text-white font-bold mt-2">Reutilización</p></div>
+        <div class="glass-card rounded-2xl p-4 text-center"><span class="text-3xl">🧩</span><p class="text-white font-bold mt-2">Adaptación</p></div>
+        <div class="glass-card rounded-2xl p-4 text-center"><span class="text-3xl">✅</span><p class="text-white font-bold mt-2">Validación</p></div>
+        <div class="glass-card rounded-2xl p-4 text-center"><span class="text-3xl">👥</span><p class="text-white font-bold mt-2">Trabajo en equipo</p></div>
+        <div class="glass-card rounded-2xl p-4 text-center"><span class="text-3xl">🛠️</span><p class="text-white font-bold mt-2">Automatización</p></div>
+        <div class="glass-card rounded-2xl p-4 text-center"><span class="text-3xl">📦</span><p class="text-white font-bold mt-2">Portabilidad</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 17 -->
+  <section class="slide flex-col items-center justify-center bg-gradient-to-b from-[#0f1a2e] to-[#0a0e1a] relative">
+    <div class="absolute inset-0 bg-pattern opacity-50"></div>
+    <div class="relative z-10 max-w-5xl mx-auto w-full px-4">
+      <h2 class="text-3xl md:text-5xl font-black text-white mb-4">
+        JSON NO GARANTIZA UN <span class="gradient-text">BUEN RESULTADO</span>
+      </h2>
+
+      <div class="glass-card rounded-3xl p-6 md:p-8 mb-5 text-center">
+        <p class="text-white text-xl md:text-2xl font-black">
+          Un JSON bien escrito puede contener una mala idea, información incompleta o instrucciones contradictorias.
+        </p>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-3">
+        <div class="glass-card rounded-2xl p-5 text-center"><span class="text-4xl">🔎</span><h3 class="text-white font-bold mt-3">Revisar contenido</h3><p class="text-gray-300 text-sm mt-2">No sólo la sintaxis.</p></div>
+        <div class="glass-card rounded-2xl p-5 text-center"><span class="text-4xl">🧪</span><h3 class="text-white font-bold mt-3">Probar resultado</h3><p class="text-gray-300 text-sm mt-2">Comparar versiones.</p></div>
+        <div class="glass-card rounded-2xl p-5 text-center"><span class="text-4xl">🔄</span><h3 class="text-white font-bold mt-3">Mejorar estructura</h3><p class="text-gray-300 text-sm mt-2">Corregir campos y criterios.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 18 -->
+  <section class="slide flex-col items-center justify-center bg-gradient-to-b from-[#0a0e1a] to-[#0f1a2e] relative">
+    <div class="absolute inset-0 bg-pattern opacity-50"></div>
+    <div class="relative z-10 max-w-5xl mx-auto w-full px-4">
+      <h2 class="text-3xl md:text-5xl font-black text-white mb-4">
+        CHECKLIST DE UN JSON <span class="gradient-text">CONFIABLE</span>
+      </h2>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+        <div class="glass-card rounded-xl p-4"><p class="text-gray-200">✔ Tiene un objetivo claro.</p></div>
+        <div class="glass-card rounded-xl p-4"><p class="text-gray-200">✔ Define la herramienta destino.</p></div>
+        <div class="glass-card rounded-xl p-4"><p class="text-gray-200">✔ Incluye contexto suficiente.</p></div>
+        <div class="glass-card rounded-xl p-4"><p class="text-gray-200">✔ Evita contradicciones.</p></div>
+        <div class="glass-card rounded-xl p-4"><p class="text-gray-200">✔ Define formato y tono.</p></div>
+        <div class="glass-card rounded-xl p-4"><p class="text-gray-200">✔ Especifica restricciones.</p></div>
+        <div class="glass-card rounded-xl p-4"><p class="text-gray-200">✔ Incluye criterios de calidad.</p></div>
+        <div class="glass-card rounded-xl p-4"><p class="text-gray-200">✔ Es JSON válido.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 19 -->
+  <section class="slide flex-col items-center justify-center bg-gradient-to-b from-[#0f1a2e] to-[#0a0e1a] relative">
+    <div class="absolute inset-0 bg-pattern opacity-50"></div>
+    <div class="relative z-10 max-w-5xl mx-auto w-full px-4">
+      <h2 class="text-3xl md:text-5xl font-black text-white mb-4">
+        ACTIVIDAD: CONVERTIR UN PROMPT <span class="gradient-text">REAL</span>
+      </h2>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+        <div class="glass-card rounded-2xl p-5 text-center"><span class="text-4xl">1️⃣</span><h3 class="text-white font-bold mt-3">Elegir</h3><p class="text-gray-300 text-sm mt-2">Tomá un prompt usado en clases anteriores.</p></div>
+        <div class="glass-card rounded-2xl p-5 text-center"><span class="text-4xl">2️⃣</span><h3 class="text-white font-bold mt-3">Convertir</h3><p class="text-gray-300 text-sm mt-2">Pedile a ChatGPT que lo transforme en JSON.</p></div>
+        <div class="glass-card rounded-2xl p-5 text-center"><span class="text-4xl">3️⃣</span><h3 class="text-white font-bold mt-3">Comparar</h3><p class="text-gray-300 text-sm mt-2">Probá versión libre y versión estructurada.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 20 -->
+  <section class="slide flex-col items-center justify-center bg-gradient-to-b from-[#0a0e1a] to-[#0f1a2e] relative">
+    <div class="absolute inset-0 bg-pattern opacity-50"></div>
+    <div class="relative z-10 max-w-5xl mx-auto w-full px-4">
+      <h2 class="text-3xl md:text-5xl font-black text-white mb-4">
+        PROMPT PARA <span class="gradient-text">REVISAR JSON</span>
+      </h2>
+
+      <div class="prompt-box rounded-3xl p-6 md:p-8">
+        <p class="text-gray-100 text-base md:text-lg leading-relaxed">
+          “Revisá este JSON como especialista en ingeniería de prompts. Verificá sintaxis, claridad, contradicciones, campos faltantes, restricciones, criterios de calidad y adecuación a la herramienta destino. Devolvé primero una lista breve de problemas y luego una versión corregida en JSON válido.”
+        </p>
+
+        <button onclick="copyText(this)" data-copy="Revisá este JSON como especialista en ingeniería de prompts. Verificá sintaxis, claridad, contradicciones, campos faltantes, restricciones, criterios de calidad y adecuación a la herramienta destino. Devolvé primero una lista breve de problemas y luego una versión corregida en JSON válido."
+          class="mt-4 px-4 py-2 rounded-xl bg-sky-500 hover:bg-sky-400 text-white text-xs font-bold transition no-print">Copiar prompt</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- 21 -->
+  <section class="slide flex-col items-center justify-center bg-gradient-to-b from-[#0f1a2e] to-[#0a0e1a] relative">
+    <div class="absolute inset-0 bg-pattern opacity-50"></div>
+    <div class="relative z-10 max-w-5xl mx-auto w-full px-4">
+      <h2 class="text-3xl md:text-5xl font-black text-white mb-4">
+        INTRODUCCIÓN A <span class="gradient-text">GOOGLE AI STUDIO</span>
+      </h2>
+
+      <div class="glass-card rounded-3xl p-6 md:p-8 mb-5">
+        <p class="text-gray-200 text-lg md:text-2xl leading-relaxed">
+          Google AI Studio es un entorno web para probar modelos Gemini, experimentar con prompts, trabajar con distintos tipos de contenido y prototipar experiencias con IA.
+        </p>
+      </div>
+
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-3">
+        <div class="bg-white/5 rounded-xl p-4 text-center"><span class="text-3xl">💬</span><p class="text-white font-bold mt-2">Chat</p></div>
+        <div class="bg-white/5 rounded-xl p-4 text-center"><span class="text-3xl">🎙️</span><p class="text-white font-bold mt-2">Audio</p></div>
+        <div class="bg-white/5 rounded-xl p-4 text-center"><span class="text-3xl">🖼️</span><p class="text-white font-bold mt-2">Imagen</p></div>
+        <div class="bg-white/5 rounded-xl p-4 text-center"><span class="text-3xl">🎬</span><p class="text-white font-bold mt-2">Video</p></div>
+        <div class="bg-white/5 rounded-xl p-4 text-center"><span class="text-3xl">🧠</span><p class="text-white font-bold mt-2">Modelos</p></div>
+        <div class="bg-white/5 rounded-xl p-4 text-center"><span class="text-3xl">⚙️</span><p class="text-white font-bold mt-2">Configuración</p></div>
+        <div class="bg-white/5 rounded-xl p-4 text-center"><span class="text-3xl">🧪</span><p class="text-white font-bold mt-2">Pruebas</p></div>
+        <div class="bg-white/5 rounded-xl p-4 text-center"><span class="text-3xl">💻</span><p class="text-white font-bold mt-2">Prototipos</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 22 -->
+  <section class="slide flex-col items-center justify-center bg-gradient-to-b from-[#0a0e1a] to-[#0f1a2e] relative">
+    <div class="absolute inset-0 bg-pattern opacity-50"></div>
+    <div class="relative z-10 max-w-5xl mx-auto w-full px-4">
+      <h2 class="text-3xl md:text-5xl font-black text-white mb-4">
+        ¿QUÉ ES <span class="gradient-text">AI STUDIO LIVE?</span>
+      </h2>
+
+      <div class="glass-card rounded-3xl p-6 md:p-9 text-center mb-5">
+        <p class="text-white text-xl md:text-3xl font-black">
+          Es una experiencia de interacción en tiempo real donde la IA puede conversar por voz y procesar información visual o compartida durante la sesión.
+        </p>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-3">
+        <div class="glass-card rounded-2xl p-5 text-center"><span class="text-4xl">🎙️</span><h3 class="text-white font-bold mt-3">Conversación</h3><p class="text-gray-300 text-sm mt-2">Hablar de forma continua e interrumpir.</p></div>
+        <div class="glass-card rounded-2xl p-5 text-center"><span class="text-4xl">🖥️</span><h3 class="text-white font-bold mt-3">Pantalla</h3><p class="text-gray-300 text-sm mt-2">Compartir lo que estamos viendo.</p></div>
+        <div class="glass-card rounded-2xl p-5 text-center"><span class="text-4xl">👀</span><h3 class="text-white font-bold mt-3">Contexto visual</h3><p class="text-gray-300 text-sm mt-2">Recibir orientación sobre elementos visibles.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 23 -->
+  <section class="slide flex-col items-center justify-center bg-gradient-to-b from-[#0f1a2e] to-[#0a0e1a] relative">
+    <div class="absolute inset-0 bg-pattern opacity-50"></div>
+    <div class="relative z-10 max-w-5xl mx-auto w-full px-4">
+      <h2 class="text-3xl md:text-5xl font-black text-white mb-4">
+        DE CHAT A <span class="gradient-text">ASISTENCIA EN VIVO</span>
+      </h2>
+
+      <div class="grid grid-cols-1 md:grid-cols-7 gap-3 items-center text-center">
+        <div class="glass-card rounded-2xl p-5 md:col-span-2"><span class="text-4xl">⌨️</span><p class="text-white font-bold mt-2">Escribir</p></div>
+        <div class="hidden md:flex justify-center"><i data-lucide="arrow-right" class="flow-arrow"></i></div>
+        <div class="glass-card rounded-2xl p-5 md:col-span-2"><span class="text-4xl">🎙️</span><p class="text-white font-bold mt-2">Hablar</p></div>
+        <div class="hidden md:flex justify-center"><i data-lucide="arrow-right" class="flow-arrow"></i></div>
+        <div class="glass-card rounded-2xl p-5 md:col-span-1"><span class="text-4xl">🖥️</span><p class="text-white font-bold mt-2">Mostrar</p></div>
+      </div>
+
+      <div class="mt-5 p-5 rounded-2xl bg-sky-400/10 border border-sky-400/20 text-center">
+        <p class="text-white font-black text-xl">La IA deja de depender únicamente de nuestra descripción y puede trabajar con lo que compartimos en tiempo real.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 24 -->
+  <section class="slide flex-col items-center justify-center bg-gradient-to-b from-[#0a0e1a] to-[#0f1a2e] relative">
+    <div class="absolute inset-0 bg-pattern opacity-50"></div>
+    <div class="relative z-10 max-w-5xl mx-auto w-full px-4">
+      <h2 class="text-3xl md:text-5xl font-black text-white mb-4">
+        COMPARTIR PANTALLA: <span class="gradient-text">¿PARA QUÉ?</span>
+      </h2>
+
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-3">
+        <div class="glass-card rounded-2xl p-4 text-center"><span class="text-3xl">🧭</span><p class="text-white font-bold mt-2">Guiar navegación</p></div>
+        <div class="glass-card rounded-2xl p-4 text-center"><span class="text-3xl">🔍</span><p class="text-white font-bold mt-2">Detectar errores</p></div>
+        <div class="glass-card rounded-2xl p-4 text-center"><span class="text-3xl">🖱️</span><p class="text-white font-bold mt-2">Indicar pasos</p></div>
+        <div class="glass-card rounded-2xl p-4 text-center"><span class="text-3xl">📚</span><p class="text-white font-bold mt-2">Explicar interfaces</p></div>
+        <div class="glass-card rounded-2xl p-4 text-center"><span class="text-3xl">🧪</span><p class="text-white font-bold mt-2">Acompañar prácticas</p></div>
+        <div class="glass-card rounded-2xl p-4 text-center"><span class="text-3xl">⚙️</span><p class="text-white font-bold mt-2">Configurar herramientas</p></div>
+        <div class="glass-card rounded-2xl p-4 text-center"><span class="text-3xl">📝</span><p class="text-white font-bold mt-2">Revisar documentos</p></div>
+        <div class="glass-card rounded-2xl p-4 text-center"><span class="text-3xl">🎨</span><p class="text-white font-bold mt-2">Evaluar diseños</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 25 -->
+  <section class="slide flex-col items-center justify-center bg-gradient-to-b from-[#0f1a2e] to-[#0a0e1a] relative">
+    <div class="absolute inset-0 bg-pattern opacity-50"></div>
+    <div class="relative z-10 max-w-5xl mx-auto w-full px-4">
+      <h2 class="text-3xl md:text-5xl font-black text-white mb-4">
+        PROMPT PARA UNA <span class="gradient-text">GUÍA EN VIVO</span>
+      </h2>
+
+      <div class="prompt-box rounded-3xl p-6 md:p-8">
+        <p class="text-gray-100 text-base md:text-lg leading-relaxed">
+          “Voy a compartir mi pantalla. Observá lo que aparece y guiame paso a paso para completar la tarea. Dáme una sola instrucción por vez, esperá a que la realice, avisame si detectás un error y no avances hasta que confirme.”
+        </p>
+
+        <button onclick="copyText(this)" data-copy="Voy a compartir mi pantalla. Observá lo que aparece y guiame paso a paso para completar la tarea. Dáme una sola instrucción por vez, esperá a que la realice, avisame si detectás un error y no avances hasta que confirme."
+          class="mt-4 px-4 py-2 rounded-xl bg-sky-500 hover:bg-sky-400 text-white text-xs font-bold transition no-print">Copiar prompt</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- 26 -->
+  <section class="slide flex-col items-center justify-center bg-gradient-to-b from-[#0a0e1a] to-[#0f1a2e] relative">
+    <div class="absolute inset-0 bg-pattern opacity-50"></div>
+    <div class="relative z-10 max-w-5xl mx-auto w-full px-4">
+      <h2 class="text-3xl md:text-5xl font-black text-white mb-4">
+        ACTIVIDAD EN <span class="gradient-text">AI STUDIO LIVE</span>
+      </h2>
+
+      <div class="grid grid-cols-1 md:grid-cols-4 gap-3">
+        <div class="glass-card rounded-2xl p-5 text-center"><span class="text-4xl">1️⃣</span><h3 class="text-white font-bold mt-3">Abrir</h3><p class="text-gray-300 text-sm mt-2">Ingresar a AI Studio.</p></div>
+        <div class="glass-card rounded-2xl p-5 text-center"><span class="text-4xl">2️⃣</span><h3 class="text-white font-bold mt-3">Iniciar Live</h3><p class="text-gray-300 text-sm mt-2">Seleccionar experiencia en tiempo real.</p></div>
+        <div class="glass-card rounded-2xl p-5 text-center"><span class="text-4xl">3️⃣</span><h3 class="text-white font-bold mt-3">Compartir</h3><p class="text-gray-300 text-sm mt-2">Elegir pantalla o ventana.</p></div>
+        <div class="glass-card rounded-2xl p-5 text-center"><span class="text-4xl">4️⃣</span><h3 class="text-white font-bold mt-3">Pedir guía</h3><p class="text-gray-300 text-sm mt-2">Seguir una instrucción por vez.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 27 -->
+  <section class="slide flex-col items-center justify-center bg-gradient-to-b from-[#0f1a2e] to-[#0a0e1a] relative">
+    <div class="absolute inset-0 bg-pattern opacity-50"></div>
+    <div class="relative z-10 max-w-5xl mx-auto w-full px-4">
+      <h2 class="text-3xl md:text-5xl font-black text-white mb-4">
+        TAREA SUGERIDA PARA LA <span class="gradient-text">GUÍA</span>
+      </h2>
+
+      <div class="glass-card rounded-3xl p-6 md:p-8 mb-5">
+        <h3 class="text-white font-black text-xl mb-4">Elegí una de estas acciones:</h3>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-3 text-sm">
+          <p class="p-3 bg-white/5 rounded-xl text-gray-300">• Crear un JSON para Canva.</p>
+          <p class="p-3 bg-white/5 rounded-xl text-gray-300">• Revisar un JSON para Lovable.</p>
+          <p class="p-3 bg-white/5 rounded-xl text-gray-300">• Configurar un cuaderno en NotebookLM.</p>
+          <p class="p-3 bg-white/5 rounded-xl text-gray-300">• Mejorar un diseño en Canva.</p>
+          <p class="p-3 bg-white/5 rounded-xl text-gray-300">• Organizar una página en Lovable.</p>
+          <p class="p-3 bg-white/5 rounded-xl text-gray-300">• Revisar un formulario o presentación.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 28 -->
+  <section class="slide flex-col items-center justify-center bg-gradient-to-b from-[#0a0e1a] to-[#0f1a2e] relative">
+    <div class="absolute inset-0 bg-pattern opacity-50"></div>
+    <div class="relative z-10 max-w-5xl mx-auto w-full px-4">
+      <h2 class="text-3xl md:text-5xl font-black text-white mb-4">
+        CÓMO PEDIR UNA BUENA <span class="gradient-text">GUÍA</span>
+      </h2>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+        <div class="prompt-box rounded-2xl p-4"><p class="text-gray-100 text-sm">“Decime qué botón tengo que tocar ahora.”</p></div>
+        <div class="prompt-box rounded-2xl p-4"><p class="text-gray-100 text-sm">“¿Ves algún error en esta pantalla?”</p></div>
+        <div class="prompt-box rounded-2xl p-4"><p class="text-gray-100 text-sm">“Explicame qué significa esta opción.”</p></div>
+        <div class="prompt-box rounded-2xl p-4"><p class="text-gray-100 text-sm">“No avances hasta que termine este paso.”</p></div>
+        <div class="prompt-box rounded-2xl p-4"><p class="text-gray-100 text-sm">“Compará estas dos configuraciones.”</p></div>
+        <div class="prompt-box rounded-2xl p-4"><p class="text-gray-100 text-sm">“Corregime si estoy haciendo algo mal.”</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 29 -->
+  <section class="slide flex-col items-center justify-center bg-gradient-to-b from-[#0f1a2e] to-[#0a0e1a] relative">
+    <div class="absolute inset-0 bg-pattern opacity-50"></div>
+    <div class="relative z-10 max-w-5xl mx-auto w-full px-4">
+      <h2 class="text-3xl md:text-5xl font-black text-white mb-4">
+        PRIVACIDAD AL COMPARTIR <span class="gradient-text">PANTALLA</span>
+      </h2>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div class="glass-card rounded-2xl p-5">
+          <div class="flex items-center gap-3 mb-3"><span class="text-3xl">✅</span><h3 class="text-emerald-300 font-black text-xl">Antes de compartir</h3></div>
+          <div class="space-y-2 text-gray-300 text-sm">
+            <p>• Cerrar correos y chats privados.</p>
+            <p>• Ocultar contraseñas.</p>
+            <p>• Elegir una sola ventana.</p>
+            <p>• Revisar notificaciones.</p>
+            <p>• Evitar datos de clientes.</p>
+          </div>
+        </div>
+
+        <div class="glass-card rounded-2xl p-5">
+          <div class="flex items-center gap-3 mb-3"><span class="text-3xl">🚫</span><h3 class="text-red-300 font-black text-xl">Nunca mostrar</h3></div>
+          <div class="space-y-2 text-gray-300 text-sm">
+            <p>• Datos bancarios.</p>
+            <p>• Claves o códigos.</p>
+            <p>• Historias clínicas.</p>
+            <p>• Documentos confidenciales.</p>
+            <p>• Información personal ajena.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 30 -->
+  <section class="slide flex-col items-center justify-center bg-gradient-to-b from-[#0a0e1a] to-[#0f1a2e] relative">
+    <div class="absolute inset-0 bg-pattern opacity-50"></div>
+    <div class="relative z-10 max-w-5xl mx-auto w-full px-4">
+      <h2 class="text-3xl md:text-5xl font-black text-white mb-4">
+        LA IA NO VE TODO <span class="gradient-text">PERFECTAMENTE</span>
+      </h2>
+
+      <div class="glass-card rounded-3xl p-6 md:p-8 mb-5 text-center">
+        <p class="text-white text-xl md:text-2xl font-black">
+          Puede interpretar mal un botón, no detectar un cambio o dar una instrucción incorrecta.
+        </p>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-3">
+        <div class="glass-card rounded-2xl p-5 text-center"><span class="text-4xl">👀</span><h3 class="text-white font-bold mt-3">Observá</h3><p class="text-gray-300 text-sm mt-2">Compará lo que dice con la pantalla.</p></div>
+        <div class="glass-card rounded-2xl p-5 text-center"><span class="text-4xl">❓</span><h3 class="text-white font-bold mt-3">Preguntá</h3><p class="text-gray-300 text-sm mt-2">Pedí confirmación si hay dudas.</p></div>
+        <div class="glass-card rounded-2xl p-5 text-center"><span class="text-4xl">🛑</span><h3 class="text-white font-bold mt-3">Detenete</h3><p class="text-gray-300 text-sm mt-2">No ejecutes acciones críticas sin revisar.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 31 -->
+  <section class="slide flex-col items-center justify-center bg-gradient-to-b from-[#0f1a2e] to-[#0a0e1a] relative">
+    <div class="absolute inset-0 bg-pattern opacity-50"></div>
+    <div class="relative z-10 max-w-5xl mx-auto w-full px-4">
+      <h2 class="text-3xl md:text-5xl font-black text-white mb-4">
+        ACTIVIDAD FINAL <span class="gradient-text">INTEGRADA</span>
+      </h2>
+
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-3">
+        <div class="glass-card rounded-2xl p-4 text-center"><span class="text-3xl">✍️</span><p class="text-white font-bold mt-2">Elegir prompt</p></div>
+        <div class="glass-card rounded-2xl p-4 text-center"><span class="text-3xl">🧱</span><p class="text-white font-bold mt-2">Convertir a JSON</p></div>
+        <div class="glass-card rounded-2xl p-4 text-center"><span class="text-3xl">✅</span><p class="text-white font-bold mt-2">Revisar</p></div>
+        <div class="glass-card rounded-2xl p-4 text-center"><span class="text-3xl">🔄</span><p class="text-white font-bold mt-2">Adaptar</p></div>
+        <div class="glass-card rounded-2xl p-4 text-center"><span class="text-3xl">🧪</span><p class="text-white font-bold mt-2">Probar</p></div>
+        <div class="glass-card rounded-2xl p-4 text-center"><span class="text-3xl">🖥️</span><p class="text-white font-bold mt-2">Compartir pantalla</p></div>
+        <div class="glass-card rounded-2xl p-4 text-center"><span class="text-3xl">🎙️</span><p class="text-white font-bold mt-2">Recibir guía</p></div>
+        <div class="glass-card rounded-2xl p-4 text-center"><span class="text-3xl">📋</span><p class="text-white font-bold mt-2">Registrar mejoras</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 32 -->
+  <section class="slide flex-col items-center justify-center bg-gradient-to-b from-[#0a0e1a] to-[#0f1a2e] relative">
+    <div class="absolute inset-0 bg-pattern opacity-50"></div>
+    <div class="relative z-10 max-w-5xl mx-auto w-full px-4">
+      <h2 class="text-3xl md:text-5xl font-black text-white mb-4">
+        RESULTADO FINAL DE LA <span class="gradient-text">CLASE</span>
+      </h2>
+
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-3">
+        <div class="glass-card rounded-2xl p-4 text-center"><span class="text-3xl">🧠</span><p class="text-white font-bold mt-2">Concepto de prompting</p></div>
+        <div class="glass-card rounded-2xl p-4 text-center"><span class="text-3xl">🧩</span><p class="text-white font-bold mt-2">Estructura profesional</p></div>
+        <div class="glass-card rounded-2xl p-4 text-center"><span class="text-3xl">🧱</span><p class="text-white font-bold mt-2">JSON comprendido</p></div>
+        <div class="glass-card rounded-2xl p-4 text-center"><span class="text-3xl">🤖</span><p class="text-white font-bold mt-2">JSON generado</p></div>
+        <div class="glass-card rounded-2xl p-4 text-center"><span class="text-3xl">🔍</span><p class="text-white font-bold mt-2">JSON revisado</p></div>
+        <div class="glass-card rounded-2xl p-4 text-center"><span class="text-3xl">🖥️</span><p class="text-white font-bold mt-2">Pantalla compartida</p></div>
+        <div class="glass-card rounded-2xl p-4 text-center"><span class="text-3xl">🎙️</span><p class="text-white font-bold mt-2">Guía en vivo</p></div>
+        <div class="glass-card rounded-2xl p-4 text-center"><span class="text-3xl">✅</span><p class="text-white font-bold mt-2">Práctica completada</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 33 -->
+  <section class="slide flex-col items-center justify-center bg-gradient-to-b from-[#0f1a2e] to-[#0a0e1a] relative">
+    <div class="absolute inset-0 bg-pattern opacity-50"></div>
+    <div class="relative z-10 max-w-5xl mx-auto w-full px-4">
+      <h2 class="text-3xl md:text-5xl font-black text-white mb-4">
+        LA NUEVA FORMA DE <span class="gradient-text">TRABAJAR</span>
+      </h2>
+
+      <div class="grid grid-cols-1 md:grid-cols-5 gap-3 items-center text-center">
+        <div class="glass-card rounded-2xl p-4 md:col-span-2"><span class="text-3xl">💭</span><p class="text-white font-bold mt-2">Idea humana</p></div>
+        <div class="hidden md:flex justify-center"><i data-lucide="arrow-right" class="flow-arrow"></i></div>
+        <div class="glass-card rounded-2xl p-4 md:col-span-2"><span class="text-3xl">🤖</span><p class="text-white font-bold mt-2">Estructura de IA</p></div>
+      </div>
+
+      <div class="flex justify-center my-4"><i data-lucide="arrow-down" class="text-indigo-300 w-7 h-7"></i></div>
+
+      <div class="grid grid-cols-1 md:grid-cols-5 gap-3 items-center text-center max-w-3xl mx-auto">
+        <div class="glass-card rounded-2xl p-4 md:col-span-2"><span class="text-3xl">🧪</span><p class="text-white font-bold mt-2">Prueba</p></div>
+        <div class="hidden md:flex justify-center"><i data-lucide="arrow-right" class="flow-arrow"></i></div>
+        <div class="glass-card rounded-2xl p-4 md:col-span-2"><span class="text-3xl">🔄</span><p class="text-white font-bold mt-2">Mejora</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 34 -->
+  <section class="slide flex-col items-center justify-center bg-gradient-to-br from-[#0a0e1a] via-[#0f1a2e] to-[#0a0e1a] text-center relative overflow-hidden">
+    <div class="absolute inset-0 bg-pattern opacity-70"></div>
+    <div class="absolute top-0 right-0 w-1/2 h-1/2 bg-indigo-500/10 rounded-full blur-3xl"></div>
+
+    <div class="relative z-10 max-w-5xl mx-auto w-full px-4">
+      <img src="https://i.postimg.cc/jSkQKpRK/Diseno-sin-titulo-2026-05-15T105828-195.png"
+        alt="Instituto IEC" class="h-14 md:h-20 mx-auto mb-5 object-contain" />
+
+      <p class="text-sky-300 font-bold uppercase tracking-[.2em] text-sm mb-3">Cierre de la clase</p>
+
+      <h2 class="text-3xl sm:text-4xl md:text-6xl font-black text-white leading-tight mb-5">
+        NO HACE FALTA PROGRAMAR.<br><span class="gradient-text">HACE FALTA SABER DIRIGIR.</span>
+      </h2>
+
+      <div class="glass-card rounded-3xl p-5 md:p-8 max-w-4xl mx-auto">
+        <p class="text-white font-black text-lg md:text-2xl">
+          La ingeniería de prompts organiza nuestras ideas. El JSON las vuelve transportables. AI Studio Live agrega acompañamiento en tiempo real.
+        </p>
+
+        <div class="mt-5 flex flex-wrap justify-center gap-2 text-xs md:text-sm">
+          <span class="px-3 py-2 bg-white/5 rounded-full text-gray-200">Prompt</span>
+          <span class="px-3 py-2 bg-white/5 rounded-full text-gray-200">JSON</span>
+          <span class="px-3 py-2 bg-white/5 rounded-full text-gray-200">Revisión</span>
+          <span class="px-3 py-2 bg-white/5 rounded-full text-gray-200">Voz</span>
+          <span class="px-3 py-2 bg-white/5 rounded-full text-gray-200">Pantalla</span>
+        </div>
+      </div>
+
+      <p class="text-gray-400 text-xs md:text-sm mt-6">Instituto IEC · Experto en Aplicaciones Prácticas con IA</p>
+    </div>
+  </section>
+
+  <script>
+    let current = 0;
+    const slides = Array.from(document.querySelectorAll(".slide"));
+    const dotsContainer = document.getElementById("dots");
+    const progressBar = document.getElementById("progress-bar");
+    const currentNumber = document.getElementById("current-number");
+    const totalNumber = document.getElementById("total-number");
+    const prevButton = document.getElementById("prev-btn");
+    const nextButton = document.getElementById("next-btn");
+
+    totalNumber.textContent = slides.length;
+
+    slides.forEach((_, index) => {
+      const dot = document.createElement("button");
+      dot.className = "dot w-2 h-2 md:w-2.5 md:h-2.5 rounded-full bg-white/25 transition";
+      dot.setAttribute("aria-label", `Ir a la diapositiva ${index + 1}`);
+      dot.addEventListener("click", () => goSlide(index));
+      dotsContainer.appendChild(dot);
+    });
+
+    const dots = Array.from(document.querySelectorAll(".dot"));
+
+    function updateUI() {
+      dots.forEach((dot, index) => dot.classList.toggle("active", index === current));
+      currentNumber.textContent = current + 1;
+      progressBar.style.width = `${((current + 1) / slides.length) * 100}%`;
+      prevButton.disabled = current === 0;
+      nextButton.disabled = current === slides.length - 1;
+    }
+
+    function goSlide(index) {
+      if (index < 0 || index >= slides.length || index === current) return;
+      slides[current].classList.remove("active");
+      current = index;
+      slides[current].classList.add("active");
+      slides[current].scrollTop = 0;
+      window.scrollTo({ top:0, left:0, behavior:"instant" });
+      updateUI();
+    }
+
+    function changeSlide(direction) { goSlide(current + direction); }
+
+    document.addEventListener("keydown", (event) => {
+      const tag = document.activeElement?.tagName?.toLowerCase();
+      if (["input","textarea","select"].includes(tag)) return;
+
+      if (event.key === "ArrowRight" || event.key === "PageDown" || event.key === " ") {
+        event.preventDefault();
+        changeSlide(1);
+      }
+
+      if (event.key === "ArrowLeft" || event.key === "PageUp") {
+        event.preventDefault();
+        changeSlide(-1);
+      }
+
+      if (event.key === "Home") {
+        event.preventDefault();
+        goSlide(0);
+      }
+
+      if (event.key === "End") {
+        event.preventDefault();
+        goSlide(slides.length - 1);
+      }
+    });
+
+    let touchStartX = 0;
+    let touchStartY = 0;
+
+    document.addEventListener("touchstart", (event) => {
+      touchStartX = event.changedTouches[0].screenX;
+      touchStartY = event.changedTouches[0].screenY;
+    }, { passive:true });
+
+    document.addEventListener("touchend", (event) => {
+      const x = event.changedTouches[0].screenX;
+      const y = event.changedTouches[0].screenY;
+      const dx = touchStartX - x;
+      const dy = touchStartY - y;
+
+      if (Math.abs(dx) > 60 && Math.abs(dx) > Math.abs(dy)) {
+        dx > 0 ? changeSlide(1) : changeSlide(-1);
+      }
+    }, { passive:true });
+
+    async function copyText(button) {
+      const text = button.dataset.copy;
+      const original = button.textContent;
+
+      try {
+        await navigator.clipboard.writeText(text);
+        button.textContent = "¡Prompt copiado!";
+        button.classList.remove("bg-sky-500");
+        button.classList.add("bg-emerald-500");
+      } catch {
+        button.textContent = "Seleccioná y copiá manualmente";
+      }
+
+      setTimeout(() => {
+        button.textContent = original;
+        button.classList.add("bg-sky-500");
+        button.classList.remove("bg-emerald-500");
+      }, 1800);
+    }
+
+    updateUI();
+    lucide.createIcons();
+  </script>
+</body>
+</html>

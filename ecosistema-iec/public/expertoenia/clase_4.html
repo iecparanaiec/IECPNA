@@ -1,0 +1,1152 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Clase 4 del curso Experto en Aplicaciones Prácticas con IA del Instituto IEC: Canva IA, diseño editable, formularios y códigos QR." />
+  <title>Clase 4 · Canva IA y Diseño Inteligente | Instituto IEC</title>
+
+  <script src="https://cdn.tailwindcss.com/3.4.17"></script>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
+  <script src="https://cdn.jsdelivr.net/npm/lucide@0.263.0/dist/umd/lucide.min.js"></script>
+
+  <style>
+    * { box-sizing: border-box; font-family: "DM Sans", sans-serif; }
+    html, body { margin: 0; width: 100%; min-height: 100%; background: #0a0e1a; }
+    body { overflow: hidden; }
+
+    .slide {
+      display: none;
+      width: 100%;
+      min-height: 100vh;
+      height: 100vh;
+      overflow-y: auto;
+      padding: 2rem 1.5rem 6.5rem;
+      scroll-behavior: smooth;
+    }
+
+    .slide.active {
+      display: flex;
+      animation: slideIn .35s ease-out;
+      -webkit-overflow-scrolling: touch;
+    }
+
+    @keyframes slideIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .glass-card {
+      background: rgba(255,255,255,.075);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border: 1px solid rgba(255,255,255,.12);
+      box-shadow: 0 18px 45px rgba(0,0,0,.18);
+    }
+
+    .gradient-text {
+      background: linear-gradient(135deg,#38bdf8,#818cf8);
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .bg-pattern {
+      background-image:
+        radial-gradient(circle at 20% 45%,rgba(56,189,248,.07) 0%,transparent 42%),
+        radial-gradient(circle at 82% 78%,rgba(129,140,248,.07) 0%,transparent 42%);
+    }
+
+    .dot.active {
+      background:#38bdf8;
+      transform:scale(1.3);
+      box-shadow:0 0 12px rgba(56,189,248,.75);
+    }
+
+    .nav-button:disabled { opacity:.35; cursor:not-allowed; }
+
+    .prompt-box {
+      background: rgba(15,26,46,.92);
+      border:1px solid rgba(56,189,248,.28);
+      box-shadow:inset 0 0 30px rgba(56,189,248,.03);
+    }
+
+    .pulse-border { animation:pulseBorder 2s ease-in-out infinite; }
+
+    @keyframes pulseBorder {
+      0%,100% { border-color:rgba(251,191,36,.2); }
+      50% { border-color:rgba(251,191,36,.65); }
+    }
+
+    .flow-arrow { color:#38bdf8; }
+    .print-only { display:none; }
+
+    @media (max-width:640px){
+      .slide{padding:1.2rem .8rem 7rem;}
+      .text-7xl{font-size:2.65rem!important}
+      .text-6xl{font-size:2.35rem!important}
+      .text-5xl{font-size:2rem!important}
+      .text-4xl{font-size:1.72rem!important}
+      .text-3xl{font-size:1.42rem!important}
+    }
+
+    @media print {
+      @page { size: A4; margin: 14mm; }
+
+      html, body {
+        background:#fff!important;
+        color:#111!important;
+        overflow:visible!important;
+      }
+
+      body { display:block!important; }
+
+      #progress-wrap, #prev-btn, #next-btn, #footer-nav, #print-button {
+        display:none!important;
+      }
+
+      .slide, .slide.active {
+        display:block!important;
+        width:100%!important;
+        min-height:auto!important;
+        height:auto!important;
+        overflow:visible!important;
+        padding:0!important;
+        margin:0 0 14mm 0!important;
+        background:#fff!important;
+        color:#111!important;
+        page-break-after:always;
+        break-after:page;
+        animation:none!important;
+      }
+
+      .slide:last-of-type { page-break-after:auto; break-after:auto; }
+      .slide > .absolute { display:none!important; }
+      .slide > .relative { position:relative!important; z-index:1!important; }
+
+      .glass-card, .prompt-box, .bg-white\/5, .bg-black\/25,
+      [class*="bg-sky-"], [class*="bg-indigo-"], [class*="bg-emerald-"],
+      [class*="bg-amber-"], [class*="bg-red-"], [class*="bg-pink-"],
+      [class*="bg-cyan-"] {
+        background:#fff!important;
+        box-shadow:none!important;
+      }
+
+      .glass-card, .prompt-box,
+      [class*="border-white"], [class*="border-sky"], [class*="border-indigo"],
+      [class*="border-emerald"], [class*="border-amber"], [class*="border-red"],
+      [class*="border-pink"], [class*="border-cyan"] {
+        border-color:#cbd5e1!important;
+      }
+
+      .text-white, .text-gray-100, .text-gray-200, .text-gray-300,
+      .text-gray-400, .text-gray-500 { color:#111827!important; }
+
+      .text-sky-300 { color:#0369a1!important; }
+      .text-indigo-300 { color:#4338ca!important; }
+      .text-emerald-300 { color:#047857!important; }
+      .text-amber-300 { color:#b45309!important; }
+      .text-red-300 { color:#b91c1c!important; }
+      .text-pink-300 { color:#be185d!important; }
+      .text-cyan-300 { color:#0e7490!important; }
+
+      .gradient-text {
+        background:none!important;
+        -webkit-text-fill-color:#0f172a!important;
+        color:#0f172a!important;
+      }
+
+      img { filter:none!important; }
+      button { display:none!important; }
+      .print-only { display:block!important; }
+      .no-print { display:none!important; }
+      h1,h2,h3,h4,p,li,span { text-shadow:none!important; }
+    }
+  </style>
+</head>
+
+<body class="relative bg-[#0a0e1a]">
+<button
+    onclick="location.href='index.html'"
+    class="fixed top-4 left-4 z-[80]
+           px-4 py-2 rounded-xl
+           bg-white/10 hover:bg-white/20
+           backdrop-blur border border-white/10
+           text-white text-xs md:text-sm font-bold
+           flex items-center gap-2 transition">
+
+    <i data-lucide="arrow-left" class="w-4 h-4"></i>
+    Volver al menú
+
+</button>
+  <div id="progress-wrap" class="fixed top-0 left-0 right-0 z-[70] h-1 bg-white/5">
+    <div id="progress-bar" class="h-full bg-gradient-to-r from-sky-400 to-indigo-400 transition-all duration-300" style="width:0%"></div>
+  </div>
+
+  <button id="print-button"
+    class="fixed top-4 right-4 z-[80] px-4 py-2 rounded-xl bg-white/10 hover:bg-white/20 backdrop-blur border border-white/10 text-white text-xs md:text-sm font-bold flex items-center gap-2 transition"
+    onclick="window.print()" aria-label="Imprimir presentación">
+    <i data-lucide="printer" class="w-4 h-4"></i>
+    Imprimir manual
+  </button>
+
+  <button id="prev-btn"
+    class="nav-button fixed left-2 md:left-5 top-1/2 -translate-y-1/2 z-50 bg-white/10 hover:bg-white/20 backdrop-blur border border-white/10 rounded-full w-10 h-10 md:w-12 md:h-12 flex items-center justify-center transition text-white"
+    onclick="changeSlide(-1)" aria-label="Diapositiva anterior">
+    <i data-lucide="chevron-left" style="width:21px;height:21px;"></i>
+  </button>
+
+  <button id="next-btn"
+    class="nav-button fixed right-2 md:right-5 top-1/2 -translate-y-1/2 z-50 bg-white/10 hover:bg-white/20 backdrop-blur border border-white/10 rounded-full w-10 h-10 md:w-12 md:h-12 flex items-center justify-center transition text-white"
+    onclick="changeSlide(1)" aria-label="Diapositiva siguiente">
+    <i data-lucide="chevron-right" style="width:21px;height:21px;"></i>
+  </button>
+
+  <div id="footer-nav" class="fixed bottom-3 left-1/2 -translate-x-1/2 z-50 flex flex-col items-center gap-2 w-[92%] max-w-4xl">
+    <div id="dots" class="flex gap-1.5 md:gap-2 flex-wrap justify-center px-2"></div>
+    <div class="px-3 py-1 rounded-full bg-black/30 border border-white/10 text-[10px] md:text-xs text-gray-300 text-center backdrop-blur">
+      <span id="current-number">1</span> / <span id="total-number">30</span>
+    </div>
+  </div>
+
+  <!-- 1 -->
+  <section class="slide active flex-col items-center justify-center bg-gradient-to-br from-[#0a0e1a] via-[#0f1a2e] to-[#0a0e1a] text-center relative overflow-hidden">
+    <div class="absolute inset-0 bg-pattern opacity-80"></div>
+    <div class="absolute -top-32 -left-24 w-96 h-96 rounded-full bg-sky-500/10 blur-3xl"></div>
+    <div class="absolute -bottom-32 -right-24 w-96 h-96 rounded-full bg-indigo-500/10 blur-3xl"></div>
+
+    <div class="relative z-10 max-w-5xl mx-auto w-full px-4">
+      <img src="https://i.postimg.cc/jSkQKpRK/Diseno-sin-titulo-2026-05-15T105828-195.png"
+        alt="Instituto IEC" class="h-14 md:h-20 lg:h-24 mx-auto mb-5 object-contain" />
+
+      <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-sky-400/30 bg-sky-400/10 text-sky-300 text-xs md:text-sm font-bold tracking-wider mb-5">
+        <span>🎨</span> EXPERTO EN APLICACIONES PRÁCTICAS CON IA
+      </div>
+
+      <p class="text-sky-300 text-sm md:text-lg font-bold tracking-[.2em] uppercase mb-2">Clase 4</p>
+
+      <h1 class="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-black text-white leading-tight mb-4">
+        CANVA IA Y<br><span class="gradient-text">DISEÑO INTELIGENTE</span>
+      </h1>
+
+      <p class="text-base md:text-xl text-gray-300 max-w-3xl mx-auto mb-6">
+        Creá piezas visuales editables, presentaciones, formularios interactivos y campañas conectadas mediante códigos QR.
+      </p>
+
+      <div class="glass-card rounded-2xl p-4 md:p-6 max-w-3xl mx-auto">
+        <p class="text-gray-200 text-sm md:text-lg">
+          En esta clase vamos a combinar la capacidad estratégica de ChatGPT con la potencia visual y editable de Canva.
+        </p>
+      </div>
+
+      <div class="mt-6 flex flex-wrap justify-center gap-2 md:gap-3 text-xs md:text-sm text-gray-300">
+        <span class="px-3 py-2 bg-white/5 border border-white/5 rounded-full">🖼️ Imágenes</span>
+        <span class="px-3 py-2 bg-white/5 border border-white/5 rounded-full">📣 Marketing</span>
+        <span class="px-3 py-2 bg-white/5 border border-white/5 rounded-full">📊 Presentaciones</span>
+        <span class="px-3 py-2 bg-white/5 border border-white/5 rounded-full">🔗 Formularios + QR</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- 2 -->
+  <section class="slide flex-col items-center justify-center bg-gradient-to-b from-[#0a0e1a] to-[#0f1a2e] relative">
+    <div class="absolute inset-0 bg-pattern opacity-50"></div>
+    <div class="relative z-10 max-w-5xl mx-auto w-full px-4">
+      <h2 class="text-3xl md:text-5xl font-black text-white mb-5">
+        ¿QUÉ VAS A <span class="gradient-text">APRENDER?</span>
+      </h2>
+
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 md:gap-4">
+        <div class="glass-card rounded-2xl p-4 flex gap-3"><span class="text-2xl">🎨</span><div><h3 class="text-white font-bold">Comprender Canva</h3><p class="text-gray-300 text-sm mt-1">Qué es, para qué sirve y por qué es una herramienta de diseño tan versátil.</p></div></div>
+        <div class="glass-card rounded-2xl p-4 flex gap-3"><span class="text-2xl">✨</span><div><h3 class="text-white font-bold">Explorar Canva IA</h3><p class="text-gray-300 text-sm mt-1">Conocer sus posibilidades generativas y de edición.</p></div></div>
+        <div class="glass-card rounded-2xl p-4 flex gap-3"><span class="text-2xl">🧠</span><div><h3 class="text-white font-bold">Transferir el método</h3><p class="text-gray-300 text-sm mt-1">Reconocer el mismo patrón de prompt, generación y mejora.</p></div></div>
+        <div class="glass-card rounded-2xl p-4 flex gap-3"><span class="text-2xl">✍️</span><div><h3 class="text-white font-bold">Usar ChatGPT como prompter</h3><p class="text-gray-300 text-sm mt-1">Preparar instrucciones profesionales para Canva IA.</p></div></div>
+        <div class="glass-card rounded-2xl p-4 flex gap-3"><span class="text-2xl">📣</span><div><h3 class="text-white font-bold">Crear contenido de marketing</h3><p class="text-gray-300 text-sm mt-1">Flyers, redes sociales, imágenes y presentaciones.</p></div></div>
+        <div class="glass-card rounded-2xl p-4 flex gap-3"><span class="text-2xl">📱</span><div><h3 class="text-white font-bold">Conectar diseño y datos</h3><p class="text-gray-300 text-sm mt-1">Crear formulario, publicarlo y vincularlo mediante QR.</p></div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 3 -->
+  <section class="slide flex-col items-center justify-center bg-gradient-to-b from-[#0f1a2e] to-[#0a0e1a] relative">
+    <div class="absolute inset-0 bg-pattern opacity-50"></div>
+    <div class="relative z-10 max-w-5xl mx-auto w-full px-4">
+      <h2 class="text-3xl md:text-5xl font-black text-white mb-4">
+        ¿QUÉ ES <span class="gradient-text">CANVA?</span>
+      </h2>
+
+      <div class="glass-card rounded-3xl p-6 md:p-8 mb-5">
+        <p class="text-gray-200 text-lg md:text-2xl leading-relaxed">
+          Canva es una plataforma de diseño visual que permite crear contenidos digitales e impresos mediante una interfaz sencilla, plantillas y elementos editables.
+        </p>
+      </div>
+
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-3">
+        <div class="bg-white/5 border border-white/5 rounded-2xl p-4 text-center"><span class="text-4xl">📱</span><p class="text-white font-bold mt-2">Redes sociales</p></div>
+        <div class="bg-white/5 border border-white/5 rounded-2xl p-4 text-center"><span class="text-4xl">📊</span><p class="text-white font-bold mt-2">Presentaciones</p></div>
+        <div class="bg-white/5 border border-white/5 rounded-2xl p-4 text-center"><span class="text-4xl">🖨️</span><p class="text-white font-bold mt-2">Material impreso</p></div>
+        <div class="bg-white/5 border border-white/5 rounded-2xl p-4 text-center"><span class="text-4xl">🌐</span><p class="text-white font-bold mt-2">Sitios web</p></div>
+        <div class="bg-white/5 border border-white/5 rounded-2xl p-4 text-center"><span class="text-4xl">🎬</span><p class="text-white font-bold mt-2">Videos</p></div>
+        <div class="bg-white/5 border border-white/5 rounded-2xl p-4 text-center"><span class="text-4xl">📄</span><p class="text-white font-bold mt-2">Documentos</p></div>
+        <div class="bg-white/5 border border-white/5 rounded-2xl p-4 text-center"><span class="text-4xl">🧾</span><p class="text-white font-bold mt-2">Formularios</p></div>
+        <div class="bg-white/5 border border-white/5 rounded-2xl p-4 text-center"><span class="text-4xl">🤝</span><p class="text-white font-bold mt-2">Trabajo en equipo</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 4 -->
+  <section class="slide flex-col items-center justify-center bg-gradient-to-b from-[#0a0e1a] to-[#0f1a2e] relative">
+    <div class="absolute inset-0 bg-pattern opacity-50"></div>
+    <div class="relative z-10 max-w-5xl mx-auto w-full px-4">
+      <h2 class="text-3xl md:text-5xl font-black text-white mb-4">
+        ¿POR QUÉ CANVA ES TAN <span class="gradient-text">VERSÁTIL?</span>
+      </h2>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+        <div class="glass-card rounded-2xl p-5 text-center"><span class="text-4xl">🧩</span><h3 class="text-white font-black mt-3">Plantillas</h3><p class="text-gray-300 text-sm mt-2">Permiten empezar rápido sin diseñar desde cero.</p></div>
+        <div class="glass-card rounded-2xl p-5 text-center"><span class="text-4xl">🖱️</span><h3 class="text-white font-black mt-3">Arrastrar y soltar</h3><p class="text-gray-300 text-sm mt-2">Mover elementos, cambiar tamaños y reorganizar.</p></div>
+        <div class="glass-card rounded-2xl p-5 text-center"><span class="text-4xl">🎨</span><h3 class="text-white font-black mt-3">Edición visual</h3><p class="text-gray-300 text-sm mt-2">Colores, tipografías, fotos, íconos y formas.</p></div>
+        <div class="glass-card rounded-2xl p-5 text-center"><span class="text-4xl">📐</span><h3 class="text-white font-black mt-3">Muchos formatos</h3><p class="text-gray-300 text-sm mt-2">Una misma idea se adapta a diferentes piezas.</p></div>
+        <div class="glass-card rounded-2xl p-5 text-center"><span class="text-4xl">🔄</span><h3 class="text-white font-black mt-3">Edición continua</h3><p class="text-gray-300 text-sm mt-2">El diseño puede evolucionar sin volver a empezar.</p></div>
+        <div class="glass-card rounded-2xl p-5 text-center"><span class="text-4xl">📤</span><h3 class="text-white font-black mt-3">Publicación y exportación</h3><p class="text-gray-300 text-sm mt-2">Compartir, descargar, presentar o publicar.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 5 -->
+  <section class="slide flex-col items-center justify-center bg-gradient-to-b from-[#0f1a2e] to-[#0a0e1a] relative">
+    <div class="absolute inset-0 bg-pattern opacity-50"></div>
+    <div class="relative z-10 max-w-5xl mx-auto w-full px-4">
+      <h2 class="text-3xl md:text-5xl font-black text-white mb-4">
+        ¿QUÉ ES <span class="gradient-text">CANVA IA?</span>
+      </h2>
+
+      <div class="glass-card rounded-3xl p-6 md:p-8 text-center mb-5">
+        <p class="text-white text-xl md:text-3xl font-black">
+          Es el conjunto de funciones generativas y asistidas por IA integradas dentro del entorno de diseño de Canva.
+        </p>
+      </div>
+
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-3">
+        <div class="bg-white/5 border border-white/5 rounded-2xl p-4 text-center"><span class="text-3xl">✍️</span><p class="text-white font-bold mt-2">Generar textos</p></div>
+        <div class="bg-white/5 border border-white/5 rounded-2xl p-4 text-center"><span class="text-3xl">🖼️</span><p class="text-white font-bold mt-2">Crear imágenes</p></div>
+        <div class="bg-white/5 border border-white/5 rounded-2xl p-4 text-center"><span class="text-3xl">📊</span><p class="text-white font-bold mt-2">Diseñar presentaciones</p></div>
+        <div class="bg-white/5 border border-white/5 rounded-2xl p-4 text-center"><span class="text-3xl">🪄</span><p class="text-white font-bold mt-2">Editar visuales</p></div>
+        <div class="bg-white/5 border border-white/5 rounded-2xl p-4 text-center"><span class="text-3xl">🎬</span><p class="text-white font-bold mt-2">Generar video</p></div>
+        <div class="bg-white/5 border border-white/5 rounded-2xl p-4 text-center"><span class="text-3xl">🔄</span><p class="text-white font-bold mt-2">Adaptar formatos</p></div>
+        <div class="bg-white/5 border border-white/5 rounded-2xl p-4 text-center"><span class="text-3xl">🧱</span><p class="text-white font-bold mt-2">Crear diseños editables</p></div>
+        <div class="bg-white/5 border border-white/5 rounded-2xl p-4 text-center"><span class="text-3xl">💡</span><p class="text-white font-bold mt-2">Sugerir ideas</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 6 -->
+  <section class="slide flex-col items-center justify-center bg-gradient-to-b from-[#0a0e1a] to-[#0f1a2e] relative">
+    <div class="absolute inset-0 bg-pattern opacity-50"></div>
+    <div class="relative z-10 max-w-5xl mx-auto w-full px-4">
+      <h2 class="text-3xl md:text-5xl font-black text-white mb-4">
+        CANVA ESTÁ APOSTANDO FUERTE POR LA <span class="gradient-text">IA</span>
+      </h2>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-5 items-center">
+        <div class="glass-card rounded-3xl p-6">
+          <span class="text-5xl block mb-4">🚀</span>
+          <h3 class="text-white font-black text-2xl">De herramienta de diseño a entorno creativo completo</h3>
+          <p class="text-gray-300 text-sm md:text-base mt-4">
+            Canva incorporó IA en generación, edición, adaptación de contenido, escritura, video, diseño y productividad.
+          </p>
+        </div>
+
+        <div class="space-y-3">
+          <div class="p-4 rounded-xl bg-sky-400/10 border border-sky-400/20"><p class="text-sky-300 font-bold">Más automatización</p><p class="text-gray-200 text-sm mt-1">Reduce tareas repetitivas de diseño.</p></div>
+          <div class="p-4 rounded-xl bg-indigo-400/10 border border-indigo-400/20"><p class="text-indigo-300 font-bold">Más edición</p><p class="text-gray-200 text-sm mt-1">Permite intervenir el resultado después de generarlo.</p></div>
+          <div class="p-4 rounded-xl bg-emerald-400/10 border border-emerald-400/20"><p class="text-emerald-300 font-bold">Más integración</p><p class="text-gray-200 text-sm mt-1">Texto, imagen, presentación, datos y publicación en un mismo espacio.</p></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 7 -->
+  <section class="slide flex-col items-center justify-center bg-gradient-to-b from-[#0f1a2e] to-[#0a0e1a] relative">
+    <div class="absolute inset-0 bg-pattern opacity-50"></div>
+    <div class="relative z-10 max-w-5xl mx-auto w-full px-4">
+      <h2 class="text-3xl md:text-5xl font-black text-white mb-4">
+        LA DIFERENCIA: <span class="gradient-text">GENERAR Y EDITAR</span>
+      </h2>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+        <div class="rounded-3xl p-6 bg-red-400/10 border border-red-400/20">
+          <div class="flex items-center gap-3 mb-4"><span class="text-3xl">🖼️</span><h3 class="text-red-300 font-black text-xl">Imagen estática</h3></div>
+          <p class="text-gray-200">Una IA genera el flyer como una sola imagen.</p>
+          <div class="mt-4 space-y-2 text-gray-300 text-sm">
+            <p>• El texto queda integrado.</p>
+            <p>• Mover objetos es difícil.</p>
+            <p>• Corregir una palabra puede requerir regenerar.</p>
+            <p>• La composición está cerrada.</p>
+          </div>
+        </div>
+
+        <div class="rounded-3xl p-6 bg-emerald-400/10 border border-emerald-400/20">
+          <div class="flex items-center gap-3 mb-4"><span class="text-3xl">🧩</span><h3 class="text-emerald-300 font-black text-xl">Diseño editable</h3></div>
+          <p class="text-gray-200">Canva trabaja con objetos que se pueden intervenir.</p>
+          <div class="mt-4 space-y-2 text-gray-300 text-sm">
+            <p>• Cambiar textos.</p>
+            <p>• Mover imágenes.</p>
+            <p>• Ajustar colores.</p>
+            <p>• Duplicar, borrar o reemplazar elementos.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 8 -->
+  <section class="slide flex-col items-center justify-center bg-gradient-to-b from-[#0a0e1a] to-[#0f1a2e] relative">
+    <div class="absolute inset-0 bg-pattern opacity-50"></div>
+    <div class="relative z-10 max-w-5xl mx-auto w-full px-4">
+      <h2 class="text-3xl md:text-5xl font-black text-white mb-4">
+        EL MISMO PATRÓN DE LAS <span class="gradient-text">IA GENERATIVAS</span>
+      </h2>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-4 items-center">
+        <div class="glass-card rounded-3xl p-5">
+          <div class="rounded-2xl bg-black/25 border border-white/10 p-4 min-h-[260px] flex flex-col">
+            <p class="text-white font-bold">ChatGPT</p>
+            <div class="mt-auto prompt-box rounded-xl p-4"><p class="text-gray-500 text-sm">¿En qué puedo ayudarte?</p></div>
+          </div>
+        </div>
+
+        <div class="glass-card rounded-3xl p-5">
+          <div class="rounded-2xl bg-black/25 border border-white/10 p-4 min-h-[260px] flex flex-col">
+            <p class="text-white font-bold">Lovable</p>
+            <div class="mt-auto prompt-box rounded-xl p-4"><p class="text-gray-500 text-sm">¿Qué crearemos hoy?</p></div>
+          </div>
+        </div>
+
+        <div class="glass-card rounded-3xl p-5">
+          <div class="rounded-2xl bg-black/25 border border-white/10 p-4 min-h-[260px] flex flex-col">
+            <p class="text-white font-bold">Canva IA</p>
+            <div class="mt-auto prompt-box rounded-xl p-4"><p class="text-gray-500 text-sm">Describí lo que querés diseñar...</p></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="mt-5 p-4 rounded-xl bg-sky-400/10 border border-sky-400/20 text-center">
+        <p class="text-white font-black">Cuadro de texto → instrucción → resultado → edición → mejora.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 9 -->
+  <section class="slide flex-col items-center justify-center bg-gradient-to-b from-[#0f1a2e] to-[#0a0e1a] relative">
+    <div class="absolute inset-0 bg-pattern opacity-50"></div>
+    <div class="relative z-10 max-w-5xl mx-auto w-full px-4">
+      <h2 class="text-3xl md:text-5xl font-black text-white mb-4">
+        NO APRENDEMOS UNA APP: <span class="gradient-text">APRENDEMOS UN MÉTODO</span>
+      </h2>
+
+      <div class="grid grid-cols-1 md:grid-cols-9 gap-3 items-center text-center">
+        <div class="glass-card rounded-2xl p-4 md:col-span-2"><span class="text-3xl">🧠</span><p class="text-white font-bold mt-2">Pensar</p></div>
+        <div class="hidden md:flex justify-center"><i data-lucide="arrow-right" class="flow-arrow"></i></div>
+        <div class="glass-card rounded-2xl p-4 md:col-span-2"><span class="text-3xl">✍️</span><p class="text-white font-bold mt-2">Promptear</p></div>
+        <div class="hidden md:flex justify-center"><i data-lucide="arrow-right" class="flow-arrow"></i></div>
+        <div class="glass-card rounded-2xl p-4 md:col-span-2"><span class="text-3xl">✨</span><p class="text-white font-bold mt-2">Generar</p></div>
+      </div>
+
+      <div class="flex justify-center my-4"><i data-lucide="arrow-down" class="text-indigo-300 w-7 h-7"></i></div>
+
+      <div class="grid grid-cols-1 md:grid-cols-5 gap-3 items-center text-center max-w-3xl mx-auto">
+        <div class="glass-card rounded-2xl p-4 md:col-span-2"><span class="text-3xl">🖱️</span><p class="text-white font-bold mt-2">Editar</p></div>
+        <div class="hidden md:flex justify-center"><i data-lucide="arrow-right" class="flow-arrow"></i></div>
+        <div class="glass-card rounded-2xl p-4 md:col-span-2"><span class="text-3xl">🔄</span><p class="text-white font-bold mt-2">Mejorar</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 10 -->
+  <section class="slide flex-col items-center justify-center bg-gradient-to-b from-[#0a0e1a] to-[#0f1a2e] relative">
+    <div class="absolute inset-0 bg-pattern opacity-50"></div>
+    <div class="relative z-10 max-w-5xl mx-auto w-full px-4">
+      <h2 class="text-3xl md:text-5xl font-black text-white mb-4">
+        CHATGPT COMO <span class="gradient-text">PROMPTER PARA CANVA</span>
+      </h2>
+
+      <div class="glass-card rounded-3xl p-6 md:p-8 mb-5 text-center">
+        <p class="text-white text-xl md:text-2xl font-black">
+          ChatGPT organiza el concepto, el mensaje y la estructura. Canva transforma ese plan en una pieza visual editable.
+        </p>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-5 gap-3 items-center text-center">
+        <div class="glass-card rounded-2xl p-5 md:col-span-2"><span class="text-4xl">🤖</span><h3 class="text-white font-bold mt-2">ChatGPT</h3><p class="text-gray-400 text-xs mt-1">Idea, estrategia y prompt.</p></div>
+        <div class="hidden md:flex justify-center"><i data-lucide="arrow-right" class="flow-arrow"></i></div>
+        <div class="glass-card rounded-2xl p-5 md:col-span-2"><span class="text-4xl">🎨</span><h3 class="text-white font-bold mt-2">Canva IA</h3><p class="text-gray-400 text-xs mt-1">Diseño, edición y publicación.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 11 -->
+  <section class="slide flex-col items-center justify-center bg-gradient-to-b from-[#0f1a2e] to-[#0a0e1a] relative">
+    <div class="absolute inset-0 bg-pattern opacity-50"></div>
+    <div class="relative z-10 max-w-5xl mx-auto w-full px-4">
+      <h2 class="text-3xl md:text-5xl font-black text-white mb-4">
+        FLUJO DE TRABAJO DE LA <span class="gradient-text">CLASE</span>
+      </h2>
+
+      <div class="grid grid-cols-1 md:grid-cols-9 gap-3 items-center text-center">
+        <div class="glass-card rounded-2xl p-4 md:col-span-2"><span class="text-3xl">💭</span><p class="text-white font-bold mt-2">Tema</p></div>
+        <div class="hidden md:flex justify-center"><i data-lucide="arrow-right" class="flow-arrow"></i></div>
+        <div class="glass-card rounded-2xl p-4 md:col-span-2"><span class="text-3xl">✍️</span><p class="text-white font-bold mt-2">Prompt</p></div>
+        <div class="hidden md:flex justify-center"><i data-lucide="arrow-right" class="flow-arrow"></i></div>
+        <div class="glass-card rounded-2xl p-4 md:col-span-2"><span class="text-3xl">🎨</span><p class="text-white font-bold mt-2">Diseño</p></div>
+      </div>
+
+      <div class="flex justify-center my-4"><i data-lucide="arrow-down" class="text-indigo-300 w-7 h-7"></i></div>
+
+      <div class="grid grid-cols-1 md:grid-cols-7 gap-3 items-center text-center max-w-4xl mx-auto">
+        <div class="glass-card rounded-2xl p-4 md:col-span-2"><span class="text-3xl">🧾</span><p class="text-white font-bold mt-2">Formulario</p></div>
+        <div class="hidden md:flex justify-center"><i data-lucide="arrow-right" class="flow-arrow"></i></div>
+        <div class="glass-card rounded-2xl p-4 md:col-span-2"><span class="text-3xl">🔗</span><p class="text-white font-bold mt-2">Publicación</p></div>
+        <div class="hidden md:flex justify-center"><i data-lucide="arrow-right" class="flow-arrow"></i></div>
+        <div class="glass-card rounded-2xl p-4 md:col-span-1"><span class="text-3xl">📱</span><p class="text-white font-bold mt-2">QR</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 12 -->
+  <section class="slide flex-col items-center justify-center bg-gradient-to-b from-[#0a0e1a] to-[#0f1a2e] relative">
+    <div class="absolute inset-0 bg-pattern opacity-50"></div>
+    <div class="relative z-10 max-w-5xl mx-auto w-full px-4">
+      <p class="text-sky-300 font-bold uppercase tracking-wider mb-2">Actividad 1</p>
+      <h2 class="text-3xl md:text-5xl font-black text-white mb-4">
+        CREAR UNA <span class="gradient-text">IMAGEN</span>
+      </h2>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+        <div class="glass-card rounded-2xl p-5">
+          <h3 class="text-white font-black text-xl mb-3">Definí primero:</h3>
+          <div class="space-y-2 text-sm text-gray-300">
+            <p>• Tema principal.</p>
+            <p>• Público objetivo.</p>
+            <p>• Estilo visual.</p>
+            <p>• Colores.</p>
+            <p>• Formato.</p>
+            <p>• Sensación que debe transmitir.</p>
+          </div>
+        </div>
+
+        <div class="prompt-box rounded-2xl p-5">
+          <p class="text-xs text-sky-300 font-bold uppercase tracking-wider mb-3">Prompt sugerido</p>
+          <p class="text-gray-100 text-sm leading-relaxed">
+            “Creá una imagen publicitaria para ________, dirigida a ________. Debe transmitir ________, utilizar una estética ________, una paleta de ________ y una composición limpia y profesional.”
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 13 -->
+  <section class="slide flex-col items-center justify-center bg-gradient-to-b from-[#0f1a2e] to-[#0a0e1a] relative">
+    <div class="absolute inset-0 bg-pattern opacity-50"></div>
+    <div class="relative z-10 max-w-5xl mx-auto w-full px-4">
+      <h2 class="text-3xl md:text-5xl font-black text-white mb-4">
+        MEJORAR LA IMAGEN <span class="gradient-text">GENERADA</span>
+      </h2>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+        <div class="glass-card rounded-2xl p-5 text-center"><span class="text-4xl">🔍</span><h3 class="text-white font-bold mt-3">Revisá</h3><p class="text-gray-300 text-sm mt-2">¿Representa bien el concepto?</p></div>
+        <div class="glass-card rounded-2xl p-5 text-center"><span class="text-4xl">🪄</span><h3 class="text-white font-bold mt-3">Pedí cambios</h3><p class="text-gray-300 text-sm mt-2">Color, iluminación, estilo o composición.</p></div>
+        <div class="glass-card rounded-2xl p-5 text-center"><span class="text-4xl">🎯</span><h3 class="text-white font-bold mt-3">Elegí</h3><p class="text-gray-300 text-sm mt-2">Seleccioná la mejor variante.</p></div>
+      </div>
+
+      <div class="mt-5 prompt-box rounded-2xl p-5">
+        <p class="text-gray-100 text-sm">
+          “Mantené la idea principal, pero hacé la imagen más moderna, con mayor contraste, menos elementos y un foco visual más claro.”
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 14 -->
+  <section class="slide flex-col items-center justify-center bg-gradient-to-b from-[#0a0e1a] to-[#0f1a2e] relative">
+    <div class="absolute inset-0 bg-pattern opacity-50"></div>
+    <div class="relative z-10 max-w-5xl mx-auto w-full px-4">
+      <p class="text-sky-300 font-bold uppercase tracking-wider mb-2">Actividad 2</p>
+      <h2 class="text-3xl md:text-5xl font-black text-white mb-4">
+        CREAR UN <span class="gradient-text">FLYER EDITABLE</span>
+      </h2>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+        <div class="glass-card rounded-2xl p-5">
+          <h3 class="text-white font-black text-xl mb-3">Elementos del flyer</h3>
+          <div class="space-y-2 text-gray-300 text-sm">
+            <p>• Título principal.</p>
+            <p>• Beneficio o propuesta.</p>
+            <p>• Imagen o recurso visual.</p>
+            <p>• Datos importantes.</p>
+            <p>• Llamado a la acción.</p>
+            <p>• Datos de contacto.</p>
+          </div>
+        </div>
+
+        <div class="prompt-box rounded-2xl p-5">
+          <p class="text-xs text-indigo-300 font-bold uppercase tracking-wider mb-3">Prompt para Canva</p>
+          <p class="text-gray-100 text-sm leading-relaxed">
+            “Diseñá un flyer vertical para promocionar ________. Debe incluir el título ________, destacar ________, utilizar la paleta ________ y cerrar con el llamado a la acción ________. Quiero un estilo moderno, editable y preparado para redes sociales.”
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 15 -->
+  <section class="slide flex-col items-center justify-center bg-gradient-to-b from-[#0f1a2e] to-[#0a0e1a] relative">
+    <div class="absolute inset-0 bg-pattern opacity-50"></div>
+    <div class="relative z-10 max-w-5xl mx-auto w-full px-4">
+      <h2 class="text-3xl md:text-5xl font-black text-white mb-4">
+        EDITAR EL FLYER <span class="gradient-text">ELEMENTO POR ELEMENTO</span>
+      </h2>
+
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-3">
+        <div class="glass-card rounded-2xl p-4 text-center"><span class="text-3xl">🔤</span><p class="text-white font-bold mt-2">Texto</p><p class="text-gray-400 text-xs mt-1">Contenido, tamaño y fuente.</p></div>
+        <div class="glass-card rounded-2xl p-4 text-center"><span class="text-3xl">🎨</span><p class="text-white font-bold mt-2">Color</p><p class="text-gray-400 text-xs mt-1">Fondos, botones y acentos.</p></div>
+        <div class="glass-card rounded-2xl p-4 text-center"><span class="text-3xl">🖼️</span><p class="text-white font-bold mt-2">Imagen</p><p class="text-gray-400 text-xs mt-1">Reemplazar, recortar y mover.</p></div>
+        <div class="glass-card rounded-2xl p-4 text-center"><span class="text-3xl">📐</span><p class="text-white font-bold mt-2">Composición</p><p class="text-gray-400 text-xs mt-1">Alinear y reorganizar.</p></div>
+      </div>
+
+      <div class="mt-5 p-5 rounded-2xl bg-emerald-400/10 border border-emerald-400/20 text-center">
+        <p class="text-emerald-300 font-black text-lg">Ésta es la gran ventaja de Canva:</p>
+        <p class="text-gray-200 text-sm mt-2">el diseño generado se convierte en una base que vos podés personalizar.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 16 -->
+  <section class="slide flex-col items-center justify-center bg-gradient-to-b from-[#0a0e1a] to-[#0f1a2e] relative">
+    <div class="absolute inset-0 bg-pattern opacity-50"></div>
+    <div class="relative z-10 max-w-5xl mx-auto w-full px-4">
+      <p class="text-sky-300 font-bold uppercase tracking-wider mb-2">Actividad 3</p>
+      <h2 class="text-3xl md:text-5xl font-black text-white mb-4">
+        CREAR CONTENIDO PARA <span class="gradient-text">REDES SOCIALES</span>
+      </h2>
+
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-3">
+        <div class="glass-card rounded-2xl p-4 text-center"><span class="text-3xl">🟦</span><p class="text-white font-bold mt-2">Post</p></div>
+        <div class="glass-card rounded-2xl p-4 text-center"><span class="text-3xl">📲</span><p class="text-white font-bold mt-2">Historia</p></div>
+        <div class="glass-card rounded-2xl p-4 text-center"><span class="text-3xl">🧵</span><p class="text-white font-bold mt-2">Carrusel</p></div>
+        <div class="glass-card rounded-2xl p-4 text-center"><span class="text-3xl">🎬</span><p class="text-white font-bold mt-2">Video corto</p></div>
+      </div>
+
+      <div class="mt-5 prompt-box rounded-2xl p-5">
+        <p class="text-gray-100 text-sm md:text-base">
+          “Creá una campaña de tres piezas para redes sociales sobre ________: un post informativo, una historia con llamada a la acción y un carrusel de cinco páginas. Mantené la misma identidad visual.”
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 17 -->
+  <section class="slide flex-col items-center justify-center bg-gradient-to-b from-[#0f1a2e] to-[#0a0e1a] relative">
+    <div class="absolute inset-0 bg-pattern opacity-50"></div>
+    <div class="relative z-10 max-w-5xl mx-auto w-full px-4">
+      <h2 class="text-3xl md:text-5xl font-black text-white mb-4">
+        UN MISMO MENSAJE, <span class="gradient-text">VARIOS FORMATOS</span>
+      </h2>
+
+      <div class="grid grid-cols-1 md:grid-cols-5 gap-3 items-center text-center">
+        <div class="glass-card rounded-2xl p-4 md:col-span-2"><span class="text-3xl">💡</span><p class="text-white font-bold mt-2">Idea central</p></div>
+        <div class="hidden md:flex justify-center"><i data-lucide="arrow-right" class="flow-arrow"></i></div>
+        <div class="glass-card rounded-2xl p-4 md:col-span-2"><span class="text-3xl">🔄</span><p class="text-white font-bold mt-2">Adaptación</p></div>
+      </div>
+
+      <div class="mt-5 grid grid-cols-2 md:grid-cols-4 gap-3">
+        <div class="bg-white/5 rounded-xl p-4 text-center text-gray-200">Post cuadrado</div>
+        <div class="bg-white/5 rounded-xl p-4 text-center text-gray-200">Historia vertical</div>
+        <div class="bg-white/5 rounded-xl p-4 text-center text-gray-200">Flyer impreso</div>
+        <div class="bg-white/5 rounded-xl p-4 text-center text-gray-200">Presentación</div>
+      </div>
+
+      <div class="mt-5 p-4 rounded-xl bg-sky-400/10 border border-sky-400/20">
+        <p class="text-gray-200 text-sm text-center">La identidad se mantiene; el formato cambia según el canal y el objetivo.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 18 -->
+  <section class="slide flex-col items-center justify-center bg-gradient-to-b from-[#0a0e1a] to-[#0f1a2e] relative">
+    <div class="absolute inset-0 bg-pattern opacity-50"></div>
+    <div class="relative z-10 max-w-5xl mx-auto w-full px-4">
+      <p class="text-sky-300 font-bold uppercase tracking-wider mb-2">Actividad 4</p>
+      <h2 class="text-3xl md:text-5xl font-black text-white mb-4">
+        CREAR UNA <span class="gradient-text">PRESENTACIÓN</span>
+      </h2>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+        <div class="glass-card rounded-2xl p-5">
+          <h3 class="text-white font-black text-xl mb-3">Estructura sugerida</h3>
+          <div class="space-y-2 text-gray-300 text-sm">
+            <p>1. Portada.</p>
+            <p>2. Problema o contexto.</p>
+            <p>3. Idea principal.</p>
+            <p>4. Beneficios.</p>
+            <p>5. Ejemplos.</p>
+            <p>6. Llamado a la acción.</p>
+          </div>
+        </div>
+
+        <div class="prompt-box rounded-2xl p-5">
+          <p class="text-xs text-sky-300 font-bold uppercase tracking-wider mb-3">Prompt sugerido</p>
+          <p class="text-gray-100 text-sm leading-relaxed">
+            “Creá una presentación de ocho diapositivas sobre ________, dirigida a ________. Usá un tono ________, una estética ________, textos breves y una diapositiva final con llamada a la acción.”
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 19 -->
+  <section class="slide flex-col items-center justify-center bg-gradient-to-b from-[#0f1a2e] to-[#0a0e1a] relative">
+    <div class="absolute inset-0 bg-pattern opacity-50"></div>
+    <div class="relative z-10 max-w-5xl mx-auto w-full px-4">
+      <h2 class="text-3xl md:text-5xl font-black text-white mb-4">
+        REVISIÓN DE LA <span class="gradient-text">PRESENTACIÓN</span>
+      </h2>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div class="glass-card rounded-2xl p-5">
+          <h3 class="text-white font-black text-xl mb-3">Contenido</h3>
+          <div class="space-y-2 text-gray-300 text-sm">
+            <p>• Una idea principal por diapositiva.</p>
+            <p>• Textos breves y claros.</p>
+            <p>• Secuencia lógica.</p>
+            <p>• Ejemplos comprensibles.</p>
+          </div>
+        </div>
+
+        <div class="glass-card rounded-2xl p-5">
+          <h3 class="text-white font-black text-xl mb-3">Diseño</h3>
+          <div class="space-y-2 text-gray-300 text-sm">
+            <p>• Buena jerarquía visual.</p>
+            <p>• Contraste suficiente.</p>
+            <p>• Identidad coherente.</p>
+            <p>• Imágenes útiles, no decorativas.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 20 -->
+  <section class="slide flex-col items-center justify-center bg-gradient-to-b from-[#0a0e1a] to-[#0f1a2e] relative">
+    <div class="absolute inset-0 bg-pattern opacity-50"></div>
+    <div class="relative z-10 max-w-5xl mx-auto w-full px-4">
+      <p class="text-sky-300 font-bold uppercase tracking-wider mb-2">Actividad 5</p>
+      <h2 class="text-3xl md:text-5xl font-black text-white mb-4">
+        CREAR UN <span class="gradient-text">FORMULARIO INTERACTIVO</span>
+      </h2>
+
+      <div class="glass-card rounded-3xl p-6 md:p-8 mb-5">
+        <p class="text-white text-lg md:text-2xl font-black text-center">
+          El formulario transforma una pieza visual en una herramienta que recibe información de personas reales.
+        </p>
+      </div>
+
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-3">
+        <div class="bg-white/5 rounded-xl p-4 text-center"><span class="text-3xl">📝</span><p class="text-white font-bold mt-2">Inscripción</p></div>
+        <div class="bg-white/5 rounded-xl p-4 text-center"><span class="text-3xl">📩</span><p class="text-white font-bold mt-2">Consulta</p></div>
+        <div class="bg-white/5 rounded-xl p-4 text-center"><span class="text-3xl">⭐</span><p class="text-white font-bold mt-2">Encuesta</p></div>
+        <div class="bg-white/5 rounded-xl p-4 text-center"><span class="text-3xl">🛒</span><p class="text-white font-bold mt-2">Pedido</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 21 -->
+  <section class="slide flex-col items-center justify-center bg-gradient-to-b from-[#0f1a2e] to-[#0a0e1a] relative">
+    <div class="absolute inset-0 bg-pattern opacity-50"></div>
+    <div class="relative z-10 max-w-5xl mx-auto w-full px-4">
+      <h2 class="text-3xl md:text-5xl font-black text-white mb-4">
+        PLANIFICAR EL <span class="gradient-text">FORMULARIO</span>
+      </h2>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div class="glass-card rounded-2xl p-5">
+          <h3 class="text-white font-black text-xl mb-3">Preguntas posibles</h3>
+          <div class="space-y-2 text-gray-300 text-sm">
+            <p>• Nombre y apellido.</p>
+            <p>• Correo electrónico.</p>
+            <p>• Teléfono.</p>
+            <p>• Opción o servicio elegido.</p>
+            <p>• Mensaje o comentario.</p>
+            <p>• Consentimiento de contacto.</p>
+          </div>
+        </div>
+
+        <div class="prompt-box rounded-2xl p-5">
+          <p class="text-xs text-emerald-300 font-bold uppercase tracking-wider mb-3">Prompt para ChatGPT</p>
+          <p class="text-gray-100 text-sm leading-relaxed">
+            “Diseñá la estructura de un formulario para ________. Indicá qué campos debería tener, cuáles son obligatorios, qué tipo de respuesta corresponde y qué mensaje de confirmación debería mostrarse.”
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 22 -->
+  <section class="slide flex-col items-center justify-center bg-gradient-to-b from-[#0a0e1a] to-[#0f1a2e] relative">
+    <div class="absolute inset-0 bg-pattern opacity-50"></div>
+    <div class="relative z-10 max-w-5xl mx-auto w-full px-4">
+      <h2 class="text-3xl md:text-5xl font-black text-white mb-4">
+        FORMULARIO + <span class="gradient-text">DATOS</span>
+      </h2>
+
+      <div class="grid grid-cols-1 md:grid-cols-7 gap-3 items-center text-center">
+        <div class="glass-card rounded-2xl p-5 md:col-span-2"><span class="text-4xl">👤</span><p class="text-white font-bold mt-2">Persona completa</p></div>
+        <div class="hidden md:flex justify-center"><i data-lucide="arrow-right" class="flow-arrow"></i></div>
+        <div class="glass-card rounded-2xl p-5 md:col-span-2"><span class="text-4xl">🧾</span><p class="text-white font-bold mt-2">Formulario recibe</p></div>
+        <div class="hidden md:flex justify-center"><i data-lucide="arrow-right" class="flow-arrow"></i></div>
+        <div class="glass-card rounded-2xl p-5 md:col-span-1"><span class="text-4xl">📊</span><p class="text-white font-bold mt-2">Datos</p></div>
+      </div>
+
+      <div class="mt-5 p-5 rounded-2xl bg-indigo-400/10 border border-indigo-400/20 text-center">
+        <p class="text-white font-black text-lg">El diseño deja de ser solamente visual.</p>
+        <p class="text-gray-200 text-sm mt-2">Ahora también puede iniciar un proceso de registro, seguimiento o contacto.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 23 -->
+  <section class="slide flex-col items-center justify-center bg-gradient-to-b from-[#0f1a2e] to-[#0a0e1a] relative">
+    <div class="absolute inset-0 bg-pattern opacity-50"></div>
+    <div class="relative z-10 max-w-5xl mx-auto w-full px-4">
+      <h2 class="text-3xl md:text-5xl font-black text-white mb-4">
+        CREAR EL FORMULARIO EN <span class="gradient-text">CANVA IA</span>
+      </h2>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+        <div class="glass-card rounded-2xl p-5 text-center"><span class="text-4xl">1️⃣</span><h3 class="text-white font-bold mt-3">Describí</h3><p class="text-gray-300 text-sm mt-2">Indicá objetivo, campos y estilo.</p></div>
+        <div class="glass-card rounded-2xl p-5 text-center"><span class="text-4xl">2️⃣</span><h3 class="text-white font-bold mt-3">Generá</h3><p class="text-gray-300 text-sm mt-2">Creá la primera versión del formulario.</p></div>
+        <div class="glass-card rounded-2xl p-5 text-center"><span class="text-4xl">3️⃣</span><h3 class="text-white font-bold mt-3">Editá</h3><p class="text-gray-300 text-sm mt-2">Ajustá preguntas, diseño y mensajes.</p></div>
+      </div>
+
+      <div class="mt-5 prompt-box rounded-2xl p-5">
+        <p class="text-gray-100 text-sm md:text-base">
+          “Creá un formulario interactivo para ________. Debe incluir ________, guardar las respuestas y mostrar un mensaje final de agradecimiento. Usá la identidad visual definida para el proyecto.”
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 24 -->
+  <section class="slide flex-col items-center justify-center bg-gradient-to-b from-[#0a0e1a] to-[#0f1a2e] relative">
+    <div class="absolute inset-0 bg-pattern opacity-50"></div>
+    <div class="relative z-10 max-w-5xl mx-auto w-full px-4">
+      <h2 class="text-3xl md:text-5xl font-black text-white mb-4">
+        PUBLICAR EL <span class="gradient-text">FORMULARIO</span>
+      </h2>
+
+      <div class="grid grid-cols-1 md:grid-cols-5 gap-3 items-center text-center">
+        <div class="glass-card rounded-2xl p-5 md:col-span-2"><span class="text-4xl">🧾</span><p class="text-white font-bold mt-2">Formulario terminado</p></div>
+        <div class="hidden md:flex justify-center"><i data-lucide="arrow-right" class="flow-arrow"></i></div>
+        <div class="glass-card rounded-2xl p-5 md:col-span-2"><span class="text-4xl">🌐</span><p class="text-white font-bold mt-2">Publicar como sitio</p></div>
+      </div>
+
+      <div class="mt-5 glass-card rounded-2xl p-5">
+        <h3 class="text-white font-black text-xl mb-3">Antes de publicar:</h3>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-2 text-sm text-gray-300">
+          <p class="p-3 bg-white/5 rounded-xl">✔ Probá todos los campos.</p>
+          <p class="p-3 bg-white/5 rounded-xl">✔ Revisá ortografía.</p>
+          <p class="p-3 bg-white/5 rounded-xl">✔ Confirmá el mensaje final.</p>
+          <p class="p-3 bg-white/5 rounded-xl">✔ Verificá la versión móvil.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 25 -->
+  <section class="slide flex-col items-center justify-center bg-gradient-to-b from-[#0f1a2e] to-[#0a0e1a] relative">
+    <div class="absolute inset-0 bg-pattern opacity-50"></div>
+    <div class="relative z-10 max-w-5xl mx-auto w-full px-4">
+      <h2 class="text-3xl md:text-5xl font-black text-white mb-4">
+        COPIAR EL <span class="gradient-text">ENLACE PÚBLICO</span>
+      </h2>
+
+      <div class="glass-card rounded-3xl p-6 md:p-8 text-center mb-5">
+        <span class="text-5xl block mb-4">🔗</span>
+        <p class="text-white text-xl md:text-2xl font-black">
+          Una vez publicado, el formulario obtiene un enlace que cualquier persona puede abrir desde su celular o computadora.
+        </p>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-3">
+        <div class="bg-white/5 rounded-xl p-4 text-center"><p class="text-white font-bold">1. Copiar</p><p class="text-gray-400 text-xs mt-1">Guardá la URL publicada.</p></div>
+        <div class="bg-white/5 rounded-xl p-4 text-center"><p class="text-white font-bold">2. Probar</p><p class="text-gray-400 text-xs mt-1">Abrila en otro dispositivo.</p></div>
+        <div class="bg-white/5 rounded-xl p-4 text-center"><p class="text-white font-bold">3. Compartir</p><p class="text-gray-400 text-xs mt-1">Usala en QR, redes o mensajes.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 26 -->
+  <section class="slide flex-col items-center justify-center bg-gradient-to-b from-[#0a0e1a] to-[#0f1a2e] relative">
+    <div class="absolute inset-0 bg-pattern opacity-50"></div>
+    <div class="relative z-10 max-w-5xl mx-auto w-full px-4">
+      <h2 class="text-3xl md:text-5xl font-black text-white mb-4">
+        GENERAR EL <span class="gradient-text">CÓDIGO QR</span>
+      </h2>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+        <div class="glass-card rounded-3xl p-6 text-center">
+          <div class="w-40 h-40 mx-auto bg-white rounded-2xl p-4 grid grid-cols-7 gap-1">
+            <span class="bg-black col-span-2 row-span-2"></span><span class="bg-black"></span><span class="bg-white"></span><span class="bg-black col-span-2 row-span-2"></span>
+            <span class="bg-black"></span><span class="bg-white"></span><span class="bg-black"></span>
+            <span class="bg-white"></span><span class="bg-black"></span><span class="bg-white"></span><span class="bg-black"></span><span class="bg-white"></span><span class="bg-black"></span><span class="bg-white"></span>
+            <span class="bg-black"></span><span class="bg-white"></span><span class="bg-black"></span><span class="bg-black"></span><span class="bg-white"></span><span class="bg-black"></span><span class="bg-white"></span>
+            <span class="bg-black col-span-2 row-span-2"></span><span class="bg-white"></span><span class="bg-black"></span><span class="bg-black col-span-2 row-span-2"></span>
+            <span class="bg-black"></span><span class="bg-white"></span><span class="bg-black"></span>
+          </div>
+          <p class="text-gray-400 text-xs mt-3">Representación visual de ejemplo.</p>
+        </div>
+
+        <div class="glass-card rounded-3xl p-6">
+          <h3 class="text-white font-black text-xl mb-4">Paso a paso</h3>
+          <div class="space-y-3 text-gray-300 text-sm">
+            <p>1. Abrí la sección de aplicaciones.</p>
+            <p>2. Buscá “Generador de código QR”.</p>
+            <p>3. Pegá el enlace del formulario.</p>
+            <p>4. Generá el código.</p>
+            <p>5. Insertalo dentro del diseño.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 27 -->
+  <section class="slide flex-col items-center justify-center bg-gradient-to-b from-[#0f1a2e] to-[#0a0e1a] relative">
+    <div class="absolute inset-0 bg-pattern opacity-50"></div>
+    <div class="relative z-10 max-w-5xl mx-auto w-full px-4">
+      <h2 class="text-3xl md:text-5xl font-black text-white mb-4">
+        CREAR EL FLYER FINAL CON <span class="gradient-text">QR</span>
+      </h2>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+        <div class="glass-card rounded-3xl p-6">
+          <h3 class="text-white font-black text-xl mb-3">El flyer debe incluir:</h3>
+          <div class="space-y-2 text-gray-300 text-sm">
+            <p>• Título claro.</p>
+            <p>• Beneficio principal.</p>
+            <p>• Instrucción para escanear.</p>
+            <p>• Código QR visible.</p>
+            <p>• Alternativa de contacto.</p>
+            <p>• Identidad visual coherente.</p>
+          </div>
+        </div>
+
+        <div class="prompt-box rounded-3xl p-6">
+          <p class="text-xs text-sky-300 font-bold uppercase tracking-wider mb-3">Prompt sugerido</p>
+          <p class="text-gray-100 text-sm leading-relaxed">
+            “Diseñá un flyer para invitar a las personas a completar un formulario. Incluí el texto ________, una zona destacada para colocar un QR y la instrucción ‘Escaneá para participar’. Usá la identidad visual ________.”
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 28 -->
+  <section class="slide flex-col items-center justify-center bg-gradient-to-b from-[#0a0e1a] to-[#0f1a2e] relative">
+    <div class="absolute inset-0 bg-pattern opacity-50"></div>
+    <div class="relative z-10 max-w-5xl mx-auto w-full px-4">
+      <h2 class="text-3xl md:text-5xl font-black text-white mb-4">
+        PROBAR TODO EL <span class="gradient-text">CIRCUITO</span>
+      </h2>
+
+      <div class="grid grid-cols-1 md:grid-cols-9 gap-3 items-center text-center">
+        <div class="glass-card rounded-2xl p-4 md:col-span-2"><span class="text-3xl">📱</span><p class="text-white font-bold mt-2">Escanear</p></div>
+        <div class="hidden md:flex justify-center"><i data-lucide="arrow-right" class="flow-arrow"></i></div>
+        <div class="glass-card rounded-2xl p-4 md:col-span-2"><span class="text-3xl">🌐</span><p class="text-white font-bold mt-2">Abrir</p></div>
+        <div class="hidden md:flex justify-center"><i data-lucide="arrow-right" class="flow-arrow"></i></div>
+        <div class="glass-card rounded-2xl p-4 md:col-span-2"><span class="text-3xl">🧾</span><p class="text-white font-bold mt-2">Completar</p></div>
+      </div>
+
+      <div class="flex justify-center my-4"><i data-lucide="arrow-down" class="text-indigo-300 w-7 h-7"></i></div>
+
+      <div class="grid grid-cols-1 md:grid-cols-5 gap-3 items-center text-center max-w-3xl mx-auto">
+        <div class="glass-card rounded-2xl p-4 md:col-span-2"><span class="text-3xl">📊</span><p class="text-white font-bold mt-2">Registrar</p></div>
+        <div class="hidden md:flex justify-center"><i data-lucide="arrow-right" class="flow-arrow"></i></div>
+        <div class="glass-card rounded-2xl p-4 md:col-span-2"><span class="text-3xl">✅</span><p class="text-white font-bold mt-2">Confirmar</p></div>
+      </div>
+
+      <div class="mt-5 p-4 rounded-xl bg-amber-400/10 border border-amber-400/25 pulse-border">
+        <p class="text-gray-200 text-sm text-center">Probalo con al menos dos celulares antes de compartirlo públicamente.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 29 -->
+  <section class="slide flex-col items-center justify-center bg-gradient-to-b from-[#0f1a2e] to-[#0a0e1a] relative">
+    <div class="absolute inset-0 bg-pattern opacity-50"></div>
+    <div class="relative z-10 max-w-5xl mx-auto w-full px-4">
+      <h2 class="text-3xl md:text-5xl font-black text-white mb-4">
+        ACTIVIDAD FINAL DE LA <span class="gradient-text">CLASE</span>
+      </h2>
+
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-3">
+        <div class="glass-card rounded-2xl p-4 text-center"><span class="text-3xl">🖼️</span><p class="text-white font-bold mt-2">Imagen</p></div>
+        <div class="glass-card rounded-2xl p-4 text-center"><span class="text-3xl">📣</span><p class="text-white font-bold mt-2">Flyer</p></div>
+        <div class="glass-card rounded-2xl p-4 text-center"><span class="text-3xl">📊</span><p class="text-white font-bold mt-2">Presentación</p></div>
+        <div class="glass-card rounded-2xl p-4 text-center"><span class="text-3xl">📱</span><p class="text-white font-bold mt-2">Pieza para redes</p></div>
+        <div class="glass-card rounded-2xl p-4 text-center"><span class="text-3xl">🧾</span><p class="text-white font-bold mt-2">Formulario</p></div>
+        <div class="glass-card rounded-2xl p-4 text-center"><span class="text-3xl">🌐</span><p class="text-white font-bold mt-2">Publicación</p></div>
+        <div class="glass-card rounded-2xl p-4 text-center"><span class="text-3xl">🔳</span><p class="text-white font-bold mt-2">Código QR</p></div>
+        <div class="glass-card rounded-2xl p-4 text-center"><span class="text-3xl">✅</span><p class="text-white font-bold mt-2">Prueba final</p></div>
+      </div>
+
+      <div class="mt-5 p-5 rounded-2xl bg-sky-400/10 border border-sky-400/20 text-center">
+        <p class="text-white font-black text-xl">Resultado esperado: una campaña visual editable y conectada con un formulario funcional.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 30 -->
+  <section class="slide flex-col items-center justify-center bg-gradient-to-br from-[#0a0e1a] via-[#0f1a2e] to-[#0a0e1a] text-center relative overflow-hidden">
+    <div class="absolute inset-0 bg-pattern opacity-70"></div>
+    <div class="absolute top-0 right-0 w-1/2 h-1/2 bg-indigo-500/10 rounded-full blur-3xl"></div>
+
+    <div class="relative z-10 max-w-5xl mx-auto w-full px-4">
+      <img src="https://i.postimg.cc/jSkQKpRK/Diseno-sin-titulo-2026-05-15T105828-195.png"
+        alt="Instituto IEC" class="h-14 md:h-20 mx-auto mb-5 object-contain" />
+
+      <p class="text-sky-300 font-bold uppercase tracking-[.2em] text-sm mb-3">Cierre de la clase</p>
+
+      <h2 class="text-3xl sm:text-4xl md:text-6xl font-black text-white leading-tight mb-5">
+        LA IA CREA.<br><span class="gradient-text">VOS DISEÑÁS.</span>
+      </h2>
+
+      <div class="glass-card rounded-3xl p-5 md:p-8 max-w-4xl mx-auto">
+        <p class="text-white font-black text-lg md:text-2xl">
+          El valor no está solamente en generar una pieza. Está en poder editarla, adaptarla, conectarla y convertirla en una herramienta útil.
+        </p>
+
+        <div class="mt-5 flex flex-wrap justify-center gap-2 text-xs md:text-sm">
+          <span class="px-3 py-2 bg-white/5 rounded-full text-gray-200">ChatGPT</span>
+          <span class="px-3 py-2 bg-white/5 rounded-full text-gray-200">Canva IA</span>
+          <span class="px-3 py-2 bg-white/5 rounded-full text-gray-200">Diseño editable</span>
+          <span class="px-3 py-2 bg-white/5 rounded-full text-gray-200">Formulario</span>
+          <span class="px-3 py-2 bg-white/5 rounded-full text-gray-200">QR</span>
+        </div>
+      </div>
+
+      <p class="text-gray-400 text-xs md:text-sm mt-6">Instituto IEC · Experto en Aplicaciones Prácticas con IA</p>
+    </div>
+  </section>
+
+  <script>
+    let current = 0;
+    const slides = Array.from(document.querySelectorAll(".slide"));
+    const dotsContainer = document.getElementById("dots");
+    const progressBar = document.getElementById("progress-bar");
+    const currentNumber = document.getElementById("current-number");
+    const totalNumber = document.getElementById("total-number");
+    const prevButton = document.getElementById("prev-btn");
+    const nextButton = document.getElementById("next-btn");
+
+    totalNumber.textContent = slides.length;
+
+    slides.forEach((_, index) => {
+      const dot = document.createElement("button");
+      dot.className = "dot w-2 h-2 md:w-2.5 md:h-2.5 rounded-full bg-white/25 transition";
+      dot.setAttribute("aria-label", `Ir a la diapositiva ${index + 1}`);
+      dot.addEventListener("click", () => goSlide(index));
+      dotsContainer.appendChild(dot);
+    });
+
+    const dots = Array.from(document.querySelectorAll(".dot"));
+
+    function updateUI() {
+      dots.forEach((dot, index) => dot.classList.toggle("active", index === current));
+      currentNumber.textContent = current + 1;
+      progressBar.style.width = `${((current + 1) / slides.length) * 100}%`;
+      prevButton.disabled = current === 0;
+      nextButton.disabled = current === slides.length - 1;
+    }
+
+    function goSlide(index) {
+      if (index < 0 || index >= slides.length || index === current) return;
+      slides[current].classList.remove("active");
+      current = index;
+      slides[current].classList.add("active");
+      slides[current].scrollTop = 0;
+      window.scrollTo({ top:0, left:0, behavior:"instant" });
+      updateUI();
+    }
+
+    function changeSlide(direction) { goSlide(current + direction); }
+
+    document.addEventListener("keydown", (event) => {
+      const tag = document.activeElement?.tagName?.toLowerCase();
+      if (["input","textarea","select"].includes(tag)) return;
+
+      if (event.key === "ArrowRight" || event.key === "PageDown" || event.key === " ") {
+        event.preventDefault();
+        changeSlide(1);
+      }
+
+      if (event.key === "ArrowLeft" || event.key === "PageUp") {
+        event.preventDefault();
+        changeSlide(-1);
+      }
+
+      if (event.key === "Home") {
+        event.preventDefault();
+        goSlide(0);
+      }
+
+      if (event.key === "End") {
+        event.preventDefault();
+        goSlide(slides.length - 1);
+      }
+    });
+
+    let touchStartX = 0;
+    let touchStartY = 0;
+
+    document.addEventListener("touchstart", (event) => {
+      touchStartX = event.changedTouches[0].screenX;
+      touchStartY = event.changedTouches[0].screenY;
+    }, { passive:true });
+
+    document.addEventListener("touchend", (event) => {
+      const x = event.changedTouches[0].screenX;
+      const y = event.changedTouches[0].screenY;
+      const dx = touchStartX - x;
+      const dy = touchStartY - y;
+
+      if (Math.abs(dx) > 60 && Math.abs(dx) > Math.abs(dy)) {
+        dx > 0 ? changeSlide(1) : changeSlide(-1);
+      }
+    }, { passive:true });
+
+    async function copyText(button) {
+      const text = button.dataset.copy;
+      const original = button.textContent;
+
+      try {
+        await navigator.clipboard.writeText(text);
+        button.textContent = "¡Prompt copiado!";
+        button.classList.remove("bg-sky-500");
+        button.classList.add("bg-emerald-500");
+      } catch {
+        button.textContent = "Seleccioná y copiá manualmente";
+      }
+
+      setTimeout(() => {
+        button.textContent = original;
+        button.classList.add("bg-sky-500");
+        button.classList.remove("bg-emerald-500");
+      }, 1800);
+    }
+
+    updateUI();
+    lucide.createIcons();
+  </script>
+</body>
+</html>

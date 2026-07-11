@@ -1,0 +1,1305 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Clase 8 del curso Experto en Aplicaciones Prácticas con IA del Instituto IEC: proyecto final integrador con 10 herramientas." />
+  <title>Clase 8 · Proyecto Final Integrador | Instituto IEC</title>
+
+  <script src="https://cdn.tailwindcss.com/3.4.17"></script>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
+  <script src="https://cdn.jsdelivr.net/npm/lucide@0.263.0/dist/umd/lucide.min.js"></script>
+
+  <style>
+    * { box-sizing: border-box; font-family: "DM Sans", sans-serif; }
+    html, body { margin:0; width:100%; min-height:100%; background:#0a0e1a; }
+    body { overflow:hidden; }
+
+    .slide {
+      display:none;
+      width:100%;
+      min-height:100vh;
+      height:100vh;
+      overflow-y:auto;
+      padding:2rem 1.5rem 6.5rem;
+      scroll-behavior:smooth;
+    }
+
+    .slide.active {
+      display:flex;
+      animation:slideIn .35s ease-out;
+      -webkit-overflow-scrolling:touch;
+    }
+
+    @keyframes slideIn {
+      from { opacity:0; transform:translateY(10px); }
+      to { opacity:1; transform:translateY(0); }
+    }
+
+    .glass-card {
+      background:rgba(255,255,255,.075);
+      backdrop-filter:blur(12px);
+      -webkit-backdrop-filter:blur(12px);
+      border:1px solid rgba(255,255,255,.12);
+      box-shadow:0 18px 45px rgba(0,0,0,.18);
+    }
+
+    .gradient-text {
+      background:linear-gradient(135deg,#38bdf8,#818cf8);
+      -webkit-background-clip:text;
+      background-clip:text;
+      -webkit-text-fill-color:transparent;
+    }
+
+    .bg-pattern {
+      background-image:
+        radial-gradient(circle at 20% 45%,rgba(56,189,248,.07) 0%,transparent 42%),
+        radial-gradient(circle at 82% 78%,rgba(129,140,248,.07) 0%,transparent 42%);
+    }
+
+    .dot.active {
+      background:#38bdf8;
+      transform:scale(1.3);
+      box-shadow:0 0 12px rgba(56,189,248,.75);
+    }
+
+    .nav-button:disabled { opacity:.35; cursor:not-allowed; }
+
+    .prompt-box {
+      background:rgba(15,26,46,.92);
+      border:1px solid rgba(56,189,248,.28);
+      box-shadow:inset 0 0 30px rgba(56,189,248,.03);
+    }
+
+    .json-box {
+      background:#08111f;
+      border:1px solid rgba(129,140,248,.3);
+      color:#dbeafe;
+      font-family:ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,"Liberation Mono",monospace;
+      white-space:pre-wrap;
+      overflow-wrap:anywhere;
+    }
+
+    .key { color:#7dd3fc; }
+    .string { color:#fde68a; }
+    .value { color:#86efac; }
+    .flow-arrow { color:#38bdf8; }
+
+    .pulse-border { animation:pulseBorder 2s ease-in-out infinite; }
+    @keyframes pulseBorder {
+      0%,100% { border-color:rgba(251,191,36,.2); }
+      50% { border-color:rgba(251,191,36,.65); }
+    }
+
+    @media (max-width:640px){
+      .slide{padding:1.2rem .8rem 7rem;}
+      .text-7xl{font-size:2.65rem!important}
+      .text-6xl{font-size:2.35rem!important}
+      .text-5xl{font-size:2rem!important}
+      .text-4xl{font-size:1.72rem!important}
+      .text-3xl{font-size:1.42rem!important}
+    }
+
+    @media print {
+      @page { size:A4; margin:14mm; }
+
+      html, body {
+        background:#fff!important;
+        color:#111!important;
+        overflow:visible!important;
+      }
+
+      body { display:block!important; }
+
+      #progress-wrap, #prev-btn, #next-btn, #footer-nav, #print-button, #back-button {
+        display:none!important;
+      }
+
+      .slide, .slide.active {
+        display:block!important;
+        width:100%!important;
+        min-height:auto!important;
+        height:auto!important;
+        overflow:visible!important;
+        padding:0!important;
+        margin:0 0 14mm 0!important;
+        background:#fff!important;
+        color:#111!important;
+        page-break-after:always;
+        break-after:page;
+        animation:none!important;
+      }
+
+      .slide:last-of-type { page-break-after:auto; break-after:auto; }
+      .slide > .absolute { display:none!important; }
+      .slide > .relative { position:relative!important; z-index:1!important; }
+
+      .glass-card, .prompt-box, .json-box, .bg-white\/5, .bg-black\/25,
+      [class*="bg-sky-"], [class*="bg-indigo-"], [class*="bg-emerald-"],
+      [class*="bg-amber-"], [class*="bg-red-"], [class*="bg-pink-"],
+      [class*="bg-cyan-"] {
+        background:#fff!important;
+        box-shadow:none!important;
+      }
+
+      .glass-card, .prompt-box, .json-box,
+      [class*="border-white"], [class*="border-sky"], [class*="border-indigo"],
+      [class*="border-emerald"], [class*="border-amber"], [class*="border-red"],
+      [class*="border-pink"], [class*="border-cyan"] {
+        border-color:#cbd5e1!important;
+      }
+
+      .text-white, .text-gray-100, .text-gray-200, .text-gray-300,
+      .text-gray-400, .text-gray-500 { color:#111827!important; }
+
+      .text-sky-300 { color:#0369a1!important; }
+      .text-indigo-300 { color:#4338ca!important; }
+      .text-emerald-300 { color:#047857!important; }
+      .text-amber-300 { color:#b45309!important; }
+      .text-red-300 { color:#b91c1c!important; }
+      .text-pink-300 { color:#be185d!important; }
+
+      .gradient-text {
+        background:none!important;
+        -webkit-text-fill-color:#0f172a!important;
+        color:#0f172a!important;
+      }
+
+      .json-box, .json-box * {
+        color:#111827!important;
+        font-family:ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,"Liberation Mono",monospace!important;
+      }
+
+      img { filter:none!important; }
+      button { display:none!important; }
+    }
+  </style>
+</head>
+
+<body class="relative bg-[#0a0e1a]">
+
+  <div id="progress-wrap" class="fixed top-0 left-0 right-0 z-[70] h-1 bg-white/5">
+    <div id="progress-bar" class="h-full bg-gradient-to-r from-sky-400 to-indigo-400 transition-all duration-300" style="width:0%"></div>
+  </div>
+
+  <a id="back-button"
+    href="index.html"
+    class="fixed top-4 left-4 z-[80] px-4 py-2 rounded-xl bg-white/10 hover:bg-white/20 backdrop-blur border border-white/10 text-white text-xs md:text-sm font-bold flex items-center gap-2 transition"
+    aria-label="Volver al menú de clases">
+    <i data-lucide="arrow-left" class="w-4 h-4"></i>
+    Volver al menú
+  </a>
+
+  <button id="print-button"
+    class="fixed top-4 right-4 z-[80] px-4 py-2 rounded-xl bg-white/10 hover:bg-white/20 backdrop-blur border border-white/10 text-white text-xs md:text-sm font-bold flex items-center gap-2 transition"
+    onclick="window.print()" aria-label="Imprimir presentación">
+    <i data-lucide="printer" class="w-4 h-4"></i>
+    Imprimir manual
+  </button>
+
+  <button id="prev-btn"
+    class="nav-button fixed left-2 md:left-5 top-1/2 -translate-y-1/2 z-50 bg-white/10 hover:bg-white/20 backdrop-blur border border-white/10 rounded-full w-10 h-10 md:w-12 md:h-12 flex items-center justify-center transition text-white"
+    onclick="changeSlide(-1)" aria-label="Diapositiva anterior">
+    <i data-lucide="chevron-left" style="width:21px;height:21px;"></i>
+  </button>
+
+  <button id="next-btn"
+    class="nav-button fixed right-2 md:right-5 top-1/2 -translate-y-1/2 z-50 bg-white/10 hover:bg-white/20 backdrop-blur border border-white/10 rounded-full w-10 h-10 md:w-12 md:h-12 flex items-center justify-center transition text-white"
+    onclick="changeSlide(1)" aria-label="Diapositiva siguiente">
+    <i data-lucide="chevron-right" style="width:21px;height:21px;"></i>
+  </button>
+
+  <div id="footer-nav" class="fixed bottom-3 left-1/2 -translate-x-1/2 z-50 flex flex-col items-center gap-2 w-[92%] max-w-4xl">
+    <div id="dots" class="flex gap-1.5 md:gap-2 flex-wrap justify-center px-2"></div>
+    <div class="px-3 py-1 rounded-full bg-black/30 border border-white/10 text-[10px] md:text-xs text-gray-300">
+      <span id="current-number">1</span> / <span id="total-number">40</span>
+    </div>
+  </div>
+
+  <!-- 1 -->
+  <section class="slide active flex-col items-center justify-center bg-gradient-to-br from-[#0a0e1a] via-[#0f1a2e] to-[#0a0e1a] text-center relative overflow-hidden">
+    <div class="absolute inset-0 bg-pattern opacity-80"></div>
+    <div class="absolute -top-32 -left-24 w-96 h-96 rounded-full bg-sky-500/10 blur-3xl"></div>
+    <div class="absolute -bottom-32 -right-24 w-96 h-96 rounded-full bg-indigo-500/10 blur-3xl"></div>
+
+    <div class="relative z-10 max-w-5xl mx-auto w-full px-4">
+      <img src="https://i.postimg.cc/jSkQKpRK/Diseno-sin-titulo-2026-05-15T105828-195.png"
+        alt="Instituto IEC" class="h-14 md:h-20 lg:h-24 mx-auto mb-5 object-contain" />
+
+      <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-sky-400/30 bg-sky-400/10 text-sky-300 text-xs md:text-sm font-bold tracking-wider mb-5">
+        <span>🏁</span> EXPERTO EN APLICACIONES PRÁCTICAS CON IA
+      </div>
+
+      <p class="text-sky-300 text-sm md:text-lg font-bold tracking-[.2em] uppercase mb-2">Clase 8 · Proyecto Final</p>
+
+      <h1 class="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-black text-white leading-tight mb-4">
+        PROYECTO FINAL<br><span class="gradient-text">INTEGRADOR CON IA</span>
+      </h1>
+
+      <p class="text-base md:text-xl text-gray-300 max-w-3xl mx-auto mb-6">
+        Integrá 10 herramientas del curso para diseñar, construir, comunicar, documentar y presentar una solución real.
+      </p>
+
+      <div class="glass-card rounded-2xl p-4 md:p-6 max-w-3xl mx-auto">
+        <p class="text-gray-200 text-sm md:text-lg">
+          La evaluación final no consiste en repetir herramientas, sino en demostrar que sabés combinarlas con criterio.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 2 -->
+  <section class="slide flex-col items-center justify-center bg-gradient-to-b from-[#0a0e1a] to-[#0f1a2e] relative">
+    <div class="absolute inset-0 bg-pattern opacity-50"></div>
+    <div class="relative z-10 max-w-5xl mx-auto w-full px-4">
+      <h2 class="text-3xl md:text-5xl font-black text-white mb-5">
+        OBJETIVO DE LA <span class="gradient-text">CLASE FINAL</span>
+      </h2>
+
+      <div class="glass-card rounded-3xl p-6 md:p-9 text-center mb-5">
+        <p class="text-white text-xl md:text-3xl font-black">
+          Crear una solución completa que responda a una necesidad real y demuestre el uso articulado de las herramientas aprendidas.
+        </p>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+        <div class="glass-card rounded-2xl p-5 text-center"><span class="text-4xl">🧠</span><h3 class="text-white font-bold mt-3">Pensar</h3><p class="text-gray-300 text-sm mt-2">Definir el problema y la estrategia.</p></div>
+        <div class="glass-card rounded-2xl p-5 text-center"><span class="text-4xl">🛠️</span><h3 class="text-white font-bold mt-3">Construir</h3><p class="text-gray-300 text-sm mt-2">Crear piezas, sistemas y guías.</p></div>
+        <div class="glass-card rounded-2xl p-5 text-center"><span class="text-4xl">🎤</span><h3 class="text-white font-bold mt-3">Presentar</h3><p class="text-gray-300 text-sm mt-2">Explicar decisiones, resultados y aprendizajes.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 3 -->
+  <section class="slide flex-col items-center justify-center bg-gradient-to-b from-[#0f1a2e] to-[#0a0e1a] relative">
+    <div class="absolute inset-0 bg-pattern opacity-50"></div>
+    <div class="relative z-10 max-w-5xl mx-auto w-full px-4">
+      <h2 class="text-3xl md:text-5xl font-black text-white mb-5">
+        LAS 10 HERRAMIENTAS DEL <span class="gradient-text">RECORRIDO</span>
+      </h2>
+
+      <div class="grid grid-cols-2 md:grid-cols-5 gap-3">
+        <div class="glass-card rounded-2xl p-4 text-center"><span class="text-3xl">💬</span><p class="text-white font-bold mt-2">1. ChatGPT</p></div>
+        <div class="glass-card rounded-2xl p-4 text-center"><span class="text-3xl">✍️</span><p class="text-white font-bold mt-2">2. Prompting</p></div>
+        <div class="glass-card rounded-2xl p-4 text-center"><span class="text-3xl">🧱</span><p class="text-white font-bold mt-2">3. JSON</p></div>
+        <div class="glass-card rounded-2xl p-4 text-center"><span class="text-3xl">💻</span><p class="text-white font-bold mt-2">4. Lovable</p></div>
+        <div class="glass-card rounded-2xl p-4 text-center"><span class="text-3xl">🎨</span><p class="text-white font-bold mt-2">5. Canva IA</p></div>
+        <div class="glass-card rounded-2xl p-4 text-center"><span class="text-3xl">🧾</span><p class="text-white font-bold mt-2">6. Formularios</p></div>
+        <div class="glass-card rounded-2xl p-4 text-center"><span class="text-3xl">🔳</span><p class="text-white font-bold mt-2">7. QR</p></div>
+        <div class="glass-card rounded-2xl p-4 text-center"><span class="text-3xl">📚</span><p class="text-white font-bold mt-2">8. NotebookLM</p></div>
+        <div class="glass-card rounded-2xl p-4 text-center"><span class="text-3xl">🧪</span><p class="text-white font-bold mt-2">9. AI Studio</p></div>
+        <div class="glass-card rounded-2xl p-4 text-center"><span class="text-3xl">🤖</span><p class="text-white font-bold mt-2">10. Guía/Agente</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 4 -->
+  <section class="slide flex-col items-center justify-center bg-gradient-to-b from-[#0a0e1a] to-[#0f1a2e] relative">
+    <div class="absolute inset-0 bg-pattern opacity-50"></div>
+    <div class="relative z-10 max-w-5xl mx-auto w-full px-4">
+      <p class="text-sky-300 font-bold uppercase tracking-wider mb-2">Herramienta 1</p>
+      <h2 class="text-3xl md:text-5xl font-black text-white mb-5">
+        <span class="gradient-text">CHATGPT</span>
+      </h2>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+        <div class="glass-card rounded-3xl p-6">
+          <h3 class="text-white font-black text-xl">¿Cómo lo implementamos?</h3>
+          <div class="mt-4 space-y-2 text-gray-300 text-sm">
+            <p>• Investigación inicial.</p>
+            <p>• Generación de ideas.</p>
+            <p>• Desarrollo de emprendimientos.</p>
+            <p>• Creación de nombres y propuestas.</p>
+            <p>• Preparación de prompts para otras IAs.</p>
+          </div>
+        </div>
+
+        <div class="glass-card rounded-3xl p-6">
+          <h3 class="text-white font-black text-xl">¿Cómo entra en el proyecto final?</h3>
+          <p class="text-gray-300 text-sm mt-4">Se utiliza como asistente estratégico para definir el problema, organizar el proyecto, producir contenido y coordinar las demás herramientas.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 5 -->
+  <section class="slide flex-col items-center justify-center bg-gradient-to-b from-[#0f1a2e] to-[#0a0e1a] relative">
+    <div class="absolute inset-0 bg-pattern opacity-50"></div>
+    <div class="relative z-10 max-w-5xl mx-auto w-full px-4">
+      <p class="text-sky-300 font-bold uppercase tracking-wider mb-2">Herramienta 2</p>
+      <h2 class="text-3xl md:text-5xl font-black text-white mb-5">
+        INGENIERÍA DE <span class="gradient-text">PROMPTS</span>
+      </h2>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+        <div class="glass-card rounded-3xl p-6">
+          <h3 class="text-white font-black text-xl">¿Cómo la implementamos?</h3>
+          <div class="mt-4 space-y-2 text-gray-300 text-sm">
+            <p>• Contexto.</p>
+            <p>• Rol.</p>
+            <p>• Objetivo.</p>
+            <p>• Restricciones.</p>
+            <p>• Formato de salida.</p>
+          </div>
+        </div>
+
+        <div class="prompt-box rounded-3xl p-6">
+          <h3 class="text-white font-black text-xl">Aplicación final</h3>
+          <p class="text-gray-100 text-sm mt-4">Cada herramienta del proyecto deberá recibir una instrucción pensada para su función y no un pedido genérico.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 6 -->
+  <section class="slide flex-col items-center justify-center bg-gradient-to-b from-[#0a0e1a] to-[#0f1a2e] relative">
+    <div class="absolute inset-0 bg-pattern opacity-50"></div>
+    <div class="relative z-10 max-w-5xl mx-auto w-full px-4">
+      <p class="text-sky-300 font-bold uppercase tracking-wider mb-2">Herramienta 3</p>
+      <h2 class="text-3xl md:text-5xl font-black text-white mb-5">
+        PROMPTS EN <span class="gradient-text">JSON</span>
+      </h2>
+
+      <div class="json-box rounded-2xl p-5 md:p-7 text-xs md:text-sm">
+{
+  <span class="key">"objetivo"</span>: <span class="string">"Crear una solución integral"</span>,
+  <span class="key">"publico"</span>: <span class="string">"Usuario definido"</span>,
+  <span class="key">"herramienta_destino"</span>: <span class="string">"Canva, Lovable o AI Studio"</span>,
+  <span class="key">"formato"</span>: <span class="string">"Resultado solicitado"</span>,
+  <span class="key">"restricciones"</span>: [
+    <span class="string">"Condición 1"</span>,
+    <span class="string">"Condición 2"</span>
+  ]
+}
+      </div>
+
+      <div class="mt-5 p-4 rounded-xl bg-indigo-400/10 border border-indigo-400/20 text-center">
+        <p class="text-gray-200 text-sm">Se aplicará para transformar instrucciones complejas en estructuras ordenadas, reutilizables y fáciles de revisar.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 7 -->
+  <section class="slide flex-col items-center justify-center bg-gradient-to-b from-[#0f1a2e] to-[#0a0e1a] relative">
+    <div class="absolute inset-0 bg-pattern opacity-50"></div>
+    <div class="relative z-10 max-w-5xl mx-auto w-full px-4">
+      <p class="text-sky-300 font-bold uppercase tracking-wider mb-2">Herramienta 4</p>
+      <h2 class="text-3xl md:text-5xl font-black text-white mb-5">
+        <span class="gradient-text">LOVABLE</span>
+      </h2>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+        <div class="glass-card rounded-3xl p-6">
+          <h3 class="text-white font-black text-xl">¿Cómo lo implementamos?</h3>
+          <div class="mt-4 space-y-2 text-gray-300 text-sm">
+            <p>• Creación de una web desde una instrucción.</p>
+            <p>• Estructura de secciones.</p>
+            <p>• Modificación conversacional.</p>
+            <p>• Diseño responsivo.</p>
+            <p>• Publicación del prototipo.</p>
+          </div>
+        </div>
+
+        <div class="glass-card rounded-3xl p-6">
+          <h3 class="text-white font-black text-xl">Aplicación final</h3>
+          <p class="text-gray-300 text-sm mt-4">Crear una landing page, sitio informativo o prototipo web que presente la solución desarrollada.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 8 -->
+  <section class="slide flex-col items-center justify-center bg-gradient-to-b from-[#0a0e1a] to-[#0f1a2e] relative">
+    <div class="absolute inset-0 bg-pattern opacity-50"></div>
+    <div class="relative z-10 max-w-5xl mx-auto w-full px-4">
+      <p class="text-sky-300 font-bold uppercase tracking-wider mb-2">Herramienta 5</p>
+      <h2 class="text-3xl md:text-5xl font-black text-white mb-5">
+        <span class="gradient-text">CANVA IA</span>
+      </h2>
+
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-3 mb-5">
+        <div class="glass-card rounded-2xl p-4 text-center"><span class="text-3xl">🖼️</span><p class="text-white font-bold mt-2">Imagen</p></div>
+        <div class="glass-card rounded-2xl p-4 text-center"><span class="text-3xl">📣</span><p class="text-white font-bold mt-2">Flyer</p></div>
+        <div class="glass-card rounded-2xl p-4 text-center"><span class="text-3xl">📊</span><p class="text-white font-bold mt-2">Presentación</p></div>
+        <div class="glass-card rounded-2xl p-4 text-center"><span class="text-3xl">📱</span><p class="text-white font-bold mt-2">Redes</p></div>
+      </div>
+
+      <div class="glass-card rounded-2xl p-5 text-center">
+        <p class="text-gray-200">En el proyecto final, Canva se utilizará para crear la identidad visual y las piezas de comunicación editables.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 9 -->
+  <section class="slide flex-col items-center justify-center bg-gradient-to-b from-[#0f1a2e] to-[#0a0e1a] relative">
+    <div class="absolute inset-0 bg-pattern opacity-50"></div>
+    <div class="relative z-10 max-w-5xl mx-auto w-full px-4">
+      <p class="text-sky-300 font-bold uppercase tracking-wider mb-2">Herramienta 6</p>
+      <h2 class="text-3xl md:text-5xl font-black text-white mb-5">
+        FORMULARIOS <span class="gradient-text">INTERACTIVOS</span>
+      </h2>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+        <div class="glass-card rounded-3xl p-6">
+          <h3 class="text-white font-black text-xl">¿Cómo los implementamos?</h3>
+          <div class="mt-4 space-y-2 text-gray-300 text-sm">
+            <p>• Inscripción.</p>
+            <p>• Consulta.</p>
+            <p>• Encuesta.</p>
+            <p>• Pedido.</p>
+            <p>• Registro de respuestas.</p>
+          </div>
+        </div>
+
+        <div class="glass-card rounded-3xl p-6">
+          <h3 class="text-white font-black text-xl">Aplicación final</h3>
+          <p class="text-gray-300 text-sm mt-4">Agregar al proyecto una vía de participación, contacto, captura de datos o validación de la propuesta.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 10 -->
+  <section class="slide flex-col items-center justify-center bg-gradient-to-b from-[#0a0e1a] to-[#0f1a2e] relative">
+    <div class="absolute inset-0 bg-pattern opacity-50"></div>
+    <div class="relative z-10 max-w-5xl mx-auto w-full px-4">
+      <p class="text-sky-300 font-bold uppercase tracking-wider mb-2">Herramienta 7</p>
+      <h2 class="text-3xl md:text-5xl font-black text-white mb-5">
+        CÓDIGO <span class="gradient-text">QR</span>
+      </h2>
+
+      <div class="grid grid-cols-1 md:grid-cols-5 gap-3 items-center text-center">
+        <div class="glass-card rounded-2xl p-5 md:col-span-2"><span class="text-4xl">📣</span><p class="text-white font-bold mt-2">Pieza visual</p></div>
+        <div class="hidden md:flex justify-center"><i data-lucide="arrow-right" class="flow-arrow"></i></div>
+        <div class="glass-card rounded-2xl p-5 md:col-span-2"><span class="text-4xl">🔳</span><p class="text-white font-bold mt-2">QR</p></div>
+      </div>
+
+      <div class="flex justify-center my-4"><i data-lucide="arrow-down" class="text-indigo-300 w-7 h-7"></i></div>
+
+      <div class="glass-card rounded-2xl p-5 max-w-3xl mx-auto text-center">
+        <span class="text-4xl">🌐</span>
+        <p class="text-white font-bold mt-2">Formulario, sitio o recurso digital</p>
+      </div>
+
+      <p class="text-gray-400 text-xs mt-4 text-center">En el proyecto final, el QR debe conectar una pieza física o visual con una acción digital concreta.</p>
+    </div>
+  </section>
+
+  <!-- 11 -->
+  <section class="slide flex-col items-center justify-center bg-gradient-to-b from-[#0f1a2e] to-[#0a0e1a] relative">
+    <div class="absolute inset-0 bg-pattern opacity-50"></div>
+    <div class="relative z-10 max-w-5xl mx-auto w-full px-4">
+      <p class="text-sky-300 font-bold uppercase tracking-wider mb-2">Herramienta 8</p>
+      <h2 class="text-3xl md:text-5xl font-black text-white mb-5">
+        <span class="gradient-text">NOTEBOOKLM</span>
+      </h2>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-5">
+        <div class="glass-card rounded-2xl p-5 text-center"><span class="text-4xl">📎</span><h3 class="text-white font-bold mt-3">Fuentes</h3><p class="text-gray-300 text-sm mt-2">Organizar documentación.</p></div>
+        <div class="glass-card rounded-2xl p-5 text-center"><span class="text-4xl">💬</span><h3 class="text-white font-bold mt-3">Chat</h3><p class="text-gray-300 text-sm mt-2">Analizar y consultar.</p></div>
+        <div class="glass-card rounded-2xl p-5 text-center"><span class="text-4xl">🧠</span><h3 class="text-white font-bold mt-3">Estudio</h3><p class="text-gray-300 text-sm mt-2">Crear resúmenes y recursos.</p></div>
+      </div>
+
+      <div class="glass-card rounded-2xl p-5 text-center">
+        <p class="text-gray-200">En el proyecto final, NotebookLM funcionará como centro documental del proyecto.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 12 -->
+  <section class="slide flex-col items-center justify-center bg-gradient-to-b from-[#0a0e1a] to-[#0f1a2e] relative">
+    <div class="absolute inset-0 bg-pattern opacity-50"></div>
+    <div class="relative z-10 max-w-5xl mx-auto w-full px-4">
+      <p class="text-sky-300 font-bold uppercase tracking-wider mb-2">Herramienta 9</p>
+      <h2 class="text-3xl md:text-5xl font-black text-white mb-5">
+        <span class="gradient-text">GOOGLE AI STUDIO</span>
+      </h2>
+
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-3 mb-5">
+        <div class="glass-card rounded-2xl p-4 text-center"><span class="text-3xl">🧠</span><p class="text-white font-bold mt-2">Modelo</p></div>
+        <div class="glass-card rounded-2xl p-4 text-center"><span class="text-3xl">📜</span><p class="text-white font-bold mt-2">Instrucciones</p></div>
+        <div class="glass-card rounded-2xl p-4 text-center"><span class="text-3xl">📎</span><p class="text-white font-bold mt-2">Contexto</p></div>
+        <div class="glass-card rounded-2xl p-4 text-center"><span class="text-3xl">🧪</span><p class="text-white font-bold mt-2">Pruebas</p></div>
+      </div>
+
+      <div class="glass-card rounded-2xl p-5 text-center">
+        <p class="text-gray-200">Se utilizará para prototipar la guía especializada del proyecto final.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 13 -->
+  <section class="slide flex-col items-center justify-center bg-gradient-to-b from-[#0f1a2e] to-[#0a0e1a] relative">
+    <div class="absolute inset-0 bg-pattern opacity-50"></div>
+    <div class="relative z-10 max-w-5xl mx-auto w-full px-4">
+      <p class="text-sky-300 font-bold uppercase tracking-wider mb-2">Herramienta 10</p>
+      <h2 class="text-3xl md:text-5xl font-black text-white mb-5">
+        GUÍA O <span class="gradient-text">AGENTE ESPECIALIZADO</span>
+      </h2>
+
+      <div class="glass-card rounded-3xl p-6 md:p-9 text-center mb-5">
+        <p class="text-white text-xl md:text-3xl font-black">
+          Es el resultado más avanzado del curso: una IA configurada para acompañar una necesidad concreta.
+        </p>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+        <div class="glass-card rounded-2xl p-5 text-center"><span class="text-4xl">🎯</span><h3 class="text-white font-bold mt-3">Propósito</h3><p class="text-gray-300 text-sm mt-2">Sabe qué problema resuelve.</p></div>
+        <div class="glass-card rounded-2xl p-5 text-center"><span class="text-4xl">📏</span><h3 class="text-white font-bold mt-3">Reglas</h3><p class="text-gray-300 text-sm mt-2">Sabe cómo actuar.</p></div>
+        <div class="glass-card rounded-2xl p-5 text-center"><span class="text-4xl">🧪</span><h3 class="text-white font-bold mt-3">Pruebas</h3><p class="text-gray-300 text-sm mt-2">Demuestra que funciona.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 14 -->
+  <section class="slide flex-col items-center justify-center bg-gradient-to-b from-[#0a0e1a] to-[#0f1a2e] relative">
+    <div class="absolute inset-0 bg-pattern opacity-50"></div>
+    <div class="relative z-10 max-w-5xl mx-auto w-full px-4">
+      <h2 class="text-3xl md:text-5xl font-black text-white mb-5">
+        CÓMO SE CONECTAN LAS <span class="gradient-text">10 HERRAMIENTAS</span>
+      </h2>
+
+      <div class="grid grid-cols-2 md:grid-cols-5 gap-3 text-center">
+        <div class="glass-card rounded-xl p-4"><p class="text-white font-bold">ChatGPT</p><p class="text-gray-400 text-xs mt-1">Idea</p></div>
+        <div class="glass-card rounded-xl p-4"><p class="text-white font-bold">Prompting</p><p class="text-gray-400 text-xs mt-1">Instrucción</p></div>
+        <div class="glass-card rounded-xl p-4"><p class="text-white font-bold">JSON</p><p class="text-gray-400 text-xs mt-1">Estructura</p></div>
+        <div class="glass-card rounded-xl p-4"><p class="text-white font-bold">Canva</p><p class="text-gray-400 text-xs mt-1">Identidad</p></div>
+        <div class="glass-card rounded-xl p-4"><p class="text-white font-bold">Lovable</p><p class="text-gray-400 text-xs mt-1">Web</p></div>
+        <div class="glass-card rounded-xl p-4"><p class="text-white font-bold">Formulario</p><p class="text-gray-400 text-xs mt-1">Datos</p></div>
+        <div class="glass-card rounded-xl p-4"><p class="text-white font-bold">QR</p><p class="text-gray-400 text-xs mt-1">Acceso</p></div>
+        <div class="glass-card rounded-xl p-4"><p class="text-white font-bold">NotebookLM</p><p class="text-gray-400 text-xs mt-1">Conocimiento</p></div>
+        <div class="glass-card rounded-xl p-4"><p class="text-white font-bold">AI Studio</p><p class="text-gray-400 text-xs mt-1">Prototipo</p></div>
+        <div class="glass-card rounded-xl p-4"><p class="text-white font-bold">Agente</p><p class="text-gray-400 text-xs mt-1">Solución</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 15 -->
+  <section class="slide flex-col items-center justify-center bg-gradient-to-b from-[#0f1a2e] to-[#0a0e1a] relative">
+    <div class="absolute inset-0 bg-pattern opacity-50"></div>
+    <div class="relative z-10 max-w-5xl mx-auto w-full px-4">
+      <h2 class="text-3xl md:text-5xl font-black text-white mb-5">
+        EL PROYECTO FINAL DEBE SER <span class="gradient-text">REAL</span>
+      </h2>
+
+      <div class="glass-card rounded-3xl p-6 md:p-8 mb-5">
+        <p class="text-white text-xl md:text-2xl font-black text-center">
+          Debe responder a una necesidad concreta de una persona, actividad, profesión, negocio, institución o comunidad.
+        </p>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+        <div class="glass-card rounded-2xl p-5 text-center"><span class="text-4xl">😣</span><h3 class="text-white font-bold mt-3">Problema</h3><p class="text-gray-300 text-sm mt-2">Algo que cuesta, demora o falla.</p></div>
+        <div class="glass-card rounded-2xl p-5 text-center"><span class="text-4xl">👤</span><h3 class="text-white font-bold mt-3">Usuario</h3><p class="text-gray-300 text-sm mt-2">Alguien que necesita ayuda.</p></div>
+        <div class="glass-card rounded-2xl p-5 text-center"><span class="text-4xl">✅</span><h3 class="text-white font-bold mt-3">Resultado</h3><p class="text-gray-300 text-sm mt-2">Una mejora que pueda mostrarse.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 16 -->
+  <section class="slide flex-col items-center justify-center bg-gradient-to-b from-[#0a0e1a] to-[#0f1a2e] relative">
+    <div class="absolute inset-0 bg-pattern opacity-50"></div>
+    <div class="relative z-10 max-w-5xl mx-auto w-full px-4">
+      <h2 class="text-3xl md:text-5xl font-black text-white mb-5">
+        ETAPA 1: DEFINIR EL <span class="gradient-text">PROBLEMA</span>
+      </h2>
+
+      <div class="prompt-box rounded-3xl p-6 md:p-8">
+        <p class="text-gray-100 text-base md:text-lg leading-relaxed">
+          “Ayudame a identificar un problema real que pueda resolverse combinando IA, diseño, una web, captura de datos, documentación y una guía especializada. Haceme preguntas sobre mi trabajo, intereses y necesidades. No propongas una solución hasta comprender bien el contexto.”
+        </p>
+
+        <button onclick="copyText(this)" data-copy="Ayudame a identificar un problema real que pueda resolverse combinando IA, diseño, una web, captura de datos, documentación y una guía especializada. Haceme preguntas sobre mi trabajo, intereses y necesidades. No propongas una solución hasta comprender bien el contexto."
+          class="mt-4 px-4 py-2 rounded-xl bg-sky-500 hover:bg-sky-400 text-white text-xs font-bold transition no-print">Copiar prompt</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- 17 -->
+  <section class="slide flex-col items-center justify-center bg-gradient-to-b from-[#0f1a2e] to-[#0a0e1a] relative">
+    <div class="absolute inset-0 bg-pattern opacity-50"></div>
+    <div class="relative z-10 max-w-5xl mx-auto w-full px-4">
+      <h2 class="text-3xl md:text-5xl font-black text-white mb-5">
+        ETAPA 2: DISEÑAR LA <span class="gradient-text">SOLUCIÓN</span>
+      </h2>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div class="glass-card rounded-xl p-5"><p class="text-sky-300 font-bold">Nombre</p><p class="text-gray-300 text-sm mt-1">¿Cómo se llama la solución?</p></div>
+        <div class="glass-card rounded-xl p-5"><p class="text-sky-300 font-bold">Usuario</p><p class="text-gray-300 text-sm mt-1">¿Quién la utilizará?</p></div>
+        <div class="glass-card rounded-xl p-5"><p class="text-sky-300 font-bold">Propuesta</p><p class="text-gray-300 text-sm mt-1">¿Qué mejora ofrece?</p></div>
+        <div class="glass-card rounded-xl p-5"><p class="text-sky-300 font-bold">Flujo</p><p class="text-gray-300 text-sm mt-1">¿Cómo se usa de principio a fin?</p></div>
+        <div class="glass-card rounded-xl p-5"><p class="text-sky-300 font-bold">Datos</p><p class="text-gray-300 text-sm mt-1">¿Qué información necesita?</p></div>
+        <div class="glass-card rounded-xl p-5"><p class="text-sky-300 font-bold">Resultado</p><p class="text-gray-300 text-sm mt-1">¿Qué entrega al usuario?</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 18 -->
+  <section class="slide flex-col items-center justify-center bg-gradient-to-b from-[#0a0e1a] to-[#0f1a2e] relative">
+    <div class="absolute inset-0 bg-pattern opacity-50"></div>
+    <div class="relative z-10 max-w-5xl mx-auto w-full px-4">
+      <h2 class="text-3xl md:text-5xl font-black text-white mb-5">
+        ETAPA 3: CREAR EL <span class="gradient-text">PROMPT MAESTRO</span>
+      </h2>
+
+      <div class="prompt-box rounded-3xl p-6 md:p-8">
+        <p class="text-gray-100 text-sm md:text-base leading-relaxed">
+          “Actuá como director de proyecto de IA. Organizá toda la solución en objetivos, usuarios, etapas, herramientas, entregables, datos necesarios, riesgos, responsables y criterios de éxito. Después, generá un prompt específico para cada una de las 10 herramientas que voy a utilizar.”
+        </p>
+
+        <button onclick="copyText(this)" data-copy="Actuá como director de proyecto de IA. Organizá toda la solución en objetivos, usuarios, etapas, herramientas, entregables, datos necesarios, riesgos, responsables y criterios de éxito. Después, generá un prompt específico para cada una de las 10 herramientas que voy a utilizar."
+          class="mt-4 px-4 py-2 rounded-xl bg-sky-500 hover:bg-sky-400 text-white text-xs font-bold transition no-print">Copiar prompt</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- 19 -->
+  <section class="slide flex-col items-center justify-center bg-gradient-to-b from-[#0f1a2e] to-[#0a0e1a] relative">
+    <div class="absolute inset-0 bg-pattern opacity-50"></div>
+    <div class="relative z-10 max-w-5xl mx-auto w-full px-4">
+      <h2 class="text-3xl md:text-5xl font-black text-white mb-5">
+        ETAPA 4: CONVERTIR EL PLAN A <span class="gradient-text">JSON</span>
+      </h2>
+
+      <div class="json-box rounded-2xl p-5 md:p-7 text-xs md:text-sm">
+{
+  <span class="key">"proyecto"</span>: <span class="string">"Nombre"</span>,
+  <span class="key">"problema"</span>: <span class="string">"Necesidad detectada"</span>,
+  <span class="key">"usuario"</span>: <span class="string">"Público principal"</span>,
+  <span class="key">"herramientas"</span>: [
+    <span class="string">"ChatGPT"</span>,
+    <span class="string">"Canva"</span>,
+    <span class="string">"Lovable"</span>,
+    <span class="string">"NotebookLM"</span>,
+    <span class="string">"AI Studio"</span>
+  ],
+  <span class="key">"entregables"</span>: [
+    <span class="string">"Identidad"</span>,
+    <span class="string">"Sitio"</span>,
+    <span class="string">"Formulario"</span>,
+    <span class="string">"Guía especializada"</span>
+  ]
+}
+      </div>
+    </div>
+  </section>
+
+  <!-- 20 -->
+  <section class="slide flex-col items-center justify-center bg-gradient-to-b from-[#0a0e1a] to-[#0f1a2e] relative">
+    <div class="absolute inset-0 bg-pattern opacity-50"></div>
+    <div class="relative z-10 max-w-5xl mx-auto w-full px-4">
+      <h2 class="text-3xl md:text-5xl font-black text-white mb-5">
+        ETAPA 5: CREAR LA <span class="gradient-text">IDENTIDAD VISUAL</span>
+      </h2>
+
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-3">
+        <div class="glass-card rounded-2xl p-4 text-center"><span class="text-3xl">🏷️</span><p class="text-white font-bold mt-2">Nombre</p></div>
+        <div class="glass-card rounded-2xl p-4 text-center"><span class="text-3xl">✍️</span><p class="text-white font-bold mt-2">Eslogan</p></div>
+        <div class="glass-card rounded-2xl p-4 text-center"><span class="text-3xl">🎨</span><p class="text-white font-bold mt-2">Paleta</p></div>
+        <div class="glass-card rounded-2xl p-4 text-center"><span class="text-3xl">🔷</span><p class="text-white font-bold mt-2">Logo</p></div>
+        <div class="glass-card rounded-2xl p-4 text-center"><span class="text-3xl">📣</span><p class="text-white font-bold mt-2">Flyer</p></div>
+        <div class="glass-card rounded-2xl p-4 text-center"><span class="text-3xl">📱</span><p class="text-white font-bold mt-2">Redes</p></div>
+        <div class="glass-card rounded-2xl p-4 text-center"><span class="text-3xl">📊</span><p class="text-white font-bold mt-2">Presentación</p></div>
+        <div class="glass-card rounded-2xl p-4 text-center"><span class="text-3xl">🧩</span><p class="text-white font-bold mt-2">Plantilla</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 21 -->
+  <section class="slide flex-col items-center justify-center bg-gradient-to-b from-[#0f1a2e] to-[#0a0e1a] relative">
+    <div class="absolute inset-0 bg-pattern opacity-50"></div>
+    <div class="relative z-10 max-w-5xl mx-auto w-full px-4">
+      <h2 class="text-3xl md:text-5xl font-black text-white mb-5">
+        ETAPA 6: CONSTRUIR LA <span class="gradient-text">WEB</span>
+      </h2>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+        <div class="glass-card rounded-2xl p-5 text-center"><span class="text-4xl">🏠</span><h3 class="text-white font-bold mt-3">Inicio</h3><p class="text-gray-300 text-sm mt-2">Presentar la propuesta.</p></div>
+        <div class="glass-card rounded-2xl p-5 text-center"><span class="text-4xl">⭐</span><h3 class="text-white font-bold mt-3">Beneficios</h3><p class="text-gray-300 text-sm mt-2">Explicar el valor.</p></div>
+        <div class="glass-card rounded-2xl p-5 text-center"><span class="text-4xl">📩</span><h3 class="text-white font-bold mt-3">Acción</h3><p class="text-gray-300 text-sm mt-2">Invitar a participar.</p></div>
+      </div>
+
+      <div class="mt-5 prompt-box rounded-2xl p-5">
+        <p class="text-gray-100 text-sm">“Creá una web clara y responsiva para presentar esta solución. Incluí problema, propuesta, funcionamiento, beneficios, preguntas frecuentes y llamado a la acción.”</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 22 -->
+  <section class="slide flex-col items-center justify-center bg-gradient-to-b from-[#0a0e1a] to-[#0f1a2e] relative">
+    <div class="absolute inset-0 bg-pattern opacity-50"></div>
+    <div class="relative z-10 max-w-5xl mx-auto w-full px-4">
+      <h2 class="text-3xl md:text-5xl font-black text-white mb-5">
+        ETAPA 7: CREAR EL <span class="gradient-text">FORMULARIO</span>
+      </h2>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+        <div class="glass-card rounded-3xl p-6">
+          <h3 class="text-white font-black text-xl">Objetivos posibles</h3>
+          <div class="mt-4 space-y-2 text-gray-300 text-sm">
+            <p>• Recibir consultas.</p>
+            <p>• Registrar usuarios.</p>
+            <p>• Validar interés.</p>
+            <p>• Recopilar necesidades.</p>
+            <p>• Obtener devolución.</p>
+          </div>
+        </div>
+
+        <div class="glass-card rounded-3xl p-6">
+          <h3 class="text-white font-black text-xl">Debe demostrar</h3>
+          <div class="mt-4 space-y-2 text-gray-300 text-sm">
+            <p>• Campos adecuados.</p>
+            <p>• Claridad.</p>
+            <p>• Coherencia visual.</p>
+            <p>• Mensaje final.</p>
+            <p>• Registro de respuestas.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 23 -->
+  <section class="slide flex-col items-center justify-center bg-gradient-to-b from-[#0f1a2e] to-[#0a0e1a] relative">
+    <div class="absolute inset-0 bg-pattern opacity-50"></div>
+    <div class="relative z-10 max-w-5xl mx-auto w-full px-4">
+      <h2 class="text-3xl md:text-5xl font-black text-white mb-5">
+        ETAPA 8: CONECTAR CON <span class="gradient-text">QR</span>
+      </h2>
+
+      <div class="grid grid-cols-1 md:grid-cols-7 gap-3 items-center text-center">
+        <div class="glass-card rounded-2xl p-5 md:col-span-2"><span class="text-4xl">📣</span><p class="text-white font-bold mt-2">Flyer</p></div>
+        <div class="hidden md:flex justify-center"><i data-lucide="arrow-right" class="flow-arrow"></i></div>
+        <div class="glass-card rounded-2xl p-5 md:col-span-2"><span class="text-4xl">🔳</span><p class="text-white font-bold mt-2">QR</p></div>
+        <div class="hidden md:flex justify-center"><i data-lucide="arrow-right" class="flow-arrow"></i></div>
+        <div class="glass-card rounded-2xl p-5 md:col-span-1"><span class="text-4xl">🌐</span><p class="text-white font-bold mt-2">Acción</p></div>
+      </div>
+
+      <div class="mt-5 p-4 rounded-xl bg-amber-400/10 border border-amber-400/25 text-center">
+        <p class="text-gray-200 text-sm">El QR debe ser probado con más de un celular y dirigir al enlace correcto.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 24 -->
+  <section class="slide flex-col items-center justify-center bg-gradient-to-b from-[#0a0e1a] to-[#0f1a2e] relative">
+    <div class="absolute inset-0 bg-pattern opacity-50"></div>
+    <div class="relative z-10 max-w-5xl mx-auto w-full px-4">
+      <h2 class="text-3xl md:text-5xl font-black text-white mb-5">
+        ETAPA 9: DOCUMENTAR EN <span class="gradient-text">NOTEBOOKLM</span>
+      </h2>
+
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-3">
+        <div class="glass-card rounded-2xl p-4 text-center"><span class="text-3xl">📄</span><p class="text-white font-bold mt-2">Plan</p></div>
+        <div class="glass-card rounded-2xl p-4 text-center"><span class="text-3xl">🎨</span><p class="text-white font-bold mt-2">Identidad</p></div>
+        <div class="glass-card rounded-2xl p-4 text-center"><span class="text-3xl">💻</span><p class="text-white font-bold mt-2">Web</p></div>
+        <div class="glass-card rounded-2xl p-4 text-center"><span class="text-3xl">🧾</span><p class="text-white font-bold mt-2">Formulario</p></div>
+        <div class="glass-card rounded-2xl p-4 text-center"><span class="text-3xl">🧪</span><p class="text-white font-bold mt-2">Pruebas</p></div>
+        <div class="glass-card rounded-2xl p-4 text-center"><span class="text-3xl">🔍</span><p class="text-white font-bold mt-2">Debilidades</p></div>
+        <div class="glass-card rounded-2xl p-4 text-center"><span class="text-3xl">📊</span><p class="text-white font-bold mt-2">Informe</p></div>
+        <div class="glass-card rounded-2xl p-4 text-center"><span class="text-3xl">🎧</span><p class="text-white font-bold mt-2">Audio</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 25 -->
+  <section class="slide flex-col items-center justify-center bg-gradient-to-b from-[#0f1a2e] to-[#0a0e1a] relative">
+    <div class="absolute inset-0 bg-pattern opacity-50"></div>
+    <div class="relative z-10 max-w-5xl mx-auto w-full px-4">
+      <h2 class="text-3xl md:text-5xl font-black text-white mb-5">
+        ETAPA 10: CREAR LA <span class="gradient-text">GUÍA ESPECIALIZADA</span>
+      </h2>
+
+      <div class="prompt-box rounded-3xl p-6 md:p-8">
+        <p class="text-gray-100 text-sm md:text-base leading-relaxed">
+          “Sos una guía especializada en [tema del proyecto]. Tu objetivo es ayudar a [usuario] a lograr [resultado]. Antes de responder, solicitá los datos necesarios. Seguí este proceso: diagnosticar, organizar, recomendar y definir próximo paso. No inventes información. Respondé en formato claro y estructurado.”
+        </p>
+
+        <button onclick="copyText(this)" data-copy="Sos una guía especializada en [tema del proyecto]. Tu objetivo es ayudar a [usuario] a lograr [resultado]. Antes de responder, solicitá los datos necesarios. Seguí este proceso: diagnosticar, organizar, recomendar y definir próximo paso. No inventes información. Respondé en formato claro y estructurado."
+          class="mt-4 px-4 py-2 rounded-xl bg-sky-500 hover:bg-sky-400 text-white text-xs font-bold transition no-print">Copiar plantilla</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- 26 -->
+  <section class="slide flex-col items-center justify-center bg-gradient-to-b from-[#0a0e1a] to-[#0f1a2e] relative">
+    <div class="absolute inset-0 bg-pattern opacity-50"></div>
+    <div class="relative z-10 max-w-5xl mx-auto w-full px-4">
+      <h2 class="text-3xl md:text-5xl font-black text-white mb-5">
+        ARQUITECTURA DEL <span class="gradient-text">PROYECTO FINAL</span>
+      </h2>
+
+      <div class="grid grid-cols-1 md:grid-cols-9 gap-3 items-center text-center">
+        <div class="glass-card rounded-2xl p-4 md:col-span-2"><span class="text-3xl">🧠</span><p class="text-white font-bold mt-2">Estrategia</p></div>
+        <div class="hidden md:flex justify-center"><i data-lucide="arrow-right" class="flow-arrow"></i></div>
+        <div class="glass-card rounded-2xl p-4 md:col-span-2"><span class="text-3xl">🎨</span><p class="text-white font-bold mt-2">Comunicación</p></div>
+        <div class="hidden md:flex justify-center"><i data-lucide="arrow-right" class="flow-arrow"></i></div>
+        <div class="glass-card rounded-2xl p-4 md:col-span-2"><span class="text-3xl">💻</span><p class="text-white font-bold mt-2">Canal digital</p></div>
+      </div>
+
+      <div class="flex justify-center my-4"><i data-lucide="arrow-down" class="text-indigo-300 w-7 h-7"></i></div>
+
+      <div class="grid grid-cols-1 md:grid-cols-7 gap-3 items-center text-center max-w-4xl mx-auto">
+        <div class="glass-card rounded-2xl p-4 md:col-span-2"><span class="text-3xl">📊</span><p class="text-white font-bold mt-2">Datos</p></div>
+        <div class="hidden md:flex justify-center"><i data-lucide="arrow-right" class="flow-arrow"></i></div>
+        <div class="glass-card rounded-2xl p-4 md:col-span-2"><span class="text-3xl">📚</span><p class="text-white font-bold mt-2">Conocimiento</p></div>
+        <div class="hidden md:flex justify-center"><i data-lucide="arrow-right" class="flow-arrow"></i></div>
+        <div class="glass-card rounded-2xl p-4 md:col-span-1"><span class="text-3xl">🤖</span><p class="text-white font-bold mt-2">Guía</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 27 -->
+  <section class="slide flex-col items-center justify-center bg-gradient-to-b from-[#0f1a2e] to-[#0a0e1a] relative">
+    <div class="absolute inset-0 bg-pattern opacity-50"></div>
+    <div class="relative z-10 max-w-5xl mx-auto w-full px-4">
+      <h2 class="text-3xl md:text-5xl font-black text-white mb-5">
+        ENTREGABLES <span class="gradient-text">OBLIGATORIOS</span>
+      </h2>
+
+      <div class="grid grid-cols-2 md:grid-cols-5 gap-3">
+        <div class="glass-card rounded-2xl p-4 text-center"><span class="text-3xl">📄</span><p class="text-white font-bold mt-2">Ficha del proyecto</p></div>
+        <div class="glass-card rounded-2xl p-4 text-center"><span class="text-3xl">✍️</span><p class="text-white font-bold mt-2">Prompt maestro</p></div>
+        <div class="glass-card rounded-2xl p-4 text-center"><span class="text-3xl">🧱</span><p class="text-white font-bold mt-2">JSON</p></div>
+        <div class="glass-card rounded-2xl p-4 text-center"><span class="text-3xl">🎨</span><p class="text-white font-bold mt-2">Identidad</p></div>
+        <div class="glass-card rounded-2xl p-4 text-center"><span class="text-3xl">💻</span><p class="text-white font-bold mt-2">Web</p></div>
+        <div class="glass-card rounded-2xl p-4 text-center"><span class="text-3xl">🧾</span><p class="text-white font-bold mt-2">Formulario</p></div>
+        <div class="glass-card rounded-2xl p-4 text-center"><span class="text-3xl">🔳</span><p class="text-white font-bold mt-2">QR</p></div>
+        <div class="glass-card rounded-2xl p-4 text-center"><span class="text-3xl">📚</span><p class="text-white font-bold mt-2">NotebookLM</p></div>
+        <div class="glass-card rounded-2xl p-4 text-center"><span class="text-3xl">🤖</span><p class="text-white font-bold mt-2">Guía AI Studio</p></div>
+        <div class="glass-card rounded-2xl p-4 text-center"><span class="text-3xl">🎤</span><p class="text-white font-bold mt-2">Presentación final</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 28 -->
+  <section class="slide flex-col items-center justify-center bg-gradient-to-b from-[#0a0e1a] to-[#0f1a2e] relative">
+    <div class="absolute inset-0 bg-pattern opacity-50"></div>
+    <div class="relative z-10 max-w-5xl mx-auto w-full px-4">
+      <h2 class="text-3xl md:text-5xl font-black text-white mb-5">
+        MATRIZ DE <span class="gradient-text">VALIDACIÓN</span>
+      </h2>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div class="glass-card rounded-2xl p-5">
+          <h3 class="text-white font-black text-xl mb-3">Funcionalidad</h3>
+          <div class="space-y-2 text-gray-300 text-sm">
+            <p>• ¿La web abre?</p>
+            <p>• ¿El formulario registra?</p>
+            <p>• ¿El QR dirige bien?</p>
+            <p>• ¿La guía responde?</p>
+            <p>• ¿Los enlaces funcionan?</p>
+          </div>
+        </div>
+
+        <div class="glass-card rounded-2xl p-5">
+          <h3 class="text-white font-black text-xl mb-3">Coherencia</h3>
+          <div class="space-y-2 text-gray-300 text-sm">
+            <p>• ¿Todo responde al mismo problema?</p>
+            <p>• ¿La identidad es consistente?</p>
+            <p>• ¿Los textos coinciden?</p>
+            <p>• ¿La guía usa el mismo enfoque?</p>
+            <p>• ¿El usuario entiende el recorrido?</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 29 -->
+  <section class="slide flex-col items-center justify-center bg-gradient-to-b from-[#0f1a2e] to-[#0a0e1a] relative">
+    <div class="absolute inset-0 bg-pattern opacity-50"></div>
+    <div class="relative z-10 max-w-5xl mx-auto w-full px-4">
+      <h2 class="text-3xl md:text-5xl font-black text-white mb-5">
+        PRUEBAS CON <span class="gradient-text">USUARIOS</span>
+      </h2>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+        <div class="glass-card rounded-2xl p-5 text-center"><span class="text-4xl">👀</span><h3 class="text-white font-bold mt-3">Observar</h3><p class="text-gray-300 text-sm mt-2">Qué entiende sin explicación.</p></div>
+        <div class="glass-card rounded-2xl p-5 text-center"><span class="text-4xl">📝</span><h3 class="text-white font-bold mt-3">Registrar</h3><p class="text-gray-300 text-sm mt-2">Errores, dudas y comentarios.</p></div>
+        <div class="glass-card rounded-2xl p-5 text-center"><span class="text-4xl">🔄</span><h3 class="text-white font-bold mt-3">Mejorar</h3><p class="text-gray-300 text-sm mt-2">Cambiar lo necesario.</p></div>
+      </div>
+
+      <div class="mt-5 p-4 rounded-xl bg-emerald-400/10 border border-emerald-400/20 text-center">
+        <p class="text-gray-200 text-sm">El proyecto debe probarse con al menos una persona que no haya participado en su creación.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 30 -->
+  <section class="slide flex-col items-center justify-center bg-gradient-to-b from-[#0a0e1a] to-[#0f1a2e] relative">
+    <div class="absolute inset-0 bg-pattern opacity-50"></div>
+    <div class="relative z-10 max-w-5xl mx-auto w-full px-4">
+      <h2 class="text-3xl md:text-5xl font-black text-white mb-5">
+        RÚBRICA DE <span class="gradient-text">EVALUACIÓN</span>
+      </h2>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+        <div class="glass-card rounded-xl p-4"><p class="text-white font-bold">Problema y propósito</p><p class="text-gray-400 text-xs mt-1">20 puntos</p></div>
+        <div class="glass-card rounded-xl p-4"><p class="text-white font-bold">Integración de herramientas</p><p class="text-gray-400 text-xs mt-1">20 puntos</p></div>
+        <div class="glass-card rounded-xl p-4"><p class="text-white font-bold">Calidad del prototipo</p><p class="text-gray-400 text-xs mt-1">20 puntos</p></div>
+        <div class="glass-card rounded-xl p-4"><p class="text-white font-bold">Uso de prompts y JSON</p><p class="text-gray-400 text-xs mt-1">15 puntos</p></div>
+        <div class="glass-card rounded-xl p-4"><p class="text-white font-bold">Validación y mejora</p><p class="text-gray-400 text-xs mt-1">15 puntos</p></div>
+        <div class="glass-card rounded-xl p-4"><p class="text-white font-bold">Presentación y reflexión</p><p class="text-gray-400 text-xs mt-1">10 puntos</p></div>
+      </div>
+
+      <div class="mt-5 p-4 rounded-xl bg-sky-400/10 border border-sky-400/20 text-center">
+        <p class="text-white font-black text-lg">Total: 100 puntos</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 31 -->
+  <section class="slide flex-col items-center justify-center bg-gradient-to-b from-[#0f1a2e] to-[#0a0e1a] relative">
+    <div class="absolute inset-0 bg-pattern opacity-50"></div>
+    <div class="relative z-10 max-w-5xl mx-auto w-full px-4">
+      <h2 class="text-3xl md:text-5xl font-black text-white mb-5">
+        QUÉ SE EVALÚA <span class="gradient-text">REALMENTE</span>
+      </h2>
+
+      <div class="glass-card rounded-3xl p-6 md:p-9 text-center mb-5">
+        <p class="text-white text-xl md:text-3xl font-black">
+          No se evalúa quién hizo el diseño más lindo. Se evalúa quién logró construir una solución coherente y útil.
+        </p>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+        <div class="glass-card rounded-2xl p-5 text-center"><span class="text-4xl">🧠</span><h3 class="text-white font-bold mt-3">Criterio</h3><p class="text-gray-300 text-sm mt-2">Por qué eligió cada herramienta.</p></div>
+        <div class="glass-card rounded-2xl p-5 text-center"><span class="text-4xl">🔗</span><h3 class="text-white font-bold mt-3">Integración</h3><p class="text-gray-300 text-sm mt-2">Cómo se conectan las partes.</p></div>
+        <div class="glass-card rounded-2xl p-5 text-center"><span class="text-4xl">✅</span><h3 class="text-white font-bold mt-3">Utilidad</h3><p class="text-gray-300 text-sm mt-2">Qué mejora concreta produce.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 32 -->
+  <section class="slide flex-col items-center justify-center bg-gradient-to-b from-[#0a0e1a] to-[#0f1a2e] relative">
+    <div class="absolute inset-0 bg-pattern opacity-50"></div>
+    <div class="relative z-10 max-w-5xl mx-auto w-full px-4">
+      <h2 class="text-3xl md:text-5xl font-black text-white mb-5">
+        PRESENTACIÓN FINAL: <span class="gradient-text">8 MINUTOS</span>
+      </h2>
+
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-3">
+        <div class="glass-card rounded-2xl p-4 text-center"><span class="text-3xl">1️⃣</span><p class="text-white font-bold mt-2">Problema</p></div>
+        <div class="glass-card rounded-2xl p-4 text-center"><span class="text-3xl">2️⃣</span><p class="text-white font-bold mt-2">Usuario</p></div>
+        <div class="glass-card rounded-2xl p-4 text-center"><span class="text-3xl">3️⃣</span><p class="text-white font-bold mt-2">Solución</p></div>
+        <div class="glass-card rounded-2xl p-4 text-center"><span class="text-3xl">4️⃣</span><p class="text-white font-bold mt-2">Herramientas</p></div>
+        <div class="glass-card rounded-2xl p-4 text-center"><span class="text-3xl">5️⃣</span><p class="text-white font-bold mt-2">Demostración</p></div>
+        <div class="glass-card rounded-2xl p-4 text-center"><span class="text-3xl">6️⃣</span><p class="text-white font-bold mt-2">Prueba</p></div>
+        <div class="glass-card rounded-2xl p-4 text-center"><span class="text-3xl">7️⃣</span><p class="text-white font-bold mt-2">Error</p></div>
+        <div class="glass-card rounded-2xl p-4 text-center"><span class="text-3xl">8️⃣</span><p class="text-white font-bold mt-2">Aprendizaje</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 33 -->
+  <section class="slide flex-col items-center justify-center bg-gradient-to-b from-[#0f1a2e] to-[#0a0e1a] relative">
+    <div class="absolute inset-0 bg-pattern opacity-50"></div>
+    <div class="relative z-10 max-w-5xl mx-auto w-full px-4">
+      <h2 class="text-3xl md:text-5xl font-black text-white mb-5">
+        GUION DE LA <span class="gradient-text">PRESENTACIÓN</span>
+      </h2>
+
+      <div class="prompt-box rounded-3xl p-6 md:p-8">
+        <p class="text-gray-100 text-sm md:text-base leading-relaxed">
+          “Creá un guion oral de ocho minutos para presentar mi proyecto final. Debe explicar el problema, usuario, solución, uso de las 10 herramientas, demostración, validación, errores encontrados, mejoras y conclusión. Usá lenguaje claro y profesional.”
+        </p>
+
+        <button onclick="copyText(this)" data-copy="Creá un guion oral de ocho minutos para presentar mi proyecto final. Debe explicar el problema, usuario, solución, uso de las 10 herramientas, demostración, validación, errores encontrados, mejoras y conclusión. Usá lenguaje claro y profesional."
+          class="mt-4 px-4 py-2 rounded-xl bg-sky-500 hover:bg-sky-400 text-white text-xs font-bold transition no-print">Copiar prompt</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- 34 -->
+  <section class="slide flex-col items-center justify-center bg-gradient-to-b from-[#0a0e1a] to-[#0f1a2e] relative">
+    <div class="absolute inset-0 bg-pattern opacity-50"></div>
+    <div class="relative z-10 max-w-5xl mx-auto w-full px-4">
+      <h2 class="text-3xl md:text-5xl font-black text-white mb-5">
+        CARPETA FINAL DEL <span class="gradient-text">PROYECTO</span>
+      </h2>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div class="glass-card rounded-2xl p-5">
+          <h3 class="text-white font-black text-xl mb-3">Documentación</h3>
+          <div class="space-y-2 text-gray-300 text-sm">
+            <p>• Ficha del proyecto.</p>
+            <p>• Prompts.</p>
+            <p>• JSON.</p>
+            <p>• Informe de NotebookLM.</p>
+            <p>• Registro de pruebas.</p>
+          </div>
+        </div>
+
+        <div class="glass-card rounded-2xl p-5">
+          <h3 class="text-white font-black text-xl mb-3">Prototipos</h3>
+          <div class="space-y-2 text-gray-300 text-sm">
+            <p>• Identidad visual.</p>
+            <p>• Enlace web.</p>
+            <p>• Formulario.</p>
+            <p>• QR.</p>
+            <p>• Guía de AI Studio.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 35 -->
+  <section class="slide flex-col items-center justify-center bg-gradient-to-b from-[#0f1a2e] to-[#0a0e1a] relative">
+    <div class="absolute inset-0 bg-pattern opacity-50"></div>
+    <div class="relative z-10 max-w-5xl mx-auto w-full px-4">
+      <h2 class="text-3xl md:text-5xl font-black text-white mb-5">
+        PRIVACIDAD, ÉTICA Y <span class="gradient-text">RESPONSABILIDAD</span>
+      </h2>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div class="glass-card rounded-2xl p-5">
+          <div class="flex items-center gap-3 mb-3"><span class="text-3xl">✅</span><h3 class="text-emerald-300 font-black text-xl">Debe incluir</h3></div>
+          <div class="space-y-2 text-gray-300 text-sm">
+            <p>• Datos ficticios en pruebas.</p>
+            <p>• Aviso si la IA puede equivocarse.</p>
+            <p>• Revisión humana.</p>
+            <p>• Protección de información.</p>
+            <p>• Límites claros.</p>
+          </div>
+        </div>
+
+        <div class="glass-card rounded-2xl p-5">
+          <div class="flex items-center gap-3 mb-3"><span class="text-3xl">🚫</span><h3 class="text-red-300 font-black text-xl">No debe incluir</h3></div>
+          <div class="space-y-2 text-gray-300 text-sm">
+            <p>• Contraseñas.</p>
+            <p>• Datos bancarios.</p>
+            <p>• Información confidencial.</p>
+            <p>• Datos personales ajenos.</p>
+            <p>• Promesas imposibles.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 36 -->
+  <section class="slide flex-col items-center justify-center bg-gradient-to-b from-[#0a0e1a] to-[#0f1a2e] relative">
+    <div class="absolute inset-0 bg-pattern opacity-50"></div>
+    <div class="relative z-10 max-w-5xl mx-auto w-full px-4">
+      <h2 class="text-3xl md:text-5xl font-black text-white mb-5">
+        PLAN DE TRABAJO <span class="gradient-text">SUGERIDO</span>
+      </h2>
+
+      <div class="grid grid-cols-1 md:grid-cols-4 gap-3">
+        <div class="glass-card rounded-2xl p-5 text-center"><span class="text-4xl">1️⃣</span><h3 class="text-white font-bold mt-3">Bloque 1</h3><p class="text-gray-300 text-sm mt-2">Problema, usuario y estrategia.</p></div>
+        <div class="glass-card rounded-2xl p-5 text-center"><span class="text-4xl">2️⃣</span><h3 class="text-white font-bold mt-3">Bloque 2</h3><p class="text-gray-300 text-sm mt-2">Identidad, web y formulario.</p></div>
+        <div class="glass-card rounded-2xl p-5 text-center"><span class="text-4xl">3️⃣</span><h3 class="text-white font-bold mt-3">Bloque 3</h3><p class="text-gray-300 text-sm mt-2">Documentación y guía.</p></div>
+        <div class="glass-card rounded-2xl p-5 text-center"><span class="text-4xl">4️⃣</span><h3 class="text-white font-bold mt-3">Bloque 4</h3><p class="text-gray-300 text-sm mt-2">Pruebas y presentación.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 37 -->
+  <section class="slide flex-col items-center justify-center bg-gradient-to-b from-[#0f1a2e] to-[#0a0e1a] relative">
+    <div class="absolute inset-0 bg-pattern opacity-50"></div>
+    <div class="relative z-10 max-w-5xl mx-auto w-full px-4">
+      <h2 class="text-3xl md:text-5xl font-black text-white mb-5">
+        CHECKLIST DE <span class="gradient-text">ENTREGA</span>
+      </h2>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+        <div class="glass-card rounded-xl p-4 text-gray-200">✔ El problema es claro.</div>
+        <div class="glass-card rounded-xl p-4 text-gray-200">✔ Las 10 herramientas están justificadas.</div>
+        <div class="glass-card rounded-xl p-4 text-gray-200">✔ Los prompts están guardados.</div>
+        <div class="glass-card rounded-xl p-4 text-gray-200">✔ Existe un JSON válido.</div>
+        <div class="glass-card rounded-xl p-4 text-gray-200">✔ La identidad es consistente.</div>
+        <div class="glass-card rounded-xl p-4 text-gray-200">✔ La web funciona.</div>
+        <div class="glass-card rounded-xl p-4 text-gray-200">✔ El formulario registra datos.</div>
+        <div class="glass-card rounded-xl p-4 text-gray-200">✔ El QR fue probado.</div>
+        <div class="glass-card rounded-xl p-4 text-gray-200">✔ NotebookLM contiene fuentes.</div>
+        <div class="glass-card rounded-xl p-4 text-gray-200">✔ La guía fue probada y mejorada.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 38 -->
+  <section class="slide flex-col items-center justify-center bg-gradient-to-b from-[#0a0e1a] to-[#0f1a2e] relative">
+    <div class="absolute inset-0 bg-pattern opacity-50"></div>
+    <div class="relative z-10 max-w-5xl mx-auto w-full px-4">
+      <h2 class="text-3xl md:text-5xl font-black text-white mb-5">
+        REFLEXIÓN <span class="gradient-text">FINAL</span>
+      </h2>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+        <div class="prompt-box rounded-xl p-4 text-gray-100 text-sm">¿Qué herramienta aportó más valor?</div>
+        <div class="prompt-box rounded-xl p-4 text-gray-100 text-sm">¿Qué parte fue más difícil?</div>
+        <div class="prompt-box rounded-xl p-4 text-gray-100 text-sm">¿Qué error mejoró más el proyecto?</div>
+        <div class="prompt-box rounded-xl p-4 text-gray-100 text-sm">¿Qué harías distinto?</div>
+        <div class="prompt-box rounded-xl p-4 text-gray-100 text-sm">¿Dónde podrías implementarlo realmente?</div>
+        <div class="prompt-box rounded-xl p-4 text-gray-100 text-sm">¿Cuál sería el próximo paso?</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 39 -->
+  <section class="slide flex-col items-center justify-center bg-gradient-to-b from-[#0f1a2e] to-[#0a0e1a] relative">
+    <div class="absolute inset-0 bg-pattern opacity-50"></div>
+    <div class="relative z-10 max-w-5xl mx-auto w-full px-4">
+      <h2 class="text-3xl md:text-5xl font-black text-white mb-5">
+        LO QUE DEMOSTRASTE EN ESTE <span class="gradient-text">CURSO</span>
+      </h2>
+
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-3">
+        <div class="glass-card rounded-2xl p-4 text-center"><span class="text-3xl">🧠</span><p class="text-white font-bold mt-2">Pensamiento estratégico</p></div>
+        <div class="glass-card rounded-2xl p-4 text-center"><span class="text-3xl">✍️</span><p class="text-white font-bold mt-2">Comunicación con IA</p></div>
+        <div class="glass-card rounded-2xl p-4 text-center"><span class="text-3xl">🎨</span><p class="text-white font-bold mt-2">Diseño</p></div>
+        <div class="glass-card rounded-2xl p-4 text-center"><span class="text-3xl">💻</span><p class="text-white font-bold mt-2">Construcción digital</p></div>
+        <div class="glass-card rounded-2xl p-4 text-center"><span class="text-3xl">📊</span><p class="text-white font-bold mt-2">Trabajo con datos</p></div>
+        <div class="glass-card rounded-2xl p-4 text-center"><span class="text-3xl">📚</span><p class="text-white font-bold mt-2">Gestión del conocimiento</p></div>
+        <div class="glass-card rounded-2xl p-4 text-center"><span class="text-3xl">🤖</span><p class="text-white font-bold mt-2">Diseño de agentes</p></div>
+        <div class="glass-card rounded-2xl p-4 text-center"><span class="text-3xl">✅</span><p class="text-white font-bold mt-2">Validación</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 40 -->
+  <section class="slide flex-col items-center justify-center bg-gradient-to-br from-[#0a0e1a] via-[#0f1a2e] to-[#0a0e1a] text-center relative overflow-hidden">
+    <div class="absolute inset-0 bg-pattern opacity-70"></div>
+    <div class="absolute top-0 right-0 w-1/2 h-1/2 bg-indigo-500/10 rounded-full blur-3xl"></div>
+
+    <div class="relative z-10 max-w-5xl mx-auto w-full px-4">
+      <img src="https://i.postimg.cc/jSkQKpRK/Diseno-sin-titulo-2026-05-15T105828-195.png"
+        alt="Instituto IEC" class="h-14 md:h-20 mx-auto mb-5 object-contain" />
+
+      <p class="text-sky-300 font-bold uppercase tracking-[.2em] text-sm mb-3">Cierre del curso</p>
+
+      <h2 class="text-3xl sm:text-4xl md:text-6xl font-black text-white leading-tight mb-5">
+        NO APRENDISTE DIEZ HERRAMIENTAS.<br><span class="gradient-text">APRENDISTE A CONSTRUIR SOLUCIONES.</span>
+      </h2>
+
+      <div class="glass-card rounded-3xl p-5 md:p-8 max-w-4xl mx-auto">
+        <p class="text-white font-black text-lg md:text-2xl">
+          El verdadero valor aparece cuando estrategia, contenido, diseño, tecnología, datos y conocimiento trabajan juntos para resolver un problema real.
+        </p>
+
+        <div class="mt-5 flex flex-wrap justify-center gap-2 text-xs md:text-sm">
+          <span class="px-3 py-2 bg-white/5 rounded-full text-gray-200">Pensar</span>
+          <span class="px-3 py-2 bg-white/5 rounded-full text-gray-200">Diseñar</span>
+          <span class="px-3 py-2 bg-white/5 rounded-full text-gray-200">Construir</span>
+          <span class="px-3 py-2 bg-white/5 rounded-full text-gray-200">Probar</span>
+          <span class="px-3 py-2 bg-white/5 rounded-full text-gray-200">Mejorar</span>
+        </div>
+      </div>
+
+      <p class="text-gray-400 text-xs md:text-sm mt-6">Instituto IEC · Experto en Aplicaciones Prácticas con IA</p>
+    </div>
+  </section>
+
+  <script>
+    let current = 0;
+    const slides = Array.from(document.querySelectorAll(".slide"));
+    const dotsContainer = document.getElementById("dots");
+    const progressBar = document.getElementById("progress-bar");
+    const currentNumber = document.getElementById("current-number");
+    const totalNumber = document.getElementById("total-number");
+    const prevButton = document.getElementById("prev-btn");
+    const nextButton = document.getElementById("next-btn");
+
+    totalNumber.textContent = slides.length;
+
+    slides.forEach((_, index) => {
+      const dot = document.createElement("button");
+      dot.className = "dot w-2 h-2 md:w-2.5 md:h-2.5 rounded-full bg-white/25 transition";
+      dot.setAttribute("aria-label", `Ir a la diapositiva ${index + 1}`);
+      dot.addEventListener("click", () => goSlide(index));
+      dotsContainer.appendChild(dot);
+    });
+
+    const dots = Array.from(document.querySelectorAll(".dot"));
+
+    function updateUI() {
+      dots.forEach((dot, index) => dot.classList.toggle("active", index === current));
+      currentNumber.textContent = current + 1;
+      progressBar.style.width = `${((current + 1) / slides.length) * 100}%`;
+      prevButton.disabled = current === 0;
+      nextButton.disabled = current === slides.length - 1;
+    }
+
+    function goSlide(index) {
+      if (index < 0 || index >= slides.length || index === current) return;
+      slides[current].classList.remove("active");
+      current = index;
+      slides[current].classList.add("active");
+      slides[current].scrollTop = 0;
+      window.scrollTo({ top:0, left:0, behavior:"instant" });
+      updateUI();
+    }
+
+    function changeSlide(direction) { goSlide(current + direction); }
+
+    document.addEventListener("keydown", (event) => {
+      const tag = document.activeElement?.tagName?.toLowerCase();
+      if (["input","textarea","select"].includes(tag)) return;
+
+      if (event.key === "ArrowRight" || event.key === "PageDown" || event.key === " ") {
+        event.preventDefault();
+        changeSlide(1);
+      }
+
+      if (event.key === "ArrowLeft" || event.key === "PageUp") {
+        event.preventDefault();
+        changeSlide(-1);
+      }
+
+      if (event.key === "Home") {
+        event.preventDefault();
+        goSlide(0);
+      }
+
+      if (event.key === "End") {
+        event.preventDefault();
+        goSlide(slides.length - 1);
+      }
+    });
+
+    let touchStartX = 0;
+    let touchStartY = 0;
+
+    document.addEventListener("touchstart", (event) => {
+      touchStartX = event.changedTouches[0].screenX;
+      touchStartY = event.changedTouches[0].screenY;
+    }, { passive:true });
+
+    document.addEventListener("touchend", (event) => {
+      const x = event.changedTouches[0].screenX;
+      const y = event.changedTouches[0].screenY;
+      const dx = touchStartX - x;
+      const dy = touchStartY - y;
+
+      if (Math.abs(dx) > 60 && Math.abs(dx) > Math.abs(dy)) {
+        dx > 0 ? changeSlide(1) : changeSlide(-1);
+      }
+    }, { passive:true });
+
+    async function copyText(button) {
+      const text = button.dataset.copy;
+      const original = button.textContent;
+
+      try {
+        await navigator.clipboard.writeText(text);
+        button.textContent = "¡Copiado!";
+        button.classList.remove("bg-sky-500");
+        button.classList.add("bg-emerald-500");
+      } catch {
+        button.textContent = "Seleccioná y copiá manualmente";
+      }
+
+      setTimeout(() => {
+        button.textContent = original;
+        button.classList.add("bg-sky-500");
+        button.classList.remove("bg-emerald-500");
+      }, 1800);
+    }
+
+    updateUI();
+    lucide.createIcons();
+  </script>
+</body>
+</html>
