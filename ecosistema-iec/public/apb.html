@@ -1,0 +1,493 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Ecosistema Digital APB | Propuesta Instituto IEC</title>
+  <meta name="description" content="Presentación interactiva del Ecosistema Digital APB: gestión interna, APB Play, inteligencia operativa y demostración funcional." />
+  <script src="https://cdn.tailwindcss.com/3.4.17"></script>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
+  <script src="https://cdn.jsdelivr.net/npm/lucide@0.468.0/dist/umd/lucide.min.js"></script>
+  <style>
+    :root {
+      --apb-blue: #3b82f6;
+      --apb-cyan: #22d3ee;
+      --apb-violet: #8b5cf6;
+      --apb-orange: #f59e0b;
+      --bg: #070b14;
+      --panel: #0d1526;
+    }
+    * { box-sizing: border-box; font-family: 'DM Sans', sans-serif; }
+    html, body { margin: 0; padding: 0; background: var(--bg); }
+    body { color: #fff; overflow: hidden; }
+    button, a { -webkit-tap-highlight-color: transparent; }
+    .slide {
+      display: none;
+      width: 100%;
+      min-height: 100vh;
+      height: 100vh;
+      overflow-y: auto;
+      overflow-x: hidden;
+      padding: 2rem 1.5rem 5rem;
+      scroll-behavior: smooth;
+    }
+    .slide.active { display: flex; }
+    .glass-card {
+      background: rgba(255,255,255,.07);
+      backdrop-filter: blur(14px);
+      border: 1px solid rgba(255,255,255,.11);
+      box-shadow: 0 24px 70px rgba(0,0,0,.22);
+    }
+    .gradient-text {
+      background: linear-gradient(135deg, #67e8f9, #60a5fa, #a78bfa);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .orange-text {
+      background: linear-gradient(135deg, #fbbf24, #fb923c);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .bg-pattern {
+      background-image:
+        radial-gradient(circle at 18% 20%, rgba(34,211,238,.12), transparent 25%),
+        radial-gradient(circle at 82% 75%, rgba(139,92,246,.13), transparent 30%),
+        linear-gradient(90deg, rgba(59,130,246,.055) 1px, transparent 1px),
+        linear-gradient(rgba(59,130,246,.055) 1px, transparent 1px);
+      background-size: auto, auto, 52px 52px, 52px 52px;
+    }
+    .bg-pattern::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, transparent 0 45%, rgba(34,211,238,.06) 46%, transparent 48% 100%);
+      background-size: 360px 360px;
+      pointer-events: none;
+    }
+    .orb { position: absolute; border-radius: 999px; filter: blur(80px); opacity: .2; }
+    .dot {
+      width: 8px; height: 8px; border-radius: 999px;
+      background: rgba(255,255,255,.25); transition: .25s ease;
+    }
+    .dot.active { width: 24px; background: linear-gradient(90deg, var(--apb-cyan), var(--apb-blue)); }
+    .nav-button {
+      position: fixed; top: 50%; z-index: 60; transform: translateY(-50%);
+      width: 46px; height: 46px; border-radius: 999px;
+      display: flex; align-items: center; justify-content: center;
+      background: rgba(255,255,255,.08); border: 1px solid rgba(255,255,255,.14);
+      backdrop-filter: blur(14px); color: #fff; transition: .2s ease;
+    }
+    .nav-button:hover { background: rgba(59,130,246,.25); border-color: rgba(96,165,250,.55); }
+    .nav-button:disabled { opacity: .25; cursor: not-allowed; }
+    .pill { background: rgba(255,255,255,.055); border: 1px solid rgba(255,255,255,.09); }
+    .number-badge {
+      background: linear-gradient(135deg, rgba(34,211,238,.26), rgba(59,130,246,.22));
+      border: 1px solid rgba(103,232,249,.32);
+    }
+    .impact-card { transition: transform .25s ease, border-color .25s ease; }
+    .impact-card:hover { transform: translateY(-4px); border-color: rgba(103,232,249,.35); }
+    .browser-shell {
+      background: #0a1020;
+      border: 1px solid rgba(255,255,255,.15);
+      box-shadow: 0 30px 90px rgba(0,0,0,.45);
+    }
+    .browser-toolbar { background: rgba(255,255,255,.045); border-bottom: 1px solid rgba(255,255,255,.09); }
+    .browser-dot { width: 11px; height: 11px; border-radius: 999px; }
+    .iframe-wrap { position: relative; min-height: 610px; background: #fff; }
+    .iframe-wrap iframe { width: 100%; height: 610px; border: 0; display: block; background: #fff; }
+    .iframe-fallback {
+      position: absolute; inset: 0; display: flex; align-items: center; justify-content: center;
+      padding: 2rem; text-align: center; color: #cbd5e1; background: #0a1020; z-index: -1;
+    }
+    .flow-line { height: 2px; background: linear-gradient(90deg, rgba(34,211,238,.15), rgba(96,165,250,.8), rgba(139,92,246,.15)); }
+    .scrollbar-soft::-webkit-scrollbar { width: 8px; }
+    .scrollbar-soft::-webkit-scrollbar-thumb { background: rgba(96,165,250,.35); border-radius: 999px; }
+    .mini-logo {
+      width: 54px; height: 54px; border-radius: 18px;
+      display: grid; place-items: center; font-weight: 900; letter-spacing: -2px;
+      background: linear-gradient(135deg, #0ea5e9, #2563eb 55%, #7c3aed);
+      box-shadow: 0 12px 35px rgba(37,99,235,.32);
+    }
+    .status-live { animation: pulseLive 1.8s infinite; }
+    @keyframes pulseLive { 0%,100% { opacity: 1; } 50% { opacity: .45; } }
+    @media (max-width: 768px) {
+      .slide { padding: 1.2rem .85rem 5rem; }
+      .nav-button { width: 40px; height: 40px; }
+      .iframe-wrap, .iframe-wrap iframe { min-height: 520px; height: 520px; }
+    }
+    @media (max-width: 640px) {
+      body { overflow: hidden; }
+      .nav-button { top: auto; bottom: 16px; transform: none; }
+      #prev-btn { left: 14px !important; }
+      #next-btn { right: 14px !important; }
+      #dots { bottom: 29px !important; max-width: calc(100vw - 120px); }
+      .iframe-wrap, .iframe-wrap iframe { min-height: 480px; height: 480px; }
+    }
+  </style>
+</head>
+<body class="relative">
+  <button id="prev-btn" class="nav-button left-3 md:left-5" onclick="changeSlide(-1)" aria-label="Diapositiva anterior">
+    <i data-lucide="chevron-left" style="width:22px;height:22px"></i>
+  </button>
+  <button id="next-btn" class="nav-button right-3 md:right-5" onclick="changeSlide(1)" aria-label="Diapositiva siguiente">
+    <i data-lucide="chevron-right" style="width:22px;height:22px"></i>
+  </button>
+  <div id="dots" class="fixed bottom-4 left-1/2 -translate-x-1/2 z-[70] flex items-center justify-center gap-2 flex-wrap"></div>
+  <div id="slide-counter" class="fixed top-4 right-4 z-[70] px-3 py-1.5 rounded-full bg-black/30 border border-white/10 backdrop-blur text-xs text-slate-300"></div>
+
+  <!-- 1. PORTADA -->
+  <section class="slide active flex-col items-center justify-center relative bg-gradient-to-br from-[#070b14] via-[#0b162b] to-[#070b14] text-center">
+    <div class="absolute inset-0 bg-pattern"></div>
+    <div class="orb w-80 h-80 bg-cyan-400 top-[-120px] left-[-100px]"></div>
+    <div class="orb w-96 h-96 bg-violet-500 bottom-[-160px] right-[-120px]"></div>
+    <div class="relative z-10 max-w-6xl mx-auto w-full px-3">
+      <div class="flex items-center justify-center gap-4 mb-6">
+        <div class="mini-logo text-white text-xl">APB</div>
+        <div class="h-12 w-px bg-white/20"></div>
+        <img src="https://i.postimg.cc/jSkQKpRK/Diseno-sin-titulo-2026-05-15T105828-195.png" alt="Instituto IEC" class="h-14 md:h-16 object-contain" />
+      </div>
+      <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-cyan-400/25 bg-cyan-400/10 text-cyan-200 text-xs md:text-sm font-bold tracking-[.18em] uppercase mb-5">
+        <span>🏀</span> Propuesta de transformación digital
+      </div>
+      <h1 class="text-4xl sm:text-5xl md:text-7xl lg:text-8xl font-black leading-[.95] mb-5">ECOSISTEMA<br><span class="gradient-text">DIGITAL APB</span></h1>
+      <p class="text-base sm:text-lg md:text-2xl text-slate-300 max-w-4xl mx-auto mb-6">Una plataforma integral para gestionar la Asociación, conectar a sus actores y transformar la relación con el público.</p>
+      <div class="flex flex-wrap justify-center gap-3">
+        <span class="pill px-4 py-2 rounded-xl text-sm font-semibold text-cyan-200">Gestión interna</span>
+        <span class="pill px-4 py-2 rounded-xl text-sm font-semibold text-blue-200">APB Play</span>
+        <span class="pill px-4 py-2 rounded-xl text-sm font-semibold text-violet-200">Inteligencia Operativa</span>
+        <span class="pill px-4 py-2 rounded-xl text-sm font-semibold text-amber-200">Nuevas unidades de ingreso</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- 2. PUNTO DE PARTIDA -->
+  <section class="slide flex-col items-center justify-center relative bg-gradient-to-b from-[#070b14] to-[#0b1426]">
+    <div class="absolute inset-0 bg-pattern opacity-70"></div>
+    <div class="relative z-10 max-w-6xl mx-auto w-full px-3">
+      <div class="mb-6">
+        <span class="text-cyan-300 font-bold tracking-widest text-sm">01 · PUNTO DE PARTIDA</span>
+        <h2 class="text-3xl sm:text-4xl md:text-6xl font-black mt-2">UNA INSTITUCIÓN COMPLEJA<br><span class="gradient-text">NECESITA UN SISTEMA INTEGRAL</span></h2>
+      </div>
+      <div class="grid md:grid-cols-2 gap-4">
+        <div class="glass-card rounded-3xl p-5 md:p-7">
+          <h3 class="text-red-300 font-bold text-xl mb-4">Fricciones actuales</h3>
+          <div class="space-y-3 text-slate-300">
+            <div class="pill rounded-xl p-3">Información distribuida entre clubes, planillas, mensajes y personas.</div>
+            <div class="pill rounded-xl p-3">Procesos administrativos repetitivos y difíciles de auditar.</div>
+            <div class="pill rounded-xl p-3">Comunicación fragmentada con jugadores, familias y árbitros.</div>
+            <div class="pill rounded-xl p-3">Escasa explotación comercial del contenido, los partidos y la comunidad.</div>
+          </div>
+        </div>
+        <div class="glass-card rounded-3xl p-5 md:p-7 border-cyan-400/20 bg-gradient-to-br from-cyan-500/5 to-blue-500/5">
+          <h3 class="text-cyan-300 font-bold text-xl mb-4">La oportunidad</h3>
+          <p class="text-slate-200 text-lg leading-relaxed">Construir una infraestructura digital capaz de ordenar la gestión institucional y, al mismo tiempo, convertir la actividad deportiva en una experiencia pública, comunicacional y comercial.</p>
+          <div class="mt-5 p-4 rounded-2xl bg-blue-400/10 border border-blue-400/20">
+            <p class="text-blue-100 font-semibold">No se trata de sumar pantallas. Se trata de conectar personas, procesos, datos y oportunidades.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 3. DOS PLATAFORMAS -->
+  <section class="slide flex-col items-center justify-center relative bg-gradient-to-b from-[#0b1426] to-[#070b14]">
+    <div class="absolute inset-0 bg-pattern opacity-60"></div>
+    <div class="relative z-10 max-w-6xl mx-auto w-full px-3">
+      <div class="text-center mb-6">
+        <span class="text-cyan-300 font-bold tracking-widest text-sm">02 · VISIÓN DEL PROYECTO</span>
+        <h2 class="text-3xl sm:text-4xl md:text-6xl font-black mt-2">UN ECOSISTEMA.<br><span class="gradient-text">DOS EXPERIENCIAS.</span></h2>
+      </div>
+      <div class="grid md:grid-cols-2 gap-5">
+        <div class="glass-card rounded-3xl p-6 md:p-8 impact-card">
+          <div class="text-5xl mb-4">🧩</div>
+          <p class="text-cyan-300 font-bold tracking-widest text-xs mb-2">PLATAFORMA PRIVADA</p>
+          <h3 class="text-3xl font-black mb-3">APB Gestión</h3>
+          <p class="text-slate-300 mb-5">El núcleo operativo para jugadores, familias, entrenadores, árbitros, clubes, seguridad y administrativos.</p>
+          <div class="flex flex-wrap gap-2 text-sm">
+            <span class="pill rounded-full px-3 py-1.5">Legajos</span><span class="pill rounded-full px-3 py-1.5">Pases</span><span class="pill rounded-full px-3 py-1.5">Pagos</span><span class="pill rounded-full px-3 py-1.5">Tribunal</span><span class="pill rounded-full px-3 py-1.5">Credenciales</span>
+          </div>
+        </div>
+        <div class="glass-card rounded-3xl p-6 md:p-8 impact-card border-violet-400/20 bg-gradient-to-br from-blue-500/5 to-violet-500/5">
+          <div class="text-5xl mb-4">📡</div>
+          <p class="text-violet-300 font-bold tracking-widest text-xs mb-2">PLATAFORMA PÚBLICA Y COMERCIAL</p>
+          <h3 class="text-3xl font-black mb-3">APB Play</h3>
+          <p class="text-slate-300 mb-5">La cara pública para seguidores, familias, sponsors, compradores y toda la comunidad del básquet.</p>
+          <div class="flex flex-wrap gap-2 text-sm">
+            <span class="pill rounded-full px-3 py-1.5">Streaming</span><span class="pill rounded-full px-3 py-1.5">Noticias</span><span class="pill rounded-full px-3 py-1.5">Entradas</span><span class="pill rounded-full px-3 py-1.5">Tienda</span><span class="pill rounded-full px-3 py-1.5">Sponsors</span>
+          </div>
+        </div>
+      </div>
+      <div class="mt-5 text-center glass-card rounded-2xl p-4">
+        <p class="text-slate-200"><span class="text-cyan-300 font-bold">Hoy se presentan como maquetas independientes.</span> En la implementación final podrán integrarse según las necesidades y prioridades definidas con APB.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 4. APB GESTION -->
+  <section class="slide flex-col items-center justify-center relative bg-gradient-to-b from-[#070b14] to-[#0b1426]">
+    <div class="absolute inset-0 bg-pattern opacity-55"></div>
+    <div class="relative z-10 max-w-6xl mx-auto w-full px-3">
+      <div class="mb-6">
+        <span class="text-cyan-300 font-bold tracking-widest text-sm">03 · NÚCLEO OPERATIVO</span>
+        <h2 class="text-3xl sm:text-4xl md:text-6xl font-black mt-2">APB <span class="gradient-text">GESTIÓN</span></h2>
+        <p class="text-slate-300 text-lg mt-3 max-w-4xl">Una experiencia privada adaptada a cada rol, con acceso a la información y las acciones que necesita.</p>
+      </div>
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-3">
+        <div class="glass-card rounded-2xl p-4 impact-card"><span class="text-3xl">🏀</span><h3 class="font-bold mt-3">Jugadores</h3><p class="text-slate-400 text-sm mt-1">Perfil, pagos, estadísticas y documentación.</p></div>
+        <div class="glass-card rounded-2xl p-4 impact-card"><span class="text-3xl">👨‍👩‍👧</span><h3 class="font-bold mt-3">Familias</h3><p class="text-slate-400 text-sm mt-1">Seguimiento, autorizaciones y comunicaciones.</p></div>
+        <div class="glass-card rounded-2xl p-4 impact-card"><span class="text-3xl">🧑‍🏫</span><h3 class="font-bold mt-3">Entrenadores</h3><p class="text-slate-400 text-sm mt-1">Plantel, convocatorias y rendimiento.</p></div>
+        <div class="glass-card rounded-2xl p-4 impact-card"><span class="text-3xl">🟨</span><h3 class="font-bold mt-3">Árbitros</h3><p class="text-slate-400 text-sm mt-1">Designaciones, informes y disponibilidad.</p></div>
+        <div class="glass-card rounded-2xl p-4 impact-card"><span class="text-3xl">🏢</span><h3 class="font-bold mt-3">Clubes</h3><p class="text-slate-400 text-sm mt-1">Planteles, pases, pagos y documentación.</p></div>
+        <div class="glass-card rounded-2xl p-4 impact-card"><span class="text-3xl">⚖️</span><h3 class="font-bold mt-3">Tribunal</h3><p class="text-slate-400 text-sm mt-1">Expedientes, sanciones y resoluciones.</p></div>
+        <div class="glass-card rounded-2xl p-4 impact-card"><span class="text-3xl">🛡️</span><h3 class="font-bold mt-3">Seguridad</h3><p class="text-slate-400 text-sm mt-1">Credenciales y control de acceso.</p></div>
+        <div class="glass-card rounded-2xl p-4 impact-card"><span class="text-3xl">📊</span><h3 class="font-bold mt-3">Administración</h3><p class="text-slate-400 text-sm mt-1">Tableros, auditoría y control integral.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 5. APB PLAY -->
+  <section class="slide flex-col items-center justify-center relative bg-gradient-to-b from-[#0b1426] to-[#070b14]">
+    <div class="absolute inset-0 bg-pattern opacity-55"></div>
+    <div class="relative z-10 max-w-6xl mx-auto w-full px-3">
+      <div class="mb-6 text-center">
+        <span class="text-violet-300 font-bold tracking-widest text-sm">04 · EXPERIENCIA PÚBLICA</span>
+        <h2 class="text-3xl sm:text-4xl md:text-6xl font-black mt-2">APB <span class="gradient-text">PLAY</span></h2>
+        <p class="text-slate-300 text-lg mt-3 max-w-4xl mx-auto">Una nueva relación entre APB, los clubes, los seguidores y las marcas.</p>
+      </div>
+      <div class="grid md:grid-cols-3 gap-4">
+        <div class="glass-card rounded-3xl p-5 impact-card"><span class="text-4xl">📺</span><h3 class="text-xl font-black mt-4">Streaming</h3><p class="text-slate-300 mt-2">Partidos en vivo, repeticiones, contenido premium y espacios publicitarios.</p></div>
+        <div class="glass-card rounded-3xl p-5 impact-card"><span class="text-4xl">🎟️</span><h3 class="text-xl font-black mt-4">Entradas</h3><p class="text-slate-300 mt-2">Venta digital, acceso QR, control de capacidad y trazabilidad.</p></div>
+        <div class="glass-card rounded-3xl p-5 impact-card"><span class="text-4xl">🛍️</span><h3 class="text-xl font-black mt-4">Tienda</h3><p class="text-slate-300 mt-2">Merchandising, productos oficiales y experiencias para la comunidad.</p></div>
+        <div class="glass-card rounded-3xl p-5 impact-card"><span class="text-4xl">📰</span><h3 class="text-xl font-black mt-4">Noticias</h3><p class="text-slate-300 mt-2">Agenda, resultados, contenidos institucionales y cobertura de torneos.</p></div>
+        <div class="glass-card rounded-3xl p-5 impact-card"><span class="text-4xl">📈</span><h3 class="text-xl font-black mt-4">Estadísticas</h3><p class="text-slate-300 mt-2">Jugadores, partidos, tablas, tendencias y visualizaciones públicas.</p></div>
+        <div class="glass-card rounded-3xl p-5 impact-card"><span class="text-4xl">🤝</span><h3 class="text-xl font-black mt-4">Sponsors</h3><p class="text-slate-300 mt-2">Mayor visibilidad, activaciones digitales y métricas de exposición.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 6. INTELIGENCIA OPERATIVA -->
+  <section class="slide flex-col items-center justify-center relative bg-gradient-to-b from-[#070b14] to-[#0b1426]">
+    <div class="absolute inset-0 bg-pattern opacity-60"></div>
+    <div class="relative z-10 max-w-6xl mx-auto w-full px-3">
+      <div class="mb-7">
+        <span class="text-cyan-300 font-bold tracking-widest text-sm">05 · CAPA DIFERENCIAL</span>
+        <h2 class="text-3xl sm:text-4xl md:text-6xl font-black mt-2">INTELIGENCIA <span class="gradient-text">OPERATIVA</span></h2>
+      </div>
+      <div class="grid md:grid-cols-4 gap-3 items-stretch">
+        <div class="glass-card rounded-2xl p-5 text-center"><div class="number-badge w-12 h-12 rounded-full grid place-items-center mx-auto text-xl font-black">1</div><h3 class="font-bold mt-4">Datos</h3><p class="text-slate-400 text-sm mt-2">El sistema reúne información de cada proceso.</p></div>
+        <div class="glass-card rounded-2xl p-5 text-center"><div class="number-badge w-12 h-12 rounded-full grid place-items-center mx-auto text-xl font-black">2</div><h3 class="font-bold mt-4">Análisis</h3><p class="text-slate-400 text-sm mt-2">La IA interpreta tendencias, riesgos y prioridades.</p></div>
+        <div class="glass-card rounded-2xl p-5 text-center"><div class="number-badge w-12 h-12 rounded-full grid place-items-center mx-auto text-xl font-black">3</div><h3 class="font-bold mt-4">Automatización</h3><p class="text-slate-400 text-sm mt-2">Los eventos disparan avisos, tareas y acciones.</p></div>
+        <div class="glass-card rounded-2xl p-5 text-center"><div class="number-badge w-12 h-12 rounded-full grid place-items-center mx-auto text-xl font-black">4</div><h3 class="font-bold mt-4">Decisión</h3><p class="text-slate-400 text-sm mt-2">Los responsables reciben información accionable.</p></div>
+      </div>
+      <div class="flow-line my-6"></div>
+      <div class="grid sm:grid-cols-2 md:grid-cols-4 gap-3 text-sm">
+        <div class="pill rounded-xl p-4">🤖 Copiloto ejecutivo</div>
+        <div class="pill rounded-xl p-4">📣 Comunicación segmentada</div>
+        <div class="pill rounded-xl p-4">📝 Informes automáticos</div>
+        <div class="pill rounded-xl p-4">🚨 Alertas y vencimientos</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 7. FLUJOS -->
+  <section class="slide flex-col items-center justify-center relative bg-gradient-to-b from-[#0b1426] to-[#070b14]">
+    <div class="absolute inset-0 bg-pattern opacity-55"></div>
+    <div class="relative z-10 max-w-6xl mx-auto w-full px-3">
+      <div class="text-center mb-7">
+        <span class="text-cyan-300 font-bold tracking-widest text-sm">06 · EJEMPLOS DE USO</span>
+        <h2 class="text-3xl sm:text-4xl md:text-6xl font-black mt-2">DEL EVENTO A LA <span class="gradient-text">ACCIÓN</span></h2>
+      </div>
+      <div class="space-y-4">
+        <div class="glass-card rounded-2xl p-4 md:p-5 grid md:grid-cols-[1fr_auto_1fr_auto_1fr] gap-3 items-center">
+          <div><p class="text-cyan-300 text-xs font-bold">PARTIDO CREADO</p><p class="font-bold mt-1">Fecha, categoría y estadio</p></div><i data-lucide="arrow-right" class="hidden md:block text-slate-500"></i>
+          <div><p class="text-blue-300 text-xs font-bold">PUBLICACIÓN</p><p class="font-bold mt-1">Agenda, entradas y streaming</p></div><i data-lucide="arrow-right" class="hidden md:block text-slate-500"></i>
+          <div><p class="text-violet-300 text-xs font-bold">RESULTADO</p><p class="font-bold mt-1">Estadísticas y contenido</p></div>
+        </div>
+        <div class="glass-card rounded-2xl p-4 md:p-5 grid md:grid-cols-[1fr_auto_1fr_auto_1fr] gap-3 items-center">
+          <div><p class="text-cyan-300 text-xs font-bold">VENCIMIENTO</p><p class="font-bold mt-1">Cuota, seguro o apto médico</p></div><i data-lucide="arrow-right" class="hidden md:block text-slate-500"></i>
+          <div><p class="text-blue-300 text-xs font-bold">ALERTA</p><p class="font-bold mt-1">Mensaje automático al responsable</p></div><i data-lucide="arrow-right" class="hidden md:block text-slate-500"></i>
+          <div><p class="text-violet-300 text-xs font-bold">SEGUIMIENTO</p><p class="font-bold mt-1">Registro y escalamiento</p></div>
+        </div>
+        <div class="glass-card rounded-2xl p-4 md:p-5 grid md:grid-cols-[1fr_auto_1fr_auto_1fr] gap-3 items-center">
+          <div><p class="text-cyan-300 text-xs font-bold">INFORME ARBITRAL</p><p class="font-bold mt-1">Dictado o carga digital</p></div><i data-lucide="arrow-right" class="hidden md:block text-slate-500"></i>
+          <div><p class="text-blue-300 text-xs font-bold">ESTRUCTURACIÓN IA</p><p class="font-bold mt-1">Resumen y clasificación</p></div><i data-lucide="arrow-right" class="hidden md:block text-slate-500"></i>
+          <div><p class="text-violet-300 text-xs font-bold">TRIBUNAL</p><p class="font-bold mt-1">Expediente listo para revisar</p></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 8. BENEFICIOS -->
+  <section class="slide flex-col items-center justify-center relative bg-gradient-to-b from-[#070b14] to-[#0b1426]">
+    <div class="absolute inset-0 bg-pattern opacity-55"></div>
+    <div class="relative z-10 max-w-6xl mx-auto w-full px-3">
+      <div class="text-center mb-6">
+        <span class="text-cyan-300 font-bold tracking-widest text-sm">07 · IMPACTO</span>
+        <h2 class="text-3xl sm:text-4xl md:text-6xl font-black mt-2">BENEFICIOS PARA <span class="gradient-text">TODO EL ECOSISTEMA</span></h2>
+      </div>
+      <div class="grid grid-cols-2 md:grid-cols-3 gap-3 md:gap-4">
+        <div class="glass-card rounded-2xl p-4 text-center"><span class="text-3xl">🏛️</span><h3 class="font-bold mt-2">APB</h3><p class="text-slate-400 text-sm mt-1">Control, trazabilidad y decisión.</p></div>
+        <div class="glass-card rounded-2xl p-4 text-center"><span class="text-3xl">🏢</span><h3 class="font-bold mt-2">Clubes</h3><p class="text-slate-400 text-sm mt-1">Menos trámites y mejor comunicación.</p></div>
+        <div class="glass-card rounded-2xl p-4 text-center"><span class="text-3xl">🏀</span><h3 class="font-bold mt-2">Jugadores</h3><p class="text-slate-400 text-sm mt-1">Información y servicios accesibles.</p></div>
+        <div class="glass-card rounded-2xl p-4 text-center"><span class="text-3xl">👨‍👩‍👧</span><h3 class="font-bold mt-2">Familias</h3><p class="text-slate-400 text-sm mt-1">Seguimiento y tranquilidad.</p></div>
+        <div class="glass-card rounded-2xl p-4 text-center"><span class="text-3xl">📣</span><h3 class="font-bold mt-2">Público</h3><p class="text-slate-400 text-sm mt-1">Contenido, entradas y participación.</p></div>
+        <div class="glass-card rounded-2xl p-4 text-center"><span class="text-3xl">🤝</span><h3 class="font-bold mt-2">Sponsors</h3><p class="text-slate-400 text-sm mt-1">Visibilidad medible y nuevas activaciones.</p></div>
+      </div>
+      <div class="mt-5 glass-card rounded-2xl p-5 text-center bg-gradient-to-r from-cyan-500/5 via-blue-500/5 to-violet-500/5">
+        <p class="text-lg md:text-xl font-bold">Una APB más ordenada, conectada, visible y preparada para crecer.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 9. MODELO DE VALOR -->
+  <section class="slide flex-col items-center justify-center relative bg-gradient-to-b from-[#0b1426] to-[#070b14]">
+    <div class="absolute inset-0 bg-pattern opacity-55"></div>
+    <div class="relative z-10 max-w-6xl mx-auto w-full px-3">
+      <div class="mb-6">
+        <span class="text-amber-300 font-bold tracking-widest text-sm">08 · VALOR COMERCIAL</span>
+        <h2 class="text-3xl sm:text-4xl md:text-6xl font-black mt-2">NUEVAS FUENTES DE <span class="orange-text">INGRESO</span></h2>
+      </div>
+      <div class="grid md:grid-cols-4 gap-4">
+        <div class="glass-card rounded-3xl p-5 border-amber-400/15"><span class="text-4xl">🎟️</span><h3 class="font-black text-xl mt-4">Boletería digital</h3><p class="text-slate-300 mt-2">Venta anticipada, QR y control de accesos.</p></div>
+        <div class="glass-card rounded-3xl p-5 border-amber-400/15"><span class="text-4xl">📺</span><h3 class="font-black text-xl mt-4">Contenido premium</h3><p class="text-slate-300 mt-2">Partidos, repeticiones y suscripciones.</p></div>
+        <div class="glass-card rounded-3xl p-5 border-amber-400/15"><span class="text-4xl">🛍️</span><h3 class="font-black text-xl mt-4">Tienda oficial</h3><p class="text-slate-300 mt-2">Productos APB y de clubes asociados.</p></div>
+        <div class="glass-card rounded-3xl p-5 border-amber-400/15"><span class="text-4xl">📢</span><h3 class="font-black text-xl mt-4">Publicidad</h3><p class="text-slate-300 mt-2">Sponsors, campañas y métricas de alcance.</p></div>
+      </div>
+      <div class="mt-6 p-5 rounded-2xl bg-amber-400/10 border border-amber-400/20">
+        <p class="text-amber-100 text-center font-semibold">La plataforma no solo reduce costos operativos: también crea activos digitales capaces de generar valor económico.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 10. ROADMAP -->
+  <section class="slide flex-col items-center justify-center relative bg-gradient-to-b from-[#070b14] to-[#0b1426]">
+    <div class="absolute inset-0 bg-pattern opacity-55"></div>
+    <div class="relative z-10 max-w-6xl mx-auto w-full px-3">
+      <div class="text-center mb-7">
+        <span class="text-cyan-300 font-bold tracking-widest text-sm">09 · IMPLEMENTACIÓN</span>
+        <h2 class="text-3xl sm:text-4xl md:text-6xl font-black mt-2">ROADMAP <span class="gradient-text">PROPUESTO</span></h2>
+      </div>
+      <div class="grid md:grid-cols-5 gap-3">
+        <div class="glass-card rounded-2xl p-4"><div class="number-badge w-11 h-11 rounded-full grid place-items-center font-black">1</div><h3 class="font-bold mt-3 text-cyan-200">Relevamiento</h3><p class="text-slate-400 text-sm mt-2">Procesos, roles, datos y prioridades.</p></div>
+        <div class="glass-card rounded-2xl p-4"><div class="number-badge w-11 h-11 rounded-full grid place-items-center font-black">2</div><h3 class="font-bold mt-3 text-cyan-200">Núcleo interno</h3><p class="text-slate-400 text-sm mt-2">Usuarios, legajos y operaciones críticas.</p></div>
+        <div class="glass-card rounded-2xl p-4"><div class="number-badge w-11 h-11 rounded-full grid place-items-center font-black">3</div><h3 class="font-bold mt-3 text-cyan-200">APB Play</h3><p class="text-slate-400 text-sm mt-2">Contenido, entradas, tienda y streaming.</p></div>
+        <div class="glass-card rounded-2xl p-4"><div class="number-badge w-11 h-11 rounded-full grid place-items-center font-black">4</div><h3 class="font-bold mt-3 text-cyan-200">Integraciones</h3><p class="text-slate-400 text-sm mt-2">Pagos, mensajes, datos y automatizaciones.</p></div>
+        <div class="glass-card rounded-2xl p-4"><div class="number-badge w-11 h-11 rounded-full grid place-items-center font-black">5</div><h3 class="font-bold mt-3 text-cyan-200">IA Operativa</h3><p class="text-slate-400 text-sm mt-2">Análisis, alertas, copilotos e informes.</p></div>
+      </div>
+      <p class="text-center text-slate-300 mt-6">El orden definitivo de las etapas se define junto al cliente, según impacto, urgencia y presupuesto.</p>
+    </div>
+  </section>
+
+  <!-- 11. DEMO ERP -->
+  <section class="slide flex-col items-center justify-start relative bg-gradient-to-b from-[#070b14] to-[#0b1426] scrollbar-soft">
+    <div class="absolute inset-0 bg-pattern opacity-45"></div>
+    <div class="relative z-10 max-w-[1500px] mx-auto w-full px-1 md:px-3 pb-10">
+      <div class="text-center mb-5">
+        <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-green-400/10 border border-green-400/20 text-green-300 text-xs font-bold tracking-widest mb-3">
+          <span class="w-2 h-2 bg-green-400 rounded-full status-live"></span> DEMOSTRACIÓN PUBLICADA
+        </div>
+        <h2 class="text-3xl sm:text-4xl md:text-6xl font-black">ERP APB <span class="gradient-text">EN VIVO</span></h2>
+        <p class="text-slate-300 text-sm md:text-lg mt-2 max-w-4xl mx-auto">La maqueta funcional ya está desplegada y puede recorrerse directamente desde esta presentación.</p>
+      </div>
+
+      <div class="browser-shell rounded-3xl overflow-hidden">
+        <div class="browser-toolbar p-3 flex items-center gap-3">
+          <div class="flex gap-2 shrink-0">
+            <span class="browser-dot bg-red-400"></span><span class="browser-dot bg-amber-400"></span><span class="browser-dot bg-green-400"></span>
+          </div>
+          <div class="flex-1 rounded-xl bg-black/25 border border-white/10 px-3 py-2 text-xs md:text-sm text-slate-300 truncate">https://apb-basquet.vercel.app/</div>
+          <a href="https://apb-basquet.vercel.app/" target="_blank" rel="noopener noreferrer" class="shrink-0 inline-flex items-center gap-2 px-3 md:px-4 py-2 rounded-xl bg-blue-500 hover:bg-blue-400 transition font-bold text-xs md:text-sm">
+            <i data-lucide="external-link" style="width:16px;height:16px"></i><span class="hidden sm:inline">Abrir completa</span>
+          </a>
+        </div>
+        <div class="iframe-wrap">
+          <div class="iframe-fallback">
+            <div><p class="text-xl font-bold">La demo puede bloquear la vista embebida según la política del navegador.</p><p class="mt-2">Usá el botón “Abrir completa” para verla en una pestaña nueva.</p></div>
+          </div>
+          <iframe src="https://apb-basquet.vercel.app/" title="Maqueta ERP APB" loading="lazy" allow="clipboard-read; clipboard-write; fullscreen"></iframe>
+        </div>
+      </div>
+      <p class="text-center text-slate-500 text-xs mt-3">Maqueta demostrativa. Los datos, transacciones e integraciones visibles forman parte de una simulación conceptual previa al desarrollo definitivo.</p>
+    </div>
+  </section>
+
+  <!-- 12. CIERRE -->
+  <section class="slide flex-col items-center justify-center relative bg-gradient-to-br from-[#070b14] via-[#0b162b] to-[#070b14] text-center">
+    <div class="absolute inset-0 bg-pattern"></div>
+    <div class="orb w-96 h-96 bg-blue-500 top-[-180px] right-[-120px]"></div>
+    <div class="orb w-80 h-80 bg-cyan-400 bottom-[-160px] left-[-100px]"></div>
+    <div class="relative z-10 max-w-5xl mx-auto px-3">
+      <div class="flex items-center justify-center gap-4 mb-6">
+        <div class="mini-logo text-white text-xl">APB</div>
+        <div class="h-12 w-px bg-white/20"></div>
+        <img src="https://i.postimg.cc/jSkQKpRK/Diseno-sin-titulo-2026-05-15T105828-195.png" alt="Instituto IEC" class="h-14 md:h-16 object-contain" />
+      </div>
+      <p class="text-cyan-300 font-bold tracking-[.2em] text-xs md:text-sm mb-4">ECOSISTEMA DIGITAL APB</p>
+      <h2 class="text-4xl sm:text-5xl md:text-7xl font-black leading-tight">UNA PLATAFORMA PARA <span class="gradient-text">GESTIONAR</span>.<br>OTRA PARA <span class="orange-text">CONECTAR Y CRECER</span>.</h2>
+      <div class="glass-card rounded-3xl p-5 md:p-7 mt-7 max-w-4xl mx-auto">
+        <p class="text-lg md:text-2xl font-bold">ORDENAR · CONECTAR · AUTOMATIZAR · MONETIZAR</p>
+        <p class="text-slate-300 mt-3">Una visión integral para transformar la operación institucional y la experiencia pública del básquet de Paraná.</p>
+      </div>
+      <a href="https://apb-basquet.vercel.app/" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 mt-6 px-6 py-3 rounded-2xl bg-gradient-to-r from-cyan-500 to-blue-600 hover:brightness-110 transition font-black shadow-lg shadow-blue-500/20">
+        <i data-lucide="rocket" style="width:20px;height:20px"></i> Ver maqueta funcional
+      </a>
+    </div>
+  </section>
+
+  <script>
+    const slides = Array.from(document.querySelectorAll('.slide'));
+    const dotsContainer = document.getElementById('dots');
+    const counter = document.getElementById('slide-counter');
+    const prevBtn = document.getElementById('prev-btn');
+    const nextBtn = document.getElementById('next-btn');
+    let currentSlide = 0;
+
+    function createDots() {
+      dotsContainer.innerHTML = '';
+      slides.forEach((_, index) => {
+        const button = document.createElement('button');
+        button.className = 'dot' + (index === currentSlide ? ' active' : '');
+        button.setAttribute('aria-label', `Ir a diapositiva ${index + 1}`);
+        button.addEventListener('click', () => showSlide(index));
+        dotsContainer.appendChild(button);
+      });
+    }
+
+    function showSlide(index) {
+      if (index < 0 || index >= slides.length) return;
+      slides[currentSlide].classList.remove('active');
+      currentSlide = index;
+      slides[currentSlide].classList.add('active');
+      slides[currentSlide].scrollTop = 0;
+      createDots();
+      counter.textContent = `${currentSlide + 1} / ${slides.length}`;
+      prevBtn.disabled = currentSlide === 0;
+      nextBtn.disabled = currentSlide === slides.length - 1;
+      if (window.lucide) lucide.createIcons();
+    }
+
+    function changeSlide(direction) { showSlide(currentSlide + direction); }
+
+    document.addEventListener('keydown', (event) => {
+      if (event.key === 'ArrowRight' || event.key === 'PageDown' || event.key === ' ') changeSlide(1);
+      if (event.key === 'ArrowLeft' || event.key === 'PageUp') changeSlide(-1);
+      if (event.key === 'Home') showSlide(0);
+      if (event.key === 'End') showSlide(slides.length - 1);
+    });
+
+    let touchStartX = 0;
+    document.addEventListener('touchstart', e => { touchStartX = e.changedTouches[0].screenX; }, { passive: true });
+    document.addEventListener('touchend', e => {
+      const diff = e.changedTouches[0].screenX - touchStartX;
+      if (Math.abs(diff) > 65) changeSlide(diff < 0 ? 1 : -1);
+    }, { passive: true });
+
+    createDots();
+    counter.textContent = `1 / ${slides.length}`;
+    prevBtn.disabled = true;
+    if (window.lucide) lucide.createIcons();
+  </script>
+</body>
+</html>
