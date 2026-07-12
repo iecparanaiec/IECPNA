@@ -1,0 +1,1275 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#080d12" />
+  <meta name="description" content="Ecosistema IEC: Centro de Perfeccionamiento en IA, Smarteo de Empresas e IEC Service." />
+  <title>Ecosistema IEC</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+
+  <style>
+    :root {
+      --bg: #070b0f;
+      --bg-2: #0b1117;
+      --panel: rgba(14, 22, 30, 0.72);
+      --panel-strong: rgba(17, 27, 37, 0.94);
+      --line: rgba(148, 203, 234, 0.16);
+      --line-strong: rgba(113, 199, 244, 0.35);
+      --text: #f4f8fb;
+      --muted: #9fb0bd;
+      --primary: #7fd3ff;
+      --primary-2: #4aa8df;
+      --primary-soft: rgba(127, 211, 255, 0.12);
+      --success: #25d366;
+      --shadow: 0 24px 70px rgba(0, 0, 0, 0.36);
+      --radius: 24px;
+      --radius-sm: 18px;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      min-height: 100vh;
+      font-family: "Inter", sans-serif;
+      color: var(--text);
+      background:
+        radial-gradient(circle at 15% 10%, rgba(67, 153, 206, .18), transparent 28%),
+        radial-gradient(circle at 85% 18%, rgba(64, 185, 233, .10), transparent 24%),
+        radial-gradient(circle at 50% 100%, rgba(30, 90, 126, .12), transparent 34%),
+        linear-gradient(180deg, #070a0d 0%, #081018 45%, #070b0f 100%);
+      overflow-x: hidden;
+    }
+
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      opacity: .18;
+      background-image:
+        linear-gradient(rgba(255,255,255,.025) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,.025) 1px, transparent 1px);
+      background-size: 28px 28px;
+      mask-image: linear-gradient(to bottom, black, transparent 75%);
+    }
+
+    .noise {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      opacity: .18;
+      z-index: -1;
+      background:
+        repeating-radial-gradient(circle at 0 0, transparent 0, rgba(255,255,255,.02) 1px, transparent 2px);
+      background-size: 6px 6px;
+    }
+
+    .page {
+      width: min(100% - 28px, 760px);
+      margin: 0 auto;
+      padding: 18px 0 76px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .topbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 24px;
+    }
+
+    .icon-btn {
+      width: 46px;
+      height: 46px;
+      border-radius: 16px;
+      border: 1px solid var(--line);
+      background: rgba(12, 18, 24, .75);
+      color: var(--text);
+      display: inline-grid;
+      place-items: center;
+      cursor: pointer;
+      transition: .25s ease;
+      backdrop-filter: blur(16px);
+    }
+
+    .icon-btn:hover {
+      transform: translateY(-2px);
+      border-color: var(--line-strong);
+      color: var(--primary);
+    }
+
+    .brand {
+      text-align: center;
+      padding: 10px 8px 28px;
+    }
+
+    .logo-wrap {
+      width: 112px;
+      height: 112px;
+      margin: 0 auto 20px;
+      border-radius: 50%;
+      display: grid;
+      place-items: center;
+      background:
+        radial-gradient(circle at 35% 25%, rgba(127,211,255,.32), transparent 36%),
+        linear-gradient(145deg, rgba(21,37,49,.96), rgba(6,12,17,.96));
+      border: 1px solid rgba(127,211,255,.45);
+      box-shadow:
+        0 0 0 8px rgba(127,211,255,.035),
+        0 0 35px rgba(87,181,231,.20);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .logo-wrap::before,
+    .logo-wrap::after {
+      content: "";
+      position: absolute;
+      background: var(--primary);
+      opacity: .5;
+    }
+
+    .logo-wrap::before {
+      width: 70px;
+      height: 1px;
+    }
+
+    .logo-wrap::after {
+      width: 1px;
+      height: 70px;
+    }
+
+    .logo-mark {
+      width: 88px;
+      height: 88px;
+      border-radius: 50%;
+      object-fit: contain;
+      position: relative;
+      z-index: 2;
+      filter: drop-shadow(0 0 14px rgba(127,211,255,.22));
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: .16em;
+      text-transform: uppercase;
+      color: var(--primary);
+      margin-bottom: 12px;
+    }
+
+    h1 {
+      font-family: "Space Grotesk", sans-serif;
+      font-size: clamp(34px, 7vw, 54px);
+      line-height: 1;
+      letter-spacing: -0.045em;
+      margin-bottom: 14px;
+    }
+
+    .brand h2 {
+      font-size: clamp(17px, 3.8vw, 23px);
+      line-height: 1.35;
+      font-weight: 700;
+      margin-bottom: 12px;
+    }
+
+    .brand p {
+      color: var(--muted);
+      line-height: 1.65;
+      max-width: 590px;
+      margin: 0 auto;
+      font-size: 15px;
+    }
+
+    .main-links {
+      display: grid;
+      gap: 14px;
+    }
+
+    .main-card {
+      width: 100%;
+      text-align: left;
+      border: 1px solid var(--line);
+      background: linear-gradient(135deg, rgba(18,28,38,.88), rgba(10,16,22,.78));
+      color: var(--text);
+      border-radius: var(--radius-sm);
+      padding: 18px;
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      cursor: pointer;
+      transition: .25s ease;
+      box-shadow: 0 10px 35px rgba(0,0,0,.14);
+      backdrop-filter: blur(16px);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .main-card::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(90deg, transparent, rgba(127,211,255,.06), transparent);
+      transform: translateX(-100%);
+      transition: transform .65s ease;
+    }
+
+    .main-card:hover::after {
+      transform: translateX(100%);
+    }
+
+    .main-card:hover {
+      transform: translateY(-3px);
+      border-color: var(--line-strong);
+      box-shadow: 0 20px 45px rgba(0,0,0,.26);
+    }
+
+    .main-card .icon {
+      width: 52px;
+      height: 52px;
+      flex: 0 0 52px;
+      border-radius: 17px;
+      background: var(--primary-soft);
+      color: var(--primary);
+      display: grid;
+      place-items: center;
+      font-size: 21px;
+      border: 1px solid rgba(127,211,255,.15);
+    }
+
+    .main-card .content {
+      flex: 1;
+      min-width: 0;
+    }
+
+    .main-card strong {
+      display: block;
+      font-size: 16px;
+      margin-bottom: 5px;
+    }
+
+    .main-card span {
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.4;
+    }
+
+    .main-card .arrow {
+      color: #6f8290;
+      font-size: 14px;
+      transition: .25s ease;
+    }
+
+    .main-card:hover .arrow {
+      color: var(--primary);
+      transform: translateX(3px);
+    }
+
+    .external-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+      margin-top: 14px;
+    }
+
+    .external-card {
+      min-height: 108px;
+      text-decoration: none;
+      border: 1px solid var(--line);
+      border-radius: var(--radius-sm);
+      background: rgba(12, 18, 24, .75);
+      color: var(--text);
+      padding: 18px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      transition: .25s ease;
+      backdrop-filter: blur(14px);
+    }
+
+    .external-card:hover {
+      transform: translateY(-3px);
+      border-color: var(--line-strong);
+      background: rgba(16, 25, 34, .92);
+    }
+
+    .external-card i {
+      font-size: 22px;
+      color: var(--primary);
+    }
+
+    .external-card strong {
+      font-size: 14px;
+    }
+
+    .footer {
+      text-align: center;
+      color: #6f8290;
+      font-size: 12px;
+      margin-top: 34px;
+      line-height: 1.7;
+    }
+
+    .subpage {
+      display: none;
+      min-height: 100vh;
+      position: relative;
+      z-index: 40;
+      padding: 0 0 72px;
+      animation: pageIn .28s ease;
+    }
+
+    .subpage.active {
+      display: block;
+    }
+
+    .home-view.hidden {
+      display: none;
+    }
+
+    .panel {
+      width: min(100% - 24px, 760px);
+      min-height: 100vh;
+      margin: 0 auto;
+      overflow: visible;
+      border: 0;
+      background: transparent;
+      box-shadow: none;
+      padding: 0 0 32px;
+    }
+
+    .section-nav {
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      display: flex;
+      align-items: center;
+      gap: 13px;
+      min-height: 74px;
+      margin: 0 -2px 22px;
+      padding: 12px 2px;
+      background: linear-gradient(180deg, rgba(7,11,15,.98) 72%, rgba(7,11,15,0));
+      backdrop-filter: blur(18px);
+    }
+
+    .back-btn {
+      width: 46px;
+      height: 46px;
+      flex: 0 0 46px;
+      border-radius: 15px;
+      border: 1px solid var(--line);
+      background: rgba(14, 22, 30, .92);
+      color: var(--text);
+      display: grid;
+      place-items: center;
+      cursor: pointer;
+      font-size: 18px;
+      transition: .22s ease;
+    }
+
+    .back-btn:hover,
+    .back-btn:active {
+      color: var(--primary);
+      border-color: var(--line-strong);
+      transform: translateX(-2px);
+    }
+
+    .section-nav-text {
+      min-width: 0;
+    }
+
+    .section-nav-text small {
+      display: block;
+      color: var(--primary);
+      font-size: 10px;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: .13em;
+      margin-bottom: 4px;
+    }
+
+    .section-nav-text strong {
+      display: block;
+      font-family: "Space Grotesk", sans-serif;
+      font-size: 18px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .panel-head {
+      margin-bottom: 22px;
+    }
+
+    .panel-head small {
+      display: block;
+      color: var(--primary);
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: .12em;
+      margin-bottom: 7px;
+    }
+
+    .panel-head h3 {
+      font-family: "Space Grotesk", sans-serif;
+      font-size: clamp(28px, 7vw, 40px);
+      line-height: 1.08;
+    }
+
+    .intro-box {
+      border: 1px solid var(--line);
+      background: rgba(127,211,255,.055);
+      border-radius: 18px;
+      padding: 18px;
+      color: #c8d5de;
+      line-height: 1.65;
+      font-size: 14px;
+      margin-bottom: 18px;
+    }
+
+    .items {
+      display: grid;
+      gap: 12px;
+    }
+
+    .item {
+      border: 1px solid var(--line);
+      background: rgba(255,255,255,.025);
+      border-radius: 18px;
+      overflow: hidden;
+      transition: .25s ease;
+    }
+
+    .item.open {
+      border-color: var(--line-strong);
+      background: rgba(127,211,255,.045);
+    }
+
+    .item-trigger {
+      width: 100%;
+      border: 0;
+      background: transparent;
+      color: var(--text);
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      padding: 16px;
+      cursor: pointer;
+      text-align: left;
+    }
+
+    .item-trigger .mini-icon {
+      width: 42px;
+      height: 42px;
+      flex: 0 0 42px;
+      border-radius: 14px;
+      background: var(--primary-soft);
+      color: var(--primary);
+      display: grid;
+      place-items: center;
+    }
+
+    .item-trigger .name {
+      flex: 1;
+      font-size: 15px;
+      font-weight: 700;
+    }
+
+    .item-trigger .plus {
+      color: #6f8290;
+      transition: .25s ease;
+    }
+
+    .item.open .plus {
+      color: var(--primary);
+      transform: rotate(45deg);
+    }
+
+    .item-body {
+      display: grid;
+      grid-template-rows: 0fr;
+      transition: grid-template-rows .3s ease;
+    }
+
+    .item.open .item-body {
+      grid-template-rows: 1fr;
+    }
+
+    .item-body-inner {
+      overflow: hidden;
+    }
+
+    .item-content {
+      padding: 0 16px 16px 72px;
+    }
+
+    .item-content p {
+      color: var(--muted);
+      line-height: 1.65;
+      font-size: 14px;
+      margin-bottom: 14px;
+    }
+
+    .tag-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-bottom: 14px;
+    }
+
+    .tag {
+      font-size: 11px;
+      color: #badff3;
+      border: 1px solid rgba(127,211,255,.16);
+      background: rgba(127,211,255,.07);
+      border-radius: 999px;
+      padding: 7px 10px;
+    }
+
+    .wa-btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 9px;
+      text-decoration: none;
+      min-height: 44px;
+      padding: 11px 15px;
+      border-radius: 13px;
+      background: linear-gradient(135deg, #20bd5a, #159447);
+      color: white;
+      font-weight: 800;
+      font-size: 13px;
+      box-shadow: 0 10px 24px rgba(37,211,102,.16);
+      transition: .25s ease;
+    }
+
+    .wa-btn:hover {
+      transform: translateY(-2px);
+      filter: brightness(1.05);
+    }
+
+    .float-wa {
+      position: fixed;
+      right: 18px;
+      bottom: 18px;
+      z-index: 20;
+      width: 58px;
+      height: 58px;
+      border-radius: 50%;
+      display: grid;
+      place-items: center;
+      background: var(--success);
+      color: white;
+      text-decoration: none;
+      font-size: 25px;
+      box-shadow: 0 14px 34px rgba(37,211,102,.32);
+      transition: .25s ease;
+    }
+
+    .float-wa:hover {
+      transform: translateY(-4px) scale(1.03);
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+
+    @keyframes pageIn {
+      from { opacity: 0; transform: translateX(18px); }
+      to { opacity: 1; transform: translateX(0); }
+    }
+
+    @media (max-width: 600px) {
+      .page {
+        width: min(100% - 22px, 760px);
+        padding-top: 18px;
+      }
+
+      .brand {
+        padding-bottom: 22px;
+      }
+
+      .logo-wrap {
+        width: 98px;
+        height: 98px;
+      }
+
+      .logo-mark {
+        width: 78px;
+        height: 78px;
+      }
+
+      .external-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .panel {
+        width: min(100% - 20px, 760px);
+        padding: 0 0 24px;
+      }
+
+      .section-nav {
+        min-height: 68px;
+        margin-bottom: 16px;
+      }
+
+      .main-card {
+        min-height: 82px;
+        padding: 15px;
+      }
+
+      .item-content {
+        padding-left: 16px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="noise"></div>
+
+  <main class="page home-view" id="homeView">
+    <header class="brand">
+      <div class="logo-wrap" aria-label="Logo IEC">
+        <img class="logo-mark" src="https://i.postimg.cc/jSkQKpRK/Diseno-sin-titulo-2026-05-15T105828-195.png" alt="Logo oficial del Ecosistema IEC">
+      </div>
+
+      <div class="eyebrow">
+        <i class="fa-solid fa-microchip"></i>
+        Ecosistema de innovación
+      </div>
+
+      <h1>Ecosistema IEC</h1>
+      <h2>Centro de Perfeccionamiento en Inteligencia Artificial</h2>
+      <p>
+        Formación, Smarteo de Empresas, Inteligencia Operativa y Servicios Integrales
+        para personas, organizaciones e instituciones.
+      </p>
+    </header>
+
+    <section class="main-links" aria-label="Áreas principales">
+      <button class="main-card" data-panel="capacitaciones">
+        <span class="icon"><i class="fa-solid fa-graduation-cap"></i></span>
+        <span class="content">
+          <strong>Centro de Perfeccionamiento en IA</strong>
+          <span>Conocé nuestras capacitaciones y programas de formación.</span>
+        </span>
+        <i class="fa-solid fa-chevron-right arrow"></i>
+      </button>
+
+      <button class="main-card" data-panel="smarteo">
+        <span class="icon"><i class="fa-solid fa-brain"></i></span>
+        <span class="content">
+          <strong>Smarteo de Empresas</strong>
+          <span>Transformación de procesos con IA e Inteligencia Operativa.</span>
+        </span>
+        <i class="fa-solid fa-chevron-right arrow"></i>
+      </button>
+
+      <button class="main-card" data-panel="services">
+        <span class="icon"><i class="fa-solid fa-screwdriver-wrench"></i></span>
+        <span class="content">
+          <strong>IEC Service</strong>
+          <span>Electricidad, seguridad electrónica y reparación de celulares.</span>
+        </span>
+        <i class="fa-solid fa-chevron-right arrow"></i>
+      </button>
+
+      <button class="main-card" data-panel="factoria">
+        <span class="icon"><i class="fa-solid fa-layer-group"></i></span>
+        <span class="content">
+          <strong>FactorIA</strong>
+          <span>Webs, e-commerce y landing pages completas en 30 días.</span>
+        </span>
+        <i class="fa-solid fa-chevron-right arrow"></i>
+      </button>
+    </section>
+
+    <section class="external-grid" aria-label="Enlaces externos">
+      <a class="external-card" href="https://www.iec-ia.com.ar/" target="_blank" rel="noopener">
+        <i class="fa-solid fa-globe"></i>
+        <strong>Página institucional</strong>
+      </a>
+
+      <a class="external-card" href="https://www.linkedin.com/in/agustin-gor%C3%B3-305138254" target="_blank" rel="noopener">
+        <i class="fa-brands fa-linkedin-in"></i>
+        <strong>LinkedIn</strong>
+      </a>
+
+      <a class="external-card" href="https://www.instagram.com/iecparana/" target="_blank" rel="noopener">
+        <i class="fa-brands fa-instagram"></i>
+        <strong>Instagram</strong>
+      </a>
+
+      <a class="external-card" href="https://api.whatsapp.com/send/?phone=5493434664964&text=Hola%2C%20quiero%20recibir%20m%C3%A1s%20informaci%C3%B3n%20sobre%20el%20Ecosistema%20IEC.&type=phone_number&app_absent=0" target="_blank" rel="noopener">
+        <i class="fa-brands fa-whatsapp"></i>
+        <strong>WhatsApp</strong>
+      </a>
+    </section>
+
+    <footer class="footer">
+      © <span id="year"></span> Ecosistema IEC<br>
+      Paraná, Entre Ríos · Argentina
+    </footer>
+  </main>
+
+  <a
+    class="float-wa"
+    href="https://api.whatsapp.com/send/?phone=5493434664964&text=Hola%2C%20quiero%20recibir%20m%C3%A1s%20informaci%C3%B3n%20sobre%20el%20Ecosistema%20IEC.&type=phone_number&app_absent=0"
+    target="_blank"
+    rel="noopener"
+    aria-label="Contactar por WhatsApp"
+  >
+    <i class="fa-brands fa-whatsapp"></i>
+  </a>
+
+  <!-- PANEL CAPACITACIONES -->
+  <div class="subpage" id="capacitaciones" >
+    <section class="panel" aria-labelledby="capacitaciones-title">
+      <div class="section-nav">
+        <button class="back-btn" aria-label="Volver al menú principal">
+          <i class="fa-solid fa-arrow-left"></i>
+        </button>
+        <div class="section-nav-text">
+          <small>Volver al menú</small>
+          <strong>Capacitaciones</strong>
+        </div>
+      </div>
+
+      <div class="panel-head">
+        <small>Formación IEC</small>
+        <h3 id="capacitaciones-title">Centro de Perfeccionamiento en IA</h3>
+      </div>
+
+      <div class="intro-box">
+        Programas de formación práctica para incorporar tecnología, programación e Inteligencia Artificial
+        en el estudio, el trabajo, la vida cotidiana y el desarrollo profesional.
+      </div>
+
+      <div class="items">
+        <article class="item">
+          <button class="item-trigger">
+            <span class="mini-icon"><i class="fa-solid fa-wand-magic-sparkles"></i></span>
+            <span class="name">Experto en Aplicaciones Prácticas con IA</span>
+            <i class="fa-solid fa-plus plus"></i>
+          </button>
+          <div class="item-body"><div class="item-body-inner">
+            <div class="item-content">
+              <p>Capacitación orientada a incorporar herramientas de IA en la actividad profesional, laboral o comercial, mejorando procesos, productividad, creatividad y toma de decisiones.</p>
+              <div class="tag-list"><span class="tag">Productividad</span><span class="tag">Automatización</span><span class="tag">Herramientas IA</span></div>
+              <a class="wa-btn" href="#" data-message="Hola, quiero recibir información sobre la capacitación Experto en Aplicaciones Prácticas con Inteligencia Artificial.">
+                <i class="fa-brands fa-whatsapp"></i> Consultar por Experto en IA
+              </a>
+            </div>
+          </div></div>
+        </article>
+
+        <article class="item">
+          <button class="item-trigger">
+            <span class="mini-icon"><i class="fa-solid fa-robot"></i></span>
+            <span class="name">Robótica Kids</span>
+            <i class="fa-solid fa-plus plus"></i>
+          </button>
+          <div class="item-body"><div class="item-body-inner">
+            <div class="item-content">
+              <p>Una propuesta práctica para que niñas y niños aprendan robótica, programación, electrónica, diseño e impresión 3D mediante proyectos, juegos y desafíos tecnológicos.</p>
+              <div class="tag-list"><span class="tag">Robótica</span><span class="tag">Programación</span><span class="tag">Impresión 3D</span></div>
+              <a class="wa-btn" href="#" data-message="Hola, quiero recibir información sobre el curso de Robótica Kids del Instituto IEC.">
+                <i class="fa-brands fa-whatsapp"></i> Consultar por Robótica Kids
+              </a>
+            </div>
+          </div></div>
+        </article>
+
+        <article class="item">
+          <button class="item-trigger">
+            <span class="mini-icon"><i class="fa-solid fa-code"></i></span>
+            <span class="name">Programador Experto con IA</span>
+            <i class="fa-solid fa-plus plus"></i>
+          </button>
+          <div class="item-body"><div class="item-body-inner">
+            <div class="item-content">
+              <p>Formación integral para aprender programación desde cero y desarrollar páginas web, aplicaciones, sistemas y automatizaciones utilizando herramientas de Inteligencia Artificial.</p>
+              <div class="tag-list"><span class="tag">Desarrollo web</span><span class="tag">Aplicaciones</span><span class="tag">IA aplicada</span></div>
+              <a class="wa-btn" href="#" data-message="Hola, quiero recibir información sobre la capacitación Programador Experto con IA.">
+                <i class="fa-brands fa-whatsapp"></i> Consultar por Programador Experto
+              </a>
+            </div>
+          </div></div>
+        </article>
+
+        <article class="item">
+          <button class="item-trigger">
+            <span class="mini-icon"><i class="fa-solid fa-laptop-code"></i></span>
+            <span class="name">Programación con IA para Adolescentes</span>
+            <i class="fa-solid fa-plus plus"></i>
+          </button>
+          <div class="item-body"><div class="item-body-inner">
+            <div class="item-content">
+              <p>Curso diseñado para que adolescentes aprendan programación, creación de aplicaciones, videojuegos, páginas web y herramientas de IA mediante proyectos concretos.</p>
+              <div class="tag-list"><span class="tag">Videojuegos</span><span class="tag">Apps</span><span class="tag">Creatividad digital</span></div>
+              <a class="wa-btn" href="#" data-message="Hola, quiero recibir información sobre el curso de Programación con IA para Adolescentes.">
+                <i class="fa-brands fa-whatsapp"></i> Consultar por Programación para Adolescentes
+              </a>
+            </div>
+          </div></div>
+        </article>
+
+        <article class="item">
+          <button class="item-trigger">
+            <span class="mini-icon"><i class="fa-solid fa-drafting-compass"></i></span>
+            <span class="name">Revit y QGIS</span>
+            <i class="fa-solid fa-plus plus"></i>
+          </button>
+          <div class="item-body"><div class="item-body-inner">
+            <div class="item-content">
+              <p>Capacitación en herramientas digitales aplicadas a arquitectura, construcción, modelado BIM, representación de proyectos y gestión de información geográfica.</p>
+              <div class="tag-list"><span class="tag">BIM</span><span class="tag">Arquitectura</span><span class="tag">Geolocalización</span></div>
+              <a class="wa-btn" href="#" data-message="Hola, quiero recibir información sobre las capacitaciones de Revit y QGIS.">
+                <i class="fa-brands fa-whatsapp"></i> Consultar por Revit y QGIS
+              </a>
+            </div>
+          </div></div>
+        </article>
+
+        <article class="item">
+          <button class="item-trigger">
+            <span class="mini-icon"><i class="fa-solid fa-person-cane"></i></span>
+            <span class="name">IA para Jubilados</span>
+            <i class="fa-solid fa-plus plus"></i>
+          </button>
+          <div class="item-body"><div class="item-body-inner">
+            <div class="item-content">
+              <p>Una capacitación accesible y práctica para aprender a utilizar la Inteligencia Artificial en actividades cotidianas, comunicación, organización, creatividad y entretenimiento.</p>
+              <div class="tag-list"><span class="tag">Uso cotidiano</span><span class="tag">Comunicación</span><span class="tag">Autonomía digital</span></div>
+              <a class="wa-btn" href="#" data-message="Hola, quiero recibir información sobre la capacitación de Inteligencia Artificial para Jubilados.">
+                <i class="fa-brands fa-whatsapp"></i> Consultar por IA para Jubilados
+              </a>
+            </div>
+          </div></div>
+        </article>
+      </div>
+    </section>
+  </div>
+
+  <!-- PANEL SMARTEO -->
+  <div class="subpage" id="smarteo" >
+    <section class="panel" aria-labelledby="smarteo-title">
+      <div class="section-nav">
+        <button class="back-btn" aria-label="Volver al menú principal">
+          <i class="fa-solid fa-arrow-left"></i>
+        </button>
+        <div class="section-nav-text">
+          <small>Volver al menú</small>
+          <strong>Smarteo de Empresas</strong>
+        </div>
+      </div>
+
+      <div class="panel-head">
+        <small>Inteligencia Operativa</small>
+        <h3 id="smarteo-title">Smarteo de Empresas</h3>
+      </div>
+
+      <div class="intro-box">
+        Analizamos cómo funciona una empresa, comercio o institución para detectar pérdidas de tiempo,
+        tareas repetitivas, problemas administrativos y oportunidades concretas de mejora.
+      </div>
+
+      <div class="items">
+        <article class="item open">
+          <button class="item-trigger">
+            <span class="mini-icon"><i class="fa-solid fa-gears"></i></span>
+            <span class="name">Automatización de procesos</span>
+            <i class="fa-solid fa-plus plus"></i>
+          </button>
+          <div class="item-body"><div class="item-body-inner">
+            <div class="item-content">
+              <p>Diseñamos flujos automáticos para reducir tareas manuales, errores y tiempos operativos.</p>
+            </div>
+          </div></div>
+        </article>
+
+        <article class="item">
+          <button class="item-trigger">
+            <span class="mini-icon"><i class="fa-solid fa-comments"></i></span>
+            <span class="name">Atención y seguimiento inteligente</span>
+            <i class="fa-solid fa-plus plus"></i>
+          </button>
+          <div class="item-body"><div class="item-body-inner">
+            <div class="item-content">
+              <p>Implementamos asistentes con IA, atención automática por WhatsApp, seguimiento comercial, recordatorios y gestión de consultas.</p>
+            </div>
+          </div></div>
+        </article>
+
+        <article class="item">
+          <button class="item-trigger">
+            <span class="mini-icon"><i class="fa-solid fa-chart-line"></i></span>
+            <span class="name">Tableros, informes y control</span>
+            <i class="fa-solid fa-plus plus"></i>
+          </button>
+          <div class="item-body"><div class="item-body-inner">
+            <div class="item-content">
+              <p>Centralizamos información, indicadores y reportes para facilitar la toma de decisiones.</p>
+            </div>
+          </div></div>
+        </article>
+
+        <article class="item">
+          <button class="item-trigger">
+            <span class="mini-icon"><i class="fa-solid fa-network-wired"></i></span>
+            <span class="name">Integraciones, IoT y monitoreo</span>
+            <i class="fa-solid fa-plus plus"></i>
+          </button>
+          <div class="item-body"><div class="item-body-inner">
+            <div class="item-content">
+              <p>Conectamos sistemas, sensores, dispositivos y plataformas para crear operaciones más ágiles, preventivas e inteligentes.</p>
+            </div>
+          </div></div>
+        </article>
+      </div>
+
+      <div style="margin-top:18px">
+        <a class="wa-btn" href="#" data-message="Hola, quiero recibir información sobre el servicio de Smarteo de Empresas e Inteligencia Operativa del Ecosistema IEC.">
+          <i class="fa-brands fa-whatsapp"></i> Quiero smartear mi empresa
+        </a>
+      </div>
+    </section>
+  </div>
+
+  <!-- PANEL SERVICES -->
+  <div class="subpage" id="services" >
+    <section class="panel" aria-labelledby="services-title">
+      <div class="section-nav">
+        <button class="back-btn" aria-label="Volver al menú principal">
+          <i class="fa-solid fa-arrow-left"></i>
+        </button>
+        <div class="section-nav-text">
+          <small>Volver al menú</small>
+          <strong>IEC Service</strong>
+        </div>
+      </div>
+
+      <div class="panel-head">
+        <small>Servicios Integrales</small>
+        <h3 id="services-title">IEC Service</h3>
+      </div>
+
+      <div class="intro-box">
+        Seleccioná el servicio que necesitás. El botón de consulta abrirá WhatsApp con el mensaje correspondiente ya preparado.
+      </div>
+
+      <div class="items">
+        <article class="item">
+          <button class="item-trigger">
+            <span class="mini-icon"><i class="fa-solid fa-bolt"></i></span>
+            <span class="name">Auxilio eléctrico</span>
+            <i class="fa-solid fa-plus plus"></i>
+          </button>
+          <div class="item-body"><div class="item-body-inner">
+            <div class="item-content">
+              <p>Atención ante fallas, cortes internos, problemas en llaves térmicas, tomacorrientes, iluminación y otros inconvenientes eléctricos.</p>
+              <a class="wa-btn" href="#" data-message="Hola, necesito información sobre el servicio de Auxilio Eléctrico de IEC Service."><i class="fa-brands fa-whatsapp"></i> Consultar por auxilio eléctrico</a>
+            </div>
+          </div></div>
+        </article>
+
+        <article class="item">
+          <button class="item-trigger">
+            <span class="mini-icon"><i class="fa-solid fa-plug-circle-check"></i></span>
+            <span class="name">Mantenimiento eléctrico</span>
+            <i class="fa-solid fa-plus plus"></i>
+          </button>
+          <div class="item-body"><div class="item-body-inner">
+            <div class="item-content">
+              <p>Revisión y mantenimiento preventivo o correctivo de instalaciones eléctricas residenciales, comerciales e institucionales.</p>
+              <a class="wa-btn" href="#" data-message="Hola, necesito información sobre el servicio de Mantenimiento Eléctrico de IEC Service."><i class="fa-brands fa-whatsapp"></i> Consultar por mantenimiento</a>
+            </div>
+          </div></div>
+        </article>
+
+        <article class="item">
+          <button class="item-trigger">
+            <span class="mini-icon"><i class="fa-solid fa-house-signal"></i></span>
+            <span class="name">Instalaciones eléctricas</span>
+            <i class="fa-solid fa-plus plus"></i>
+          </button>
+          <div class="item-body"><div class="item-body-inner">
+            <div class="item-content">
+              <p>Realización, ampliación y adecuación de instalaciones eléctricas para viviendas, comercios, oficinas e instituciones.</p>
+              <a class="wa-btn" href="#" data-message="Hola, necesito información sobre el servicio de Instalaciones Eléctricas de IEC Service."><i class="fa-brands fa-whatsapp"></i> Consultar por instalaciones</a>
+            </div>
+          </div></div>
+        </article>
+
+        <article class="item">
+          <button class="item-trigger">
+            <span class="mini-icon"><i class="fa-solid fa-video"></i></span>
+            <span class="name">CCTV</span>
+            <i class="fa-solid fa-plus plus"></i>
+          </button>
+          <div class="item-body"><div class="item-body-inner">
+            <div class="item-content">
+              <p>Instalación, configuración, ampliación y mantenimiento de cámaras, grabadores y sistemas de videovigilancia.</p>
+              <a class="wa-btn" href="#" data-message="Hola, quiero consultar por el servicio de instalación o mantenimiento de cámaras de seguridad CCTV."><i class="fa-brands fa-whatsapp"></i> Consultar por CCTV</a>
+            </div>
+          </div></div>
+        </article>
+
+        <article class="item">
+          <button class="item-trigger">
+            <span class="mini-icon"><i class="fa-solid fa-bell"></i></span>
+            <span class="name">Alarmas</span>
+            <i class="fa-solid fa-plus plus"></i>
+          </button>
+          <div class="item-body"><div class="item-body-inner">
+            <div class="item-content">
+              <p>Instalación y mantenimiento de sistemas de alarma para viviendas, comercios e instituciones.</p>
+              <a class="wa-btn" href="#" data-message="Hola, quiero consultar por el servicio de instalación o mantenimiento de alarmas."><i class="fa-brands fa-whatsapp"></i> Consultar por alarmas</a>
+            </div>
+          </div></div>
+        </article>
+
+        <article class="item">
+          <button class="item-trigger">
+            <span class="mini-icon"><i class="fa-solid fa-door-open"></i></span>
+            <span class="name">Porteros eléctricos</span>
+            <i class="fa-solid fa-plus plus"></i>
+          </button>
+          <div class="item-body"><div class="item-body-inner">
+            <div class="item-content">
+              <p>Instalación, reparación y mantenimiento de porteros eléctricos, sistemas de comunicación y control de acceso.</p>
+              <a class="wa-btn" href="#" data-message="Hola, quiero consultar por el servicio de porteros eléctricos."><i class="fa-brands fa-whatsapp"></i> Consultar por porteros</a>
+            </div>
+          </div></div>
+        </article>
+
+        <article class="item">
+          <button class="item-trigger">
+            <span class="mini-icon"><i class="fa-solid fa-warehouse"></i></span>
+            <span class="name">Portones eléctricos</span>
+            <i class="fa-solid fa-plus plus"></i>
+          </button>
+          <div class="item-body"><div class="item-body-inner">
+            <div class="item-content">
+              <p>Instalación, automatización, reparación y mantenimiento de portones eléctricos.</p>
+              <a class="wa-btn" href="#" data-message="Hola, quiero consultar por el servicio de portones eléctricos."><i class="fa-brands fa-whatsapp"></i> Consultar por portones</a>
+            </div>
+          </div></div>
+        </article>
+
+        <article class="item">
+          <button class="item-trigger">
+            <span class="mini-icon"><i class="fa-solid fa-mobile-screen-button"></i></span>
+            <span class="name">Reparación de celulares</span>
+            <i class="fa-solid fa-plus plus"></i>
+          </button>
+          <div class="item-body"><div class="item-body-inner">
+            <div class="item-content">
+              <p>Diagnóstico, mantenimiento y reparación de celulares: carga, batería, pantalla, software, conectores y fallas generales.</p>
+              <a class="wa-btn" href="#" data-message="Hola, quiero consultar por el servicio de reparación de celulares de IEC Service."><i class="fa-brands fa-whatsapp"></i> Consultar por reparación</a>
+            </div>
+          </div></div>
+        </article>
+      </div>
+    </section>
+  </div>
+
+  <!-- PANEL FACTORIA -->
+  <div class="subpage" id="factoria" >
+    <section class="panel" aria-labelledby="factoria-title">
+      <div class="section-nav">
+        <button class="back-btn" aria-label="Volver al menú principal">
+          <i class="fa-solid fa-arrow-left"></i>
+        </button>
+        <div class="section-nav-text">
+          <small>Volver al menú</small>
+          <strong>FactorIA</strong>
+        </div>
+      </div>
+
+      <div class="panel-head">
+        <small>Desarrollo Digital con IA</small>
+        <h3 id="factoria-title">FactorIA</h3>
+      </div>
+
+      <div class="intro-box">
+        Creamos tu presencia digital completa en un plazo estimado de 30 días: diseño, desarrollo, adaptación móvil, canales de contacto y un atendedor con Inteligencia Artificial incluido.
+      </div>
+
+      <div class="items">
+        <article class="item open">
+          <button class="item-trigger">
+            <span class="mini-icon"><i class="fa-solid fa-globe"></i></span>
+            <span class="name">Páginas web institucionales</span>
+            <i class="fa-solid fa-plus plus"></i>
+          </button>
+          <div class="item-body"><div class="item-body-inner">
+            <div class="item-content">
+              <p>Sitios profesionales para empresas, comercios, instituciones y profesionales, con identidad visual propia, información clara y diseño adaptable a todos los dispositivos.</p>
+            </div>
+          </div></div>
+        </article>
+
+        <article class="item">
+          <button class="item-trigger">
+            <span class="mini-icon"><i class="fa-solid fa-cart-shopping"></i></span>
+            <span class="name">E-commerce</span>
+            <i class="fa-solid fa-plus plus"></i>
+          </button>
+          <div class="item-body"><div class="item-body-inner">
+            <div class="item-content">
+              <p>Tiendas online con catálogo, fichas de productos, carrito, medios de contacto y una experiencia simple para que tus clientes puedan consultar y comprar.</p>
+            </div>
+          </div></div>
+        </article>
+
+        <article class="item">
+          <button class="item-trigger">
+            <span class="mini-icon"><i class="fa-solid fa-bullseye"></i></span>
+            <span class="name">Landing pages</span>
+            <i class="fa-solid fa-plus plus"></i>
+          </button>
+          <div class="item-body"><div class="item-body-inner">
+            <div class="item-content">
+              <p>Páginas enfocadas en campañas, lanzamientos, inscripciones, generación de contactos o venta de un producto o servicio específico.</p>
+            </div>
+          </div></div>
+        </article>
+
+        <article class="item">
+          <button class="item-trigger">
+            <span class="mini-icon"><i class="fa-solid fa-headset"></i></span>
+            <span class="name">Atendedor con Inteligencia Artificial</span>
+            <i class="fa-solid fa-plus plus"></i>
+          </button>
+          <div class="item-body"><div class="item-body-inner">
+            <div class="item-content">
+              <p>Incluimos un asistente digital capaz de responder consultas frecuentes, orientar visitantes, presentar servicios y derivar oportunidades comerciales.</p>
+            </div>
+          </div></div>
+        </article>
+
+        <article class="item">
+          <button class="item-trigger">
+            <span class="mini-icon"><i class="fa-solid fa-calendar-check"></i></span>
+            <span class="name">Proyecto completo en 30 días</span>
+            <i class="fa-solid fa-plus plus"></i>
+          </button>
+          <div class="item-body"><div class="item-body-inner">
+            <div class="item-content">
+              <p>Organizamos el proyecto por etapas para entregar una solución funcional, moderna y lista para publicar en un plazo estimado de 30 días, sujeto a la entrega de contenidos y aprobaciones.</p>
+            </div>
+          </div></div>
+        </article>
+      </div>
+
+      <div style="margin-top:18px">
+        <a class="wa-btn" href="#" data-message="Hola, quiero recibir información sobre FactorIA para desarrollar una página web, e-commerce o landing page con atendedor de Inteligencia Artificial incluido.">
+          <i class="fa-brands fa-whatsapp"></i> Quiero desarrollar mi proyecto
+        </a>
+      </div>
+    </section>
+  </div>
+
+  <script>
+    const PHONE = "5493434664964";
+
+    function whatsappUrl(message) {
+      return `https://api.whatsapp.com/send/?phone=${PHONE}&text=${encodeURIComponent(message)}&type=phone_number&app_absent=0`;
+    }
+
+    const homeView = document.getElementById("homeView");
+
+    function openSection(sectionId) {
+      const section = document.getElementById(sectionId);
+      if (!section) return;
+
+      homeView.classList.add("hidden");
+      document.querySelectorAll(".subpage").forEach(view => view.classList.remove("active"));
+      section.classList.add("active");
+      window.scrollTo({ top: 0, behavior: "instant" });
+
+      history.pushState({ section: sectionId }, "", `#${sectionId}`);
+    }
+
+    function showHome(updateHistory = true) {
+      document.querySelectorAll(".subpage").forEach(view => view.classList.remove("active"));
+      homeView.classList.remove("hidden");
+      window.scrollTo({ top: 0, behavior: "instant" });
+
+      if (updateHistory) {
+        history.pushState({ section: "home" }, "", window.location.pathname + window.location.search);
+      }
+    }
+
+    document.querySelectorAll("[data-panel]").forEach(button => {
+      button.addEventListener("click", () => openSection(button.dataset.panel));
+    });
+
+    document.querySelectorAll(".back-btn").forEach(button => {
+      button.addEventListener("click", () => {
+        if (history.state && history.state.section && history.state.section !== "home") {
+          history.back();
+        } else {
+          showHome();
+        }
+      });
+    });
+
+    window.addEventListener("popstate", () => {
+      const sectionId = window.location.hash.replace("#", "");
+      if (sectionId && document.getElementById(sectionId)?.classList.contains("subpage")) {
+        homeView.classList.add("hidden");
+        document.querySelectorAll(".subpage").forEach(view => view.classList.remove("active"));
+        document.getElementById(sectionId).classList.add("active");
+        window.scrollTo({ top: 0, behavior: "instant" });
+      } else {
+        showHome(false);
+      }
+    });
+
+    // Permite abrir una sección directamente desde una URL con #capacitaciones, #smarteo, etc.
+    const initialSection = window.location.hash.replace("#", "");
+    if (initialSection && document.getElementById(initialSection)?.classList.contains("subpage")) {
+      homeView.classList.add("hidden");
+      document.getElementById(initialSection).classList.add("active");
+      history.replaceState({ section: initialSection }, "", `#${initialSection}`);
+    } else {
+      history.replaceState({ section: "home" }, "", window.location.pathname + window.location.search);
+    }
+
+    document.querySelectorAll(".item-trigger").forEach(trigger => {
+      trigger.addEventListener("click", () => {
+        trigger.closest(".item").classList.toggle("open");
+      });
+    });
+
+    document.querySelectorAll("[data-message]").forEach(link => {
+      link.href = whatsappUrl(link.dataset.message);
+      link.target = "_blank";
+      link.rel = "noopener";
+    });
+
+    document.getElementById("year").textContent = new Date().getFullYear();
+  </script>
+</body>
+</html>
