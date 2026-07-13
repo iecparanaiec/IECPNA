@@ -1,0 +1,719 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Diagnóstico institucional del Círculo Odontológico de Paraná para detectar oportunidades de mejora, automatización e Inteligencia Operativa." />
+  <title>Diagnóstico Institucional COP | Instituto IEC</title>
+
+  <script src="https://cdn.tailwindcss.com/3.4.17"></script>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
+  <script src="https://cdn.jsdelivr.net/npm/lucide@0.468.0/dist/umd/lucide.min.js"></script>
+
+  <style>
+    :root{
+      --cyan:#22d3ee;
+      --blue:#3b82f6;
+      --violet:#8b5cf6;
+      --green:#22c55e;
+      --amber:#f59e0b;
+      --red:#ef4444;
+      --bg:#070b14;
+      --panel:#0d1525;
+      --text:#f8fafc;
+      --muted:#94a3b8;
+    }
+
+    *{box-sizing:border-box;font-family:'DM Sans',sans-serif}
+    html{scroll-behavior:smooth}
+    html,body{margin:0;min-height:100%;background:var(--bg);color:var(--text)}
+    body{overflow-x:hidden}
+    button,input,textarea,select{font:inherit}
+    button,a,label{-webkit-tap-highlight-color:transparent}
+
+    .bg-pattern{
+      position:fixed;inset:0;pointer-events:none;z-index:0;
+      background-image:
+        radial-gradient(circle at 15% 10%,rgba(34,211,238,.11),transparent 26%),
+        radial-gradient(circle at 88% 82%,rgba(139,92,246,.12),transparent 31%),
+        linear-gradient(90deg,rgba(59,130,246,.045) 1px,transparent 1px),
+        linear-gradient(rgba(59,130,246,.045) 1px,transparent 1px);
+      background-size:auto,auto,52px 52px,52px 52px;
+    }
+
+    .orb{position:fixed;border-radius:999px;filter:blur(90px);opacity:.16;pointer-events:none;z-index:0}
+    .glass{
+      background:rgba(255,255,255,.065);
+      border:1px solid rgba(255,255,255,.11);
+      backdrop-filter:blur(18px);
+      box-shadow:0 24px 80px rgba(0,0,0,.28);
+    }
+    .gradient-text{
+      background:linear-gradient(135deg,#67e8f9,#60a5fa,#a78bfa);
+      -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
+    }
+
+    .topbar{
+      position:fixed;left:0;right:0;top:0;z-index:80;
+      background:rgba(7,11,20,.84);backdrop-filter:blur(18px);
+      border-bottom:1px solid rgba(255,255,255,.09);
+    }
+
+    /* Navegación siempre por encima del contenido.
+       Tailwind no genera la clase z-80 por defecto, por lo que el <main>
+       quedaba arriba del footer y capturaba los clics cuando el zoom era 100%. */
+    #navigation{
+      position:fixed !important;
+      left:0 !important;right:0 !important;bottom:0 !important;
+      z-index:10000 !important;
+      pointer-events:auto !important;
+      isolation:isolate;
+    }
+    #navigation .btn{
+      position:relative;
+      z-index:10001;
+      pointer-events:auto !important;
+      touch-action:manipulation;
+    }
+    .progress-track{height:4px;background:rgba(255,255,255,.08)}
+    .progress-fill{height:100%;width:0;background:linear-gradient(90deg,var(--cyan),var(--blue),var(--violet));transition:width .35s ease}
+
+    .step{display:none;animation:fadeIn .28s ease}
+    .step.active{display:block}
+    @keyframes fadeIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+
+    .question-card{
+      background:rgba(255,255,255,.052);
+      border:1px solid rgba(255,255,255,.095);
+      border-radius:24px;padding:22px;
+      transition:border-color .2s ease,transform .2s ease;
+    }
+    .question-card:focus-within{border-color:rgba(103,232,249,.38)}
+    .question-card.invalid{border-color:rgba(248,113,113,.75);box-shadow:0 0 0 3px rgba(239,68,68,.09)}
+
+    .option-label{
+      display:flex;align-items:flex-start;gap:12px;
+      padding:13px 14px;border-radius:15px;cursor:pointer;
+      background:rgba(255,255,255,.035);border:1px solid rgba(255,255,255,.075);
+      transition:.18s ease;
+    }
+    .option-label:hover{background:rgba(59,130,246,.09);border-color:rgba(96,165,250,.26)}
+    .option-label:has(input:checked){background:rgba(34,211,238,.10);border-color:rgba(103,232,249,.38)}
+    .option-label input{margin-top:2px;width:18px;height:18px;accent-color:#22d3ee;flex:0 0 auto}
+
+    .text-input,.text-area,.select-input{
+      width:100%;color:#fff;background:rgba(2,6,23,.72);
+      border:1px solid rgba(255,255,255,.13);border-radius:14px;
+      padding:13px 14px;outline:none;transition:.18s ease;
+    }
+    .text-input:focus,.text-area:focus,.select-input:focus{border-color:rgba(103,232,249,.62);box-shadow:0 0 0 3px rgba(34,211,238,.09)}
+    .text-area{min-height:112px;resize:vertical}
+    .select-input option{background:#0f172a;color:#fff}
+
+    .scale-wrap{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:10px}
+    .scale-option{position:relative}
+    .scale-option input{position:absolute;opacity:0;pointer-events:none}
+    .scale-option label{
+      display:flex;align-items:center;justify-content:center;min-height:50px;
+      border-radius:14px;cursor:pointer;font-weight:900;
+      background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.10);
+      transition:.18s ease;
+    }
+    .scale-option input:checked + label{background:linear-gradient(135deg,rgba(34,211,238,.22),rgba(59,130,246,.24));border-color:rgba(103,232,249,.55);color:#cffafe}
+
+    .btn{
+      display:inline-flex;align-items:center;justify-content:center;gap:9px;
+      min-height:48px;padding:11px 18px;border-radius:999px;border:1px solid rgba(255,255,255,.14);
+      color:#fff;font-weight:800;cursor:pointer;transition:.18s ease;
+      background:rgba(255,255,255,.07);
+    }
+    .btn:hover{transform:translateY(-1px);border-color:rgba(103,232,249,.42)}
+    .btn-primary{background:linear-gradient(135deg,#0891b2,#2563eb);border-color:rgba(125,211,252,.48);box-shadow:0 12px 36px rgba(37,99,235,.20)}
+    .btn-success{background:linear-gradient(135deg,#16a34a,#059669);border-color:rgba(134,239,172,.42)}
+    .btn:disabled{opacity:.55;cursor:not-allowed;transform:none}
+
+    .toast{
+      position:fixed;right:18px;bottom:18px;z-index:120;max-width:390px;
+      display:none;padding:14px 16px;border-radius:16px;
+      background:rgba(7,11,20,.96);border:1px solid rgba(103,232,249,.34);
+      box-shadow:0 22px 60px rgba(0,0,0,.38);color:#dbeafe;font-size:14px;
+    }
+    .toast.error{border-color:rgba(248,113,113,.48);color:#fecaca}
+
+    .required-mark{color:#fca5a5}
+    .section-chip{display:inline-flex;align-items:center;gap:8px;padding:8px 12px;border-radius:999px;background:rgba(34,211,238,.10);border:1px solid rgba(103,232,249,.25);color:#a5f3fc;font-size:12px;font-weight:900;letter-spacing:.08em;text-transform:uppercase}
+    .summary-row{display:grid;grid-template-columns:minmax(170px,.7fr) minmax(0,1.3fr);gap:16px;padding:14px 0;border-bottom:1px solid rgba(255,255,255,.08)}
+    .summary-row:last-child{border-bottom:0}
+
+    @media(max-width:768px){
+      .question-card{padding:17px;border-radius:19px}
+      .scale-wrap{gap:6px}
+      .scale-option label{min-height:46px;border-radius:12px}
+      .summary-row{grid-template-columns:1fr;gap:5px}
+    }
+  </style>
+</head>
+<body>
+  <div class="bg-pattern"></div>
+  <div class="orb w-80 h-80 bg-cyan-400 -top-24 -left-24"></div>
+  <div class="orb w-96 h-96 bg-violet-500 -bottom-32 -right-28"></div>
+
+  <header class="topbar">
+    <div class="max-w-6xl mx-auto px-4 py-3 flex items-center justify-between gap-4">
+      <div class="flex items-center gap-3 min-w-0">
+        <div class="w-10 h-10 rounded-xl bg-white flex items-center justify-center overflow-hidden shrink-0">
+          <span class="font-black text-slate-900 text-xs">COP</span>
+        </div>
+        <div class="min-w-0">
+          <p class="font-black text-sm sm:text-base truncate">Diagnóstico Institucional COP</p>
+          <p id="step-label" class="text-xs text-slate-400 truncate">Presentación</p>
+        </div>
+      </div>
+      <div class="flex items-center gap-3 shrink-0">
+        <span id="save-status" class="hidden sm:inline text-xs text-slate-500">Formulario listo</span>
+        <span id="step-counter" class="px-3 py-1.5 rounded-full bg-white/5 border border-white/10 text-xs font-bold text-slate-300">1 / 18</span>
+      </div>
+    </div>
+    <div class="progress-track"><div id="progress-fill" class="progress-fill"></div></div>
+  </header>
+
+  <main class="relative max-w-6xl mx-auto px-4 pt-28 pb-32" style="z-index:10">
+    <form id="cop-form" novalidate>
+      <div id="steps-container"></div>
+    </form>
+  </main>
+
+  <footer id="navigation" class="fixed bottom-0 left-0 right-0 z-[10000] bg-[#070b14]/90 backdrop-blur-xl border-t border-white/10">
+    <div class="max-w-6xl mx-auto px-4 py-3 flex items-center justify-between gap-3">
+      <button type="button" id="prev-btn" class="btn" onclick="return forcePrevious(event)">
+        <i data-lucide="arrow-left" class="w-4 h-4"></i> Anterior
+      </button>
+      <div class="hidden md:block text-xs text-slate-500 text-center">Las respuestas se envían al finalizar el formulario.</div>
+      <button type="button" id="next-btn" class="btn btn-primary" onclick="return forceNext(event)">
+        Siguiente <i data-lucide="arrow-right" class="w-4 h-4"></i>
+      </button>
+    </div>
+  </footer>
+
+  <div id="toast" class="toast" role="status" aria-live="polite"></div>
+
+<script>
+  const WEBHOOK_URL = 'https://n8n.smarteco.com.ar/webhook/cop';
+  const STORAGE_KEY = 'cop_diagnostico_borrador_v1';
+  const SUBMITTED_KEY = 'cop_diagnostico_ultimo_envio_v1';
+
+  const sections = [
+    {
+      id:'datos_responsable', title:'Datos de quien responde', icon:'user-round', intro:'Estos datos permiten contextualizar las respuestas y, si fuera necesario, ampliar algún punto del relevamiento.',
+      questions:[
+        {id:'nombre_apellido', type:'text', label:'Nombre y apellido', required:true, placeholder:'Ingrese su nombre completo'},
+        {id:'cargo_area', type:'text', label:'Cargo, función o área dentro de la institución', required:true, placeholder:'Ej.: Administración, Secretaría, Comisión Directiva'},
+        {id:'email', type:'email', label:'Correo electrónico', required:false, placeholder:'nombre@ejemplo.com'},
+        {id:'telefono', type:'tel', label:'Teléfono o WhatsApp de contacto', required:false, placeholder:'Ej.: 343 0000000'},
+        {id:'antiguedad', type:'single', label:'¿Hace cuánto tiempo participa o trabaja en la institución?', required:false, options:['Menos de 1 año','Entre 1 y 3 años','Entre 4 y 7 años','Más de 7 años'], other:true}
+      ]
+    },
+    {
+      id:'administracion_general', title:'Administración General', icon:'building-2',
+      questions:[
+        scale('valoracion','¿Cómo califica el funcionamiento administrativo general actual?'),
+        multi('problemas','¿Cuáles considera que son hoy los principales problemas administrativos?',['Exceso de tareas manuales','Demoras en los procesos','Información dispersa entre distintas áreas','Duplicación de tareas o datos','Errores administrativos frecuentes','Falta de integración entre sistemas']),
+        multi('tareas_tiempo','¿Qué tareas consumen más tiempo diariamente?',['Atención y respuesta a asociados','Carga manual de información','Facturación, cobranzas y conciliaciones','Respuesta de WhatsApp y correo electrónico','Elaboración de informes','Gestión y búsqueda de documentación']),
+        multi('automatizar','¿Qué procesos considera prioritario automatizar?',['Respuestas a consultas frecuentes','Carga y actualización de datos','Generación de reportes','Recordatorios y vencimientos','Derivación de consultas entre áreas','Gestión documental y archivo']),
+        multi('informacion_faltante','¿Qué información resulta difícil de obtener cuando se necesita?',['Estado de trámites o solicitudes','Situación económica de asociados','Indicadores de cada área','Historial de comunicaciones','Documentación institucional','Información consolidada para Comisión Directiva'])
+      ]
+    },
+    {
+      id:'mesa_entrada', title:'Mesa de Entrada', icon:'inbox',
+      questions:[
+        scale('valoracion','¿Cómo califica actualmente el funcionamiento de Mesa de Entrada?'),
+        multi('canales','¿Por qué canales ingresan actualmente las consultas y solicitudes?',['Atención presencial','Teléfono','WhatsApp','Correo electrónico','Página web','Redes sociales']),
+        multi('problemas','¿Qué dificultades se presentan con mayor frecuencia?',['Consultas que se pierden o quedan sin respuesta','Demoras en la atención','Falta de seguimiento del caso','Información incompleta al recibir el pedido','Derivaciones incorrectas o tardías','No existe un historial único']),
+        multi('mejoras','¿Qué mejoras serían más útiles para Mesa de Entrada?',['Número o código de seguimiento por solicitud','Derivación automática según tema','Historial único del asociado','Panel de consultas pendientes','Respuestas automáticas iniciales','Alertas por demoras o falta de resolución']),
+        multi('datos_registro','¿Qué datos deberían registrarse obligatoriamente al recibir una consulta?',['Identificación y contacto de la persona','Motivo o categoría de la consulta','Área responsable','Fecha y hora de ingreso','Estado y prioridad','Documentación adjunta'])
+      ]
+    },
+    {
+      id:'atencion_asociado', title:'Atención al Asociado', icon:'users',
+      questions:[
+        scale('valoracion','¿Cómo califica la atención actual a los asociados?'),
+        multi('consultas_frecuentes','¿Cuáles son las consultas más frecuentes de los asociados?',['Facturación, deuda o pagos','Auditorías de ortodoncia o prótesis','Guardias y S.O.S.','Cursos y Posgrado','Venta y disponibilidad de insumos','Estado de trámites o documentación']),
+        multi('dificultades','¿Qué dificultades aparecen con mayor frecuencia?',['Demoras en las respuestas','Información diferente según quién responde','Consultas reiteradas sobre el mismo tema','Falta de seguimiento','Necesidad de llamar o escribir varias veces','Falta de disponibilidad fuera del horario administrativo']),
+        multi('respuestas_automaticas','¿Qué temas podrían resolverse automáticamente sin intervención inicial del personal?',['Horarios, teléfonos y ubicación','Estado de trámites','Información sobre cursos y Posgrado','Guardias y profesionales disponibles','Facturas, vencimientos y medios de pago','Stock, precios y pedidos de insumos']),
+        multi('canal_preferido','¿Qué canales deberían priorizarse para atender a los asociados?',['WhatsApp institucional','Portal web de autogestión','Correo electrónico','Atención telefónica','Aplicación móvil','Atención presencial'])
+      ]
+    },
+    {
+      id:'whatsapp', title:'WhatsApp Institucional', icon:'message-circle',
+      questions:[
+        scale('valoracion','¿Cómo califica la gestión actual del WhatsApp institucional?'),
+        multi('administracion','¿Cómo se administra actualmente el WhatsApp?',['Una sola persona responde todo','Varias personas comparten el mismo número','Cada área utiliza un número diferente','Se responde desde teléfonos personales','Se utiliza WhatsApp Business','No existe un criterio unificado']),
+        multi('problemas','¿Qué problemas se presentan habitualmente?',['Muchas consultas repetidas','Demoras por saturación','Mensajes fuera del horario laboral','Conversaciones que quedan sin seguimiento','Dificultad para derivar entre áreas','Falta de métricas e historial centralizado']),
+        multi('automatizar','¿Qué funciones le gustaría automatizar en WhatsApp?',['Recepción y clasificación inicial','Respuestas a preguntas frecuentes','Derivación automática al área correcta','Consulta del estado de trámites','Envío de recordatorios y vencimientos','Encuestas de satisfacción']),
+        multi('segmentacion','¿A qué grupos sería útil enviar comunicaciones segmentadas?',['Todos los asociados','Profesionales por especialidad','Participantes de Posgrado','Integrantes de guardias o S.O.S.','Asociados con pagos pendientes','Público general o pacientes'])
+      ]
+    },
+    {
+      id:'comunicacion', title:'Comunicación Institucional y Comunidad', icon:'megaphone',
+      questions:[
+        scale('valoracion','¿Cómo califica la comunicación externa actual del COP?'),
+        multi('comunica_actualmente','¿Qué información comunica habitualmente el Círculo Odontológico?',['Actividades y novedades institucionales','Cursos y Escuela de Posgrado','Servicio Odontológico Solidario (S.O.S.) y guardias','Venta de insumos y accesorios','Información y beneficios para asociados','Campañas de prevención y salud bucal para la comunidad']),
+        multi('interesa_comunicar','¿Qué temas les interesa comunicar con mayor frecuencia a la comunidad?',['Prevención y cuidado de la salud bucal','Servicios disponibles para pacientes','Guardias odontológicas y atención de urgencias','Acciones solidarias y S.O.S.','Importancia de consultar a profesionales matriculados','Campañas, jornadas y actividades abiertas']),
+        multi('interesa_comunicar_odontologos','¿Qué temas les interesa comunicar específicamente a los odontólogos?',['Cursos, Posgrado y actualización profesional','Normativas, convenios y novedades institucionales','Beneficios para asociados','Auditorías y procedimientos administrativos','Disponibilidad y promociones de insumos','Convocatorias, guardias y actividades del COP']),
+        multi('canales','¿Qué canales utilizan actualmente para comunicarse?',['Página web','Instagram','Facebook','WhatsApp','Correo electrónico','Radio, televisión o prensa gráfica','Portales de noticias digitales']),
+        {id:'pauta_frecuencia', type:'single', label:'¿Actualmente realizan publicidad paga o pautas de difusión?', required:true, options:['Sí, de manera permanente','Sí, para campañas o eventos específicos','Se realiza muy ocasionalmente','Actualmente no se realiza publicidad paga'], other:true},
+        multi('medios_pauta','¿En qué medios realizan o considerarían realizar pauta publicitaria?',['Meta Ads: Facebook e Instagram','Google Ads','Radio','Televisión','Diarios y portales digitales','Cartelería o vía pública','Medios especializados del sector salud']),
+        multi('objetivos','¿Qué objetivos debería perseguir la comunicación institucional?',['Informar mejor a los asociados','Aumentar la participación en Posgrado','Dar a conocer los servicios del COP','Promover campañas preventivas','Fortalecer la imagen institucional','Incrementar la venta de insumos','Mejorar la relación con la comunidad']),
+        multi('medicion','¿Cómo se mide actualmente el impacto de la comunicación?',['Alcance e interacciones en redes','Consultas recibidas','Inscripciones o ventas generadas','Tráfico de la página web','Cobertura en medios','No se utilizan indicadores sistemáticos'])
+      ]
+    },
+    {
+      id:'secretaria_cd', title:'Secretaría y Comisión Directiva', icon:'landmark',
+      questions:[
+        scale('valoracion','¿Cómo califica el soporte administrativo a Secretaría y Comisión Directiva?'),
+        multi('carga','¿Qué tareas generan mayor carga administrativa?',['Preparación de reuniones y orden del día','Actas, resoluciones y documentación','Convocatorias y comunicaciones','Seguimiento de decisiones pendientes','Elaboración de informes','Archivo y búsqueda de antecedentes']),
+        multi('informacion_cd','¿Qué información necesita con mayor frecuencia la Comisión Directiva?',['Indicadores económicos y financieros','Cantidad, altas y bajas de asociados','Estado de servicios y prestaciones','Resultados de Posgrado','Situación de insumos y ventas','Auditorías y trámites pendientes','Estadísticas de atención y comunicación']),
+        multi('mejoras','¿Qué herramientas serían más útiles?',['Tablero ejecutivo actualizado','Repositorio documental con buscador','Seguimiento de compromisos y decisiones','Generación automática de minutas o actas','Agenda institucional compartida','Reportes periódicos automáticos'])
+      ]
+    },
+    {
+      id:'sistemas', title:'Sistemas e Integraciones', icon:'network',
+      questions:[
+        scale('valoracion','¿Cómo califica los sistemas informáticos actuales?'),
+        multi('problemas','¿Qué problemas presentan los sistemas actuales?',['No se integran entre sí','La misma información se carga varias veces','Existen datos duplicados o desactualizados','Hay procesos que dependen de Excel o papel','El acceso a la información es lento o complejo','Faltan respaldos, permisos o trazabilidad']),
+        multi('herramientas_actuales','¿Qué herramientas se utilizan actualmente?',['Sistema administrativo o contable','Sistema de facturación','Planillas Excel o Google Sheets','Correo electrónico','WhatsApp Business','Página web o portal de autogestión','Almacenamiento en Drive u otra nube']),
+        multi('integraciones','¿Qué integraciones considera prioritarias?',['Gestión de asociados + facturación','WhatsApp + historial de atención','Página web + autogestión','Stock + ventas + facturación','Posgrado + pagos + certificados','Auditorías + seguimiento + notificaciones','Bancos o billeteras + conciliación']),
+        multi('seguridad','¿Qué necesidades existen en seguridad y acceso a la información?',['Usuarios y permisos por área','Copias de seguridad automáticas','Registro de cambios realizados','Protección de datos personales','Acceso remoto seguro','Protocolos ante fallas o incidentes'])
+      ]
+    },
+    {
+      id:'insumos', title:'Venta de Insumos y Accesorios', icon:'package-search',
+      questions:[
+        scale('valoracion','¿Cómo califica el funcionamiento actual de la venta de insumos?'),
+        multi('problemas','¿Qué dificultades encuentran actualmente?',['Control de stock inexacto','Faltantes o reposición tardía','Carga manual de pedidos','Precios o catálogo desactualizados','Demoras en facturación y cobro','Falta de información sobre ventas y márgenes']),
+        multi('canales_pedido','¿Por qué canales se reciben los pedidos?',['Mostrador o atención presencial','WhatsApp','Teléfono','Correo electrónico','Formulario o página web','Pedidos internos o por terceros']),
+        multi('mejoras','¿Qué mejoras le gustaría implementar?',['Catálogo digital actualizado','Tienda online para asociados','Pedidos y reservas por WhatsApp','Stock en tiempo real','Alertas automáticas de reposición','Facturación y comprobantes automáticos','Reportes de productos más vendidos']),
+        multi('indicadores','¿Qué indicadores serían útiles para administrar los insumos?',['Stock disponible y comprometido','Productos con stock crítico','Ventas por período','Productos de mayor rotación','Margen o rentabilidad por producto','Pedidos pendientes de entrega','Historial de compra por asociado'])
+      ]
+    },
+    {
+      id:'facturacion', title:'Facturación y Gestión Económica', icon:'receipt-text',
+      questions:[
+        scale('valoracion','¿Cómo califica el proceso actual de facturación y gestión económica?'),
+        multi('conceptos','¿Qué conceptos factura o cobra habitualmente el Círculo?',['Cuotas societarias','Venta de insumos y accesorios','Cursos y Posgrado','Prestaciones o servicios odontológicos','Auditorías, trámites o aranceles','Alquileres o uso de espacios','Otros servicios institucionales']),
+        multi('origen_datos','¿Desde dónde se obtienen los datos para emitir las facturas?',['Sistema de asociados','Sistema de venta de insumos','Planillas Excel','Formularios o registros manuales','Información enviada por cada área','Se cargan directamente al momento de facturar']),
+        multi('problemas','¿Cuáles son los principales inconvenientes de la facturación?',['Demoras en la emisión','Errores en datos o importes','Carga manual o repetida','Falta de integración con otros sistemas','Dificultad para identificar pagos','Seguimiento manual de deuda y morosidad','Demoras en enviar comprobantes']),
+        multi('tareas_tiempo','¿Qué tareas demandan más tiempo administrativo?',['Generar y revisar facturas','Enviar comprobantes','Registrar pagos','Conciliar bancos o billeteras','Gestionar cuentas corrientes','Reclamar deuda o mora','Preparar reportes contables']),
+        multi('emision','¿Cómo se emiten actualmente los comprobantes?',['Desde un sistema administrativo integrado','Desde un software contable independiente','Carga manual en ARCA','Mediante planillas y posterior carga','Cada área informa lo que debe facturarse','Se utilizan distintos procedimientos según el concepto']),
+        multi('entrega','¿Cómo reciben los asociados sus facturas o comprobantes?',['Correo electrónico','WhatsApp','Portal de autogestión','Entrega impresa','Se envían solo cuando se solicitan','Mediante más de un canal sin registro unificado']),
+        multi('vencimientos','¿Cómo se notifican actualmente los vencimientos?',['WhatsApp manual','Correo electrónico','Llamadas telefónicas','Aviso impreso o presencial','Notificación desde un sistema','No existe un proceso sistemático de avisos']),
+        multi('medios_pago','¿Qué medios de pago se administran actualmente?',['Transferencia bancaria','Débito automático','Tarjeta de débito o crédito','Billeteras virtuales o QR','Efectivo','Pago mediante plataforma o link de pago']),
+        multi('conciliacion','¿Cómo se identifican y concilian los pagos recibidos?',['Automáticamente desde el sistema','Revisión manual de movimientos bancarios','Comprobantes enviados por WhatsApp o correo','Planilla de control','Cada área confirma sus cobros','Existen pagos difíciles de identificar']),
+        multi('morosidad','¿Qué dificultades existen en el seguimiento de deuda y morosidad?',['No hay alertas tempranas','Los reclamos se realizan manualmente','La información de deuda no está actualizada','No existe segmentación por antigüedad de deuda','Es difícil conocer compromisos o planes de pago','No hay un historial centralizado de gestiones']),
+        multi('automatizar','¿Qué procesos sería prioritario automatizar?',['Generación periódica de facturas','Envío automático de comprobantes','Recordatorios previos al vencimiento','Avisos escalonados de mora','Imputación y conciliación de pagos','Emisión de recibos','Reportes económicos automáticos','Integración con bancos y billeteras']),
+        multi('indicadores','¿Qué indicadores económicos deberían estar disponibles en un tablero?',['Facturación total por mes','Cobranza efectiva por período','Deuda total y morosidad','Ingresos por tipo de servicio','Ingresos y margen por venta de insumos','Ingresos por cursos y Posgrado','Cuentas pendientes de conciliación','Evolución de asociados activos y cuotas']),
+        multi('permisos','¿Quiénes deberían acceder a la información económica?',['Administración','Tesorería','Secretaría','Comisión Directiva','Contador o asesor externo','Responsables de cada área con acceso limitado']),
+        {id:'principal_dolor', type:'textarea', label:'Describa el principal problema actual de facturación o cobranza que debería resolverse primero.', required:false, placeholder:'Puede detallar un caso concreto, demoras, errores, duplicaciones o dificultades de seguimiento.'}
+      ]
+    },
+    {
+      id:'sos', title:'Servicio Odontológico Solidario (S.O.S.)', icon:'heart-handshake',
+      questions:[
+        scale('valoracion','¿Cómo califica el funcionamiento administrativo actual del S.O.S.?'),
+        multi('problemas','¿Qué aspectos necesitan mejorar?',['Recepción y clasificación de solicitudes','Asignación de profesionales','Organización de turnos o guardias','Seguimiento de pacientes o casos','Registro de prestaciones','Comunicación con profesionales y pacientes','Obtención de estadísticas']),
+        multi('datos','¿Qué información debería registrarse en cada atención?',['Datos y contacto del paciente','Motivo y nivel de urgencia','Profesional asignado','Fecha, horario y lugar de atención','Prestación realizada','Resultado, derivación o seguimiento','Documentación y observaciones']),
+        multi('automatizar','¿Qué procesos podrían automatizarse?',['Recepción inicial y orientación','Asignación según disponibilidad','Confirmaciones y recordatorios','Avisos a profesionales','Seguimiento posterior','Encuestas de atención','Estadísticas e informes']),
+        multi('indicadores','¿Qué indicadores serían importantes?',['Cantidad de consultas recibidas','Casos atendidos y pendientes','Tiempos de respuesta','Prestaciones más frecuentes','Profesionales participantes','Derivaciones y seguimiento','Distribución por zonas o perfiles'])
+      ]
+    },
+    {
+      id:'guardia', title:'Guardia Odontológica', icon:'siren',
+      questions:[
+        scale('valoracion','¿Cómo califica la organización actual de la guardia?'),
+        multi('problemas','¿Qué dificultades encuentran?',['Confección del cronograma','Confirmación de disponibilidad','Cambios y reemplazos de último momento','Comunicación con profesionales','Publicación de la guardia vigente','Consultas reiteradas del público','Falta de registro de incidencias']),
+        multi('mejoras','¿Qué mejoras serían más útiles?',['Calendario digital compartido','Confirmación automática de turnos','Sistema de reemplazos','Recordatorios previos','Publicación automática en web y WhatsApp','Consulta pública de la guardia vigente','Registro de cumplimiento e incidencias']),
+        multi('alertas','¿Qué alertas deberían generarse automáticamente?',['Guardia sin profesional asignado','Falta de confirmación','Cambio o reemplazo pendiente','Inicio próximo del turno','Incumplimiento o ausencia','Consulta urgente sin respuesta'])
+      ]
+    },
+    {
+      id:'auditorias', title:'Auditorías de Ortodoncia y Prótesis', icon:'clipboard-check',
+      questions:[
+        scale('valoracion','¿Cómo califica el funcionamiento actual de las auditorías?'),
+        multi('demoras','¿En qué etapas aparecen las mayores demoras?',['Recepción de documentación','Control de requisitos','Asignación al auditor','Evaluación técnica','Solicitud de correcciones','Comunicación del resultado','Archivo y cierre del trámite']),
+        multi('errores','¿Qué problemas son más frecuentes?',['Documentación incompleta','Archivos o imágenes ilegibles','Datos inconsistentes','Falta de seguimiento','Consultas reiteradas por el estado','Correcciones enviadas por distintos canales','Dificultad para encontrar antecedentes']),
+        multi('automatizar','¿Qué procesos le gustaría automatizar?',['Carga digital de documentación','Validación inicial de requisitos','Asignación al auditor','Notificaciones de avance','Solicitud de correcciones','Consulta online del estado','Emisión del resultado o constancia','Reportes de tiempos y resultados']),
+        multi('separacion','¿Cómo debería organizarse la gestión de auditorías?',['Un circuito único para ambas especialidades','Circuitos separados para Ortodoncia y Prótesis','Un portal común con requisitos diferenciados','Asignación automática según tipo de trámite','Paneles diferenciados por auditor','Historial único por profesional o paciente'])
+      ]
+    },
+    {
+      id:'posgrado', title:'Escuela de Posgrado', icon:'graduation-cap',
+      questions:[
+        scale('valoracion','¿Cómo califica la gestión administrativa actual de Posgrado?'),
+        multi('carga','¿Qué tareas generan mayor carga administrativa?',['Difusión de actividades','Inscripciones','Validación de datos y documentación','Cobros y seguimiento de cuotas','Comunicación con alumnos y docentes','Control de asistencia','Certificados y constancias']),
+        multi('problemas','¿Qué dificultades se presentan con mayor frecuencia?',['Datos incompletos de inscriptos','Pagos difíciles de identificar','Consultas repetidas','Recordatorios manuales','Cambios de fechas o aulas','Certificados demorados','Información distribuida en varias herramientas']),
+        multi('automatizar','¿Qué procesos podrían automatizarse?',['Inscripción online','Confirmación de vacantes','Cobro y conciliación','Recordatorios de clases y pagos','Control de asistencia','Encuestas de satisfacción','Generación de certificados','Campañas segmentadas de nuevos cursos']),
+        multi('indicadores','¿Qué indicadores serían útiles?',['Cantidad de interesados e inscriptos','Conversión de consultas a inscripciones','Ingresos y deuda por curso','Asistencia','Satisfacción de participantes','Rentabilidad por actividad','Temáticas más demandadas'])
+      ]
+    },
+    {
+      id:'inteligencia_operativa', title:'Inteligencia Operativa', icon:'brain-circuit',
+      questions:[
+        multi('prioridades','¿Qué herramientas considera prioritarias para una futura plataforma?',['Asistente de IA para atención','Mesa de entrada digital','Portal de autogestión para asociados','Automatización de WhatsApp','Gestión documental inteligente','Tableros de control','Alertas y recordatorios automáticos','Integración entre sistemas']),
+        multi('alertas','¿Qué alertas serían más útiles?',['Mensajes sin responder','Trámites demorados','Facturas vencidas o pagos sin identificar','Stock bajo','Guardias sin cubrir','Auditorías pendientes','Cursos con baja inscripción','Tareas o decisiones de Comisión Directiva pendientes']),
+        multi('tablero','¿Qué información debería visualizarse en un tablero central?',['Atención y consultas por área','Facturación, cobranza y deuda','Trámites y auditorías','Stock y ventas','Guardias y S.O.S.','Posgrado','Comunicación y campañas','Indicadores generales de asociados']),
+        multi('condiciones','¿Qué condiciones considera importantes para implementar nuevas herramientas?',['Que sean simples de usar','Capacitación al personal','Integración con sistemas existentes','Seguridad y privacidad','Implementación por etapas','Soporte técnico permanente','Posibilidad de medir resultados']),
+        {id:'proceso_ideal', type:'textarea', label:'¿Qué tarea o proceso le delegaría primero a una plataforma inteligente?', required:false, placeholder:'Describa una tarea repetitiva, lenta o problemática que le gustaría transformar.'}
+      ]
+    },
+    {
+      id:'priorizacion', title:'Priorización y Visión de Futuro', icon:'list-checks',
+      questions:[
+        {id:'areas_urgentes', type:'multi', label:'Seleccione hasta cinco áreas que considera más urgentes para mejorar.', required:true, max:5, options:['Administración General','Mesa de Entrada','Atención al Asociado','WhatsApp Institucional','Comunicación Externa','Secretaría y Comisión Directiva','Sistemas','Venta de Insumos','Facturación y Gestión Económica','Servicio Odontológico Solidario (S.O.S.)','Guardia','Auditorías','Posgrado'], other:true},
+        multi('resultados_esperados','¿Qué resultados espera obtener con una mejora tecnológica?',['Menos tareas manuales','Respuestas más rápidas','Reducción de errores','Mayor trazabilidad y control','Mejor atención a asociados y público','Información en tiempo real','Ahorro de tiempo y costos','Mayor capacidad de comunicación']),
+        {id:'tres_cambios', type:'textarea', label:'Si pudiera cambiar únicamente tres cosas del funcionamiento actual del COP, ¿cuáles serían y por qué?', required:true, placeholder:'1. ...\n2. ...\n3. ...'},
+        {id:'observaciones', type:'textarea', label:'Observaciones, ejemplos o comentarios adicionales', required:false, placeholder:'Incluya cualquier situación concreta que ayude a comprender mejor los procesos actuales.'}
+      ]
+    }
+  ];
+
+  function scale(id,label){return {id,type:'scale',label,required:true}}
+  function multi(id,label,options){return {id,type:'multi',label,options,other:true,required:true}}
+
+  const introStep = {id:'inicio',title:'Presentación'};
+  const reviewStep = {id:'revision',title:'Revisión y envío'};
+  const allSteps = [introStep,...sections,reviewStep];
+  let currentStep = 0;
+  let isSubmitting = false;
+
+  const container = document.getElementById('steps-container');
+
+  function refreshIcons(){
+    try{
+      if(window.lucide && typeof window.lucide.createIcons === 'function'){
+        window.lucide.createIcons();
+      }
+    }catch(error){
+      console.warn('No se pudieron cargar los íconos; el formulario seguirá funcionando.', error);
+    }
+  }
+
+  function escapeHtml(value=''){
+    return String(value).replace(/[&<>'"]/g, char => ({'&':'&amp;','<':'&lt;','>':'&gt;',"'":'&#039;','"':'&quot;'}[char]));
+  }
+
+  function renderIntro(){
+    return `
+      <section class="step active" data-step="inicio">
+        <div class="min-h-[67vh] flex items-center justify-center">
+          <div class="max-w-4xl w-full text-center">
+            <div class="flex items-center justify-center gap-4 mb-7">
+              <div class="w-24 h-20 rounded-2xl bg-white text-slate-900 grid place-items-center font-black text-2xl shadow-2xl">COP</div>
+              <div class="h-14 w-px bg-white/20"></div>
+              <img src="https://i.postimg.cc/jSkQKpRK/Diseno-sin-titulo-2026-05-15T105828-195.png" alt="Instituto IEC" class="h-16 sm:h-20 object-contain" />
+            </div>
+            <span class="section-chip"><i data-lucide="scan-search" class="w-4 h-4"></i> Relevamiento institucional</span>
+            <h1 class="text-4xl sm:text-5xl md:text-7xl font-black leading-[.98] mt-6">DIAGNÓSTICO DE<br><span class="gradient-text">INTELIGENCIA OPERATIVA</span></h1>
+            <p class="text-lg sm:text-xl text-slate-300 mt-6 max-w-3xl mx-auto">Este cuestionario busca identificar dificultades, tareas repetitivas y oportunidades de mejora en los procesos del Círculo Odontológico de Paraná.</p>
+            <div class="grid sm:grid-cols-3 gap-4 mt-8 text-left">
+              <div class="glass rounded-2xl p-5"><i data-lucide="clock-3" class="w-7 h-7 text-cyan-300"></i><p class="font-black mt-3">15 a 20 minutos</p><p class="text-sm text-slate-400 mt-1">Puede completarse por etapas.</p></div>
+              <div class="glass rounded-2xl p-5"><i data-lucide="save" class="w-7 h-7 text-blue-300"></i><p class="font-black mt-3">Formulario estable</p><p class="text-sm text-slate-400 mt-1">Sin dependencia del almacenamiento del navegador.</p></div>
+              <div class="glass rounded-2xl p-5"><i data-lucide="shield-check" class="w-7 h-7 text-violet-300"></i><p class="font-black mt-3">Diagnóstico interno</p><p class="text-sm text-slate-400 mt-1">La información se utilizará para diseñar mejoras.</p></div>
+            </div>
+            <p class="text-sm text-slate-500 mt-7">Las preguntas con <span class="required-mark">*</span> son obligatorias. En las preguntas de casillas puede seleccionar más de una respuesta.</p>
+          </div>
+        </div>
+      </section>`;
+  }
+
+  function renderQuestion(section,q,index){
+    const fieldName = `${section.id}__${q.id}`;
+    const required = q.required ? '<span class="required-mark">*</span>' : '';
+    let body='';
+
+    if(['text','email','tel'].includes(q.type)){
+      body = `<input class="text-input" type="${q.type}" id="${fieldName}" name="${fieldName}" placeholder="${escapeHtml(q.placeholder||'')}" ${q.required?'required':''} />`;
+    } else if(q.type==='textarea'){
+      body = `<textarea class="text-area" id="${fieldName}" name="${fieldName}" placeholder="${escapeHtml(q.placeholder||'')}" ${q.required?'required':''}></textarea>`;
+    } else if(q.type==='scale'){
+      body = `<div class="flex justify-between text-xs text-slate-500 mb-2"><span>1 · Muy deficiente</span><span>5 · Excelente</span></div><div class="scale-wrap">${[1,2,3,4,5].map(v=>`<div class="scale-option"><input type="radio" id="${fieldName}_${v}" name="${fieldName}" value="${v}" ${q.required?'required':''}><label for="${fieldName}_${v}">${v}</label></div>`).join('')}</div>`;
+    } else if(q.type==='single'){
+      body = `<div class="grid sm:grid-cols-2 gap-2">${q.options.map((opt,i)=>`<label class="option-label"><input type="radio" name="${fieldName}" value="${escapeHtml(opt)}" ${q.required?'required':''}><span>${escapeHtml(opt)}</span></label>`).join('')}${q.other?`<label class="option-label sm:col-span-2"><input type="radio" name="${fieldName}" value="Otro" ${q.required?'required':''}><span class="w-full">Otro (especifique)<input type="text" class="text-input mt-3 other-input" data-for="${fieldName}" placeholder="Desarrolle su respuesta"></span></label>`:''}</div>`;
+    } else if(q.type==='multi'){
+      body = `<div class="grid sm:grid-cols-2 gap-2">${q.options.map(opt=>`<label class="option-label"><input type="checkbox" name="${fieldName}" value="${escapeHtml(opt)}" data-max="${q.max||''}"><span>${escapeHtml(opt)}</span></label>`).join('')}${q.other?`<label class="option-label sm:col-span-2"><input type="checkbox" name="${fieldName}" value="Otro" data-max="${q.max||''}"><span class="w-full">Otro (especifique)<input type="text" class="text-input mt-3 other-input" data-for="${fieldName}" placeholder="Desarrolle su respuesta"></span></label>`:''}</div>${q.max?`<p class="text-xs text-amber-300 mt-3">Puede seleccionar hasta ${q.max} opciones.</p>`:''}`;
+    }
+
+    return `<article class="question-card" data-question="${fieldName}" data-type="${q.type}" data-required="${q.required?'true':'false'}" data-max="${q.max||''}">
+      <div class="flex gap-3 items-start mb-4"><span class="w-8 h-8 rounded-full bg-cyan-400/10 border border-cyan-400/20 text-cyan-200 grid place-items-center text-xs font-black shrink-0">${index+1}</span><div><h3 class="font-bold text-base sm:text-lg leading-snug">${escapeHtml(q.label)} ${required}</h3></div></div>
+      ${body}
+      <p class="validation-message hidden text-sm text-red-300 mt-3">Complete esta pregunta para continuar.</p>
+    </article>`;
+  }
+
+  function renderSection(section,stepIndex){
+    return `<section class="step" data-step="${section.id}">
+      <div class="mb-8">
+        <span class="section-chip"><i data-lucide="${section.icon}" class="w-4 h-4"></i> Sección ${stepIndex} de ${sections.length}</span>
+        <h2 class="text-3xl sm:text-5xl font-black mt-4">${escapeHtml(section.title)}</h2>
+        ${section.intro?`<p class="text-slate-400 mt-3 max-w-3xl">${escapeHtml(section.intro)}</p>`:'<p class="text-slate-400 mt-3">Seleccione todas las opciones que correspondan y utilice “Otro” para ampliar cuando sea necesario.</p>'}
+      </div>
+      <div class="space-y-5">${section.questions.map((q,i)=>renderQuestion(section,q,i)).join('')}</div>
+    </section>`;
+  }
+
+  function renderReview(){
+    return `<section class="step" data-step="revision">
+      <div class="mb-8">
+        <span class="section-chip"><i data-lucide="send" class="w-4 h-4"></i> Último paso</span>
+        <h2 class="text-3xl sm:text-5xl font-black mt-4">Revisión y envío</h2>
+        <p class="text-slate-400 mt-3">Revise el resumen general. Puede volver a cualquier sección con el botón Anterior.</p>
+      </div>
+      <div class="glass rounded-3xl p-5 sm:p-7">
+        <div id="review-summary"></div>
+      </div>
+      <label class="option-label mt-5">
+        <input type="checkbox" id="confirmation" />
+        <span>Confirmo que revisé las respuestas y autorizo su envío para la elaboración del diagnóstico institucional.</span>
+      </label>
+      <div class="mt-7 flex flex-col sm:flex-row gap-3">
+        <button type="button" id="submit-btn" class="btn btn-success flex-1" onclick="submitForm()"><i data-lucide="send" class="w-5 h-5"></i> Enviar diagnóstico</button>
+        <button type="button" class="btn" onclick="downloadJSON()"><i data-lucide="download" class="w-5 h-5"></i> Descargar copia JSON</button>
+      </div>
+      <div id="submit-error" class="hidden mt-5 rounded-2xl p-4 bg-red-400/10 border border-red-400/25 text-red-200 text-sm"></div>
+    </section>`;
+  }
+
+  function buildForm(){
+    container.innerHTML = renderIntro() + sections.map((s,i)=>renderSection(s,i+1)).join('') + renderReview();
+    bindInputs();
+    restoreDraft();
+    updateUI();
+    refreshIcons();
+  }
+
+  function bindInputs(){
+    document.querySelectorAll('#cop-form input, #cop-form textarea, #cop-form select').forEach(el=>{
+      el.addEventListener('input',()=>{clearInvalid(el);saveDraftDebounced()});
+      el.addEventListener('change',()=>{enforceMax(el);clearInvalid(el);saveDraftDebounced()});
+    });
+  }
+
+  function enforceMax(el){
+    if(el.type!=='checkbox') return;
+    const max = Number(el.dataset.max||0);
+    if(!max) return;
+    const checked = document.querySelectorAll(`input[name="${CSS.escape(el.name)}"]:checked`);
+    if(checked.length>max){el.checked=false;showToast(`Puede seleccionar hasta ${max} opciones.`,true)}
+  }
+
+  function clearInvalid(el){
+    const card=el.closest('.question-card');
+    if(card){card.classList.remove('invalid');card.querySelector('.validation-message')?.classList.add('hidden')}
+  }
+
+  function getCurrentStepElement(){return document.querySelectorAll('.step')[currentStep]}
+
+  function validateCurrentStep(){
+    if(currentStep===0 || currentStep===allSteps.length-1) return true;
+    const step=getCurrentStepElement();
+    let valid=true;
+    step.querySelectorAll('.question-card[data-required="true"]').forEach(card=>{
+      const name=card.dataset.question;
+      const type=card.dataset.type;
+      let answered=false;
+      if(type==='multi') answered=card.querySelectorAll(`input[name="${CSS.escape(name)}"]:checked`).length>0;
+      else if(type==='single'||type==='scale') answered=!!card.querySelector(`input[name="${CSS.escape(name)}"]:checked`);
+      else answered=!!card.querySelector(`[name="${CSS.escape(name)}"]`)?.value.trim();
+      if(!answered){valid=false;card.classList.add('invalid');card.querySelector('.validation-message')?.classList.remove('hidden')}
+    });
+    if(!valid){step.querySelector('.question-card.invalid')?.scrollIntoView({behavior:'smooth',block:'center'});showToast('Complete las preguntas obligatorias antes de continuar.',true)}
+    return valid;
+  }
+
+  function nextStep(){
+    if(!validateCurrentStep()) return;
+    if(currentStep<allSteps.length-1){currentStep++;if(currentStep===allSteps.length-1)renderReviewSummary();updateUI();window.scrollTo({top:0,behavior:'smooth'})}
+  }
+  function previousStep(){if(currentStep>0){currentStep--;updateUI();window.scrollTo({top:0,behavior:'smooth'})}}
+
+  function updateUI(){
+    document.querySelectorAll('.step').forEach((step,i)=>step.classList.toggle('active',i===currentStep));
+    const step=allSteps[currentStep];
+    document.getElementById('step-label').textContent=step.title;
+    document.getElementById('step-counter').textContent=`${currentStep+1} / ${allSteps.length}`;
+    document.getElementById('progress-fill').style.width=`${(currentStep/(allSteps.length-1))*100}%`;
+    document.getElementById('prev-btn').style.visibility=currentStep===0?'hidden':'visible';
+    const next=document.getElementById('next-btn');
+    next.style.display=currentStep===allSteps.length-1?'none':'inline-flex';
+    next.innerHTML=currentStep===0?`Comenzar <i data-lucide="arrow-right" class="w-4 h-4"></i>`:`Siguiente <i data-lucide="arrow-right" class="w-4 h-4"></i>`;
+    refreshIcons();
+  }
+
+  function collectData(){
+    const payload={
+      formulario:'Diagnóstico Institucional - Círculo Odontológico de Paraná',
+      version:'1.0',
+      fecha_envio:new Date().toISOString(),
+      timezone:Intl.DateTimeFormat().resolvedOptions().timeZone,
+      origen:window.location.href,
+      user_agent:navigator.userAgent,
+      respuestas:{}
+    };
+    sections.forEach(section=>{
+      payload.respuestas[section.id]={titulo:section.title,respuestas:{}};
+      section.questions.forEach(q=>{
+        const name=`${section.id}__${q.id}`;
+        let value;
+        if(q.type==='multi'){
+          value=Array.from(document.querySelectorAll(`input[name="${CSS.escape(name)}"]:checked`)).map(el=>{
+            if(el.value==='Otro'){
+              const other=el.closest('label')?.querySelector('.other-input')?.value.trim();
+              return other?`Otro: ${other}`:'Otro';
+            }
+            return el.value;
+          });
+        }else if(q.type==='single'||q.type==='scale'){
+          const checked=document.querySelector(`input[name="${CSS.escape(name)}"]:checked`);
+          value=checked?.value||'';
+          if(value==='Otro'){
+            const other=checked.closest('label')?.querySelector('.other-input')?.value.trim();
+            value=other?`Otro: ${other}`:'Otro';
+          }
+        }else{
+          value=document.querySelector(`[name="${CSS.escape(name)}"]`)?.value.trim()||'';
+        }
+        payload.respuestas[section.id].respuestas[q.id]={pregunta:q.label,respuesta:value};
+      });
+    });
+    payload.respondente={
+      nombre_apellido:payload.respuestas.datos_responsable.respuestas.nombre_apellido.respuesta,
+      cargo_area:payload.respuestas.datos_responsable.respuestas.cargo_area.respuesta,
+      email:payload.respuestas.datos_responsable.respuestas.email.respuesta,
+      telefono:payload.respuestas.datos_responsable.respuestas.telefono.respuesta
+    };
+    return payload;
+  }
+
+  function renderReviewSummary(){
+    const data=collectData();
+    const answered=sections.reduce((sum,s)=>sum+s.questions.filter(q=>{
+      const v=data.respuestas[s.id].respuestas[q.id].respuesta;
+      return Array.isArray(v)?v.length>0:String(v||'').trim()!=='';
+    }).length,0);
+    const total=sections.reduce((sum,s)=>sum+s.questions.length,0);
+    const priorities=data.respuestas.priorizacion.respuestas.areas_urgentes.respuesta||[];
+    document.getElementById('review-summary').innerHTML=`
+      <div class="grid sm:grid-cols-3 gap-4 mb-6">
+        <div class="rounded-2xl bg-white/5 border border-white/10 p-4"><p class="text-xs text-slate-400 uppercase font-bold tracking-widest">Responsable</p><p class="font-black mt-2">${escapeHtml(data.respondente.nombre_apellido||'Sin identificar')}</p><p class="text-sm text-slate-400">${escapeHtml(data.respondente.cargo_area||'')}</p></div>
+        <div class="rounded-2xl bg-white/5 border border-white/10 p-4"><p class="text-xs text-slate-400 uppercase font-bold tracking-widest">Preguntas respondidas</p><p class="text-3xl font-black mt-2">${answered} / ${total}</p></div>
+        <div class="rounded-2xl bg-white/5 border border-white/10 p-4"><p class="text-xs text-slate-400 uppercase font-bold tracking-widest">Áreas prioritarias</p><p class="font-black mt-2">${priorities.length}</p><p class="text-sm text-slate-400">seleccionadas</p></div>
+      </div>
+      <h3 class="text-xl font-black mb-2">Prioridades declaradas</h3>
+      <div class="flex flex-wrap gap-2">${priorities.length?priorities.map(p=>`<span class="px-3 py-2 rounded-full bg-cyan-400/10 border border-cyan-400/20 text-cyan-100 text-sm">${escapeHtml(p)}</span>`).join(''):'<span class="text-slate-500">No se seleccionaron prioridades.</span>'}</div>
+      <div class="mt-6 rounded-2xl bg-blue-400/8 border border-blue-400/20 p-4 text-sm text-slate-300"><strong>Destino:</strong> las respuestas se enviarán de forma segura al flujo de diagnóstico del Instituto IEC mediante n8n.</div>`;
+  }
+
+  // Guardado local desactivado para evitar errores de cuota del navegador o del visor.
+  function saveDraftDebounced(){}
+  function saveDraft(){}
+  function restoreDraft(){}
+
+  async function submitForm(){
+    if(isSubmitting)return;
+    if(!document.getElementById('confirmation').checked){showToast('Confirme la revisión de las respuestas antes de enviar.',true);return}
+    const button=document.getElementById('submit-btn');
+    const errorBox=document.getElementById('submit-error');
+    errorBox.classList.add('hidden');
+    isSubmitting=true;button.disabled=true;button.innerHTML='<span class="animate-pulse">Enviando respuestas...</span>';
+    const payload=collectData();
+    try{
+      const response=await fetch(WEBHOOK_URL,{method:'POST',headers:{'Content-Type':'application/json','Accept':'application/json'},body:JSON.stringify(payload)});
+      if(!response.ok)throw new Error(`El servidor respondió con estado ${response.status}`);
+      showSuccess(payload);
+    }catch(error){
+      console.error(error);
+      errorBox.innerHTML=`<strong>No se pudo completar el envío.</strong><br>${escapeHtml(error.message)}. Verifique que el workflow de n8n esté activo y que el webhook permita solicitudes desde este dominio.`;
+      errorBox.classList.remove('hidden');
+      showToast('No se pudo enviar el formulario.',true);
+    }finally{
+      isSubmitting=false;button.disabled=false;button.innerHTML='<i data-lucide="send" class="w-5 h-5"></i> Enviar diagnóstico';refreshIcons();
+    }
+  }
+
+  function showSuccess(payload){
+    document.getElementById('navigation').style.display='none';
+    container.innerHTML=`<section class="step active"><div class="min-h-[70vh] flex items-center justify-center"><div class="max-w-3xl w-full text-center glass rounded-[32px] p-7 sm:p-12"><div class="w-20 h-20 rounded-full bg-green-400/15 border border-green-400/30 grid place-items-center mx-auto"><i data-lucide="check" class="w-10 h-10 text-green-300"></i></div><span class="section-chip mt-6" style="color:#bbf7d0;border-color:rgba(74,222,128,.28);background:rgba(34,197,94,.10)">Envío completado</span><h2 class="text-4xl sm:text-6xl font-black mt-5">¡Muchas gracias!</h2><p class="text-lg text-slate-300 mt-4">Las respuestas de <strong>${escapeHtml(payload.respondente.nombre_apellido)}</strong> fueron enviadas correctamente para la elaboración del diagnóstico institucional del COP.</p><div class="mt-7 rounded-2xl bg-white/5 border border-white/10 p-5 text-left"><p class="text-sm text-slate-400">Fecha y hora del envío</p><p class="font-bold mt-1">${new Date().toLocaleString('es-AR')}</p></div><button type="button" class="btn mt-7" onclick="location.reload()"><i data-lucide="rotate-ccw" class="w-4 h-4"></i> Cargar otra respuesta</button></div></div></section>`;
+    document.getElementById('step-label').textContent='Envío completado';document.getElementById('progress-fill').style.width='100%';refreshIcons();window.scrollTo({top:0,behavior:'smooth'});
+  }
+
+  function downloadJSON(){
+    const blob=new Blob([JSON.stringify(collectData(),null,2)],{type:'application/json'});
+    const url=URL.createObjectURL(blob);const a=document.createElement('a');a.href=url;a.download=`diagnostico_cop_${new Date().toISOString().slice(0,10)}.json`;document.body.appendChild(a);a.click();a.remove();URL.revokeObjectURL(url);
+  }
+
+  function showToast(message,isError=false){
+    const toast=document.getElementById('toast');toast.textContent=message;toast.classList.toggle('error',isError);toast.style.display='block';clearTimeout(window.__toastTimer);window.__toastTimer=setTimeout(()=>toast.style.display='none',4200);
+  }
+
+  function forceNext(event){
+    if(event){ event.preventDefault(); event.stopPropagation(); }
+    try{
+      if(currentStep===0){
+        currentStep=1;
+        updateUI();
+        window.scrollTo(0,0);
+        return false;
+      }
+      nextStep();
+    }catch(error){
+      console.error('Error al avanzar:', error);
+      const steps=document.querySelectorAll('.step');
+      if(steps.length>1){
+        steps.forEach((el,i)=>el.classList.toggle('active',i===1));
+        currentStep=1;
+        document.getElementById('step-label').textContent=allSteps[1].title;
+        document.getElementById('prev-btn').style.visibility='visible';
+      }
+    }
+    return false;
+  }
+
+  function forcePrevious(event){
+    if(event){ event.preventDefault(); event.stopPropagation(); }
+    previousStep();
+    return false;
+  }
+
+  function bindNavigation(){
+    const previousButton = document.getElementById('prev-btn');
+    const nextButton = document.getElementById('next-btn');
+
+    if(previousButton){
+      previousButton.addEventListener('click', function(event){
+        event.preventDefault();
+        previousStep();
+      });
+    }
+
+    if(nextButton){
+      nextButton.addEventListener('click', function(event){
+        event.preventDefault();
+        nextStep();
+      });
+    }
+  }
+
+  // Exponer funciones para botones dinámicos y compatibilidad con navegadores.
+  window.nextStep = nextStep;
+  window.previousStep = previousStep;
+  window.submitForm = submitForm;
+  window.downloadJSON = downloadJSON;
+
+  // Primero construimos el formulario; recién después enlazamos los botones
+  // de navegación, porque esos botones deben existir en el DOM.
+  buildForm();
+  // La navegación usa onclick directo para máxima compatibilidad.
+  window.forceNext = forceNext;
+  window.forcePrevious = forcePrevious;
+</script>
+</body>
+</html>
