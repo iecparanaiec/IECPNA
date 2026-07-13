@@ -104,11 +104,38 @@
     .flow-line { height: 2px; background: linear-gradient(90deg, rgba(34,211,238,.15), rgba(96,165,250,.8), rgba(139,92,246,.15)); }
     .scrollbar-soft::-webkit-scrollbar { width: 8px; }
     .scrollbar-soft::-webkit-scrollbar-thumb { background: rgba(96,165,250,.35); border-radius: 999px; }
-    .mini-logo {
-      width: 54px; height: 54px; border-radius: 18px;
-      display: grid; place-items: center; font-weight: 900; letter-spacing: -2px;
-      background: linear-gradient(135deg, #0ea5e9, #2563eb 55%, #7c3aed);
-      box-shadow: 0 12px 35px rgba(37,99,235,.32);
+    .apb-logo-shell {
+      position: relative;
+      width: 68px;
+      height: 68px;
+      flex: 0 0 68px;
+      border-radius: 999px;
+      display: grid;
+      place-items: center;
+      padding: 5px;
+      overflow: hidden;
+      background: rgba(255,255,255,.96);
+      border: 2px solid rgba(103,232,249,.48);
+      box-shadow:
+        0 0 0 5px rgba(34,211,238,.08),
+        0 14px 40px rgba(37,99,235,.34),
+        inset 0 0 18px rgba(59,130,246,.08);
+    }
+    .apb-logo-shell::before {
+      content: "";
+      position: absolute;
+      inset: -18px;
+      z-index: -1;
+      border-radius: 999px;
+      background: radial-gradient(circle, rgba(34,211,238,.28), rgba(59,130,246,.12) 48%, transparent 70%);
+      filter: blur(12px);
+    }
+    .apb-logo-shell img {
+      width: 100%;
+      height: 100%;
+      border-radius: 999px;
+      object-fit: cover;
+      display: block;
     }
     .status-live { animation: pulseLive 1.8s infinite; }
     @keyframes pulseLive { 0%,100% { opacity: 1; } 50% { opacity: .45; } }
@@ -118,6 +145,7 @@
       .iframe-wrap, .iframe-wrap iframe { min-height: 520px; height: 520px; }
     }
     @media (max-width: 640px) {
+      .apb-logo-shell { width: 60px; height: 60px; flex-basis: 60px; }
       body { overflow: hidden; }
       .nav-button { top: auto; bottom: 16px; transform: none; }
       #prev-btn { left: 14px !important; }
@@ -144,7 +172,9 @@
     <div class="orb w-96 h-96 bg-violet-500 bottom-[-160px] right-[-120px]"></div>
     <div class="relative z-10 max-w-6xl mx-auto w-full px-3">
       <div class="flex items-center justify-center gap-4 mb-6">
-        <div class="mini-logo text-white text-xl">APB</div>
+        <div class="apb-logo-shell" aria-label="Logo de la Asociación Paranaense de Básquet">
+          <img src="https://i.postimg.cc/DyXqQqB3/images-(7).png" alt="Logo APB" />
+        </div>
         <div class="h-12 w-px bg-white/20"></div>
         <img src="https://i.postimg.cc/jSkQKpRK/Diseno-sin-titulo-2026-05-15T105828-195.png" alt="Instituto IEC" class="h-14 md:h-16 object-contain" />
       </div>
@@ -420,7 +450,9 @@
     <div class="orb w-80 h-80 bg-cyan-400 bottom-[-160px] left-[-100px]"></div>
     <div class="relative z-10 max-w-5xl mx-auto px-3">
       <div class="flex items-center justify-center gap-4 mb-6">
-        <div class="mini-logo text-white text-xl">APB</div>
+        <div class="apb-logo-shell" aria-label="Logo de la Asociación Paranaense de Básquet">
+          <img src="https://i.postimg.cc/DyXqQqB3/images-(7).png" alt="Logo APB" />
+        </div>
         <div class="h-12 w-px bg-white/20"></div>
         <img src="https://i.postimg.cc/jSkQKpRK/Diseno-sin-titulo-2026-05-15T105828-195.png" alt="Instituto IEC" class="h-14 md:h-16 object-contain" />
       </div>
