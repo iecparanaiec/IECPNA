@@ -1,0 +1,1042 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Unimédica + Instituto IEC | Programa de Inteligencia Operativa</title>
+  <meta name="description" content="Propuesta institucional para una nueva comisión exclusiva de Unimédica Paraná: 12 clases de Inteligencia Artificial aplicada, fuera del horario laboral." />
+
+  <script src="https://cdn.tailwindcss.com/3.4.17"></script>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
+  <script src="https://cdn.jsdelivr.net/npm/lucide@0.468.0/dist/umd/lucide.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+
+  <style>
+    :root{
+      --cyan:#22d3ee;
+      --blue:#3b82f6;
+      --violet:#8b5cf6;
+      --green:#22c55e;
+      --amber:#f59e0b;
+      --bg:#070b14;
+    }
+
+    *{box-sizing:border-box;font-family:'DM Sans',sans-serif}
+    html,body{margin:0;padding:0;background:var(--bg)}
+    body{color:#fff;overflow:hidden}
+    button,a{-webkit-tap-highlight-color:transparent}
+    button{font:inherit}
+
+    .slide{
+      display:none;
+      width:100%;
+      height:100vh;
+      min-height:100vh;
+      overflow-y:auto;
+      overflow-x:hidden;
+      padding:2rem 1.5rem 5.5rem;
+      scroll-behavior:smooth;
+    }
+    .slide.active{display:flex}
+
+    .glass-card{
+      background:rgba(255,255,255,.07);
+      backdrop-filter:blur(14px);
+      border:1px solid rgba(255,255,255,.11);
+      box-shadow:0 24px 70px rgba(0,0,0,.24);
+    }
+
+    .gradient-text{
+      background:linear-gradient(135deg,#67e8f9,#60a5fa,#a78bfa);
+      -webkit-background-clip:text;
+      -webkit-text-fill-color:transparent;
+      background-clip:text;
+    }
+
+    .green-text{
+      background:linear-gradient(135deg,#86efac,#22c55e);
+      -webkit-background-clip:text;
+      -webkit-text-fill-color:transparent;
+      background-clip:text;
+    }
+
+    .amber-text{
+      background:linear-gradient(135deg,#fde68a,#f59e0b,#fb923c);
+      -webkit-background-clip:text;
+      -webkit-text-fill-color:transparent;
+      background-clip:text;
+    }
+
+    .bg-pattern{
+      background-image:
+        radial-gradient(circle at 18% 20%,rgba(34,211,238,.12),transparent 25%),
+        radial-gradient(circle at 82% 75%,rgba(139,92,246,.13),transparent 30%),
+        linear-gradient(90deg,rgba(59,130,246,.055) 1px,transparent 1px),
+        linear-gradient(rgba(59,130,246,.055) 1px,transparent 1px);
+      background-size:auto,auto,52px 52px,52px 52px;
+    }
+
+    .bg-pattern::after{
+      content:"";
+      position:absolute;
+      inset:0;
+      background:linear-gradient(135deg,transparent 0 45%,rgba(34,211,238,.06) 46%,transparent 48% 100%);
+      background-size:360px 360px;
+      pointer-events:none;
+    }
+
+    .orb{
+      position:absolute;
+      border-radius:999px;
+      filter:blur(80px);
+      opacity:.2;
+    }
+
+    .pill{
+      background:rgba(255,255,255,.055);
+      border:1px solid rgba(255,255,255,.09);
+    }
+
+    .impact-card{transition:transform .25s ease,border-color .25s ease}
+    .impact-card:hover{transform:translateY(-4px);border-color:rgba(103,232,249,.35)}
+
+    .nav-button{
+      position:fixed;
+      top:50%;
+      z-index:70;
+      transform:translateY(-50%);
+      width:46px;height:46px;border-radius:999px;
+      display:flex;align-items:center;justify-content:center;
+      background:rgba(255,255,255,.08);
+      border:1px solid rgba(255,255,255,.14);
+      backdrop-filter:blur(14px);
+      color:#fff;transition:.2s ease;
+    }
+
+    .nav-button:hover{background:rgba(59,130,246,.25);border-color:rgba(96,165,250,.55)}
+    .dot{
+      width:8px;height:8px;border-radius:999px;
+      background:rgba(255,255,255,.25);
+      transition:.25s ease;border:0;padding:0;
+    }
+    .dot.active{width:24px;background:linear-gradient(90deg,var(--cyan),var(--blue))}
+
+    .top-actions{
+      position:fixed;top:14px;left:14px;z-index:80;
+      display:flex;gap:8px;flex-wrap:wrap;
+    }
+
+    .action-button{
+      display:inline-flex;align-items:center;justify-content:center;gap:8px;
+      border-radius:999px;padding:10px 14px;
+      background:rgba(5,10,20,.72);
+      border:1px solid rgba(255,255,255,.14);
+      color:#fff;backdrop-filter:blur(14px);
+      font-size:12px;font-weight:800;letter-spacing:.03em;
+      transition:.2s ease;cursor:pointer;
+    }
+    .action-button:hover{background:rgba(37,99,235,.28);border-color:rgba(96,165,250,.55)}
+    .action-button.primary{
+      background:linear-gradient(135deg,rgba(14,165,233,.92),rgba(37,99,235,.92));
+      border-color:rgba(125,211,252,.55)
+    }
+
+    .number-badge{
+      background:linear-gradient(135deg,rgba(34,211,238,.26),rgba(59,130,246,.22));
+      border:1px solid rgba(103,232,249,.32);
+    }
+
+    .price-card{
+      background:
+        radial-gradient(circle at 85% 15%,rgba(34,197,94,.16),transparent 28%),
+        linear-gradient(135deg,rgba(255,255,255,.08),rgba(255,255,255,.04));
+      border:1px solid rgba(74,222,128,.28);
+      box-shadow:0 24px 80px rgba(34,197,94,.08);
+    }
+
+    .discount-badge{
+      display:inline-flex;align-items:center;gap:8px;
+      padding:8px 12px;border-radius:999px;
+      font-weight:900;font-size:12px;letter-spacing:.05em;
+      background:rgba(34,197,94,.12);color:#86efac;
+      border:1px solid rgba(74,222,128,.28);
+    }
+
+    .timeline-line{
+      height:2px;
+      background:linear-gradient(90deg,rgba(34,211,238,.15),rgba(96,165,250,.8),rgba(139,92,246,.15));
+    }
+
+    .unimedica-shell{
+      min-width:190px;
+      height:72px;
+      padding:0 22px;
+      border-radius:22px;
+      display:flex;align-items:center;justify-content:center;
+      background:linear-gradient(145deg,rgba(255,255,255,.97),rgba(224,242,254,.94));
+      color:#0f172a;
+      border:2px solid rgba(103,232,249,.55);
+      box-shadow:0 15px 45px rgba(37,99,235,.28),0 0 0 6px rgba(34,211,238,.07);
+      font-size:20px;font-weight:1000;letter-spacing:.08em;
+    }
+
+    .schedule-chip{
+      display:inline-flex;align-items:center;gap:9px;
+      padding:11px 15px;border-radius:14px;
+      background:rgba(245,158,11,.10);
+      border:1px solid rgba(251,191,36,.26);
+      color:#fde68a;font-weight:800;
+    }
+
+    .pdf-status{
+      position:fixed;inset:auto 16px 16px auto;z-index:100;
+      max-width:340px;padding:12px 16px;border-radius:16px;
+      background:rgba(7,11,20,.94);
+      border:1px solid rgba(255,255,255,.14);
+      box-shadow:0 20px 50px rgba(0,0,0,.35);
+      font-size:13px;color:#dbeafe;display:none;
+    }
+
+    #pdf-deck{
+      position:fixed;left:-30000px;top:0;width:1600px;
+      background:#070b14;z-index:-9999;
+    }
+
+    #pdf-deck .pdf-page{
+      display:flex!important;
+      width:1600px!important;height:900px!important;min-height:900px!important;
+      overflow:hidden!important;
+      padding:48px 72px 60px!important;
+      page-break-after:always;break-after:page;
+      position:relative;
+    }
+    #pdf-deck .pdf-page:last-child{page-break-after:auto;break-after:auto}
+
+    @media(max-width:768px){
+      .slide{padding:5.3rem .85rem 5.5rem}
+      .nav-button{width:40px;height:40px}
+      .top-actions{top:10px;left:10px;right:10px}
+      .action-button{padding:9px 11px;font-size:10px}
+    }
+
+    @media(max-width:640px){
+      body{overflow:hidden}
+      .nav-button{top:auto;bottom:16px;transform:none}
+      #prev-btn{left:14px!important}
+      #next-btn{right:14px!important}
+      #dots{bottom:29px!important;max-width:calc(100vw - 120px)}
+      .unimedica-shell{min-width:150px;height:58px;font-size:16px;border-radius:18px}
+    }
+
+    @media print{
+      body{overflow:visible;background:#070b14}
+      .top-actions,.nav-button,#dots,#slide-counter,.pdf-status{display:none!important}
+      .slide{
+        display:flex!important;width:100vw;height:100vh;min-height:100vh;
+        page-break-after:always;break-after:page;overflow:hidden;
+      }
+    }
+  </style>
+</head>
+
+<body class="relative">
+  <div class="top-actions">
+    <button class="action-button primary" onclick="downloadPDF()" id="download-btn">
+      <i data-lucide="download" style="width:16px;height:16px"></i>
+      DESCARGAR PDF
+    </button>
+    <button class="action-button" onclick="toggleFullscreen()">
+      <i data-lucide="maximize-2" style="width:16px;height:16px"></i>
+      PANTALLA COMPLETA
+    </button>
+    <button class="action-button" onclick="window.print()">
+      <i data-lucide="printer" style="width:16px;height:16px"></i>
+      IMPRIMIR
+    </button>
+  </div>
+
+  <button id="prev-btn" class="nav-button left-3 md:left-5" onclick="changeSlide(-1)" aria-label="Diapositiva anterior">
+    <i data-lucide="chevron-left" style="width:22px;height:22px"></i>
+  </button>
+  <button id="next-btn" class="nav-button right-3 md:right-5" onclick="changeSlide(1)" aria-label="Diapositiva siguiente">
+    <i data-lucide="chevron-right" style="width:22px;height:22px"></i>
+  </button>
+
+  <div id="dots" class="fixed bottom-4 left-1/2 -translate-x-1/2 z-[70] flex items-center justify-center gap-2 flex-wrap"></div>
+  <div id="slide-counter" class="fixed top-4 right-4 z-[70] px-3 py-1.5 rounded-full bg-black/30 border border-white/10 backdrop-blur text-xs text-slate-300"></div>
+  <div id="pdf-status" class="pdf-status"></div>
+  <div id="pdf-deck" aria-hidden="true"></div>
+
+  <!-- 1 -->
+  <section class="slide active flex-col items-center justify-center relative bg-gradient-to-br from-[#070b14] via-[#0b162b] to-[#070b14] text-center">
+    <div class="absolute inset-0 bg-pattern"></div>
+    <div class="orb w-80 h-80 bg-cyan-400 top-[-120px] left-[-100px]"></div>
+    <div class="orb w-96 h-96 bg-violet-500 bottom-[-160px] right-[-120px]"></div>
+
+    <div class="relative z-10 max-w-6xl mx-auto w-full px-3">
+      <div class="flex items-center justify-center gap-4 md:gap-6 mb-7">
+        <img src="https://i.postimg.cc/Z5Sn2gzD/Chat-GPT-Image-12-jul-2026-10-45-09-p-m.png"
+style="height:72px;object-fit:contain;filter:drop-shadow(0 12px 25px rgba(0,0,0,.25));" alt="Unimédica Paraná"/>
+        <div class="h-14 w-px bg-white/20"></div>
+        <img src="https://i.postimg.cc/jSkQKpRK/Diseno-sin-titulo-2026-05-15T105828-195.png" alt="Instituto IEC" class="h-14 md:h-20 object-contain" />
+      </div>
+
+      <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-cyan-400/25 bg-cyan-400/10 text-cyan-200 text-xs md:text-sm font-bold tracking-[.18em] uppercase mb-5">
+        <span>🤝</span> Nueva comisión exclusiva
+      </div>
+
+      <h1 class="text-4xl sm:text-5xl md:text-7xl lg:text-8xl font-black leading-[.95] mb-5">
+        EXPERTO EN APLICACIONES<br>
+        <span class="gradient-text">PRÁCTICAS CON IA</span>
+      </h1>
+
+      <p class="text-base sm:text-lg md:text-2xl text-slate-300 max-w-4xl mx-auto mb-7">
+        Una nueva oportunidad para incorporar más integrantes del equipo de Unimédica a una formación tecnológica práctica, aplicable y compatible con la jornada laboral.
+      </p>
+
+      <div class="flex flex-wrap justify-center gap-3">
+        <span class="pill px-4 py-2 rounded-xl text-sm font-semibold text-cyan-200">12 clases</span>
+        <span class="pill px-4 py-2 rounded-xl text-sm font-semibold text-blue-200">Comisión exclusiva</span>
+        <span class="pill px-4 py-2 rounded-xl text-sm font-semibold text-violet-200">Fuera del horario laboral</span>
+        <span class="pill px-4 py-2 rounded-xl text-sm font-semibold text-green-200">Condiciones ya acordadas</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- 2 -->
+  <section class="slide flex-col items-center justify-center relative bg-gradient-to-b from-[#070b14] to-[#0b1426]">
+    <div class="absolute inset-0 bg-pattern opacity-70"></div>
+    <div class="relative z-10 max-w-6xl mx-auto w-full px-3">
+      <div class="mb-6">
+        <span class="text-cyan-300 font-bold tracking-widest text-sm">01 · ANTECEDENTE POSITIVO</span>
+        <h2 class="text-3xl sm:text-4xl md:text-6xl font-black mt-2">
+          UNA EXPERIENCIA YA INICIADA.<br>
+          <span class="gradient-text">UNA NUEVA OPORTUNIDAD DE AMPLIACIÓN.</span>
+        </h2>
+      </div>
+
+      <div class="grid md:grid-cols-2 gap-5">
+        <div class="glass-card rounded-3xl p-6 md:p-8">
+          <div class="text-5xl mb-4">✅</div>
+          <p class="text-green-300 font-bold tracking-widest text-xs mb-2">PRIMERA EXPERIENCIA</p>
+          <h3 class="text-3xl font-black mb-3">Unimédica ya conformó una comisión con IEC</h3>
+          <p class="text-slate-300">
+            La experiencia previa permitió validar el interés del equipo, la modalidad institucional y las condiciones económicas preferenciales.
+          </p>
+        </div>
+
+        <div class="glass-card rounded-3xl p-6 md:p-8 border-blue-400/20 bg-gradient-to-br from-cyan-500/5 to-blue-500/5">
+          <div class="text-5xl mb-4">🚀</div>
+          <p class="text-cyan-300 font-bold tracking-widest text-xs mb-2">NUEVA ETAPA</p>
+          <h3 class="text-3xl font-black mb-3">Captar a más integrantes del equipo</h3>
+          <p class="text-slate-300">
+            Abrir una nueva comisión permite que quienes no participaron anteriormente puedan acceder a la misma oportunidad de actualización tecnológica.
+          </p>
+        </div>
+      </div>
+
+      <div class="mt-6 glass-card rounded-2xl p-5 text-center">
+        <p class="text-lg md:text-2xl font-bold">
+          No partimos de cero: retomamos un vínculo institucional ya construido para ampliar su alcance.
+        </p>
+      </div>
+      <div class="mt-6 glass-card rounded-3xl p-6 border border-cyan-400/20 bg-gradient-to-br from-cyan-500/5 to-blue-500/5">
+        <span class="text-cyan-300 text-xs font-black tracking-[.2em]">PACIENTE 0: VALIDACIÓN EXITOSA</span>
+        <h3 class="text-3xl font-black mt-3 mb-4">La primera experiencia ya demostró el potencial.</h3>
+        <p class="text-slate-300 leading-8">
+          La comisión inicial estuvo integrada por <strong>cinco integrantes de la conducción</strong>, muchos de ellos con conocimientos informáticos muy básicos e incluso con escasa utilización de la computadora, y <strong>cinco administrativos</strong> que rápidamente comenzaron a identificar oportunidades concretas de aplicación dentro de su trabajo cotidiano.
+        </p>
+        <p class="text-slate-300 leading-8 mt-4">
+          Ese proceso cumplió un objetivo estratégico: el <strong>"paciente 0"</strong> ya fue implantado. Hoy la organización conoce de primera mano el alcance real de la Inteligencia Artificial y comprende que no se trata únicamente de utilizar ChatGPT, sino de transformar procesos completos mediante herramientas de Inteligencia Operativa.
+        </p>
+        <p class="text-slate-300 leading-8 mt-4">
+          La nueva comisión propone dar el siguiente paso: incorporar más integrantes del área administrativa para aplicar directamente las herramientas aprendidas sobre los procesos internos de Unimédica, generando automatizaciones, asistentes inteligentes, documentación, comunicación y mejoras operativas que impacten en toda la organización.
+        </p>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- 3 -->
+  <section class="slide flex-col items-center justify-center relative bg-gradient-to-b from-[#0b1426] to-[#070b14]">
+    <div class="absolute inset-0 bg-pattern opacity-55"></div>
+    <div class="relative z-10 max-w-6xl mx-auto w-full px-3">
+      <div class="text-center mb-7">
+        <span class="text-amber-300 font-bold tracking-widest text-sm">02 · MODALIDAD COMPATIBLE</span>
+        <h2 class="text-3xl sm:text-4xl md:text-6xl font-black mt-2">
+          CAPACITACIÓN POR FUERA<br>
+          <span class="amber-text">DEL HORARIO LABORAL</span>
+        </h2>
+      </div>
+
+      <div class="grid md:grid-cols-3 gap-4">
+        <div class="glass-card rounded-3xl p-6 text-center impact-card">
+          <span class="text-5xl">🕒</span>
+          <h3 class="text-xl font-black mt-4">Sin afectar la jornada</h3>
+          <p class="text-slate-300 mt-2">El cursado se organiza en una franja posterior al horario de trabajo.</p>
+        </div>
+        <div class="glass-card rounded-3xl p-6 text-center impact-card border-amber-400/20">
+          <span class="text-5xl">📅</span>
+          <h3 class="text-xl font-black mt-4">Día consensuado</h3>
+          <p class="text-slate-300 mt-2">Unimédica e IEC definen conjuntamente el día más conveniente.</p>
+        </div>
+        <div class="glass-card rounded-3xl p-6 text-center impact-card border-violet-400/20">
+          <span class="text-5xl">👥</span>
+          <h3 class="text-xl font-black mt-4">Comisión exclusiva</h3>
+          <p class="text-slate-300 mt-2">Grupo integrado exclusivamente por miembros de la comunidad Unimédica.</p>
+        </div>
+      </div>
+
+      <div class="mt-6 flex justify-center">
+        <div class="schedule-chip">
+          <i data-lucide="moon" style="width:20px;height:20px"></i>
+          Horario vespertino o nocturno a definir con Unimédica
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 4 -->
+  <section class="slide flex-col items-center justify-center relative bg-gradient-to-b from-[#070b14] to-[#0b1426]">
+    <div class="absolute inset-0 bg-pattern opacity-55"></div>
+    <div class="relative z-10 max-w-6xl mx-auto w-full px-3">
+      <div class="mb-6">
+        <span class="text-cyan-300 font-bold tracking-widest text-sm">03 · OBJETIVO</span>
+        <h2 class="text-3xl sm:text-4xl md:text-6xl font-black mt-2">
+          POTENCIAR AL EQUIPO CON<br>
+          <span class="gradient-text">HERRAMIENTAS DE USO INMEDIATO</span>
+        </h2>
+      </div>
+
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+        <div class="glass-card rounded-3xl p-5 impact-card"><span class="text-4xl">⚡</span><h3 class="font-black mt-3">Productividad</h3><p class="text-slate-400 text-sm mt-2">Resolver tareas en menos tiempo y con mayor calidad.</p></div>
+        <div class="glass-card rounded-3xl p-5 impact-card"><span class="text-4xl">🤖</span><h3 class="font-black mt-3">Asistentes IA</h3><p class="text-slate-400 text-sm mt-2">Crear asistentes personalizados para funciones concretas.</p></div>
+        <div class="glass-card rounded-3xl p-5 impact-card"><span class="text-4xl">⚙️</span><h3 class="font-black mt-3">Automatización</h3><p class="text-slate-400 text-sm mt-2">Reducir tareas repetitivas y mejorar procesos.</p></div>
+        <div class="glass-card rounded-3xl p-5 impact-card"><span class="text-4xl">📊</span><h3 class="font-black mt-3">Aplicación laboral</h3><p class="text-slate-400 text-sm mt-2">Adaptar las herramientas a las funciones reales de cada participante.</p></div>
+      </div>
+
+      <div class="mt-6 glass-card rounded-2xl p-5 border-cyan-400/20 bg-cyan-400/5">
+        <p class="text-center text-lg font-bold">
+          La capacitación no se limita a enseñar plataformas: trabaja sobre procesos, problemas y tareas reales del equipo.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 5 -->
+  <section class="slide flex-col items-center justify-center relative bg-gradient-to-b from-[#0b1426] to-[#070b14]">
+    <div class="absolute inset-0 bg-pattern opacity-55"></div>
+    <div class="relative z-10 max-w-6xl mx-auto w-full px-3">
+      <div class="text-center mb-6">
+        <span class="text-violet-300 font-bold tracking-widest text-sm">04 · EVOLUCIÓN DEL PROGRAMA</span>
+        <h2 class="text-3xl sm:text-4xl md:text-6xl font-black mt-2">
+          DE 8 CLASES DE FORMACIÓN<br>
+          <span class="gradient-text">A 12 CLASES CON IMPLEMENTACIÓN REAL</span>
+        </h2>
+        <p class="text-slate-300 text-lg mt-3 max-w-4xl mx-auto">
+          La propuesta mantiene la base académica que ya conoció la primera comisión e incorpora cuatro clases adicionales orientadas al trabajo directo sobre los procesos de Unimédica.
+        </p>
+      </div>
+
+      <div class="grid md:grid-cols-2 gap-5">
+        <div class="glass-card rounded-3xl p-6 md:p-8">
+          <p class="text-cyan-300 text-xs font-bold tracking-widest">ETAPA 1 · FORMACIÓN</p>
+          <div class="flex items-end gap-3 mt-3">
+            <p class="text-6xl font-black">8</p>
+            <p class="text-xl font-black pb-2">clases</p>
+          </div>
+          <h3 class="text-2xl font-black mt-4">Comprender y dominar las herramientas</h3>
+          <div class="space-y-3 mt-5 text-slate-300">
+            <div class="pill rounded-xl p-3">Fundamentos y uso responsable de Inteligencia Artificial.</div>
+            <div class="pill rounded-xl p-3">Prompting profesional y generación de contenidos.</div>
+            <div class="pill rounded-xl p-3">Documentación, comunicación, datos y presentaciones.</div>
+            <div class="pill rounded-xl p-3">Asistentes inteligentes y automatizaciones iniciales.</div>
+          </div>
+        </div>
+
+        <div class="glass-card rounded-3xl p-6 md:p-8 border-violet-400/20 bg-gradient-to-br from-blue-500/5 to-violet-500/5">
+          <p class="text-violet-300 text-xs font-bold tracking-widest">ETAPA 2 · IMPLEMENTACIÓN</p>
+          <div class="flex items-end gap-3 mt-3">
+            <p class="text-6xl font-black">4</p>
+            <p class="text-xl font-black pb-2">clases adicionales</p>
+          </div>
+          <h3 class="text-2xl font-black mt-4">Aplicar Inteligencia Operativa en Unimédica</h3>
+          <div class="space-y-3 mt-5 text-slate-300">
+            <div class="pill rounded-xl p-3">Relevamiento de procesos internos.</div>
+            <div class="pill rounded-xl p-3">Detección de tareas repetitivas y oportunidades.</div>
+            <div class="pill rounded-xl p-3">Diseño de asistentes y automatizaciones.</div>
+            <div class="pill rounded-xl p-3">Proyecto institucional aplicado a un proceso real.</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="mt-6 p-5 rounded-2xl bg-cyan-400/10 border border-cyan-400/20 text-center">
+        <p class="text-cyan-100 text-xl font-black">El objetivo ya no es solo aprender IA: es convertir ese conocimiento en mejoras concretas dentro de la empresa.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 6 -->
+  <section class="slide flex-col items-center justify-center relative bg-gradient-to-b from-[#070b14] to-[#0b1426]">
+    <div class="absolute inset-0 bg-pattern opacity-55"></div>
+    <div class="relative z-10 max-w-6xl mx-auto w-full px-3">
+      <div class="mb-6">
+        <span class="text-cyan-300 font-bold tracking-widest text-sm">05 · LAS 4 CLASES ADICIONALES</span>
+        <h2 class="text-3xl sm:text-4xl md:text-6xl font-black mt-2">
+          DEL CONOCIMIENTO<br>
+          <span class="gradient-text">A LA INTELIGENCIA OPERATIVA</span>
+        </h2>
+      </div>
+
+      <div class="grid md:grid-cols-2 gap-4">
+        <div class="glass-card rounded-3xl p-6 impact-card">
+          <div class="number-badge w-12 h-12 rounded-full grid place-items-center font-black">9</div>
+          <h3 class="text-2xl font-black mt-4">Mapa de procesos internos</h3>
+          <p class="text-slate-300 mt-2">Identificación de circuitos administrativos, tareas repetitivas, puntos de demora y procesos con potencial de mejora.</p>
+        </div>
+
+        <div class="glass-card rounded-3xl p-6 impact-card">
+          <div class="number-badge w-12 h-12 rounded-full grid place-items-center font-black">10</div>
+          <h3 class="text-2xl font-black mt-4">Asistentes inteligentes</h3>
+          <p class="text-slate-300 mt-2">Diseño de asistentes para consultas internas, documentación, protocolos, respuestas frecuentes y apoyo operativo.</p>
+        </div>
+
+        <div class="glass-card rounded-3xl p-6 impact-card">
+          <div class="number-badge w-12 h-12 rounded-full grid place-items-center font-black">11</div>
+          <h3 class="text-2xl font-black mt-4">Automatización de procesos</h3>
+          <p class="text-slate-300 mt-2">Aplicación de IA en documentos, comunicaciones, formularios, clasificación de información, reportes y flujos de trabajo.</p>
+        </div>
+
+        <div class="glass-card rounded-3xl p-6 impact-card border-violet-400/20 bg-gradient-to-br from-blue-500/5 to-violet-500/5">
+          <div class="number-badge w-12 h-12 rounded-full grid place-items-center font-black">12</div>
+          <h3 class="text-2xl font-black mt-4">Proyecto institucional</h3>
+          <p class="text-slate-300 mt-2">Desarrollo y presentación de una solución concreta aplicada a un proceso real de Unimédica.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 7 -->
+  <section class="slide flex-col items-center justify-center relative bg-gradient-to-b from-[#0b1426] to-[#070b14]">
+    <div class="absolute inset-0 bg-pattern opacity-55"></div>
+    <div class="relative z-10 max-w-6xl mx-auto w-full px-3">
+      <div class="text-center mb-7">
+        <span class="text-blue-300 font-bold tracking-widest text-sm">06 · PACIENTE 0</span>
+        <h2 class="text-3xl sm:text-4xl md:text-6xl font-black mt-2">
+          LA PRIMERA COMISIÓN<br>
+          <span class="gradient-text">YA ABRIÓ EL CAMINO</span>
+        </h2>
+      </div>
+
+      <div class="grid md:grid-cols-2 gap-5">
+        <div class="glass-card rounded-3xl p-6 md:p-8">
+          <p class="text-cyan-300 text-xs font-bold tracking-widest">5 INTEGRANTES DE LA CONDUCCIÓN</p>
+          <h3 class="text-3xl font-black mt-3">Primer acercamiento tecnológico</h3>
+          <p class="text-slate-300 mt-4 leading-relaxed">
+            Parte de la comitiva llegó con conocimientos informáticos muy básicos. La experiencia permitió derribar barreras, comprender las posibilidades de la IA y generar una primera visión institucional sobre su valor.
+          </p>
+        </div>
+
+        <div class="glass-card rounded-3xl p-6 md:p-8 border-green-400/20 bg-gradient-to-br from-green-500/5 to-cyan-500/5">
+          <p class="text-green-300 text-xs font-bold tracking-widest">5 INTEGRANTES ADMINISTRATIVOS</p>
+          <h3 class="text-3xl font-black mt-3">Potencial de aplicación inmediata</h3>
+          <p class="text-slate-300 mt-4 leading-relaxed">
+            El equipo administrativo comenzó a visualizar oportunidades concretas para aplicar las herramientas en tareas, documentos, comunicación, seguimiento y organización interna.
+          </p>
+        </div>
+      </div>
+
+      <div class="mt-6 glass-card rounded-3xl p-6 border-cyan-400/20 bg-gradient-to-r from-cyan-500/5 via-blue-500/5 to-violet-500/5 text-center">
+        <p class="text-xl md:text-3xl font-black">
+          El “Paciente 0” ya fue plantado: Unimédica ya conoce el potencial. Ahora corresponde llevarlo al corazón de sus procesos.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 8 -->
+  <section class="slide flex-col items-center justify-center relative bg-gradient-to-b from-[#070b14] to-[#0b1426]">
+    <div class="absolute inset-0 bg-pattern opacity-55"></div>
+    <div class="relative z-10 max-w-6xl mx-auto w-full px-3">
+      <div class="text-center mb-6">
+        <span class="text-cyan-300 font-bold tracking-widest text-sm">07 · INTELIGENCIA OPERATIVA</span>
+        <h2 class="text-3xl sm:text-4xl md:text-6xl font-black mt-2">
+          LA IA DEJA DE SER UNA HERRAMIENTA.<br>
+          <span class="gradient-text">SE CONVIERTE EN PARTE DEL PROCESO.</span>
+        </h2>
+      </div>
+
+      <div class="grid md:grid-cols-4 gap-4">
+        <div class="glass-card rounded-3xl p-5 text-center">
+          <div class="number-badge w-12 h-12 rounded-full grid place-items-center mx-auto font-black">1</div>
+          <h3 class="font-black mt-4">Relevar</h3>
+          <p class="text-slate-400 text-sm mt-2">Comprender cómo funciona hoy cada proceso.</p>
+        </div>
+        <div class="glass-card rounded-3xl p-5 text-center">
+          <div class="number-badge w-12 h-12 rounded-full grid place-items-center mx-auto font-black">2</div>
+          <h3 class="font-black mt-4">Detectar</h3>
+          <p class="text-slate-400 text-sm mt-2">Identificar tareas repetitivas, demoras y errores.</p>
+        </div>
+        <div class="glass-card rounded-3xl p-5 text-center">
+          <div class="number-badge w-12 h-12 rounded-full grid place-items-center mx-auto font-black">3</div>
+          <h3 class="font-black mt-4">Diseñar</h3>
+          <p class="text-slate-400 text-sm mt-2">Crear asistentes, automatizaciones y herramientas.</p>
+        </div>
+        <div class="glass-card rounded-3xl p-5 text-center">
+          <div class="number-badge w-12 h-12 rounded-full grid place-items-center mx-auto font-black">4</div>
+          <h3 class="font-black mt-4">Implementar</h3>
+          <p class="text-slate-400 text-sm mt-2">Aplicar la solución sobre un proceso concreto.</p>
+        </div>
+      </div>
+
+      <div class="mt-6 p-5 rounded-2xl bg-violet-400/10 border border-violet-400/20 text-center">
+        <p class="text-violet-100 text-xl font-black">El curso se convierte en un laboratorio de mejora interna para Unimédica.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 9 -->
+  <section class="slide flex-col items-center justify-center relative bg-gradient-to-b from-[#0b1426] to-[#070b14]">
+    <div class="absolute inset-0 bg-pattern opacity-55"></div>
+    <div class="relative z-10 max-w-6xl mx-auto w-full px-3">
+      <div class="text-center mb-6">
+        <span class="text-violet-300 font-bold tracking-widest text-sm">08 · IMPACTO PERSONAL</span>
+        <h2 class="text-3xl sm:text-4xl md:text-6xl font-black mt-2">
+          BENEFICIOS PARA <span class="gradient-text">CADA PARTICIPANTE</span>
+        </h2>
+      </div>
+
+      <div class="grid md:grid-cols-2 gap-5">
+        <div class="glass-card rounded-3xl p-6 md:p-8">
+          <p class="text-cyan-300 text-xs font-bold tracking-widest">DURANTE LA CAPACITACIÓN</p>
+          <h3 class="text-3xl font-black mt-2 mb-5">Aprendizaje acompañado</h3>
+          <div class="space-y-3">
+            <div class="pill rounded-xl p-3">Docente y acompañamiento permanente.</div>
+            <div class="pill rounded-xl p-3">Acceso a herramientas tecnológicas actuales.</div>
+            <div class="pill rounded-xl p-3">Ejercicios adaptados a necesidades reales.</div>
+            <div class="pill rounded-xl p-3">Comisión reducida y exclusiva.</div>
+          </div>
+        </div>
+
+        <div class="glass-card rounded-3xl p-6 md:p-8 border-green-400/20 bg-gradient-to-br from-green-500/5 to-cyan-500/5">
+          <p class="text-green-300 text-xs font-bold tracking-widest">DESPUÉS DE LA CAPACITACIÓN</p>
+          <h3 class="text-3xl font-black mt-2 mb-5">Capacidad de aplicación</h3>
+          <div class="space-y-3">
+            <div class="pill rounded-xl p-3">Más autonomía frente a tareas digitales.</div>
+            <div class="pill rounded-xl p-3">Nuevas herramientas para el crecimiento profesional.</div>
+            <div class="pill rounded-xl p-3">Mejor organización y productividad personal.</div>
+            <div class="pill rounded-xl p-3">Proyecto concreto listo para implementar.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 10 -->
+  <section class="slide flex-col items-center justify-center relative bg-gradient-to-b from-[#070b14] to-[#0b1426]">
+    <div class="absolute inset-0 bg-pattern opacity-55"></div>
+    <div class="relative z-10 max-w-6xl mx-auto w-full px-3">
+      <div class="mb-7">
+        <span class="text-cyan-300 font-bold tracking-widest text-sm">09 · ORGANIZACIÓN ACADÉMICA</span>
+        <h2 class="text-3xl sm:text-4xl md:text-6xl font-black mt-2">
+          UNA PROPUESTA SIMPLE<br>
+          <span class="gradient-text">DE IMPLEMENTAR</span>
+        </h2>
+      </div>
+
+      <div class="grid md:grid-cols-4 gap-4">
+        <div class="glass-card rounded-3xl p-6 text-center"><div class="number-badge w-14 h-14 rounded-full grid place-items-center mx-auto text-2xl font-black">12</div><h3 class="font-black mt-4 text-xl">Clases</h3><p class="text-slate-400 mt-2">8 clases formativas + 4 clases de implementación.</p></div>
+        <div class="glass-card rounded-3xl p-6 text-center"><div class="number-badge w-14 h-14 rounded-full grid place-items-center mx-auto text-xl font-black">3 m</div><h3 class="font-black mt-4 text-xl">Duración</h3><p class="text-slate-400 mt-2">Programa completo concentrado en 3 meses.</p></div>
+        <div class="glass-card rounded-3xl p-6 text-center"><div class="number-badge w-14 h-14 rounded-full grid place-items-center mx-auto text-2xl font-black">10</div><h3 class="font-black mt-4 text-xl">Cupo ideal</h3><p class="text-slate-400 mt-2">Comisión reducida para un trabajo personalizado.</p></div>
+        <div class="glass-card rounded-3xl p-6 text-center"><div class="number-badge w-14 h-14 rounded-full grid place-items-center mx-auto text-xl font-black">PM</div><h3 class="font-black mt-4 text-xl">Horario</h3><p class="text-slate-400 mt-2">Fuera de la jornada laboral habitual.</p></div>
+      </div>
+
+      <div class="mt-6 p-5 rounded-2xl bg-amber-400/10 border border-amber-400/20 text-center">
+        <p class="text-amber-100 font-semibold">
+          El día y horario definitivo se acuerdan con Unimédica para facilitar la asistencia sostenida.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 11 -->
+  <section class="slide flex-col items-center justify-center relative bg-gradient-to-br from-[#070b14] via-[#07151a] to-[#0b1426]">
+    <div class="absolute inset-0 bg-pattern opacity-45"></div>
+    <div class="orb w-96 h-96 bg-green-500 top-[-180px] right-[-120px]"></div>
+    <div class="relative z-10 max-w-6xl mx-auto w-full px-3">
+      <div class="text-center mb-6">
+        <span class="text-green-300 font-bold tracking-widest text-sm">10 · CONDICIONES ECONÓMICAS ACTUALIZADAS</span>
+        <h2 class="text-3xl sm:text-4xl md:text-6xl font-black mt-2">
+          PROPUESTA <span class="green-text">UNIMÉDICA</span>
+        </h2>
+        <p class="text-slate-300 text-lg mt-3 max-w-4xl mx-auto">
+          La nueva propuesta amplía el programa de 8 a 12 clases, manteniendo exactamente el mismo valor por clase que Unimédica ya aceptó en la experiencia anterior.
+        </p>
+      </div>
+
+      <div class="grid lg:grid-cols-3 gap-5 items-stretch">
+        <div class="glass-card rounded-3xl p-6 md:p-8">
+          <p class="text-slate-400 text-xs uppercase tracking-[.18em] font-bold">Valor general del programa</p>
+          <p class="text-5xl md:text-6xl font-black mt-3">$600.000</p>
+          <p class="text-slate-300 mt-2">por participante</p>
+
+          <div class="mt-6 space-y-3">
+            <div class="pill rounded-xl p-4 flex items-center justify-between gap-4"><span>Duración</span><strong>3 meses</strong></div>
+            <div class="pill rounded-xl p-4 flex items-center justify-between gap-4"><span>Programa</span><strong>12 clases</strong></div>
+            <div class="pill rounded-xl p-4 flex items-center justify-between gap-4"><span>Modalidad</span><strong>Comisión exclusiva</strong></div>
+          </div>
+        </div>
+
+        <div class="glass-card rounded-3xl p-6 md:p-8 border-blue-400/20 bg-blue-400/5">
+          <div class="discount-badge" style="background:rgba(59,130,246,.12);color:#bfdbfe;border-color:rgba(96,165,250,.28)">
+            ✓ BENEFICIO INSTITUCIONAL UNIMÉDICA
+          </div>
+          <p class="text-slate-300 mt-5">Valor preferencial por participante:</p>
+          <p class="text-5xl md:text-6xl font-black mt-2 gradient-text">$500.000</p>
+          <p class="text-blue-200 font-bold">programa completo</p>
+
+          <div class="mt-6 p-5 rounded-2xl bg-blue-400/10 border border-blue-400/20">
+            <p class="text-blue-200 text-xs uppercase tracking-widest font-bold">Ahorro institucional</p>
+            <p class="text-4xl md:text-5xl font-black mt-2">$100.000</p>
+            <p class="text-slate-300 mt-2">por participante respecto del valor general.</p>
+          </div>
+        </div>
+
+        <div class="price-card rounded-3xl p-6 md:p-8">
+          <div class="discount-badge">✓ VALOR FINAL EXCLUSIVO</div>
+          <p class="text-slate-300 mt-5">Valor final acordado por participante:</p>
+          <p class="text-5xl md:text-6xl font-black mt-2 green-text">$450.000</p>
+          <p class="text-green-200 font-bold">programa completo</p>
+
+          <div class="mt-6 p-5 rounded-2xl bg-green-400/10 border border-green-400/20">
+            <p class="text-green-200 text-xs uppercase tracking-widest font-bold">Ahorro total</p>
+            <p class="text-4xl md:text-5xl font-black mt-2">$150.000</p>
+            <p class="text-slate-300 mt-2">por participante respecto del valor general.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="mt-6 p-5 rounded-2xl bg-cyan-400/10 border border-cyan-400/20 text-center">
+        <p class="text-cyan-100 font-semibold text-lg">
+          La condición final deja el programa de 12 clases en <strong>$450.000 por participante</strong>, manteniendo el mismo valor unitario de <strong>$37.500 por clase</strong>.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 12 -->
+  <section class="slide flex-col items-center justify-center relative bg-gradient-to-b from-[#07151a] to-[#070b14]">
+    <div class="absolute inset-0 bg-pattern opacity-50"></div>
+    <div class="relative z-10 max-w-6xl mx-auto w-full px-3">
+      <div class="text-center mb-7">
+        <span class="text-amber-300 font-bold tracking-widest text-sm">11 · ESQUEMA ECONÓMICO DE LA COMISIÓN</span>
+        <h2 class="text-3xl sm:text-4xl md:text-6xl font-black mt-2">
+          10 PARTICIPANTES<br>
+          <span class="amber-text">$4.500.000 TOTALES</span>
+        </h2>
+      </div>
+
+      <div class="grid md:grid-cols-3 gap-4">
+        <div class="glass-card rounded-3xl p-6 text-center">
+          <p class="text-slate-400 text-xs uppercase tracking-widest font-bold">Valor general</p>
+          <p class="text-4xl md:text-5xl font-black mt-3">$600.000</p>
+          <p class="text-slate-400 mt-2">por participante</p>
+          <div class="mt-5 pill rounded-xl p-4">
+            <p class="text-sm text-slate-400">Total por 10 personas</p>
+            <p class="text-2xl font-black mt-1">$6.000.000</p>
+          </div>
+        </div>
+
+        <div class="glass-card rounded-3xl p-6 text-center border-blue-400/20 bg-blue-400/5">
+          <p class="text-blue-300 text-xs uppercase tracking-widest font-bold">Valor institucional</p>
+          <p class="text-4xl md:text-5xl font-black mt-3">$500.000</p>
+          <p class="text-blue-200 mt-2 font-bold">por participante</p>
+          <div class="mt-5 pill rounded-xl p-4">
+            <p class="text-sm text-slate-400">Total por 10 personas</p>
+            <p class="text-2xl font-black mt-1">$5.000.000</p>
+          </div>
+        </div>
+
+        <div class="glass-card rounded-3xl p-6 text-center border-green-400/20 bg-green-400/5">
+          <p class="text-green-300 text-xs uppercase tracking-widest font-bold">Valor final exclusivo</p>
+          <p class="text-4xl md:text-5xl font-black mt-3">$450.000</p>
+          <p class="text-green-200 mt-2 font-bold">por participante</p>
+          <div class="mt-5 rounded-xl p-4 bg-green-400/10 border border-green-400/20">
+            <p class="text-sm text-green-200">Total por 10 personas</p>
+            <p class="text-3xl font-black mt-1">$4.500.000</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="mt-6 glass-card rounded-3xl p-6 border border-amber-400/20 bg-amber-400/5">
+        <div class="grid md:grid-cols-[.8fr_1.2fr] gap-5 items-center">
+          <div class="text-center md:text-left">
+            <p class="text-amber-300 text-xs uppercase tracking-widest font-bold">REFERENCIA ANTERIOR</p>
+            <p class="text-4xl font-black mt-2">$300.000</p>
+            <p class="text-slate-300">por 8 clases</p>
+          </div>
+          <div>
+            <p class="text-slate-200 text-lg leading-relaxed">
+              La comisión anterior abonó <strong>$4.500.000 por 10 personas</strong>, equivalentes a <strong>$300.000 por participante</strong> para un programa de 8 clases.
+              La nueva propuesta conserva el mismo valor por clase y lo proyecta de manera proporcional a 12 encuentros.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 13 -->
+  <section class="slide flex-col items-center justify-center relative bg-gradient-to-b from-[#070b14] to-[#0b1426]">
+    <div class="absolute inset-0 bg-pattern opacity-55"></div>
+    <div class="relative z-10 max-w-6xl mx-auto w-full px-3">
+      <div class="text-center mb-7">
+        <span class="text-cyan-300 font-bold tracking-widest text-sm">12 · ACTIVACIÓN</span>
+        <h2 class="text-3xl sm:text-4xl md:text-6xl font-black mt-2">
+          CÓMO PONER EN MARCHA<br>
+          <span class="gradient-text">LA NUEVA COMISIÓN</span>
+        </h2>
+      </div>
+
+      <div class="grid md:grid-cols-5 gap-3">
+        <div class="glass-card rounded-2xl p-4"><div class="number-badge w-11 h-11 rounded-full grid place-items-center font-black">1</div><h3 class="font-bold mt-3 text-cyan-200">Convocatoria</h3><p class="text-slate-400 text-sm mt-2">Difusión interna entre quienes aún no cursaron.</p></div>
+        <div class="glass-card rounded-2xl p-4"><div class="number-badge w-11 h-11 rounded-full grid place-items-center font-black">2</div><h3 class="font-bold mt-3 text-cyan-200">Interesados</h3><p class="text-slate-400 text-sm mt-2">Registro preliminar de integrantes.</p></div>
+        <div class="glass-card rounded-2xl p-4"><div class="number-badge w-11 h-11 rounded-full grid place-items-center font-black">3</div><h3 class="font-bold mt-3 text-cyan-200">Comisión</h3><p class="text-slate-400 text-sm mt-2">Confirmación del grupo de hasta 10 personas.</p></div>
+        <div class="glass-card rounded-2xl p-4"><div class="number-badge w-11 h-11 rounded-full grid place-items-center font-black">4</div><h3 class="font-bold mt-3 text-cyan-200">Horario</h3><p class="text-slate-400 text-sm mt-2">Definición de franja fuera de jornada.</p></div>
+        <div class="glass-card rounded-2xl p-4"><div class="number-badge w-11 h-11 rounded-full grid place-items-center font-black">5</div><h3 class="font-bold mt-3 text-cyan-200">Inicio</h3><p class="text-slate-400 text-sm mt-2">Inscripción, pago y comienzo del cursado.</p></div>
+      </div>
+
+      <div class="mt-6 glass-card rounded-2xl p-5 text-center border-cyan-400/20">
+        <p class="text-lg font-bold">IEC acompaña la difusión, organización, inscripción y puesta en marcha de la comisión.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 14 -->
+  <section class="slide flex-col items-center justify-center relative bg-gradient-to-b from-[#0b1426] to-[#070b14]">
+    <div class="absolute inset-0 bg-pattern opacity-55"></div>
+    <div class="relative z-10 max-w-6xl mx-auto w-full px-3">
+      <div class="mb-6">
+        <span class="text-violet-300 font-bold tracking-widest text-sm">13 · COMUNICACIÓN INTERNA</span>
+        <h2 class="text-3xl sm:text-4xl md:text-6xl font-black mt-2">
+          MENSAJE CLARO PARA<br>
+          <span class="gradient-text">CAPTAR NUEVOS PARTICIPANTES</span>
+        </h2>
+      </div>
+
+      <div class="glass-card rounded-3xl p-6 md:p-8 border-violet-400/20 bg-gradient-to-br from-blue-500/5 to-violet-500/5">
+        <p class="text-violet-300 text-xs font-bold tracking-widest">PROPUESTA DE CONVOCATORIA</p>
+        <p class="text-xl md:text-3xl font-black mt-4 leading-relaxed">
+          “Unimédica abre una nueva comisión exclusiva del curso Experto en Aplicaciones Prácticas con IA junto al Instituto IEC. Serán 12 clases presenciales, fuera del horario laboral, con actividades aplicadas al trabajo cotidiano y condiciones económicas preferenciales para el equipo.”
+        </p>
+      </div>
+
+      <div class="grid md:grid-cols-3 gap-4 mt-5">
+        <div class="pill rounded-2xl p-4 text-center font-bold">Cupos reducidos</div>
+        <div class="pill rounded-2xl p-4 text-center font-bold">Horario compatible</div>
+        <div class="pill rounded-2xl p-4 text-center font-bold">Beneficio exclusivo</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 15 -->
+  <section class="slide flex-col items-center justify-center relative bg-gradient-to-b from-[#070b14] to-[#0b1426]">
+    <div class="absolute inset-0 bg-pattern opacity-55"></div>
+    <div class="relative z-10 max-w-6xl mx-auto w-full px-3">
+      <div class="text-center mb-7">
+        <span class="text-cyan-300 font-bold tracking-widest text-sm">14 · CONTINUIDAD INSTITUCIONAL</span>
+        <h2 class="text-3xl sm:text-4xl md:text-6xl font-black mt-2">
+          UNA NUEVA COMISIÓN.<br>
+          <span class="gradient-text">UN VÍNCULO QUE SIGUE CRECIENDO.</span>
+        </h2>
+      </div>
+
+      <div class="grid md:grid-cols-3 gap-4">
+        <div class="glass-card rounded-3xl p-6 text-center impact-card"><span class="text-5xl">1️⃣</span><h3 class="text-xl font-black mt-4">Primera cohorte</h3><p class="text-slate-300 mt-2">Validó el interés y abrió el camino institucional.</p></div>
+        <div class="glass-card rounded-3xl p-6 text-center impact-card border-cyan-400/20"><span class="text-5xl">2️⃣</span><h3 class="text-xl font-black mt-4">Nueva cohorte</h3><p class="text-slate-300 mt-2">Permite incorporar a más integrantes del equipo.</p></div>
+        <div class="glass-card rounded-3xl p-6 text-center impact-card border-violet-400/20"><span class="text-5xl">♾️</span><h3 class="text-xl font-black mt-4">Programa continuo</h3><p class="text-slate-300 mt-2">Posibilidad de nuevas capacitaciones y especializaciones.</p></div>
+      </div>
+
+      <div class="mt-6 p-5 rounded-2xl bg-cyan-400/10 border border-cyan-400/20 text-center">
+        <p class="text-cyan-100 text-xl font-black">Capacitar progresivamente permite que la transformación llegue a todo el equipo.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 16 -->
+  <section class="slide flex-col items-center justify-center relative bg-gradient-to-br from-[#070b14] via-[#0b162b] to-[#070b14] text-center">
+    <div class="absolute inset-0 bg-pattern"></div>
+    <div class="orb w-80 h-80 bg-cyan-400 top-[-120px] left-[-100px]"></div>
+    <div class="orb w-96 h-96 bg-violet-500 bottom-[-160px] right-[-120px]"></div>
+
+    <div class="relative z-10 max-w-5xl mx-auto w-full px-3">
+      <div class="flex items-center justify-center gap-4 md:gap-6 mb-7">
+        <img src="https://i.postimg.cc/Z5Sn2gzD/Chat-GPT-Image-12-jul-2026-10-45-09-p-m.png"
+style="height:72px;object-fit:contain;filter:drop-shadow(0 12px 25px rgba(0,0,0,.25));" alt="Unimédica Paraná"/>
+        <div class="h-14 w-px bg-white/20"></div>
+        <img src="https://i.postimg.cc/jSkQKpRK/Diseno-sin-titulo-2026-05-15T105828-195.png" alt="Instituto IEC" class="h-14 md:h-20 object-contain" />
+      </div>
+
+      <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-cyan-400/25 bg-cyan-400/10 text-cyan-200 text-xs md:text-sm font-bold tracking-[.18em] uppercase mb-5">
+        NUEVA COMISIÓN EXCLUSIVA
+      </div>
+
+      <h2 class="text-4xl sm:text-5xl md:text-7xl font-black leading-[.98] mb-5">
+        MÁS PERSONAS CAPACITADAS.<br>
+        UN EQUIPO <span class="gradient-text">MÁS PREPARADO.</span>
+      </h2>
+
+      <p class="text-lg md:text-2xl text-slate-300 max-w-4xl mx-auto">
+        Doce clases en tres meses: ocho para dominar las herramientas y cuatro para aplicarlas directamente sobre los procesos reales de Unimédica.
+      </p>
+
+      <div class="mt-8 glass-card rounded-3xl p-6 max-w-3xl mx-auto">
+        <p class="text-xl md:text-3xl font-black">EXPERTO EN APLICACIONES PRÁCTICAS CON IA</p>
+        <p class="text-slate-300 mt-2">12 clases · Comisión exclusiva · $450.000 por participante · Total comisión $4.500.000</p>
+        <p class="text-green-300 font-bold mt-2">Valor final exclusivo: $450.000 por participante</p>
+      </div>
+
+      <p class="text-slate-500 mt-6 text-sm">
+        Instituto IEC · Gualeguaychú 449, Paraná · WhatsApp 343 5010523 · Instagram @iecparana
+      </p>
+    </div>
+  </section>
+
+  <script>
+    let current = 0;
+    const slides = Array.from(document.querySelectorAll('.slide'));
+    const dotsContainer = document.getElementById('dots');
+    const counter = document.getElementById('slide-counter');
+
+    slides.forEach((_, index) => {
+      const dot = document.createElement('button');
+      dot.className = 'dot';
+      dot.setAttribute('aria-label', `Ir a la diapositiva ${index + 1}`);
+      dot.onclick = () => goSlide(index);
+      dotsContainer.appendChild(dot);
+    });
+
+    const dots = Array.from(document.querySelectorAll('.dot'));
+
+    function updateNavigation(){
+      dots.forEach((dot,index)=>dot.classList.toggle('active',index===current));
+      counter.textContent = `${current + 1} / ${slides.length}`;
+    }
+
+    function goSlide(index){
+      slides[current].classList.remove('active');
+      current = (index + slides.length) % slides.length;
+      slides[current].classList.add('active');
+      slides[current].scrollTop = 0;
+      updateNavigation();
+    }
+
+    function changeSlide(direction){goSlide(current + direction)}
+
+    document.addEventListener('keydown', event => {
+      if(event.key === 'ArrowRight' || event.key === 'PageDown') changeSlide(1);
+      if(event.key === 'ArrowLeft' || event.key === 'PageUp') changeSlide(-1);
+      if(event.key === 'Home') goSlide(0);
+      if(event.key === 'End') goSlide(slides.length - 1);
+    });
+
+    let touchStartX = 0;
+    document.addEventListener('touchstart', event => {
+      touchStartX = event.changedTouches[0].screenX;
+    }, {passive:true});
+
+    document.addEventListener('touchend', event => {
+      const diff = touchStartX - event.changedTouches[0].screenX;
+      if(Math.abs(diff) > 55) changeSlide(diff > 0 ? 1 : -1);
+    }, {passive:true});
+
+    async function toggleFullscreen(){
+      try{
+        if(!document.fullscreenElement) await document.documentElement.requestFullscreen();
+        else await document.exitFullscreen();
+      }catch(error){
+        alert('El navegador no permitió activar la pantalla completa.');
+      }
+    }
+
+    function showPDFStatus(message, isError=false){
+      const status = document.getElementById('pdf-status');
+      status.textContent = message;
+      status.style.display = 'block';
+      status.style.borderColor = isError ? 'rgba(248,113,113,.4)' : 'rgba(103,232,249,.3)';
+      status.style.color = isError ? '#fecaca' : '#dbeafe';
+      clearTimeout(window.__pdfStatusTimer);
+      window.__pdfStatusTimer = setTimeout(()=>status.style.display='none', 5000);
+    }
+
+    async function waitForImages(container){
+      const images = Array.from(container.querySelectorAll('img'));
+      await Promise.all(images.map(img => {
+        if(img.complete) return Promise.resolve();
+        return new Promise(resolve => {
+          img.onload = resolve;
+          img.onerror = resolve;
+        });
+      }));
+    }
+
+    async function downloadPDF(){
+      const button = document.getElementById('download-btn');
+      const original = button.innerHTML;
+      button.disabled = true;
+      button.innerHTML = '<span>GENERANDO PDF...</span>';
+      showPDFStatus('Preparando la presentación. El PDF se descargará automáticamente.');
+
+      const deck = document.getElementById('pdf-deck');
+      deck.innerHTML = '';
+
+      slides.forEach(slide => {
+        const clone = slide.cloneNode(true);
+        clone.classList.remove('active');
+        clone.classList.add('pdf-page');
+        clone.style.display = 'flex';
+        clone.style.width = '1600px';
+        clone.style.height = '900px';
+        clone.style.minHeight = '900px';
+        clone.style.overflow = 'hidden';
+        deck.appendChild(clone);
+      });
+
+      try{
+        await waitForImages(deck);
+        await new Promise(resolve => setTimeout(resolve, 500));
+
+        const options = {
+          margin: 0,
+          filename: 'Propuesta_Unimedica_IEC_Nueva_Comision.pdf',
+          image: {type:'jpeg',quality:.98},
+          html2canvas:{
+            scale:1.25,useCORS:true,allowTaint:true,
+            backgroundColor:'#070b14',logging:false,
+            windowWidth:1600,windowHeight:900,scrollX:0,scrollY:0
+          },
+          jsPDF:{
+            unit:'px',format:[1600,900],orientation:'landscape',
+            hotfixes:['px_scaling']
+          },
+          pagebreak:{mode:['css','legacy']}
+        };
+
+        await html2pdf().set(options).from(deck).save();
+        showPDFStatus('PDF generado correctamente.');
+      }catch(error){
+        console.error(error);
+        showPDFStatus('No se pudo generar el PDF automáticamente. Utilizá Imprimir y elegí “Guardar como PDF”.', true);
+      }finally{
+        deck.innerHTML = '';
+        button.disabled = false;
+        button.innerHTML = original;
+        lucide.createIcons();
+      }
+    }
+
+    updateNavigation();
+    lucide.createIcons();
+  </script>
+</body>
+</html>
