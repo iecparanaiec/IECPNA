@@ -1,0 +1,319 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Inscripción | IA · Inteligencia Argentina</title>
+  <meta name="description" content="Formulario de inscripción al Primer Encuentro de IA: Inteligencia Argentina." />
+
+  <script src="https://cdn.tailwindcss.com/3.4.17"></script>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
+  <script src="https://unpkg.com/lucide@0.468.0/dist/umd/lucide.min.js"></script>
+
+  <style>
+    :root{
+      --cyan:#22d3ee;
+      --blue:#3b82f6;
+      --violet:#8b5cf6;
+      --green:#22c55e;
+      --bg:#070b14;
+    }
+
+    *{box-sizing:border-box;font-family:'DM Sans',sans-serif}
+    html{scroll-behavior:smooth}
+    body{
+      margin:0;
+      min-height:100vh;
+      color:#fff;
+      background:
+        radial-gradient(circle at 15% 15%,rgba(34,211,238,.12),transparent 28%),
+        radial-gradient(circle at 85% 80%,rgba(139,92,246,.12),transparent 30%),
+        linear-gradient(135deg,#070b14 0%,#0b162b 52%,#070b14 100%);
+    }
+
+    body::before{
+      content:"";
+      position:fixed;
+      inset:0;
+      pointer-events:none;
+      background-image:
+        linear-gradient(90deg,rgba(59,130,246,.045) 1px,transparent 1px),
+        linear-gradient(rgba(59,130,246,.045) 1px,transparent 1px);
+      background-size:52px 52px;
+      mask-image:linear-gradient(to bottom,black,transparent 92%);
+    }
+
+    .glass{
+      background:rgba(255,255,255,.07);
+      backdrop-filter:blur(16px);
+      border:1px solid rgba(255,255,255,.11);
+      box-shadow:0 24px 70px rgba(0,0,0,.30);
+    }
+
+    .gradient-text{
+      background:linear-gradient(135deg,#67e8f9,#60a5fa,#a78bfa);
+      -webkit-background-clip:text;
+      -webkit-text-fill-color:transparent;
+      background-clip:text;
+    }
+
+    .field{
+      width:100%;
+      border-radius:16px;
+      border:1px solid rgba(255,255,255,.12);
+      background:rgba(3,8,18,.72);
+      color:#fff;
+      padding:14px 15px;
+      outline:none;
+      transition:.2s ease;
+    }
+
+    .field::placeholder{color:#64748b}
+
+    .field:focus{
+      border-color:rgba(103,232,249,.65);
+      box-shadow:0 0 0 4px rgba(34,211,238,.10);
+      background:rgba(3,8,18,.9);
+    }
+
+    .label{
+      display:block;
+      margin-bottom:8px;
+      font-size:13px;
+      font-weight:800;
+      color:#cbd5e1;
+    }
+
+    .submit-btn{
+      width:100%;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      gap:10px;
+      border:0;
+      border-radius:16px;
+      padding:15px 18px;
+      font-weight:900;
+      color:white;
+      cursor:pointer;
+      background:linear-gradient(135deg,#06b6d4,#2563eb);
+      box-shadow:0 16px 35px rgba(37,99,235,.28);
+      transition:.2s ease;
+    }
+
+    .submit-btn:hover{transform:translateY(-1px);filter:brightness(1.06)}
+    .submit-btn:disabled{opacity:.55;cursor:not-allowed;transform:none}
+
+    .file-box{
+      border:1px dashed rgba(103,232,249,.35);
+      background:rgba(34,211,238,.055);
+      border-radius:18px;
+      padding:18px;
+    }
+
+    .status{
+      display:none;
+      margin-top:16px;
+      padding:13px 15px;
+      border-radius:14px;
+      font-size:14px;
+      font-weight:700;
+    }
+
+    .status.ok{
+      display:block;
+      color:#bbf7d0;
+      background:rgba(34,197,94,.12);
+      border:1px solid rgba(74,222,128,.25);
+    }
+
+    .status.error{
+      display:block;
+      color:#fecaca;
+      background:rgba(239,68,68,.12);
+      border:1px solid rgba(248,113,113,.25);
+    }
+  </style>
+</head>
+
+<body>
+  <main class="relative z-10 min-h-screen px-4 py-8 md:py-12">
+    <div class="max-w-3xl mx-auto">
+
+      <header class="text-center mb-7">
+        <div class="flex items-center justify-center gap-4 mb-5">
+          <img
+            src="https://i.postimg.cc/jSkQKpRK/Diseno-sin-titulo-2026-05-15T105828-195.png"
+            alt="Ecosistema IEC"
+            class="h-16 md:h-20 object-contain"
+          />
+        </div>
+
+        <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-cyan-400/25 bg-cyan-400/10 text-cyan-200 text-xs font-black tracking-[.18em] uppercase">
+          Cupos limitados
+        </div>
+
+        <h1 class="text-4xl md:text-6xl font-black leading-[.95] mt-5">
+          PRIMER ENCUENTRO DE<br>
+          <span class="gradient-text">IA · INTELIGENCIA ARGENTINA</span>
+        </h1>
+
+        <p class="text-slate-300 mt-4 text-base md:text-lg">
+          Jueves 16 de julio · 20:30 hs · Espacio de Networking IEC × Oliva
+        </p>
+      </header>
+
+      <section class="glass rounded-[28px] p-5 md:p-8">
+        <div class="mb-6">
+          <p class="text-cyan-300 text-xs font-black tracking-[.2em] uppercase">Formulario de inscripción</p>
+          <h2 class="text-2xl md:text-3xl font-black mt-2">Completá tus datos y adjuntá el comprobante de pago</h2>
+        </div>
+
+        <form id="registrationForm" enctype="multipart/form-data" novalidate>
+          <input type="hidden" name="evento" value="Primer Encuentro de IA - Inteligencia Argentina" />
+          <input type="hidden" name="fecha_evento" value="2026-07-16 20:30" />
+          <input type="hidden" name="valor" value="15000" />
+
+          <div class="grid md:grid-cols-2 gap-4">
+            <div>
+              <label class="label" for="nombre">Nombre *</label>
+              <input class="field" type="text" id="nombre" name="nombre" placeholder="Tu nombre" required />
+            </div>
+
+            <div>
+              <label class="label" for="apellido">Apellido *</label>
+              <input class="field" type="text" id="apellido" name="apellido" placeholder="Tu apellido" required />
+            </div>
+
+            <div>
+              <label class="label" for="telefono">WhatsApp *</label>
+              <input class="field" type="tel" id="telefono" name="telefono" placeholder="Ej.: 343 5000000" required />
+            </div>
+
+            <div>
+              <label class="label" for="email">Correo electrónico *</label>
+              <input class="field" type="email" id="email" name="email" placeholder="nombre@correo.com" required />
+            </div>
+          </div>
+
+          <div class="mt-4">
+            <label class="label" for="empresa">Comercio, empresa o emprendimiento *</label>
+            <input class="field" type="text" id="empresa" name="empresa" placeholder="Nombre de tu actividad" required />
+          </div>
+
+          <div class="mt-4">
+            <label class="label" for="rubro">Rubro o actividad</label>
+            <input class="field" type="text" id="rubro" name="rubro" placeholder="Ej.: gastronomía, comercio, servicios..." />
+          </div>
+
+          <div class="mt-4">
+            <label class="label" for="idea">¿Qué desafío o idea te gustaría trabajar con IA?</label>
+            <textarea class="field min-h-[110px] resize-y" id="idea" name="idea" placeholder="Contanos brevemente"></textarea>
+          </div>
+
+          <div class="mt-5 file-box">
+            <label class="label" for="comprobante">Comprobante de pago *</label>
+            <input
+              class="field"
+              type="file"
+              id="comprobante"
+              name="comprobante"
+              accept=".pdf,image/png,image/jpeg,image/webp"
+              required
+            />
+            <p class="text-xs text-slate-400 mt-3">Formatos permitidos: PDF, JPG, PNG o WEBP. Tamaño máximo: 10 MB.</p>
+          </div>
+
+          <label class="flex items-start gap-3 mt-5 text-sm text-slate-300">
+            <input type="checkbox" id="confirmacion" name="confirmacion" value="aceptado" class="mt-1 accent-cyan-400" required />
+            <span>Confirmo que los datos enviados son correctos y que la inscripción queda sujeta a validación del pago y disponibilidad de cupo.</span>
+          </label>
+
+          <button id="submitBtn" class="submit-btn mt-6" type="submit">
+            <i data-lucide="send" style="width:19px;height:19px"></i>
+            ENVIAR INSCRIPCIÓN
+          </button>
+
+          <div id="status" class="status" role="alert"></div>
+        </form>
+      </section>
+
+      <p class="text-center text-slate-500 text-xs mt-5">
+        Ecosistema IEC · Inteligencia Operativa aplicada a empresas argentinas
+      </p>
+    </div>
+  </main>
+
+  <script>
+    lucide.createIcons();
+
+    const form = document.getElementById('registrationForm');
+    const submitBtn = document.getElementById('submitBtn');
+    const statusBox = document.getElementById('status');
+    const webhookUrl = 'https://n8n.smarteco.com.ar/webhook/inteligenciaargentina';
+
+    function showStatus(message, type) {
+      statusBox.className = 'status ' + type;
+      statusBox.textContent = message;
+    }
+
+    form.addEventListener('submit', async (event) => {
+      event.preventDefault();
+      statusBox.className = 'status';
+      statusBox.textContent = '';
+
+      if (!form.checkValidity()) {
+        form.reportValidity();
+        return;
+      }
+
+      const fileInput = document.getElementById('comprobante');
+      const file = fileInput.files[0];
+
+      if (!file) {
+        showStatus('Adjuntá el comprobante de pago.', 'error');
+        return;
+      }
+
+      if (file.size > 10 * 1024 * 1024) {
+        showStatus('El archivo supera el tamaño máximo permitido de 10 MB.', 'error');
+        return;
+      }
+
+      const allowedTypes = ['application/pdf', 'image/png', 'image/jpeg', 'image/webp'];
+      if (!allowedTypes.includes(file.type)) {
+        showStatus('Formato no permitido. Usá PDF, JPG, PNG o WEBP.', 'error');
+        return;
+      }
+
+      const formData = new FormData(form);
+      formData.append('enviado_desde', window.location.href);
+      formData.append('fecha_envio', new Date().toISOString());
+
+      submitBtn.disabled = true;
+      submitBtn.innerHTML = '<span class="animate-pulse">ENVIANDO...</span>';
+
+      try {
+        const response = await fetch(webhookUrl, {
+          method: 'POST',
+          body: formData
+        });
+
+        if (!response.ok) {
+          throw new Error('Respuesta no válida del servidor');
+        }
+
+        showStatus('Inscripción enviada correctamente. Tu lugar quedará confirmado una vez validado el pago.', 'ok');
+        form.reset();
+      } catch (error) {
+        console.error(error);
+        showStatus('No se pudo enviar la inscripción. Revisá la conexión o la configuración CORS del webhook de n8n.', 'error');
+      } finally {
+        submitBtn.disabled = false;
+        submitBtn.innerHTML = '<i data-lucide="send" style="width:19px;height:19px"></i> ENVIAR INSCRIPCIÓN';
+        lucide.createIcons();
+      }
+    });
+  </script>
+</body>
+</html>
