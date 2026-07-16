@@ -119,7 +119,7 @@
     .action-button:hover{background:rgba(255,210,0,.16);border-color:rgba(255,210,0,.55)}
     .action-button.primary{background:linear-gradient(135deg,rgba(255,210,0,.95),rgba(245,158,11,.95));border-color:rgba(254,240,138,.72);color:#063557}
     .pdf-status{position:fixed;inset:auto 16px 16px auto;z-index:100;max-width:360px;padding:12px 16px;border-radius:16px;background:rgba(4,22,38,.96);border:1px solid rgba(255,255,255,.16);box-shadow:0 20px 50px rgba(0,0,0,.35);font-size:13px;color:#dbeafe;display:none}
-    #pdf-deck{position:fixed;left:-30000px;top:0;width:1600px;background:#06182a;z-index:-9999}
+    #pdf-deck{position:absolute;left:0;top:0;width:1600px;background:#06182a;z-index:-1;pointer-events:none;opacity:1;display:none}
     #pdf-deck .pdf-page{display:flex!important;width:1600px!important;height:900px!important;min-height:900px!important;overflow:hidden!important;padding:48px 72px 60px!important;page-break-after:always;break-after:page;position:relative}
     #pdf-deck .pdf-page:last-child{page-break-after:auto;break-after:auto}
 
@@ -421,17 +421,7 @@
     </div>
   </section>
 
-  <!-- 15 -->
-  <section class="slide flex-col items-center justify-center upcn-bg">
-    <div class="relative z-10 max-w-6xl mx-auto w-full px-3">
-      <h2 class="text-4xl sm:text-5xl md:text-7xl font-black mb-8 yellow-text">FUENTES VISUALES</h2>
-      <div class="glass-card rounded-3xl p-7 space-y-5">
-        <div><p class="font-black text-xl">Diseño base</p><p class="text-slate-300 mt-1">Recreación visual inspirada en la propuesta “UPCN 4.0 · Ecosistema de Inteligencia y Comunicación”.</p></div>
-        <div><p class="font-black text-xl">Recursos gráficos</p><p class="text-slate-300 mt-1">La versión final reemplaza imágenes externas por componentes visuales propios en HTML/CSS para evitar dependencias y mejorar la exportación a PDF.</p></div>
-        <div><p class="font-black text-xl">Logos</p><p class="source-link mt-1">UPCN: https://i.postimg.cc/7Lcb2Jvw/Chat-GPT-Image-13-jul-2026-02-05-09-p-m.png</p><p class="source-link mt-1">Instituto IEC: https://i.postimg.cc/jSkQKpRK/Diseno-sin-titulo-2026-05-15T105828-195.png</p></div>
-      </div>
-    </div>
-  </section>
+
 
   <script>
     let current = 0;
@@ -473,6 +463,16 @@
       if(Math.abs(delta) > 60){ changeSlide(delta < 0 ? 1 : -1); }
     }, {passive:true});
 
+    function waitForImages(root){
+      const imgs = Array.from(root.querySelectorAll('img'));
+      return Promise.all(imgs.map(img => new Promise(resolve => {
+        try{ img.crossOrigin = 'anonymous'; }catch(e){}
+        if(img.complete && img.naturalWidth !== 0){ resolve(); return; }
+        img.onload = () => resolve();
+        img.onerror = () => resolve();
+      })));
+    }
+
     async function downloadPDF(){
       const status = document.getElementById('pdf-status');
       const btn = document.getElementById('download-btn');
@@ -481,32 +481,67 @@
         status.style.display = 'block';
         status.textContent = 'Preparando PDF...';
         btn.disabled = true;
+
         deck.innerHTML = '';
+        deck.style.display = 'block';
+        deck.style.position = 'absolute';
+        deck.style.left = '0px';
+        deck.style.top = '0px';
+        deck.style.width = '1600px';
+        deck.style.zIndex = '-1';
+        deck.style.opacity = '1';
+        deck.style.pointerEvents = 'none';
+        deck.setAttribute('aria-hidden','true');
+
         slides.forEach((slide) => {
           const clone = slide.cloneNode(true);
           clone.classList.add('pdf-page');
           clone.classList.remove('active');
           clone.style.display = 'flex';
+          clone.style.visibility = 'visible';
+          clone.style.opacity = '1';
+          clone.querySelectorAll('*').forEach(el => {
+            el.style.visibility = 'visible';
+          });
           deck.appendChild(clone);
         });
-        if(window.lucide){ lucide.createIcons(); }
-        await new Promise(resolve => setTimeout(resolve, 350));
+
+        if(window.lucide){ lucide.createIcons({attrs:{}}); }
+        if(document.fonts && document.fonts.ready){ await document.fonts.ready; }
+        await waitForImages(deck);
+        await new Promise(resolve => requestAnimationFrame(() => requestAnimationFrame(resolve)));
+
         const opt = {
-          margin:0,
-          filename:'UPCN_4_0_Comunicacion_IA.pdf',
-          image:{type:'jpeg',quality:0.98},
-          html2canvas:{scale:2,useCORS:true,backgroundColor:'#06182a',windowWidth:1600,windowHeight:900},
-          jsPDF:{unit:'px',format:[1600,900],orientation:'landscape'},
-          pagebreak:{mode:['css','legacy']}
+          margin: 0,
+          filename: 'UPCN_4_0_Comunicacion_IA.pdf',
+          image: { type: 'jpeg', quality: 0.98 },
+          html2canvas: {
+            scale: 2,
+            useCORS: true,
+            allowTaint: false,
+            backgroundColor: '#06182a',
+            scrollX: 0,
+            scrollY: 0,
+            windowWidth: 1600,
+            windowHeight: 900
+          },
+          jsPDF: { unit: 'px', format: [1600, 900], orientation: 'landscape', compress: true },
+          pagebreak: { mode: ['css', 'legacy'] }
         };
+
         await html2pdf().set(opt).from(deck).save();
         status.textContent = 'PDF generado correctamente.';
       }catch(err){
         console.error(err);
-        status.textContent = 'No se pudo generar el PDF. Usá la opción Imprimir > Guardar como PDF.';
+        status.textContent = 'No se pudo generar con descarga directa. Se abre impresión para guardar como PDF.';
+        setTimeout(() => window.print(), 600);
       }finally{
         btn.disabled = false;
-        setTimeout(() => { status.style.display = 'none'; }, 4000);
+        setTimeout(() => {
+          deck.innerHTML = '';
+          deck.style.display = 'none';
+          status.style.display = 'none';
+        }, 3000);
       }
     }
 
