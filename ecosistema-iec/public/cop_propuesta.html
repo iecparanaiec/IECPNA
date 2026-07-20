@@ -46,6 +46,13 @@
     .timeline{position:relative}.timeline::before{content:"";position:absolute;left:20px;top:10px;bottom:10px;width:2px;background:linear-gradient(var(--cyan),var(--violet))}.timeline-item{position:relative;padding-left:54px;margin:0 0 19px}.timeline-dot{position:absolute;left:9px;top:0;width:24px;height:24px;border-radius:50%;background:#0b1728;border:4px solid var(--cyan);box-shadow:0 0 0 5px rgba(34,211,238,.10)}
     .logo{object-fit:contain;filter:drop-shadow(0 12px 30px rgba(0,0,0,.25))}
     .mini-label{font-size:11px;color:#64748b;text-transform:uppercase;letter-spacing:.13em;font-weight:900}
+
+    .copilot-bubble{padding:12px 14px;border-radius:18px;max-width:92%;font-size:13px;line-height:1.38;border:1px solid rgba(255,255,255,.09)}
+    .copilot-user{margin-left:auto;background:rgba(59,130,246,.14);border-color:rgba(96,165,250,.24);color:#dbeafe}
+    .copilot-ai{margin-right:auto;background:rgba(34,211,238,.10);border-color:rgba(103,232,249,.24);color:#ecfeff}
+    .copilot-pill{padding:9px 11px;border-radius:999px;background:rgba(255,255,255,.045);border:1px solid rgba(255,255,255,.09);color:#cbd5e1;font-size:12px;font-weight:800;cursor:pointer;transition:.18s}
+    .copilot-pill:hover{background:rgba(34,211,238,.12);border-color:rgba(103,232,249,.35);color:#ecfeff}
+    .copilot-source{padding:10px;border-radius:14px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.075);font-size:12px;color:#cbd5e1}
     @media(max-width:900px){
       html,body{overflow:auto}.slide{position:relative;min-height:100vh;padding:70px 20px 90px}.slide:not(.active){display:none}.slide.active{display:flex}.nav-btn{width:40px;height:40px;top:auto;bottom:14px;transform:none}#prev{left:14px}#next{right:14px}#dots{bottom:28px;max-width:65vw}.flow{grid-template-columns:1fr 1fr}.desktop-grid{grid-template-columns:1fr!important}.hide-mobile{display:none!important}.topline{height:48px}}
   </style>
@@ -310,19 +317,270 @@
     </div>
   </section>
 
-  <!-- 25 INTERACTIVE ERP -->
-  <section class="slide items-start" data-title="Maqueta interactiva ERP">
-    <div class="relative z-10 max-w-7xl mx-auto w-full"><div class="text-center"><span class="chip">Maqueta conceptual</span><h2 class="text-3xl md:text-5xl font-black mt-3">ERP COP de <span class="gradient-text">Inteligencia Operativa</span></h2><p class="text-slate-400 mt-2">Navegue por los módulos para visualizar cómo se materializa la propuesta.</p></div>
-      <div class="erp-shell mt-5"><div class="p-4 border-b border-white/10 flex flex-wrap justify-between gap-3"><div><p class="mini-label text-cyan-300">COP + IEC</p><h3 class="font-black text-xl">Centro de Inteligencia Operativa</h3></div><div class="flex gap-2 flex-wrap text-xs"><span class="px-3 py-2 rounded-full bg-green-400/10 border border-green-300/20 text-green-200">● Operativo</span><span class="px-3 py-2 rounded-full bg-cyan-400/10 border border-cyan-300/20 text-cyan-200">Automatizaciones activas</span><span class="px-3 py-2 rounded-full bg-violet-400/10 border border-violet-300/20 text-violet-200">IA disponible</span></div></div>
-        <div class="grid lg:grid-cols-[245px_1fr] desktop-grid"><aside class="p-4 border-r border-white/10 space-y-2"><button class="erp-tab active" data-panel="central">Panel central</button><button class="erp-tab" data-panel="asociados">Asociados y legajos</button><button class="erp-tab" data-panel="tramites">Trámites y auditorías</button><button class="erp-tab" data-panel="economia">Facturación y cobranzas</button><button class="erp-tab" data-panel="servicios">Guardias, S.O.S. y Posgrado</button><button class="erp-tab" data-panel="automatizaciones">Automatizaciones</button><button class="erp-tab" data-panel="direccion">Comisión Directiva</button></aside><main class="p-5 min-h-[470px]">
-          <div class="erp-panel active" id="erp-central"><div class="grid grid-cols-2 md:grid-cols-4 gap-3"><div class="kpi"><p class="mini-label">Consultas abiertas</p><p class="text-3xl font-black mt-1">42</p><p class="text-xs text-amber-300">6 próximas a vencer</p></div><div class="kpi"><p class="mini-label">Cobranza mensual</p><p class="text-3xl font-black mt-1">87%</p><p class="text-xs text-green-300">+4,2% vs. anterior</p></div><div class="kpi"><p class="mini-label">Auditorías pendientes</p><p class="text-3xl font-black mt-1">18</p><p class="text-xs text-cyan-300">5 en evaluación</p></div><div class="kpi"><p class="mini-label">Automatizaciones</p><p class="text-3xl font-black mt-1">126</p><p class="text-xs text-violet-300">acciones esta semana</p></div></div><div class="grid md:grid-cols-2 gap-4 mt-4"><div class="glass-soft rounded-2xl p-4"><h4 class="font-black text-cyan-200">Bandeja inteligente</h4><div class="space-y-2 text-sm mt-3"><p class="p-3 bg-white/5 rounded-xl">12 documentos asociados automáticamente.</p><p class="p-3 bg-white/5 rounded-xl">8 pagos propuestos para conciliación.</p><p class="p-3 bg-white/5 rounded-xl">3 guardias requieren confirmación.</p><p class="p-3 bg-white/5 rounded-xl">5 trámites excedieron el plazo objetivo.</p></div></div><div class="glass-soft rounded-2xl p-4"><h4 class="font-black text-blue-200">Asistente Operativo</h4><div class="mt-3 p-4 rounded-2xl bg-blue-400/10 border border-blue-300/20 text-sm text-slate-200">“Preparé el resumen semanal para Comisión Directiva. Detecté aumento de deuda en cuotas societarias y tres auditorías con documentación pendiente.”</div><button class="mt-3 px-4 py-2 rounded-xl bg-blue-500/80 font-bold text-sm">Ver informe</button></div></div></div>
-          <div class="erp-panel" id="erp-asociados"><h4 class="text-2xl font-black">Asociados y legajos</h4><div class="grid md:grid-cols-3 gap-3 mt-4"><div class="kpi"><p class="mini-label">Asociados activos</p><p class="text-3xl font-black">1.248</p></div><div class="kpi"><p class="mini-label">Documentación completa</p><p class="text-3xl font-black">92%</p></div><div class="kpi"><p class="mini-label">Actualizaciones pendientes</p><p class="text-3xl font-black">34</p></div></div><div class="glass-soft rounded-2xl p-4 mt-4"><p class="font-black">Ficha integral</p><div class="grid md:grid-cols-4 gap-2 mt-3 text-sm"><span class="p-3 bg-white/5 rounded-xl">Datos y matrícula</span><span class="p-3 bg-white/5 rounded-xl">Documentos</span><span class="p-3 bg-white/5 rounded-xl">Deuda y pagos</span><span class="p-3 bg-white/5 rounded-xl">Historial de atención</span></div></div></div>
-          <div class="erp-panel" id="erp-tramites"><h4 class="text-2xl font-black">Trámites y auditorías</h4><div class="grid md:grid-cols-5 gap-2 mt-4 text-center text-xs"><div class="p-4 rounded-xl bg-cyan-400/10 border border-cyan-300/20">Recibido<br><b class="text-xl">28</b></div><div class="p-4 rounded-xl bg-blue-400/10 border border-blue-300/20">Validación<br><b class="text-xl">11</b></div><div class="p-4 rounded-xl bg-violet-400/10 border border-violet-300/20">Evaluación<br><b class="text-xl">15</b></div><div class="p-4 rounded-xl bg-amber-400/10 border border-amber-300/20">Corrección<br><b class="text-xl">7</b></div><div class="p-4 rounded-xl bg-green-400/10 border border-green-300/20">Finalizado<br><b class="text-xl">46</b></div></div><div class="glass-soft rounded-2xl p-4 mt-4"><p class="text-sm text-slate-300">Cada expediente contiene responsable, prioridad, requisitos, archivos, comentarios, tiempos, historial y resultado.</p></div></div>
-          <div class="erp-panel" id="erp-economia"><h4 class="text-2xl font-black">Facturación y cobranzas</h4><div class="grid md:grid-cols-4 gap-3 mt-4"><div class="kpi"><p class="mini-label">Facturado</p><p class="text-2xl font-black">$ 48,2 M</p></div><div class="kpi"><p class="mini-label">Cobrado</p><p class="text-2xl font-black">$ 41,9 M</p></div><div class="kpi"><p class="mini-label">Mora</p><p class="text-2xl font-black">$ 6,3 M</p></div><div class="kpi"><p class="mini-label">Sin conciliar</p><p class="text-2xl font-black">17</p></div></div><div class="glass-soft rounded-2xl p-4 mt-4"><p class="font-black">Flujo automático de cobro</p><p class="text-sm text-slate-400 mt-2">Vencimiento → recordatorio → pago detectado → propuesta de imputación → recibo → actualización de deuda → tablero.</p></div></div>
-          <div class="erp-panel" id="erp-servicios"><h4 class="text-2xl font-black">Servicios institucionales</h4><div class="grid md:grid-cols-3 gap-4 mt-4"><div class="glass-soft rounded-2xl p-4"><b>Guardia</b><p class="text-sm text-slate-400 mt-2">Cronograma, confirmaciones, reemplazos y publicación.</p></div><div class="glass-soft rounded-2xl p-4"><b>S.O.S.</b><p class="text-sm text-slate-400 mt-2">Casos, urgencia, asignación y seguimiento.</p></div><div class="glass-soft rounded-2xl p-4"><b>Posgrado</b><p class="text-sm text-slate-400 mt-2">Cursos, alumnos, pagos, asistencia y certificados.</p></div></div></div>
-          <div class="erp-panel" id="erp-automatizaciones"><h4 class="text-2xl font-black">Centro de automatizaciones</h4><div class="space-y-3 mt-4 text-sm"><div class="p-4 rounded-xl bg-green-400/10 border border-green-300/20">ACTIVA · Documento recibido → lectura → validación → legajo.</div><div class="p-4 rounded-xl bg-green-400/10 border border-green-300/20">ACTIVA · Pago identificado → conciliación → recibo → notificación.</div><div class="p-4 rounded-xl bg-amber-400/10 border border-amber-300/20">REQUIERE APROBACIÓN · Factura extraordinaria superior al límite.</div><div class="p-4 rounded-xl bg-blue-400/10 border border-blue-300/20">PROGRAMADA · Informe ejecutivo todos los viernes.</div></div></div>
-          <div class="erp-panel" id="erp-direccion"><h4 class="text-2xl font-black">Panel de Comisión Directiva</h4><div class="grid md:grid-cols-2 gap-4 mt-4"><div class="glass-soft rounded-2xl p-4"><b>Indicadores institucionales</b><p class="text-sm text-slate-400 mt-2">Asociados, economía, servicios, atención, comunicación y cumplimiento.</p></div><div class="glass-soft rounded-2xl p-4"><b>Decisiones y compromisos</b><p class="text-sm text-slate-400 mt-2">Actas, responsables, fechas, evidencias y alertas.</p></div></div><div class="mt-4 p-4 rounded-2xl bg-violet-400/10 border border-violet-300/20 text-sm">Informe ejecutivo generado automáticamente con información actualizada y fuentes trazables.</div></div>
-        </main></div>
+  <!-- 25 INTERACTIVE ERP MEJORADO -->
+  <section class="slide items-start" data-title="ERP COP avanzado">
+    <div class="relative z-10 max-w-7xl mx-auto w-full">
+      <div class="text-center">
+        <span class="chip"><i data-lucide="panel-top" class="w-4 h-4"></i> Maqueta funcional avanzada</span>
+        <h2 class="text-3xl md:text-5xl font-black mt-3">ERP COP de <span class="gradient-text">Inteligencia Operativa</span></h2>
+        <p class="text-slate-400 mt-2 max-w-5xl mx-auto">Una plataforma institucional que no solo registra información: lee documentos, clasifica solicitudes, dispara mensajes, deriva casos, prepara tareas, solicita aprobaciones y actualiza indicadores en tiempo real.</p>
+      </div>
+
+      <div class="erp-shell mt-5">
+        <div class="p-4 border-b border-white/10 flex flex-wrap justify-between gap-3 bg-white/[.025]">
+          <div>
+            <p class="mini-label text-cyan-300">COP + IEC · ERP + IA + Automatización Operativa</p>
+            <h3 class="font-black text-xl md:text-2xl">Centro de Gestión Inteligente</h3>
+          </div>
+          <div class="flex gap-2 flex-wrap text-xs">
+            <span class="px-3 py-2 rounded-full bg-green-400/10 border border-green-300/20 text-green-200">● 28 flujos activos</span>
+            <span class="px-3 py-2 rounded-full bg-cyan-400/10 border border-cyan-300/20 text-cyan-200">OCR documental</span>
+            <span class="px-3 py-2 rounded-full bg-blue-400/10 border border-blue-300/20 text-blue-200">Mensajería automática</span>
+            <span class="px-3 py-2 rounded-full bg-amber-400/10 border border-amber-300/20 text-amber-200">12 aprobaciones</span>
+          </div>
+        </div>
+
+        <div class="grid desktop-grid" style="grid-template-columns:270px 1fr;">
+          <aside class="p-4 border-r border-white/10 bg-white/[.02]">
+            <div class="space-y-2">
+              <button class="erp-tab active" data-panel="cockpit">🏠 Cockpit operativo</button>
+              <button class="erp-tab" data-panel="ocr">📄 OCR y legajos</button>
+              <button class="erp-tab" data-panel="copilot">🤖 COP Copilot</button>
+              <button class="erp-tab" data-panel="mensajes">💬 Mensajes automáticos</button>
+              <button class="erp-tab" data-panel="tramites">🦷 Auditorías y trámites</button>
+              <button class="erp-tab" data-panel="facturacion">🧾 Facturación y cobros</button>
+              <button class="erp-tab" data-panel="guardia">🚨 Guardia y S.O.S.</button>
+              <button class="erp-tab" data-panel="posgrado">🎓 Posgrado e inscripciones</button>
+              <button class="erp-tab" data-panel="insumos">📦 Insumos y stock</button>
+              <button class="erp-tab" data-panel="direccion">📊 Comisión Directiva</button>
+            </div>
+            <div class="mt-4 p-4 rounded-2xl bg-cyan-400/10 border border-cyan-300/20">
+              <p class="mini-label text-cyan-200">COP Copilot</p>
+              <p class="text-sm text-slate-200 mt-2">“Puedo responder sobre procesos del COP, requisitos, auditorías, guardias, S.O.S., Posgrado, facturación, insumos y documentación institucional.”</p>
+            </div>
+          </aside>
+
+          <main class="p-4 md:p-5 min-h-[560px]">
+            <div class="erp-panel active" id="erp-cockpit">
+              <div class="grid md:grid-cols-4 gap-3">
+                <div class="kpi"><p class="mini-label">Solicitudes entrantes</p><p class="text-3xl font-black">146</p><p class="text-xs text-green-300 mt-1">92% clasificadas</p></div>
+                <div class="kpi"><p class="mini-label">Documentos leídos</p><p class="text-3xl font-black">318</p><p class="text-xs text-cyan-300 mt-1">OCR + validación</p></div>
+                <div class="kpi"><p class="mini-label">Mensajes enviados</p><p class="text-3xl font-black">1.204</p><p class="text-xs text-blue-300 mt-1">WhatsApp + mail</p></div>
+                <div class="kpi"><p class="mini-label">Ahorro estimado</p><p class="text-3xl font-black">64 h</p><p class="text-xs text-amber-300 mt-1">este mes</p></div>
+              </div>
+              <div class="grid md:grid-cols-[1.15fr_.85fr] gap-4 mt-4">
+                <div class="glass-soft rounded-2xl p-4">
+                  <div class="flex items-center justify-between gap-3"><h4 class="text-xl font-black">Bandeja inteligente de procesos</h4><span class="text-xs px-3 py-1 rounded-full bg-green-400/10 border border-green-300/20 text-green-200">En vivo</span></div>
+                  <div class="space-y-3 mt-4 text-sm">
+                    <div class="p-3 rounded-xl bg-cyan-400/10 border border-cyan-300/20 flex justify-between gap-2"><span>📄 Matrícula adjuntó comprobante y DNI</span><b class="text-cyan-200">OCR leído</b></div>
+                    <div class="p-3 rounded-xl bg-blue-400/10 border border-blue-300/20 flex justify-between gap-2"><span>💬 Consulta sobre guardia vigente</span><b class="text-blue-200">Respondida</b></div>
+                    <div class="p-3 rounded-xl bg-violet-400/10 border border-violet-300/20 flex justify-between gap-2"><span>🦷 Auditoría de prótesis incompleta</span><b class="text-violet-200">Pide faltantes</b></div>
+                    <div class="p-3 rounded-xl bg-amber-400/10 border border-amber-300/20 flex justify-between gap-2"><span>🧾 Pago recibido sin asociado identificado</span><b class="text-amber-200">Revisión</b></div>
+                  </div>
+                </div>
+                <div class="glass-soft rounded-2xl p-4">
+                  <h4 class="text-xl font-black">Acciones automáticas activas</h4>
+                  <div class="grid grid-cols-1 gap-2 mt-4 text-sm">
+                    <div class="p-3 bg-white/5 rounded-xl border border-white/10">✅ Clasificar solicitud por tema y urgencia</div>
+                    <div class="p-3 bg-white/5 rounded-xl border border-white/10">✅ Derivar al área responsable</div>
+                    <div class="p-3 bg-white/5 rounded-xl border border-white/10">✅ Enviar confirmación al asociado</div>
+                    <div class="p-3 bg-white/5 rounded-xl border border-white/10">✅ Crear tarea con vencimiento</div>
+                    <div class="p-3 bg-white/5 rounded-xl border border-white/10">✅ Actualizar tablero ejecutivo</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="erp-panel" id="erp-ocr">
+              <h4 class="text-2xl font-black">OCR documental + legajo digital inteligente</h4>
+              <p class="text-sm text-slate-400 mt-2">El sistema permite cargar PDFs, imágenes, comprobantes, constancias, certificados, planillas y documentación de auditoría para leerlos, clasificarlos y asociarlos automáticamente.</p>
+              <div class="grid md:grid-cols-[.9fr_1.1fr] gap-4 mt-4">
+                <div class="glass-soft rounded-2xl p-4">
+                  <div class="border-2 border-dashed border-cyan-300/25 rounded-2xl p-6 text-center bg-cyan-400/5">
+                    <i data-lucide="upload-cloud" class="w-12 h-12 mx-auto text-cyan-300"></i>
+                    <p class="font-black mt-3">Carga de archivos institucionales</p>
+                    <p class="text-xs text-slate-500 mt-1">PDF · JPG · PNG · Excel · CSV · Word</p>
+                  </div>
+                  <div class="space-y-2 mt-4 text-sm">
+                    <div class="p-3 rounded-xl bg-green-400/10 border border-green-300/20">DNI_asociado.pdf · <b>leído</b></div>
+                    <div class="p-3 rounded-xl bg-cyan-400/10 border border-cyan-300/20">comprobante_pago.jpg · <b>importe detectado</b></div>
+                    <div class="p-3 rounded-xl bg-amber-400/10 border border-amber-300/20">auditoria_protesis.zip · <b>falta panorámica</b></div>
+                  </div>
+                </div>
+                <div class="glass-soft rounded-2xl p-4">
+                  <h5 class="font-black text-cyan-200">Extracción automática</h5>
+                  <div class="grid md:grid-cols-2 gap-2 mt-3 text-sm">
+                    <div class="p-3 rounded-xl bg-white/5"><p class="mini-label">Asociado detectado</p><b>Dra. Mariana López</b></div>
+                    <div class="p-3 rounded-xl bg-white/5"><p class="mini-label">Matrícula</p><b>MP 2458</b></div>
+                    <div class="p-3 rounded-xl bg-white/5"><p class="mini-label">Tipo documento</p><b>Comprobante de pago</b></div>
+                    <div class="p-3 rounded-xl bg-white/5"><p class="mini-label">Acción sugerida</p><b>Imputar a cuota</b></div>
+                  </div>
+                  <div class="mt-4 p-4 rounded-2xl bg-blue-400/10 border border-blue-300/20 text-sm">Automatización: leer archivo → extraer datos → validar requisitos → asociar al legajo → crear tarea si falta documentación → notificar al interesado.</div>
+                </div>
+              </div>
+            </div>
+
+
+            <div class="erp-panel" id="erp-copilot">
+              <div class="grid lg:grid-cols-[1.05fr_.95fr] gap-4">
+                <div class="glass-soft rounded-2xl p-4">
+                  <div class="flex flex-wrap items-center justify-between gap-3">
+                    <div>
+                      <p class="mini-label text-cyan-200">Asistente institucional con conocimiento COP</p>
+                      <h4 class="text-2xl font-black">COP Copilot</h4>
+                    </div>
+                    <span class="px-3 py-1.5 rounded-full bg-green-400/10 border border-green-300/20 text-green-200 text-xs font-black">● Base institucional activa</span>
+                  </div>
+                  <p class="text-sm text-slate-400 mt-3">Una IA integrada al ERP que responde usando la información propia del Círculo: procedimientos internos, preguntas frecuentes, estados de trámites, documentos, auditorías, guardias, S.O.S., Posgrado, insumos, facturación y comunicaciones institucionales.</p>
+
+                  <div class="mt-4 rounded-2xl bg-black/20 border border-white/10 p-3 min-h-[310px] flex flex-col">
+                    <div id="copilot-chat" class="space-y-3 flex-1">
+                      <div class="copilot-bubble copilot-ai"><b>COP Copilot:</b> Hola. Puedo ayudarte a consultar requisitos, preparar respuestas, buscar documentos, revisar trámites y sugerir acciones dentro del ERP COP.</div>
+                      <div class="copilot-bubble copilot-user">¿Qué documentación falta en esta auditoría?</div>
+                      <div class="copilot-bubble copilot-ai"><b>Respuesta:</b> Para el trámite AUD-2026-0142 detecté ficha cargada, odontograma y comprobante. Falta adjuntar imagen panorámica y consentimiento firmado. Ya puedo preparar un mensaje automático al profesional solicitando esos faltantes.</div>
+                    </div>
+                    <div class="mt-3 flex gap-2">
+                      <input id="copilotInput" class="w-full px-3 py-2 rounded-xl bg-white/5 border border-white/10 text-white text-sm outline-none focus:border-cyan-300/40" value="¿Cómo respondo una consulta sobre guardia odontológica?" />
+                      <button onclick="copilotAsk()" class="px-4 py-2 rounded-xl bg-cyan-500/80 hover:bg-cyan-400 text-white font-black text-sm">Enviar</button>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="space-y-4">
+                  <div class="glass-soft rounded-2xl p-4">
+                    <h5 class="font-black text-cyan-200">Preguntas rápidas</h5>
+                    <div class="flex flex-wrap gap-2 mt-3">
+                      <button class="copilot-pill" onclick="copilotQuick('auditoria')">Auditoría incompleta</button>
+                      <button class="copilot-pill" onclick="copilotQuick('guardia')">Guardia vigente</button>
+                      <button class="copilot-pill" onclick="copilotQuick('facturacion')">Factura y deuda</button>
+                      <button class="copilot-pill" onclick="copilotQuick('posgrado')">Curso de Posgrado</button>
+                      <button class="copilot-pill" onclick="copilotQuick('insumos')">Stock de insumos</button>
+                      <button class="copilot-pill" onclick="copilotQuick('secretaria')">Acta para CD</button>
+                    </div>
+                  </div>
+
+                  <div class="glass-soft rounded-2xl p-4">
+                    <h5 class="font-black text-blue-200">Fuentes de conocimiento</h5>
+                    <div class="grid sm:grid-cols-2 gap-2 mt-3">
+                      <div class="copilot-source">📚 Reglamentos, protocolos y comunicados</div>
+                      <div class="copilot-source">🦷 Requisitos de auditorías</div>
+                      <div class="copilot-source">🚨 Guardia odontológica y S.O.S.</div>
+                      <div class="copilot-source">🧾 Facturación, deuda y medios de pago</div>
+                      <div class="copilot-source">🎓 Posgrado, cursos y certificados</div>
+                      <div class="copilot-source">📦 Catálogo, pedidos y stock de insumos</div>
+                    </div>
+                  </div>
+
+                  <div class="glass-soft rounded-2xl p-4">
+                    <h5 class="font-black text-violet-200">Acciones que puede ejecutar</h5>
+                    <div class="space-y-2 mt-3 text-sm">
+                      <div class="p-3 bg-white/5 rounded-xl border border-white/10">💬 Redactar respuesta institucional lista para WhatsApp o mail.</div>
+                      <div class="p-3 bg-white/5 rounded-xl border border-white/10">📎 Buscar documentos asociados a una matrícula o trámite.</div>
+                      <div class="p-3 bg-white/5 rounded-xl border border-white/10">✅ Preparar tareas, alertas y pedidos de aprobación humana.</div>
+                      <div class="p-3 bg-white/5 rounded-xl border border-white/10">📊 Resumir indicadores para Secretaría o Comisión Directiva.</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="erp-panel" id="erp-mensajes">
+              <h4 class="text-2xl font-black">Centro de mensajería automática</h4>
+              <div class="grid md:grid-cols-3 gap-3 mt-4">
+                <div class="glass-soft rounded-2xl p-4"><b>WhatsApp institucional</b><p class="text-sm text-slate-400 mt-2">Respuestas frecuentes, derivación por tema, confirmaciones, vencimientos y avisos de guardia.</p></div>
+                <div class="glass-soft rounded-2xl p-4"><b>Correo electrónico</b><p class="text-sm text-slate-400 mt-2">Envío de comprobantes, certificados, actas, recordatorios y comunicaciones segmentadas.</p></div>
+                <div class="glass-soft rounded-2xl p-4"><b>Campañas segmentadas</b><p class="text-sm text-slate-400 mt-2">Asociados, posgrado, guardias, odontólogos por especialidad y público general.</p></div>
+              </div>
+              <div class="grid md:grid-cols-[1fr_.9fr] gap-4 mt-4">
+                <div class="glass-soft rounded-2xl p-4">
+                  <p class="font-black">Mensajes automáticos configurables</p>
+                  <div class="space-y-2 mt-3 text-sm">
+                    <div class="p-3 bg-green-400/10 border border-green-300/20 rounded-xl">✅ “Recibimos tu documentación. El trámite quedó registrado con el código AUD-2026-0142.”</div>
+                    <div class="p-3 bg-blue-400/10 border border-blue-300/20 rounded-xl">✅ “Tu factura ya está disponible. Podés abonarla por transferencia o link de pago.”</div>
+                    <div class="p-3 bg-violet-400/10 border border-violet-300/20 rounded-xl">✅ “Recordatorio: mañana inicia el curso de Posgrado. Adjuntamos aula, horario y material.”</div>
+                  </div>
+                </div>
+                <div class="glass-soft rounded-2xl p-4">
+                  <p class="font-black">Reglas de automatización</p>
+                  <div class="mt-3 text-sm space-y-2"><div class="p-3 rounded-xl bg-white/5">Mensaje recibido → clasifica intención</div><div class="p-3 rounded-xl bg-white/5">Consulta simple → responde</div><div class="p-3 rounded-xl bg-white/5">Consulta compleja → deriva</div><div class="p-3 rounded-xl bg-white/5">Sin respuesta humana → alerta</div></div>
+                </div>
+              </div>
+            </div>
+
+            <div class="erp-panel" id="erp-tramites">
+              <h4 class="text-2xl font-black">Auditorías de Ortodoncia y Prótesis</h4>
+              <div class="grid md:grid-cols-5 gap-2 mt-4 text-center text-xs">
+                <div class="p-4 rounded-xl bg-cyan-400/10 border border-cyan-300/20">Recibido<br><b class="text-xl">28</b></div><div class="p-4 rounded-xl bg-blue-400/10 border border-blue-300/20">Validación IA<br><b class="text-xl">11</b></div><div class="p-4 rounded-xl bg-violet-400/10 border border-violet-300/20">Auditor<br><b class="text-xl">15</b></div><div class="p-4 rounded-xl bg-amber-400/10 border border-amber-300/20">Faltantes<br><b class="text-xl">7</b></div><div class="p-4 rounded-xl bg-green-400/10 border border-green-300/20">Cerrado<br><b class="text-xl">46</b></div>
+              </div>
+              <div class="grid md:grid-cols-2 gap-4 mt-4"><div class="glass-soft rounded-2xl p-4"><b>Validación automática de requisitos</b><p class="text-sm text-slate-400 mt-2">Chequeo de archivos obligatorios, imágenes, datos del profesional, tipo de práctica y antecedentes.</p></div><div class="glass-soft rounded-2xl p-4"><b>Comunicación automática de avance</b><p class="text-sm text-slate-400 mt-2">Notificaciones por recepción, observación, pedido de corrección, resultado y cierre.</p></div></div>
+            </div>
+
+            <div class="erp-panel" id="erp-facturacion">
+              <h4 class="text-2xl font-black">Facturación, cobranza y conciliación</h4>
+              <div class="grid md:grid-cols-4 gap-3 mt-4"><div class="kpi"><p class="mini-label">Facturas sugeridas</p><p class="text-2xl font-black">84</p></div><div class="kpi"><p class="mini-label">Pagos detectados</p><p class="text-2xl font-black">129</p></div><div class="kpi"><p class="mini-label">Sin imputar</p><p class="text-2xl font-black">17</p></div><div class="kpi"><p class="mini-label">Mora alertada</p><p class="text-2xl font-black">41</p></div></div>
+              <div class="flow mt-4"><div class="flow-item"><b>Vencimiento</b><p>Detecta deuda</p></div><div class="flow-item"><b>Aviso</b><p>Mail / WhatsApp</p></div><div class="flow-item"><b>Pago</b><p>Identifica comprobante</p></div><div class="flow-item"><b>OCR</b><p>Lee importe</p></div><div class="flow-item"><b>Conciliación</b><p>Asocia asociado</p></div><div class="flow-item"><b>Recibo</b><p>Prepara envío</p></div><div class="flow-item"><b>Tablero</b><p>Actualiza KPIs</p></div></div>
+              <div class="mt-4 p-4 rounded-2xl bg-green-400/10 border border-green-300/20 text-sm">El sistema puede preparar facturas, emitir avisos escalonados de mora, detectar pagos por comprobantes adjuntos, proponer imputaciones y generar reportes de Tesorería.</div>
+            </div>
+
+            <div class="erp-panel" id="erp-guardia">
+              <h4 class="text-2xl font-black">Guardia Odontológica y S.O.S.</h4>
+              <div class="grid md:grid-cols-2 gap-4 mt-4"><div class="glass-soft rounded-2xl p-4"><b>Guardia inteligente</b><p class="text-sm text-slate-400 mt-2">Calendario, confirmación automática de profesionales, reemplazos, alertas por falta de cobertura y publicación de guardia vigente.</p></div><div class="glass-soft rounded-2xl p-4"><b>S.O.S. con seguimiento</b><p class="text-sm text-slate-400 mt-2">Recepción del caso, nivel de urgencia, profesional asignado, documentación, seguimiento posterior y estadísticas.</p></div></div>
+              <div class="grid md:grid-cols-3 gap-3 mt-4 text-sm"><div class="p-4 rounded-xl bg-cyan-400/10 border border-cyan-300/20">🚨 Guardia sin confirmar → alerta automática</div><div class="p-4 rounded-xl bg-blue-400/10 border border-blue-300/20">📲 Paciente consulta → respuesta orientadora</div><div class="p-4 rounded-xl bg-green-400/10 border border-green-300/20">📊 Caso cerrado → indicador actualizado</div></div>
+            </div>
+
+            <div class="erp-panel" id="erp-posgrado">
+              <h4 class="text-2xl font-black">Escuela de Posgrado automatizada</h4>
+              <div class="grid md:grid-cols-3 gap-4 mt-4"><div class="kpi"><p class="mini-label">Interesados</p><p class="text-3xl font-black">286</p></div><div class="kpi"><p class="mini-label">Inscriptos</p><p class="text-3xl font-black">118</p></div><div class="kpi"><p class="mini-label">Certificados listos</p><p class="text-3xl font-black">74</p></div></div>
+              <div class="flow mt-4"><div class="flow-item"><b>Formulario</b><p>Inscripción</p></div><div class="flow-item"><b>Pago</b><p>Verificación</p></div><div class="flow-item"><b>Confirmación</b><p>Mail / WhatsApp</p></div><div class="flow-item"><b>Calendar</b><p>Agenda</p></div><div class="flow-item"><b>Asistencia</b><p>Registro</p></div><div class="flow-item"><b>Certificado</b><p>Generación</p></div><div class="flow-item"><b>Encuesta</b><p>Feedback</p></div></div>
+            </div>
+
+            <div class="erp-panel" id="erp-insumos">
+              <h4 class="text-2xl font-black">Venta de insumos y stock inteligente</h4>
+              <div class="grid md:grid-cols-4 gap-3 mt-4"><div class="kpi"><p class="mini-label">Stock crítico</p><p class="text-3xl font-black">23</p></div><div class="kpi"><p class="mini-label">Pedidos web</p><p class="text-3xl font-black">64</p></div><div class="kpi"><p class="mini-label">Reservas</p><p class="text-3xl font-black">31</p></div><div class="kpi"><p class="mini-label">Reposición sugerida</p><p class="text-3xl font-black">18</p></div></div>
+              <div class="grid md:grid-cols-2 gap-4 mt-4"><div class="glass-soft rounded-2xl p-4"><b>Catálogo digital</b><p class="text-sm text-slate-400 mt-2">Consulta de precios, disponibilidad, reserva de productos y solicitud de compra.</p></div><div class="glass-soft rounded-2xl p-4"><b>Alertas de reposición</b><p class="text-sm text-slate-400 mt-2">Aviso por stock crítico, rotación, ventas por período y productos de mayor demanda.</p></div></div>
+            </div>
+
+            <div class="erp-panel" id="erp-direccion">
+              <h4 class="text-2xl font-black">Panel ejecutivo para Comisión Directiva</h4>
+              <div class="grid md:grid-cols-2 gap-4 mt-4"><div class="glass-soft rounded-2xl p-4"><b>Indicadores institucionales</b><p class="text-sm text-slate-400 mt-2">Asociados, facturación, mora, atención, auditorías, posgrado, guardia, S.O.S., insumos y comunicación.</p></div><div class="glass-soft rounded-2xl p-4"><b>Actas y compromisos</b><p class="text-sm text-slate-400 mt-2">Generación asistida de minutas, responsables, fechas de cumplimiento, evidencias y alertas.</p></div></div>
+              <div class="mt-4 p-4 rounded-2xl bg-violet-400/10 border border-violet-300/20 text-sm">Reporte ejecutivo automático: resumen semanal, desvíos, decisiones pendientes, métricas clave y recomendaciones de mejora.</div>
+            </div>
+          </main>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 26 NUEVO CURSO SECRETARIADO ODONTOLÓGICO -->
+  <section class="slide items-center" data-title="Secretariado Odontológico IEC">
+    <div class="relative z-10 max-w-6xl mx-auto w-full">
+      <div class="grid md:grid-cols-[1.05fr_.95fr] gap-6 items-center">
+        <div>
+          <span class="chip"><i data-lucide="graduation-cap" class="w-4 h-4"></i> Capacitación para la matrícula COP</span>
+          <h2 class="text-4xl md:text-6xl font-black mt-4">Curso IEC de <span class="gradient-text">Secretariado Odontológico Inteligente</span></h2>
+          <p class="text-lg text-slate-300 mt-4">Como complemento institucional, IEC propone acercar a los profesionales matriculados del COP una capacitación orientada a modernizar la administración odontológica con herramientas de IA, automatización, comunicación digital y gestión operativa.</p>
+          <div class="grid sm:grid-cols-2 gap-3 mt-5 text-sm">
+            <div class="glass-soft rounded-2xl p-4"><b>Para consultorios odontológicos</b><p class="text-slate-400 mt-2">Orden administrativo, turnos, mensajes, documentación y atención al paciente.</p></div>
+            <div class="glass-soft rounded-2xl p-4"><b>Con IA aplicada</b><p class="text-slate-400 mt-2">Prompts, asistentes, respuestas profesionales, organización documental y productividad.</p></div>
+            <div class="glass-soft rounded-2xl p-4"><b>Formato práctico IEC</b><p class="text-slate-400 mt-2">Aprender haciendo, con casos reales del ámbito odontológico.</p></div>
+            <div class="glass-soft rounded-2xl p-4"><b>Valor institucional</b><p class="text-slate-400 mt-2">Beneficio para matriculados y mejora de la calidad de atención en el ecosistema COP.</p></div>
+          </div>
+          <a href="https://iec-ia.com.ar/secretariado_odontologico.html" target="_blank" rel="noopener" class="inline-flex items-center gap-3 mt-6 px-6 py-4 rounded-full bg-gradient-to-r from-cyan-500 to-blue-600 text-white font-black shadow-lg shadow-cyan-500/20 border border-cyan-200/30">
+            Ver curso Secretariado Odontológico <i data-lucide="external-link" class="w-5 h-5"></i>
+          </a>
+        </div>
+        <div class="glass rounded-[34px] p-6 border-cyan-300/20">
+          <div class="flex items-center justify-between gap-3">
+            <div><p class="mini-label text-cyan-300">Landing IEC</p><h3 class="text-2xl font-black">Formación profesional anexada a COP</h3></div>
+            <div class="w-14 h-14 rounded-2xl bg-cyan-400/10 border border-cyan-300/20 grid place-items-center"><i data-lucide="tooth" class="w-8 h-8 text-cyan-300"></i></div>
+          </div>
+          <div class="space-y-3 mt-5 text-sm">
+            <div class="p-4 rounded-2xl bg-white/5 border border-white/10"><b>IA para atención y comunicación</b><p class="text-slate-400 mt-1">Respuestas a pacientes, turnos, recordatorios y derivaciones.</p></div>
+            <div class="p-4 rounded-2xl bg-white/5 border border-white/10"><b>Gestión documental y administrativa</b><p class="text-slate-400 mt-1">Organización de archivos, plantillas, informes y datos.</p></div>
+            <div class="p-4 rounded-2xl bg-white/5 border border-white/10"><b>Automatización simple de procesos</b><p class="text-slate-400 mt-1">Formularios, planillas, agenda, correos y seguimiento.</p></div>
+          </div>
+          <div class="mt-5 p-4 rounded-2xl bg-green-400/10 border border-green-300/20 text-sm text-green-100">Propuesta: COP puede difundirlo como beneficio de actualización profesional para toda su matrícula.</div>
+        </div>
       </div>
     </div>
   </section>
