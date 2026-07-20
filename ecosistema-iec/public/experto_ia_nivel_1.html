@@ -1156,12 +1156,323 @@
 
   <script>
     /*
-      Inicio de la primera comisión:
-      miércoles 5 de agosto de 2026 a las 16:00 hs de Argentina.
+      ============================================================
+      GOOGLE ANALYTICS 4 · MEDICIÓN AVANZADA IEC
+      Propiedad: G-R817QWH97R
+      Curso: Experto en Aplicaciones Prácticas con IA · Nivel I
+      ============================================================
 
-      Al abrir la página se consulta la hora actual en Internet.
-      Si los servicios externos no responden, se usa el reloj local
-      como respaldo sin mostrar mensajes técnicos al visitante.
+      Eventos incorporados:
+      - click_whatsapp
+      - click_navegacion
+      - ver_seccion
+      - ver_modulo
+      - ver_herramienta
+      - ver_comision
+      - scroll_profundidad
+      - tiempo_interaccion
+      - estado_cuenta_regresiva
+      - sincronizacion_hora
+      - salida_pagina
+
+      No se envían nombres, teléfonos, correos ni otros datos personales.
+    */
+
+    const COURSE_NAME = "Experto en Aplicaciones Prácticas con IA Nivel I";
+    const PAGE_TYPE = "landing_curso";
+    const PAGE_PATH = window.location.pathname;
+    const PAGE_TITLE = document.title;
+    const SESSION_START = Date.now();
+
+    function sendGA4Event(eventName, parameters = {}) {
+      if (typeof window.gtag !== "function") {
+        return;
+      }
+
+      window.gtag("event", eventName, {
+        curso: COURSE_NAME,
+        tipo_pagina: PAGE_TYPE,
+        pagina: PAGE_PATH,
+        titulo_pagina: PAGE_TITLE,
+        ...parameters
+      });
+    }
+
+    function cleanText(value) {
+      return String(value || "")
+        .replace(/\s+/g, " ")
+        .trim()
+        .slice(0, 100);
+    }
+
+    /*
+      ------------------------------------------------------------
+      1. CLICS DE NAVEGACIÓN
+      ------------------------------------------------------------
+    */
+
+    const brandLink = document.querySelector(".brand");
+    if (brandLink) {
+      brandLink.addEventListener("click", () => {
+        sendGA4Event("click_navegacion", {
+          elemento: "logo_iecc",
+          ubicacion_boton: "barra_superior",
+          destino: brandLink.href
+        });
+      });
+    }
+
+    const backButton = document.querySelector(".back-button");
+    if (backButton) {
+      backButton.addEventListener("click", () => {
+        sendGA4Event("click_navegacion", {
+          elemento: "volver_a_cursos",
+          ubicacion_boton: "barra_superior",
+          destino: backButton.href
+        });
+      });
+    }
+
+    /*
+      ------------------------------------------------------------
+      2. CLICS EN WHATSAPP
+      ------------------------------------------------------------
+    */
+
+    document.querySelectorAll('a[href*="wa.me"]').forEach((link) => {
+      link.addEventListener("click", () => {
+        let location = "otro";
+
+        if (link.closest(".hero-cta")) {
+          location = "hero_principal";
+        } else if (link.closest(".closing")) {
+          location = "cierre_pagina";
+        } else if (link.classList.contains("float-wa")) {
+          location = "boton_flotante";
+        }
+
+        sendGA4Event("click_whatsapp", {
+          ubicacion_boton: location,
+          texto_boton: cleanText(link.textContent || link.getAttribute("aria-label")),
+          destino: link.href,
+          intencion: "preinscripcion"
+        });
+      });
+    });
+
+    /*
+      ------------------------------------------------------------
+      3. PROFUNDIDAD DE SCROLL
+      ------------------------------------------------------------
+    */
+
+    const scrollMilestones = [25, 50, 75, 90, 100];
+    const reachedScrollMilestones = new Set();
+
+    function measureScrollDepth() {
+      const documentHeight = Math.max(
+        document.body.scrollHeight,
+        document.documentElement.scrollHeight
+      );
+
+      const viewportBottom = window.scrollY + window.innerHeight;
+      const availableScrollableHeight = Math.max(documentHeight - window.innerHeight, 1);
+      const scrolledPixels = Math.max(viewportBottom - window.innerHeight, 0);
+      const percentage = Math.min(
+        100,
+        Math.round((scrolledPixels / availableScrollableHeight) * 100)
+      );
+
+      scrollMilestones.forEach((milestone) => {
+        if (percentage >= milestone && !reachedScrollMilestones.has(milestone)) {
+          reachedScrollMilestones.add(milestone);
+
+          sendGA4Event("scroll_profundidad", {
+            porcentaje: milestone
+          });
+        }
+      });
+    }
+
+    window.addEventListener("scroll", measureScrollDepth, { passive: true });
+    window.addEventListener("resize", measureScrollDepth);
+    measureScrollDepth();
+
+    /*
+      ------------------------------------------------------------
+      4. TIEMPO DE INTERACCIÓN
+      ------------------------------------------------------------
+    */
+
+    [15, 30, 60, 120, 180, 300].forEach((seconds) => {
+      window.setTimeout(() => {
+        if (document.visibilityState === "visible") {
+          sendGA4Event("tiempo_interaccion", {
+            segundos: seconds
+          });
+        }
+      }, seconds * 1000);
+    });
+
+    /*
+      ------------------------------------------------------------
+      5. VISUALIZACIÓN DE SECCIONES
+      ------------------------------------------------------------
+    */
+
+    const viewedSections = new Set();
+
+    const sectionObserver = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (!entry.isIntersecting || entry.intersectionRatio < 0.35) {
+          return;
+        }
+
+        const section = entry.target;
+        const heading = section.querySelector("h2");
+        const sectionName = cleanText(heading ? heading.textContent : "Sección sin título");
+
+        if (viewedSections.has(sectionName)) {
+          return;
+        }
+
+        viewedSections.add(sectionName);
+
+        sendGA4Event("ver_seccion", {
+          seccion: sectionName
+        });
+
+        sectionObserver.unobserve(section);
+      });
+    }, {
+      threshold: [0.35]
+    });
+
+    document.querySelectorAll("main .section").forEach((section) => {
+      sectionObserver.observe(section);
+    });
+
+    /*
+      ------------------------------------------------------------
+      6. VISUALIZACIÓN DE MÓDULOS
+      ------------------------------------------------------------
+    */
+
+    const viewedModules = new Set();
+
+    const moduleObserver = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (!entry.isIntersecting || entry.intersectionRatio < 0.55) {
+          return;
+        }
+
+        const module = entry.target;
+        const number = cleanText(module.querySelector(".module-number")?.textContent);
+        const title = cleanText(module.querySelector("h3")?.textContent);
+        const moduleKey = `${number}-${title}`;
+
+        if (viewedModules.has(moduleKey)) {
+          return;
+        }
+
+        viewedModules.add(moduleKey);
+
+        sendGA4Event("ver_modulo", {
+          numero_modulo: number,
+          nombre_modulo: title
+        });
+
+        moduleObserver.unobserve(module);
+      });
+    }, {
+      threshold: [0.55]
+    });
+
+    document.querySelectorAll(".module").forEach((module) => {
+      moduleObserver.observe(module);
+    });
+
+    /*
+      ------------------------------------------------------------
+      7. VISUALIZACIÓN DE HERRAMIENTAS
+      ------------------------------------------------------------
+    */
+
+    const viewedTools = new Set();
+
+    const toolObserver = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (!entry.isIntersecting || entry.intersectionRatio < 0.65) {
+          return;
+        }
+
+        const tool = entry.target;
+        const toolName = cleanText(tool.querySelector("strong")?.textContent);
+
+        if (!toolName || viewedTools.has(toolName)) {
+          return;
+        }
+
+        viewedTools.add(toolName);
+
+        sendGA4Event("ver_herramienta", {
+          herramienta: toolName
+        });
+
+        toolObserver.unobserve(tool);
+      });
+    }, {
+      threshold: [0.65]
+    });
+
+    document.querySelectorAll(".tool").forEach((tool) => {
+      toolObserver.observe(tool);
+    });
+
+    /*
+      ------------------------------------------------------------
+      8. VISUALIZACIÓN DE COMISIONES
+      ------------------------------------------------------------
+    */
+
+    const viewedCommissions = new Set();
+
+    const commissionObserver = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (!entry.isIntersecting || entry.intersectionRatio < 0.55) {
+          return;
+        }
+
+        const commission = entry.target;
+        const label = cleanText(commission.querySelector(".commission-label")?.textContent);
+        const day = cleanText(commission.querySelector("h3")?.textContent);
+        const commissionKey = `${label}-${day}`;
+
+        if (viewedCommissions.has(commissionKey)) {
+          return;
+        }
+
+        viewedCommissions.add(commissionKey);
+
+        sendGA4Event("ver_comision", {
+          comision: label,
+          dia: day
+        });
+
+        commissionObserver.unobserve(commission);
+      });
+    }, {
+      threshold: [0.55]
+    });
+
+    document.querySelectorAll(".commission").forEach((commission) => {
+      commissionObserver.observe(commission);
+    });
+
+    /*
+      ------------------------------------------------------------
+      9. CUENTA REGRESIVA Y SINCRONIZACIÓN DE HORA
+      ------------------------------------------------------------
     */
 
     const EVENT_START = new Date("2026-08-05T16:00:00-03:00").getTime();
@@ -1169,118 +1480,143 @@
     let internetNowAtSync = null;
     let browserNowAtSync = null;
     let timerInterval = null;
+    let countdownStatusReported = false;
 
-    function pad(value){
-      return String(value).padStart(2,"0");
+    function pad(value) {
+      return String(value).padStart(2, "0");
     }
 
-    function getSynchronizedNow(){
-      if(Number.isFinite(internetNowAtSync) && Number.isFinite(browserNowAtSync)){
+    function getSynchronizedNow() {
+      if (Number.isFinite(internetNowAtSync) && Number.isFinite(browserNowAtSync)) {
         return internetNowAtSync + (Date.now() - browserNowAtSync);
       }
 
       return Date.now();
     }
 
-    async function fetchWorldTime(){
+    async function fetchWorldTime() {
       const response = await fetch(
         "https://worldtimeapi.org/api/timezone/America/Argentina/Buenos_Aires",
         {
-          method:"GET",
-          cache:"no-store",
-          headers:{"Accept":"application/json"}
+          method: "GET",
+          cache: "no-store",
+          headers: { "Accept": "application/json" }
         }
       );
 
-      if(!response.ok){
+      if (!response.ok) {
         throw new Error("Servicio principal de hora no disponible.");
       }
 
       const data = await response.json();
       const parsed = new Date(data.datetime).getTime();
 
-      if(!Number.isFinite(parsed)){
+      if (!Number.isFinite(parsed)) {
         throw new Error("La hora recibida no es válida.");
       }
 
       return parsed;
     }
 
-    async function fetchTimeApi(){
+    async function fetchTimeApi() {
       const response = await fetch(
         "https://timeapi.io/api/time/current/zone?timeZone=America%2FArgentina%2FBuenos_Aires",
         {
-          method:"GET",
-          cache:"no-store",
-          headers:{"Accept":"application/json"}
+          method: "GET",
+          cache: "no-store",
+          headers: { "Accept": "application/json" }
         }
       );
 
-      if(!response.ok){
+      if (!response.ok) {
         throw new Error("Servicio alternativo de hora no disponible.");
       }
 
       const data = await response.json();
       let isoDate = data.dateTime;
 
-      if(!isoDate && data.year){
-        const month = String(data.month || 1).padStart(2,"0");
-        const day = String(data.day || 1).padStart(2,"0");
-        const hour = String(data.hour || 0).padStart(2,"0");
-        const minute = String(data.minute || 0).padStart(2,"0");
-        const seconds = String(data.seconds || 0).padStart(2,"0");
+      if (!isoDate && data.year) {
+        const month = String(data.month || 1).padStart(2, "0");
+        const day = String(data.day || 1).padStart(2, "0");
+        const hour = String(data.hour || 0).padStart(2, "0");
+        const minute = String(data.minute || 0).padStart(2, "0");
+        const seconds = String(data.seconds || 0).padStart(2, "0");
 
         isoDate = `${data.year}-${month}-${day}T${hour}:${minute}:${seconds}-03:00`;
       }
 
       const parsed = new Date(isoDate).getTime();
 
-      if(!Number.isFinite(parsed)){
+      if (!Number.isFinite(parsed)) {
         throw new Error("La hora alternativa no es válida.");
       }
 
       return parsed;
     }
 
-    async function synchronizeInternetTime(){
-      try{
+    async function synchronizeInternetTime() {
+      let source = "reloj_local";
+
+      try {
         let currentInternetTime;
 
-        try{
+        try {
           currentInternetTime = await fetchWorldTime();
-        }catch(primaryError){
+          source = "worldtimeapi";
+        } catch (primaryError) {
           currentInternetTime = await fetchTimeApi();
+          source = "timeapi";
         }
 
         internetNowAtSync = currentInternetTime;
         browserNowAtSync = Date.now();
-      }catch(error){
+
+        sendGA4Event("sincronizacion_hora", {
+          resultado: "correcta",
+          fuente_hora: source
+        });
+      } catch (error) {
         internetNowAtSync = null;
         browserNowAtSync = null;
+
+        sendGA4Event("sincronizacion_hora", {
+          resultado: "respaldo_local",
+          fuente_hora: source
+        });
       }
 
       updateCountdown();
 
-      if(timerInterval){
+      if (timerInterval) {
         clearInterval(timerInterval);
       }
 
-      timerInterval = setInterval(updateCountdown,1000);
+      timerInterval = setInterval(updateCountdown, 1000);
     }
 
-    function updateCountdown(){
+    function updateCountdown() {
       const distance = EVENT_START - getSynchronizedNow();
 
       const countdown = document.getElementById("countdown");
       const expired = document.getElementById("countdown-expired");
 
-      if(!countdown || !expired){
+      if (!countdown || !expired) {
         return;
       }
 
-      if(distance <= 0){
+      if (distance <= 0) {
         countdown.style.display = "none";
         expired.style.display = "block";
+
+        if (!countdownStatusReported) {
+          countdownStatusReported = true;
+
+          sendGA4Event("estado_cuenta_regresiva", {
+            estado: "curso_iniciado",
+            dias_restantes: 0
+          });
+        }
+
         return;
       }
 
@@ -1296,13 +1632,65 @@
       document.getElementById("hours").textContent = pad(hours);
       document.getElementById("minutes").textContent = pad(minutes);
       document.getElementById("seconds").textContent = pad(seconds);
+
+      if (!countdownStatusReported) {
+        countdownStatusReported = true;
+
+        sendGA4Event("estado_cuenta_regresiva", {
+          estado: "curso_proximo",
+          dias_restantes: days
+        });
+      }
     }
 
     synchronizeInternetTime();
 
-    if(window.lucide){
-      lucide.createIcons();
+    /*
+      ------------------------------------------------------------
+      10. SALIDA DE LA PÁGINA
+      ------------------------------------------------------------
+    */
+
+    let exitEventSent = false;
+
+    function reportPageExit() {
+      if (exitEventSent) {
+        return;
+      }
+
+      exitEventSent = true;
+
+      const engagementSeconds = Math.max(
+        1,
+        Math.round((Date.now() - SESSION_START) / 1000)
+      );
+
+      sendGA4Event("salida_pagina", {
+        segundos_en_pagina: engagementSeconds,
+        scroll_maximo: reachedScrollMilestones.size
+          ? Math.max(...reachedScrollMilestones)
+          : 0
+      });
+    }
+
+    document.addEventListener("visibilitychange", () => {
+      if (document.visibilityState === "hidden") {
+        reportPageExit();
+      }
+    });
+
+    window.addEventListener("pagehide", reportPageExit);
+
+    /*
+      ------------------------------------------------------------
+      11. ICONOS
+      ------------------------------------------------------------
+    */
+
+    if (window.lucide) {
+      window.lucide.createIcons();
     }
   </script>
+
 </body>
 </html>
