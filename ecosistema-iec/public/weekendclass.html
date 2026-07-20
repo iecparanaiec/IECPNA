@@ -1367,12 +1367,452 @@
 
   <script>
     /*
-      Fecha del evento:
-      17 de agosto de 2026 a las 14:00 hs de Argentina.
+      ============================================================
+      GOOGLE ANALYTICS 4 · MEDICIÓN AVANZADA IEC
+      Propiedad: G-R817QWH97R
+      Curso: WeekendClass FactorIA · De Cero a Producción
+      ============================================================
 
-      Cada vez que se abre la página se consulta la hora actual en Internet.
-      Se prueban dos servicios públicos de hora y, si ambos fallan,
-      se utiliza el reloj local del dispositivo como respaldo.
+      Eventos incorporados:
+      - click_whatsapp
+      - click_navegacion
+      - ver_seccion
+      - ver_resultado
+      - ver_jornada
+      - ver_herramienta
+      - ver_incluido
+      - ver_bloque_factoria
+      - ver_aviso_cupos
+      - scroll_profundidad
+      - tiempo_interaccion
+      - estado_cuenta_regresiva
+      - sincronizacion_hora
+      - salida_pagina
+
+      No se envían nombres, teléfonos, correos ni otros datos personales.
+    */
+
+    const COURSE_NAME = "WeekendClass FactorIA · De Cero a Producción";
+    const PAGE_TYPE = "landing_weekendclass";
+    const PAGE_PATH = window.location.pathname;
+    const PAGE_TITLE = document.title;
+    const SESSION_START = Date.now();
+
+    function sendGA4Event(eventName, parameters = {}) {
+      if (typeof window.gtag !== "function") {
+        return;
+      }
+
+      window.gtag("event", eventName, {
+        curso: COURSE_NAME,
+        tipo_pagina: PAGE_TYPE,
+        pagina: PAGE_PATH,
+        titulo_pagina: PAGE_TITLE,
+        ...parameters
+      });
+    }
+
+    function cleanText(value) {
+      return String(value || "")
+        .replace(/\s+/g, " ")
+        .trim()
+        .slice(0, 120);
+    }
+
+    /*
+      ------------------------------------------------------------
+      1. CLICS DE NAVEGACIÓN
+      ------------------------------------------------------------
+    */
+
+    const brandLink = document.querySelector(".brand");
+    if (brandLink) {
+      brandLink.addEventListener("click", () => {
+        sendGA4Event("click_navegacion", {
+          elemento: "logo_iec",
+          ubicacion_boton: "barra_superior",
+          destino: brandLink.href
+        });
+      });
+    }
+
+    const backButton = document.querySelector(".back-button");
+    if (backButton) {
+      backButton.addEventListener("click", () => {
+        sendGA4Event("click_navegacion", {
+          elemento: "volver_a_cursos",
+          ubicacion_boton: "barra_superior",
+          destino: backButton.href
+        });
+      });
+    }
+
+    /*
+      ------------------------------------------------------------
+      2. CLICS EN WHATSAPP
+      ------------------------------------------------------------
+    */
+
+    document.querySelectorAll('a[href*="wa.me"]').forEach((link) => {
+      link.addEventListener("click", () => {
+        let location = "otro";
+
+        if (link.closest(".hero-cta")) {
+          location = "hero_principal";
+        } else if (link.closest(".closing")) {
+          location = "cierre_pagina";
+        } else if (link.classList.contains("float-wa")) {
+          location = "boton_flotante";
+        } else if (link.classList.contains("whatsapp-top")) {
+          location = "barra_superior";
+        }
+
+        sendGA4Event("click_whatsapp", {
+          ubicacion_boton: location,
+          texto_boton: cleanText(link.textContent || link.getAttribute("aria-label")),
+          destino: link.href,
+          intencion: "preinscripcion"
+        });
+      });
+    });
+
+    /*
+      ------------------------------------------------------------
+      3. AVISOS DE CUPOS LIMITADOS
+      ------------------------------------------------------------
+    */
+
+    const viewedLimitedNotices = new Set();
+
+    const limitedNoticeObserver = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (!entry.isIntersecting || entry.intersectionRatio < 0.70) {
+          return;
+        }
+
+        const noticeText = cleanText(entry.target.textContent);
+
+        if (!noticeText || viewedLimitedNotices.has(noticeText)) {
+          return;
+        }
+
+        viewedLimitedNotices.add(noticeText);
+
+        sendGA4Event("ver_aviso_cupos", {
+          aviso: noticeText,
+          ubicacion_aviso: entry.target.classList.contains("limited-badge")
+            ? "hero"
+            : "cuenta_regresiva"
+        });
+
+        limitedNoticeObserver.unobserve(entry.target);
+      });
+    }, {
+      threshold: [0.70]
+    });
+
+    document.querySelectorAll(".limited-badge, .countdown-limited").forEach((notice) => {
+      limitedNoticeObserver.observe(notice);
+    });
+
+    /*
+      ------------------------------------------------------------
+      4. PROFUNDIDAD DE SCROLL
+      ------------------------------------------------------------
+    */
+
+    const scrollMilestones = [25, 50, 75, 90, 100];
+    const reachedScrollMilestones = new Set();
+
+    function measureScrollDepth() {
+      const documentHeight = Math.max(
+        document.body.scrollHeight,
+        document.documentElement.scrollHeight
+      );
+
+      const availableScrollableHeight = Math.max(
+        documentHeight - window.innerHeight,
+        1
+      );
+
+      const percentage = Math.min(
+        100,
+        Math.round((window.scrollY / availableScrollableHeight) * 100)
+      );
+
+      scrollMilestones.forEach((milestone) => {
+        if (percentage >= milestone && !reachedScrollMilestones.has(milestone)) {
+          reachedScrollMilestones.add(milestone);
+
+          sendGA4Event("scroll_profundidad", {
+            porcentaje: milestone
+          });
+        }
+      });
+    }
+
+    window.addEventListener("scroll", measureScrollDepth, { passive: true });
+    window.addEventListener("resize", measureScrollDepth);
+    measureScrollDepth();
+
+    /*
+      ------------------------------------------------------------
+      5. TIEMPO DE INTERACCIÓN
+      ------------------------------------------------------------
+    */
+
+    [15, 30, 60, 120, 180, 300, 600].forEach((seconds) => {
+      window.setTimeout(() => {
+        if (document.visibilityState === "visible") {
+          sendGA4Event("tiempo_interaccion", {
+            segundos: seconds
+          });
+        }
+      }, seconds * 1000);
+    });
+
+    /*
+      ------------------------------------------------------------
+      6. VISUALIZACIÓN DE SECCIONES
+      ------------------------------------------------------------
+    */
+
+    const viewedSections = new Set();
+
+    const sectionObserver = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (!entry.isIntersecting || entry.intersectionRatio < 0.35) {
+          return;
+        }
+
+        const section = entry.target;
+        const heading = section.querySelector("h2");
+        const fallbackHeading = section.querySelector("h3");
+        const sectionName = cleanText(
+          heading?.textContent ||
+          fallbackHeading?.textContent ||
+          "Sección sin título"
+        );
+
+        if (viewedSections.has(sectionName)) {
+          return;
+        }
+
+        viewedSections.add(sectionName);
+
+        sendGA4Event("ver_seccion", {
+          seccion: sectionName
+        });
+
+        sectionObserver.unobserve(section);
+      });
+    }, {
+      threshold: [0.35]
+    });
+
+    document.querySelectorAll("main .section").forEach((section) => {
+      sectionObserver.observe(section);
+    });
+
+    /*
+      ------------------------------------------------------------
+      7. RESULTADOS QUE SE VAN A CONSTRUIR
+      ------------------------------------------------------------
+    */
+
+    const viewedResults = new Set();
+
+    const resultObserver = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (!entry.isIntersecting || entry.intersectionRatio < 0.65) {
+          return;
+        }
+
+        const card = entry.target;
+        const resultName = cleanText(card.querySelector("strong")?.textContent);
+
+        if (!resultName || viewedResults.has(resultName)) {
+          return;
+        }
+
+        viewedResults.add(resultName);
+
+        sendGA4Event("ver_resultado", {
+          resultado: resultName
+        });
+
+        resultObserver.unobserve(card);
+      });
+    }, {
+      threshold: [0.65]
+    });
+
+    document.querySelectorAll(".result").forEach((card) => {
+      resultObserver.observe(card);
+    });
+
+    /*
+      ------------------------------------------------------------
+      8. JORNADAS DE LA SEMANA
+      ------------------------------------------------------------
+    */
+
+    const viewedDays = new Set();
+
+    const dayObserver = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (!entry.isIntersecting || entry.intersectionRatio < 0.50) {
+          return;
+        }
+
+        const day = entry.target;
+        const number = cleanText(day.querySelector(".day-label small")?.textContent);
+        const dayName = cleanText(day.querySelector(".day-label strong")?.textContent);
+        const schedule = cleanText(day.querySelector(".day-label span")?.textContent);
+        const title = cleanText(day.querySelector("h3")?.textContent);
+        const key = `${number}-${dayName}-${title}`;
+
+        if (viewedDays.has(key)) {
+          return;
+        }
+
+        viewedDays.add(key);
+
+        sendGA4Event("ver_jornada", {
+          numero_jornada: number,
+          dia: dayName,
+          horario: schedule,
+          tema_jornada: title
+        });
+
+        dayObserver.unobserve(day);
+      });
+    }, {
+      threshold: [0.50]
+    });
+
+    document.querySelectorAll(".day").forEach((day) => {
+      dayObserver.observe(day);
+    });
+
+    /*
+      ------------------------------------------------------------
+      9. HERRAMIENTAS UTILIZADAS
+      ------------------------------------------------------------
+    */
+
+    const viewedTools = new Set();
+
+    const toolObserver = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (!entry.isIntersecting || entry.intersectionRatio < 0.65) {
+          return;
+        }
+
+        const tool = entry.target;
+        const toolName = cleanText(tool.querySelector("strong")?.textContent);
+
+        if (!toolName || viewedTools.has(toolName)) {
+          return;
+        }
+
+        viewedTools.add(toolName);
+
+        sendGA4Event("ver_herramienta", {
+          herramienta: toolName
+        });
+
+        toolObserver.unobserve(tool);
+      });
+    }, {
+      threshold: [0.65]
+    });
+
+    document.querySelectorAll(".tool").forEach((tool) => {
+      toolObserver.observe(tool);
+    });
+
+    /*
+      ------------------------------------------------------------
+      10. ELEMENTOS INCLUIDOS
+      ------------------------------------------------------------
+    */
+
+    const viewedIncluded = new Set();
+
+    const includedObserver = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (!entry.isIntersecting || entry.intersectionRatio < 0.60) {
+          return;
+        }
+
+        const item = entry.target;
+        const itemName = cleanText(item.querySelector("h3")?.textContent);
+
+        if (!itemName || viewedIncluded.has(itemName)) {
+          return;
+        }
+
+        viewedIncluded.add(itemName);
+
+        sendGA4Event("ver_incluido", {
+          elemento_incluido: itemName
+        });
+
+        includedObserver.unobserve(item);
+      });
+    }, {
+      threshold: [0.60]
+    });
+
+    document.querySelectorAll(".included").forEach((item) => {
+      includedObserver.observe(item);
+    });
+
+    /*
+      ------------------------------------------------------------
+      11. BLOQUES DE ENFOQUE Y FACTORIA
+      ------------------------------------------------------------
+    */
+
+    const viewedFactoriaBlocks = new Set();
+
+    const factoriaObserver = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (!entry.isIntersecting || entry.intersectionRatio < 0.50) {
+          return;
+        }
+
+        const card = entry.target;
+        const label = cleanText(card.querySelector(".investment-label")?.textContent);
+        const title = cleanText(card.querySelector("h3")?.textContent);
+        const key = `${label}-${title}`;
+
+        if (viewedFactoriaBlocks.has(key)) {
+          return;
+        }
+
+        viewedFactoriaBlocks.add(key);
+
+        sendGA4Event("ver_bloque_factoria", {
+          bloque: label,
+          titulo_bloque: title
+        });
+
+        factoriaObserver.unobserve(card);
+      });
+    }, {
+      threshold: [0.50]
+    });
+
+    document.querySelectorAll(".investment-card").forEach((card) => {
+      factoriaObserver.observe(card);
+    });
+
+    /*
+      ------------------------------------------------------------
+      12. CUENTA REGRESIVA Y SINCRONIZACIÓN DE HORA
+      ------------------------------------------------------------
     */
 
     const EVENT_START = new Date("2026-08-17T14:00:00-03:00").getTime();
@@ -1380,6 +1820,7 @@
     let internetNowAtSync = null;
     let browserNowAtSync = null;
     let timerInterval = null;
+    let countdownStatusReported = false;
 
     function pad(value) {
       return String(value).padStart(2, "0");
@@ -1402,9 +1843,7 @@
         {
           method: "GET",
           cache: "no-store",
-          headers: {
-            "Accept": "application/json"
-          }
+          headers: { "Accept": "application/json" }
         }
       );
 
@@ -1413,11 +1852,6 @@
       }
 
       const data = await response.json();
-
-      if (!data.datetime) {
-        throw new Error("WorldTimeAPI no devolvió una fecha válida.");
-      }
-
       const parsed = new Date(data.datetime).getTime();
 
       if (!Number.isFinite(parsed)) {
@@ -1433,9 +1867,7 @@
         {
           method: "GET",
           cache: "no-store",
-          headers: {
-            "Accept": "application/json"
-          }
+          headers: { "Accept": "application/json" }
         }
       );
 
@@ -1444,7 +1876,6 @@
       }
 
       const data = await response.json();
-
       let isoDate = data.dateTime;
 
       if (!isoDate && data.year) {
@@ -1467,25 +1898,34 @@
     }
 
     async function synchronizeInternetTime() {
+      let source = "reloj_local";
+
       try {
         let currentInternetTime;
 
         try {
           currentInternetTime = await fetchTimeFromWorldTimeAPI();
+          source = "worldtimeapi";
         } catch (primaryError) {
-          console.warn(primaryError);
           currentInternetTime = await fetchTimeFromTimeAPI();
+          source = "timeapi";
         }
 
         internetNowAtSync = currentInternetTime;
         browserNowAtSync = Date.now();
 
+        sendGA4Event("sincronizacion_hora", {
+          resultado: "correcta",
+          fuente_hora: source
+        });
       } catch (error) {
-        console.warn("No fue posible sincronizar la hora por Internet.", error);
-
         internetNowAtSync = null;
         browserNowAtSync = null;
 
+        sendGA4Event("sincronizacion_hora", {
+          resultado: "respaldo_local",
+          fuente_hora: source
+        });
       }
 
       updateCountdown();
@@ -1498,13 +1938,14 @@
     }
 
     function updateCountdown() {
-      const now = getSynchronizedNow();
-      const distance = EVENT_START - now;
+      const distance = EVENT_START - getSynchronizedNow();
 
       const countdown = document.getElementById("countdown");
       const expired = document.getElementById("countdown-expired");
 
-      if (!countdown || !expired) return;
+      if (!countdown || !expired) {
+        return;
+      }
 
       if (distance <= 0) {
         document.getElementById("days").textContent = "00";
@@ -1515,6 +1956,16 @@
         countdown.style.display = "none";
         expired.style.display = "block";
         expired.textContent = "La WeekendClass ya comenzó. Consultá por disponibilidad, ingreso tardío o próximas fechas.";
+
+        if (!countdownStatusReported) {
+          countdownStatusReported = true;
+
+          sendGA4Event("estado_cuenta_regresiva", {
+            estado: "weekendclass_iniciada",
+            dias_restantes: 0
+          });
+        }
+
         return;
       }
 
@@ -1530,13 +1981,63 @@
       document.getElementById("hours").textContent = pad(hours);
       document.getElementById("minutes").textContent = pad(minutes);
       document.getElementById("seconds").textContent = pad(seconds);
+
+      if (!countdownStatusReported) {
+        countdownStatusReported = true;
+
+        sendGA4Event("estado_cuenta_regresiva", {
+          estado: "weekendclass_proxima",
+          dias_restantes: days
+        });
+      }
     }
 
     synchronizeInternetTime();
 
+    /*
+      ------------------------------------------------------------
+      13. SALIDA DE LA PÁGINA
+      ------------------------------------------------------------
+    */
+
+    let exitEventSent = false;
+
+    function reportPageExit() {
+      if (exitEventSent) {
+        return;
+      }
+
+      exitEventSent = true;
+
+      sendGA4Event("salida_pagina", {
+        segundos_en_pagina: Math.max(
+          1,
+          Math.round((Date.now() - SESSION_START) / 1000)
+        ),
+        scroll_maximo: reachedScrollMilestones.size
+          ? Math.max(...reachedScrollMilestones)
+          : 0
+      });
+    }
+
+    document.addEventListener("visibilitychange", () => {
+      if (document.visibilityState === "hidden") {
+        reportPageExit();
+      }
+    });
+
+    window.addEventListener("pagehide", reportPageExit);
+
+    /*
+      ------------------------------------------------------------
+      14. ICONOS
+      ------------------------------------------------------------
+    */
+
     if (window.lucide) {
-      lucide.createIcons();
+      window.lucide.createIcons();
     }
   </script>
+
 </body>
 </html>
