@@ -1,0 +1,1270 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Robótica Kids del Instituto IEC. Taller permanente para niños con programación, videojuegos, electrónica, Arduino, Inteligencia Artificial e Internet de las Cosas.">
+  <meta name="theme-color" content="#07111f">
+  <title>Robótica Kids | Instituto IEC</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <script src="https://unpkg.com/lucide@0.468.0/dist/umd/lucide.min.js"></script>
+
+  <style>
+    :root{
+      --bg:#030912;
+      --bg2:#07111f;
+      --panel:rgba(255,255,255,.07);
+      --line:rgba(255,255,255,.10);
+      --text:#f8fafc;
+      --muted:#9fb0c4;
+      --green:#22c55e;
+      --lime:#84cc16;
+      --cyan:#22d3ee;
+      --sky:#38bdf8;
+      --blue:#2563eb;
+      --violet:#8b5cf6;
+      --amber:#f59e0b;
+      --pink:#ec4899;
+      --radius:26px;
+    }
+
+    *{box-sizing:border-box}
+    html{scroll-behavior:smooth}
+    body{
+      margin:0;
+      min-height:100vh;
+      color:var(--text);
+      font-family:"DM Sans",sans-serif;
+      background:
+        radial-gradient(circle at 12% -5%,rgba(34,197,94,.18),transparent 28%),
+        radial-gradient(circle at 92% 18%,rgba(14,165,233,.17),transparent 30%),
+        radial-gradient(circle at 50% 110%,rgba(132,204,22,.08),transparent 36%),
+        linear-gradient(180deg,var(--bg),var(--bg2) 55%,#02070d);
+      overflow-x:hidden;
+    }
+
+    body::before{
+      content:"";
+      position:fixed;
+      inset:0;
+      z-index:-2;
+      pointer-events:none;
+      background-image:
+        linear-gradient(rgba(34,197,94,.04) 1px,transparent 1px),
+        linear-gradient(90deg,rgba(56,189,248,.04) 1px,transparent 1px);
+      background-size:56px 56px;
+      mask-image:linear-gradient(to bottom,black,transparent 92%);
+    }
+
+    body::after{
+      content:"";
+      position:fixed;
+      inset:0;
+      z-index:-1;
+      pointer-events:none;
+      background:
+        radial-gradient(circle at 80% 13%,rgba(34,197,94,.55) 0 1px,transparent 2px),
+        radial-gradient(circle at 86% 25%,rgba(56,189,248,.48) 0 1px,transparent 2px),
+        radial-gradient(circle at 71% 69%,rgba(132,204,22,.38) 0 1px,transparent 2px);
+    }
+
+    a{text-decoration:none;color:inherit}
+    img{display:block;max-width:100%}
+
+    .container{
+      width:min(1160px,100%);
+      margin:0 auto;
+      padding:0 18px;
+    }
+
+    .glass{
+      background:var(--panel);
+      border:1px solid var(--line);
+      backdrop-filter:blur(14px);
+      -webkit-backdrop-filter:blur(14px);
+      box-shadow:0 22px 60px rgba(0,0,0,.24);
+    }
+
+    .gradient{
+      background:linear-gradient(135deg,#bbf7d0,#22c55e 36%,#38bdf8 72%,#818cf8);
+      -webkit-background-clip:text;
+      background-clip:text;
+      -webkit-text-fill-color:transparent;
+    }
+
+    .topbar{
+      position:sticky;
+      top:0;
+      z-index:50;
+      background:rgba(3,9,18,.80);
+      border-bottom:1px solid rgba(255,255,255,.08);
+      backdrop-filter:blur(16px);
+    }
+
+    .topbar-inner{
+      min-height:70px;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:14px;
+    }
+
+    .brand{
+      display:flex;
+      align-items:center;
+      gap:11px;
+      min-width:0;
+    }
+
+    .brand img{
+      width:46px;
+      height:46px;
+      object-fit:contain;
+      border-radius:14px;
+      padding:4px;
+      background:rgba(255,255,255,.05);
+      border:1px solid rgba(255,255,255,.08);
+    }
+
+    .brand strong{
+      display:block;
+      font-size:14px;
+      font-weight:900;
+      line-height:1.1;
+    }
+
+    .brand span{
+      display:block;
+      margin-top:3px;
+      color:#94a3b8;
+      font-size:11px;
+      white-space:nowrap;
+      overflow:hidden;
+      text-overflow:ellipsis;
+    }
+
+    .top-actions{
+      display:flex;
+      align-items:center;
+      gap:10px;
+    }
+
+    .back-button,.whatsapp-top{
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      min-height:42px;
+      padding:10px 14px;
+      border-radius:999px;
+      font-size:12px;
+      font-weight:900;
+      transition:.18s ease;
+      white-space:nowrap;
+    }
+
+    .back-button{
+      color:#e2e8f0;
+      background:rgba(255,255,255,.055);
+      border:1px solid rgba(255,255,255,.09);
+    }
+
+    .back-button:hover{
+      transform:translateY(-1px);
+      border-color:rgba(56,189,248,.45);
+      color:#fff;
+    }
+
+    .whatsapp-top{
+      color:white;
+      background:linear-gradient(135deg,#22c55e,#059669);
+      box-shadow:0 14px 35px rgba(5,150,105,.25);
+    }
+
+    .whatsapp-top:hover{transform:translateY(-1px);filter:brightness(1.05)}
+
+    .hero{
+      padding:74px 0 48px;
+      text-align:center;
+    }
+
+    .hero-logo{
+      width:118px;
+      height:118px;
+      margin:0 auto 21px;
+      padding:8px;
+      border-radius:50%;
+      border:1px solid rgba(187,247,208,.30);
+      background:linear-gradient(145deg,rgba(34,197,94,.21),rgba(14,165,233,.08));
+      box-shadow:0 0 62px rgba(34,197,94,.18);
+    }
+
+    .hero-logo img{
+      width:100%;
+      height:100%;
+      object-fit:contain;
+      border-radius:50%;
+    }
+
+    .eyebrow{
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      padding:8px 14px;
+      border-radius:999px;
+      color:#bbf7d0;
+      background:rgba(34,197,94,.09);
+      border:1px solid rgba(34,197,94,.22);
+      font-size:12px;
+      font-weight:900;
+      letter-spacing:.12em;
+      text-transform:uppercase;
+    }
+
+    h1{
+      margin:18px auto 16px;
+      max-width:1000px;
+      font-size:clamp(44px,7vw,88px);
+      line-height:.96;
+      letter-spacing:-.058em;
+      font-weight:900;
+    }
+
+    .hero-copy{
+      max-width:860px;
+      margin:0 auto;
+      color:#cbd5e1;
+      font-size:clamp(17px,2.4vw,22px);
+      line-height:1.55;
+    }
+
+    .hero-cta{
+      display:flex;
+      flex-wrap:wrap;
+      justify-content:center;
+      gap:12px;
+      margin-top:28px;
+    }
+
+    .btn{
+      min-height:52px;
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      gap:9px;
+      padding:13px 20px;
+      border-radius:17px;
+      font-size:14px;
+      font-weight:900;
+      transition:.18s ease;
+    }
+
+    .btn:hover{transform:translateY(-2px)}
+
+    .btn-primary{
+      color:white;
+      background:linear-gradient(135deg,#22c55e,#059669);
+      border:1px solid rgba(187,247,208,.32);
+      box-shadow:0 18px 45px rgba(5,150,105,.26);
+    }
+
+    .stats{
+      display:grid;
+      grid-template-columns:repeat(4,minmax(0,1fr));
+      gap:12px;
+      margin-top:35px;
+    }
+
+    .stat{
+      padding:17px;
+      border-radius:22px;
+      text-align:left;
+    }
+
+    .stat small{
+      display:block;
+      margin-bottom:6px;
+      color:#64748b;
+      font-size:10px;
+      font-weight:900;
+      letter-spacing:.10em;
+      text-transform:uppercase;
+    }
+
+    .stat strong{
+      display:block;
+      font-size:16px;
+      line-height:1.3;
+    }
+
+    .section{padding:40px 0}
+
+    .section-head{
+      display:grid;
+      grid-template-columns:minmax(0,1fr) minmax(280px,440px);
+      align-items:end;
+      gap:28px;
+      margin-bottom:20px;
+    }
+
+    .section-head h2{
+      margin:0;
+      font-size:clamp(31px,4vw,52px);
+      line-height:1.03;
+      letter-spacing:-.04em;
+      font-weight:900;
+    }
+
+    .section-head p{
+      margin:0;
+      color:var(--muted);
+      font-size:14px;
+      line-height:1.65;
+    }
+
+    .foundation{
+      display:grid;
+      grid-template-columns:1.05fr .95fr;
+      gap:16px;
+    }
+
+    .foundation-card{
+      padding:24px;
+      border-radius:var(--radius);
+    }
+
+    .foundation-card h3{
+      margin:0 0 11px;
+      font-size:22px;
+      line-height:1.15;
+      font-weight:900;
+    }
+
+    .foundation-card p{
+      margin:0;
+      color:#cbd5e1;
+      font-size:15px;
+      line-height:1.75;
+    }
+
+    .foundation-list{
+      display:grid;
+      gap:10px;
+      margin-top:15px;
+    }
+
+    .foundation-item{
+      display:flex;
+      align-items:flex-start;
+      gap:10px;
+      padding:12px;
+      border-radius:15px;
+      background:rgba(255,255,255,.045);
+      border:1px solid rgba(255,255,255,.07);
+      color:#cbd5e1;
+      font-size:13px;
+      line-height:1.5;
+    }
+
+    .foundation-item i{
+      color:#bbf7d0;
+      flex:0 0 auto;
+      margin-top:1px;
+    }
+
+    .cognitive-grid{
+      display:grid;
+      grid-template-columns:repeat(3,minmax(0,1fr));
+      gap:14px;
+    }
+
+    .cognitive{
+      padding:22px;
+      border-radius:24px;
+    }
+
+    .cognitive-icon{
+      width:48px;
+      height:48px;
+      display:grid;
+      place-items:center;
+      border-radius:16px;
+      color:#bbf7d0;
+      background:rgba(34,197,94,.10);
+      border:1px solid rgba(187,247,208,.18);
+      margin-bottom:13px;
+    }
+
+    .cognitive h3{
+      margin:0 0 8px;
+      font-size:18px;
+      font-weight:900;
+    }
+
+    .cognitive p{
+      margin:0;
+      color:#b7c4d4;
+      font-size:13px;
+      line-height:1.6;
+    }
+
+    .permanent{
+      padding:28px;
+      border-radius:30px;
+      background:
+        radial-gradient(circle at 90% 0%,rgba(34,197,94,.14),transparent 40%),
+        linear-gradient(135deg,rgba(34,197,94,.11),rgba(14,165,233,.08));
+      border:1px solid rgba(34,197,94,.20);
+    }
+
+    .permanent h3{
+      margin:0 0 11px;
+      font-size:clamp(25px,4vw,39px);
+      line-height:1.05;
+      letter-spacing:-.035em;
+      font-weight:900;
+    }
+
+    .permanent p{
+      margin:0;
+      color:#cbd5e1;
+      font-size:15px;
+      line-height:1.7;
+    }
+
+    .permanent-grid{
+      display:grid;
+      grid-template-columns:repeat(4,minmax(0,1fr));
+      gap:11px;
+      margin-top:18px;
+    }
+
+    .permanent-step{
+      padding:15px;
+      border-radius:18px;
+      background:rgba(255,255,255,.05);
+      border:1px solid rgba(255,255,255,.08);
+    }
+
+    .permanent-step small{
+      display:block;
+      margin-bottom:5px;
+      color:#bbf7d0;
+      font-size:9px;
+      font-weight:900;
+      letter-spacing:.09em;
+      text-transform:uppercase;
+    }
+
+    .permanent-step strong{
+      font-size:13px;
+      line-height:1.4;
+    }
+
+    .stack-grid{
+      display:grid;
+      grid-template-columns:repeat(4,minmax(0,1fr));
+      gap:12px;
+    }
+
+    .stack-card{
+      min-height:150px;
+      padding:18px;
+      border-radius:22px;
+      text-align:center;
+    }
+
+    .stack-icon{
+      width:50px;
+      height:50px;
+      margin:0 auto 12px;
+      display:grid;
+      place-items:center;
+      border-radius:16px;
+      color:#bbf7d0;
+      background:rgba(34,197,94,.10);
+      border:1px solid rgba(187,247,208,.18);
+    }
+
+    .stack-card strong{
+      display:block;
+      margin-bottom:5px;
+      font-size:15px;
+    }
+
+    .stack-card span{
+      display:block;
+      color:#94a3b8;
+      font-size:12px;
+      line-height:1.45;
+    }
+
+    .modules{display:grid;gap:14px}
+
+    .module{
+      display:grid;
+      grid-template-columns:72px minmax(0,1fr);
+      gap:16px;
+      align-items:start;
+      padding:21px;
+      border-radius:25px;
+      background:
+        linear-gradient(135deg,rgba(255,255,255,.075),rgba(255,255,255,.025)),
+        rgba(3,13,24,.78);
+      border:1px solid rgba(255,255,255,.09);
+      box-shadow:0 18px 55px rgba(0,0,0,.20);
+    }
+
+    .module-number{
+      width:72px;
+      height:72px;
+      display:grid;
+      place-items:center;
+      border-radius:20px;
+      color:#bbf7d0;
+      background:linear-gradient(145deg,rgba(34,197,94,.18),rgba(14,165,233,.14));
+      border:1px solid rgba(187,247,208,.22);
+      font-size:22px;
+      font-weight:900;
+    }
+
+    .module h3{
+      margin:0 0 8px;
+      font-size:21px;
+      line-height:1.25;
+      font-weight:900;
+    }
+
+    .module p{
+      margin:0;
+      color:#bdc9d8;
+      font-size:14px;
+      line-height:1.65;
+    }
+
+    .module-topics{
+      display:flex;
+      flex-wrap:wrap;
+      gap:7px;
+      margin-top:13px;
+    }
+
+    .topic{
+      padding:7px 10px;
+      border-radius:999px;
+      color:#cbd5e1;
+      background:rgba(255,255,255,.045);
+      border:1px solid rgba(255,255,255,.07);
+      font-size:11px;
+      font-weight:700;
+    }
+
+    .projects-grid{
+      display:grid;
+      grid-template-columns:repeat(3,minmax(0,1fr));
+      gap:14px;
+    }
+
+    .project{
+      padding:22px;
+      border-radius:24px;
+    }
+
+    .project-icon{
+      width:48px;
+      height:48px;
+      display:grid;
+      place-items:center;
+      border-radius:16px;
+      color:#67e8f9;
+      background:rgba(56,189,248,.10);
+      border:1px solid rgba(125,211,252,.18);
+      margin-bottom:13px;
+    }
+
+    .project h3{
+      margin:0 0 8px;
+      font-size:18px;
+      font-weight:900;
+    }
+
+    .project p{
+      margin:0;
+      color:#b7c4d4;
+      font-size:13px;
+      line-height:1.6;
+    }
+
+    .projection{
+      display:grid;
+      grid-template-columns:1.05fr .95fr;
+      gap:16px;
+    }
+
+    .projection-card{
+      padding:25px;
+      border-radius:27px;
+    }
+
+    .projection-label{
+      display:inline-flex;
+      align-items:center;
+      gap:7px;
+      padding:7px 11px;
+      border-radius:999px;
+      color:#bbf7d0;
+      background:rgba(34,197,94,.09);
+      border:1px solid rgba(34,197,94,.22);
+      font-size:10px;
+      font-weight:900;
+      letter-spacing:.09em;
+      text-transform:uppercase;
+      margin-bottom:12px;
+    }
+
+    .projection-card h3{
+      margin:0 0 11px;
+      font-size:25px;
+      line-height:1.1;
+      font-weight:900;
+    }
+
+    .projection-card p{
+      margin:0;
+      color:#cbd5e1;
+      font-size:14px;
+      line-height:1.7;
+    }
+
+    .projection-list{
+      display:grid;
+      gap:10px;
+      margin-top:15px;
+    }
+
+    .projection-item{
+      display:flex;
+      align-items:flex-start;
+      gap:10px;
+      padding:12px;
+      border-radius:15px;
+      background:rgba(255,255,255,.045);
+      border:1px solid rgba(255,255,255,.07);
+      color:#cbd5e1;
+      font-size:13px;
+      line-height:1.5;
+    }
+
+    .projection-item i{
+      color:#bbf7d0;
+      flex:0 0 auto;
+      margin-top:1px;
+    }
+
+    .closing{
+      margin-top:38px;
+      padding:31px;
+      border-radius:32px;
+      text-align:center;
+      background:
+        radial-gradient(circle at 84% 0%,rgba(34,197,94,.15),transparent 42%),
+        linear-gradient(135deg,rgba(34,197,94,.12),rgba(14,165,233,.09));
+      border:1px solid rgba(34,197,94,.22);
+    }
+
+    .closing h2{
+      margin:0 0 12px;
+      font-size:clamp(32px,5vw,58px);
+      line-height:1;
+      letter-spacing:-.05em;
+      font-weight:900;
+    }
+
+    .closing p{
+      max-width:800px;
+      margin:0 auto 21px;
+      color:#cbd5e1;
+      font-size:16px;
+      line-height:1.65;
+    }
+
+    footer{
+      padding:32px 0 46px;
+      text-align:center;
+      color:#64748b;
+      font-size:12px;
+      line-height:1.7;
+    }
+
+    footer strong{color:#94a3b8}
+
+    .float-wa{
+      position:fixed;
+      right:18px;
+      bottom:18px;
+      z-index:60;
+      width:60px;
+      height:60px;
+      display:grid;
+      place-items:center;
+      border-radius:20px;
+      color:white;
+      background:linear-gradient(135deg,#22c55e,#059669);
+      border:1px solid rgba(187,247,208,.42);
+      box-shadow:0 20px 45px rgba(5,150,105,.28);
+      transition:.18s ease;
+    }
+
+    .float-wa:hover{transform:translateY(-3px) scale(1.02)}
+
+    @media(max-width:900px){
+      .section-head{grid-template-columns:1fr;gap:10px}
+      .foundation,.projection{grid-template-columns:1fr}
+      .stats{grid-template-columns:repeat(2,minmax(0,1fr))}
+      .stack-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+      .permanent-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+      .cognitive-grid,.projects-grid{grid-template-columns:1fr}
+    }
+
+    @media(max-width:620px){
+      .container{padding:0 13px}
+      .topbar-inner{
+        min-height:66px;
+        align-items:flex-start;
+        padding:10px 0;
+      }
+      .brand img{width:42px;height:42px}
+      .brand span{max-width:130px}
+      .top-actions{gap:7px;flex-direction:column;align-items:flex-end}
+      .back-button,.whatsapp-top{padding:8px 11px;font-size:10px;min-height:35px}
+      .hero{padding:46px 0 31px}
+      .hero-logo{width:98px;height:98px}
+      h1{font-size:clamp(39px,12vw,58px)}
+      .stats{grid-template-columns:1fr}
+      .stack-grid{grid-template-columns:1fr 1fr}
+      .permanent-grid{grid-template-columns:1fr}
+      .module{grid-template-columns:56px minmax(0,1fr);padding:16px;gap:12px}
+      .module-number{width:56px;height:56px;border-radius:17px;font-size:17px}
+      .module h3{font-size:17px}
+      .module p{font-size:13px}
+      .float-wa{right:13px;bottom:13px;width:54px;height:54px}
+    }
+
+    @media(max-width:410px){
+      .stack-grid{grid-template-columns:1fr}
+    }
+
+    @media(prefers-reduced-motion:reduce){
+      *,*::before,*::after{transition:none!important;animation:none!important;scroll-behavior:auto!important}
+    }
+  </style>
+</head>
+
+<body>
+  <header class="topbar">
+    <div class="container topbar-inner">
+      <a class="brand" href="https://www.iec-ia.com.ar/">
+        <img src="https://i.postimg.cc/jSkQKpRK/Diseno-sin-titulo-2026-05-15T105828-195.png" alt="Instituto IEC">
+        <span>
+          <strong>Instituto IEC</strong>
+          <span>Centro de Perfeccionamiento en IA</span>
+        </span>
+      </a>
+
+      <div class="top-actions">
+        <a class="back-button" href="https://www.iec-ia.com.ar/cursos.html">
+          <i data-lucide="arrow-left" width="17"></i>
+          Volver a Cursos
+        </a>
+
+        <a class="whatsapp-top" href="https://wa.me/5493434295937?text=Hola%20IEC%2C%20quiero%20informaci%C3%B3n%20sobre%20Rob%C3%B3tica%20Kids" target="_blank" rel="noopener">
+          <i data-lucide="message-circle" width="18"></i>
+          Consultar
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero">
+      <div class="container">
+        <div class="hero-logo">
+          <img src="https://i.postimg.cc/jSkQKpRK/Diseno-sin-titulo-2026-05-15T105828-195.png" alt="Instituto IEC">
+        </div>
+
+        <span class="eyebrow">
+          <i data-lucide="cpu" width="16"></i>
+          Taller permanente para niños
+        </span>
+
+        <h1>Robótica Kids con <span class="gradient">Inteligencia Artificial</span></h1>
+
+        <p class="hero-copy">
+          Un espacio continuo donde cada niño aprende creando sus propios proyectos:
+          desde videojuegos y páginas web hasta robots, sensores y dispositivos IoT.
+        </p>
+
+        <div class="hero-cta">
+          <a class="btn btn-primary" href="https://wa.me/5493434295937?text=Hola%20IEC%2C%20quiero%20informaci%C3%B3n%20sobre%20Rob%C3%B3tica%20Kids" target="_blank" rel="noopener">
+            <i data-lucide="message-circle" width="19"></i>
+            Consultar por WhatsApp
+          </a>
+        </div>
+
+        <div class="stats">
+          <div class="stat glass">
+            <small>Formato</small>
+            <strong>Taller permanente</strong>
+          </div>
+          <div class="stat glass">
+            <small>Metodología</small>
+            <strong>Aprender haciendo</strong>
+          </div>
+          <div class="stat glass">
+            <small>Proyectos</small>
+            <strong>Individuales y progresivos</strong>
+          </div>
+          <div class="stat glass">
+            <small>Recorrido</small>
+            <strong>Videojuegos, robótica e IoT</strong>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container">
+        <div class="section-head">
+          <h2>Fundamentación</h2>
+          <p>Los niños aprenden mejor cuando pueden explorar, construir, equivocarse, corregir y ver cómo sus ideas se convierten en algo real.</p>
+        </div>
+
+        <div class="foundation">
+          <article class="foundation-card glass">
+            <h3>La tecnología como herramienta de creación</h3>
+            <p>
+              Robótica Kids transforma la curiosidad natural de los niños en una experiencia educativa.
+              La programación, la electrónica, el diseño y la Inteligencia Artificial se integran para que cada alumno
+              pueda imaginar, construir y mejorar proyectos propios con acompañamiento docente.
+            </p>
+          </article>
+
+          <article class="foundation-card glass">
+            <h3>Un aprendizaje sin límites rígidos</h3>
+            <div class="foundation-list">
+              <div class="foundation-item"><i data-lucide="check-circle-2" width="18"></i><span>Cada niño comienza desde su nivel y avanza a su propio ritmo.</span></div>
+              <div class="foundation-item"><i data-lucide="check-circle-2" width="18"></i><span>Los proyectos se adaptan a sus intereses, edad y habilidades.</span></div>
+              <div class="foundation-item"><i data-lucide="check-circle-2" width="18"></i><span>La IA acompaña como asistente para explicar, crear y resolver problemas.</span></div>
+              <div class="foundation-item"><i data-lucide="check-circle-2" width="18"></i><span>El taller continúa con nuevos desafíos a medida que el alumno progresa.</span></div>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container">
+        <div class="section-head">
+          <h2>Habilidades que se desarrollan</h2>
+          <p>La robótica y la programación estimulan capacidades cognitivas, creativas y sociales fundamentales para el aprendizaje.</p>
+        </div>
+
+        <div class="cognitive-grid">
+          <article class="cognitive glass">
+            <div class="cognitive-icon"><i data-lucide="brain" width="24"></i></div>
+            <h3>Pensamiento lógico</h3>
+            <p>Comprender secuencias, relaciones, condiciones y consecuencias dentro de un sistema.</p>
+          </article>
+
+          <article class="cognitive glass">
+            <div class="cognitive-icon"><i data-lucide="puzzle" width="24"></i></div>
+            <h3>Resolución de problemas</h3>
+            <p>Probar, detectar errores, corregir y buscar nuevas alternativas ante un desafío.</p>
+          </article>
+
+          <article class="cognitive glass">
+            <div class="cognitive-icon"><i data-lucide="lightbulb" width="24"></i></div>
+            <h3>Creatividad</h3>
+            <p>Convertir ideas propias en juegos, robots, mecanismos y experiencias interactivas.</p>
+          </article>
+
+          <article class="cognitive glass">
+            <div class="cognitive-icon"><i data-lucide="hand" width="24"></i></div>
+            <h3>Motricidad y precisión</h3>
+            <p>Manipular piezas, conectar componentes y construir prototipos de manera cuidadosa.</p>
+          </article>
+
+          <article class="cognitive glass">
+            <div class="cognitive-icon"><i data-lucide="messages-square" width="24"></i></div>
+            <h3>Comunicación</h3>
+            <p>Explicar ideas, describir problemas y presentar el funcionamiento de sus proyectos.</p>
+          </article>
+
+          <article class="cognitive glass">
+            <div class="cognitive-icon"><i data-lucide="users" width="24"></i></div>
+            <h3>Trabajo colaborativo</h3>
+            <p>Compartir conocimientos, ayudar a otros y participar en desafíos grupales.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container">
+        <div class="permanent">
+          <h3>Un taller continuo donde cada proyecto abre una nueva puerta</h3>
+          <p>
+            Una vez iniciado el taller, cada niño comienza a construir sus propios proyectos.
+            A medida que adquiere nuevas habilidades, puede avanzar desde actividades visuales y videojuegos
+            hacia programación, electrónica, robots y dispositivos conectados a Internet.
+          </p>
+
+          <div class="permanent-grid">
+            <article class="permanent-step">
+              <small>Primer paso</small>
+              <strong>Ideas, lógica y juegos simples</strong>
+            </article>
+            <article class="permanent-step">
+              <small>Creación</small>
+              <strong>Webs, videojuegos y animaciones</strong>
+            </article>
+            <article class="permanent-step">
+              <small>Construcción</small>
+              <strong>Robots, circuitos y sensores</strong>
+            </article>
+            <article class="permanent-step">
+              <small>Expansión</small>
+              <strong>IoT, automatización y nuevos desafíos</strong>
+            </article>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container">
+        <div class="section-head">
+          <h2>Lenguajes y herramientas</h2>
+          <p>Los mismos lenguajes del mundo profesional se presentan mediante proyectos simples, visuales y adaptados a niños.</p>
+        </div>
+
+        <div class="stack-grid">
+          <article class="stack-card glass">
+            <div class="stack-icon"><i data-lucide="layout-template" width="24"></i></div>
+            <strong>HTML + CSS</strong>
+            <span>Páginas, colores, diseño y experiencias visuales.</span>
+          </article>
+
+          <article class="stack-card glass">
+            <div class="stack-icon"><i data-lucide="braces" width="24"></i></div>
+            <strong>JavaScript</strong>
+            <span>Videojuegos, movimiento, eventos y desafíos interactivos.</span>
+          </article>
+
+          <article class="stack-card glass">
+            <div class="stack-icon"><i data-lucide="terminal-square" width="24"></i></div>
+            <strong>Python</strong>
+            <span>Programas, retos, lógica y automatizaciones sencillas.</span>
+          </article>
+
+          <article class="stack-card glass">
+            <div class="stack-icon"><i data-lucide="component" width="24"></i></div>
+            <strong>React</strong>
+            <span>Aplicaciones visuales en etapas de mayor avance.</span>
+          </article>
+
+          <article class="stack-card glass">
+            <div class="stack-icon"><i data-lucide="microchip" width="24"></i></div>
+            <strong>C++ y Arduino</strong>
+            <span>Sensores, luces, motores y robots físicos.</span>
+          </article>
+
+          <article class="stack-card glass">
+            <div class="stack-icon"><i data-lucide="sparkles" width="24"></i></div>
+            <strong>Google AI Studio</strong>
+            <span>Asistencia, ideas, explicación y prototipos con IA.</span>
+          </article>
+
+          <article class="stack-card glass">
+            <div class="stack-icon"><i data-lucide="box" width="24"></i></div>
+            <strong>Diseño 3D</strong>
+            <span>Modelado de piezas, objetos y elementos para proyectos.</span>
+          </article>
+
+          <article class="stack-card glass">
+            <div class="stack-icon"><i data-lucide="wifi" width="24"></i></div>
+            <strong>Internet de las Cosas</strong>
+            <span>Dispositivos conectados, datos y automatización.</span>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container">
+        <div class="section-head">
+          <h2>Recorrido formativo</h2>
+          <p>Los módulos se trabajan de forma flexible, recurrente y progresiva según el avance de cada niño.</p>
+        </div>
+
+        <div class="modules">
+          <article class="module">
+            <div class="module-number">I</div>
+            <div>
+              <h3>Pensamiento computacional e IA</h3>
+              <p>Secuencias, patrones, instrucciones y resolución de problemas. La IA ayuda a explicar conceptos y acompañar los primeros desafíos.</p>
+              <div class="module-topics">
+                <span class="topic">Lógica</span>
+                <span class="topic">Secuencias</span>
+                <span class="topic">Prompts</span>
+                <span class="topic">IA responsable</span>
+              </div>
+            </div>
+          </article>
+
+          <article class="module">
+            <div class="module-number">II</div>
+            <div>
+              <h3>Primeros videojuegos y animaciones</h3>
+              <p>Creación de personajes, movimiento, puntajes, reglas y objetivos. Los niños aprenden programación jugando y creando.</p>
+              <div class="module-topics">
+                <span class="topic">Videojuegos</span>
+                <span class="topic">Eventos</span>
+                <span class="topic">Animaciones</span>
+                <span class="topic">Creatividad</span>
+              </div>
+            </div>
+          </article>
+
+          <article class="module">
+            <div class="module-number">III</div>
+            <div>
+              <h3>Diseño de páginas y experiencias web</h3>
+              <p>Uso de HTML y CSS para crear páginas personales, catálogos, historias interactivas y proyectos visuales.</p>
+              <div class="module-topics">
+                <span class="topic">HTML</span>
+                <span class="topic">CSS</span>
+                <span class="topic">Diseño</span>
+                <span class="topic">Web</span>
+              </div>
+            </div>
+          </article>
+
+          <article class="module">
+            <div class="module-number">IV</div>
+            <div>
+              <h3>JavaScript y lógica interactiva</h3>
+              <p>Variables, condiciones, funciones, eventos y objetos adaptados a desafíos visuales y juegos sencillos.</p>
+              <div class="module-topics">
+                <span class="topic">JavaScript</span>
+                <span class="topic">Funciones</span>
+                <span class="topic">Condiciones</span>
+                <span class="topic">DOM</span>
+              </div>
+            </div>
+          </article>
+
+          <article class="module">
+            <div class="module-number">V</div>
+            <div>
+              <h3>Python y desafíos de lógica</h3>
+              <p>Programas simples, minijuegos, cálculos y retos que permiten fortalecer el razonamiento y la organización del pensamiento.</p>
+              <div class="module-topics">
+                <span class="topic">Python</span>
+                <span class="topic">Funciones</span>
+                <span class="topic">Listas</span>
+                <span class="topic">Desafíos</span>
+              </div>
+            </div>
+          </article>
+
+          <article class="module">
+            <div class="module-number">VI</div>
+            <div>
+              <h3>Electrónica básica y circuitos</h3>
+              <p>Conexión de luces, pulsadores, motores y sensores. Los niños comprenden cómo circula la energía y cómo el código controla componentes físicos.</p>
+              <div class="module-topics">
+                <span class="topic">LED</span>
+                <span class="topic">Motores</span>
+                <span class="topic">Sensores</span>
+                <span class="topic">Circuitos</span>
+              </div>
+            </div>
+          </article>
+
+          <article class="module">
+            <div class="module-number">VII</div>
+            <div>
+              <h3>Arduino y C++</h3>
+              <p>Programación de placas Arduino mediante proyectos adaptados: semáforos, alarmas, autos, robots y mecanismos automáticos.</p>
+              <div class="module-topics">
+                <span class="topic">Arduino IDE</span>
+                <span class="topic">C++</span>
+                <span class="topic">Robots</span>
+                <span class="topic">Automatización</span>
+              </div>
+            </div>
+          </article>
+
+          <article class="module">
+            <div class="module-number">VIII</div>
+            <div>
+              <h3>Diseño 3D y construcción de piezas</h3>
+              <p>Modelado de objetos y componentes para complementar robots, escenarios, soportes y prototipos físicos.</p>
+              <div class="module-topics">
+                <span class="topic">Diseño 3D</span>
+                <span class="topic">Modelado</span>
+                <span class="topic">Prototipos</span>
+                <span class="topic">Piezas</span>
+              </div>
+            </div>
+          </article>
+
+          <article class="module">
+            <div class="module-number">IX</div>
+            <div>
+              <h3>Dispositivos IoT</h3>
+              <p>Proyectos conectados a Internet que reciben información, envían datos o pueden controlarse a distancia.</p>
+              <div class="module-topics">
+                <span class="topic">IoT</span>
+                <span class="topic">Conectividad</span>
+                <span class="topic">Datos</span>
+                <span class="topic">Control remoto</span>
+              </div>
+            </div>
+          </article>
+
+          <article class="module">
+            <div class="module-number">X</div>
+            <div>
+              <h3>Proyectos personales y desafíos avanzados</h3>
+              <p>Cada niño continúa creando proyectos propios, combina tecnologías y supera nuevas barreras según sus intereses y evolución.</p>
+              <div class="module-topics">
+                <span class="topic">Proyecto propio</span>
+                <span class="topic">Integración</span>
+                <span class="topic">Creatividad</span>
+                <span class="topic">Continuidad</span>
+              </div>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container">
+        <div class="section-head">
+          <h2>Proyectos que pueden crear</h2>
+          <p>El aprendizaje se materializa en producciones concretas, adaptadas al nivel y a la imaginación de cada niño.</p>
+        </div>
+
+        <div class="projects-grid">
+          <article class="project glass">
+            <div class="project-icon"><i data-lucide="gamepad-2" width="24"></i></div>
+            <h3>Videojuegos propios</h3>
+            <p>Juegos de plataformas, laberintos, desafíos, torneos y experiencias interactivas.</p>
+          </article>
+
+          <article class="project glass">
+            <div class="project-icon"><i data-lucide="bot" width="24"></i></div>
+            <h3>Robots y mecanismos</h3>
+            <p>Autos, alarmas, semáforos, brazos, sensores y dispositivos automatizados.</p>
+          </article>
+
+          <article class="project glass">
+            <div class="project-icon"><i data-lucide="wifi" width="24"></i></div>
+            <h3>Dispositivos IoT</h3>
+            <p>Proyectos conectados a Internet para controlar luces, medir datos o activar acciones.</p>
+          </article>
+
+          <article class="project glass">
+            <div class="project-icon"><i data-lucide="globe-2" width="24"></i></div>
+            <h3>Páginas y aplicaciones</h3>
+            <p>Sitios personales, historias interactivas, apps educativas y paneles visuales.</p>
+          </article>
+
+          <article class="project glass">
+            <div class="project-icon"><i data-lucide="box" width="24"></i></div>
+            <h3>Objetos en 3D</h3>
+            <p>Piezas, soportes, personajes y elementos para complementar sus creaciones.</p>
+          </article>
+
+          <article class="project glass">
+            <div class="project-icon"><i data-lucide="sparkles" width="24"></i></div>
+            <h3>Asistentes con IA</h3>
+            <p>Guías, personajes, ayudantes virtuales y proyectos creativos con Inteligencia Artificial.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container">
+        <div class="projection">
+          <article class="projection-card glass">
+            <span class="projection-label"><i data-lucide="rocket" width="15"></i> Aprendizaje sin techo</span>
+            <h3>Romper barreras a medida que avanzan</h3>
+            <p>
+              El taller no limita a todos los niños al mismo proyecto. Cada participante puede profundizar,
+              combinar herramientas y desarrollar nuevas ideas según su ritmo, curiosidad y nivel de autonomía.
+            </p>
+
+            <div class="projection-list">
+              <div class="projection-item"><i data-lucide="check-circle-2" width="18"></i><span>Proyectos individuales desde las primeras etapas.</span></div>
+              <div class="projection-item"><i data-lucide="check-circle-2" width="18"></i><span>Desafíos progresivos adaptados a cada niño.</span></div>
+              <div class="projection-item"><i data-lucide="check-circle-2" width="18"></i><span>Libertad para explorar videojuegos, robótica, diseño o IoT.</span></div>
+              <div class="projection-item"><i data-lucide="check-circle-2" width="18"></i><span>Continuidad hacia Programador Teens en edades posteriores.</span></div>
+            </div>
+          </article>
+
+          <article class="projection-card glass">
+            <span class="projection-label"><i data-lucide="shield-check" width="15"></i> Acompañamiento y seguridad</span>
+            <h3>Aprender con tecnología de manera responsable</h3>
+            <p>
+              Los niños trabajan con acompañamiento docente, reglas claras y proyectos adecuados a su edad.
+              Se promueve el cuidado de los materiales, la privacidad y el uso consciente de la Inteligencia Artificial.
+            </p>
+
+            <div class="projection-list">
+              <div class="projection-item"><i data-lucide="check-circle-2" width="18"></i><span>Uso responsable de Internet e IA.</span></div>
+              <div class="projection-item"><i data-lucide="check-circle-2" width="18"></i><span>Cuidado de componentes y herramientas.</span></div>
+              <div class="projection-item"><i data-lucide="check-circle-2" width="18"></i><span>Validación de resultados y aprendizaje del error.</span></div>
+              <div class="projection-item"><i data-lucide="check-circle-2" width="18"></i><span>Acompañamiento permanente durante cada proyecto.</span></div>
+            </div>
+          </article>
+        </div>
+
+        <div class="closing">
+          <h2>Imaginar, construir y aprender sin límites</h2>
+          <p>
+            Robótica Kids combina juego, programación, electrónica e Inteligencia Artificial
+            para que cada niño descubra todo lo que es capaz de crear.
+          </p>
+
+          <a class="btn btn-primary" href="https://wa.me/5493434295937?text=Hola%20IEC%2C%20quiero%20informaci%C3%B3n%20sobre%20Rob%C3%B3tica%20Kids" target="_blank" rel="noopener">
+            <i data-lucide="message-circle" width="20"></i>
+            Consultar por WhatsApp
+          </a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <a class="float-wa" href="https://wa.me/5493434295937?text=Hola%20IEC%2C%20quiero%20informaci%C3%B3n%20sobre%20Rob%C3%B3tica%20Kids" target="_blank" rel="noopener" aria-label="Consultar por WhatsApp">
+    <i data-lucide="message-circle" width="28"></i>
+  </a>
+
+  <footer>
+    <div class="container">
+      <strong>Instituto IEC · Centro de Perfeccionamiento en Inteligencia Artificial</strong><br>
+      Taller permanente de programación, robótica e IoT para niños · Paraná, Entre Ríos.
+    </div>
+  </footer>
+
+  <script>
+    if (window.lucide) lucide.createIcons();
+  </script>
+</body>
+</html>
