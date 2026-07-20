@@ -1,0 +1,1276 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Programador Teens con IA del Instituto IEC. Taller permanente para adolescentes orientado a programación, creatividad, pensamiento lógico, desarrollo cognitivo e Inteligencia Artificial.">
+  <meta name="theme-color" content="#06111f">
+  <title>Programador Teens con IA | Instituto IEC</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <script src="https://unpkg.com/lucide@0.468.0/dist/umd/lucide.min.js"></script>
+
+  <style>
+    :root{
+      --bg:#030912;
+      --bg2:#07111f;
+      --panel:rgba(255,255,255,.07);
+      --line:rgba(255,255,255,.10);
+      --text:#f8fafc;
+      --muted:#9fb0c4;
+      --cyan:#22d3ee;
+      --sky:#38bdf8;
+      --blue:#2563eb;
+      --violet:#8b5cf6;
+      --amber:#f59e0b;
+      --pink:#ec4899;
+      --green:#22c55e;
+      --radius:26px;
+    }
+
+    *{box-sizing:border-box}
+    html{scroll-behavior:smooth}
+    body{
+      margin:0;
+      min-height:100vh;
+      color:var(--text);
+      font-family:"DM Sans",sans-serif;
+      background:
+        radial-gradient(circle at 13% -5%,rgba(245,158,11,.16),transparent 28%),
+        radial-gradient(circle at 92% 18%,rgba(99,102,241,.18),transparent 30%),
+        radial-gradient(circle at 50% 110%,rgba(34,211,238,.09),transparent 36%),
+        linear-gradient(180deg,var(--bg),var(--bg2) 55%,#02070d);
+      overflow-x:hidden;
+    }
+
+    body::before{
+      content:"";
+      position:fixed;
+      inset:0;
+      z-index:-2;
+      pointer-events:none;
+      background-image:
+        linear-gradient(rgba(56,189,248,.045) 1px,transparent 1px),
+        linear-gradient(90deg,rgba(56,189,248,.045) 1px,transparent 1px);
+      background-size:56px 56px;
+      mask-image:linear-gradient(to bottom,black,transparent 92%);
+    }
+
+    body::after{
+      content:"";
+      position:fixed;
+      inset:0;
+      z-index:-1;
+      pointer-events:none;
+      background:
+        radial-gradient(circle at 80% 13%,rgba(245,158,11,.55) 0 1px,transparent 2px),
+        radial-gradient(circle at 86% 25%,rgba(129,140,248,.50) 0 1px,transparent 2px),
+        radial-gradient(circle at 71% 69%,rgba(34,211,238,.40) 0 1px,transparent 2px);
+    }
+
+    a{text-decoration:none;color:inherit}
+    img{display:block;max-width:100%}
+
+    .container{
+      width:min(1160px,100%);
+      margin:0 auto;
+      padding:0 18px;
+    }
+
+    .glass{
+      background:var(--panel);
+      border:1px solid var(--line);
+      backdrop-filter:blur(14px);
+      -webkit-backdrop-filter:blur(14px);
+      box-shadow:0 22px 60px rgba(0,0,0,.24);
+    }
+
+    .gradient{
+      background:linear-gradient(135deg,#fde68a,#f59e0b 36%,#818cf8 70%,#38bdf8);
+      -webkit-background-clip:text;
+      background-clip:text;
+      -webkit-text-fill-color:transparent;
+    }
+
+    .topbar{
+      position:sticky;
+      top:0;
+      z-index:50;
+      background:rgba(3,9,18,.80);
+      border-bottom:1px solid rgba(255,255,255,.08);
+      backdrop-filter:blur(16px);
+    }
+
+    .topbar-inner{
+      min-height:70px;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:14px;
+    }
+
+    .brand{
+      display:flex;
+      align-items:center;
+      gap:11px;
+      min-width:0;
+    }
+
+    .brand img{
+      width:46px;
+      height:46px;
+      object-fit:contain;
+      border-radius:14px;
+      padding:4px;
+      background:rgba(255,255,255,.05);
+      border:1px solid rgba(255,255,255,.08);
+    }
+
+    .brand strong{
+      display:block;
+      font-size:14px;
+      font-weight:900;
+      line-height:1.1;
+    }
+
+    .brand span{
+      display:block;
+      margin-top:3px;
+      color:#94a3b8;
+      font-size:11px;
+      white-space:nowrap;
+      overflow:hidden;
+      text-overflow:ellipsis;
+    }
+
+    .top-actions{
+      display:flex;
+      align-items:center;
+      gap:10px;
+    }
+
+    .back-button,.whatsapp-top{
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      min-height:42px;
+      padding:10px 14px;
+      border-radius:999px;
+      font-size:12px;
+      font-weight:900;
+      transition:.18s ease;
+      white-space:nowrap;
+    }
+
+    .back-button{
+      color:#e2e8f0;
+      background:rgba(255,255,255,.055);
+      border:1px solid rgba(255,255,255,.09);
+    }
+
+    .back-button:hover{
+      transform:translateY(-1px);
+      border-color:rgba(56,189,248,.45);
+      color:#fff;
+    }
+
+    .whatsapp-top{
+      color:white;
+      background:linear-gradient(135deg,#22c55e,#059669);
+      box-shadow:0 14px 35px rgba(5,150,105,.25);
+    }
+
+    .whatsapp-top:hover{transform:translateY(-1px);filter:brightness(1.05)}
+
+    .hero{
+      padding:74px 0 48px;
+      text-align:center;
+    }
+
+    .hero-logo{
+      width:118px;
+      height:118px;
+      margin:0 auto 21px;
+      padding:8px;
+      border-radius:50%;
+      border:1px solid rgba(253,230,138,.30);
+      background:linear-gradient(145deg,rgba(245,158,11,.21),rgba(99,102,241,.08));
+      box-shadow:0 0 62px rgba(245,158,11,.18);
+    }
+
+    .hero-logo img{
+      width:100%;
+      height:100%;
+      object-fit:contain;
+      border-radius:50%;
+    }
+
+    .eyebrow{
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      padding:8px 14px;
+      border-radius:999px;
+      color:#fde68a;
+      background:rgba(245,158,11,.09);
+      border:1px solid rgba(245,158,11,.22);
+      font-size:12px;
+      font-weight:900;
+      letter-spacing:.12em;
+      text-transform:uppercase;
+    }
+
+    h1{
+      margin:18px auto 16px;
+      max-width:1000px;
+      font-size:clamp(44px,7vw,88px);
+      line-height:.96;
+      letter-spacing:-.058em;
+      font-weight:900;
+    }
+
+    .hero-copy{
+      max-width:860px;
+      margin:0 auto;
+      color:#cbd5e1;
+      font-size:clamp(17px,2.4vw,22px);
+      line-height:1.55;
+    }
+
+    .hero-cta{
+      display:flex;
+      flex-wrap:wrap;
+      justify-content:center;
+      gap:12px;
+      margin-top:28px;
+    }
+
+    .btn{
+      min-height:52px;
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      gap:9px;
+      padding:13px 20px;
+      border-radius:17px;
+      font-size:14px;
+      font-weight:900;
+      transition:.18s ease;
+    }
+
+    .btn:hover{transform:translateY(-2px)}
+
+    .btn-primary{
+      color:white;
+      background:linear-gradient(135deg,#22c55e,#059669);
+      border:1px solid rgba(187,247,208,.32);
+      box-shadow:0 18px 45px rgba(5,150,105,.26);
+    }
+
+    .stats{
+      display:grid;
+      grid-template-columns:repeat(4,minmax(0,1fr));
+      gap:12px;
+      margin-top:35px;
+    }
+
+    .stat{
+      padding:17px;
+      border-radius:22px;
+      text-align:left;
+    }
+
+    .stat small{
+      display:block;
+      margin-bottom:6px;
+      color:#64748b;
+      font-size:10px;
+      font-weight:900;
+      letter-spacing:.10em;
+      text-transform:uppercase;
+    }
+
+    .stat strong{
+      display:block;
+      font-size:16px;
+      line-height:1.3;
+    }
+
+    .section{padding:40px 0}
+
+    .section-head{
+      display:grid;
+      grid-template-columns:minmax(0,1fr) minmax(280px,440px);
+      align-items:end;
+      gap:28px;
+      margin-bottom:20px;
+    }
+
+    .section-head h2{
+      margin:0;
+      font-size:clamp(31px,4vw,52px);
+      line-height:1.03;
+      letter-spacing:-.04em;
+      font-weight:900;
+    }
+
+    .section-head p{
+      margin:0;
+      color:var(--muted);
+      font-size:14px;
+      line-height:1.65;
+    }
+
+    .foundation{
+      display:grid;
+      grid-template-columns:1.05fr .95fr;
+      gap:16px;
+    }
+
+    .foundation-card{
+      padding:24px;
+      border-radius:var(--radius);
+    }
+
+    .foundation-card h3{
+      margin:0 0 11px;
+      font-size:22px;
+      line-height:1.15;
+      font-weight:900;
+    }
+
+    .foundation-card p{
+      margin:0;
+      color:#cbd5e1;
+      font-size:15px;
+      line-height:1.75;
+    }
+
+    .foundation-list{
+      display:grid;
+      gap:10px;
+      margin-top:15px;
+    }
+
+    .foundation-item{
+      display:flex;
+      align-items:flex-start;
+      gap:10px;
+      padding:12px;
+      border-radius:15px;
+      background:rgba(255,255,255,.045);
+      border:1px solid rgba(255,255,255,.07);
+      color:#cbd5e1;
+      font-size:13px;
+      line-height:1.5;
+    }
+
+    .foundation-item i{
+      color:#fde68a;
+      flex:0 0 auto;
+      margin-top:1px;
+    }
+
+    .cognitive-grid{
+      display:grid;
+      grid-template-columns:repeat(3,minmax(0,1fr));
+      gap:14px;
+    }
+
+    .cognitive{
+      padding:22px;
+      border-radius:24px;
+    }
+
+    .cognitive-icon{
+      width:48px;
+      height:48px;
+      display:grid;
+      place-items:center;
+      border-radius:16px;
+      color:#fde68a;
+      background:rgba(245,158,11,.10);
+      border:1px solid rgba(253,230,138,.18);
+      margin-bottom:13px;
+    }
+
+    .cognitive h3{
+      margin:0 0 8px;
+      font-size:18px;
+      font-weight:900;
+    }
+
+    .cognitive p{
+      margin:0;
+      color:#b7c4d4;
+      font-size:13px;
+      line-height:1.6;
+    }
+
+    .objectives{
+      display:grid;
+      grid-template-columns:repeat(2,minmax(0,1fr));
+      gap:14px;
+    }
+
+    .objective{
+      display:flex;
+      align-items:flex-start;
+      gap:13px;
+      padding:19px;
+      border-radius:22px;
+    }
+
+    .objective-icon{
+      width:46px;
+      height:46px;
+      flex:0 0 auto;
+      display:grid;
+      place-items:center;
+      border-radius:15px;
+      color:#fde68a;
+      background:rgba(245,158,11,.10);
+      border:1px solid rgba(253,230,138,.18);
+    }
+
+    .objective h3{
+      margin:0 0 6px;
+      font-size:17px;
+      font-weight:900;
+    }
+
+    .objective p{
+      margin:0;
+      color:#b7c4d4;
+      font-size:13px;
+      line-height:1.6;
+    }
+
+    .stack-grid{
+      display:grid;
+      grid-template-columns:repeat(4,minmax(0,1fr));
+      gap:12px;
+    }
+
+    .stack-card{
+      min-height:150px;
+      padding:18px;
+      border-radius:22px;
+      text-align:center;
+    }
+
+    .stack-icon{
+      width:50px;
+      height:50px;
+      margin:0 auto 12px;
+      display:grid;
+      place-items:center;
+      border-radius:16px;
+      color:#fde68a;
+      background:rgba(245,158,11,.10);
+      border:1px solid rgba(253,230,138,.18);
+    }
+
+    .stack-card strong{
+      display:block;
+      margin-bottom:5px;
+      font-size:15px;
+    }
+
+    .stack-card span{
+      display:block;
+      color:#94a3b8;
+      font-size:12px;
+      line-height:1.45;
+    }
+
+    .permanent{
+      padding:28px;
+      border-radius:30px;
+      background:
+        radial-gradient(circle at 90% 0%,rgba(245,158,11,.14),transparent 40%),
+        linear-gradient(135deg,rgba(245,158,11,.11),rgba(99,102,241,.08));
+      border:1px solid rgba(245,158,11,.20);
+    }
+
+    .permanent h3{
+      margin:0 0 11px;
+      font-size:clamp(25px,4vw,39px);
+      line-height:1.05;
+      letter-spacing:-.035em;
+      font-weight:900;
+    }
+
+    .permanent p{
+      margin:0;
+      color:#cbd5e1;
+      font-size:15px;
+      line-height:1.7;
+    }
+
+    .permanent-grid{
+      display:grid;
+      grid-template-columns:repeat(4,minmax(0,1fr));
+      gap:11px;
+      margin-top:18px;
+    }
+
+    .permanent-step{
+      padding:15px;
+      border-radius:18px;
+      background:rgba(255,255,255,.05);
+      border:1px solid rgba(255,255,255,.08);
+    }
+
+    .permanent-step small{
+      display:block;
+      margin-bottom:5px;
+      color:#fde68a;
+      font-size:9px;
+      font-weight:900;
+      letter-spacing:.09em;
+      text-transform:uppercase;
+    }
+
+    .permanent-step strong{
+      font-size:13px;
+      line-height:1.4;
+    }
+
+    .modules{display:grid;gap:14px}
+
+    .module{
+      display:grid;
+      grid-template-columns:72px minmax(0,1fr);
+      gap:16px;
+      align-items:start;
+      padding:21px;
+      border-radius:25px;
+      background:
+        linear-gradient(135deg,rgba(255,255,255,.075),rgba(255,255,255,.025)),
+        rgba(3,13,24,.78);
+      border:1px solid rgba(255,255,255,.09);
+      box-shadow:0 18px 55px rgba(0,0,0,.20);
+    }
+
+    .module-number{
+      width:72px;
+      height:72px;
+      display:grid;
+      place-items:center;
+      border-radius:20px;
+      color:#fde68a;
+      background:linear-gradient(145deg,rgba(245,158,11,.18),rgba(99,102,241,.14));
+      border:1px solid rgba(253,230,138,.22);
+      font-size:22px;
+      font-weight:900;
+    }
+
+    .module h3{
+      margin:0 0 8px;
+      font-size:21px;
+      line-height:1.25;
+      font-weight:900;
+    }
+
+    .module p{
+      margin:0;
+      color:#bdc9d8;
+      font-size:14px;
+      line-height:1.65;
+    }
+
+    .module-topics{
+      display:flex;
+      flex-wrap:wrap;
+      gap:7px;
+      margin-top:13px;
+    }
+
+    .topic{
+      padding:7px 10px;
+      border-radius:999px;
+      color:#cbd5e1;
+      background:rgba(255,255,255,.045);
+      border:1px solid rgba(255,255,255,.07);
+      font-size:11px;
+      font-weight:700;
+    }
+
+    .projection{
+      display:grid;
+      grid-template-columns:1.1fr .9fr;
+      gap:16px;
+    }
+
+    .projection-card{
+      padding:25px;
+      border-radius:27px;
+    }
+
+    .projection-label{
+      display:inline-flex;
+      align-items:center;
+      gap:7px;
+      padding:7px 11px;
+      border-radius:999px;
+      color:#fde68a;
+      background:rgba(245,158,11,.09);
+      border:1px solid rgba(245,158,11,.22);
+      font-size:10px;
+      font-weight:900;
+      letter-spacing:.09em;
+      text-transform:uppercase;
+      margin-bottom:12px;
+    }
+
+    .projection-card h3{
+      margin:0 0 11px;
+      font-size:25px;
+      line-height:1.1;
+      font-weight:900;
+    }
+
+    .projection-card p{
+      margin:0;
+      color:#cbd5e1;
+      font-size:14px;
+      line-height:1.7;
+    }
+
+    .projection-list{
+      display:grid;
+      gap:10px;
+      margin-top:15px;
+    }
+
+    .projection-item{
+      display:flex;
+      align-items:flex-start;
+      gap:10px;
+      padding:12px;
+      border-radius:15px;
+      background:rgba(255,255,255,.045);
+      border:1px solid rgba(255,255,255,.07);
+      color:#cbd5e1;
+      font-size:13px;
+      line-height:1.5;
+    }
+
+    .projection-item i{
+      color:#fde68a;
+      flex:0 0 auto;
+      margin-top:1px;
+    }
+
+    .closing{
+      margin-top:38px;
+      padding:31px;
+      border-radius:32px;
+      text-align:center;
+      background:
+        radial-gradient(circle at 84% 0%,rgba(245,158,11,.15),transparent 42%),
+        linear-gradient(135deg,rgba(245,158,11,.12),rgba(99,102,241,.09));
+      border:1px solid rgba(245,158,11,.22);
+    }
+
+    .closing h2{
+      margin:0 0 12px;
+      font-size:clamp(32px,5vw,58px);
+      line-height:1;
+      letter-spacing:-.05em;
+      font-weight:900;
+    }
+
+    .closing p{
+      max-width:800px;
+      margin:0 auto 21px;
+      color:#cbd5e1;
+      font-size:16px;
+      line-height:1.65;
+    }
+
+    footer{
+      padding:32px 0 46px;
+      text-align:center;
+      color:#64748b;
+      font-size:12px;
+      line-height:1.7;
+    }
+
+    footer strong{color:#94a3b8}
+
+    .float-wa{
+      position:fixed;
+      right:18px;
+      bottom:18px;
+      z-index:60;
+      width:60px;
+      height:60px;
+      display:grid;
+      place-items:center;
+      border-radius:20px;
+      color:white;
+      background:linear-gradient(135deg,#22c55e,#059669);
+      border:1px solid rgba(187,247,208,.42);
+      box-shadow:0 20px 45px rgba(5,150,105,.28);
+      transition:.18s ease;
+    }
+
+    .float-wa:hover{transform:translateY(-3px) scale(1.02)}
+
+    @media(max-width:900px){
+      .section-head{grid-template-columns:1fr;gap:10px}
+      .foundation,.projection{grid-template-columns:1fr}
+      .stats{grid-template-columns:repeat(2,minmax(0,1fr))}
+      .stack-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+      .permanent-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+      .cognitive-grid{grid-template-columns:1fr}
+    }
+
+    @media(max-width:620px){
+      .container{padding:0 13px}
+      .topbar-inner{
+        min-height:66px;
+        align-items:flex-start;
+        padding:10px 0;
+      }
+      .brand img{width:42px;height:42px}
+      .brand span{max-width:130px}
+      .top-actions{gap:7px;flex-direction:column;align-items:flex-end}
+      .back-button,.whatsapp-top{padding:8px 11px;font-size:10px;min-height:35px}
+      .hero{padding:46px 0 31px}
+      .hero-logo{width:98px;height:98px}
+      h1{font-size:clamp(39px,12vw,58px)}
+      .stats{grid-template-columns:1fr}
+      .objectives{grid-template-columns:1fr}
+      .stack-grid{grid-template-columns:1fr 1fr}
+      .permanent-grid{grid-template-columns:1fr}
+      .module{grid-template-columns:56px minmax(0,1fr);padding:16px;gap:12px}
+      .module-number{width:56px;height:56px;border-radius:17px;font-size:17px}
+      .module h3{font-size:17px}
+      .module p{font-size:13px}
+      .float-wa{right:13px;bottom:13px;width:54px;height:54px}
+    }
+
+    @media(max-width:410px){
+      .stack-grid{grid-template-columns:1fr}
+    }
+
+    @media(prefers-reduced-motion:reduce){
+      *,*::before,*::after{transition:none!important;animation:none!important;scroll-behavior:auto!important}
+    }
+  </style>
+</head>
+
+<body>
+  <header class="topbar">
+    <div class="container topbar-inner">
+      <a class="brand" href="https://www.iec-ia.com.ar/">
+        <img src="https://i.postimg.cc/jSkQKpRK/Diseno-sin-titulo-2026-05-15T105828-195.png" alt="Instituto IEC">
+        <span>
+          <strong>Instituto IEC</strong>
+          <span>Centro de Perfeccionamiento en IA</span>
+        </span>
+      </a>
+
+      <div class="top-actions">
+        <a class="back-button" href="https://www.iec-ia.com.ar/cursos.html">
+          <i data-lucide="arrow-left" width="17"></i>
+          Volver a Cursos
+        </a>
+
+        <a class="whatsapp-top" href="https://wa.me/5493434295937?text=Hola%20IEC%2C%20quiero%20informaci%C3%B3n%20sobre%20Programador%20Teens%20con%20IA" target="_blank" rel="noopener">
+          <i data-lucide="message-circle" width="18"></i>
+          Consultar
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero">
+      <div class="container">
+        <div class="hero-logo">
+          <img src="https://i.postimg.cc/jSkQKpRK/Diseno-sin-titulo-2026-05-15T105828-195.png" alt="Instituto IEC">
+        </div>
+
+        <span class="eyebrow">
+          <i data-lucide="gamepad-2" width="16"></i>
+          Taller permanente para adolescentes
+        </span>
+
+        <h1>Programador Teens con <span class="gradient">Inteligencia Artificial</span></h1>
+
+        <p class="hero-copy">
+          Un espacio para desarrollar pensamiento lógico, creatividad, resolución de problemas y habilidades tecnológicas,
+          utilizando la Inteligencia Artificial como motor de aprendizaje para la nueva era.
+        </p>
+
+        <div class="hero-cta">
+          <a class="btn btn-primary" href="https://wa.me/5493434295937?text=Hola%20IEC%2C%20quiero%20informaci%C3%B3n%20sobre%20Programador%20Teens%20con%20IA" target="_blank" rel="noopener">
+            <i data-lucide="message-circle" width="19"></i>
+            Consultar por WhatsApp
+          </a>
+        </div>
+
+        <div class="stats">
+          <div class="stat glass">
+            <small>Formato</small>
+            <strong>Taller permanente</strong>
+          </div>
+          <div class="stat glass">
+            <small>Metodología</small>
+            <strong>Aprender creando</strong>
+          </div>
+          <div class="stat glass">
+            <small>Enfoque</small>
+            <strong>Programación + IA</strong>
+          </div>
+          <div class="stat glass">
+            <small>Proyección</small>
+            <strong>Futuro académico y profesional</strong>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container">
+        <div class="section-head">
+          <h2>Fundamentación</h2>
+          <p>La nueva alfabetización digital exige mucho más que saber usar tecnología: implica comprenderla, crear con ella y desarrollar criterio propio.</p>
+        </div>
+
+        <div class="foundation">
+          <article class="foundation-card glass">
+            <h3>Formar creadores, no solo usuarios</h3>
+            <p>
+              Los adolescentes conviven diariamente con plataformas digitales, videojuegos, aplicaciones e Inteligencia Artificial.
+              El taller busca transformar ese vínculo cotidiano en una experiencia de aprendizaje donde puedan programar,
+              diseñar, experimentar, analizar problemas y construir sus propias soluciones.
+            </p>
+          </article>
+
+          <article class="foundation-card glass">
+            <h3>IA como motor de la nueva era</h3>
+            <div class="foundation-list">
+              <div class="foundation-item"><i data-lucide="check-circle-2" width="18"></i><span>La IA se utiliza para explicar, orientar, crear y mejorar proyectos.</span></div>
+              <div class="foundation-item"><i data-lucide="check-circle-2" width="18"></i><span>Se enseña a validar resultados y no depender ciegamente de una respuesta automática.</span></div>
+              <div class="foundation-item"><i data-lucide="check-circle-2" width="18"></i><span>Los alumnos aprenden a transformar ideas en programas, juegos y aplicaciones.</span></div>
+              <div class="foundation-item"><i data-lucide="check-circle-2" width="18"></i><span>El aprendizaje se adapta al ritmo y evolución de cada participante.</span></div>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container">
+        <div class="section-head">
+          <h2>Desarrollo de habilidades cognitivas</h2>
+          <p>Programar ayuda a organizar el pensamiento, descomponer problemas y construir soluciones de manera progresiva.</p>
+        </div>
+
+        <div class="cognitive-grid">
+          <article class="cognitive glass">
+            <div class="cognitive-icon"><i data-lucide="brain" width="24"></i></div>
+            <h3>Pensamiento lógico</h3>
+            <p>Comprender secuencias, condiciones, variables, causas y consecuencias dentro de un sistema.</p>
+          </article>
+
+          <article class="cognitive glass">
+            <div class="cognitive-icon"><i data-lucide="puzzle" width="24"></i></div>
+            <h3>Resolución de problemas</h3>
+            <p>Dividir desafíos complejos en pasos pequeños, probar alternativas y aprender del error.</p>
+          </article>
+
+          <article class="cognitive glass">
+            <div class="cognitive-icon"><i data-lucide="lightbulb" width="24"></i></div>
+            <h3>Creatividad aplicada</h3>
+            <p>Convertir ideas propias en videojuegos, aplicaciones, sitios y experiencias digitales.</p>
+          </article>
+
+          <article class="cognitive glass">
+            <div class="cognitive-icon"><i data-lucide="search-check" width="24"></i></div>
+            <h3>Pensamiento crítico</h3>
+            <p>Evaluar resultados generados por IA, detectar errores y tomar decisiones con criterio.</p>
+          </article>
+
+          <article class="cognitive glass">
+            <div class="cognitive-icon"><i data-lucide="messages-square" width="24"></i></div>
+            <h3>Comunicación</h3>
+            <p>Explicar ideas, formular instrucciones y presentar proyectos de manera clara y ordenada.</p>
+          </article>
+
+          <article class="cognitive glass">
+            <div class="cognitive-icon"><i data-lucide="users" width="24"></i></div>
+            <h3>Trabajo colaborativo</h3>
+            <p>Compartir tareas, integrar aportes y desarrollar proyectos junto a otros estudiantes.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container">
+        <div class="permanent">
+          <h3>Un taller permanente que crece con cada estudiante</h3>
+          <p>
+            Programador Teens no se plantea como un curso cerrado. Los participantes pueden continuar asistiendo,
+            profundizar tecnologías, desarrollar nuevos proyectos y avanzar hacia contenidos de mayor complejidad
+            según su edad, experiencia e intereses.
+          </p>
+
+          <div class="permanent-grid">
+            <article class="permanent-step">
+              <small>Inicio</small>
+              <strong>Primeros conceptos y proyectos simples</strong>
+            </article>
+            <article class="permanent-step">
+              <small>Práctica</small>
+              <strong>Juegos, webs y aplicaciones</strong>
+            </article>
+            <article class="permanent-step">
+              <small>Profundización</small>
+              <strong>Proyectos más complejos y trabajo en equipo</strong>
+            </article>
+            <article class="permanent-step">
+              <small>Proyección</small>
+              <strong>Preparación para futuras carreras tecnológicas</strong>
+            </article>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container">
+        <div class="section-head">
+          <h2>Objetivos generales</h2>
+          <p>La propuesta busca desarrollar conocimientos tecnológicos y, al mismo tiempo, fortalecer capacidades transferibles a otras áreas de estudio.</p>
+        </div>
+
+        <div class="objectives">
+          <article class="objective glass">
+            <div class="objective-icon"><i data-lucide="code-2" width="22"></i></div>
+            <div>
+              <h3>Aprender fundamentos de programación</h3>
+              <p>Comprender lógica, variables, condiciones, funciones, objetos y estructuras básicas.</p>
+            </div>
+          </article>
+
+          <article class="objective glass">
+            <div class="objective-icon"><i data-lucide="bot" width="22"></i></div>
+            <div>
+              <h3>Utilizar IA de manera responsable</h3>
+              <p>Formular instrucciones, revisar resultados, corregir errores y mejorar producciones.</p>
+            </div>
+          </article>
+
+          <article class="objective glass">
+            <div class="objective-icon"><i data-lucide="gamepad-2" width="22"></i></div>
+            <div>
+              <h3>Crear proyectos propios</h3>
+              <p>Desarrollar videojuegos, páginas, aplicaciones y experiencias interactivas.</p>
+            </div>
+          </article>
+
+          <article class="objective glass">
+            <div class="objective-icon"><i data-lucide="graduation-cap" width="22"></i></div>
+            <div>
+              <h3>Proyectar su formación futura</h3>
+              <p>Explorar áreas como programación, robótica, diseño, datos, IA y desarrollo de software.</p>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container">
+        <div class="section-head">
+          <h2>Tecnologías y herramientas</h2>
+          <p>Los contenidos se incorporan progresivamente, priorizando la comprensión, la experimentación y la creación.</p>
+        </div>
+
+        <div class="stack-grid">
+          <article class="stack-card glass">
+            <div class="stack-icon"><i data-lucide="layout-template" width="24"></i></div>
+            <strong>HTML + CSS</strong>
+            <span>Creación de páginas, interfaces y diseños responsive.</span>
+          </article>
+
+          <article class="stack-card glass">
+            <div class="stack-icon"><i data-lucide="braces" width="24"></i></div>
+            <strong>JavaScript</strong>
+            <span>Interactividad, lógica, eventos y videojuegos web.</span>
+          </article>
+
+          <article class="stack-card glass">
+            <div class="stack-icon"><i data-lucide="component" width="24"></i></div>
+            <strong>React</strong>
+            <span>Componentes y aplicaciones modernas en etapas avanzadas.</span>
+          </article>
+
+          <article class="stack-card glass">
+            <div class="stack-icon"><i data-lucide="terminal-square" width="24"></i></div>
+            <strong>Python</strong>
+            <span>Programas, desafíos, automatizaciones y procesamiento básico.</span>
+          </article>
+
+          <article class="stack-card glass">
+            <div class="stack-icon"><i data-lucide="sparkles" width="24"></i></div>
+            <strong>Google AI Studio</strong>
+            <span>Asistencia, creación de agentes y prototipos con IA.</span>
+          </article>
+
+          <article class="stack-card glass">
+            <div class="stack-icon"><i data-lucide="code" width="24"></i></div>
+            <strong>Visual Studio Code</strong>
+            <span>Entorno de desarrollo, archivos, extensiones y proyectos.</span>
+          </article>
+
+          <article class="stack-card glass">
+            <div class="stack-icon"><i data-lucide="microchip" width="24"></i></div>
+            <strong>Arduino IDE</strong>
+            <span>Robótica, sensores, motores y programación física.</span>
+          </article>
+
+          <article class="stack-card glass">
+            <div class="stack-icon"><i data-lucide="blocks" width="24"></i></div>
+            <strong>Herramientas 3D y diseño</strong>
+            <span>Creación de recursos visuales y prototipos digitales.</span>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container">
+        <div class="section-head">
+          <h2>Recorrido formativo</h2>
+          <p>Los módulos se abordan de manera flexible y recurrente, con actividades adaptadas al nivel de cada grupo.</p>
+        </div>
+
+        <div class="modules">
+          <article class="module">
+            <div class="module-number">I</div>
+            <div>
+              <h3>Pensamiento computacional e IA</h3>
+              <p>Introducción a secuencias, reglas, algoritmos y resolución de problemas. La IA se utiliza como asistente para explicar conceptos, proponer ideas y acompañar la práctica.</p>
+              <div class="module-topics">
+                <span class="topic">Lógica</span>
+                <span class="topic">Algoritmos</span>
+                <span class="topic">Prompts</span>
+                <span class="topic">IA responsable</span>
+              </div>
+            </div>
+          </article>
+
+          <article class="module">
+            <div class="module-number">II</div>
+            <div>
+              <h3>Primeras páginas web</h3>
+              <p>Construcción de páginas mediante HTML y CSS. Los alumnos aprenden estructura, diseño, colores, tipografías y adaptación a diferentes pantallas.</p>
+              <div class="module-topics">
+                <span class="topic">HTML</span>
+                <span class="topic">CSS</span>
+                <span class="topic">Diseño</span>
+                <span class="topic">Responsive</span>
+              </div>
+            </div>
+          </article>
+
+          <article class="module">
+            <div class="module-number">III</div>
+            <div>
+              <h3>JavaScript y experiencias interactivas</h3>
+              <p>Variables, funciones, condiciones, eventos y movimiento. Se desarrollan juegos simples, desafíos y aplicaciones interactivas para aprender programando.</p>
+              <div class="module-topics">
+                <span class="topic">JavaScript</span>
+                <span class="topic">Eventos</span>
+                <span class="topic">Animaciones</span>
+                <span class="topic">Videojuegos</span>
+              </div>
+            </div>
+          </article>
+
+          <article class="module">
+            <div class="module-number">IV</div>
+            <div>
+              <h3>Creación de videojuegos con IA</h3>
+              <p>Diseño de personajes, reglas, niveles, puntajes y objetivos. La IA acompaña la planificación, generación de ideas, depuración y mejora de la experiencia.</p>
+              <div class="module-topics">
+                <span class="topic">Game Design</span>
+                <span class="topic">Mecánicas</span>
+                <span class="topic">Narrativa</span>
+                <span class="topic">IA creativa</span>
+              </div>
+            </div>
+          </article>
+
+          <article class="module">
+            <div class="module-number">V</div>
+            <div>
+              <h3>Python y desafíos de programación</h3>
+              <p>Resolución de problemas mediante programas de consola, minijuegos, cálculos, estructuras de datos y automatizaciones sencillas.</p>
+              <div class="module-topics">
+                <span class="topic">Python</span>
+                <span class="topic">Funciones</span>
+                <span class="topic">Listas</span>
+                <span class="topic">Desafíos</span>
+              </div>
+            </div>
+          </article>
+
+          <article class="module">
+            <div class="module-number">VI</div>
+            <div>
+              <h3>Aplicaciones modernas y React</h3>
+              <p>En etapas avanzadas se introducen componentes, estados, navegación y construcción de aplicaciones web más organizadas y escalables.</p>
+              <div class="module-topics">
+                <span class="topic">React</span>
+                <span class="topic">Componentes</span>
+                <span class="topic">Estados</span>
+                <span class="topic">Interfaces</span>
+              </div>
+            </div>
+          </article>
+
+          <article class="module">
+            <div class="module-number">VII</div>
+            <div>
+              <h3>Agentes y asistentes con IA</h3>
+              <p>Creación de asistentes simples mediante Google AI Studio, instrucciones claras y bases de conocimiento adaptadas a proyectos educativos o creativos.</p>
+              <div class="module-topics">
+                <span class="topic">AI Studio</span>
+                <span class="topic">Agentes</span>
+                <span class="topic">Instrucciones</span>
+                <span class="topic">Prototipos</span>
+              </div>
+            </div>
+          </article>
+
+          <article class="module">
+            <div class="module-number">VIII</div>
+            <div>
+              <h3>Arduino, robótica y C++</h3>
+              <p>En etapas avanzadas se incorporan circuitos, sensores, motores y programación física. Los alumnos conectan código con objetos del mundo real.</p>
+              <div class="module-topics">
+                <span class="topic">Arduino</span>
+                <span class="topic">C++</span>
+                <span class="topic">Sensores</span>
+                <span class="topic">Robótica</span>
+              </div>
+            </div>
+          </article>
+
+          <article class="module">
+            <div class="module-number">IX</div>
+            <div>
+              <h3>Proyectos integradores</h3>
+              <p>Desarrollo de proyectos individuales y grupales que integran programación, diseño, IA y presentación. Cada estudiante construye un portfolio de producciones propias.</p>
+              <div class="module-topics">
+                <span class="topic">Portfolio</span>
+                <span class="topic">Proyecto propio</span>
+                <span class="topic">Trabajo en equipo</span>
+                <span class="topic">Presentación</span>
+              </div>
+            </div>
+          </article>
+
+          <article class="module">
+            <div class="module-number">X</div>
+            <div>
+              <h3>Actualización y especialización permanente</h3>
+              <p>El taller continúa con nuevas herramientas, desafíos y tecnologías. Los alumnos pueden profundizar en desarrollo web, videojuegos, robótica, IA, diseño o programación avanzada.</p>
+              <div class="module-topics">
+                <span class="topic">Actualización</span>
+                <span class="topic">Especialización</span>
+                <span class="topic">Nuevas tecnologías</span>
+                <span class="topic">Continuidad</span>
+              </div>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container">
+        <div class="section-head">
+          <h2>Proyección para su futuro</h2>
+          <p>La finalidad no es insertar laboralmente a menores, sino ofrecerles una base sólida para tomar mejores decisiones académicas y profesionales en el futuro.</p>
+        </div>
+
+        <div class="projection">
+          <article class="projection-card glass">
+            <span class="projection-label"><i data-lucide="graduation-cap" width="15"></i> Formación a largo plazo</span>
+            <h3>Preparación para carreras y oficios tecnológicos</h3>
+            <p>
+              La experiencia permite conocer áreas vinculadas con programación, ingeniería, diseño digital,
+              robótica, ciencia de datos, videojuegos, automatización e Inteligencia Artificial antes de elegir
+              una orientación educativa o profesional.
+            </p>
+
+            <div class="projection-list">
+              <div class="projection-item"><i data-lucide="check-circle-2" width="18"></i><span>Exploración temprana de intereses tecnológicos.</span></div>
+              <div class="projection-item"><i data-lucide="check-circle-2" width="18"></i><span>Construcción progresiva de un portfolio educativo.</span></div>
+              <div class="projection-item"><i data-lucide="check-circle-2" width="18"></i><span>Mayor confianza frente a desafíos complejos.</span></div>
+              <div class="projection-item"><i data-lucide="check-circle-2" width="18"></i><span>Preparación para continuar con Programador Experto al alcanzar la edad adecuada.</span></div>
+            </div>
+          </article>
+
+          <article class="projection-card glass">
+            <span class="projection-label"><i data-lucide="shield-check" width="15"></i> Uso responsable</span>
+            <h3>Tecnología con criterio, creatividad y acompañamiento</h3>
+            <p>
+              El Instituto IEC promueve un uso consciente de la IA. Los adolescentes aprenden a proteger datos,
+              reconocer errores, respetar derechos de autor, evitar dependencias y utilizar la tecnología como una
+              herramienta para pensar y crear.
+            </p>
+
+            <div class="projection-list">
+              <div class="projection-item"><i data-lucide="check-circle-2" width="18"></i><span>Privacidad y seguridad digital.</span></div>
+              <div class="projection-item"><i data-lucide="check-circle-2" width="18"></i><span>Validación crítica de respuestas generadas por IA.</span></div>
+              <div class="projection-item"><i data-lucide="check-circle-2" width="18"></i><span>Uso ético de contenidos, imágenes y fuentes.</span></div>
+              <div class="projection-item"><i data-lucide="check-circle-2" width="18"></i><span>Acompañamiento docente en todo el proceso.</span></div>
+            </div>
+          </article>
+        </div>
+
+        <div class="closing">
+          <h2>Prepararlos hoy para crear el futuro</h2>
+          <p>
+            Programador Teens combina tecnología, pensamiento, creatividad e Inteligencia Artificial
+            para que cada adolescente descubra lo que puede construir y desarrolle herramientas para su futuro.
+          </p>
+
+          <a class="btn btn-primary" href="https://wa.me/5493434295937?text=Hola%20IEC%2C%20quiero%20informaci%C3%B3n%20sobre%20Programador%20Teens%20con%20IA" target="_blank" rel="noopener">
+            <i data-lucide="message-circle" width="20"></i>
+            Consultar por WhatsApp
+          </a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <a class="float-wa" href="https://wa.me/5493434295937?text=Hola%20IEC%2C%20quiero%20informaci%C3%B3n%20sobre%20Programador%20Teens%20con%20IA" target="_blank" rel="noopener" aria-label="Consultar por WhatsApp">
+    <i data-lucide="message-circle" width="28"></i>
+  </a>
+
+  <footer>
+    <div class="container">
+      <strong>Instituto IEC · Centro de Perfeccionamiento en Inteligencia Artificial</strong><br>
+      Taller permanente de programación, creatividad e IA para adolescentes · Paraná, Entre Ríos.
+    </div>
+  </footer>
+
+  <script>
+    if (window.lucide) lucide.createIcons();
+  </script>
+</body>
+</html>
