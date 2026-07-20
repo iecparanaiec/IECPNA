@@ -1,0 +1,1104 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#07111f" />
+  <title>Calendario Académico IEC 2026</title>
+
+  <style>
+    :root {
+      --bg: #06101c;
+      --panel: #0b1a2c;
+      --panel-2: #10233a;
+      --line: rgba(255,255,255,.10);
+      --text: #f5f9ff;
+      --muted: #91a7bb;
+      --brand-a: #2d8cff;
+      --brand-b: #39d0b4;
+      --hour-height: 54px;
+      --time-width: 88px;
+      --day-width: 175px;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      color-scheme: dark;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      font-family: Inter, Arial, Helvetica, sans-serif;
+      background:
+        radial-gradient(circle at 15% 20%, rgba(45,140,255,.18), transparent 28%),
+        radial-gradient(circle at 85% 80%, rgba(57,208,180,.12), transparent 26%),
+        linear-gradient(145deg, #040b13, #081522 55%, #06101c);
+      color: var(--text);
+    }
+
+    button,
+    input {
+      font: inherit;
+    }
+
+    button {
+      cursor: pointer;
+    }
+
+    .hidden {
+      display: none !important;
+    }
+
+    .login-view {
+      min-height: 100vh;
+      display: grid;
+      place-items: center;
+      padding: 24px;
+    }
+
+    .login-card {
+      width: min(430px, 100%);
+      padding: 34px;
+      border: 1px solid var(--line);
+      border-radius: 26px;
+      background: linear-gradient(180deg, rgba(16,35,58,.96), rgba(7,17,31,.96));
+      box-shadow: 0 28px 80px rgba(0,0,0,.4);
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+
+    .brand-logo {
+      width: 58px;
+      height: 58px;
+      border-radius: 17px;
+      display: grid;
+      place-items: center;
+      font-weight: 900;
+      background: linear-gradient(135deg, var(--brand-a), var(--brand-b));
+      box-shadow: 0 12px 30px rgba(45,140,255,.26);
+    }
+
+    .eyebrow {
+      margin: 0;
+      color: #57e0c8;
+      font-size: .75rem;
+      font-weight: 800;
+      letter-spacing: .14em;
+      text-transform: uppercase;
+    }
+
+    h1, h2, h3, p {
+      margin-top: 0;
+    }
+
+    .login-card h1 {
+      margin: 5px 0 0;
+      font-size: 1.8rem;
+    }
+
+    .login-copy {
+      margin: 24px 0;
+      color: var(--muted);
+      line-height: 1.6;
+    }
+
+    .login-form {
+      display: grid;
+      gap: 17px;
+    }
+
+    .login-form label {
+      display: grid;
+      gap: 8px;
+      font-size: .9rem;
+      font-weight: 700;
+      color: #d8e5f0;
+    }
+
+    .login-form input {
+      width: 100%;
+      padding: 14px 15px;
+      border: 1px solid rgba(255,255,255,.14);
+      border-radius: 14px;
+      outline: none;
+      background: rgba(1,8,15,.58);
+      color: white;
+    }
+
+    .login-form input:focus {
+      border-color: rgba(45,140,255,.8);
+      box-shadow: 0 0 0 4px rgba(45,140,255,.12);
+    }
+
+    .password-row {
+      position: relative;
+    }
+
+    .password-row input {
+      padding-right: 48px;
+    }
+
+    .show-password {
+      position: absolute;
+      top: 50%;
+      right: 8px;
+      transform: translateY(-50%);
+      border: 0;
+      background: transparent;
+      color: var(--muted);
+      padding: 8px;
+    }
+
+    .primary-btn,
+    .secondary-btn,
+    .month-btn,
+    .logout-btn {
+      border: 0;
+      border-radius: 14px;
+      padding: 13px 16px;
+      font-weight: 800;
+      transition: .2s ease;
+    }
+
+    .primary-btn {
+      color: white;
+      background: linear-gradient(135deg, var(--brand-a), var(--brand-b));
+      box-shadow: 0 12px 28px rgba(45,140,255,.2);
+    }
+
+    .primary-btn:hover,
+    .secondary-btn:hover,
+    .month-btn:hover {
+      transform: translateY(-1px);
+    }
+
+    .secondary-btn {
+      color: white;
+      background: rgba(255,255,255,.06);
+      border: 1px solid var(--line);
+    }
+
+    .error {
+      min-height: 20px;
+      margin: -4px 0 0;
+      color: #ff9ca5;
+      font-size: .88rem;
+    }
+
+    .app-view {
+      min-height: 100vh;
+      display: grid;
+      grid-template-columns: 270px minmax(0,1fr);
+    }
+
+    .sidebar {
+      position: sticky;
+      top: 0;
+      height: 100vh;
+      padding: 24px;
+      display: flex;
+      flex-direction: column;
+      border-right: 1px solid var(--line);
+      background: rgba(5,14,25,.88);
+      backdrop-filter: blur(16px);
+    }
+
+    .sidebar h2 {
+      margin: 4px 0 0;
+    }
+
+    .month-nav {
+      display: grid;
+      gap: 10px;
+      margin-top: 28px;
+    }
+
+    .month-btn {
+      text-align: left;
+      color: #bfd0dd;
+      background: transparent;
+    }
+
+    .month-btn.active {
+      color: white;
+      background: linear-gradient(90deg, rgba(45,140,255,.22), rgba(57,208,180,.08));
+      border: 1px solid rgba(45,140,255,.2);
+    }
+
+    .legend {
+      margin-top: 26px;
+      padding: 18px;
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      background: rgba(255,255,255,.03);
+    }
+
+    .legend-list {
+      display: grid;
+      gap: 10px;
+      margin-top: 14px;
+    }
+
+    .legend-item {
+      display: flex;
+      align-items: center;
+      gap: 9px;
+      color: #c4d3df;
+      font-size: .8rem;
+    }
+
+    .legend-dot {
+      width: 11px;
+      height: 11px;
+      border-radius: 4px;
+      flex: 0 0 auto;
+    }
+
+    .logout-btn {
+      margin-top: auto;
+      color: #ffc0c5;
+      background: rgba(255,85,96,.08);
+      border: 1px solid rgba(255,85,96,.14);
+    }
+
+    .workspace {
+      min-width: 0;
+      padding: 26px;
+    }
+
+    .topbar {
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+      gap: 18px;
+      margin-bottom: 22px;
+    }
+
+    .topbar h1 {
+      margin: 8px 0 0;
+      font-size: clamp(2rem, 4vw, 3.4rem);
+    }
+
+    .topbar p:last-child {
+      margin: 10px 0 0;
+      color: var(--muted);
+    }
+
+    .topbar-actions {
+      display: flex;
+      gap: 10px;
+    }
+
+    .stats {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0,1fr));
+      gap: 14px;
+      margin-bottom: 22px;
+    }
+
+    .stat-card {
+      padding: 18px;
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      background: linear-gradient(180deg, rgba(16,35,58,.72), rgba(7,17,31,.72));
+    }
+
+    .stat-card span {
+      color: var(--muted);
+      font-size: .82rem;
+    }
+
+    .stat-card strong {
+      display: block;
+      margin-top: 6px;
+      font-size: 1.6rem;
+    }
+
+    .calendar-panel {
+      overflow: hidden;
+      border: 1px solid var(--line);
+      border-radius: 22px;
+      background: rgba(6,16,28,.74);
+      box-shadow: 0 18px 50px rgba(0,0,0,.22);
+    }
+
+    .calendar-scroll {
+      overflow-x: auto;
+    }
+
+    .week-section + .week-section {
+      border-top: 8px solid rgba(255,255,255,.025);
+    }
+
+    .calendar-header,
+    .calendar-body {
+      min-width: calc(var(--time-width) + (7 * var(--day-width)));
+      display: grid;
+      grid-template-columns: var(--time-width) repeat(7, minmax(var(--day-width), 1fr));
+    }
+
+    .week-label,
+    .day-head {
+      min-height: 62px;
+      display: grid;
+      place-items: center;
+      border-right: 1px solid var(--line);
+      border-bottom: 1px solid var(--line);
+      background: #0b1b2d;
+    }
+
+    .week-label {
+      color: #58dec7;
+      font-size: .72rem;
+      font-weight: 900;
+    }
+
+    .day-head strong,
+    .day-head span {
+      display: block;
+      text-align: center;
+    }
+
+    .day-head span {
+      margin-top: 4px;
+      color: var(--muted);
+      font-size: .78rem;
+    }
+
+    .day-head.outside {
+      opacity: .35;
+    }
+
+    .time-column {
+      height: calc(14 * var(--hour-height));
+      border-right: 1px solid var(--line);
+    }
+
+    .time-slot {
+      height: var(--hour-height);
+      padding-top: 8px;
+      text-align: center;
+      border-bottom: 1px solid rgba(255,255,255,.08);
+      color: var(--muted);
+      font-size: .72rem;
+      font-weight: 800;
+    }
+
+    .day-column {
+      position: relative;
+      height: calc(14 * var(--hour-height));
+      border-right: 1px solid var(--line);
+      background:
+        repeating-linear-gradient(
+          to bottom,
+          rgba(255,255,255,.017) 0,
+          rgba(255,255,255,.017) calc(var(--hour-height) - 1px),
+          rgba(255,255,255,.08) calc(var(--hour-height) - 1px),
+          rgba(255,255,255,.08) var(--hour-height)
+        );
+    }
+
+    .day-column.weekend {
+      background-color: rgba(255,255,255,.012);
+    }
+
+    .day-column.outside {
+      opacity: .28;
+    }
+
+    .event {
+      position: absolute;
+      left: 5px;
+      right: 5px;
+      z-index: 3;
+      overflow: hidden;
+      padding: 8px;
+      border: 1px solid rgba(255,255,255,.13);
+      border-radius: 11px;
+      box-shadow: 0 8px 20px rgba(0,0,0,.2);
+      color: white;
+    }
+
+    .event.overlap-left {
+      right: calc(50% + 2px);
+    }
+
+    .event.overlap-right {
+      left: calc(50% + 2px);
+    }
+
+    .event strong {
+      display: block;
+      font-size: .76rem;
+      line-height: 1.25;
+    }
+
+    .event span {
+      display: block;
+      margin-top: 4px;
+      font-size: .66rem;
+      opacity: .9;
+    }
+
+    .blue { background: linear-gradient(135deg,#2d7ef7,#4aa4ff); }
+    .green { background: linear-gradient(135deg,#2f9d63,#58c987); }
+    .mint { background: linear-gradient(135deg,#278f83,#4fc8b7); }
+    .lime { background: linear-gradient(135deg,#5f983f,#8bc866); }
+    .teal { background: linear-gradient(135deg,#167a87,#35b2bf); }
+    .purple { background: linear-gradient(135deg,#7048ca,#a477eb); }
+    .yellow { background: linear-gradient(135deg,#ca9321,#f0bd49); }
+    .red { background: linear-gradient(135deg,#c5555c,#e67b82); }
+    .indigo { background: linear-gradient(135deg,#4652cc,#6f7cf1); }
+
+    @media (max-width: 980px) {
+      .app-view {
+        grid-template-columns: 1fr;
+      }
+
+      .sidebar {
+        position: relative;
+        height: auto;
+        border-right: 0;
+        border-bottom: 1px solid var(--line);
+      }
+
+      .month-nav {
+        grid-template-columns: repeat(3,1fr);
+      }
+
+      .legend {
+        display: none;
+      }
+
+      .logout-btn {
+        margin-top: 18px;
+      }
+    }
+
+    @media (max-width: 700px) {
+      .workspace {
+        padding: 16px;
+      }
+
+      .topbar {
+        align-items: flex-start;
+        flex-direction: column;
+      }
+
+      .topbar-actions {
+        width: 100%;
+      }
+
+      .topbar-actions button {
+        flex: 1;
+      }
+
+      .stats {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media print {
+      body {
+        background: white;
+      }
+
+      .sidebar,
+      .topbar-actions,
+      .stats {
+        display: none !important;
+      }
+
+      .app-view {
+        display: block;
+      }
+
+      .workspace {
+        padding: 0;
+      }
+
+      .calendar-panel {
+        border: 0;
+        box-shadow: none;
+      }
+
+      .calendar-scroll {
+        overflow: visible;
+      }
+
+      .week-section {
+        break-inside: avoid;
+        page-break-inside: avoid;
+      }
+
+      .calendar-header,
+      .calendar-body {
+        min-width: 0;
+        grid-template-columns: 70px repeat(7,1fr);
+      }
+
+      .event {
+        print-color-adjust: exact;
+        -webkit-print-color-adjust: exact;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <main id="loginView" class="login-view">
+    <section class="login-card">
+      <div class="brand">
+        <div class="brand-logo">IEC</div>
+        <div>
+          <p class="eyebrow">Instituto IEC</p>
+          <h1>Calendario Académico</h1>
+        </div>
+      </div>
+
+      <p class="login-copy">
+        Acceso administrativo al cronograma institucional de cursos 2026.
+      </p>
+
+      <form id="loginForm" class="login-form">
+        <label>
+          Correo electrónico
+          <input id="email" type="email" autocomplete="username" required />
+        </label>
+
+        <label>
+          Contraseña
+          <div class="password-row">
+            <input id="password" type="password" autocomplete="current-password" required />
+            <button id="showPassword" class="show-password" type="button">Ver</button>
+          </div>
+        </label>
+
+        <p id="loginError" class="error"></p>
+
+        <button class="primary-btn" type="submit">Ingresar</button>
+      </form>
+    </section>
+  </main>
+
+  <main id="appView" class="app-view hidden">
+    <aside class="sidebar">
+      <div>
+        <div class="brand">
+          <div class="brand-logo">IEC</div>
+          <div>
+            <p class="eyebrow">Instituto IEC</p>
+            <h2>Agenda 2026</h2>
+          </div>
+        </div>
+
+        <nav class="month-nav">
+          <button class="month-btn active" data-month="7">Agosto</button>
+          <button class="month-btn" data-month="8">Septiembre</button>
+          <button class="month-btn" data-month="9">Octubre</button>
+        </nav>
+
+        <section class="legend">
+          <p class="eyebrow">Referencias</p>
+          <div id="legendList" class="legend-list"></div>
+        </section>
+      </div>
+
+      <button id="logoutBtn" class="logout-btn">Cerrar sesión</button>
+    </aside>
+
+    <section class="workspace">
+      <header class="topbar">
+        <div>
+          <p class="eyebrow">Planificación institucional</p>
+          <h1 id="monthTitle">Agosto 2026</h1>
+          <p>Horario operativo del instituto: 08:00 a 22:00</p>
+        </div>
+
+        <div class="topbar-actions">
+          <button id="augustBtn" class="secondary-btn">Ir a agosto</button>
+          <button id="printBtn" class="primary-btn">Imprimir</button>
+        </div>
+      </header>
+
+      <section class="stats">
+        <article class="stat-card">
+          <span>Cursos activos</span>
+          <strong id="activeCourses">0</strong>
+        </article>
+
+        <article class="stat-card">
+          <span>Clases del mes</span>
+          <strong id="monthClasses">0</strong>
+        </article>
+
+        <article class="stat-card">
+          <span>Horario institucional</span>
+          <strong>08–22 h</strong>
+        </article>
+      </section>
+
+      <section class="calendar-panel">
+        <div id="calendarRoot" class="calendar-scroll"></div>
+      </section>
+    </section>
+  </main>
+
+  <script>
+    const ADMIN_EMAIL = "admin@iec-ia.com.ar";
+    const ADMIN_PASSWORD = "IECpna2026";
+
+    const MONTHS = [
+      "Enero","Febrero","Marzo","Abril","Mayo","Junio",
+      "Julio","Agosto","Septiembre","Octubre","Noviembre","Diciembre"
+    ];
+
+    const DAY_NAMES = ["LUN","MAR","MIÉ","JUE","VIE","SÁB","DOM"];
+
+    const courses = [
+      {
+        id: "programador-teens",
+        name: "Programador Teens",
+        shortName: "Programador Teens",
+        color: "blue",
+        recurrence: {
+          kind: "weekly",
+          weekday: 3,
+          startDate: "2026-08-05",
+          startTime: "14:00",
+          endTime: "16:00"
+        }
+      },
+      {
+        id: "ia-1-a",
+        name: "Experto en IA Nivel I · Comisión A",
+        shortName: "IA Nivel I · Com. A",
+        color: "green",
+        recurrence: {
+          kind: "weekly-count",
+          weekday: 3,
+          startDate: "2026-08-05",
+          count: 8,
+          startTime: "16:00",
+          endTime: "18:00"
+        }
+      },
+      {
+        id: "ia-1-b",
+        name: "Experto en IA Nivel I · Comisión B",
+        shortName: "IA Nivel I · Com. B",
+        color: "mint",
+        recurrence: {
+          kind: "weekly-count",
+          weekday: 5,
+          startDate: "2026-08-07",
+          count: 8,
+          startTime: "18:00",
+          endTime: "20:00"
+        }
+      },
+      {
+        id: "ia-2-a",
+        name: "Experto en IA Nivel II · Comisión A",
+        shortName: "IA Nivel II · Com. A",
+        color: "lime",
+        recurrence: {
+          kind: "weekly-count",
+          weekday: 3,
+          startDate: "2026-08-05",
+          count: 8,
+          startTime: "18:00",
+          endTime: "20:00"
+        }
+      },
+      {
+        id: "ia-2-b",
+        name: "Experto en IA Nivel II · Comisión B",
+        shortName: "IA Nivel II · Com. B",
+        color: "teal",
+        recurrence: {
+          kind: "weekly-count",
+          weekday: 5,
+          startDate: "2026-09-04",
+          count: 8,
+          startTime: "20:00",
+          endTime: "22:00"
+        }
+      },
+      {
+        id: "weekendclass",
+        name: "WeekendClass · De 0 a Producción",
+        shortName: "WeekendClass",
+        color: "purple",
+        recurrence: {
+          kind: "date-list",
+          dates: [
+            "2026-08-17",
+            "2026-08-18",
+            "2026-08-19",
+            "2026-08-20",
+            "2026-08-21"
+          ],
+          startTime: "14:00",
+          endTime: "17:00"
+        }
+      },
+      {
+        id: "robotica-kids",
+        name: "Robótica Kids",
+        shortName: "Robótica Kids",
+        color: "yellow",
+        recurrence: {
+          kind: "weekly",
+          weekday: 6,
+          startDate: "2026-08-01",
+          startTime: "10:00",
+          endTime: "12:00"
+        }
+      },
+      {
+        id: "revit",
+        name: "Revit",
+        shortName: "Revit",
+        color: "red",
+        recurrence: {
+          kind: "weekly-count",
+          weekday: 2,
+          startDate: "2026-09-01",
+          count: 8,
+          startTime: "18:00",
+          endTime: "21:00"
+        }
+      },
+      {
+        id: "programador-experto",
+        name: "Programador Experto con IA",
+        shortName: "Programador Experto IA",
+        color: "indigo",
+        recurrence: {
+          kind: "weekly",
+          weekday: 4,
+          startDate: "2026-08-06",
+          startTime: "18:00",
+          endTime: "22:00"
+        }
+      }
+    ];
+
+    const state = {
+      monthIndex: 7,
+      year: 2026
+    };
+
+    const loginView = document.getElementById("loginView");
+    const appView = document.getElementById("appView");
+    const loginForm = document.getElementById("loginForm");
+    const loginError = document.getElementById("loginError");
+    const monthTitle = document.getElementById("monthTitle");
+    const calendarRoot = document.getElementById("calendarRoot");
+    const activeCourses = document.getElementById("activeCourses");
+    const monthClasses = document.getElementById("monthClasses");
+    const legendList = document.getElementById("legendList");
+
+    loginForm.addEventListener("submit", (event) => {
+      event.preventDefault();
+
+      const email = document.getElementById("email").value.trim().toLowerCase();
+      const password = document.getElementById("password").value;
+
+      if (email === ADMIN_EMAIL.toLowerCase() && password === ADMIN_PASSWORD) {
+        sessionStorage.setItem("iec-calendar-auth", "ok");
+        showApp();
+      } else {
+        loginError.textContent = "Correo electrónico o contraseña incorrectos.";
+      }
+    });
+
+    document.getElementById("showPassword").addEventListener("click", () => {
+      const input = document.getElementById("password");
+      input.type = input.type === "password" ? "text" : "password";
+    });
+
+    document.getElementById("logoutBtn").addEventListener("click", () => {
+      sessionStorage.removeItem("iec-calendar-auth");
+      appView.classList.add("hidden");
+      loginView.classList.remove("hidden");
+      loginForm.reset();
+      loginError.textContent = "";
+    });
+
+    document.getElementById("printBtn").addEventListener("click", () => {
+      window.print();
+    });
+
+    document.getElementById("augustBtn").addEventListener("click", () => {
+      state.monthIndex = 7;
+      setActiveMonth();
+      renderMonth();
+    });
+
+    document.querySelectorAll(".month-btn").forEach((button) => {
+      button.addEventListener("click", () => {
+        state.monthIndex = Number(button.dataset.month);
+        setActiveMonth();
+        renderMonth();
+      });
+    });
+
+    function showApp() {
+      loginView.classList.add("hidden");
+      appView.classList.remove("hidden");
+      renderLegend();
+      setActiveMonth();
+      renderMonth();
+    }
+
+    function setActiveMonth() {
+      document.querySelectorAll(".month-btn").forEach((button) => {
+        button.classList.toggle(
+          "active",
+          Number(button.dataset.month) === state.monthIndex
+        );
+      });
+    }
+
+    function renderLegend() {
+      legendList.innerHTML = "";
+
+      courses.forEach((course) => {
+        const item = document.createElement("div");
+        item.className = "legend-item";
+        item.innerHTML = `
+          <span class="legend-dot ${course.color}"></span>
+          <span>${course.name}</span>
+        `;
+        legendList.appendChild(item);
+      });
+    }
+
+    function renderMonth() {
+      const weeks = getMonthWeeks(state.year, state.monthIndex);
+
+      monthTitle.textContent = `${MONTHS[state.monthIndex]} ${state.year}`;
+      calendarRoot.innerHTML = "";
+
+      let classCount = 0;
+      const activeIds = new Set();
+
+      weeks.forEach((week, weekIndex) => {
+        const weekSection = document.createElement("section");
+        weekSection.className = "week-section";
+
+        const header = document.createElement("div");
+        header.className = "calendar-header";
+        header.innerHTML = `<div class="week-label">SEMANA ${weekIndex + 1}</div>`;
+
+        week.forEach((day, dayIndex) => {
+          const inMonth = day.getMonth() === state.monthIndex;
+          const dayHead = document.createElement("div");
+          dayHead.className = `day-head ${inMonth ? "" : "outside"}`;
+          dayHead.innerHTML = `
+            <div>
+              <strong>${DAY_NAMES[dayIndex]}</strong>
+              <span>${String(day.getDate()).padStart(2,"0")}/${String(day.getMonth()+1).padStart(2,"0")}</span>
+            </div>
+          `;
+          header.appendChild(dayHead);
+        });
+
+        const body = document.createElement("div");
+        body.className = "calendar-body";
+
+        const timeColumn = document.createElement("div");
+        timeColumn.className = "time-column";
+
+        for (let hour = 8; hour < 22; hour++) {
+          const slot = document.createElement("div");
+          slot.className = "time-slot";
+          slot.textContent = `${String(hour).padStart(2,"0")}:00`;
+          timeColumn.appendChild(slot);
+        }
+
+        body.appendChild(timeColumn);
+
+        week.forEach((day) => {
+          const inMonth = day.getMonth() === state.monthIndex;
+          const dayColumn = document.createElement("div");
+
+          dayColumn.className =
+            `day-column ${day.getDay() === 0 || day.getDay() === 6 ? "weekend" : ""} ${inMonth ? "" : "outside"}`;
+
+          if (inMonth) {
+            const events = getEventsForDate(day);
+            const layout = computeOverlapLayout(events);
+
+            layout.forEach(({ event, side }) => {
+              const top = (timeToDecimal(event.startTime) - 8) * 54;
+              const height = (timeToDecimal(event.endTime) - timeToDecimal(event.startTime)) * 54;
+
+              const eventEl = document.createElement("article");
+              eventEl.className = `event ${event.color} ${side ? `overlap-${side}` : ""}`;
+              eventEl.style.top = `${top + 4}px`;
+              eventEl.style.height = `${Math.max(height - 8, 38)}px`;
+              eventEl.title = `${event.name} · ${event.startTime} a ${event.endTime}`;
+              eventEl.innerHTML = `
+                <strong>${event.shortName}</strong>
+                <span>${event.startTime}–${event.endTime}</span>
+              `;
+
+              dayColumn.appendChild(eventEl);
+              classCount++;
+              activeIds.add(event.id);
+            });
+          }
+
+          body.appendChild(dayColumn);
+        });
+
+        weekSection.appendChild(header);
+        weekSection.appendChild(body);
+        calendarRoot.appendChild(weekSection);
+      });
+
+      activeCourses.textContent = activeIds.size;
+      monthClasses.textContent = classCount;
+    }
+
+    function getEventsForDate(dateObj) {
+      return courses
+        .filter((course) => occursOnDate(course.recurrence, dateObj))
+        .map((course) => ({
+          ...course,
+          startTime: course.recurrence.startTime,
+          endTime: course.recurrence.endTime
+        }))
+        .sort((a,b) => a.startTime.localeCompare(b.startTime));
+    }
+
+    function occursOnDate(recurrence, dateObj) {
+      const iso = formatDate(dateObj);
+
+      if (recurrence.kind === "date-list") {
+        return recurrence.dates.includes(iso);
+      }
+
+      const start = parseDate(recurrence.startDate);
+      if (dateObj < start) return false;
+
+      const isoWeekday = dateObj.getDay() === 0 ? 7 : dateObj.getDay();
+
+      if (isoWeekday !== recurrence.weekday) {
+        return false;
+      }
+
+      if (recurrence.kind === "weekly") {
+        return true;
+      }
+
+      if (recurrence.kind === "weekly-count") {
+        const diffDays = Math.round((dateObj - start) / 86400000);
+        const occurrenceIndex = Math.floor(diffDays / 7);
+        return occurrenceIndex >= 0 && occurrenceIndex < recurrence.count;
+      }
+
+      return false;
+    }
+
+    function computeOverlapLayout(events) {
+      return events.map((event, index) => {
+        const overlaps = events.filter((other, otherIndex) => {
+          if (otherIndex === index) return false;
+
+          return rangesOverlap(
+            timeToDecimal(event.startTime),
+            timeToDecimal(event.endTime),
+            timeToDecimal(other.startTime),
+            timeToDecimal(other.endTime)
+          );
+        });
+
+        if (!overlaps.length) {
+          return { event, side: null };
+        }
+
+        const group = events.filter((candidate) =>
+          rangesOverlap(
+            timeToDecimal(event.startTime),
+            timeToDecimal(event.endTime),
+            timeToDecimal(candidate.startTime),
+            timeToDecimal(candidate.endTime)
+          )
+        );
+
+        const position = group.findIndex((candidate) => candidate.id === event.id);
+
+        return {
+          event,
+          side: position === 0 ? "left" : "right"
+        };
+      });
+    }
+
+    function rangesOverlap(startA, endA, startB, endB) {
+      return startA < endB && startB < endA;
+    }
+
+    function getMonthWeeks(year, monthIndex) {
+      const first = new Date(year, monthIndex, 1);
+      const last = new Date(year, monthIndex + 1, 0);
+
+      const mondayOffset = (first.getDay() + 6) % 7;
+      const start = new Date(year, monthIndex, 1 - mondayOffset);
+
+      const sundayOffset = (7 - last.getDay()) % 7;
+      const end = new Date(year, monthIndex, last.getDate() + sundayOffset);
+
+      const weeks = [];
+      const cursor = new Date(start);
+
+      while (cursor <= end) {
+        const week = [];
+
+        for (let i = 0; i < 7; i++) {
+          week.push(new Date(cursor));
+          cursor.setDate(cursor.getDate() + 1);
+        }
+
+        weeks.push(week);
+      }
+
+      return weeks;
+    }
+
+    function parseDate(value) {
+      const [year, month, day] = value.split("-").map(Number);
+      return new Date(year, month - 1, day);
+    }
+
+    function formatDate(dateObj) {
+      return [
+        dateObj.getFullYear(),
+        String(dateObj.getMonth() + 1).padStart(2,"0"),
+        String(dateObj.getDate()).padStart(2,"0")
+      ].join("-");
+    }
+
+    function timeToDecimal(value) {
+      const [hours, minutes] = value.split(":").map(Number);
+      return hours + minutes / 60;
+    }
+
+    if (sessionStorage.getItem("iec-calendar-auth") === "ok") {
+      showApp();
+    }
+  </script>
+</body>
+</html>
