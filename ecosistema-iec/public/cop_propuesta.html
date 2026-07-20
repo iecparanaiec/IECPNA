@@ -1,0 +1,360 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Propuesta institucional del Instituto IEC para la transformación digital e Inteligencia Operativa del Círculo Odontológico de Paraná." />
+  <title>IEC + COP | Propuesta de Inteligencia Operativa</title>
+  <script src="https://cdn.tailwindcss.com/3.4.17"></script>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
+  <script src="https://cdn.jsdelivr.net/npm/lucide@0.468.0/dist/umd/lucide.min.js"></script>
+  <style>
+    :root{
+      --bg:#07101d;--panel:#0d1829;--panel2:#101f35;--cyan:#22d3ee;--blue:#3b82f6;
+      --violet:#8b5cf6;--green:#22c55e;--amber:#f59e0b;--red:#ef4444;--text:#f8fafc;--muted:#94a3b8;
+    }
+    *{box-sizing:border-box;font-family:'DM Sans',sans-serif}
+    html,body{margin:0;min-height:100%;background:var(--bg);color:var(--text);overflow:hidden}
+    button{font:inherit;-webkit-tap-highlight-color:transparent}
+    .slide{display:none;position:absolute;inset:0;overflow-y:auto;overflow-x:hidden;padding:74px 66px 82px;background:
+      radial-gradient(circle at 12% 12%,rgba(34,211,238,.11),transparent 27%),
+      radial-gradient(circle at 88% 82%,rgba(139,92,246,.10),transparent 30%),
+      linear-gradient(135deg,#07101d,#0b1728 56%,#07101d)}
+    .slide.active{display:flex;animation:enter .34s ease}
+    @keyframes enter{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+    .slide::before{content:"";position:fixed;inset:0;pointer-events:none;background-image:
+      linear-gradient(90deg,rgba(59,130,246,.045) 1px,transparent 1px),
+      linear-gradient(rgba(59,130,246,.045) 1px,transparent 1px);background-size:52px 52px;mask-image:linear-gradient(to bottom,black,transparent 94%)}
+    .glass{background:rgba(255,255,255,.062);border:1px solid rgba(255,255,255,.105);backdrop-filter:blur(16px);box-shadow:0 25px 80px rgba(0,0,0,.24)}
+    .glass-soft{background:rgba(255,255,255,.035);border:1px solid rgba(255,255,255,.075)}
+    .gradient-text{background:linear-gradient(135deg,#67e8f9,#60a5fa,#a78bfa);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+    .chip{display:inline-flex;align-items:center;gap:8px;padding:8px 13px;border-radius:999px;background:rgba(34,211,238,.10);border:1px solid rgba(103,232,249,.26);color:#a5f3fc;font-size:12px;font-weight:900;letter-spacing:.08em;text-transform:uppercase}
+    .nav-btn{position:fixed;top:50%;transform:translateY(-50%);z-index:200;width:46px;height:46px;border-radius:999px;color:white;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.14);backdrop-filter:blur(14px);display:grid;place-items:center;cursor:pointer;transition:.18s}
+    .nav-btn:hover{background:rgba(34,211,238,.16);border-color:rgba(103,232,249,.45)}
+    #prev{left:14px}#next{right:14px}
+    .topline{position:fixed;z-index:190;left:0;right:0;top:0;height:50px;background:rgba(7,16,29,.82);backdrop-filter:blur(18px);border-bottom:1px solid rgba(255,255,255,.08)}
+    .progress{height:3px;background:rgba(255,255,255,.07)}.progress span{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--cyan),var(--blue),var(--violet));transition:width .28s ease}
+    #dots{position:fixed;left:50%;bottom:15px;transform:translateX(-50%);z-index:210;display:flex;gap:6px;max-width:90vw;flex-wrap:wrap;justify-content:center}
+    .dot{width:7px;height:7px;border-radius:50%;border:0;background:rgba(255,255,255,.24);cursor:pointer;padding:0;transition:.18s}.dot.active{background:var(--cyan);transform:scale(1.4)}
+    .metric{border-radius:22px;padding:20px;background:rgba(255,255,255,.048);border:1px solid rgba(255,255,255,.085)}
+    .bar{height:10px;background:rgba(255,255,255,.08);border-radius:999px;overflow:hidden}.bar span{height:100%;display:block;border-radius:999px;background:linear-gradient(90deg,var(--cyan),var(--blue),var(--violet))}
+    .flow{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:8px}.flow-item{padding:13px 9px;border-radius:16px;text-align:center;background:rgba(255,255,255,.045);border:1px solid rgba(255,255,255,.09);min-height:106px;display:flex;flex-direction:column;justify-content:center}.flow-item strong{font-size:13px}.flow-item p{font-size:11px;color:#94a3b8;margin-top:4px}
+    .erp-shell{border-radius:28px;overflow:hidden;background:linear-gradient(135deg,rgba(10,20,36,.98),rgba(14,31,52,.96));border:1px solid rgba(103,232,249,.20);box-shadow:0 30px 100px rgba(0,0,0,.35)}
+    .erp-tab{width:100%;text-align:left;padding:11px 13px;border-radius:13px;border:1px solid rgba(255,255,255,.08);background:rgba(255,255,255,.035);color:#cbd5e1;font-weight:700;font-size:13px;cursor:pointer;transition:.18s}.erp-tab:hover,.erp-tab.active{background:rgba(34,211,238,.12);border-color:rgba(103,232,249,.38);color:#ecfeff}
+    .erp-panel{display:none}.erp-panel.active{display:block;animation:enter .25s ease}
+    .kpi{padding:14px;border-radius:16px;background:rgba(255,255,255,.045);border:1px solid rgba(255,255,255,.08)}
+    .timeline{position:relative}.timeline::before{content:"";position:absolute;left:20px;top:10px;bottom:10px;width:2px;background:linear-gradient(var(--cyan),var(--violet))}.timeline-item{position:relative;padding-left:54px;margin:0 0 19px}.timeline-dot{position:absolute;left:9px;top:0;width:24px;height:24px;border-radius:50%;background:#0b1728;border:4px solid var(--cyan);box-shadow:0 0 0 5px rgba(34,211,238,.10)}
+    .logo{object-fit:contain;filter:drop-shadow(0 12px 30px rgba(0,0,0,.25))}
+    .mini-label{font-size:11px;color:#64748b;text-transform:uppercase;letter-spacing:.13em;font-weight:900}
+    @media(max-width:900px){
+      html,body{overflow:auto}.slide{position:relative;min-height:100vh;padding:70px 20px 90px}.slide:not(.active){display:none}.slide.active{display:flex}.nav-btn{width:40px;height:40px;top:auto;bottom:14px;transform:none}#prev{left:14px}#next{right:14px}#dots{bottom:28px;max-width:65vw}.flow{grid-template-columns:1fr 1fr}.desktop-grid{grid-template-columns:1fr!important}.hide-mobile{display:none!important}.topline{height:48px}}
+  </style>
+</head>
+<body>
+  <header class="topline">
+    <div class="h-full max-w-7xl mx-auto px-5 flex items-center justify-between gap-4">
+      <div class="flex items-center gap-3 min-w-0"><img src="https://i.postimg.cc/3r2Rq6Td/Chat-GPT-Image-13-jul-2026-12-10-33-p-m.png" class="w-34 h-8 object-contain bg-white rounded-lg px-1" alt="COP"><span class="text-xs text-slate-500">+</span><img src="https://i.postimg.cc/jSkQKpRK/Diseno-sin-titulo-2026-05-15T105828-195.png" class="w-28 h-8 object-contain" alt="IEC"></div>
+      <div class="text-right"><p id="slideTitle" class="text-xs font-bold text-slate-300 truncate max-w-[50vw]">Propuesta institucional</p><p id="counter" class="text-[11px] text-slate-500">1 / 27</p></div>
+    </div>
+    <div class="progress"><span id="progress"></span></div>
+  </header>
+  <button id="prev" class="nav-btn" aria-label="Anterior"><i data-lucide="chevron-left"></i></button>
+  <button id="next" class="nav-btn" aria-label="Siguiente"><i data-lucide="chevron-right"></i></button>
+  <div id="dots"></div>
+
+  <!-- 1 -->
+  <section class="slide active items-center justify-center text-center" data-title="Portada">
+    <div class="relative z-10 max-w-6xl mx-auto w-full">
+      <div class="flex items-center justify-center gap-6 mb-7"><img src="https://i.postimg.cc/3r2Rq6Td/Chat-GPT-Image-13-jul-2026-12-10-33-p-m.png" class="logo h-20 md:h-24 bg-white rounded-2xl p-2" alt="COP"><div class="w-px h-20 bg-white/20"></div><img src="https://i.postimg.cc/jSkQKpRK/Diseno-sin-titulo-2026-05-15T105828-195.png" class="logo h-20 md:h-24" alt="IEC"></div>
+      <span class="chip"><i data-lucide="brain-circuit" class="w-4 h-4"></i> Propuesta institucional</span>
+      <h1 class="text-5xl md:text-7xl font-black leading-[.98] mt-6">COP <span class="gradient-text">INTELIGENTE</span></h1>
+      <p class="text-xl md:text-3xl text-slate-200 mt-5 font-bold">Programa de Transformación e Inteligencia Operativa</p>
+      <p class="text-base md:text-xl text-slate-400 mt-4 max-w-4xl mx-auto">ERP institucional, automatización de procesos, asistentes de IA, portales de autogestión, tableros ejecutivos y capacitación integral para optimizar al máximo la gestión del Círculo Odontológico de Paraná.</p>
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-3 mt-8 max-w-4xl mx-auto"><div class="glass-soft rounded-2xl p-4"><i data-lucide="database" class="w-7 h-7 text-cyan-300 mx-auto"></i><p class="font-black mt-2">Integrar</p></div><div class="glass-soft rounded-2xl p-4"><i data-lucide="workflow" class="w-7 h-7 text-blue-300 mx-auto"></i><p class="font-black mt-2">Automatizar</p></div><div class="glass-soft rounded-2xl p-4"><i data-lucide="chart-no-axes-combined" class="w-7 h-7 text-violet-300 mx-auto"></i><p class="font-black mt-2">Medir</p></div><div class="glass-soft rounded-2xl p-4"><i data-lucide="graduation-cap" class="w-7 h-7 text-green-300 mx-auto"></i><p class="font-black mt-2">Capacitar</p></div></div>
+    </div>
+  </section>
+
+  <!-- 2 -->
+  <section class="slide items-center" data-title="Punto de partida">
+    <div class="relative z-10 max-w-6xl mx-auto w-full">
+      <span class="chip">Diagnóstico institucional</span><h2 class="text-4xl md:text-6xl font-black mt-4">Partimos de lo que <span class="gradient-text">COP respondió</span></h2>
+      <p class="text-lg text-slate-300 mt-4 max-w-5xl">El relevamiento fue respondido por referentes con experiencia institucional. Las respuestas muestran una organización con procesos consolidados, pero todavía sostenidos por carga manual, información fragmentada, consultas entre áreas y herramientas que no trabajan como un único ecosistema.</p>
+      <div class="grid md:grid-cols-4 gap-4 mt-7">
+        <div class="metric"><p class="mini-label">Respuestas analizadas</p><p class="text-4xl font-black mt-2">4</p><p class="text-sm text-slate-400">Referentes institucionales</p></div>
+        <div class="metric"><p class="mini-label">Áreas relevadas</p><p class="text-4xl font-black mt-2">13</p><p class="text-sm text-slate-400">Procesos críticos</p></div>
+        <div class="metric"><p class="mini-label">Preguntas por persona</p><p class="text-4xl font-black mt-2">91</p><p class="text-sm text-slate-400">Diagnóstico integral</p></div>
+        <div class="metric"><p class="mini-label">Prioridad coincidente</p><p class="text-4xl font-black mt-2">3/4</p><p class="text-sm text-slate-400">Administración y Sistemas</p></div>
+      </div>
+      <div class="glass rounded-3xl p-6 mt-6"><p class="text-xl md:text-2xl font-black">Conclusión central</p><p class="text-slate-300 mt-2 text-lg">COP no necesita sumar herramientas aisladas. Necesita que los procesos, la información y las personas funcionen dentro de una misma arquitectura operativa.</p></div>
+    </div>
+  </section>
+
+  <!-- 3 -->
+  <section class="slide items-center" data-title="Hallazgos del diagnóstico">
+    <div class="relative z-10 max-w-6xl mx-auto w-full"><h2 class="text-4xl md:text-6xl font-black">Los dolores que se <span class="gradient-text">repiten</span></h2>
+      <div class="grid md:grid-cols-2 gap-5 mt-7">
+        <div class="glass rounded-3xl p-6"><h3 class="text-xl font-black text-cyan-200">Operación diaria</h3><div class="space-y-4 mt-4">
+          <div><div class="flex justify-between text-sm"><span>Exceso de tareas manuales</span><b>Alto</b></div><div class="bar mt-2"><span style="width:92%"></span></div></div>
+          <div><div class="flex justify-between text-sm"><span>Información dispersa</span><b>Alto</b></div><div class="bar mt-2"><span style="width:88%"></span></div></div>
+          <div><div class="flex justify-between text-sm"><span>Falta de integración</span><b>Crítico</b></div><div class="bar mt-2"><span style="width:95%"></span></div></div>
+          <div><div class="flex justify-between text-sm"><span>Consulta manual entre áreas</span><b>Alto</b></div><div class="bar mt-2"><span style="width:84%"></span></div></div>
+        </div></div>
+        <div class="glass rounded-3xl p-6"><h3 class="text-xl font-black text-blue-200">Gestión y decisión</h3><div class="space-y-3 mt-4 text-slate-300">
+          <p>• Dificultad para obtener información consolidada para Comisión Directiva.</p><p>• Historiales de comunicaciones y documentación sin una única vista.</p><p>• Seguimiento económico y conciliaciones con intervención manual.</p><p>• Indicadores que requieren preparación y elaboración de informes.</p><p>• Diferencias de conocimiento entre áreas, que exigen diagnósticos específicos por sector.</p>
+        </div></div>
+      </div>
+      <div class="mt-5 p-5 rounded-2xl bg-amber-400/10 border border-amber-300/20"><p class="text-amber-100"><b>Aprendizaje clave del diagnóstico:</b> la implementación debe realizarse por área, con responsables propios y validación funcional antes de automatizar.</p></div>
+    </div>
+  </section>
+
+  <!-- 4 -->
+  <section class="slide items-center" data-title="Valoraciones por área">
+    <div class="relative z-10 max-w-6xl mx-auto w-full"><span class="chip">Percepción actual · escala 1 a 5</span><h2 class="text-4xl md:text-6xl font-black mt-4">Dónde está la mayor <span class="gradient-text">oportunidad</span></h2>
+      <div class="grid md:grid-cols-2 gap-x-8 gap-y-4 mt-7 text-sm">
+        <div><div class="flex justify-between"><span>Guardia odontológica</span><b>3,0</b></div><div class="bar mt-2"><span style="width:60%"></span></div></div>
+        <div><div class="flex justify-between"><span>Comunicación institucional</span><b>3,25</b></div><div class="bar mt-2"><span style="width:65%"></span></div></div>
+        <div><div class="flex justify-between"><span>Sistemas e integraciones</span><b>3,25</b></div><div class="bar mt-2"><span style="width:65%"></span></div></div>
+        <div><div class="flex justify-between"><span>Administración general</span><b>3,5</b></div><div class="bar mt-2"><span style="width:70%"></span></div></div>
+        <div><div class="flex justify-between"><span>Secretaría y Comisión Directiva</span><b>3,5</b></div><div class="bar mt-2"><span style="width:70%"></span></div></div>
+        <div><div class="flex justify-between"><span>Facturación y gestión económica</span><b>3,5</b></div><div class="bar mt-2"><span style="width:70%"></span></div></div>
+        <div><div class="flex justify-between"><span>Auditorías</span><b>3,5</b></div><div class="bar mt-2"><span style="width:70%"></span></div></div>
+        <div><div class="flex justify-between"><span>Posgrado</span><b>3,5</b></div><div class="bar mt-2"><span style="width:70%"></span></div></div>
+        <div><div class="flex justify-between"><span>WhatsApp institucional</span><b>3,75</b></div><div class="bar mt-2"><span style="width:75%"></span></div></div>
+        <div><div class="flex justify-between"><span>Venta de insumos</span><b>3,75</b></div><div class="bar mt-2"><span style="width:75%"></span></div></div>
+        <div><div class="flex justify-between"><span>S.O.S.</span><b>3,75</b></div><div class="bar mt-2"><span style="width:75%"></span></div></div>
+        <div><div class="flex justify-between"><span>Atención al asociado</span><b>4,0</b></div><div class="bar mt-2"><span style="width:80%"></span></div></div>
+        <div><div class="flex justify-between"><span>Mesa de Entrada</span><b>4,5</b></div><div class="bar mt-2"><span style="width:90%"></span></div></div>
+      </div>
+      <p class="text-sm text-slate-500 mt-5">Las áreas con menor valoración no necesariamente funcionan mal: son las que muestran mayor margen para mejorar mediante integración, automatización y trazabilidad.</p>
+    </div>
+  </section>
+
+  <!-- 5 -->
+  <section class="slide items-center" data-title="Resultados esperados">
+    <div class="relative z-10 max-w-6xl mx-auto w-full"><h2 class="text-4xl md:text-6xl font-black">Lo que COP espera <span class="gradient-text">lograr</span></h2>
+      <div class="grid md:grid-cols-4 gap-4 mt-8">
+        <div class="glass rounded-3xl p-6 text-center"><i data-lucide="shield-check" class="w-12 h-12 text-green-300 mx-auto"></i><p class="text-2xl font-black mt-4">4 de 4</p><p class="text-slate-300">Reducción de errores</p></div>
+        <div class="glass rounded-3xl p-6 text-center"><i data-lucide="clock-3" class="w-12 h-12 text-cyan-300 mx-auto"></i><p class="text-2xl font-black mt-4">Prioridad</p><p class="text-slate-300">Ahorro de tiempo y costos</p></div>
+        <div class="glass rounded-3xl p-6 text-center"><i data-lucide="users" class="w-12 h-12 text-blue-300 mx-auto"></i><p class="text-2xl font-black mt-4">Mejorar</p><p class="text-slate-300">Atención a asociados y público</p></div>
+        <div class="glass rounded-3xl p-6 text-center"><i data-lucide="activity" class="w-12 h-12 text-violet-300 mx-auto"></i><p class="text-2xl font-black mt-4">Disponibilidad</p><p class="text-slate-300">Información en tiempo real</p></div>
+      </div>
+      <div class="glass rounded-3xl p-7 mt-6"><p class="text-2xl font-black">La propuesta IEC se diseña sobre estos resultados</p><p class="text-lg text-slate-300 mt-3">Cada módulo, automatización y capacitación deberá demostrar que reduce pasos manuales, mejora la calidad del dato, agiliza respuestas o facilita una decisión institucional.</p></div>
+    </div>
+  </section>
+
+  <!-- 6 -->
+  <section class="slide items-center" data-title="Inteligencia Operativa">
+    <div class="relative z-10 max-w-6xl mx-auto w-full"><span class="chip">Modelo IEC</span><h2 class="text-4xl md:text-6xl font-black mt-4">¿Qué entendemos por <span class="gradient-text">Inteligencia Operativa?</span></h2>
+      <p class="text-lg text-slate-300 mt-4 max-w-5xl">Es la capacidad de una organización para capturar lo que ocurre, integrar sus datos, interpretar situaciones, ejecutar acciones automáticamente y mantener control humano sobre las decisiones sensibles.</p>
+      <div class="flow mt-8">
+        <div class="flow-item"><i data-lucide="scan-line" class="w-8 h-8 text-cyan-300 mx-auto"></i><strong class="mt-2">Captura</strong><p>Formularios, mensajes, archivos, pagos y eventos</p></div>
+        <div class="flow-item"><i data-lucide="network" class="w-8 h-8 text-blue-300 mx-auto"></i><strong class="mt-2">Integración</strong><p>Los sistemas comparten información</p></div>
+        <div class="flow-item"><i data-lucide="brain-circuit" class="w-8 h-8 text-violet-300 mx-auto"></i><strong class="mt-2">Inteligencia</strong><p>La IA clasifica, resume y recomienda</p></div>
+        <div class="flow-item"><i data-lucide="workflow" class="w-8 h-8 text-amber-300 mx-auto"></i><strong class="mt-2">Automatización</strong><p>El proceso ejecuta el siguiente paso</p></div>
+        <div class="flow-item"><i data-lucide="bell-ring" class="w-8 h-8 text-red-300 mx-auto"></i><strong class="mt-2">Alerta</strong><p>El sistema detecta demoras y desvíos</p></div>
+        <div class="flow-item"><i data-lucide="chart-spline" class="w-8 h-8 text-green-300 mx-auto"></i><strong class="mt-2">Medición</strong><p>KPIs actualizados en tiempo real</p></div>
+        <div class="flow-item"><i data-lucide="shield-check" class="w-8 h-8 text-cyan-200 mx-auto"></i><strong class="mt-2">Gobernanza</strong><p>Permisos, auditoría y validación humana</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 7 -->
+  <section class="slide items-center" data-title="Visión COP Inteligente">
+    <div class="relative z-10 max-w-6xl mx-auto w-full"><h2 class="text-4xl md:text-6xl font-black text-center">Una sola organización. <span class="gradient-text">Un solo ecosistema.</span></h2>
+      <div class="relative max-w-5xl mx-auto mt-7 grid md:grid-cols-[1fr_1.2fr_1fr] gap-4 items-center">
+        <div class="space-y-3"><div class="glass-soft rounded-2xl p-4">Asociados y legajos</div><div class="glass-soft rounded-2xl p-4">Mesa de Entrada</div><div class="glass-soft rounded-2xl p-4">WhatsApp y correo</div><div class="glass-soft rounded-2xl p-4">Web y autogestión</div></div>
+        <div class="glass rounded-[36px] p-8 text-center border-cyan-300/20"><i data-lucide="brain-circuit" class="w-20 h-20 mx-auto text-cyan-300"></i><p class="text-3xl font-black mt-4">CENTRO DE INTELIGENCIA OPERATIVA</p><p class="text-slate-400 mt-2">ERP + IA + automatizaciones + datos + capacitación</p></div>
+        <div class="space-y-3"><div class="glass-soft rounded-2xl p-4">Facturación y cobranzas</div><div class="glass-soft rounded-2xl p-4">Auditorías y trámites</div><div class="glass-soft rounded-2xl p-4">Guardias, S.O.S. y Posgrado</div><div class="glass-soft rounded-2xl p-4">Comisión Directiva</div></div>
+      </div>
+      <p class="text-center text-lg text-slate-300 mt-6">La información se registra una vez, circula entre las áreas y genera acciones, alertas e indicadores sin volver a cargarse.</p>
+    </div>
+  </section>
+
+  <!-- 8 -->
+  <section class="slide items-center" data-title="ERP Institucional COP">
+    <div class="relative z-10 max-w-6xl mx-auto w-full"><span class="chip">Núcleo tecnológico</span><h2 class="text-4xl md:text-6xl font-black mt-4">ERP institucional <span class="gradient-text">diseñado para COP</span></h2>
+      <div class="grid md:grid-cols-3 gap-4 mt-7">
+        <div class="glass rounded-3xl p-5"><i data-lucide="users-round" class="w-9 h-9 text-cyan-300"></i><h3 class="font-black text-xl mt-3">Personas y asociados</h3><p class="text-sm text-slate-400 mt-2">Legajo digital, categorías, estado, deuda, documentación, comunicaciones e historial integral.</p></div>
+        <div class="glass rounded-3xl p-5"><i data-lucide="inbox" class="w-9 h-9 text-blue-300"></i><h3 class="font-black text-xl mt-3">Procesos y trámites</h3><p class="text-sm text-slate-400 mt-2">Mesa de Entrada, auditorías, aprobaciones, estados, responsables, plazos y archivos adjuntos.</p></div>
+        <div class="glass rounded-3xl p-5"><i data-lucide="receipt-text" class="w-9 h-9 text-violet-300"></i><h3 class="font-black text-xl mt-3">Economía</h3><p class="text-sm text-slate-400 mt-2">Facturación, cuotas, cobranzas, conciliación, insumos, Posgrado e indicadores económicos.</p></div>
+        <div class="glass rounded-3xl p-5"><i data-lucide="calendar-days" class="w-9 h-9 text-green-300"></i><h3 class="font-black text-xl mt-3">Servicios</h3><p class="text-sm text-slate-400 mt-2">Guardias, S.O.S., turnos, profesionales, incidencias, cronogramas y recordatorios.</p></div>
+        <div class="glass rounded-3xl p-5"><i data-lucide="megaphone" class="w-9 h-9 text-amber-300"></i><h3 class="font-black text-xl mt-3">Comunicación</h3><p class="text-sm text-slate-400 mt-2">Campañas segmentadas, WhatsApp, correo, publicaciones, métricas y respuestas institucionales.</p></div>
+        <div class="glass rounded-3xl p-5"><i data-lucide="chart-no-axes-combined" class="w-9 h-9 text-red-300"></i><h3 class="font-black text-xl mt-3">Dirección</h3><p class="text-sm text-slate-400 mt-2">Tablero ejecutivo, actas, compromisos, decisiones, alertas y reportes automáticos.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 9 -->
+  <section class="slide items-center" data-title="Automatización transversal">
+    <div class="relative z-10 max-w-6xl mx-auto w-full"><h2 class="text-4xl md:text-6xl font-black">El ERP no solo registra. <span class="gradient-text">Actúa.</span></h2>
+      <div class="grid md:grid-cols-2 gap-5 mt-7">
+        <div class="glass rounded-3xl p-6"><h3 class="text-xl font-black text-cyan-200">Cuando ocurre un evento…</h3><div class="space-y-3 mt-4 text-slate-300"><p>• Ingresa una consulta.</p><p>• Se recibe documentación.</p><p>• Se aproxima un vencimiento.</p><p>• Se confirma un pago.</p><p>• Un trámite cambia de estado.</p><p>• Una guardia queda sin cubrir.</p></div></div>
+        <div class="glass rounded-3xl p-6"><h3 class="text-xl font-black text-blue-200">…el sistema ejecuta el siguiente paso</h3><div class="space-y-3 mt-4 text-slate-300"><p>• Clasifica y deriva al área correcta.</p><p>• Valida requisitos y detecta faltantes.</p><p>• Envía recordatorios y escalamiento.</p><p>• Imputa, emite recibo y actualiza deuda.</p><p>• Notifica a las personas involucradas.</p><p>• Actualiza indicadores y genera alertas.</p></div></div>
+      </div>
+      <div class="mt-5 p-5 rounded-2xl bg-green-400/10 border border-green-300/20"><p class="text-green-100 text-lg"><b>Principio de diseño:</b> automatizar al máximo las tareas repetitivas y conservar validación humana en decisiones sensibles, económicas o profesionales.</p></div>
+    </div>
+  </section>
+
+  <!-- 10 -->
+  <section class="slide items-center" data-title="Administración inteligente">
+    <div class="relative z-10 max-w-6xl mx-auto w-full"><span class="chip">Prioridad del diagnóstico</span><h2 class="text-4xl md:text-6xl font-black mt-4">Administración <span class="gradient-text">inteligente</span></h2>
+      <div class="grid md:grid-cols-2 gap-5 mt-7"><div class="glass rounded-3xl p-6"><p class="mini-label">Dolores detectados</p><ul class="space-y-3 text-slate-300 mt-4"><li>Exceso de tareas manuales.</li><li>Carga y actualización de información.</li><li>Elaboración de informes.</li><li>Información dispersa entre áreas.</li><li>Dificultad para reunir información para Comisión Directiva.</li></ul></div><div class="glass rounded-3xl p-6"><p class="mini-label">Solución IEC</p><ul class="space-y-3 text-slate-200 mt-4"><li>ERP con expediente e historial único.</li><li>Formularios que actualizan automáticamente los registros.</li><li>Gestión documental con clasificación inteligente.</li><li>Reportes periódicos automáticos.</li><li>Bandeja de tareas, responsables, vencimientos y alertas.</li></ul></div></div>
+      <div class="flow mt-5"><div class="flow-item"><b>Ingreso</b><p>Dato o documento</p></div><div class="flow-item"><b>Validación</b><p>Campos y requisitos</p></div><div class="flow-item"><b>Registro</b><p>Actualiza ERP</p></div><div class="flow-item"><b>Derivación</b><p>Responsable</p></div><div class="flow-item"><b>Seguimiento</b><p>Plazos y estados</p></div><div class="flow-item"><b>Reporte</b><p>Indicadores</p></div><div class="flow-item"><b>Archivo</b><p>Trazabilidad</p></div></div>
+    </div>
+  </section>
+
+  <!-- 11 -->
+  <section class="slide items-center" data-title="Atención y Mesa de Entrada">
+    <div class="relative z-10 max-w-6xl mx-auto w-full"><h2 class="text-4xl md:text-6xl font-black">Mesa de Entrada y <span class="gradient-text">Atención Omnicanal</span></h2>
+      <div class="grid md:grid-cols-3 gap-4 mt-7"><div class="glass rounded-3xl p-5"><i data-lucide="message-circle" class="w-9 h-9 text-cyan-300"></i><h3 class="font-black mt-3">Ingreso unificado</h3><p class="text-sm text-slate-400 mt-2">WhatsApp, web, correo, teléfono y atención presencial ingresan a una misma bandeja.</p></div><div class="glass rounded-3xl p-5"><i data-lucide="tags" class="w-9 h-9 text-blue-300"></i><h3 class="font-black mt-3">Clasificación automática</h3><p class="text-sm text-slate-400 mt-2">La consulta se identifica por tema, asociado, prioridad, área y documentación recibida.</p></div><div class="glass rounded-3xl p-5"><i data-lucide="route" class="w-9 h-9 text-violet-300"></i><h3 class="font-black mt-3">Derivación y SLA</h3><p class="text-sm text-slate-400 mt-2">Cada caso tiene responsable, estado, plazo, historial y alertas ante demoras.</p></div></div>
+      <div class="glass rounded-3xl p-6 mt-5"><h3 class="text-xl font-black">Automatizaciones propuestas</h3><div class="grid md:grid-cols-2 gap-3 mt-4 text-sm text-slate-300"><p>✓ Respuesta inicial inmediata.</p><p>✓ Código de seguimiento.</p><p>✓ Solicitud automática de datos faltantes.</p><p>✓ Derivación según tema y perfil.</p><p>✓ Avisos por cambio de estado.</p><p>✓ Encuesta al cerrar el caso.</p></div></div>
+    </div>
+  </section>
+
+  <!-- 12 -->
+  <section class="slide items-center" data-title="WhatsApp institucional">
+    <div class="relative z-10 max-w-6xl mx-auto w-full"><span class="chip">Canal prioritario</span><h2 class="text-4xl md:text-6xl font-black mt-4">WhatsApp institucional con <span class="gradient-text">IA y trazabilidad</span></h2>
+      <div class="grid md:grid-cols-[1.15fr_.85fr] gap-5 mt-7"><div class="glass rounded-3xl p-6"><div class="space-y-3"><div class="p-4 rounded-2xl bg-white/5 border border-white/10"><b>1. Recepción</b><p class="text-sm text-slate-400">Identifica a la persona y el motivo.</p></div><div class="p-4 rounded-2xl bg-white/5 border border-white/10"><b>2. Resolución automática</b><p class="text-sm text-slate-400">Horarios, guardias, deuda, cursos, requisitos o estado.</p></div><div class="p-4 rounded-2xl bg-white/5 border border-white/10"><b>3. Derivación humana</b><p class="text-sm text-slate-400">Solo cuando el caso requiere análisis o decisión.</p></div><div class="p-4 rounded-2xl bg-white/5 border border-white/10"><b>4. Registro</b><p class="text-sm text-slate-400">La conversación queda asociada al legajo o trámite.</p></div></div></div><div class="glass rounded-3xl p-6"><h3 class="text-xl font-black text-green-200">Resultados</h3><ul class="space-y-3 text-slate-300 mt-4"><li>Menos consultas repetidas.</li><li>Respuestas coherentes.</li><li>Atención fuera de horario.</li><li>Menos saturación del personal.</li><li>Historial centralizado.</li><li>Métricas de atención.</li></ul></div></div>
+    </div>
+  </section>
+
+  <!-- 13 -->
+  <section class="slide items-center" data-title="Facturación y cobranzas">
+    <div class="relative z-10 max-w-6xl mx-auto w-full"><h2 class="text-4xl md:text-6xl font-black">Facturación y cobranzas <span class="gradient-text">automatizadas</span></h2>
+      <div class="flow mt-8"><div class="flow-item"><i data-lucide="database" class="w-7 h-7 mx-auto text-cyan-300"></i><strong>Origen</strong><p>Cuota, curso, insumo o servicio</p></div><div class="flow-item"><i data-lucide="file-check-2" class="w-7 h-7 mx-auto text-blue-300"></i><strong>Validación</strong><p>Concepto e importe</p></div><div class="flow-item"><i data-lucide="receipt-text" class="w-7 h-7 mx-auto text-violet-300"></i><strong>Emisión</strong><p>Comprobante</p></div><div class="flow-item"><i data-lucide="send" class="w-7 h-7 mx-auto text-amber-300"></i><strong>Entrega</strong><p>Correo, portal o WhatsApp</p></div><div class="flow-item"><i data-lucide="landmark" class="w-7 h-7 mx-auto text-green-300"></i><strong>Conciliación</strong><p>Banco, QR o transferencia</p></div><div class="flow-item"><i data-lucide="bell" class="w-7 h-7 mx-auto text-red-300"></i><strong>Mora</strong><p>Avisos escalonados</p></div><div class="flow-item"><i data-lucide="chart-pie" class="w-7 h-7 mx-auto text-cyan-200"></i><strong>Tablero</strong><p>Cobranza y deuda</p></div></div>
+      <div class="grid md:grid-cols-3 gap-4 mt-6"><div class="metric"><p class="font-black">Conciliación asistida</p><p class="text-sm text-slate-400 mt-2">Detecta pagos, propone imputación y envía a revisión solo las excepciones.</p></div><div class="metric"><p class="font-black">Gestión de morosidad</p><p class="text-sm text-slate-400 mt-2">Segmenta por antigüedad, genera recordatorios y registra cada gestión.</p></div><div class="metric"><p class="font-black">Información económica</p><p class="text-sm text-slate-400 mt-2">Facturación, cobranza, deuda, ingresos por servicio y pendientes de conciliación.</p></div></div>
+    </div>
+  </section>
+
+  <!-- 14 -->
+  <section class="slide items-center" data-title="Legajo y gestión documental">
+    <div class="relative z-10 max-w-6xl mx-auto w-full"><span class="chip">Inteligencia documental</span><h2 class="text-4xl md:text-6xl font-black mt-4">Legajo digital <span class="gradient-text">único e inteligente</span></h2>
+      <div class="grid md:grid-cols-2 gap-5 mt-7"><div class="glass rounded-3xl p-6"><h3 class="text-xl font-black">Qué concentra</h3><div class="grid grid-cols-2 gap-3 mt-4 text-sm"><div class="glass-soft p-3 rounded-xl">Datos del asociado</div><div class="glass-soft p-3 rounded-xl">Documentación</div><div class="glass-soft p-3 rounded-xl">Facturación y deuda</div><div class="glass-soft p-3 rounded-xl">Trámites y auditorías</div><div class="glass-soft p-3 rounded-xl">Comunicaciones</div><div class="glass-soft p-3 rounded-xl">Cursos y actividades</div></div></div><div class="glass rounded-3xl p-6"><h3 class="text-xl font-black">Qué automatiza</h3><ul class="space-y-3 text-slate-300 mt-4"><li>Lectura y clasificación de archivos.</li><li>Detección de documentos faltantes o vencidos.</li><li>Asociación automática al legajo correcto.</li><li>Búsqueda por contenido, no solo por nombre.</li><li>Control de versiones y registro de cambios.</li><li>Permisos según rol y área.</li></ul></div></div>
+      <div class="p-5 mt-5 rounded-2xl bg-cyan-400/10 border border-cyan-300/20 text-cyan-100"><b>Resultado:</b> menos búsqueda manual, menos duplicación y una fuente institucional confiable para cada persona y proceso.</div>
+    </div>
+  </section>
+
+  <!-- 15 -->
+  <section class="slide items-center" data-title="Secretaría y Comisión Directiva">
+    <div class="relative z-10 max-w-6xl mx-auto w-full"><h2 class="text-4xl md:text-6xl font-black">Secretaría y Comisión Directiva <span class="gradient-text">asistidas por IA</span></h2>
+      <div class="grid md:grid-cols-3 gap-4 mt-7"><div class="glass rounded-3xl p-5"><i data-lucide="audio-lines" class="w-9 h-9 text-cyan-300"></i><h3 class="font-black mt-3">Reuniones inteligentes</h3><p class="text-sm text-slate-400 mt-2">Transcripción, resumen, acuerdos, responsables y borrador de acta.</p></div><div class="glass rounded-3xl p-5"><i data-lucide="list-todo" class="w-9 h-9 text-blue-300"></i><h3 class="font-black mt-3">Seguimiento de decisiones</h3><p class="text-sm text-slate-400 mt-2">Compromisos, vencimientos, evidencias y alertas de pendientes.</p></div><div class="glass rounded-3xl p-5"><i data-lucide="layout-dashboard" class="w-9 h-9 text-violet-300"></i><h3 class="font-black mt-3">Tablero ejecutivo</h3><p class="text-sm text-slate-400 mt-2">Economía, asociados, servicios, auditorías, Posgrado y comunicación.</p></div></div>
+      <div class="glass rounded-3xl p-6 mt-5"><p class="text-lg font-black">Asistente Ejecutivo COP</p><p class="text-slate-300 mt-2">Podrá responder preguntas autorizadas sobre la operación: “¿Qué trámites están demorados?”, “¿Cómo evolucionó la cobranza?”, “¿Qué decisiones siguen pendientes?” o “Prepará el informe semanal para Comisión Directiva”.</p></div>
+    </div>
+  </section>
+
+  <!-- 16 -->
+  <section class="slide items-center" data-title="Auditorías inteligentes">
+    <div class="relative z-10 max-w-6xl mx-auto w-full"><h2 class="text-4xl md:text-6xl font-black">Auditorías de Ortodoncia y Prótesis <span class="gradient-text">trazables</span></h2>
+      <div class="flow mt-8"><div class="flow-item"><b>Solicitud</b><p>Portal o Mesa de Entrada</p></div><div class="flow-item"><b>Requisitos</b><p>Validación inicial</p></div><div class="flow-item"><b>Asignación</b><p>Tipo y auditor</p></div><div class="flow-item"><b>Evaluación</b><p>Panel especializado</p></div><div class="flow-item"><b>Corrección</b><p>Notificación de faltantes</p></div><div class="flow-item"><b>Resultado</b><p>Constancia y firma</p></div><div class="flow-item"><b>Indicadores</b><p>Tiempos y resultados</p></div></div>
+      <div class="grid md:grid-cols-2 gap-5 mt-6"><div class="glass rounded-3xl p-6"><h3 class="font-black text-xl">Automatización</h3><ul class="text-slate-300 space-y-3 mt-4"><li>Checklist digital diferenciado.</li><li>Detección de documentación incompleta.</li><li>Asignación por especialidad y disponibilidad.</li><li>Avisos automáticos de avance o corrección.</li></ul></div><div class="glass rounded-3xl p-6"><h3 class="font-black text-xl">Control profesional</h3><ul class="text-slate-300 space-y-3 mt-4"><li>La decisión técnica sigue en manos del auditor.</li><li>La IA ordena, resume y prepara información.</li><li>Toda acción queda registrada.</li><li>Paneles separados y permisos específicos.</li></ul></div></div>
+    </div>
+  </section>
+
+  <!-- 17 -->
+  <section class="slide items-center" data-title="Guardia y S.O.S.">
+    <div class="relative z-10 max-w-6xl mx-auto w-full"><span class="chip">Servicios sensibles</span><h2 class="text-4xl md:text-6xl font-black mt-4">Guardia y S.O.S. con <span class="gradient-text">coordinación inteligente</span></h2>
+      <div class="grid md:grid-cols-2 gap-5 mt-7"><div class="glass rounded-3xl p-6"><h3 class="text-xl font-black text-red-200">Guardia Odontológica</h3><ul class="space-y-3 text-slate-300 mt-4"><li>Calendario compartido y publicación automática.</li><li>Confirmación previa del profesional.</li><li>Gestión de cambios y reemplazos.</li><li>Alerta ante turno sin cobertura.</li><li>Consulta pública de guardia vigente.</li><li>Registro de cumplimiento e incidencias.</li></ul></div><div class="glass rounded-3xl p-6"><h3 class="text-xl font-black text-green-200">Servicio Odontológico Solidario</h3><ul class="space-y-3 text-slate-300 mt-4"><li>Recepción y clasificación de solicitudes.</li><li>Registro del nivel de urgencia.</li><li>Asignación según disponibilidad.</li><li>Confirmaciones y recordatorios.</li><li>Seguimiento posterior del caso.</li><li>Indicadores de atención y respuesta.</li></ul></div></div>
+    </div>
+  </section>
+
+  <!-- 18 -->
+  <section class="slide items-center" data-title="Posgrado inteligente">
+    <div class="relative z-10 max-w-6xl mx-auto w-full"><h2 class="text-4xl md:text-6xl font-black">Escuela de Posgrado <span class="gradient-text">integrada</span></h2>
+      <div class="flow mt-8"><div class="flow-item"><b>Difusión</b><p>Campañas segmentadas</p></div><div class="flow-item"><b>Inscripción</b><p>Formulario y vacante</p></div><div class="flow-item"><b>Pago</b><p>Identificación y conciliación</p></div><div class="flow-item"><b>Comunicación</b><p>Alumno y docente</p></div><div class="flow-item"><b>Asistencia</b><p>Registro digital</p></div><div class="flow-item"><b>Certificado</b><p>Generación automática</p></div><div class="flow-item"><b>Rentabilidad</b><p>Indicadores por actividad</p></div></div>
+      <div class="grid md:grid-cols-4 gap-4 mt-6"><div class="metric"><p class="mini-label">Interesados</p><p class="text-3xl font-black mt-2">Leads</p></div><div class="metric"><p class="mini-label">Conversión</p><p class="text-3xl font-black mt-2">%</p></div><div class="metric"><p class="mini-label">Cobranza</p><p class="text-3xl font-black mt-2">$</p></div><div class="metric"><p class="mini-label">Rentabilidad</p><p class="text-3xl font-black mt-2">Curso</p></div></div>
+    </div>
+  </section>
+
+  <!-- 19 -->
+  <section class="slide items-center" data-title="Insumos y comercio">
+    <div class="relative z-10 max-w-6xl mx-auto w-full"><h2 class="text-4xl md:text-6xl font-black">Venta de insumos <span class="gradient-text">con stock vivo</span></h2>
+      <div class="grid md:grid-cols-3 gap-4 mt-7"><div class="glass rounded-3xl p-5"><i data-lucide="package-search" class="w-9 h-9 text-cyan-300"></i><h3 class="font-black mt-3">Stock en tiempo real</h3><p class="text-sm text-slate-400 mt-2">Disponible, comprometido, reservado, crítico y pendiente de ingreso.</p></div><div class="glass rounded-3xl p-5"><i data-lucide="shopping-cart" class="w-9 h-9 text-blue-300"></i><h3 class="font-black mt-3">Pedidos omnicanal</h3><p class="text-sm text-slate-400 mt-2">Mostrador, WhatsApp, portal o tienda online dentro del mismo circuito.</p></div><div class="glass rounded-3xl p-5"><i data-lucide="chart-line" class="w-9 h-9 text-violet-300"></i><h3 class="font-black mt-3">Inteligencia comercial</h3><p class="text-sm text-slate-400 mt-2">Rotación, rentabilidad, alertas de reposición e historial por asociado.</p></div></div>
+      <div class="glass rounded-3xl p-6 mt-5"><p class="font-black text-xl">Flujo automático</p><p class="text-slate-300 mt-2">Pedido confirmado → reserva de stock → comprobante → cobro → preparación → aviso de retiro o entrega → actualización de inventario y tablero.</p></div>
+    </div>
+  </section>
+
+  <!-- 20 -->
+  <section class="slide items-center" data-title="Comunicación institucional">
+    <div class="relative z-10 max-w-6xl mx-auto w-full"><span class="chip">Odontólogos + comunidad</span><h2 class="text-4xl md:text-6xl font-black mt-4">Comunicación institucional <span class="gradient-text">medible y segmentada</span></h2>
+      <div class="grid md:grid-cols-2 gap-5 mt-7"><div class="glass rounded-3xl p-6"><h3 class="text-xl font-black">Segmentos</h3><div class="flex flex-wrap gap-2 mt-4 text-sm"><span class="px-3 py-2 rounded-full bg-white/5 border border-white/10">Todos los asociados</span><span class="px-3 py-2 rounded-full bg-white/5 border border-white/10">Especialidades</span><span class="px-3 py-2 rounded-full bg-white/5 border border-white/10">Posgrado</span><span class="px-3 py-2 rounded-full bg-white/5 border border-white/10">Guardias y S.O.S.</span><span class="px-3 py-2 rounded-full bg-white/5 border border-white/10">Pagos pendientes</span><span class="px-3 py-2 rounded-full bg-white/5 border border-white/10">Comunidad</span></div></div><div class="glass rounded-3xl p-6"><h3 class="text-xl font-black">Automatización</h3><ul class="space-y-3 text-slate-300 mt-4"><li>Calendario editorial y campañas.</li><li>Generación asistida de contenidos.</li><li>Publicación multicanal.</li><li>Recordatorios de actividades.</li><li>Seguimiento de consultas generadas.</li><li>Panel de alcance, inscripciones y ventas.</li></ul></div></div>
+    </div>
+  </section>
+
+  <!-- 21 -->
+  <section class="slide items-center" data-title="Asistentes de IA">
+    <div class="relative z-10 max-w-6xl mx-auto w-full"><h2 class="text-4xl md:text-6xl font-black">Una familia de <span class="gradient-text">asistentes especializados</span></h2>
+      <div class="grid md:grid-cols-4 gap-4 mt-7 text-sm"><div class="glass rounded-2xl p-4"><b>Asistente de Atención</b><p class="text-slate-400 mt-2">Responde, clasifica y deriva.</p></div><div class="glass rounded-2xl p-4"><b>Asistente Administrativo</b><p class="text-slate-400 mt-2">Carga, verifica y prepara reportes.</p></div><div class="glass rounded-2xl p-4"><b>Asistente Documental</b><p class="text-slate-400 mt-2">Lee, ordena y encuentra archivos.</p></div><div class="glass rounded-2xl p-4"><b>Asistente de Facturación</b><p class="text-slate-400 mt-2">Sugiere comprobantes y conciliaciones.</p></div><div class="glass rounded-2xl p-4"><b>Asistente de Auditorías</b><p class="text-slate-400 mt-2">Controla requisitos y resume casos.</p></div><div class="glass rounded-2xl p-4"><b>Asistente de Posgrado</b><p class="text-slate-400 mt-2">Gestiona alumnos, pagos y certificados.</p></div><div class="glass rounded-2xl p-4"><b>Asistente de Comunicación</b><p class="text-slate-400 mt-2">Genera campañas y analiza resultados.</p></div><div class="glass rounded-2xl p-4"><b>Asistente Ejecutivo</b><p class="text-slate-400 mt-2">Resume indicadores y decisiones.</p></div></div>
+      <div class="p-5 rounded-2xl bg-violet-400/10 border border-violet-300/20 mt-5"><p class="text-violet-100"><b>Seguridad por diseño:</b> cada asistente accede solamente a la información autorizada para su rol y deja registro de sus acciones.</p></div>
+    </div>
+  </section>
+
+  <!-- 22 -->
+  <section class="slide items-center" data-title="Capacitación IEC">
+    <div class="relative z-10 max-w-6xl mx-auto w-full"><span class="chip">La tecnología sola no transforma</span><h2 class="text-4xl md:text-6xl font-black mt-4">Programa de <span class="gradient-text">capacitación IEC</span></h2>
+      <div class="grid md:grid-cols-3 gap-4 mt-7"><div class="glass rounded-3xl p-5"><p class="mini-label">Nivel 1</p><h3 class="text-xl font-black mt-2">Cultura de Inteligencia Operativa</h3><p class="text-sm text-slate-400 mt-2">Comprender procesos, datos, automatización, roles y mejora continua.</p></div><div class="glass rounded-3xl p-5"><p class="mini-label">Nivel 2</p><h3 class="text-xl font-black mt-2">Uso del ERP por área</h3><p class="text-sm text-slate-400 mt-2">Capacitación práctica para Administración, Secretaría, Tesorería, Auditorías, Posgrado, Guardia y S.O.S.</p></div><div class="glass rounded-3xl p-5"><p class="mini-label">Nivel 3</p><h3 class="text-xl font-black mt-2">IA aplicada al trabajo</h3><p class="text-sm text-slate-400 mt-2">Redacción, análisis, documentos, respuestas, informes y asistentes especializados.</p></div><div class="glass rounded-3xl p-5"><p class="mini-label">Nivel 4</p><h3 class="text-xl font-black mt-2">Gestión con indicadores</h3><p class="text-sm text-slate-400 mt-2">Lectura de tableros, seguimiento de objetivos, alertas y toma de decisiones.</p></div><div class="glass rounded-3xl p-5"><p class="mini-label">Nivel 5</p><h3 class="text-xl font-black mt-2">Seguridad y gobernanza</h3><p class="text-sm text-slate-400 mt-2">Permisos, datos personales, validación humana, trazabilidad y buenas prácticas.</p></div><div class="glass rounded-3xl p-5"><p class="mini-label">Nivel 6</p><h3 class="text-xl font-black mt-2">Referentes internos</h3><p class="text-sm text-slate-400 mt-2">Formación de usuarios clave capaces de acompañar, validar y mejorar cada proceso.</p></div></div>
+    </div>
+  </section>
+
+  <!-- 23 -->
+  <section class="slide items-center" data-title="Metodología de implementación">
+    <div class="relative z-10 max-w-6xl mx-auto w-full"><h2 class="text-4xl md:text-6xl font-black">Implementación <span class="gradient-text">por procesos y por áreas</span></h2>
+      <div class="timeline mt-7 max-w-4xl"><div class="timeline-item"><span class="timeline-dot"></span><h3 class="font-black text-xl">1. Diagnóstico específico por área</h3><p class="text-slate-400">Entrevistas, documentos, excepciones, responsables y objetivos.</p></div><div class="timeline-item"><span class="timeline-dot"></span><h3 class="font-black text-xl">2. Diseño funcional y maqueta</h3><p class="text-slate-400">Se valida la experiencia antes de construir la base definitiva.</p></div><div class="timeline-item"><span class="timeline-dot"></span><h3 class="font-black text-xl">3. Desarrollo e integración</h3><p class="text-slate-400">ERP, permisos, datos, interfaces y conexiones con herramientas existentes.</p></div><div class="timeline-item"><span class="timeline-dot"></span><h3 class="font-black text-xl">4. Automatización y asistentes</h3><p class="text-slate-400">Flujos, reglas, notificaciones, IA y validaciones humanas.</p></div><div class="timeline-item"><span class="timeline-dot"></span><h3 class="font-black text-xl">5. Pruebas y evidencia</h3><p class="text-slate-400">Casos de prueba, archivos adjuntos, incidencias, correcciones y aprobación.</p></div><div class="timeline-item"><span class="timeline-dot"></span><h3 class="font-black text-xl">6. Capacitación y mejora continua</h3><p class="text-slate-400">Puesta en marcha, acompañamiento, métricas y nuevas optimizaciones.</p></div></div>
+    </div>
+  </section>
+
+  <!-- 24 -->
+  <section class="slide items-center" data-title="Roadmap">
+    <div class="relative z-10 max-w-6xl mx-auto w-full"><span class="chip">Implementación progresiva</span><h2 class="text-4xl md:text-6xl font-black mt-4">Roadmap institucional <span class="gradient-text">propuesto</span></h2>
+      <div class="grid md:grid-cols-5 gap-3 mt-7"><div class="glass rounded-2xl p-4"><div class="w-10 h-10 rounded-full bg-cyan-400/15 grid place-items-center font-black text-cyan-200">1</div><h3 class="font-black mt-3">Base institucional</h3><p class="text-xs text-slate-400 mt-2">Usuarios, roles, asociados, legajos y documentos.</p></div><div class="glass rounded-2xl p-4"><div class="w-10 h-10 rounded-full bg-blue-400/15 grid place-items-center font-black text-blue-200">2</div><h3 class="font-black mt-3">Atención y trámites</h3><p class="text-xs text-slate-400 mt-2">Mesa de Entrada, WhatsApp, portal y seguimiento.</p></div><div class="glass rounded-2xl p-4"><div class="w-10 h-10 rounded-full bg-violet-400/15 grid place-items-center font-black text-violet-200">3</div><h3 class="font-black mt-3">Economía e insumos</h3><p class="text-xs text-slate-400 mt-2">Facturación, cobros, conciliación, deuda y stock.</p></div><div class="glass rounded-2xl p-4"><div class="w-10 h-10 rounded-full bg-amber-400/15 grid place-items-center font-black text-amber-200">4</div><h3 class="font-black mt-3">Servicios críticos</h3><p class="text-xs text-slate-400 mt-2">Auditorías, Guardia, S.O.S. y Posgrado.</p></div><div class="glass rounded-2xl p-4"><div class="w-10 h-10 rounded-full bg-green-400/15 grid place-items-center font-black text-green-200">5</div><h3 class="font-black mt-3">Inteligencia completa</h3><p class="text-xs text-slate-400 mt-2">Asistentes, tableros, predicción y mejora continua.</p></div></div>
+      <div class="glass rounded-3xl p-6 mt-6"><p class="font-black text-xl">Criterio de avance</p><p class="text-slate-300 mt-2">Cada etapa entra en producción únicamente después de ser validada por el referente funcional del área, probada por el equipo técnico y acompañada por capacitación.</p></div>
+    </div>
+  </section>
+
+  <!-- 25 INTERACTIVE ERP -->
+  <section class="slide items-start" data-title="Maqueta interactiva ERP">
+    <div class="relative z-10 max-w-7xl mx-auto w-full"><div class="text-center"><span class="chip">Maqueta conceptual</span><h2 class="text-3xl md:text-5xl font-black mt-3">ERP COP de <span class="gradient-text">Inteligencia Operativa</span></h2><p class="text-slate-400 mt-2">Navegue por los módulos para visualizar cómo se materializa la propuesta.</p></div>
+      <div class="erp-shell mt-5"><div class="p-4 border-b border-white/10 flex flex-wrap justify-between gap-3"><div><p class="mini-label text-cyan-300">COP + IEC</p><h3 class="font-black text-xl">Centro de Inteligencia Operativa</h3></div><div class="flex gap-2 flex-wrap text-xs"><span class="px-3 py-2 rounded-full bg-green-400/10 border border-green-300/20 text-green-200">● Operativo</span><span class="px-3 py-2 rounded-full bg-cyan-400/10 border border-cyan-300/20 text-cyan-200">Automatizaciones activas</span><span class="px-3 py-2 rounded-full bg-violet-400/10 border border-violet-300/20 text-violet-200">IA disponible</span></div></div>
+        <div class="grid lg:grid-cols-[245px_1fr] desktop-grid"><aside class="p-4 border-r border-white/10 space-y-2"><button class="erp-tab active" data-panel="central">Panel central</button><button class="erp-tab" data-panel="asociados">Asociados y legajos</button><button class="erp-tab" data-panel="tramites">Trámites y auditorías</button><button class="erp-tab" data-panel="economia">Facturación y cobranzas</button><button class="erp-tab" data-panel="servicios">Guardias, S.O.S. y Posgrado</button><button class="erp-tab" data-panel="automatizaciones">Automatizaciones</button><button class="erp-tab" data-panel="direccion">Comisión Directiva</button></aside><main class="p-5 min-h-[470px]">
+          <div class="erp-panel active" id="erp-central"><div class="grid grid-cols-2 md:grid-cols-4 gap-3"><div class="kpi"><p class="mini-label">Consultas abiertas</p><p class="text-3xl font-black mt-1">42</p><p class="text-xs text-amber-300">6 próximas a vencer</p></div><div class="kpi"><p class="mini-label">Cobranza mensual</p><p class="text-3xl font-black mt-1">87%</p><p class="text-xs text-green-300">+4,2% vs. anterior</p></div><div class="kpi"><p class="mini-label">Auditorías pendientes</p><p class="text-3xl font-black mt-1">18</p><p class="text-xs text-cyan-300">5 en evaluación</p></div><div class="kpi"><p class="mini-label">Automatizaciones</p><p class="text-3xl font-black mt-1">126</p><p class="text-xs text-violet-300">acciones esta semana</p></div></div><div class="grid md:grid-cols-2 gap-4 mt-4"><div class="glass-soft rounded-2xl p-4"><h4 class="font-black text-cyan-200">Bandeja inteligente</h4><div class="space-y-2 text-sm mt-3"><p class="p-3 bg-white/5 rounded-xl">12 documentos asociados automáticamente.</p><p class="p-3 bg-white/5 rounded-xl">8 pagos propuestos para conciliación.</p><p class="p-3 bg-white/5 rounded-xl">3 guardias requieren confirmación.</p><p class="p-3 bg-white/5 rounded-xl">5 trámites excedieron el plazo objetivo.</p></div></div><div class="glass-soft rounded-2xl p-4"><h4 class="font-black text-blue-200">Asistente Operativo</h4><div class="mt-3 p-4 rounded-2xl bg-blue-400/10 border border-blue-300/20 text-sm text-slate-200">“Preparé el resumen semanal para Comisión Directiva. Detecté aumento de deuda en cuotas societarias y tres auditorías con documentación pendiente.”</div><button class="mt-3 px-4 py-2 rounded-xl bg-blue-500/80 font-bold text-sm">Ver informe</button></div></div></div>
+          <div class="erp-panel" id="erp-asociados"><h4 class="text-2xl font-black">Asociados y legajos</h4><div class="grid md:grid-cols-3 gap-3 mt-4"><div class="kpi"><p class="mini-label">Asociados activos</p><p class="text-3xl font-black">1.248</p></div><div class="kpi"><p class="mini-label">Documentación completa</p><p class="text-3xl font-black">92%</p></div><div class="kpi"><p class="mini-label">Actualizaciones pendientes</p><p class="text-3xl font-black">34</p></div></div><div class="glass-soft rounded-2xl p-4 mt-4"><p class="font-black">Ficha integral</p><div class="grid md:grid-cols-4 gap-2 mt-3 text-sm"><span class="p-3 bg-white/5 rounded-xl">Datos y matrícula</span><span class="p-3 bg-white/5 rounded-xl">Documentos</span><span class="p-3 bg-white/5 rounded-xl">Deuda y pagos</span><span class="p-3 bg-white/5 rounded-xl">Historial de atención</span></div></div></div>
+          <div class="erp-panel" id="erp-tramites"><h4 class="text-2xl font-black">Trámites y auditorías</h4><div class="grid md:grid-cols-5 gap-2 mt-4 text-center text-xs"><div class="p-4 rounded-xl bg-cyan-400/10 border border-cyan-300/20">Recibido<br><b class="text-xl">28</b></div><div class="p-4 rounded-xl bg-blue-400/10 border border-blue-300/20">Validación<br><b class="text-xl">11</b></div><div class="p-4 rounded-xl bg-violet-400/10 border border-violet-300/20">Evaluación<br><b class="text-xl">15</b></div><div class="p-4 rounded-xl bg-amber-400/10 border border-amber-300/20">Corrección<br><b class="text-xl">7</b></div><div class="p-4 rounded-xl bg-green-400/10 border border-green-300/20">Finalizado<br><b class="text-xl">46</b></div></div><div class="glass-soft rounded-2xl p-4 mt-4"><p class="text-sm text-slate-300">Cada expediente contiene responsable, prioridad, requisitos, archivos, comentarios, tiempos, historial y resultado.</p></div></div>
+          <div class="erp-panel" id="erp-economia"><h4 class="text-2xl font-black">Facturación y cobranzas</h4><div class="grid md:grid-cols-4 gap-3 mt-4"><div class="kpi"><p class="mini-label">Facturado</p><p class="text-2xl font-black">$ 48,2 M</p></div><div class="kpi"><p class="mini-label">Cobrado</p><p class="text-2xl font-black">$ 41,9 M</p></div><div class="kpi"><p class="mini-label">Mora</p><p class="text-2xl font-black">$ 6,3 M</p></div><div class="kpi"><p class="mini-label">Sin conciliar</p><p class="text-2xl font-black">17</p></div></div><div class="glass-soft rounded-2xl p-4 mt-4"><p class="font-black">Flujo automático de cobro</p><p class="text-sm text-slate-400 mt-2">Vencimiento → recordatorio → pago detectado → propuesta de imputación → recibo → actualización de deuda → tablero.</p></div></div>
+          <div class="erp-panel" id="erp-servicios"><h4 class="text-2xl font-black">Servicios institucionales</h4><div class="grid md:grid-cols-3 gap-4 mt-4"><div class="glass-soft rounded-2xl p-4"><b>Guardia</b><p class="text-sm text-slate-400 mt-2">Cronograma, confirmaciones, reemplazos y publicación.</p></div><div class="glass-soft rounded-2xl p-4"><b>S.O.S.</b><p class="text-sm text-slate-400 mt-2">Casos, urgencia, asignación y seguimiento.</p></div><div class="glass-soft rounded-2xl p-4"><b>Posgrado</b><p class="text-sm text-slate-400 mt-2">Cursos, alumnos, pagos, asistencia y certificados.</p></div></div></div>
+          <div class="erp-panel" id="erp-automatizaciones"><h4 class="text-2xl font-black">Centro de automatizaciones</h4><div class="space-y-3 mt-4 text-sm"><div class="p-4 rounded-xl bg-green-400/10 border border-green-300/20">ACTIVA · Documento recibido → lectura → validación → legajo.</div><div class="p-4 rounded-xl bg-green-400/10 border border-green-300/20">ACTIVA · Pago identificado → conciliación → recibo → notificación.</div><div class="p-4 rounded-xl bg-amber-400/10 border border-amber-300/20">REQUIERE APROBACIÓN · Factura extraordinaria superior al límite.</div><div class="p-4 rounded-xl bg-blue-400/10 border border-blue-300/20">PROGRAMADA · Informe ejecutivo todos los viernes.</div></div></div>
+          <div class="erp-panel" id="erp-direccion"><h4 class="text-2xl font-black">Panel de Comisión Directiva</h4><div class="grid md:grid-cols-2 gap-4 mt-4"><div class="glass-soft rounded-2xl p-4"><b>Indicadores institucionales</b><p class="text-sm text-slate-400 mt-2">Asociados, economía, servicios, atención, comunicación y cumplimiento.</p></div><div class="glass-soft rounded-2xl p-4"><b>Decisiones y compromisos</b><p class="text-sm text-slate-400 mt-2">Actas, responsables, fechas, evidencias y alertas.</p></div></div><div class="mt-4 p-4 rounded-2xl bg-violet-400/10 border border-violet-300/20 text-sm">Informe ejecutivo generado automáticamente con información actualizada y fuentes trazables.</div></div>
+        </main></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 26 -->
+  <section class="slide items-center" data-title="Beneficios esperados">
+    <div class="relative z-10 max-w-6xl mx-auto w-full"><h2 class="text-4xl md:text-6xl font-black text-center">Beneficios <span class="gradient-text">esperados</span></h2>
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mt-8"><div class="glass rounded-3xl p-5 text-center"><i data-lucide="clock-3" class="w-10 h-10 text-cyan-300 mx-auto"></i><p class="font-black mt-3">Menos tiempo administrativo</p></div><div class="glass rounded-3xl p-5 text-center"><i data-lucide="shield-check" class="w-10 h-10 text-green-300 mx-auto"></i><p class="font-black mt-3">Menos errores</p></div><div class="glass rounded-3xl p-5 text-center"><i data-lucide="search-check" class="w-10 h-10 text-blue-300 mx-auto"></i><p class="font-black mt-3">Más trazabilidad</p></div><div class="glass rounded-3xl p-5 text-center"><i data-lucide="messages-square" class="w-10 h-10 text-violet-300 mx-auto"></i><p class="font-black mt-3">Respuestas más rápidas</p></div><div class="glass rounded-3xl p-5 text-center"><i data-lucide="database-zap" class="w-10 h-10 text-amber-300 mx-auto"></i><p class="font-black mt-3">Información en tiempo real</p></div><div class="glass rounded-3xl p-5 text-center"><i data-lucide="users" class="w-10 h-10 text-cyan-200 mx-auto"></i><p class="font-black mt-3">Mejor atención</p></div><div class="glass rounded-3xl p-5 text-center"><i data-lucide="chart-no-axes-combined" class="w-10 h-10 text-green-200 mx-auto"></i><p class="font-black mt-3">Decisiones con datos</p></div><div class="glass rounded-3xl p-5 text-center"><i data-lucide="expand" class="w-10 h-10 text-blue-200 mx-auto"></i><p class="font-black mt-3">Escalabilidad institucional</p></div></div>
+      <p class="text-center text-lg text-slate-300 mt-7 max-w-4xl mx-auto">Los porcentajes concretos de ahorro y productividad se establecerán después de medir tiempos base en cada área durante la etapa de diagnóstico específico.</p>
+    </div>
+  </section>
+
+  <!-- 27 -->
+  <section class="slide items-center justify-center text-center" data-title="Cierre">
+    <div class="relative z-10 max-w-5xl mx-auto w-full"><div class="flex items-center justify-center gap-6 mb-7"><img src="https://i.postimg.cc/3r2Rq6Td/Chat-GPT-Image-13-jul-2026-12-10-33-p-m.png" class="logo h-20 bg-white rounded-2xl p-2" alt="COP"><div class="w-px h-16 bg-white/20"></div><img src="https://i.postimg.cc/jSkQKpRK/Diseno-sin-titulo-2026-05-15T105828-195.png" class="logo h-20" alt="IEC"></div><span class="chip">Propuesta institucional</span><h2 class="text-5xl md:text-7xl font-black mt-6">El objetivo no es solamente <span class="gradient-text">informatizar COP.</span></h2><p class="text-2xl md:text-3xl font-bold text-slate-200 mt-5">Es convertirlo en una organización inteligente.</p><div class="glass rounded-3xl p-7 mt-7 max-w-4xl mx-auto"><p class="text-lg text-slate-300">Una institución donde la información fluya, las tareas repetitivas se ejecuten automáticamente, las personas trabajen con mejores herramientas y la Comisión Directiva pueda decidir con información actualizada y confiable.</p><p class="text-2xl font-black mt-5 gradient-text">INTEGRAR · AUTOMATIZAR · CAPACITAR · MEDIR · MEJORAR</p></div><p class="text-slate-500 mt-6">Instituto IEC · Inteligencia Operativa aplicada al Círculo Odontológico de Paraná</p></div>
+  </section>
+
+<script>
+  const slides=[...document.querySelectorAll('.slide')];
+  const dots=document.getElementById('dots');
+  const progress=document.getElementById('progress');
+  const counter=document.getElementById('counter');
+  const slideTitle=document.getElementById('slideTitle');
+  let index=0;
+  slides.forEach((_,i)=>{const b=document.createElement('button');b.className='dot';b.setAttribute('aria-label',`Ir a diapositiva ${i+1}`);b.onclick=()=>go(i);dots.appendChild(b)});
+  function refresh(){slides.forEach((s,i)=>s.classList.toggle('active',i===index));[...dots.children].forEach((d,i)=>d.classList.toggle('active',i===index));progress.style.width=`${((index+1)/slides.length)*100}%`;counter.textContent=`${index+1} / ${slides.length}`;slideTitle.textContent=slides[index].dataset.title||'Propuesta institucional';slides[index].scrollTop=0;try{lucide.createIcons()}catch(e){}}
+  function go(i){index=(i+slides.length)%slides.length;refresh()}
+  document.getElementById('prev').onclick=()=>go(index-1);document.getElementById('next').onclick=()=>go(index+1);
+  document.addEventListener('keydown',e=>{if(['ArrowRight','PageDown',' '].includes(e.key)){e.preventDefault();go(index+1)}if(['ArrowLeft','PageUp'].includes(e.key)){e.preventDefault();go(index-1)}if(e.key==='Home')go(0);if(e.key==='End')go(slides.length-1)});
+  let touchX=0;document.addEventListener('touchstart',e=>touchX=e.changedTouches[0].screenX,{passive:true});document.addEventListener('touchend',e=>{const dx=e.changedTouches[0].screenX-touchX;if(Math.abs(dx)>70)go(index+(dx<0?1:-1))},{passive:true});
+  document.querySelectorAll('.erp-tab').forEach(btn=>btn.addEventListener('click',()=>{document.querySelectorAll('.erp-tab').forEach(b=>b.classList.remove('active'));document.querySelectorAll('.erp-panel').forEach(p=>p.classList.remove('active'));btn.classList.add('active');document.getElementById('erp-'+btn.dataset.panel).classList.add('active')}));
+  refresh();
+</script>
+</body>
+</html>
