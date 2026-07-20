@@ -1,11 +1,11 @@
 <!doctype html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="description" content="Capacitaciones disponibles del Instituto IEC. Inteligencia Artificial, programación, robótica, BIM y formación tecnológica aplicada." />
-  <meta name="theme-color" content="#06111f" />
-  <title>Capacitaciones IEC | Aprendé hoy, liderá mañana</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Capacitaciones disponibles del Instituto IEC: Inteligencia Artificial, programación, robótica, BIM y formación tecnológica aplicada.">
+  <meta name="theme-color" content="#06111f">
+  <title>Capacitaciones IEC | Aprende hoy, lidera mañana</title>
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -15,21 +15,12 @@
   <style>
     :root{
       --bg:#030912;
-      --bg-2:#06111f;
-      --panel:rgba(8,25,43,.76);
-      --panel-2:rgba(10,37,59,.76);
-      --line:rgba(125,211,252,.17);
-      --line-strong:rgba(34,211,238,.42);
+      --bg2:#06111f;
       --text:#f8fafc;
       --muted:#94a3b8;
       --cyan:#22d3ee;
       --sky:#0ea5e9;
       --blue:#2563eb;
-      --violet:#8b5cf6;
-      --green:#22c55e;
-      --amber:#f59e0b;
-      --danger:#fb7185;
-      --radius:25px;
     }
 
     *{box-sizing:border-box}
@@ -38,83 +29,57 @@
       margin:0;
       min-height:100vh;
       color:var(--text);
-      background:
-        radial-gradient(circle at 18% -5%,rgba(14,165,233,.20),transparent 28%),
-        radial-gradient(circle at 95% 22%,rgba(37,99,235,.18),transparent 29%),
-        radial-gradient(circle at 50% 100%,rgba(34,211,238,.10),transparent 35%),
-        linear-gradient(180deg,var(--bg),var(--bg-2) 52%,#02070d);
       font-family:"DM Sans",sans-serif;
+      background:
+        radial-gradient(circle at 15% -5%,rgba(14,165,233,.22),transparent 29%),
+        radial-gradient(circle at 95% 25%,rgba(37,99,235,.18),transparent 30%),
+        radial-gradient(circle at 50% 100%,rgba(34,211,238,.09),transparent 35%),
+        linear-gradient(180deg,var(--bg),var(--bg2) 55%,#02070d);
       overflow-x:hidden;
     }
 
-    body::before{
+    body:before{
       content:"";
       position:fixed;
       inset:0;
-      pointer-events:none;
       z-index:-2;
+      pointer-events:none;
       background-image:
         linear-gradient(rgba(56,189,248,.045) 1px,transparent 1px),
         linear-gradient(90deg,rgba(56,189,248,.045) 1px,transparent 1px);
       background-size:52px 52px;
-      mask-image:linear-gradient(to bottom,black,transparent 88%);
+      mask-image:linear-gradient(to bottom,black,transparent 90%);
     }
 
-    body::after{
-      content:"";
-      position:fixed;
-      inset:0;
-      pointer-events:none;
-      z-index:-1;
-      background:
-        radial-gradient(circle at 78% 10%,rgba(34,211,238,.95) 0 2px,transparent 3px),
-        radial-gradient(circle at 82% 15%,rgba(56,189,248,.7) 0 1px,transparent 2px),
-        radial-gradient(circle at 88% 8%,rgba(59,130,246,.8) 0 1px,transparent 2px);
-      opacity:.65;
-    }
-
-    button,a,input{font:inherit}
     a{text-decoration:none;color:inherit}
-    img{max-width:100%;display:block}
-
-    .orb{
-      position:fixed;
-      width:360px;height:360px;
-      border-radius:50%;
-      filter:blur(90px);
-      opacity:.17;
-      pointer-events:none;
-      z-index:-1;
-    }
-    .orb.one{background:#0ea5e9;top:-140px;left:-120px}
-    .orb.two{background:#2563eb;right:-170px;top:35%}
-    .orb.three{background:#22d3ee;left:35%;bottom:-220px}
+    button{font:inherit}
+    img{display:block;max-width:100%}
 
     .shell{
       width:min(100%,760px);
-      margin:0 auto;
-      padding:26px 18px 54px;
+      margin:auto;
+      padding:24px 16px 55px;
     }
 
     .hero{
       text-align:center;
-      padding:34px 20px 24px;
-      position:relative;
+      padding:30px 14px 22px;
     }
 
-    .logo-wrap{
-      width:118px;
-      height:118px;
+    .logo{
+      width:112px;
+      height:112px;
       margin:0 auto 18px;
       border-radius:50%;
-      padding:8px;
-      background:linear-gradient(145deg,rgba(125,211,252,.25),rgba(255,255,255,.04));
-      border:1px solid rgba(125,211,252,.30);
-      box-shadow:0 0 55px rgba(14,165,233,.18);
+      padding:7px;
+      border:1px solid rgba(125,211,252,.28);
+      background:linear-gradient(145deg,rgba(125,211,252,.23),rgba(255,255,255,.03));
+      box-shadow:0 0 50px rgba(14,165,233,.18);
     }
 
-    .logo-wrap img{
-      width:100%;height:100%;
+    .logo img{
+      width:100%;
+      height:100%;
       object-fit:contain;
       border-radius:50%;
     }
@@ -128,50 +93,42 @@
       color:#a5f3fc;
       background:rgba(34,211,238,.08);
       border:1px solid rgba(34,211,238,.22);
-      font-weight:800;
-      font-size:12px;
+      font-size:11px;
+      font-weight:900;
       letter-spacing:.12em;
       text-transform:uppercase;
     }
 
     h1{
-      margin:18px auto 10px;
-      max-width:680px;
-      font-size:clamp(38px,7vw,67px);
-      line-height:.98;
-      letter-spacing:-.055em;
+      margin:17px auto 10px;
+      max-width:650px;
+      font-size:clamp(28px,5vw,46px);
+      line-height:1.08;
+      letter-spacing:-.035em;
       font-weight:900;
     }
 
     .gradient{
-      background:linear-gradient(135deg,#a5f3fc,#38bdf8 42%,#818cf8);
+      background:linear-gradient(135deg,#a5f3fc,#38bdf8 45%,#818cf8);
       -webkit-background-clip:text;
       background-clip:text;
       -webkit-text-fill-color:transparent;
     }
 
-
-    .slogan-title{
-      font-size:clamp(28px,5vw,46px)!important;
-      line-height:1.08!important;
-      letter-spacing:-.035em!important;
-      white-space:normal;
-    }
-
     .hero p{
-      margin:15px auto 0;
       max-width:610px;
+      margin:14px auto 0;
       color:#cbd5e1;
-      font-size:clamp(15px,2.5vw,19px);
+      font-size:clamp(14px,2.4vw,18px);
       line-height:1.6;
     }
 
-    .hero-tags{
+    .tags{
       display:flex;
       flex-wrap:wrap;
       justify-content:center;
       gap:8px;
-      margin-top:20px;
+      margin-top:18px;
     }
 
     .tag{
@@ -180,82 +137,76 @@
       gap:6px;
       padding:8px 11px;
       border-radius:999px;
+      color:#cbd5e1;
       background:rgba(255,255,255,.045);
       border:1px solid rgba(255,255,255,.08);
-      color:#cbd5e1;
       font-size:12px;
       font-weight:700;
     }
 
     .notice{
-      margin:3px 0 20px;
       display:flex;
-      align-items:center;
       gap:13px;
+      align-items:center;
+      margin:4px 0 20px;
       padding:15px 17px;
       border-radius:20px;
-      background:linear-gradient(135deg,rgba(14,165,233,.14),rgba(37,99,235,.09));
-      border:1px solid rgba(56,189,248,.24);
-      box-shadow:0 18px 65px rgba(0,0,0,.19);
+      background:linear-gradient(135deg,rgba(14,165,233,.14),rgba(37,99,235,.08));
+      border:1px solid rgba(56,189,248,.23);
     }
+
     .notice-icon{
       width:42px;height:42px;
       flex:0 0 auto;
-      display:grid;place-items:center;
+      display:grid;
+      place-items:center;
       border-radius:14px;
       color:#67e8f9;
-      background:rgba(34,211,238,.11);
-      border:1px solid rgba(103,232,249,.22);
+      background:rgba(34,211,238,.10);
+      border:1px solid rgba(103,232,249,.20);
     }
+
     .notice strong{display:block;font-size:14px}
-    .notice span{display:block;color:var(--muted);font-size:12px;margin-top:3px;line-height:1.45}
+    .notice span{display:block;margin-top:3px;color:var(--muted);font-size:12px;line-height:1.45}
 
     .section-title{
-      margin:26px 5px 12px;
       display:flex;
-      align-items:end;
+      align-items:flex-end;
       justify-content:space-between;
       gap:10px;
+      margin:25px 5px 12px;
     }
-    .section-title h2{
-      margin:0;
-      font-size:18px;
-      font-weight:900;
-      letter-spacing:-.02em;
-    }
-    .section-title span{
-      color:#64748b;
-      font-size:12px;
-    }
+
+    .section-title h2{margin:0;font-size:18px;font-weight:900}
+    .section-title span{color:#64748b;font-size:12px}
 
     .course-list{display:grid;gap:13px}
 
     .course{
-      --accent:var(--cyan);
+      --accent:#22d3ee;
       position:relative;
-      border-radius:var(--radius);
+      overflow:hidden;
+      border-radius:24px;
       border:1px solid rgba(255,255,255,.09);
       background:
         linear-gradient(135deg,rgba(255,255,255,.075),rgba(255,255,255,.025)),
-        rgba(3,13,24,.78);
+        rgba(3,13,24,.80);
       box-shadow:0 20px 60px rgba(0,0,0,.22);
-      overflow:hidden;
-      transition:transform .2s ease,border-color .2s ease,box-shadow .2s ease;
+      transition:.2s ease;
     }
 
-    .course::before{
+    .course:before{
       content:"";
       position:absolute;
       top:0;left:0;right:0;
       height:2px;
       background:linear-gradient(90deg,transparent,var(--accent),transparent);
-      opacity:.75;
+      opacity:.8;
     }
 
     .course:hover{
       transform:translateY(-2px);
-      border-color:color-mix(in srgb,var(--accent) 48%,transparent);
-      box-shadow:0 24px 70px rgba(0,0,0,.29);
+      border-color:color-mix(in srgb,var(--accent) 45%,transparent);
     }
 
     .course-main{
@@ -274,15 +225,13 @@
 
     .icon-box{
       width:58px;height:58px;
-      border-radius:19px;
       display:grid;place-items:center;
+      border-radius:19px;
       color:var(--accent);
       background:color-mix(in srgb,var(--accent) 11%,transparent);
       border:1px solid color-mix(in srgb,var(--accent) 27%,transparent);
-      box-shadow:inset 0 0 26px color-mix(in srgb,var(--accent) 5%,transparent);
     }
 
-    .course-copy{min-width:0}
     .course-name{
       display:flex;
       flex-wrap:wrap;
@@ -297,13 +246,13 @@
     .badge{
       padding:4px 7px;
       border-radius:999px;
+      color:color-mix(in srgb,var(--accent) 86%,white);
+      background:color-mix(in srgb,var(--accent) 13%,transparent);
+      border:1px solid color-mix(in srgb,var(--accent) 25%,transparent);
       font-size:9px;
       font-weight:900;
       letter-spacing:.08em;
       text-transform:uppercase;
-      background:color-mix(in srgb,var(--accent) 13%,transparent);
-      color:color-mix(in srgb,var(--accent) 85%,white);
-      border:1px solid color-mix(in srgb,var(--accent) 25%,transparent);
     }
 
     .course-sub{
@@ -328,7 +277,7 @@
       color:#cbd5e1;
       background:rgba(255,255,255,.045);
       border:1px solid rgba(255,255,255,.075);
-      transition:transform .25s ease,color .2s ease,background .2s ease;
+      transition:.25s ease;
     }
 
     .course.open .arrow{
@@ -341,15 +290,15 @@
       max-height:0;
       opacity:0;
       overflow:hidden;
-      transition:max-height .36s ease,opacity .25s ease;
+      transition:max-height .4s ease,opacity .25s ease;
     }
 
     .course.open .course-details{
-      max-height:420px;
+      max-height:700px;
       opacity:1;
     }
 
-    .details-inner{
+    .details{
       margin:0 17px 17px;
       padding:16px;
       border-radius:19px;
@@ -357,11 +306,39 @@
       border:1px solid rgba(255,255,255,.07);
     }
 
-    .details-inner p{
+    .details p{
       margin:0;
       color:#cbd5e1;
       font-size:13px;
       line-height:1.65;
+    }
+
+    .commissions{
+      display:grid;
+      gap:9px;
+      margin-top:14px;
+    }
+
+    .commission{
+      padding:12px;
+      border-radius:14px;
+      background:rgba(255,255,255,.045);
+      border:1px solid rgba(255,255,255,.07);
+    }
+
+    .commission strong{
+      display:block;
+      margin-bottom:4px;
+      color:var(--accent);
+      font-size:10px;
+      letter-spacing:.08em;
+      text-transform:uppercase;
+    }
+
+    .commission span{
+      color:#e2e8f0;
+      font-size:12px;
+      line-height:1.45;
     }
 
     .facts{
@@ -377,15 +354,17 @@
       background:rgba(255,255,255,.04);
       border:1px solid rgba(255,255,255,.065);
     }
+
     .fact small{
       display:block;
+      margin-bottom:4px;
       color:#64748b;
       font-size:9px;
       font-weight:900;
-      text-transform:uppercase;
       letter-spacing:.08em;
-      margin-bottom:4px;
+      text-transform:uppercase;
     }
+
     .fact strong{
       display:block;
       color:#e2e8f0;
@@ -393,9 +372,9 @@
       line-height:1.35;
     }
 
-    .cta-row{
+    .actions{
       display:grid;
-      grid-template-columns:1fr auto;
+      grid-template-columns:1fr 47px;
       gap:9px;
       margin-top:13px;
     }
@@ -407,55 +386,91 @@
       justify-content:center;
       gap:8px;
       border-radius:15px;
-      font-weight:900;
       font-size:12px;
-      transition:transform .18s ease,filter .18s ease;
+      font-weight:900;
+      transition:.18s ease;
     }
+
     .cta:hover{transform:translateY(-1px);filter:brightness(1.08)}
+
     .cta.primary{
-      color:#fff;
+      color:white;
       background:linear-gradient(135deg,color-mix(in srgb,var(--accent) 75%,#0891b2),color-mix(in srgb,var(--accent) 70%,#2563eb));
-      border:1px solid color-mix(in srgb,var(--accent) 42%,white);
+      border:1px solid color-mix(in srgb,var(--accent) 40%,white);
     }
+
     .cta.secondary{
-      width:46px;
       color:#dbeafe;
       background:rgba(255,255,255,.055);
       border:1px solid rgba(255,255,255,.09);
     }
 
-    .featured{
+    .upcoming{
       margin-top:22px;
-      border-radius:27px;
       padding:20px;
+      border-radius:26px;
       background:
-        radial-gradient(circle at 90% 0%,rgba(34,211,238,.16),transparent 42%),
-        linear-gradient(135deg,rgba(14,165,233,.16),rgba(37,99,235,.08));
-      border:1px solid rgba(56,189,248,.24);
-      box-shadow:0 22px 70px rgba(0,0,0,.23);
+        radial-gradient(circle at 90% 0%,rgba(34,211,238,.15),transparent 42%),
+        linear-gradient(135deg,rgba(14,165,233,.15),rgba(37,99,235,.08));
+      border:1px solid rgba(56,189,248,.23);
     }
-    .featured-label{
+
+    .upcoming-label{
       display:inline-flex;
-      gap:7px;
       align-items:center;
+      gap:7px;
       color:#a5f3fc;
       font-size:10px;
       font-weight:900;
       letter-spacing:.12em;
       text-transform:uppercase;
     }
-    .featured h3{
-      margin:10px 0 6px;
-      font-size:21px;
-      line-height:1.1;
+
+    .upcoming h3{margin:10px 0 6px;font-size:21px}
+    .upcoming>p{margin:0;color:#aebed1;font-size:13px;line-height:1.6}
+
+    .upcoming-grid{
+      display:grid;
+      gap:12px;
+      margin-top:16px;
     }
-    .featured p{
-      margin:0;
-      color:#aebed1;
-      font-size:13px;
-      line-height:1.6;
+
+    .upcoming-card{
+      padding:15px;
+      border-radius:18px;
+      background:rgba(255,255,255,.05);
+      border:1px solid rgba(255,255,255,.08);
     }
-    .featured .cta{margin-top:14px}
+
+    .upcoming-card h4{margin:0 0 7px;font-size:15px}
+    .upcoming-card p{margin:0;color:#cbd5e1;font-size:12px;line-height:1.6}
+
+    .upcoming-actions{
+      display:flex;
+      flex-wrap:wrap;
+      align-items:center;
+      gap:9px;
+      margin-top:12px;
+    }
+
+    .soon{
+      padding:6px 11px;
+      border-radius:999px;
+      color:#67e8f9;
+      background:rgba(14,165,233,.13);
+      font-size:11px;
+      font-weight:800;
+    }
+
+    .mini-link{
+      padding:8px 12px;
+      border-radius:12px;
+      color:white;
+      background:linear-gradient(135deg,#0891b2,#2563eb);
+      border:1px solid rgba(125,211,252,.35);
+      font-size:11px;
+      font-weight:800;
+    }
 
     .socials{
       display:flex;
@@ -463,6 +478,7 @@
       gap:9px;
       margin:22px 0 14px;
     }
+
     .social{
       width:44px;height:44px;
       display:grid;place-items:center;
@@ -470,79 +486,69 @@
       color:#cbd5e1;
       background:rgba(255,255,255,.045);
       border:1px solid rgba(255,255,255,.075);
-      transition:.18s ease;
-    }
-    .social:hover{
-      color:#67e8f9;
-      transform:translateY(-2px);
-      border-color:rgba(103,232,249,.30);
     }
 
     footer{
-      text-align:center;
+      padding:8px 0 10px;
       color:#64748b;
+      text-align:center;
       font-size:11px;
       line-height:1.7;
-      padding:8px 0 10px;
     }
+
     footer strong{color:#94a3b8}
 
-    .float-whatsapp{
+    .wa-float{
       position:fixed;
-      right:18px;
-      bottom:18px;
-      z-index:30;
-      width:58px;height:58px;
+      right:17px;
+      bottom:17px;
+      z-index:50;
+      width:57px;height:57px;
       display:grid;place-items:center;
-      border-radius:20px;
+      border-radius:19px;
       color:white;
       background:linear-gradient(135deg,#22c55e,#059669);
-      border:1px solid rgba(187,247,208,.45);
+      border:1px solid rgba(187,247,208,.44);
       box-shadow:0 20px 45px rgba(5,150,105,.28);
-      transition:.2s ease;
     }
-    .float-whatsapp:hover{transform:translateY(-3px) scale(1.02)}
 
     @media(max-width:560px){
-      .shell{padding:17px 12px 38px}
-      .hero{padding:27px 10px 20px}
-      .logo-wrap{width:102px;height:102px}
+      .shell{padding:16px 11px 40px}
+      .hero{padding:25px 8px 19px}
+      .logo{width:101px;height:101px}
       .course-main{grid-template-columns:51px minmax(0,1fr) 34px;padding:14px;gap:11px}
       .icon-box{width:51px;height:51px;border-radius:17px}
       .course-name{font-size:14px}
       .course-sub{font-size:11px}
-      .details-inner{margin:0 14px 14px;padding:14px}
+      .details{margin:0 14px 14px;padding:14px}
       .facts{grid-template-columns:1fr}
-      .cta-row{grid-template-columns:1fr 46px}
       .notice{align-items:flex-start}
-      .float-whatsapp{width:53px;height:53px;right:13px;bottom:13px}
+      .wa-float{right:12px;bottom:12px;width:52px;height:52px}
     }
 
     @media(prefers-reduced-motion:reduce){
-      *,*::before,*::after{scroll-behavior:auto!important;transition:none!important;animation:none!important}
+      *{scroll-behavior:auto!important;transition:none!important}
     }
   </style>
 </head>
-<body>
-  <div class="orb one"></div>
-  <div class="orb two"></div>
-  <div class="orb three"></div>
 
+<body>
   <main class="shell">
     <header class="hero">
-      <div class="logo-wrap">
+      <div class="logo">
         <img src="https://i.postimg.cc/jSkQKpRK/Diseno-sin-titulo-2026-05-15T105828-195.png" alt="Instituto IEC">
       </div>
 
       <span class="eyebrow">
-        <i data-lucide="sparkles" width="15" height="15"></i>
+        <i data-lucide="sparkles" width="15"></i>
         Capacitaciones 2026
       </span>
 
-      <h1 class="slogan-title">Aprende hoy, <span class="gradient">lidera mañana</span></h1>
+      <h1>Aprende hoy, <span class="gradient">lidera mañana</span></h1>
+
       <p>Elegí la capacitación que mejor se adapta a vos y comenzá a desarrollar habilidades en Inteligencia Artificial, programación, robótica y tecnología aplicada.</p>
 
-      <div class="hero-tags">
+      <div class="tags">
         <span class="tag"><i data-lucide="monitor-cog" width="14"></i> Modalidad práctica</span>
         <span class="tag"><i data-lucide="award" width="14"></i> Certificación IEC</span>
         <span class="tag"><i data-lucide="map-pin" width="14"></i> Paraná</span>
@@ -553,7 +559,7 @@
       <div class="notice-icon"><i data-lucide="calendar-days" width="23"></i></div>
       <div>
         <strong>Inscripciones abiertas · Agosto 2026</strong>
-        <span>Tocá cada capacitación para conocer su propuesta, fecha de inicio y horario.</span>
+        <span>Tocá cada capacitación para conocer su propuesta, comisiones, fechas y horarios.</span>
       </div>
     </section>
 
@@ -562,70 +568,99 @@
       <span>Seleccioná una opción</span>
     </div>
 
-    <section class="course-list" id="course-list">
+    <section class="course-list">
 
+      <!-- EXPERTO IA NIVEL I UNIFICADO -->
       <article class="course" style="--accent:#22d3ee">
         <button class="course-main" type="button" aria-expanded="false">
           <span class="icon-box"><i data-lucide="brain-circuit" width="27"></i></span>
-          <span class="course-copy">
-            <span class="course-name">Experto en IA · Nivel I <span class="badge">Comisión A</span></span>
+          <span>
+            <span class="course-name">Experto en IA · Nivel I <span class="badge">2 comisiones</span></span>
             <span class="course-sub">
-              <span><i data-lucide="calendar" width="13"></i> Miércoles</span>
-              <span><i data-lucide="clock-3" width="13"></i> 16:00 a 18:00</span>
-              <span><i data-lucide="play-circle" width="13"></i> Inicio 05/08</span>
+              <span><i data-lucide="users" width="13"></i> Dos horarios</span>
+              <span><i data-lucide="calendar" width="13"></i> Miércoles o viernes</span>
             </span>
           </span>
           <span class="arrow"><i data-lucide="chevron-down" width="19"></i></span>
         </button>
+
         <div class="course-details">
-          <div class="details-inner">
+          <div class="details">
             <p>Formación inicial para aprender a utilizar Inteligencia Artificial de manera práctica en el trabajo, los estudios, la creación de contenido y la productividad diaria.</p>
+
+            <div class="commissions">
+              <div class="commission">
+                <strong>Comisión A</strong>
+                <span>Miércoles · 16:00 a 18:00 hs · Inicio 05/08</span>
+              </div>
+              <div class="commission">
+                <strong>Comisión B</strong>
+                <span>Viernes · 18:00 a 20:00 hs · Inicio 07/08</span>
+              </div>
+            </div>
+
             <div class="facts">
               <div class="fact"><small>Nivel</small><strong>Inicial–intermedio</strong></div>
               <div class="fact"><small>Modalidad</small><strong>Presencial y práctica</strong></div>
               <div class="fact"><small>Orientación</small><strong>Aplicaciones reales</strong></div>
             </div>
-            <div class="cta-row">
-              <a class="cta primary" href="https://www.iec-ia.com.ar/experto_ia_nivel_1.html" target="_blank" rel="noopener"><i data-lucide="external-link" width="16"></i> Ver capacitación</a>
-              <a class="cta secondary" href="https://wa.me/5493434295937?text=Hola%20IEC%2C%20quiero%20informaci%C3%B3n%20sobre%20Experto%20en%20IA%20Nivel%20I%20Comisi%C3%B3n%20A" target="_blank" aria-label="Consultar por WhatsApp"><i data-lucide="message-circle" width="18"></i></a>
+
+            <div class="actions">
+              <a class="cta primary" href="https://www.iec-ia.com.ar/experto_ia_nivel_1.html" target="_blank"><i data-lucide="external-link" width="16"></i> Ver capacitación</a>
+              <a class="cta secondary" href="https://wa.me/5493434295937?text=Hola%20IEC%2C%20quiero%20informaci%C3%B3n%20sobre%20Experto%20en%20IA%20Nivel%20I" target="_blank" aria-label="Consultar por WhatsApp"><i data-lucide="message-circle" width="18"></i></a>
             </div>
           </div>
         </div>
       </article>
 
+      <!-- EXPERTO IA NIVEL II UNIFICADO -->
       <article class="course" style="--accent:#818cf8">
         <button class="course-main" type="button" aria-expanded="false">
           <span class="icon-box"><i data-lucide="bot" width="27"></i></span>
-          <span class="course-copy">
-            <span class="course-name">Experto en IA · Nivel II <span class="badge">Comisión A</span></span>
+          <span>
+            <span class="course-name">Experto en IA · Nivel II <span class="badge">2 comisiones</span></span>
             <span class="course-sub">
-              <span><i data-lucide="calendar" width="13"></i> Miércoles</span>
-              <span><i data-lucide="clock-3" width="13"></i> 18:00 a 20:00</span>
-              <span><i data-lucide="play-circle" width="13"></i> Inicio 05/08</span>
+              <span><i data-lucide="users" width="13"></i> Dos horarios</span>
+              <span><i data-lucide="calendar" width="13"></i> Miércoles o viernes</span>
             </span>
           </span>
           <span class="arrow"><i data-lucide="chevron-down" width="19"></i></span>
         </button>
+
         <div class="course-details">
-          <div class="details-inner">
+          <div class="details">
             <p>Profundización en agentes, asistentes personalizados, automatización, análisis de información y aplicación estratégica de IA en proyectos profesionales.</p>
+
+            <div class="commissions">
+              <div class="commission">
+                <strong>Comisión A</strong>
+                <span>Miércoles · 18:00 a 20:00 hs · Inicio 05/08</span>
+              </div>
+              <div class="commission">
+                <strong>Comisión B</strong>
+                <span>Viernes · 20:00 a 22:00 hs · Inicio en septiembre</span>
+              </div>
+            </div>
+
             <div class="facts">
               <div class="fact"><small>Nivel</small><strong>Intermedio–avanzado</strong></div>
               <div class="fact"><small>Modalidad</small><strong>Laboratorio aplicado</strong></div>
               <div class="fact"><small>Enfoque</small><strong>Automatización e IA</strong></div>
             </div>
-            <div class="cta-row">
-              <a class="cta primary" href="https://www.iec-ia.com.ar/experto_ia_nivel_2.html" target="_blank" rel="noopener"><i data-lucide="external-link" width="16"></i> Ver capacitación</a>
-              <a class="cta secondary" href="https://wa.me/5493434295937?text=Hola%20IEC%2C%20quiero%20informaci%C3%B3n%20sobre%20Experto%20en%20IA%20Nivel%20II%20Comisi%C3%B3n%20A" target="_blank" aria-label="Consultar por WhatsApp"><i data-lucide="message-circle" width="18"></i></a>
+
+            <div class="actions">
+              <a class="cta primary" href="https://www.iec-ia.com.ar/experto_ia_nivel_2.html" target="_blank"><i data-lucide="external-link" width="16"></i> Ver capacitación</a>
+              <a class="cta secondary" href="https://wa.me/5493434295937?text=Hola%20IEC%2C%20quiero%20informaci%C3%B3n%20sobre%20Experto%20en%20IA%20Nivel%20II" target="_blank" aria-label="Consultar por WhatsApp"><i data-lucide="message-circle" width="18"></i></a>
             </div>
           </div>
         </div>
       </article>
 
+      <!-- PROGRAMADOR EXPERTO -->
       <article class="course" style="--accent:#38bdf8">
         <button class="course-main" type="button" aria-expanded="false">
           <span class="icon-box"><i data-lucide="code-xml" width="27"></i></span>
-          <span class="course-copy">
+          <span>
             <span class="course-name">Programador Experto con IA <span class="badge">Profesional</span></span>
             <span class="course-sub">
               <span><i data-lucide="calendar" width="13"></i> Jueves</span>
@@ -635,26 +670,30 @@
           </span>
           <span class="arrow"><i data-lucide="chevron-down" width="19"></i></span>
         </button>
+
         <div class="course-details">
-          <div class="details-inner">
+          <div class="details">
             <p>Desarrollo de aplicaciones, páginas web, sistemas, bases de datos y automatizaciones utilizando Inteligencia Artificial como copiloto de programación.</p>
+
             <div class="facts">
               <div class="fact"><small>Perfil</small><strong>Desarrollo Full Stack</strong></div>
               <div class="fact"><small>Práctica</small><strong>Proyectos funcionales</strong></div>
               <div class="fact"><small>Herramientas</small><strong>IA + Web + Datos</strong></div>
             </div>
-            <div class="cta-row">
-              <a class="cta primary" href="https://www.iec-ia.com.ar/programador_experto_ia.html" target="_blank" rel="noopener"><i data-lucide="external-link" width="16"></i> Ver capacitación</a>
+
+            <div class="actions">
+              <a class="cta primary" href="https://www.iec-ia.com.ar/programador_experto_ia.html" target="_blank"><i data-lucide="external-link" width="16"></i> Ver capacitación</a>
               <a class="cta secondary" href="https://wa.me/5493434295937?text=Hola%20IEC%2C%20quiero%20informaci%C3%B3n%20sobre%20Programador%20Experto%20con%20IA" target="_blank" aria-label="Consultar por WhatsApp"><i data-lucide="message-circle" width="18"></i></a>
             </div>
           </div>
         </div>
       </article>
 
+      <!-- PROGRAMADOR TEENS -->
       <article class="course" style="--accent:#f59e0b">
         <button class="course-main" type="button" aria-expanded="false">
           <span class="icon-box"><i data-lucide="gamepad-2" width="27"></i></span>
-          <span class="course-copy">
+          <span>
             <span class="course-name">Programador Teens con IA <span class="badge">Adolescentes</span></span>
             <span class="course-sub">
               <span><i data-lucide="calendar" width="13"></i> Miércoles</span>
@@ -664,26 +703,30 @@
           </span>
           <span class="arrow"><i data-lucide="chevron-down" width="19"></i></span>
         </button>
+
         <div class="course-details">
-          <div class="details-inner">
+          <div class="details">
             <p>Una experiencia para adolescentes donde aprenden programación, videojuegos, diseño digital y creación de proyectos utilizando IA como asistente.</p>
+
             <div class="facts">
-              <div class="fact"><small>Edad</small><strong>Adolescentes</strong></div>
+              <div class="fact"><small>Perfil</small><strong>Adolescentes</strong></div>
               <div class="fact"><small>Metodología</small><strong>Aprender creando</strong></div>
               <div class="fact"><small>Proyectos</small><strong>Juegos y aplicaciones</strong></div>
             </div>
-            <div class="cta-row">
-              <a class="cta primary" href="https://www.iec-ia.com.ar/programador_teens_ia.html" target="_blank" rel="noopener"><i data-lucide="external-link" width="16"></i> Ver capacitación</a>
+
+            <div class="actions">
+              <a class="cta primary" href="https://www.iec-ia.com.ar/programador_teens_ia.html" target="_blank"><i data-lucide="external-link" width="16"></i> Ver capacitación</a>
               <a class="cta secondary" href="https://wa.me/5493434295937?text=Hola%20IEC%2C%20quiero%20informaci%C3%B3n%20sobre%20Programador%20Teens%20con%20IA" target="_blank" aria-label="Consultar por WhatsApp"><i data-lucide="message-circle" width="18"></i></a>
             </div>
           </div>
         </div>
       </article>
 
+      <!-- ROBOTICA KIDS -->
       <article class="course" style="--accent:#22c55e">
         <button class="course-main" type="button" aria-expanded="false">
           <span class="icon-box"><i data-lucide="cpu" width="27"></i></span>
-          <span class="course-copy">
+          <span>
             <span class="course-name">Robótica Kids <span class="badge">Infancias</span></span>
             <span class="course-sub">
               <span><i data-lucide="calendar" width="13"></i> Sábados</span>
@@ -693,26 +736,30 @@
           </span>
           <span class="arrow"><i data-lucide="chevron-down" width="19"></i></span>
         </button>
+
         <div class="course-details">
-          <div class="details-inner">
+          <div class="details">
             <p>Robótica educativa, circuitos, programación, diseño 3D e Inteligencia Artificial en un espacio creativo para aprender mediante desafíos y proyectos.</p>
+
             <div class="facts">
               <div class="fact"><small>Enfoque</small><strong>STEAM y creatividad</strong></div>
               <div class="fact"><small>Prácticas</small><strong>Robots y circuitos</strong></div>
               <div class="fact"><small>Entorno</small><strong>Laboratorio IEC</strong></div>
             </div>
-            <div class="cta-row">
-              <a class="cta primary" href="https://www.iec-ia.com.ar/robotica_kids.html" target="_blank" rel="noopener"><i data-lucide="external-link" width="16"></i> Ver capacitación</a>
+
+            <div class="actions">
+              <a class="cta primary" href="https://www.iec-ia.com.ar/robotica_kids.html" target="_blank"><i data-lucide="external-link" width="16"></i> Ver capacitación</a>
               <a class="cta secondary" href="https://wa.me/5493434295937?text=Hola%20IEC%2C%20quiero%20informaci%C3%B3n%20sobre%20Rob%C3%B3tica%20Kids" target="_blank" aria-label="Consultar por WhatsApp"><i data-lucide="message-circle" width="18"></i></a>
             </div>
           </div>
         </div>
       </article>
 
+      <!-- WEEKENDCLASS -->
       <article class="course" style="--accent:#ec4899">
         <button class="course-main" type="button" aria-expanded="false">
           <span class="icon-box"><i data-lucide="rocket" width="27"></i></span>
-          <span class="course-copy">
+          <span>
             <span class="course-name">WeekendClass · De 0 a Producción <span class="badge">Intensiva</span></span>
             <span class="course-sub">
               <span><i data-lucide="calendar-range" width="13"></i> 17 al 21 de agosto</span>
@@ -722,84 +769,30 @@
           </span>
           <span class="arrow"><i data-lucide="chevron-down" width="19"></i></span>
         </button>
+
         <div class="course-details">
-          <div class="details-inner">
-            <p>Semana intensiva de producción tecnológica: desde la idea inicial hasta una solución funcional, utilizando IA, diseño, programación y automatización.</p>
+          <div class="details">
+            <p>Semana intensiva de producción tecnológica: desde la idea inicial hasta una solución funcional utilizando IA, diseño, programación y automatización.</p>
+
             <div class="facts">
               <div class="fact"><small>Formato</small><strong>Lunes a viernes</strong></div>
               <div class="fact"><small>Duración</small><strong>15 horas intensivas</strong></div>
               <div class="fact"><small>Resultado</small><strong>Proyecto listo</strong></div>
             </div>
-            <div class="cta-row">
-              <a class="cta primary" href="https://www.iec-ia.com.ar/weekendclass.html" target="_blank" rel="noopener"><i data-lucide="external-link" width="16"></i> Ver capacitación</a>
+
+            <div class="actions">
+              <a class="cta primary" href="https://www.iec-ia.com.ar/weekendclass.html" target="_blank"><i data-lucide="external-link" width="16"></i> Ver capacitación</a>
               <a class="cta secondary" href="https://wa.me/5493434295937?text=Hola%20IEC%2C%20quiero%20informaci%C3%B3n%20sobre%20WeekendClass%20De%200%20a%20Producci%C3%B3n" target="_blank" aria-label="Consultar por WhatsApp"><i data-lucide="message-circle" width="18"></i></a>
             </div>
           </div>
         </div>
       </article>
 
-      <article class="course" style="--accent:#0ea5e9">
-        <button class="course-main" type="button" aria-expanded="false">
-          <span class="icon-box"><i data-lucide="brain" width="27"></i></span>
-          <span class="course-copy">
-            <span class="course-name">Experto en IA · Nivel I <span class="badge">Comisión B</span></span>
-            <span class="course-sub">
-              <span><i data-lucide="calendar" width="13"></i> Viernes</span>
-              <span><i data-lucide="clock-3" width="13"></i> 18:00 a 20:00</span>
-              <span><i data-lucide="play-circle" width="13"></i> Inicio 07/08</span>
-            </span>
-          </span>
-          <span class="arrow"><i data-lucide="chevron-down" width="19"></i></span>
-        </button>
-        <div class="course-details">
-          <div class="details-inner">
-            <p>Una segunda comisión del nivel inicial para aprender herramientas de IA, generación de contenido, productividad y automatización de tareas cotidianas.</p>
-            <div class="facts">
-              <div class="fact"><small>Nivel</small><strong>Inicial–intermedio</strong></div>
-              <div class="fact"><small>Modalidad</small><strong>Presencial y práctica</strong></div>
-              <div class="fact"><small>Turno</small><strong>Viernes tarde</strong></div>
-            </div>
-            <div class="cta-row">
-              <a class="cta primary" href="https://www.iec-ia.com.ar/experto_ia_nivel_1.html" target="_blank" rel="noopener"><i data-lucide="external-link" width="16"></i> Ver capacitación</a>
-              <a class="cta secondary" href="https://wa.me/5493434295937?text=Hola%20IEC%2C%20quiero%20informaci%C3%B3n%20sobre%20Experto%20en%20IA%20Nivel%20I%20Comisi%C3%B3n%20B" target="_blank" aria-label="Consultar por WhatsApp"><i data-lucide="message-circle" width="18"></i></a>
-            </div>
-          </div>
-        </div>
-      </article>
-
-      <article class="course" style="--accent:#a78bfa">
-        <button class="course-main" type="button" aria-expanded="false">
-          <span class="icon-box"><i data-lucide="workflow" width="27"></i></span>
-          <span class="course-copy">
-            <span class="course-name">Experto en IA · Nivel II <span class="badge">Comisión B</span></span>
-            <span class="course-sub">
-              <span><i data-lucide="calendar" width="13"></i> Viernes</span>
-              <span><i data-lucide="clock-3" width="13"></i> 20:00 a 22:00</span>
-              <span><i data-lucide="calendar-plus" width="13"></i> Inicio en septiembre</span>
-            </span>
-          </span>
-          <span class="arrow"><i data-lucide="chevron-down" width="19"></i></span>
-        </button>
-        <div class="course-details">
-          <div class="details-inner">
-            <p>Entrenamiento avanzado para construir asistentes inteligentes, flujos automatizados y soluciones aplicadas a procesos profesionales y empresariales.</p>
-            <div class="facts">
-              <div class="fact"><small>Nivel</small><strong>Intermedio–avanzado</strong></div>
-              <div class="fact"><small>Orientación</small><strong>IA operativa</strong></div>
-              <div class="fact"><small>Turno</small><strong>Viernes noche</strong></div>
-            </div>
-            <div class="cta-row">
-              <a class="cta primary" href="https://www.iec-ia.com.ar/experto_ia_nivel_2.html" target="_blank" rel="noopener"><i data-lucide="external-link" width="16"></i> Ver capacitación</a>
-              <a class="cta secondary" href="https://wa.me/5493434295937?text=Hola%20IEC%2C%20quiero%20informaci%C3%B3n%20sobre%20Experto%20en%20IA%20Nivel%20II%20Comisi%C3%B3n%20B" target="_blank" aria-label="Consultar por WhatsApp"><i data-lucide="message-circle" width="18"></i></a>
-            </div>
-          </div>
-        </div>
-      </article>
-
+      <!-- REVIT IA -->
       <article class="course" style="--accent:#fb7185">
         <button class="course-main" type="button" aria-expanded="false">
           <span class="icon-box"><i data-lucide="building-2" width="27"></i></span>
-          <span class="course-copy">
+          <span>
             <span class="course-name">Revit + Inteligencia Artificial <span class="badge">BIM</span></span>
             <span class="course-sub">
               <span><i data-lucide="calendar" width="13"></i> Martes</span>
@@ -809,112 +802,95 @@
           </span>
           <span class="arrow"><i data-lucide="chevron-down" width="19"></i></span>
         </button>
+
         <div class="course-details">
-          <div class="details-inner">
+          <div class="details">
             <p>Modelado BIM, documentación técnica y optimización de proyectos arquitectónicos mediante Revit y herramientas de Inteligencia Artificial.</p>
+
             <div class="facts">
               <div class="fact"><small>Área</small><strong>Arquitectura y obra</strong></div>
               <div class="fact"><small>Tecnología</small><strong>Revit + BIM + IA</strong></div>
               <div class="fact"><small>Metodología</small><strong>Proyecto aplicado</strong></div>
             </div>
-            <div class="cta-row">
-              <a class="cta primary" href="https://www.iec-ia.com.ar/revit_ia.html" target="_blank" rel="noopener"><i data-lucide="external-link" width="16"></i> Ver capacitación</a>
+
+            <div class="actions">
+              <a class="cta primary" href="https://www.iec-ia.com.ar/revit_ia.html" target="_blank"><i data-lucide="external-link" width="16"></i> Ver capacitación</a>
               <a class="cta secondary" href="https://wa.me/5493434295937?text=Hola%20IEC%2C%20quiero%20informaci%C3%B3n%20sobre%20Revit%20con%20Inteligencia%20Artificial" target="_blank" aria-label="Consultar por WhatsApp"><i data-lucide="message-circle" width="18"></i></a>
             </div>
           </div>
         </div>
       </article>
+
     </section>
 
-    
-<section class="featured">
-  <span class="featured-label"><i data-lucide="sparkles" width="15"></i> Próximamente</span>
-  <h3>Nuevas capacitaciones inteligentes</h3>
-  <p>Muy pronto incorporaremos nuevas propuestas orientadas al ámbito de la salud, potenciadas con Inteligencia Artificial y automatización.</p>
+    <section class="upcoming">
+      <span class="upcoming-label"><i data-lucide="sparkles" width="15"></i> Próximamente</span>
+      <h3>Nuevas capacitaciones inteligentes</h3>
+      <p>Propuestas orientadas a la gestión administrativa del ámbito de la salud, potenciadas con Inteligencia Artificial y automatización.</p>
 
-  <div style="display:grid;gap:14px;margin-top:18px">
-    <div style="padding:16px;border-radius:18px;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.08)">
-      <h4 style="margin:0 0 8px;color:#fff">🦷 Secretariado Odontológico Inteligente</h4>
-      <p style="margin:0;color:#cbd5e1;font-size:13px;line-height:1.6">
-        Formación para la gestión integral de consultorios odontológicos, atención al paciente, turnos, documentación, IA y automatización administrativa.
-      </p>
-      <div style="display:flex;flex-wrap:wrap;gap:10px;align-items:center;margin-top:12px">
-        <span style="display:inline-block;padding:6px 12px;border-radius:999px;background:#0ea5e922;color:#67e8f9;font-weight:700;font-size:12px">Próximamente</span>
-        <a href="https://www.iec-ia.com.ar/secretariado_odontologico.html" target="_blank" rel="noopener"
-           style="display:inline-flex;align-items:center;gap:7px;padding:9px 13px;border-radius:12px;background:linear-gradient(135deg,#0891b2,#2563eb);border:1px solid rgba(125,211,252,.35);color:white;font-weight:800;font-size:12px">
-          Ver curso
-        </a>
+      <div class="upcoming-grid">
+        <article class="upcoming-card">
+          <h4>🦷 Secretariado Odontológico Inteligente</h4>
+          <p>Gestión integral de consultorios odontológicos, turnos, atención al paciente, documentación, comunicación y automatización administrativa.</p>
+          <div class="upcoming-actions">
+            <span class="soon">Próximamente</span>
+            <a class="mini-link" href="https://www.iec-ia.com.ar/secretariado_odontologico.html" target="_blank">Ver curso</a>
+          </div>
+        </article>
+
+        <article class="upcoming-card">
+          <h4>🏥 Secretariado Médico Inteligente</h4>
+          <p>Capacitación para clínicas, centros médicos y consultorios con IA, herramientas digitales y automatización de procesos administrativos.</p>
+          <div class="upcoming-actions">
+            <span class="soon">Próximamente</span>
+            <a class="mini-link" href="https://www.iec-ia.com.ar/secretariado_medico.html" target="_blank">Ver curso</a>
+          </div>
+        </article>
       </div>
-    </div>
-
-    <div style="padding:16px;border-radius:18px;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.08)">
-      <h4 style="margin:0 0 8px;color:#fff">🏥 Secretariado Médico Inteligente</h4>
-      <p style="margin:0;color:#cbd5e1;font-size:13px;line-height:1.6">
-        Capacitación orientada a clínicas, centros médicos y consultorios con herramientas digitales, IA y automatización de procesos administrativos.
-      </p>
-      <div style="display:flex;flex-wrap:wrap;gap:10px;align-items:center;margin-top:12px">
-        <span style="display:inline-block;padding:6px 12px;border-radius:999px;background:#0ea5e922;color:#67e8f9;font-weight:700;font-size:12px">Próximamente</span>
-        <a href="https://www.iec-ia.com.ar/secretariado_medico.html" target="_blank" rel="noopener"
-           style="display:inline-flex;align-items:center;gap:7px;padding:9px 13px;border-radius:12px;background:linear-gradient(135deg,#0891b2,#2563eb);border:1px solid rgba(125,211,252,.35);color:white;font-weight:800;font-size:12px">
-          Ver curso
-        </a>
-      </div>
-    </div>
-  </div>
-</section>
-
+    </section>
 
     <div class="socials">
-      <a class="social" href="https://www.instagram.com/iecparana/" target="_blank" rel="noopener" aria-label="Instagram IEC"><i data-lucide="instagram" width="20"></i></a>
-      <a class="social" href="https://www.iec-ia.com.ar/" target="_blank" rel="noopener" aria-label="Sitio web IEC"><i data-lucide="globe-2" width="20"></i></a>
-      <a class="social" href="https://wa.me/5493434295937" target="_blank" rel="noopener" aria-label="WhatsApp IEC"><i data-lucide="message-circle" width="20"></i></a>
+      <a class="social" href="https://www.instagram.com/iecparana/" target="_blank" aria-label="Instagram"><i data-lucide="instagram" width="20"></i></a>
+      <a class="social" href="https://www.iec-ia.com.ar/" target="_blank" aria-label="Sitio IEC"><i data-lucide="globe-2" width="20"></i></a>
+      <a class="social" href="https://wa.me/5493434295937" target="_blank" aria-label="WhatsApp"><i data-lucide="message-circle" width="20"></i></a>
     </div>
 
     <footer>
       <strong>Instituto IEC · Centro de Perfeccionamiento en Inteligencia Artificial</strong><br>
-      Paraná, Entre Ríos · Aprendé hoy, liderá mañana.
+      Paraná, Entre Ríos · Aprende hoy, lidera mañana.
     </footer>
   </main>
 
-  <a class="float-whatsapp" href="https://wa.me/5493434295937?text=Hola%20IEC%2C%20quiero%20informaci%C3%B3n%20sobre%20las%20capacitaciones%20disponibles" target="_blank" rel="noopener" aria-label="Consultar por WhatsApp">
+  <a class="wa-float" href="https://wa.me/5493434295937?text=Hola%20IEC%2C%20quiero%20informaci%C3%B3n%20sobre%20las%20capacitaciones%20disponibles" target="_blank" aria-label="Consultar por WhatsApp">
     <i data-lucide="message-circle" width="27"></i>
   </a>
 
   <script>
-    const courseButtons = document.querySelectorAll('.course-main');
+    const courses = document.querySelectorAll('.course');
 
-    courseButtons.forEach(button => {
+    courses.forEach(course => {
+      const button = course.querySelector('.course-main');
+
       button.addEventListener('click', () => {
-        const course = button.closest('.course');
-        const wasOpen = course.classList.contains('open');
+        const isOpen = course.classList.contains('open');
 
-        document.querySelectorAll('.course.open').forEach(item => {
+        courses.forEach(item => {
           item.classList.remove('open');
-          item.querySelector('.course-main')?.setAttribute('aria-expanded', 'false');
+          item.querySelector('.course-main').setAttribute('aria-expanded','false');
         });
 
-        if (!wasOpen) {
+        if (!isOpen) {
           course.classList.add('open');
-          button.setAttribute('aria-expanded', 'true');
-
-          setTimeout(() => {
-            const rect = course.getBoundingClientRect();
-            if (rect.top < 10 || rect.bottom > window.innerHeight) {
-              course.scrollIntoView({behavior:'smooth', block:'center'});
-            }
-          }, 180);
+          button.setAttribute('aria-expanded','true');
         }
       });
     });
 
-    document.addEventListener('click', event => {
-      const link = event.target.closest('a');
-      if (link) event.stopPropagation();
+    document.querySelectorAll('a').forEach(link => {
+      link.addEventListener('click', event => event.stopPropagation());
     });
 
-    if (window.lucide) {
-      lucide.createIcons();
-    }
+    if (window.lucide) lucide.createIcons();
   </script>
 </body>
 </html>
