@@ -1,0 +1,1324 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Taller permanente Programador Experto con IA del Instituto IEC. Formación y actualización continua en desarrollo web, backend, bases de datos, automatización, inteligencia artificial, Arduino y producción.">
+  <meta name="theme-color" content="#06111f">
+  <title>Programador Experto con IA | Taller Permanente IEC</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <script src="https://unpkg.com/lucide@0.468.0/dist/umd/lucide.min.js"></script>
+
+  <style>
+    :root{
+      --bg:#030912;
+      --bg2:#06111f;
+      --panel:rgba(255,255,255,.07);
+      --line:rgba(255,255,255,.10);
+      --text:#f8fafc;
+      --muted:#9fb0c4;
+      --cyan:#22d3ee;
+      --sky:#38bdf8;
+      --blue:#2563eb;
+      --indigo:#6366f1;
+      --violet:#8b5cf6;
+      --green:#22c55e;
+      --amber:#f59e0b;
+      --pink:#ec4899;
+      --radius:26px;
+    }
+
+    *{box-sizing:border-box}
+    html{scroll-behavior:smooth}
+    body{
+      margin:0;
+      min-height:100vh;
+      color:var(--text);
+      font-family:"DM Sans",sans-serif;
+      background:
+        radial-gradient(circle at 13% -5%,rgba(14,165,233,.22),transparent 29%),
+        radial-gradient(circle at 92% 18%,rgba(99,102,241,.18),transparent 30%),
+        radial-gradient(circle at 50% 110%,rgba(34,211,238,.09),transparent 36%),
+        linear-gradient(180deg,var(--bg),var(--bg2) 55%,#02070d);
+      overflow-x:hidden;
+    }
+
+    body::before{
+      content:"";
+      position:fixed;
+      inset:0;
+      z-index:-2;
+      pointer-events:none;
+      background-image:
+        linear-gradient(rgba(56,189,248,.045) 1px,transparent 1px),
+        linear-gradient(90deg,rgba(56,189,248,.045) 1px,transparent 1px);
+      background-size:56px 56px;
+      mask-image:linear-gradient(to bottom,black,transparent 92%);
+    }
+
+    body::after{
+      content:"";
+      position:fixed;
+      inset:0;
+      z-index:-1;
+      pointer-events:none;
+      background:
+        radial-gradient(circle at 80% 13%,rgba(56,189,248,.65) 0 1px,transparent 2px),
+        radial-gradient(circle at 86% 25%,rgba(129,140,248,.50) 0 1px,transparent 2px),
+        radial-gradient(circle at 71% 69%,rgba(34,211,238,.40) 0 1px,transparent 2px);
+    }
+
+    a{text-decoration:none;color:inherit}
+    img{display:block;max-width:100%}
+
+    .container{
+      width:min(1160px,100%);
+      margin:0 auto;
+      padding:0 18px;
+    }
+
+    .glass{
+      background:var(--panel);
+      border:1px solid var(--line);
+      backdrop-filter:blur(14px);
+      -webkit-backdrop-filter:blur(14px);
+      box-shadow:0 22px 60px rgba(0,0,0,.24);
+    }
+
+    .gradient{
+      background:linear-gradient(135deg,#67e8f9,#38bdf8 42%,#818cf8);
+      -webkit-background-clip:text;
+      background-clip:text;
+      -webkit-text-fill-color:transparent;
+    }
+
+    .topbar{
+      position:sticky;
+      top:0;
+      z-index:50;
+      background:rgba(3,9,18,.80);
+      border-bottom:1px solid rgba(255,255,255,.08);
+      backdrop-filter:blur(16px);
+    }
+
+    .topbar-inner{
+      min-height:70px;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:14px;
+    }
+
+    .brand{
+      display:flex;
+      align-items:center;
+      gap:11px;
+      min-width:0;
+    }
+
+    .brand img{
+      width:46px;
+      height:46px;
+      object-fit:contain;
+      border-radius:14px;
+      padding:4px;
+      background:rgba(255,255,255,.05);
+      border:1px solid rgba(255,255,255,.08);
+    }
+
+    .brand strong{
+      display:block;
+      font-size:14px;
+      font-weight:900;
+      line-height:1.1;
+    }
+
+    .brand span{
+      display:block;
+      margin-top:3px;
+      color:#94a3b8;
+      font-size:11px;
+      white-space:nowrap;
+      overflow:hidden;
+      text-overflow:ellipsis;
+    }
+
+    .top-actions{
+      display:flex;
+      align-items:center;
+      gap:10px;
+    }
+
+    .back-button,.whatsapp-top{
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      min-height:42px;
+      padding:10px 14px;
+      border-radius:999px;
+      font-size:12px;
+      font-weight:900;
+      transition:.18s ease;
+      white-space:nowrap;
+    }
+
+    .back-button{
+      color:#e2e8f0;
+      background:rgba(255,255,255,.055);
+      border:1px solid rgba(255,255,255,.09);
+    }
+
+    .back-button:hover{
+      transform:translateY(-1px);
+      border-color:rgba(56,189,248,.45);
+      color:#fff;
+    }
+
+    .whatsapp-top{
+      color:white;
+      background:linear-gradient(135deg,#22c55e,#059669);
+      box-shadow:0 14px 35px rgba(5,150,105,.25);
+    }
+
+    .whatsapp-top:hover{transform:translateY(-1px);filter:brightness(1.05)}
+
+    .hero{
+      padding:74px 0 48px;
+      text-align:center;
+    }
+
+    .hero-logo{
+      width:118px;
+      height:118px;
+      margin:0 auto 21px;
+      padding:8px;
+      border-radius:50%;
+      border:1px solid rgba(125,211,252,.30);
+      background:linear-gradient(145deg,rgba(14,165,233,.24),rgba(99,102,241,.07));
+      box-shadow:0 0 62px rgba(14,165,233,.22);
+    }
+
+    .hero-logo img{
+      width:100%;
+      height:100%;
+      object-fit:contain;
+      border-radius:50%;
+    }
+
+    .eyebrow{
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      padding:8px 14px;
+      border-radius:999px;
+      color:#a5f3fc;
+      background:rgba(34,211,238,.08);
+      border:1px solid rgba(34,211,238,.22);
+      font-size:12px;
+      font-weight:900;
+      letter-spacing:.12em;
+      text-transform:uppercase;
+    }
+
+    h1{
+      margin:18px auto 16px;
+      max-width:1000px;
+      font-size:clamp(44px,7vw,88px);
+      line-height:.96;
+      letter-spacing:-.058em;
+      font-weight:900;
+    }
+
+    .hero-copy{
+      max-width:860px;
+      margin:0 auto;
+      color:#cbd5e1;
+      font-size:clamp(17px,2.4vw,22px);
+      line-height:1.55;
+    }
+
+    .hero-cta{
+      display:flex;
+      flex-wrap:wrap;
+      justify-content:center;
+      gap:12px;
+      margin-top:28px;
+    }
+
+    .btn{
+      min-height:52px;
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      gap:9px;
+      padding:13px 20px;
+      border-radius:17px;
+      font-size:14px;
+      font-weight:900;
+      transition:.18s ease;
+    }
+
+    .btn:hover{transform:translateY(-2px)}
+
+    .btn-primary{
+      color:white;
+      background:linear-gradient(135deg,#22c55e,#059669);
+      border:1px solid rgba(187,247,208,.32);
+      box-shadow:0 18px 45px rgba(5,150,105,.26);
+    }
+
+    .stats{
+      display:grid;
+      grid-template-columns:repeat(4,minmax(0,1fr));
+      gap:12px;
+      margin-top:35px;
+    }
+
+    .stat{
+      padding:17px;
+      border-radius:22px;
+      text-align:left;
+    }
+
+    .stat small{
+      display:block;
+      margin-bottom:6px;
+      color:#64748b;
+      font-size:10px;
+      font-weight:900;
+      letter-spacing:.10em;
+      text-transform:uppercase;
+    }
+
+    .stat strong{
+      display:block;
+      font-size:16px;
+      line-height:1.3;
+    }
+
+    .section{padding:40px 0}
+
+    .section-head{
+      display:grid;
+      grid-template-columns:minmax(0,1fr) minmax(280px,440px);
+      align-items:end;
+      gap:28px;
+      margin-bottom:20px;
+    }
+
+    .section-head h2{
+      margin:0;
+      font-size:clamp(31px,4vw,52px);
+      line-height:1.03;
+      letter-spacing:-.04em;
+      font-weight:900;
+    }
+
+    .section-head p{
+      margin:0;
+      color:var(--muted);
+      font-size:14px;
+      line-height:1.65;
+    }
+
+    .foundation,.factoria{
+      display:grid;
+      grid-template-columns:1.05fr .95fr;
+      gap:16px;
+    }
+
+    .foundation-card,.factoria-card{
+      padding:24px;
+      border-radius:var(--radius);
+    }
+
+    .foundation-card h3,.factoria-card h3{
+      margin:0 0 11px;
+      font-size:22px;
+      line-height:1.15;
+      font-weight:900;
+    }
+
+    .foundation-card p,.factoria-card p{
+      margin:0;
+      color:#cbd5e1;
+      font-size:15px;
+      line-height:1.75;
+    }
+
+    .foundation-list,.factoria-list{
+      display:grid;
+      gap:10px;
+      margin-top:15px;
+    }
+
+    .foundation-item,.factoria-item{
+      display:flex;
+      align-items:flex-start;
+      gap:10px;
+      padding:12px;
+      border-radius:15px;
+      background:rgba(255,255,255,.045);
+      border:1px solid rgba(255,255,255,.07);
+      color:#cbd5e1;
+      font-size:13px;
+      line-height:1.5;
+    }
+
+    .foundation-item i,.factoria-item i{
+      color:#67e8f9;
+      flex:0 0 auto;
+      margin-top:1px;
+    }
+
+    .objectives{
+      display:grid;
+      grid-template-columns:repeat(2,minmax(0,1fr));
+      gap:14px;
+    }
+
+    .objective{
+      display:flex;
+      align-items:flex-start;
+      gap:13px;
+      padding:19px;
+      border-radius:22px;
+    }
+
+    .objective-icon{
+      width:46px;
+      height:46px;
+      flex:0 0 auto;
+      display:grid;
+      place-items:center;
+      border-radius:15px;
+      color:#67e8f9;
+      background:rgba(56,189,248,.10);
+      border:1px solid rgba(125,211,252,.18);
+    }
+
+    .objective h3{
+      margin:0 0 6px;
+      font-size:17px;
+      font-weight:900;
+    }
+
+    .objective p{
+      margin:0;
+      color:#b7c4d4;
+      font-size:13px;
+      line-height:1.6;
+    }
+
+    .stack-grid{
+      display:grid;
+      grid-template-columns:repeat(4,minmax(0,1fr));
+      gap:12px;
+    }
+
+    .stack-card{
+      min-height:150px;
+      padding:18px;
+      border-radius:22px;
+      text-align:center;
+    }
+
+    .stack-icon{
+      width:50px;
+      height:50px;
+      margin:0 auto 12px;
+      display:grid;
+      place-items:center;
+      border-radius:16px;
+      color:#67e8f9;
+      background:rgba(56,189,248,.10);
+      border:1px solid rgba(125,211,252,.18);
+    }
+
+    .stack-card strong{
+      display:block;
+      margin-bottom:5px;
+      font-size:15px;
+    }
+
+    .stack-card span{
+      display:block;
+      color:#94a3b8;
+      font-size:12px;
+      line-height:1.45;
+    }
+
+    .permanent{
+      padding:28px;
+      border-radius:30px;
+      background:
+        radial-gradient(circle at 90% 0%,rgba(34,211,238,.14),transparent 40%),
+        linear-gradient(135deg,rgba(14,165,233,.14),rgba(99,102,241,.08));
+      border:1px solid rgba(56,189,248,.22);
+    }
+
+    .permanent h3{
+      margin:0 0 11px;
+      font-size:clamp(25px,4vw,39px);
+      line-height:1.05;
+      letter-spacing:-.035em;
+      font-weight:900;
+    }
+
+    .permanent p{
+      margin:0;
+      color:#cbd5e1;
+      font-size:15px;
+      line-height:1.7;
+    }
+
+    .permanent-grid{
+      display:grid;
+      grid-template-columns:repeat(4,minmax(0,1fr));
+      gap:11px;
+      margin-top:18px;
+    }
+
+    .permanent-step{
+      padding:15px;
+      border-radius:18px;
+      background:rgba(255,255,255,.05);
+      border:1px solid rgba(255,255,255,.08);
+    }
+
+    .permanent-step small{
+      display:block;
+      margin-bottom:5px;
+      color:#67e8f9;
+      font-size:9px;
+      font-weight:900;
+      letter-spacing:.09em;
+      text-transform:uppercase;
+    }
+
+    .permanent-step strong{
+      font-size:13px;
+      line-height:1.4;
+    }
+
+    .modules{display:grid;gap:14px}
+
+    .module{
+      display:grid;
+      grid-template-columns:72px minmax(0,1fr);
+      gap:16px;
+      align-items:start;
+      padding:21px;
+      border-radius:25px;
+      background:
+        linear-gradient(135deg,rgba(255,255,255,.075),rgba(255,255,255,.025)),
+        rgba(3,13,24,.78);
+      border:1px solid rgba(255,255,255,.09);
+      box-shadow:0 18px 55px rgba(0,0,0,.20);
+    }
+
+    .module-number{
+      width:72px;
+      height:72px;
+      display:grid;
+      place-items:center;
+      border-radius:20px;
+      color:#bae6fd;
+      background:linear-gradient(145deg,rgba(14,165,233,.20),rgba(99,102,241,.14));
+      border:1px solid rgba(125,211,252,.23);
+      font-size:22px;
+      font-weight:900;
+    }
+
+    .module h3{
+      margin:0 0 8px;
+      font-size:21px;
+      line-height:1.25;
+      font-weight:900;
+    }
+
+    .module p{
+      margin:0;
+      color:#bdc9d8;
+      font-size:14px;
+      line-height:1.65;
+    }
+
+    .module-topics{
+      display:flex;
+      flex-wrap:wrap;
+      gap:7px;
+      margin-top:13px;
+    }
+
+    .topic{
+      padding:7px 10px;
+      border-radius:999px;
+      color:#cbd5e1;
+      background:rgba(255,255,255,.045);
+      border:1px solid rgba(255,255,255,.07);
+      font-size:11px;
+      font-weight:700;
+    }
+
+    .automation-grid{
+      display:grid;
+      grid-template-columns:repeat(3,minmax(0,1fr));
+      gap:14px;
+    }
+
+    .automation{
+      padding:22px;
+      border-radius:24px;
+    }
+
+    .automation-icon{
+      width:48px;
+      height:48px;
+      display:grid;
+      place-items:center;
+      border-radius:16px;
+      color:#c4b5fd;
+      background:rgba(139,92,246,.10);
+      border:1px solid rgba(196,181,253,.18);
+      margin-bottom:13px;
+    }
+
+    .automation h3{
+      margin:0 0 8px;
+      font-size:18px;
+      font-weight:900;
+    }
+
+    .automation p{
+      margin:0;
+      color:#b7c4d4;
+      font-size:13px;
+      line-height:1.6;
+    }
+
+    .factoria-label{
+      display:inline-flex;
+      align-items:center;
+      gap:7px;
+      padding:7px 11px;
+      border-radius:999px;
+      color:#a5f3fc;
+      background:rgba(56,189,248,.10);
+      border:1px solid rgba(56,189,248,.22);
+      font-size:10px;
+      font-weight:900;
+      letter-spacing:.10em;
+      text-transform:uppercase;
+      margin-bottom:12px;
+    }
+
+    .alliances{
+      display:flex;
+      flex-wrap:wrap;
+      gap:8px;
+      margin-top:15px;
+    }
+
+    .alliance{
+      padding:8px 11px;
+      border-radius:999px;
+      color:#cbd5e1;
+      background:rgba(255,255,255,.045);
+      border:1px solid rgba(255,255,255,.07);
+      font-size:11px;
+      font-weight:800;
+    }
+
+    .closing{
+      margin-top:38px;
+      padding:31px;
+      border-radius:32px;
+      text-align:center;
+      background:
+        radial-gradient(circle at 84% 0%,rgba(34,211,238,.15),transparent 42%),
+        linear-gradient(135deg,rgba(14,165,233,.17),rgba(99,102,241,.09));
+      border:1px solid rgba(56,189,248,.24);
+    }
+
+    .closing h2{
+      margin:0 0 12px;
+      font-size:clamp(32px,5vw,58px);
+      line-height:1;
+      letter-spacing:-.05em;
+      font-weight:900;
+    }
+
+    .closing p{
+      max-width:800px;
+      margin:0 auto 21px;
+      color:#cbd5e1;
+      font-size:16px;
+      line-height:1.65;
+    }
+
+    footer{
+      padding:32px 0 46px;
+      text-align:center;
+      color:#64748b;
+      font-size:12px;
+      line-height:1.7;
+    }
+
+    footer strong{color:#94a3b8}
+
+    .float-wa{
+      position:fixed;
+      right:18px;
+      bottom:18px;
+      z-index:60;
+      width:60px;
+      height:60px;
+      display:grid;
+      place-items:center;
+      border-radius:20px;
+      color:white;
+      background:linear-gradient(135deg,#22c55e,#059669);
+      border:1px solid rgba(187,247,208,.42);
+      box-shadow:0 20px 45px rgba(5,150,105,.28);
+      transition:.18s ease;
+    }
+
+    .float-wa:hover{transform:translateY(-3px) scale(1.02)}
+
+    @media(max-width:900px){
+      .section-head{grid-template-columns:1fr;gap:10px}
+      .foundation,.factoria{grid-template-columns:1fr}
+      .stats{grid-template-columns:repeat(2,minmax(0,1fr))}
+      .stack-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+      .permanent-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+      .automation-grid{grid-template-columns:1fr}
+    }
+
+    @media(max-width:620px){
+      .container{padding:0 13px}
+      .topbar-inner{
+        min-height:66px;
+        align-items:flex-start;
+        padding:10px 0;
+      }
+      .brand img{width:42px;height:42px}
+      .brand span{max-width:130px}
+      .top-actions{gap:7px;flex-direction:column;align-items:flex-end}
+      .back-button,.whatsapp-top{padding:8px 11px;font-size:10px;min-height:35px}
+      .hero{padding:46px 0 31px}
+      .hero-logo{width:98px;height:98px}
+      h1{font-size:clamp(39px,12vw,58px)}
+      .stats{grid-template-columns:1fr}
+      .objectives{grid-template-columns:1fr}
+      .stack-grid{grid-template-columns:1fr 1fr}
+      .permanent-grid{grid-template-columns:1fr}
+      .module{grid-template-columns:56px minmax(0,1fr);padding:16px;gap:12px}
+      .module-number{width:56px;height:56px;border-radius:17px;font-size:17px}
+      .module h3{font-size:17px}
+      .module p{font-size:13px}
+      .float-wa{right:13px;bottom:13px;width:54px;height:54px}
+    }
+
+    @media(max-width:410px){
+      .stack-grid{grid-template-columns:1fr}
+    }
+
+    @media(prefers-reduced-motion:reduce){
+      *,*::before,*::after{transition:none!important;animation:none!important;scroll-behavior:auto!important}
+    }
+  </style>
+</head>
+
+<body>
+  <header class="topbar">
+    <div class="container topbar-inner">
+      <a class="brand" href="https://www.iec-ia.com.ar/">
+        <img src="https://i.postimg.cc/jSkQKpRK/Diseno-sin-titulo-2026-05-15T105828-195.png" alt="Instituto IEC">
+        <span>
+          <strong>Instituto IEC</strong>
+          <span>Centro de Perfeccionamiento en IA</span>
+        </span>
+      </a>
+
+      <div class="top-actions">
+        <a class="back-button" href="https://www.iec-ia.com.ar/cursos.html">
+          <i data-lucide="arrow-left" width="17"></i>
+          Volver a Cursos
+        </a>
+
+        <a class="whatsapp-top" href="https://wa.me/5493434295937?text=Hola%20IEC%2C%20quiero%20preinscribirme%20al%20Taller%20Permanente%20Programador%20Experto%20con%20IA" target="_blank" rel="noopener">
+          <i data-lucide="message-circle" width="18"></i>
+          Preinscribirme
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero">
+      <div class="container">
+        <div class="hero-logo">
+          <img src="https://i.postimg.cc/jSkQKpRK/Diseno-sin-titulo-2026-05-15T105828-195.png" alt="Instituto IEC">
+        </div>
+
+        <span class="eyebrow">
+          <i data-lucide="code-xml" width="16"></i>
+          Taller permanente de capacitación y actualización
+        </span>
+
+        <h1>Programador Experto con <span class="gradient">Inteligencia Artificial</span></h1>
+
+        <p class="hero-copy">
+          Un espacio recurrente para aprender, practicar, actualizarse y participar en proyectos reales.
+          Programación, automatización e IA aplicadas de cero a producción, con posibilidad de incorporarse a la bolsa de empleo de FactorIA.
+        </p>
+
+        <div class="hero-cta">
+          <a class="btn btn-primary" href="https://wa.me/5493434295937?text=Hola%20IEC%2C%20quiero%20preinscribirme%20al%20Taller%20Permanente%20Programador%20Experto%20con%20IA" target="_blank" rel="noopener">
+            <i data-lucide="send" width="19"></i>
+            Preinscribirme por WhatsApp
+          </a>
+        </div>
+
+        <div class="stats">
+          <div class="stat glass">
+            <small>Formato</small>
+            <strong>Taller permanente</strong>
+          </div>
+          <div class="stat glass">
+            <small>Modalidad</small>
+            <strong>Capacitación + práctica real</strong>
+          </div>
+          <div class="stat glass">
+            <small>Enfoque</small>
+            <strong>De cero a producción</strong>
+          </div>
+          <div class="stat glass">
+            <small>Diferencial</small>
+            <strong>FactorIA + bolsa de empleo</strong>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container">
+        <div class="section-head">
+          <h2>Fundamentación</h2>
+          <p>La programación se transforma de manera constante. Por eso, la formación no puede terminar en un programa cerrado: necesita continuidad, práctica y actualización permanente.</p>
+        </div>
+
+        <div class="foundation">
+          <article class="foundation-card glass">
+            <h3>Aprender a programar en la era de la IA</h3>
+            <p>
+              El desarrollador actual utiliza Inteligencia Artificial para analizar requerimientos, diseñar arquitecturas,
+              generar código, detectar errores, documentar, crear pruebas y acelerar entregas. El taller enseña programación
+              real incorporando la IA como prompter, copiloto y herramienta de trabajo desde el comienzo.
+            </p>
+          </article>
+
+          <article class="foundation-card glass">
+            <h3>Formación continua dentro de un entorno productivo</h3>
+            <div class="foundation-list">
+              <div class="foundation-item"><i data-lucide="check-circle-2" width="18"></i><span>Ingreso progresivo: cada alumno avanza según su nivel y experiencia.</span></div>
+              <div class="foundation-item"><i data-lucide="check-circle-2" width="18"></i><span>Actualización constante ante nuevas herramientas, lenguajes y metodologías.</span></div>
+              <div class="foundation-item"><i data-lucide="check-circle-2" width="18"></i><span>Desarrollo de soluciones funcionales y participación en proyectos reales.</span></div>
+              <div class="foundation-item"><i data-lucide="check-circle-2" width="18"></i><span>Evaluación permanente para acceder a oportunidades dentro de FactorIA.</span></div>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container">
+        <div class="permanent">
+          <h3>No es un curso que termina: es un taller que evoluciona</h3>
+          <p>
+            Los participantes pueden continuar asistiendo para profundizar tecnologías, actualizar conocimientos,
+            construir portfolio, integrarse a equipos de trabajo y resolver proyectos de complejidad creciente.
+            Los contenidos se renuevan según la evolución del sector y las necesidades de los proyectos de FactorIA.
+          </p>
+
+          <div class="permanent-grid">
+            <article class="permanent-step">
+              <small>Ingreso</small>
+              <strong>Fundamentos y primeras herramientas</strong>
+            </article>
+            <article class="permanent-step">
+              <small>Práctica</small>
+              <strong>Proyectos guiados y portfolio</strong>
+            </article>
+            <article class="permanent-step">
+              <small>Producción</small>
+              <strong>Participación en soluciones reales</strong>
+            </article>
+            <article class="permanent-step">
+              <small>Actualización</small>
+              <strong>Nuevas tecnologías y especialización</strong>
+            </article>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container">
+        <div class="section-head">
+          <h2>Objetivos generales</h2>
+          <p>Formar desarrolladores capaces de crear, integrar, automatizar y mantener soluciones digitales en contextos reales.</p>
+        </div>
+
+        <div class="objectives">
+          <article class="objective glass">
+            <div class="objective-icon"><i data-lucide="code-2" width="22"></i></div>
+            <div>
+              <h3>Desarrollar bases sólidas</h3>
+              <p>Comprender lógica, estructuras, funciones, objetos, datos, algoritmos y buenas prácticas.</p>
+            </div>
+          </article>
+
+          <article class="objective glass">
+            <div class="objective-icon"><i data-lucide="bot" width="22"></i></div>
+            <div>
+              <h3>Programar junto a la IA</h3>
+              <p>Usar IA para planificar, generar, depurar, probar, documentar y mejorar código.</p>
+            </div>
+          </article>
+
+          <article class="objective glass">
+            <div class="objective-icon"><i data-lucide="layers-3" width="22"></i></div>
+            <div>
+              <h3>Construir soluciones completas</h3>
+              <p>Crear frontend, backend, bases de datos, APIs, autenticación y paneles de gestión.</p>
+            </div>
+          </article>
+
+          <article class="objective glass">
+            <div class="objective-icon"><i data-lucide="briefcase-business" width="22"></i></div>
+            <div>
+              <h3>Desarrollar experiencia profesional</h3>
+              <p>Trabajar con requerimientos, equipos, entregas y proyectos vinculados al ecosistema FactorIA.</p>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container">
+        <div class="section-head">
+          <h2>Tecnologías principales</h2>
+          <p>La primera etapa se concentra en desarrollo web, aplicaciones, backend, datos, automatización y producción.</p>
+        </div>
+
+        <div class="stack-grid">
+          <article class="stack-card glass">
+            <div class="stack-icon"><i data-lucide="layout-template" width="24"></i></div>
+            <strong>HTML + CSS</strong>
+            <span>Interfaces responsive, diseño visual y experiencia de usuario.</span>
+          </article>
+
+          <article class="stack-card glass">
+            <div class="stack-icon"><i data-lucide="braces" width="24"></i></div>
+            <strong>JavaScript</strong>
+            <span>Lógica web, DOM, eventos, asincronía y consumo de APIs.</span>
+          </article>
+
+          <article class="stack-card glass">
+            <div class="stack-icon"><i data-lucide="component" width="24"></i></div>
+            <strong>React</strong>
+            <span>Componentes, estados, rutas y aplicaciones web modernas.</span>
+          </article>
+
+          <article class="stack-card glass">
+            <div class="stack-icon"><i data-lucide="server-cog" width="24"></i></div>
+            <strong>Node + Express</strong>
+            <span>Backend, rutas, servicios, APIs y autenticación.</span>
+          </article>
+
+          <article class="stack-card glass">
+            <div class="stack-icon"><i data-lucide="terminal-square" width="24"></i></div>
+            <strong>Python</strong>
+            <span>Scripts, automatización, utilidades y procesamiento de datos.</span>
+          </article>
+
+          <article class="stack-card glass">
+            <div class="stack-icon"><i data-lucide="database" width="24"></i></div>
+            <strong>SQL</strong>
+            <span>Modelado, relaciones, consultas y administración de información.</span>
+          </article>
+
+          <article class="stack-card glass">
+            <div class="stack-icon"><i data-lucide="workflow" width="24"></i></div>
+            <strong>Automatización</strong>
+            <span>n8n, Make, Zapier, webhooks, APIs e integraciones.</span>
+          </article>
+
+          <article class="stack-card glass">
+            <div class="stack-icon"><i data-lucide="git-branch" width="24"></i></div>
+            <strong>Producción</strong>
+            <span>Git, GitHub, hosting, dominios, servidores y despliegue.</span>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container">
+        <div class="section-head">
+          <h2>Herramientas y plataformas</h2>
+          <p>El taller utiliza un stack profesional para desarrollar, almacenar, automatizar, probar y publicar soluciones.</p>
+        </div>
+
+        <div class="stack-grid">
+          <article class="stack-card glass">
+            <div class="stack-icon"><i data-lucide="code" width="24"></i></div>
+            <strong>Visual Studio Code</strong>
+            <span>Desarrollo, extensiones, terminal, Git y depuración.</span>
+          </article>
+
+          <article class="stack-card glass">
+            <div class="stack-icon"><i data-lucide="sparkles" width="24"></i></div>
+            <strong>Google AI Studio</strong>
+            <span>Prompts técnicos, prototipos, agentes y asistencia de código.</span>
+          </article>
+
+          <article class="stack-card glass">
+            <div class="stack-icon"><i data-lucide="cloud" width="24"></i></div>
+            <strong>Supabase</strong>
+            <span>PostgreSQL, autenticación, storage y backend rápido.</span>
+          </article>
+
+          <article class="stack-card glass">
+            <div class="stack-icon"><i data-lucide="database-zap" width="24"></i></div>
+            <strong>MongoDB</strong>
+            <span>Documentos, colecciones y estructuras NoSQL.</span>
+          </article>
+
+          <article class="stack-card glass">
+            <div class="stack-icon"><i data-lucide="database" width="24"></i></div>
+            <strong>PostgreSQL</strong>
+            <span>Datos relacionales, seguridad, funciones y escalabilidad.</span>
+          </article>
+
+          <article class="stack-card glass">
+            <div class="stack-icon"><i data-lucide="table-2" width="24"></i></div>
+            <strong>MySQL</strong>
+            <span>Consultas, administración y sistemas web.</span>
+          </article>
+
+          <article class="stack-card glass">
+            <div class="stack-icon"><i data-lucide="workflow" width="24"></i></div>
+            <strong>n8n · Make · Zapier</strong>
+            <span>Integraciones, automatizaciones y procesos conectados.</span>
+          </article>
+
+          <article class="stack-card glass">
+            <div class="stack-icon"><i data-lucide="microchip" width="24"></i></div>
+            <strong>Arduino IDE</strong>
+            <span>Se incorpora en etapas avanzadas para hardware, IoT y C++.</span>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container">
+        <div class="section-head">
+          <h2>Recorrido formativo permanente</h2>
+          <p>Los módulos funcionan como etapas de crecimiento. El alumno puede profundizar, repetir prácticas y continuar con nuevos proyectos.</p>
+        </div>
+
+        <div class="modules">
+          <article class="module">
+            <div class="module-number">I</div>
+            <div>
+              <h3>Programación moderna con Inteligencia Artificial</h3>
+              <p>Introducción a la lógica, resolución de problemas y uso de IA como prompter, copiloto, depurador y asistente técnico. Se aprende a solicitar código, validarlo, comprenderlo y mejorarlo.</p>
+              <div class="module-topics">
+                <span class="topic">Lógica</span>
+                <span class="topic">Algoritmos</span>
+                <span class="topic">Prompts técnicos</span>
+                <span class="topic">Debug</span>
+              </div>
+            </div>
+          </article>
+
+          <article class="module">
+            <div class="module-number">II</div>
+            <div>
+              <h3>Desarrollo web con HTML y CSS</h3>
+              <p>Construcción de landing pages, sitios institucionales e interfaces responsive. Desde esta etapa, los participantes pueden comenzar a desarrollar piezas supervisadas para portfolio y FactorIA.</p>
+              <div class="module-topics">
+                <span class="topic">HTML</span>
+                <span class="topic">CSS</span>
+                <span class="topic">Responsive</span>
+                <span class="topic">UX/UI</span>
+              </div>
+            </div>
+          </article>
+
+          <article class="module">
+            <div class="module-number">III</div>
+            <div>
+              <h3>JavaScript y aplicaciones interactivas</h3>
+              <p>Variables, funciones, objetos, DOM, eventos, validación, almacenamiento, asincronía y consumo de APIs. Desarrollo de aplicaciones que responden a acciones reales del usuario.</p>
+              <div class="module-topics">
+                <span class="topic">JavaScript</span>
+                <span class="topic">DOM</span>
+                <span class="topic">Eventos</span>
+                <span class="topic">APIs</span>
+              </div>
+            </div>
+          </article>
+
+          <article class="module">
+            <div class="module-number">IV</div>
+            <div>
+              <h3>Frontend moderno con React</h3>
+              <p>Componentes, estados, hooks, rutas, formularios y paneles administrativos. Construcción de aplicaciones escalables conectadas con servicios y APIs.</p>
+              <div class="module-topics">
+                <span class="topic">React</span>
+                <span class="topic">Componentes</span>
+                <span class="topic">Hooks</span>
+                <span class="topic">Dashboards</span>
+              </div>
+            </div>
+          </article>
+
+          <article class="module">
+            <div class="module-number">V</div>
+            <div>
+              <h3>Backend con Node y Express</h3>
+              <p>Servidores, rutas, controladores, APIs REST, autenticación, validaciones, archivos y conexión entre frontend, servicios y bases de datos.</p>
+              <div class="module-topics">
+                <span class="topic">Node.js</span>
+                <span class="topic">Express</span>
+                <span class="topic">REST API</span>
+                <span class="topic">Autenticación</span>
+              </div>
+            </div>
+          </article>
+
+          <article class="module">
+            <div class="module-number">VI</div>
+            <div>
+              <h3>Bases de datos SQL y NoSQL</h3>
+              <p>Modelado, tablas, relaciones, consultas y seguridad. Trabajo con Supabase, PostgreSQL, MySQL y MongoDB según las necesidades de cada proyecto.</p>
+              <div class="module-topics">
+                <span class="topic">SQL</span>
+                <span class="topic">Supabase</span>
+                <span class="topic">PostgreSQL</span>
+                <span class="topic">MongoDB</span>
+              </div>
+            </div>
+          </article>
+
+          <article class="module">
+            <div class="module-number">VII</div>
+            <div>
+              <h3>Python y herramientas internas</h3>
+              <p>Scripts, lectura de archivos, procesamiento de datos, utilidades administrativas y automatización de tareas que complementan aplicaciones y sistemas.</p>
+              <div class="module-topics">
+                <span class="topic">Python</span>
+                <span class="topic">Scripts</span>
+                <span class="topic">Datos</span>
+                <span class="topic">Utilidades</span>
+              </div>
+            </div>
+          </article>
+
+          <article class="module">
+            <div class="module-number">VIII</div>
+            <div>
+              <h3>Automatizaciones e integraciones</h3>
+              <p>Creación de flujos con n8n, Make y Zapier. Webhooks, APIs, formularios, correos, mensajería, calendarios, documentos, OCR y sincronización de datos.</p>
+              <div class="module-topics">
+                <span class="topic">n8n</span>
+                <span class="topic">Make</span>
+                <span class="topic">Zapier</span>
+                <span class="topic">Webhooks</span>
+              </div>
+            </div>
+          </article>
+
+          <article class="module">
+            <div class="module-number">IX</div>
+            <div>
+              <h3>Inteligencia Artificial aplicada al software</h3>
+              <p>Construcción de copilotos, agentes, asistentes especializados, bases de conocimiento y funciones inteligentes integradas dentro de aplicaciones y procesos.</p>
+              <div class="module-topics">
+                <span class="topic">AI Studio</span>
+                <span class="topic">Agentes</span>
+                <span class="topic">RAG</span>
+                <span class="topic">Copilotos</span>
+              </div>
+            </div>
+          </article>
+
+          <article class="module">
+            <div class="module-number">X</div>
+            <div>
+              <h3>C++ y Arduino para hardware e IoT</h3>
+              <p>Esta etapa avanzada introduce C++, Arduino IDE, sensores, motores, comunicación serial e integración entre dispositivos físicos, aplicaciones web y automatizaciones.</p>
+              <div class="module-topics">
+                <span class="topic">C++</span>
+                <span class="topic">Arduino</span>
+                <span class="topic">Sensores</span>
+                <span class="topic">IoT</span>
+              </div>
+            </div>
+          </article>
+
+          <article class="module">
+            <div class="module-number">XI</div>
+            <div>
+              <h3>Git, despliegue y producción</h3>
+              <p>Versionado, repositorios, servidores, hosting, dominios, certificados SSL, variables de entorno, mantenimiento y publicación de aplicaciones reales.</p>
+              <div class="module-topics">
+                <span class="topic">GitHub</span>
+                <span class="topic">Deploy</span>
+                <span class="topic">Servidor</span>
+                <span class="topic">Producción</span>
+              </div>
+            </div>
+          </article>
+
+          <article class="module">
+            <div class="module-number">XII</div>
+            <div>
+              <h3>Proyectos permanentes y especialización</h3>
+              <p>Luego de adquirir las bases, el alumno continúa trabajando en proyectos de mayor complejidad, nuevas tecnologías y áreas de especialización según su perfil y los desarrollos activos.</p>
+              <div class="module-topics">
+                <span class="topic">Portfolio</span>
+                <span class="topic">Trabajo en equipo</span>
+                <span class="topic">Especialización</span>
+                <span class="topic">Actualización</span>
+              </div>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container">
+        <div class="section-head">
+          <h2>Automatización como diferencial</h2>
+          <p>El desarrollador formado en IEC aprende a construir software y también a conectar sistemas para optimizar operaciones reales.</p>
+        </div>
+
+        <div class="automation-grid">
+          <article class="automation glass">
+            <div class="automation-icon"><i data-lucide="webhook" width="24"></i></div>
+            <h3>Integraciones y webhooks</h3>
+            <p>Conexión entre aplicaciones, formularios, APIs, bases de datos y servicios externos.</p>
+          </article>
+
+          <article class="automation glass">
+            <div class="automation-icon"><i data-lucide="mail-check" width="24"></i></div>
+            <h3>Procesos automáticos</h3>
+            <p>Mensajes, correos, documentos, alertas, turnos, facturación y reportes.</p>
+          </article>
+
+          <article class="automation glass">
+            <div class="automation-icon"><i data-lucide="database-zap" width="24"></i></div>
+            <h3>Inteligencia operativa</h3>
+            <p>Datos sincronizados, IA aplicada y automatización de procesos empresariales completos.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container">
+        <div class="section-head">
+          <h2>FactorIA y experiencia laboral</h2>
+          <p>La capacitación ocurre dentro de un ecosistema que desarrolla soluciones para clientes, organizaciones y proyectos reales.</p>
+        </div>
+
+        <div class="factoria">
+          <article class="factoria-card glass">
+            <span class="factoria-label"><i data-lucide="factory" width="15"></i> FactorIA IEC</span>
+            <h3>Fábrica de soluciones digitales</h3>
+            <p>
+              FactorIA es la unidad de desarrollo del ecosistema IEC. Produce páginas web, landing pages,
+              e-commerce, sistemas de gestión, ERP, CRM, aplicaciones, automatizaciones y asistentes con IA
+              para empresas, profesionales e instituciones.
+            </p>
+
+            <div class="factoria-list">
+              <div class="factoria-item"><i data-lucide="globe-2" width="18"></i><span>Sitios web, landing pages, portales y comercio electrónico.</span></div>
+              <div class="factoria-item"><i data-lucide="layout-dashboard" width="18"></i><span>Sistemas internos, ERP, CRM y paneles de gestión.</span></div>
+              <div class="factoria-item"><i data-lucide="bot" width="18"></i><span>Asistentes inteligentes y soluciones con IA aplicada.</span></div>
+              <div class="factoria-item"><i data-lucide="workflow" width="18"></i><span>Automatización e integración de procesos empresariales.</span></div>
+            </div>
+          </article>
+
+          <article class="factoria-card glass">
+            <span class="factoria-label"><i data-lucide="briefcase-business" width="15"></i> Bolsa de empleo integrada</span>
+            <h3>Aprender trabajando dentro del taller</h3>
+            <p>
+              La bolsa de empleo no funciona únicamente al finalizar la capacitación. A medida que el participante
+              desarrolla competencias, puede ser evaluado para colaborar en proyectos supervisados de FactorIA,
+              construir portfolio y adquirir experiencia profesional dentro del mismo proceso formativo.
+            </p>
+
+            <div class="factoria-list">
+              <div class="factoria-item"><i data-lucide="check-circle-2" width="18"></i><span>Asignación progresiva de tareas según nivel y desempeño.</span></div>
+              <div class="factoria-item"><i data-lucide="check-circle-2" width="18"></i><span>Participación en equipos de desarrollo supervisados.</span></div>
+              <div class="factoria-item"><i data-lucide="check-circle-2" width="18"></i><span>Experiencia documentable para portfolio y currículum.</span></div>
+              <div class="factoria-item"><i data-lucide="check-circle-2" width="18"></i><span>Oportunidades sujetas a evaluación y necesidades de proyectos.</span></div>
+            </div>
+
+            <div class="alliances">
+              <span class="alliance">CeCIP</span>
+              <span class="alliance">MiradorTec</span>
+              <span class="alliance">Ruta Federal del Conocimiento</span>
+              <span class="alliance">American English</span>
+              <span class="alliance">FEMER</span>
+              <span class="alliance">Círculo Odontológico</span>
+              <span class="alliance">INAES / IPCYMER</span>
+              <span class="alliance">UPCN</span>
+            </div>
+          </article>
+        </div>
+
+        <div class="closing">
+          <h2>Capacitate, actualizate y construí experiencia real</h2>
+          <p>
+            Un taller permanente para desarrollar habilidades profesionales, trabajar con tecnologías actuales
+            y crecer dentro de un ecosistema de producción, automatización e Inteligencia Artificial.
+          </p>
+
+          <a class="btn btn-primary" href="https://wa.me/5493434295937?text=Hola%20IEC%2C%20quiero%20preinscribirme%20al%20Taller%20Permanente%20Programador%20Experto%20con%20IA" target="_blank" rel="noopener">
+            <i data-lucide="message-circle" width="20"></i>
+            Preinscribirme por WhatsApp
+          </a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <a class="float-wa" href="https://wa.me/5493434295937?text=Hola%20IEC%2C%20quiero%20preinscribirme%20al%20Taller%20Permanente%20Programador%20Experto%20con%20IA" target="_blank" rel="noopener" aria-label="Preinscribirme por WhatsApp">
+    <i data-lucide="message-circle" width="28"></i>
+  </a>
+
+  <footer>
+    <div class="container">
+      <strong>Instituto IEC · Centro de Perfeccionamiento en Inteligencia Artificial</strong><br>
+      FactorIA · Taller permanente de capacitación, actualización y producción digital · Paraná, Entre Ríos.
+    </div>
+  </footer>
+
+  <script>
+    if (window.lucide) lucide.createIcons();
+  </script>
+</body>
+</html>
