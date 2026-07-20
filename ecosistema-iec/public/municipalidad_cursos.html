@@ -1,0 +1,954 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-R817QWH97R"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-R817QWH97R');
+  </script>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Municipalidad de Paraná + Instituto IEC | Programa Municipal de Desarrollo Productivo Inteligente</title>
+  <meta name="description" content="Propuesta institucional para la Municipalidad de Paraná, Subsecretaría de Producción: formación en oficios, Inteligencia Artificial, inclusión laboral, emprendimientos y desarrollo productivo local." />
+
+  <script src="https://cdn.tailwindcss.com/3.4.17"></script>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
+  <script src="https://cdn.jsdelivr.net/npm/lucide@0.468.0/dist/umd/lucide.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+
+  <style>
+    :root{
+      --cyan:#22d3ee;
+      --blue:#3b82f6;
+      --violet:#8b5cf6;
+      --green:#22c55e;
+      --amber:#f59e0b;
+      --rose:#fb7185;
+      --bg:#070b14;
+      --dark2:#0b1426;
+    }
+    *{box-sizing:border-box;font-family:'DM Sans',sans-serif}
+    html,body{margin:0;padding:0;background:var(--bg);color:#fff;overflow:hidden}
+    button,a{-webkit-tap-highlight-color:transparent}
+    button{font:inherit}
+    strong{color:#fff}
+
+    .slide{
+      display:none;width:100%;height:100vh;min-height:100vh;overflow-y:auto;overflow-x:hidden;
+      padding:2rem 1.5rem 5.5rem;scroll-behavior:smooth;position:relative;
+    }
+    .slide.active{display:flex}
+    .bg-pattern{
+      background-image:
+        radial-gradient(circle at 18% 20%,rgba(34,211,238,.12),transparent 25%),
+        radial-gradient(circle at 82% 75%,rgba(139,92,246,.13),transparent 30%),
+        linear-gradient(90deg,rgba(59,130,246,.055) 1px,transparent 1px),
+        linear-gradient(rgba(59,130,246,.055) 1px,transparent 1px);
+      background-size:auto,auto,52px 52px,52px 52px;
+    }
+    .bg-pattern::after{content:"";position:absolute;inset:0;background:linear-gradient(135deg,transparent 0 45%,rgba(34,211,238,.06) 46%,transparent 48% 100%);background-size:360px 360px;pointer-events:none}
+    .glass-card{background:rgba(255,255,255,.07);backdrop-filter:blur(14px);border:1px solid rgba(255,255,255,.11);box-shadow:0 24px 70px rgba(0,0,0,.24)}
+    .pill{background:rgba(255,255,255,.055);border:1px solid rgba(255,255,255,.09)}
+    .gradient-text{background:linear-gradient(135deg,#67e8f9,#60a5fa,#a78bfa);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+    .green-text{background:linear-gradient(135deg,#86efac,#22c55e);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+    .amber-text{background:linear-gradient(135deg,#fde68a,#f59e0b,#fb923c);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+    .rose-text{background:linear-gradient(135deg,#fda4af,#fb7185,#f43f5e);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+    .orb{position:absolute;border-radius:999px;filter:blur(80px);opacity:.2;pointer-events:none}
+    .impact-card{transition:transform .25s ease,border-color .25s ease}
+    .impact-card:hover{transform:translateY(-4px);border-color:rgba(103,232,249,.35)}
+    .number-badge{background:linear-gradient(135deg,rgba(34,211,238,.26),rgba(59,130,246,.22));border:1px solid rgba(103,232,249,.32)}
+    .green-badge{background:linear-gradient(135deg,rgba(34,197,94,.25),rgba(34,211,238,.12));border:1px solid rgba(74,222,128,.32)}
+    .amber-badge{background:linear-gradient(135deg,rgba(245,158,11,.25),rgba(251,191,36,.10));border:1px solid rgba(251,191,36,.32)}
+    .violet-badge{background:linear-gradient(135deg,rgba(139,92,246,.25),rgba(59,130,246,.14));border:1px solid rgba(167,139,250,.32)}
+    .logo-shell{height:76px;min-width:155px;padding:10px 18px;border-radius:22px;display:flex;align-items:center;justify-content:center;background:linear-gradient(145deg,rgba(255,255,255,.98),rgba(226,232,240,.92));border:2px solid rgba(103,232,249,.46);box-shadow:0 16px 48px rgba(37,99,235,.22),0 0 0 6px rgba(34,211,238,.06)}
+    .logo-shell img{max-height:56px;max-width:180px;object-fit:contain}
+    .mini-logo{height:46px;max-width:140px;object-fit:contain;filter:drop-shadow(0 10px 20px rgba(0,0,0,.28))}
+
+    .nav-button{position:fixed;top:50%;z-index:70;transform:translateY(-50%);width:46px;height:46px;border-radius:999px;display:flex;align-items:center;justify-content:center;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.14);backdrop-filter:blur(14px);color:#fff;transition:.2s ease}
+    .nav-button:hover{background:rgba(59,130,246,.25);border-color:rgba(96,165,250,.55)}
+    .dot{width:8px;height:8px;border-radius:999px;background:rgba(255,255,255,.25);transition:.25s ease;border:0;padding:0}
+    .dot.active{width:24px;background:linear-gradient(90deg,var(--cyan),var(--blue))}
+    .top-actions{position:fixed;top:14px;left:14px;z-index:80;display:flex;gap:8px;flex-wrap:wrap}
+    .action-button{display:inline-flex;align-items:center;justify-content:center;gap:8px;border-radius:999px;padding:10px 14px;background:rgba(5,10,20,.72);border:1px solid rgba(255,255,255,.14);color:#fff;backdrop-filter:blur(14px);font-size:12px;font-weight:800;letter-spacing:.03em;transition:.2s ease;cursor:pointer}
+    .action-button:hover{background:rgba(37,99,235,.28);border-color:rgba(96,165,250,.55)}
+    .action-button.primary{background:linear-gradient(135deg,rgba(14,165,233,.92),rgba(37,99,235,.92));border-color:rgba(125,211,252,.55)}
+    .pdf-status{position:fixed;inset:auto 16px 16px auto;z-index:100;max-width:360px;padding:12px 16px;border-radius:16px;background:rgba(7,11,20,.94);border:1px solid rgba(255,255,255,.14);box-shadow:0 20px 50px rgba(0,0,0,.35);font-size:13px;color:#dbeafe;display:none}
+    #pdf-deck{position:fixed;left:-30000px;top:0;width:1600px;background:#070b14;z-index:-9999}
+    #pdf-deck .pdf-page{display:flex!important;width:1600px!important;height:900px!important;min-height:900px!important;overflow:hidden!important;padding:48px 72px 60px!important;page-break-after:always;break-after:page;position:relative}
+    #pdf-deck .pdf-page:last-child{page-break-after:auto;break-after:auto}
+    .flow-arrow{color:#67e8f9;font-size:30px;line-height:1;font-weight:900;text-shadow:0 0 22px rgba(34,211,238,.42)}
+    .section-tag{font-size:13px;font-weight:900;letter-spacing:.18em;text-transform:uppercase;color:#67e8f9}
+
+    @media(max-width:768px){.slide{padding:5.3rem .85rem 5.5rem}.nav-button{width:40px;height:40px}.top-actions{top:10px;left:10px;right:10px}.action-button{padding:9px 11px;font-size:10px}.logo-shell{height:62px;min-width:120px}.logo-shell img{max-height:44px;max-width:130px}}
+    @media(max-width:640px){body{overflow:hidden}.nav-button{top:auto;bottom:16px;transform:none}#prev-btn{left:14px!important}#next-btn{right:14px!important}#dots{bottom:29px!important;max-width:calc(100vw - 120px)}.hide-mobile{display:none!important}}
+    @media print{body{overflow:visible;background:#070b14}.top-actions,.nav-button,#dots,#slide-counter,.pdf-status{display:none!important}.slide{display:flex!important;width:100vw;height:100vh;min-height:100vh;page-break-after:always;break-after:page;overflow:hidden}}
+  </style>
+</head>
+<body class="relative">
+  <div class="top-actions">
+    <button class="action-button primary" id="download-btn"><i data-lucide="download" style="width:16px;height:16px"></i> DESCARGAR PDF</button>
+    <button class="action-button" id="fullscreen-btn"><i data-lucide="maximize-2" style="width:16px;height:16px"></i> PANTALLA COMPLETA</button>
+    <button class="action-button" id="print-btn"><i data-lucide="printer" style="width:16px;height:16px"></i> IMPRIMIR</button>
+  </div>
+  <button id="prev-btn" class="nav-button left-3 md:left-5" aria-label="Diapositiva anterior"><i data-lucide="chevron-left" style="width:22px;height:22px"></i></button>
+  <button id="next-btn" class="nav-button right-3 md:right-5" aria-label="Diapositiva siguiente"><i data-lucide="chevron-right" style="width:22px;height:22px"></i></button>
+  <div id="dots" class="fixed bottom-4 left-1/2 -translate-x-1/2 z-[70] flex items-center justify-center gap-2 flex-wrap"></div>
+  <div id="slide-counter" class="fixed top-4 right-4 z-[70] px-3 py-1.5 rounded-full bg-black/30 border border-white/10 backdrop-blur text-xs text-slate-300"></div>
+  <div id="pdf-status" class="pdf-status"></div>
+  <div id="pdf-deck" aria-hidden="true"></div>
+
+  <!-- 1 -->
+  <section class="slide active flex-col items-center justify-center bg-gradient-to-br from-[#070b14] via-[#0b162b] to-[#070b14] text-center">
+    <div class="absolute inset-0 bg-pattern"></div><div class="orb w-80 h-80 bg-cyan-400 top-[-120px] left-[-100px]"></div><div class="orb w-96 h-96 bg-violet-500 bottom-[-160px] right-[-120px]"></div>
+    <div class="relative z-10 max-w-6xl mx-auto w-full px-3">
+      <div class="flex items-center justify-center gap-4 md:gap-6 mb-7 flex-wrap">
+        <div class="logo-shell" aria-label="Municipalidad de Paraná · Subsecretaría de Producción">
+          <div class="text-center leading-tight">
+            <div class="text-[#0f2740] text-sm md:text-base font-black">MUNICIPALIDAD DE PARANÁ</div>
+            <div class="text-[#2563eb] text-[10px] md:text-xs font-extrabold tracking-wide uppercase mt-1">Subsecretaría de Producción</div>
+          </div>
+        </div>
+        <div class="h-14 w-px bg-white/20 hide-mobile"></div>
+        <img src="https://i.postimg.cc/jSkQKpRK/Diseno-sin-titulo-2026-05-15T105828-195.png" alt="Instituto IEC" class="h-16 md:h-20 object-contain">
+      </div>
+      <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-cyan-400/25 bg-cyan-400/10 text-cyan-200 text-xs md:text-sm font-bold tracking-[.18em] uppercase mb-5">🤝 Propuesta institucional de impacto social</div>
+      <h1 class="text-4xl sm:text-5xl md:text-7xl lg:text-8xl font-black leading-[.95] mb-5">PROGRAMA MUNICIPAL<br><span class="gradient-text">DE DESARROLLO PRODUCTIVO INTELIGENTE</span></h1>
+      <p class="text-base sm:text-lg md:text-2xl text-slate-300 max-w-4xl mx-auto mb-7">Innovación, oficios, Inteligencia Artificial, inclusión laboral y gestión productiva medible para Paraná y su comunidad.</p>
+      <div class="glass-card rounded-3xl p-5 max-w-4xl mx-auto"><p class="text-2xl md:text-4xl font-black">“El presente es de la IA. <span class="gradient-text">El futuro es de los oficios.</span>”</p></div>
+    </div>
+  </section>
+
+  <!-- 2 -->
+  <section class="slide flex-col items-center justify-center bg-gradient-to-b from-[#070b14] to-[#0b1426]">
+    <div class="absolute inset-0 bg-pattern opacity-70"></div>
+    <div class="relative z-10 max-w-6xl mx-auto w-full px-3">
+      <span class="section-tag">01 · el desafío</span>
+      <h2 class="text-3xl sm:text-4xl md:text-6xl font-black mt-2 mb-6">LA TECNOLOGÍA CAMBIA EL TRABAJO.<br><span class="gradient-text">LOS OFICIOS SIGUEN SIENDO INDISPENSABLES.</span></h2>
+      <div class="grid md:grid-cols-2 gap-5">
+        <div class="glass-card rounded-3xl p-7"><div class="text-5xl mb-4">🤖</div><h3 class="text-3xl font-black mb-3">La IA ya es presente</h3><p class="text-slate-300 leading-7">La Inteligencia Artificial transforma tareas administrativas, comerciales, técnicas y creativas. Quienes aprendan a utilizarla tendrán una ventaja concreta en el mercado laboral.</p></div>
+        <div class="glass-card rounded-3xl p-7 border-amber-400/20 bg-amber-400/5"><div class="text-5xl mb-4">🛠️</div><h3 class="text-3xl font-black mb-3">Los oficios faltan</h3><p class="text-slate-300 leading-7">Reparación de celulares, electricidad, refrigeración, carpintería, sanitarios, gas y soporte tecnológico tienen alta demanda y requieren más personas capacitadas.</p></div>
+      </div>
+      <div class="mt-6 glass-card rounded-2xl p-5 text-center"><p class="text-xl md:text-2xl font-black">La oportunidad: formar personas en oficios reales, potenciadas con IA y conectadas con salidas laborales.</p></div>
+    </div>
+  </section>
+
+  <!-- 3 -->
+  <section class="slide flex-col items-center justify-center bg-gradient-to-b from-[#0b1426] to-[#070b14]">
+    <div class="absolute inset-0 bg-pattern opacity-55"></div>
+    <div class="relative z-10 max-w-6xl mx-auto w-full px-3">
+      <span class="section-tag text-green-300">02 · propuesta</span>
+      <h2 class="text-3xl sm:text-4xl md:text-6xl font-black mt-2 mb-7">LA MUNICIPALIDAD COMO LÍDER DE UN PILOTO<br><span class="green-text">DE INCLUSIÓN LABORAL INTELIGENTE.</span></h2>
+      <div class="grid md:grid-cols-3 gap-4">
+        <div class="glass-card rounded-3xl p-6 impact-card"><div class="text-5xl">🎓</div><h3 class="text-2xl font-black mt-4">30 cupos activos mensuales</h3><p class="text-slate-300 mt-2">Un programa recurrente, medible y comunicable.</p></div>
+        <div class="glass-card rounded-3xl p-6 impact-card border-cyan-400/20"><div class="text-5xl">⚙️</div><h3 class="text-2xl font-black mt-4">Oficios + IA</h3><p class="text-slate-300 mt-2">Capacitación tradicional elevada con herramientas tecnológicas.</p></div>
+        <div class="glass-card rounded-3xl p-6 impact-card border-violet-400/20"><div class="text-5xl">🌱</div><h3 class="text-2xl font-black mt-4">Impacto social</h3><p class="text-slate-300 mt-2">Fundación Lazos acompaña a personas en situación de vulnerabilidad.</p></div>
+      </div>
+      <div class="mt-6 p-6 rounded-3xl bg-green-400/10 border border-green-400/20 text-center"><p class="text-xl md:text-3xl font-black">No es contratar cursos aislados. Es construir una política municipal de formación, empleo, emprendimiento y desarrollo productivo.</p></div>
+    </div>
+  </section>
+
+  <!-- 4 -->
+  <section class="slide flex-col items-center justify-center bg-gradient-to-b from-[#070b14] to-[#0b1426]">
+    <div class="absolute inset-0 bg-pattern opacity-55"></div>
+    <div class="relative z-10 max-w-6xl mx-auto w-full px-3 text-center">
+      <span class="section-tag">03 · esquema de becas</span>
+      <h2 class="text-3xl sm:text-4xl md:text-6xl font-black mt-2 mb-7">30 CUPOS ACTIVOS MENSUALES.<br><span class="gradient-text">120 PERSONAS CERTIFICADAS POR AÑO.</span></h2>
+      <div class="grid lg:grid-cols-3 gap-5">
+        <div class="glass-card rounded-3xl p-7 border-green-400/20 bg-green-400/5"><div class="green-badge w-16 h-16 rounded-full grid place-items-center text-3xl font-black mx-auto">10</div><h3 class="text-3xl font-black mt-4">Reparación de Celulares</h3><p class="text-green-200 font-bold mt-2">Dr Tecno · 3 meses y medio</p><p class="text-slate-300 mt-4">10 cupos activos permiten completar 3 cohortes al año: <strong>30 técnicos certificados</strong> y una nueva cohorte en curso.</p></div>
+        <div class="glass-card rounded-3xl p-7 border-blue-400/20 bg-blue-400/5"><div class="number-badge w-16 h-16 rounded-full grid place-items-center text-3xl font-black mx-auto">10</div><h3 class="text-3xl font-black mt-4">Experto en IA para Oficios</h3><p class="text-cyan-200 font-bold mt-2">Instituto IEC · 2 meses</p><p class="text-slate-300 mt-4">10 cupos activos permiten completar 6 cohortes al año: <strong>60 trabajadores de oficios potenciados con IA</strong>.</p></div>
+        <div class="glass-card rounded-3xl p-7 border-violet-400/20 bg-violet-400/5"><div class="violet-badge w-16 h-16 rounded-full grid place-items-center text-3xl font-black mx-auto">10</div><h3 class="text-3xl font-black mt-4">Programador Experto en IA</h3><p class="text-violet-200 font-bold mt-2">FactorIA · 4 meses</p><p class="text-slate-300 mt-4">10 cupos activos permiten completar 3 cohortes al año: <strong>30 programadores IA</strong> vinculados al ecosistema productivo.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 5 -->
+  <section class="slide flex-col items-center justify-center bg-gradient-to-b from-[#0b1426] to-[#070b14]">
+    <div class="absolute inset-0 bg-pattern opacity-55"></div>
+    <div class="relative z-10 max-w-6xl mx-auto w-full px-3">
+      <span class="section-tag text-cyan-300">04 · conversión anual real</span>
+      <h2 class="text-3xl sm:text-4xl md:text-6xl font-black mt-2 mb-7">30 CUPOS ACTIVOS.<br><span class="gradient-text">120 EGRESOS CERTIFICADOS POR AÑO.</span></h2>
+      <div class="grid md:grid-cols-3 gap-4 text-center">
+        <div class="glass-card rounded-3xl p-6 border-green-400/20 bg-green-400/5"><p class="text-5xl font-black green-text">30</p><h3 class="text-2xl font-black mt-2">Reparación de celulares</h3><p class="text-slate-300 mt-2">Curso de 3 meses y medio: 3 cohortes completas por año con 10 cupos activos.</p></div>
+        <div class="glass-card rounded-3xl p-6 border-blue-400/20 bg-blue-400/5"><p class="text-5xl font-black gradient-text">60</p><h3 class="text-2xl font-black mt-2">Experto en IA para oficios</h3><p class="text-slate-300 mt-2">Curso de 2 meses: 6 cohortes completas por año con 10 cupos activos.</p></div>
+        <div class="glass-card rounded-3xl p-6 border-violet-400/20 bg-violet-400/5"><p class="text-5xl font-black rose-text">30</p><h3 class="text-2xl font-black mt-2">Programador Experto en IA</h3><p class="text-slate-300 mt-2">Curso de 4 meses: 3 cohortes completas por año con 10 cupos activos.</p></div>
+      </div>
+      <div class="mt-6 glass-card rounded-3xl p-6 border-cyan-400/20 bg-cyan-400/5 text-center">
+        <p class="text-xl md:text-3xl font-black">La comunicación institucional debe hablar de <span class="gradient-text">30 cupos activos mensuales</span> y <span class="green-text">120 personas certificadas por año</span>, evitando inflar el número como si cada mes ingresaran 30 personas nuevas.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 6 -->
+  <section class="slide flex-col items-center justify-center bg-gradient-to-b from-[#0b1426] to-[#070b14]">
+    <div class="absolute inset-0 bg-pattern opacity-55"></div>
+    <div class="relative z-10 max-w-6xl mx-auto w-full px-3">
+      <span class="section-tag text-amber-300">04 · reparación de celulares</span>
+      <h2 class="text-3xl sm:text-4xl md:text-6xl font-black mt-2 mb-7">UN OFICIO CON DEMANDA REAL.<br><span class="amber-text">FORMADO POR DR TECNO.</span></h2>
+      <div class="grid md:grid-cols-[1.1fr_.9fr] gap-5 items-stretch">
+        <div class="glass-card rounded-3xl p-7"><h3 class="text-3xl font-black mb-5">El alumno aprende a diagnosticar, reparar y emprender</h3><div class="grid sm:grid-cols-2 gap-3 text-slate-300"><div class="pill rounded-xl p-4">Diagnóstico técnico</div><div class="pill rounded-xl p-4">Cambio de módulos</div><div class="pill rounded-xl p-4">Herramientas profesionales</div><div class="pill rounded-xl p-4">Software y recuperación</div><div class="pill rounded-xl p-4">Microsoldadura inicial</div><div class="pill rounded-xl p-4">Atención al cliente</div><div class="pill rounded-xl p-4">Presupuestos</div><div class="pill rounded-xl p-4">Gestión de taller</div></div></div>
+        <div class="glass-card rounded-3xl p-7 border-green-400/20 bg-green-400/5 flex flex-col justify-center text-center"><div class="text-7xl mb-5">📱</div><p class="text-green-300 text-xs font-black tracking-[.18em] uppercase">Salida laboral rápida</p><h3 class="text-4xl font-black mt-3">Técnicos que pueden generar ingresos desde el primer mes.</h3></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 6 -->
+  <section class="slide flex-col items-center justify-center bg-gradient-to-b from-[#070b14] to-[#0b1426]">
+    <div class="absolute inset-0 bg-pattern opacity-55"></div>
+    <div class="relative z-10 max-w-6xl mx-auto w-full px-3">
+      <span class="section-tag">05 · IA aplicada</span>
+      <h2 class="text-3xl sm:text-4xl md:text-6xl font-black mt-2 mb-7">LA IA NO REEMPLAZA EL OFICIO.<br><span class="gradient-text">LO POTENCIA.</span></h2>
+      <div class="grid md:grid-cols-3 gap-4">
+        <div class="glass-card rounded-3xl p-5 impact-card"><span class="text-4xl">⚡</span><h3 class="font-black text-xl mt-3">Electricidad</h3><p class="text-slate-400 mt-2">Presupuestos, cálculo de materiales, informes y asistencia técnica.</p></div>
+        <div class="glass-card rounded-3xl p-5 impact-card"><span class="text-4xl">🪟</span><h3 class="font-black text-xl mt-3">Herrería</h3><p class="text-slate-400 mt-2">Foto del frente de una vivienda + render IA de la reja antes de fabricarla.</p></div>
+        <div class="glass-card rounded-3xl p-5 impact-card"><span class="text-4xl">🪵</span><h3 class="font-black text-xl mt-3">Carpintería</h3><p class="text-slate-400 mt-2">Diseño de muebles, renders, cortes y listas de materiales.</p></div>
+        <div class="glass-card rounded-3xl p-5 impact-card"><span class="text-4xl">🔥</span><h3 class="font-black text-xl mt-3">Gasista</h3><p class="text-slate-400 mt-2">Normativa, documentación, cálculos y presupuestos profesionales.</p></div>
+        <div class="glass-card rounded-3xl p-5 impact-card"><span class="text-4xl">❄️</span><h3 class="font-black text-xl mt-3">Refrigeración</h3><p class="text-slate-400 mt-2">Diagnóstico, manuales inteligentes y mantenimiento preventivo.</p></div>
+        <div class="glass-card rounded-3xl p-5 impact-card"><span class="text-4xl">🚿</span><h3 class="font-black text-xl mt-3">Sanitarios</h3><p class="text-slate-400 mt-2">Cálculo de materiales, planos simples, seguimiento y comunicación con clientes.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 7 -->
+  <section class="slide flex-col items-center justify-center bg-gradient-to-b from-[#0b1426] to-[#070b14]">
+    <div class="absolute inset-0 bg-pattern opacity-55"></div>
+    <div class="relative z-10 max-w-6xl mx-auto w-full px-3">
+      <span class="section-tag text-violet-300">06 · FactorIA</span>
+      <h2 class="text-3xl sm:text-4xl md:text-6xl font-black mt-2 mb-7">PROGRAMADOR EXPERTO EN IA.<br><span class="gradient-text">LA NUEVA PATA DIGITAL DEL OFICIO.</span></h2>
+      <div class="grid md:grid-cols-2 gap-5">
+        <div class="glass-card rounded-3xl p-7"><h3 class="text-3xl font-black mb-4">FactorIA forma perfiles capaces de crear soluciones</h3><p class="text-slate-300 leading-7">Desarrollo web, automatizaciones, agentes IA, landing pages, e-commerce, integraciones y sistemas simples para comercios, instituciones y profesionales.</p><div class="grid sm:grid-cols-2 gap-3 mt-5"><div class="pill rounded-xl p-3">Páginas web</div><div class="pill rounded-xl p-3">E-commerce</div><div class="pill rounded-xl p-3">Atendedores IA</div><div class="pill rounded-xl p-3">Automatizaciones</div></div></div>
+        <div class="glass-card rounded-3xl p-7 border-violet-400/20 bg-violet-400/5 text-center flex flex-col justify-center"><div class="violet-badge w-20 h-20 rounded-full grid place-items-center text-4xl font-black mx-auto">10</div><h3 class="text-4xl font-black mt-5">cupos activos</h3><p class="text-violet-200 mt-3 font-bold">Para crear talento digital vinculado al territorio.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 8 -->
+  <section class="slide flex-col items-center justify-center bg-gradient-to-b from-[#070b14] to-[#0b1426]">
+    <div class="absolute inset-0 bg-pattern opacity-55"></div>
+    <div class="relative z-10 max-w-6xl mx-auto w-full px-3 text-center">
+      <span class="section-tag text-green-300">07 · Fundación Lazos</span>
+      <h2 class="text-3xl sm:text-4xl md:text-6xl font-black mt-2 mb-7">EL PUENTE ENTRE LA VULNERABILIDAD<br><span class="green-text">Y LA OPORTUNIDAD LABORAL.</span></h2>
+      <div class="grid md:grid-cols-5 gap-3">
+        <div class="glass-card rounded-2xl p-4"><div class="number-badge w-11 h-11 rounded-full grid place-items-center font-black mx-auto">1</div><h3 class="font-black mt-3">Detecta</h3><p class="text-slate-400 text-sm mt-2">Personas con necesidad y potencial de transformación.</p></div>
+        <div class="glass-card rounded-2xl p-4"><div class="number-badge w-11 h-11 rounded-full grid place-items-center font-black mx-auto">2</div><h3 class="font-black mt-3">Evalúa</h3><p class="text-slate-400 text-sm mt-2">Situación social, compromiso y posibilidad de recorrido.</p></div>
+        <div class="glass-card rounded-2xl p-4"><div class="number-badge w-11 h-11 rounded-full grid place-items-center font-black mx-auto">3</div><h3 class="font-black mt-3">Acompaña</h3><p class="text-slate-400 text-sm mt-2">Contención y seguimiento durante la capacitación.</p></div>
+        <div class="glass-card rounded-2xl p-4"><div class="number-badge w-11 h-11 rounded-full grid place-items-center font-black mx-auto">4</div><h3 class="font-black mt-3">Vincula</h3><p class="text-slate-400 text-sm mt-2">Con oportunidades concretas del ecosistema.</p></div>
+        <div class="glass-card rounded-2xl p-4"><div class="green-badge w-11 h-11 rounded-full grid place-items-center font-black mx-auto">5</div><h3 class="font-black mt-3">Sostiene</h3><p class="text-slate-400 text-sm mt-2">Ayuda a que la oportunidad se transforme en continuidad.</p></div>
+      </div>
+      <div class="mt-6 glass-card rounded-3xl p-6 border-green-400/20 bg-green-400/5"><p class="text-xl md:text-3xl font-black">Lazos aporta la mirada social. IEC aporta la capacitación. IEC Service conecta con el trabajo.</p></div>
+    </div>
+  </section>
+
+  <!-- 9 -->
+  <section class="slide flex-col items-center justify-center bg-gradient-to-b from-[#0b1426] to-[#070b14]">
+    <div class="absolute inset-0 bg-pattern opacity-55"></div>
+    <div class="relative z-10 max-w-6xl mx-auto w-full px-3">
+      <span class="section-tag">08 · IEC como nodo central</span>
+      <h2 class="text-3xl sm:text-4xl md:text-6xl font-black mt-2 mb-7">IEC FUNCIONA COMO NODO CENTRAL<br><span class="gradient-text">DE UNA RED NEURONAL TERRITORIAL.</span></h2>
+      <div class="grid lg:grid-cols-[.9fr_1.1fr] gap-5 items-center">
+        <div class="glass-card rounded-3xl p-7"><p class="text-slate-300 leading-8 text-lg">El Instituto IEC no funciona únicamente como centro de capacitación. Funciona como <strong>nodo central de articulación</strong> entre empresas, Municipios, comercios, mutuales, fundaciones, instituciones educativas y organizaciones sociales.</p><p class="text-slate-300 leading-8 text-lg mt-4">Como una red neuronal, cada actor aporta recursos, necesidades y oportunidades. IEC coordina esa inteligencia colectiva y la transforma en proyectos concretos de desarrollo económico, tecnológico y social.</p></div>
+        <div class="glass-card rounded-3xl p-7 border-cyan-400/20 bg-cyan-400/5 text-center">
+          <div class="inline-flex items-center justify-center w-28 h-28 rounded-full number-badge text-4xl font-black mb-4">IEC</div>
+          <div class="grid grid-cols-2 gap-3 text-sm font-bold"><div class="pill rounded-xl p-3">Municipalidad de Paraná</div><div class="pill rounded-xl p-3">Fundación Lazos</div><div class="pill rounded-xl p-3">CECIP</div><div class="pill rounded-xl p-3">FEMER / ACLER</div><div class="pill rounded-xl p-3">Mutuales</div><div class="pill rounded-xl p-3">Empresas</div><div class="pill rounded-xl p-3">Dr Tecno</div><div class="pill rounded-xl p-3">IEC Service</div></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 10 -->
+  <section class="slide flex-col items-center justify-center bg-gradient-to-b from-[#070b14] to-[#0b1426]">
+    <div class="absolute inset-0 bg-pattern opacity-55"></div>
+    <div class="relative z-10 max-w-6xl mx-auto w-full px-3 text-center">
+      <span class="section-tag text-cyan-300">09 · IEC Service</span>
+      <h2 class="text-3xl sm:text-4xl md:text-6xl font-black mt-2 mb-7">IEC SERVICE.<br><span class="gradient-text">LA PLATAFORMA QUE CONVIERTE CAPACITACIÓN EN TRABAJO.</span></h2>
+      <div class="grid md:grid-cols-3 gap-4">
+        <div class="glass-card rounded-3xl p-6 impact-card"><div class="text-5xl">📲</div><h3 class="text-2xl font-black mt-4">Solicitudes digitales</h3><p class="text-slate-300 mt-2">Centraliza pedidos de familias, comercios, empresas e instituciones.</p></div>
+        <div class="glass-card rounded-3xl p-6 impact-card border-cyan-400/20"><div class="text-5xl">🧠</div><h3 class="text-2xl font-black mt-4">Inteligencia Operativa</h3><p class="text-slate-300 mt-2">Analiza necesidades, asigna técnicos y registra seguimiento.</p></div>
+        <div class="glass-card rounded-3xl p-6 impact-card border-green-400/20"><div class="text-5xl">💼</div><h3 class="text-2xl font-black mt-4">Trabajo real</h3><p class="text-slate-300 mt-2">Genera experiencia y oportunidades para egresados del ecosistema.</p></div>
+      </div>
+      <div class="mt-6 p-6 rounded-3xl bg-cyan-400/10 border border-cyan-400/20"><p class="text-xl md:text-3xl font-black">No somos solo una empresa de servicios. Somos una plataforma que transforma necesidades en oportunidades de trabajo.</p></div>
+    </div>
+  </section>
+
+  <!-- 11 -->
+  <section class="slide flex-col items-center justify-center bg-gradient-to-b from-[#0b1426] to-[#070b14]">
+    <div class="absolute inset-0 bg-pattern opacity-55"></div>
+    <div class="relative z-10 max-w-6xl mx-auto w-full px-3">
+      <span class="section-tag text-cyan-300">10 · servicios integrales</span>
+      <h2 class="text-3xl sm:text-4xl md:text-6xl font-black mt-2 mb-7">UNA RED DE SERVICIOS<br><span class="gradient-text">PARA LA COMUNIDAD Y EL SECTOR PRODUCTIVO.</span></h2>
+      <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
+        <div class="glass-card rounded-3xl p-5"><h3 class="text-xl font-black text-cyan-200">Técnicos</h3><p class="text-slate-400 mt-3">Electricidad, gas, sanitarios, refrigeración, carpintería, construcción en seco y reparaciones.</p></div>
+        <div class="glass-card rounded-3xl p-5"><h3 class="text-xl font-black text-green-200">Tecnológicos</h3><p class="text-slate-400 mt-3">Informática, notebooks, redes, servidores, backups, CCTV, alarmas y domótica.</p></div>
+        <div class="glass-card rounded-3xl p-5"><h3 class="text-xl font-black text-violet-200">Digitales</h3><p class="text-slate-400 mt-3">Desarrollo web, e-commerce, automatizaciones, agentes IA y atención inteligente.</p></div>
+        <div class="glass-card rounded-3xl p-5"><h3 class="text-xl font-black text-amber-200">Comerciales</h3><p class="text-slate-400 mt-3">Marketing, diseño gráfico, cartelería, redes sociales, producción audiovisual e identidad visual.</p></div>
+      </div>
+      <div class="mt-6 glass-card rounded-2xl p-5 text-center"><p class="text-lg md:text-2xl font-black">IEC Service permite atender problemas reales de la comunidad con técnicos formados dentro del propio ecosistema.</p></div>
+    </div>
+  </section>
+
+  <!-- 12 -->
+  <section class="slide flex-col items-center justify-center bg-gradient-to-b from-[#070b14] to-[#0b1426]">
+    <div class="absolute inset-0 bg-pattern opacity-55"></div>
+    <div class="relative z-10 max-w-6xl mx-auto w-full px-3 text-center">
+      <span class="section-tag text-green-300">11 · impacto comunitario</span>
+      <h2 class="text-3xl sm:text-4xl md:text-6xl font-black mt-2 mb-7">¿A QUIÉNES SIRVE<br><span class="green-text">IEC SERVICE?</span></h2>
+      <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-4 text-left">
+        <div class="glass-card rounded-3xl p-6"><div class="text-5xl">🏠</div><h3 class="text-2xl font-black mt-4">Familias</h3><p class="text-slate-300 mt-2">Soluciones para hogar, seguridad, internet, domótica, reparaciones y mantenimiento.</p></div>
+        <div class="glass-card rounded-3xl p-6"><div class="text-5xl">🏪</div><h3 class="text-2xl font-black mt-4">Comercios</h3><p class="text-slate-300 mt-2">Refrigeración, cámaras, electricidad, marketing, IA, soporte y mantenimiento preventivo.</p></div>
+        <div class="glass-card rounded-3xl p-6"><div class="text-5xl">🏢</div><h3 class="text-2xl font-black mt-4">Empresas</h3><p class="text-slate-300 mt-2">Infraestructura, redes, automatización, soporte técnico, servidores y seguridad electrónica.</p></div>
+        <div class="glass-card rounded-3xl p-6"><div class="text-5xl">🏛️</div><h3 class="text-2xl font-black mt-4">Instituciones</h3><p class="text-slate-300 mt-2">Escuelas, Municipios, cooperativas, mutuales, municipios, consultorios y clínicas.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 13 -->
+  <section class="slide flex-col items-center justify-center bg-gradient-to-b from-[#0b1426] to-[#070b14]">
+    <div class="absolute inset-0 bg-pattern opacity-55"></div>
+    <div class="relative z-10 max-w-6xl mx-auto w-full px-3 text-center">
+      <span class="section-tag">12 · circuito de trabajo</span>
+      <h2 class="text-3xl sm:text-4xl md:text-6xl font-black mt-2 mb-7">DE LA BECA<br><span class="gradient-text">A LA INSERCIÓN LABORAL.</span></h2>
+      <div class="grid md:grid-cols-7 gap-3 items-center">
+        <div class="glass-card rounded-2xl p-4"><h3 class="font-black text-cyan-200">Municipalidad</h3><p class="text-slate-400 text-sm mt-2">impulsa cupos</p></div><div class="flow-arrow hide-mobile">→</div>
+        <div class="glass-card rounded-2xl p-4"><h3 class="font-black text-green-200">Lazos</h3><p class="text-slate-400 text-sm mt-2">acompaña</p></div><div class="flow-arrow hide-mobile">→</div>
+        <div class="glass-card rounded-2xl p-4"><h3 class="font-black text-violet-200">IEC</h3><p class="text-slate-400 text-sm mt-2">capacita</p></div><div class="flow-arrow hide-mobile">→</div>
+        <div class="glass-card rounded-2xl p-4"><h3 class="font-black text-amber-200">Trabajo</h3><p class="text-slate-400 text-sm mt-2">inserción real</p></div>
+      </div>
+      <div class="mt-6 glass-card rounded-3xl p-6 border-cyan-400/20 bg-cyan-400/5"><p class="text-xl md:text-3xl font-black">La capacitación no termina en el certificado. El verdadero objetivo es que la persona tenga una oportunidad concreta de trabajar.</p></div>
+    </div>
+  </section>
+
+  <!-- 14 -->
+  <section class="slide flex-col items-center justify-center bg-gradient-to-b from-[#070b14] to-[#0b1426]">
+    <div class="absolute inset-0 bg-pattern opacity-55"></div>
+    <div class="relative z-10 max-w-6xl mx-auto w-full px-3">
+      <span class="section-tag text-amber-300">13 · red institucional activa</span>
+      <h2 class="text-3xl sm:text-4xl md:text-6xl font-black mt-2 mb-7">UN ECOSISTEMA QUE YA TIENE<br><span class="amber-text">DEMANDA Y TERRITORIO.</span></h2>
+      <div class="grid md:grid-cols-3 gap-4">
+        <div class="glass-card rounded-3xl p-6"><p class="text-5xl font-black gradient-text">300+</p><h3 class="text-2xl font-black mt-2">Comercios CECIP</h3><p class="text-slate-300 mt-2">Potenciales usuarios de servicios y espacios de inserción laboral.</p></div>
+        <div class="glass-card rounded-3xl p-6"><p class="text-5xl font-black green-text">4.000</p><h3 class="text-2xl font-black mt-2">Afiliados Mutual 16</h3><p class="text-slate-300 mt-2">Red de beneficios, servicios y oportunidades de articulación.</p></div>
+        <div class="glass-card rounded-3xl p-6"><p class="text-5xl font-black amber-text">500</p><h3 class="text-2xl font-black mt-2">Alumnos American English</h3><p class="text-slate-300 mt-2">Comunidad educativa vinculada al crecimiento profesional.</p></div>
+        <div class="glass-card rounded-3xl p-6"><p class="text-4xl font-black text-cyan-200">FEMER / ACLER</p><p class="text-slate-300 mt-3">Clínicas y consultorios con demanda de soporte técnico, redes, seguridad e IA administrativa.</p></div>
+        <div class="glass-card rounded-3xl p-6"><p class="text-4xl font-black text-violet-200">INAES</p><p class="text-slate-300 mt-3">Cooperativas, mutuales y asociaciones con posibilidad de escalar el modelo.</p></div>
+        <div class="glass-card rounded-3xl p-6"><p class="text-4xl font-black text-green-200">Empresas</p><p class="text-slate-300 mt-3">Comercios, industrias, instituciones y particulares que necesitan soluciones.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 15 -->
+  <section class="slide flex-col items-center justify-center bg-gradient-to-b from-[#0b1426] to-[#070b14]">
+    <div class="absolute inset-0 bg-pattern opacity-55"></div>
+    <div class="relative z-10 max-w-6xl mx-auto w-full px-3 text-center">
+      <span class="section-tag text-green-300">14 · desarrollo productivo local</span>
+      <h2 class="text-3xl sm:text-4xl md:text-6xl font-black mt-2 mb-7">NO ES SOLO UN PATROCINIO.<br><span class="green-text">ES INVERTIR EN FUTURO.</span></h2>
+      <div class="grid md:grid-cols-4 gap-4">
+        <div class="glass-card rounded-3xl p-6"><span class="text-5xl">🎓</span><h3 class="font-black mt-4 text-xl">Capacitación</h3></div>
+        <div class="glass-card rounded-3xl p-6"><span class="text-5xl">🛠️</span><h3 class="font-black mt-4 text-xl">Oficio</h3></div>
+        <div class="glass-card rounded-3xl p-6"><span class="text-5xl">💼</span><h3 class="font-black mt-4 text-xl">Trabajo</h3></div>
+        <div class="glass-card rounded-3xl p-6"><span class="text-5xl">📈</span><h3 class="font-black mt-4 text-xl">Desarrollo</h3></div>
+      </div>
+      <div class="mt-6 p-6 rounded-3xl bg-green-400/10 border border-green-400/20"><p class="text-xl md:text-3xl font-black">Cada cupo impulsado por la Municipalidad puede convertirse en una historia real de transformación social.</p></div>
+    </div>
+  </section>
+
+  <!-- 16 -->
+  <section class="slide flex-col items-center justify-center bg-gradient-to-b from-[#070b14] to-[#0b1426]">
+    <div class="absolute inset-0 bg-pattern opacity-55"></div>
+    <div class="relative z-10 max-w-6xl mx-auto w-full px-3">
+      <span class="section-tag text-amber-300">15 · valor público e institucional</span>
+      <h2 class="text-3xl sm:text-4xl md:text-6xl font-black mt-2 mb-7">GESTIÓN QUE SE PUEDE MOSTRAR.<br><span class="amber-text">RESULTADOS QUE SE PUEDEN MEDIR.</span></h2>
+      <div class="grid md:grid-cols-3 gap-4">
+        <div class="glass-card rounded-3xl p-6"><p class="text-5xl font-black amber-text">120</p><h3 class="text-2xl font-black mt-2">personas certificadas por año</h3><p class="text-slate-300 mt-2">Un indicador real, defendible y fácil de comunicar.</p></div>
+        <div class="glass-card rounded-3xl p-6"><p class="text-5xl font-black gradient-text">3</p><h3 class="text-2xl font-black mt-2">líneas de formación</h3><p class="text-slate-300 mt-2">Celulares, oficios con IA y programación con IA.</p></div>
+        <div class="glass-card rounded-3xl p-6"><p class="text-5xl font-black green-text">∞</p><h3 class="text-2xl font-black mt-2">casos de impacto</h3><p class="text-slate-300 mt-2">Historias, testimonios, inserción laboral y emprendedores.</p></div>
+      </div>
+      <div class="mt-6 glass-card rounded-3xl p-6 border-amber-400/20 bg-amber-400/5"><p class="text-xl md:text-2xl font-black text-center">La Municipalidad puede comunicar una política concreta: personas capacitadas, personas acompañadas, personas insertadas laboralmente y comercios beneficiados.</p></div>
+    </div>
+  </section>
+
+  <!-- 17 -->
+  <section class="slide flex-col items-center justify-center bg-gradient-to-b from-[#0b1426] to-[#070b14]">
+    <div class="absolute inset-0 bg-pattern opacity-55"></div>
+    <div class="relative z-10 max-w-6xl mx-auto w-full px-3">
+      <span class="section-tag text-cyan-300">16 · comunicación pública</span>
+      <h2 class="text-3xl sm:text-4xl md:text-6xl font-black mt-2 mb-7">UNA NARRATIVA POTENTE<br><span class="gradient-text">PARA LA COMUNIDAD.</span></h2>
+      <div class="glass-card rounded-3xl p-8 border-cyan-400/20 bg-cyan-400/5"><p class="text-2xl md:text-4xl font-black leading-tight">“La Municipalidad de Paraná, a través de la Subsecretaría de Producción, impulsa un programa de desarrollo inteligente que une oficios, Inteligencia Artificial, inclusión social y empleo, junto al Instituto IEC, Fundación Lazos, Dr Tecno, FactorIA e IEC Service.”</p></div>
+      <div class="grid md:grid-cols-4 gap-4 mt-5 text-center"><div class="pill rounded-2xl p-4 font-bold">Prensa</div><div class="pill rounded-2xl p-4 font-bold">Redes sociales</div><div class="pill rounded-2xl p-4 font-bold">Historias de vida</div><div class="pill rounded-2xl p-4 font-bold">Informes de gestión</div></div>
+    </div>
+  </section>
+
+  <!-- 18 -->
+  <section class="slide flex-col items-center justify-center bg-gradient-to-b from-[#070b14] to-[#0b1426]">
+    <div class="absolute inset-0 bg-pattern opacity-55"></div>
+    <div class="relative z-10 max-w-6xl mx-auto w-full px-3 text-center">
+      <span class="section-tag text-violet-300">17 · indicadores</span>
+      <h2 class="text-3xl sm:text-4xl md:text-6xl font-black mt-2 mb-7">CADA MES GENERA<br><span class="gradient-text">EVIDENCIA DE GESTIÓN.</span></h2>
+      <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-4">
+        <div class="glass-card rounded-3xl p-5"><h3 class="font-black text-2xl">Cupos otorgados</h3></div>
+        <div class="glass-card rounded-3xl p-5"><h3 class="font-black text-2xl">Personas capacitadas</h3></div>
+        <div class="glass-card rounded-3xl p-5"><h3 class="font-black text-2xl">Horas de formación</h3></div>
+        <div class="glass-card rounded-3xl p-5"><h3 class="font-black text-2xl">Asistencia</h3></div>
+        <div class="glass-card rounded-3xl p-5"><h3 class="font-black text-2xl">Egresados</h3></div>
+        <div class="glass-card rounded-3xl p-5"><h3 class="font-black text-2xl">Prácticas reales</h3></div>
+        <div class="glass-card rounded-3xl p-5"><h3 class="font-black text-2xl">Inserciones</h3></div>
+        <div class="glass-card rounded-3xl p-5"><h3 class="font-black text-2xl">Emprendimientos</h3></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 19 -->
+  <section class="slide flex-col items-center justify-center bg-gradient-to-b from-[#0b1426] to-[#070b14]">
+    <div class="absolute inset-0 bg-pattern opacity-55"></div>
+    <div class="relative z-10 max-w-6xl mx-auto w-full px-3">
+      <span class="section-tag text-cyan-300">18 · implementación</span>
+      <h2 class="text-3xl sm:text-4xl md:text-6xl font-black mt-2 mb-7">PILOTO RECURRENTE<br><span class="gradient-text">SIMPLE DE ACTIVAR.</span></h2>
+      <div class="grid md:grid-cols-6 gap-3">
+        <div class="glass-card rounded-2xl p-4"><div class="number-badge w-11 h-11 rounded-full grid place-items-center font-black">1</div><h3 class="font-bold mt-3 text-cyan-200">Convenio</h3><p class="text-slate-400 text-sm mt-2">Convenio Municipalidad de Paraná + IEC.</p></div>
+        <div class="glass-card rounded-2xl p-4"><div class="number-badge w-11 h-11 rounded-full grid place-items-center font-black">2</div><h3 class="font-bold mt-3 text-cyan-200">Cupos</h3><p class="text-slate-400 text-sm mt-2">30 cupos activos mensuales.</p></div>
+        <div class="glass-card rounded-2xl p-4"><div class="number-badge w-11 h-11 rounded-full grid place-items-center font-black">3</div><h3 class="font-bold mt-3 text-cyan-200">Selección</h3><p class="text-slate-400 text-sm mt-2">Lazos + criterios sociales.</p></div>
+        <div class="glass-card rounded-2xl p-4"><div class="number-badge w-11 h-11 rounded-full grid place-items-center font-black">4</div><h3 class="font-bold mt-3 text-cyan-200">Cursado</h3><p class="text-slate-400 text-sm mt-2">IEC, Dr Tecno y FactorIA.</p></div>
+        <div class="glass-card rounded-2xl p-4"><div class="number-badge w-11 h-11 rounded-full grid place-items-center font-black">5</div><h3 class="font-bold mt-3 text-cyan-200">Práctica</h3><p class="text-slate-400 text-sm mt-2">IEC Service.</p></div>
+        <div class="glass-card rounded-2xl p-4"><div class="green-badge w-11 h-11 rounded-full grid place-items-center font-black">6</div><h3 class="font-bold mt-3 text-green-200">Impacto</h3><p class="text-slate-400 text-sm mt-2">Trabajo y comunicación.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 20 -->
+  <section class="slide flex-col items-center justify-center bg-gradient-to-b from-[#070b14] to-[#0b1426]">
+    <div class="absolute inset-0 bg-pattern opacity-55"></div>
+    <div class="relative z-10 max-w-6xl mx-auto w-full px-3">
+      <span class="section-tag text-green-300">19 · beneficios para Municipalidad de Paraná</span>
+      <h2 class="text-3xl sm:text-4xl md:text-6xl font-black mt-2 mb-7">BENEFICIOS INSTITUCIONALES<br><span class="green-text">Y POLÍTICOS.</span></h2>
+      <div class="grid md:grid-cols-2 gap-5">
+        <div class="glass-card rounded-3xl p-7"><h3 class="text-3xl font-black mb-4">Hacia adentro</h3><div class="space-y-3 text-slate-300"><div class="pill rounded-xl p-3">Fortalece el rol municipal en empleo y producción.</div><div class="pill rounded-xl p-3">Amplía la agenda de capacitación.</div><div class="pill rounded-xl p-3">Moderniza las políticas de formación y empleo con IA.</div><div class="pill rounded-xl p-3">Genera indicadores mensuales de impacto.</div></div></div>
+        <div class="glass-card rounded-3xl p-7 border-green-400/20 bg-green-400/5"><h3 class="text-3xl font-black mb-4">Hacia afuera</h3><div class="space-y-3 text-slate-300"><div class="pill rounded-xl p-3">Muestra gestión productiva concreta ante la comunidad.</div><div class="pill rounded-xl p-3">Articula con empresas, cámaras, instituciones, fundaciones y emprendedores.</div><div class="pill rounded-xl p-3">Genera historias reales para comunicar.</div><div class="pill rounded-xl p-3">Posiciona a Paraná como ciudad innovadora y productiva.</div></div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 21 -->
+  <section class="slide flex-col items-center justify-center bg-gradient-to-b from-[#0b1426] to-[#070b14]">
+    <div class="absolute inset-0 bg-pattern opacity-55"></div>
+    <div class="relative z-10 max-w-6xl mx-auto w-full px-3 text-center">
+      <span class="section-tag text-amber-300">20 · círculo virtuoso</span>
+      <h2 class="text-3xl sm:text-4xl md:text-6xl font-black mt-2 mb-7">DEL APORTE SOCIAL<br><span class="amber-text">AL DESARROLLO REGIONAL.</span></h2>
+      <div class="grid md:grid-cols-4 gap-4">
+        <div class="glass-card rounded-3xl p-6"><h3 class="font-black text-2xl">Municipalidad impulsa</h3><p class="text-slate-400 mt-2">Cupos recurrentes</p></div>
+        <div class="glass-card rounded-3xl p-6"><h3 class="font-black text-2xl">IEC forma</h3><p class="text-slate-400 mt-2">Oficios + IA</p></div>
+        <div class="glass-card rounded-3xl p-6"><h3 class="font-black text-2xl">IEC Service activa</h3><p class="text-slate-400 mt-2">Servicios reales</p></div>
+        <div class="glass-card rounded-3xl p-6"><h3 class="font-black text-2xl">La comunidad gana</h3><p class="text-slate-400 mt-2">Trabajo y soluciones</p></div>
+      </div>
+      <div class="mt-6 glass-card rounded-3xl p-6 border-amber-400/20 bg-amber-400/5"><p class="text-xl md:text-3xl font-black">El impacto vuelve al territorio en forma de empleo, emprendedores, servicios y desarrollo económico.</p></div>
+    </div>
+  </section>
+
+  <!-- 22 -->
+  <section class="slide flex-col items-center justify-center bg-gradient-to-b from-[#070b14] to-[#0b1426]">
+    <div class="absolute inset-0 bg-pattern opacity-55"></div>
+    <div class="relative z-10 max-w-6xl mx-auto w-full px-3">
+      <span class="section-tag text-violet-300">21 · escalabilidad</span>
+      <h2 class="text-3xl sm:text-4xl md:text-6xl font-black mt-2 mb-7">UN MODELO QUE PUEDE<br><span class="gradient-text">ESCALAR EN PARANÁ Y SU ÁREA METROPOLITANA.</span></h2>
+      <div class="grid md:grid-cols-3 gap-4">
+        <div class="glass-card rounded-3xl p-6"><h3 class="text-2xl font-black">Mutuales y cooperativas</h3><p class="text-slate-300 mt-2">Programas replicables con INAES y organizaciones asociativas.</p></div>
+        <div class="glass-card rounded-3xl p-6"><h3 class="text-2xl font-black">Municipios y comunas</h3><p class="text-slate-300 mt-2">Oficios inteligentes como política local de empleo.</p></div>
+        <div class="glass-card rounded-3xl p-6"><h3 class="text-2xl font-black">Cámaras empresarias</h3><p class="text-slate-300 mt-2">Comercios que demandan servicios y pueden contratar egresados.</p></div>
+      </div>
+      <div class="mt-6 glass-card rounded-3xl p-6 border-violet-400/20 bg-violet-400/5 text-center"><p class="text-xl md:text-3xl font-black">Paraná puede ser la ciudad que consolide el modelo y marque el precedente.</p></div>
+    </div>
+  </section>
+
+  <!-- 23 -->
+  <section class="slide flex-col items-center justify-center bg-gradient-to-b from-[#0b1426] to-[#070b14]">
+    <div class="absolute inset-0 bg-pattern opacity-55"></div>
+    <div class="relative z-10 max-w-6xl mx-auto w-full px-3">
+      <span class="section-tag text-cyan-300">22 · primer año</span>
+      <h2 class="text-3xl sm:text-4xl md:text-6xl font-black mt-2 mb-7">PROYECCIÓN ANUAL<br><span class="gradient-text">DEL PILOTO MUNICIPAL.</span></h2>
+      <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-4 text-center">
+        <div class="glass-card rounded-3xl p-6"><p class="text-6xl font-black gradient-text">120</p><h3 class="font-black mt-2">personas certificadas</h3></div>
+        <div class="glass-card rounded-3xl p-6"><p class="text-6xl font-black green-text">30</p><h3 class="font-black mt-2">técnicos celulares</h3></div>
+        <div class="glass-card rounded-3xl p-6"><p class="text-6xl font-black amber-text">60</p><h3 class="font-black mt-2">oficios con IA</h3></div>
+        <div class="glass-card rounded-3xl p-6"><p class="text-6xl font-black rose-text">30</p><h3 class="font-black mt-2">programadores IA</h3></div>
+      </div>
+      <div class="mt-6 glass-card rounded-3xl p-6 text-center"><p class="text-xl md:text-3xl font-black">Un año de programa deja una huella concreta y defendible: 120 personas certificadas, más cohortes en curso y un ecosistema productivo listo para absorber talento.</p></div>
+    </div>
+  </section>
+
+  <!-- 24 -->
+  <section class="slide flex-col items-center justify-center bg-gradient-to-b from-[#070b14] to-[#0b1426]">
+    <div class="absolute inset-0 bg-pattern opacity-55"></div>
+    <div class="relative z-10 max-w-6xl mx-auto w-full px-3">
+      <span class="section-tag text-green-300">23 · propuesta de activación</span>
+      <h2 class="text-3xl sm:text-4xl md:text-6xl font-black mt-2 mb-7">PRÓXIMO PASO:<br><span class="green-text">LANZAR EL PILOTO.</span></h2>
+      <div class="grid md:grid-cols-3 gap-5">
+        <div class="glass-card rounded-3xl p-7"><div class="number-badge w-14 h-14 rounded-full grid place-items-center text-2xl font-black">1</div><h3 class="text-2xl font-black mt-4">Aprobar convenio</h3><p class="text-slate-300 mt-2">Definir acuerdo institucional y cupos recurrentes.</p></div>
+        <div class="glass-card rounded-3xl p-7"><div class="number-badge w-14 h-14 rounded-full grid place-items-center text-2xl font-black">2</div><h3 class="text-2xl font-black mt-4">Comunicar lanzamiento</h3><p class="text-slate-300 mt-2">Municipalidad de Paraná presenta el programa como acción de desarrollo productivo local.</p></div>
+        <div class="glass-card rounded-3xl p-7 border-green-400/20 bg-green-400/5"><div class="green-badge w-14 h-14 rounded-full grid place-items-center text-2xl font-black">3</div><h3 class="text-2xl font-black mt-4">Iniciar cohortes</h3><p class="text-slate-300 mt-2">Fundación Lazos, IEC, Dr Tecno, FactorIA e IEC Service activan el circuito.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 25 -->
+  <section class="slide flex-col items-center justify-center bg-gradient-to-br from-[#070b14] via-[#0b162b] to-[#070b14] text-center">
+    <div class="absolute inset-0 bg-pattern"></div><div class="orb w-80 h-80 bg-cyan-400 top-[-120px] left-[-100px]"></div><div class="orb w-96 h-96 bg-violet-500 bottom-[-160px] right-[-120px]"></div>
+    <div class="relative z-10 max-w-6xl mx-auto w-full px-3">
+      <div class="flex items-center justify-center gap-4 md:gap-6 mb-7 flex-wrap">
+        <div class="logo-shell" aria-label="Municipalidad de Paraná · Subsecretaría de Producción">
+          <div class="text-center leading-tight">
+            <div class="text-[#0f2740] text-sm md:text-base font-black">MUNICIPALIDAD DE PARANÁ</div>
+            <div class="text-[#2563eb] text-[10px] md:text-xs font-extrabold tracking-wide uppercase mt-1">Subsecretaría de Producción</div>
+          </div>
+        </div>
+        <div class="h-14 w-px bg-white/20 hide-mobile"></div>
+        <img src="https://i.postimg.cc/jSkQKpRK/Diseno-sin-titulo-2026-05-15T105828-195.png" alt="Instituto IEC" class="h-16 md:h-20 object-contain">
+      </div>
+      <h2 class="text-4xl sm:text-5xl md:text-7xl font-black leading-[.98] mb-6">EL PRESENTE ES DE LA IA.<br><span class="gradient-text">EL FUTURO ES DE LOS OFICIOS.</span></h2>
+      <div class="glass-card rounded-3xl p-7 max-w-4xl mx-auto"><p class="text-xl md:text-3xl font-black leading-tight">El desarrollo ocurre cuando la tecnología, la capacitación, las instituciones y la comunidad trabajan juntas para generar oportunidades reales.</p></div>
+      <p class="text-slate-400 mt-6 text-sm">Municipalidad de Paraná · Subsecretaría de Producción · Instituto IEC · Dr Tecno · FactorIA · IEC Service · Fundación Lazos</p>
+    </div>
+  </section>
+
+  <script>
+    /*
+      ============================================================
+      GOOGLE ANALYTICS 4 · MEDICIÓN AVANZADA IEC
+      Propiedad: G-R817QWH97R
+      Propuesta: Municipalidad de Paraná · Subsecretaría de Producción
+      ============================================================
+
+      Eventos:
+      - ver_diapositiva
+      - navegar_diapositiva
+      - click_indicador_diapositiva
+      - scroll_diapositiva
+      - tiempo_interaccion
+      - click_descargar_pdf
+      - pdf_generado
+      - error_generar_pdf
+      - click_pantalla_completa
+      - cambio_pantalla_completa
+      - click_imprimir
+      - salida_pagina
+
+      No se envían datos personales.
+    */
+
+    const PRESENTATION_NAME = "Programa Municipal de Desarrollo Productivo Inteligente";
+    const INSTITUTION_NAME = "Municipalidad de Paraná · Subsecretaría de Producción";
+    const PAGE_TYPE = "presentacion_institucional";
+    const PAGE_PATH = window.location.pathname;
+    const PAGE_TITLE = document.title;
+    const SESSION_START = Date.now();
+
+    function sendGA4Event(eventName, parameters = {}) {
+      if (typeof window.gtag !== "function") return;
+
+      window.gtag("event", eventName, {
+        presentacion: PRESENTATION_NAME,
+        institucion: INSTITUTION_NAME,
+        tipo_pagina: PAGE_TYPE,
+        pagina: PAGE_PATH,
+        titulo_pagina: PAGE_TITLE,
+        ...parameters
+      });
+    }
+
+    function cleanText(value) {
+      return String(value || "")
+        .replace(/\s+/g, " ")
+        .trim()
+        .slice(0, 140);
+    }
+
+    function getSlideTitle(slide, index) {
+      const heading = slide.querySelector("h1, h2, h3");
+      return cleanText(heading?.textContent || `Diapositiva ${index + 1}`);
+    }
+
+    let current = 0;
+    const slides = Array.from(document.querySelectorAll(".slide"));
+    const dotsContainer = document.getElementById("dots");
+    const counter = document.getElementById("slide-counter");
+    const pdfStatus = document.getElementById("pdf-status");
+    const slideViewCounts = new Map();
+    const slideScrollMilestones = new Map();
+
+    function reportSlideView(index, navigationMethod = "carga_inicial") {
+      const slide = slides[index];
+      if (!slide) return;
+
+      const previousViews = slideViewCounts.get(index) || 0;
+      slideViewCounts.set(index, previousViews + 1);
+
+      sendGA4Event("ver_diapositiva", {
+        numero_diapositiva: index + 1,
+        nombre_diapositiva: getSlideTitle(slide, index),
+        metodo_navegacion: navigationMethod,
+        cantidad_vistas_sesion: previousViews + 1
+      });
+    }
+
+    slides.forEach((_, index) => {
+      const dot = document.createElement("button");
+      dot.className = "dot";
+      dot.setAttribute("aria-label", `Ir a la diapositiva ${index + 1}`);
+
+      dot.addEventListener("click", () => {
+        sendGA4Event("click_indicador_diapositiva", {
+          diapositiva_origen: current + 1,
+          diapositiva_destino: index + 1,
+          nombre_destino: getSlideTitle(slides[index], index)
+        });
+
+        goToSlide(index, "indicador");
+      });
+
+      dotsContainer.appendChild(dot);
+    });
+
+    function updateUI() {
+      slides.forEach((slide, index) => {
+        slide.classList.toggle("active", index === current);
+      });
+
+      Array.from(dotsContainer.children).forEach((dot, index) => {
+        dot.classList.toggle("active", index === current);
+      });
+
+      counter.textContent = `${current + 1} / ${slides.length}`;
+
+      if (window.lucide) {
+        window.lucide.createIcons();
+      }
+    }
+
+    function goToSlide(index, navigationMethod = "directo") {
+      const boundedIndex = Math.max(0, Math.min(slides.length - 1, index));
+
+      if (boundedIndex === current) return;
+
+      const previousIndex = current;
+      const previousTitle = getSlideTitle(slides[previousIndex], previousIndex);
+
+      current = boundedIndex;
+      slides[current].scrollTop = 0;
+      updateUI();
+
+      sendGA4Event("navegar_diapositiva", {
+        diapositiva_origen: previousIndex + 1,
+        nombre_origen: previousTitle,
+        diapositiva_destino: current + 1,
+        nombre_destino: getSlideTitle(slides[current], current),
+        metodo_navegacion: navigationMethod
+      });
+
+      reportSlideView(current, navigationMethod);
+    }
+
+    function changeSlide(direction, navigationMethod = "boton") {
+      let next = current + direction;
+
+      if (next < 0) next = slides.length - 1;
+      if (next >= slides.length) next = 0;
+
+      goToSlide(next, navigationMethod);
+    }
+
+    document.getElementById("prev-btn").addEventListener("click", () => {
+      changeSlide(-1, "boton_anterior");
+    });
+
+    document.getElementById("next-btn").addEventListener("click", () => {
+      changeSlide(1, "boton_siguiente");
+    });
+
+    document.addEventListener("keydown", (event) => {
+      if (event.key === "ArrowRight" || event.key === "PageDown") {
+        changeSlide(1, event.key === "PageDown" ? "teclado_pagedown" : "teclado_derecha");
+      }
+
+      if (event.key === "ArrowLeft" || event.key === "PageUp") {
+        changeSlide(-1, event.key === "PageUp" ? "teclado_pageup" : "teclado_izquierda");
+      }
+
+      if (event.key === "Home") {
+        goToSlide(0, "teclado_home");
+      }
+
+      if (event.key === "End") {
+        goToSlide(slides.length - 1, "teclado_end");
+      }
+    });
+
+    let startX = null;
+
+    document.addEventListener("touchstart", (event) => {
+      startX = event.touches[0].clientX;
+    }, { passive: true });
+
+    document.addEventListener("touchend", (event) => {
+      if (startX === null) return;
+
+      const difference = event.changedTouches[0].clientX - startX;
+
+      if (Math.abs(difference) > 60) {
+        changeSlide(
+          difference < 0 ? 1 : -1,
+          difference < 0 ? "deslizar_izquierda" : "deslizar_derecha"
+        );
+      }
+
+      startX = null;
+    }, { passive: true });
+
+    /*
+      ------------------------------------------------------------
+      SCROLL INTERNO POR DIAPOSITIVA
+      ------------------------------------------------------------
+    */
+
+    function measureSlideScroll(index) {
+      const slide = slides[index];
+      if (!slide) return;
+
+      const scrollableHeight = Math.max(slide.scrollHeight - slide.clientHeight, 1);
+      const percentage = Math.min(
+        100,
+        Math.round((slide.scrollTop / scrollableHeight) * 100)
+      );
+
+      if (!slideScrollMilestones.has(index)) {
+        slideScrollMilestones.set(index, new Set());
+      }
+
+      const reached = slideScrollMilestones.get(index);
+
+      [25, 50, 75, 90, 100].forEach((milestone) => {
+        if (percentage >= milestone && !reached.has(milestone)) {
+          reached.add(milestone);
+
+          sendGA4Event("scroll_diapositiva", {
+            numero_diapositiva: index + 1,
+            nombre_diapositiva: getSlideTitle(slide, index),
+            porcentaje: milestone
+          });
+        }
+      });
+    }
+
+    slides.forEach((slide, index) => {
+      slide.addEventListener("scroll", () => {
+        measureSlideScroll(index);
+      }, { passive: true });
+    });
+
+    /*
+      ------------------------------------------------------------
+      TIEMPO DE INTERACCIÓN
+      ------------------------------------------------------------
+    */
+
+    [15, 30, 60, 120, 180, 300, 600, 900].forEach((seconds) => {
+      window.setTimeout(() => {
+        if (document.visibilityState === "visible") {
+          sendGA4Event("tiempo_interaccion", {
+            segundos: seconds,
+            diapositiva_actual: current + 1,
+            nombre_diapositiva: getSlideTitle(slides[current], current)
+          });
+        }
+      }, seconds * 1000);
+    });
+
+    /*
+      ------------------------------------------------------------
+      PANTALLA COMPLETA
+      ------------------------------------------------------------
+    */
+
+    async function toggleFullscreen() {
+      sendGA4Event("click_pantalla_completa", {
+        accion_solicitada: document.fullscreenElement ? "salir" : "entrar",
+        diapositiva_actual: current + 1
+      });
+
+      try {
+        if (!document.fullscreenElement) {
+          await document.documentElement.requestFullscreen?.();
+        } else {
+          await document.exitFullscreen?.();
+        }
+      } catch (error) {
+        sendGA4Event("cambio_pantalla_completa", {
+          resultado: "error",
+          tipo_error: cleanText(error?.message || "error_desconocido")
+        });
+      }
+    }
+
+    document.addEventListener("fullscreenchange", () => {
+      sendGA4Event("cambio_pantalla_completa", {
+        resultado: "correcto",
+        estado: document.fullscreenElement ? "activa" : "inactiva"
+      });
+    });
+
+    document.getElementById("fullscreen-btn").addEventListener("click", toggleFullscreen);
+
+    /*
+      ------------------------------------------------------------
+      IMPRESIÓN
+      ------------------------------------------------------------
+    */
+
+    document.getElementById("print-btn").addEventListener("click", () => {
+      sendGA4Event("click_imprimir", {
+        diapositiva_actual: current + 1
+      });
+
+      window.print();
+    });
+
+    /*
+      ------------------------------------------------------------
+      GENERACIÓN DE PDF
+      ------------------------------------------------------------
+    */
+
+    function showPdfStatus(message) {
+      pdfStatus.textContent = message;
+      pdfStatus.style.display = "block";
+    }
+
+    function buildPDFDeck() {
+      const deck = document.getElementById("pdf-deck");
+      deck.innerHTML = "";
+
+      slides.forEach((slide) => {
+        const clone = slide.cloneNode(true);
+        clone.classList.add("pdf-page");
+        clone.classList.remove("active");
+        clone.style.display = "flex";
+        deck.appendChild(clone);
+      });
+
+      if (window.lucide) {
+        window.lucide.createIcons();
+      }
+
+      return deck;
+    }
+
+    async function downloadPDF() {
+      const button = document.getElementById("download-btn");
+      const originalContent = button.innerHTML;
+
+      sendGA4Event("click_descargar_pdf", {
+        cantidad_diapositivas: slides.length,
+        diapositiva_actual: current + 1
+      });
+
+      button.disabled = true;
+      button.innerHTML = '<i data-lucide="loader-2" style="width:16px;height:16px"></i> GENERANDO...';
+      showPdfStatus("Preparando PDF en alta calidad...");
+
+      if (window.lucide) {
+        window.lucide.createIcons();
+      }
+
+      const deck = buildPDFDeck();
+
+      const options = {
+        margin: 0,
+        filename: "Municipalidad_Parana_IEC_Programa_Desarrollo_Productivo_Inteligente.pdf",
+        image: { type: "jpeg", quality: 0.98 },
+        html2canvas: {
+          scale: 1.15,
+          useCORS: true,
+          allowTaint: true,
+          backgroundColor: "#070b14",
+          logging: false,
+          windowWidth: 1600,
+          windowHeight: 900
+        },
+        jsPDF: {
+          unit: "px",
+          format: [1600, 900],
+          orientation: "landscape",
+          compress: true
+        },
+        pagebreak: { mode: ["css", "legacy"] }
+      };
+
+      try {
+        await html2pdf().set(options).from(deck).save();
+        showPdfStatus("PDF descargado correctamente.");
+
+        sendGA4Event("pdf_generado", {
+          resultado: "correcto",
+          cantidad_diapositivas: slides.length
+        });
+      } catch (error) {
+        showPdfStatus("No se pudo generar automáticamente. Usá IMPRIMIR y guardá como PDF.");
+
+        sendGA4Event("error_generar_pdf", {
+          resultado: "error",
+          tipo_error: cleanText(error?.message || "error_desconocido")
+        });
+      } finally {
+        button.disabled = false;
+        button.innerHTML = originalContent;
+
+        if (window.lucide) {
+          window.lucide.createIcons();
+        }
+
+        window.setTimeout(() => {
+          pdfStatus.style.display = "none";
+        }, 4500);
+      }
+    }
+
+    document.getElementById("download-btn").addEventListener("click", downloadPDF);
+
+    /*
+      ------------------------------------------------------------
+      SALIDA
+      ------------------------------------------------------------
+    */
+
+    let exitEventSent = false;
+
+    function reportPageExit() {
+      if (exitEventSent) return;
+      exitEventSent = true;
+
+      sendGA4Event("salida_pagina", {
+        segundos_en_pagina: Math.max(
+          1,
+          Math.round((Date.now() - SESSION_START) / 1000)
+        ),
+        ultima_diapositiva: current + 1,
+        nombre_ultima_diapositiva: getSlideTitle(slides[current], current),
+        diapositivas_unicas_vistas: slideViewCounts.size
+      });
+    }
+
+    document.addEventListener("visibilitychange", () => {
+      if (document.visibilityState === "hidden") {
+        reportPageExit();
+      }
+    });
+
+    window.addEventListener("pagehide", reportPageExit);
+
+    updateUI();
+    reportSlideView(0, "carga_inicial");
+
+    if (window.lucide) {
+      window.lucide.createIcons();
+    }
+  </script>
+
+</body>
+</html>
