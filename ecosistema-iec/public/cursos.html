@@ -580,7 +580,7 @@
     <section class="course-list">
 
       <!-- EXPERTO IA NIVEL I UNIFICADO -->
-      <article class="course" style="--accent:#22d3ee">
+      <article class="course" data-course="Experto en IA Nivel I" style="--accent:#22d3ee">
         <button class="course-main" type="button" aria-expanded="false">
           <span class="icon-box"><i data-lucide="brain-circuit" width="27"></i></span>
           <span>
@@ -623,7 +623,7 @@
       </article>
 
       <!-- EXPERTO IA NIVEL II UNIFICADO -->
-      <article class="course" style="--accent:#818cf8">
+      <article class="course" data-course="Experto en IA Nivel II" style="--accent:#818cf8">
         <button class="course-main" type="button" aria-expanded="false">
           <span class="icon-box"><i data-lucide="bot" width="27"></i></span>
           <span>
@@ -666,7 +666,7 @@
       </article>
 
       <!-- PROGRAMADOR EXPERTO -->
-      <article class="course" style="--accent:#38bdf8">
+      <article class="course" data-course="Programador Experto con IA" style="--accent:#38bdf8">
         <button class="course-main" type="button" aria-expanded="false">
           <span class="icon-box"><i data-lucide="code-xml" width="27"></i></span>
           <span>
@@ -699,7 +699,7 @@
       </article>
 
       <!-- PROGRAMADOR TEENS -->
-      <article class="course" style="--accent:#f59e0b">
+      <article class="course" data-course="Programador Teens con IA" style="--accent:#f59e0b">
         <button class="course-main" type="button" aria-expanded="false">
           <span class="icon-box"><i data-lucide="gamepad-2" width="27"></i></span>
           <span>
@@ -732,7 +732,7 @@
       </article>
 
       <!-- ROBOTICA KIDS -->
-      <article class="course" style="--accent:#22c55e">
+      <article class="course" data-course="Robótica Kids" style="--accent:#22c55e">
         <button class="course-main" type="button" aria-expanded="false">
           <span class="icon-box"><i data-lucide="cpu" width="27"></i></span>
           <span>
@@ -765,7 +765,7 @@
       </article>
 
       <!-- WEEKENDCLASS -->
-      <article class="course" style="--accent:#ec4899">
+      <article class="course" data-course="WeekendClass De 0 a Producción" style="--accent:#ec4899">
         <button class="course-main" type="button" aria-expanded="false">
           <span class="icon-box"><i data-lucide="rocket" width="27"></i></span>
           <span>
@@ -798,7 +798,7 @@
       </article>
 
       <!-- REVIT IA -->
-      <article class="course" style="--accent:#fb7185">
+      <article class="course" data-course="Revit con Inteligencia Artificial" style="--accent:#fb7185">
         <button class="course-main" type="button" aria-expanded="false">
           <span class="icon-box"><i data-lucide="building-2" width="27"></i></span>
           <span>
@@ -838,7 +838,7 @@
       <p>Propuestas orientadas a la gestión administrativa del ámbito de la salud, potenciadas con Inteligencia Artificial y automatización.</p>
 
       <div class="upcoming-grid">
-        <article class="upcoming-card">
+        <article class="upcoming-card" data-course="Secretariado Odontológico Inteligente">
           <h4>🦷 Secretariado Odontológico Inteligente</h4>
           <p>Gestión integral de consultorios odontológicos, turnos, atención al paciente, documentación, comunicación y automatización administrativa.</p>
           <div class="upcoming-actions">
@@ -847,7 +847,7 @@
           </div>
         </article>
 
-        <article class="upcoming-card">
+        <article class="upcoming-card" data-course="Secretariado Médico Inteligente">
           <h4>🏥 Secretariado Médico Inteligente</h4>
           <p>Capacitación para clínicas, centros médicos y consultorios con IA, herramientas digitales y automatización de procesos administrativos.</p>
           <div class="upcoming-actions">
@@ -875,29 +875,212 @@
   </a>
 
   <script>
+    /*
+      EVENTOS PERSONALIZADOS DE GOOGLE ANALYTICS 4
+      Propiedad: G-R817QWH97R
+
+      Eventos enviados:
+      - abrir_curso
+      - cerrar_curso
+      - ver_capacitacion
+      - click_whatsapp
+      - click_red_social
+      - click_sitio_iec
+      - scroll_profundidad
+      - tiempo_interaccion
+    */
+
     const courses = document.querySelectorAll('.course');
 
+    /**
+     * Envía un evento a GA4 de forma segura.
+     * Si gtag todavía no terminó de cargar, el evento queda en dataLayer.
+     */
+    function trackEvent(eventName, parameters = {}) {
+      if (typeof window.gtag !== 'function') {
+        window.dataLayer = window.dataLayer || [];
+        window.gtag = function () {
+          window.dataLayer.push(arguments);
+        };
+      }
+
+      window.gtag('event', eventName, {
+        pagina: window.location.pathname,
+        titulo_pagina: document.title,
+        ...parameters
+      });
+    }
+
+    /**
+     * Devuelve el nombre del curso relacionado con el elemento pulsado.
+     */
+    function getCourseName(element) {
+      const course = element.closest('[data-course]');
+      return course ? course.dataset.course : 'General';
+    }
+
+    /**
+     * Apertura y cierre de tarjetas de cursos.
+     */
     courses.forEach(course => {
       const button = course.querySelector('.course-main');
 
       button.addEventListener('click', () => {
         const isOpen = course.classList.contains('open');
+        const courseName = course.dataset.course || 'Curso sin identificar';
 
         courses.forEach(item => {
           item.classList.remove('open');
-          item.querySelector('.course-main').setAttribute('aria-expanded','false');
+          item.querySelector('.course-main').setAttribute('aria-expanded', 'false');
         });
 
         if (!isOpen) {
           course.classList.add('open');
-          button.setAttribute('aria-expanded','true');
+          button.setAttribute('aria-expanded', 'true');
+
+          trackEvent('abrir_curso', {
+            curso: courseName,
+            seccion: 'capacitaciones_disponibles'
+          });
+        } else {
+          trackEvent('cerrar_curso', {
+            curso: courseName,
+            seccion: 'capacitaciones_disponibles'
+          });
         }
       });
     });
 
-    document.querySelectorAll('a').forEach(link => {
-      link.addEventListener('click', event => event.stopPropagation());
+    /**
+     * Seguimiento centralizado de todos los enlaces.
+     */
+    document.addEventListener('click', event => {
+      const link = event.target.closest('a');
+      if (!link) return;
+
+      event.stopPropagation();
+
+      const href = link.href || '';
+      const courseName = getCourseName(link);
+
+      if (link.classList.contains('primary')) {
+        trackEvent('ver_capacitacion', {
+          curso: courseName,
+          ubicacion_boton: 'tarjeta_curso',
+          destino: href
+        });
+        return;
+      }
+
+      if (link.classList.contains('mini-link')) {
+        trackEvent('ver_capacitacion', {
+          curso: courseName,
+          ubicacion_boton: 'proximamente',
+          destino: href
+        });
+        return;
+      }
+
+      if (
+        link.classList.contains('secondary') ||
+        link.classList.contains('wa-float') ||
+        href.includes('wa.me') ||
+        href.includes('api.whatsapp.com')
+      ) {
+        let ubicacion = 'otro';
+
+        if (link.classList.contains('secondary')) ubicacion = 'tarjeta_curso';
+        if (link.classList.contains('wa-float')) ubicacion = 'boton_flotante';
+        if (link.classList.contains('social')) ubicacion = 'redes_footer';
+
+        trackEvent('click_whatsapp', {
+          curso: courseName,
+          ubicacion_boton: ubicacion,
+          destino: href
+        });
+        return;
+      }
+
+      if (href.includes('instagram.com')) {
+        trackEvent('click_red_social', {
+          red_social: 'Instagram',
+          ubicacion_boton: 'redes_footer',
+          destino: href
+        });
+        return;
+      }
+
+      if (
+        link.classList.contains('social') &&
+        href.includes('iec-ia.com.ar')
+      ) {
+        trackEvent('click_sitio_iec', {
+          ubicacion_boton: 'redes_footer',
+          destino: href
+        });
+      }
     });
+
+    /**
+     * Profundidad de desplazamiento.
+     * Cada porcentaje se envía una sola vez por carga de página.
+     */
+    const sentScrollMilestones = new Set();
+    const scrollMilestones = [25, 50, 75, 90, 100];
+
+    function trackScrollDepth() {
+      const documentHeight = Math.max(
+        document.body.scrollHeight,
+        document.documentElement.scrollHeight
+      );
+      const viewportBottom = window.scrollY + window.innerHeight;
+      const scrollPercent = documentHeight > 0
+        ? Math.min(100, Math.round((viewportBottom / documentHeight) * 100))
+        : 100;
+
+      scrollMilestones.forEach(milestone => {
+        if (
+          scrollPercent >= milestone &&
+          !sentScrollMilestones.has(milestone)
+        ) {
+          sentScrollMilestones.add(milestone);
+
+          trackEvent('scroll_profundidad', {
+            porcentaje: milestone
+          });
+        }
+      });
+    }
+
+    window.addEventListener('scroll', trackScrollDepth, { passive: true });
+    window.addEventListener('load', trackScrollDepth);
+
+    /**
+     * Tiempo real de interacción con la página.
+     * Solo se contabiliza mientras la pestaña está visible.
+     */
+    const timeMilestones = [30, 60, 120];
+    const sentTimeMilestones = new Set();
+    let visibleSeconds = 0;
+
+    setInterval(() => {
+      if (document.visibilityState !== 'visible') return;
+
+      visibleSeconds += 1;
+
+      timeMilestones.forEach(seconds => {
+        if (
+          visibleSeconds >= seconds &&
+          !sentTimeMilestones.has(seconds)
+        ) {
+          sentTimeMilestones.add(seconds);
+
+          trackEvent('tiempo_interaccion', {
+            segundos: seconds
+          });
+        }
+      });
+    }, 1000);
 
     if (window.lucide) lucide.createIcons();
   </script>
