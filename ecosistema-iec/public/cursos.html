@@ -1,1088 +1,441 @@
 <!doctype html>
 <html lang="es">
 <head>
-  <!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-R817QWH97R"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>UNER + Instituto IEC | Programa Universitario de Inteligencia Operativa Aplicada</title>
+  <meta name="description" content="Presentación institucional para la Facultad de Ciencias Económicas de la UNER: programa universitario de Inteligencia Operativa Aplicada para docentes, personal administrativo y profesionales de Ciencias Económicas." />
 
-  gtag('config', 'G-R817QWH97R');
-</script>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Capacitaciones disponibles del Instituto IEC: Inteligencia Artificial, programación, robótica, BIM y formación tecnológica aplicada.">
-  <meta name="theme-color" content="#06111f">
-  <title>Capacitaciones IEC | Aprende hoy, lidera mañana</title>
-
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
-  <script src="https://unpkg.com/lucide@0.468.0/dist/umd/lucide.min.js"></script>
+  <script src="https://cdn.tailwindcss.com/3.4.17"></script>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
+  <script src="https://cdn.jsdelivr.net/npm/lucide@0.468.0/dist/umd/lucide.min.js"></script>
 
   <style>
     :root{
-      --bg:#030912;
-      --bg2:#06111f;
-      --text:#f8fafc;
-      --muted:#94a3b8;
       --cyan:#22d3ee;
-      --sky:#0ea5e9;
-      --blue:#2563eb;
+      --blue:#3b82f6;
+      --violet:#8b5cf6;
+      --green:#22c55e;
+      --amber:#f59e0b;
+      --rose:#fb7185;
+      --bg:#070b14;
+      --dark2:#0b1426;
     }
-
-    *{box-sizing:border-box}
-    html{scroll-behavior:smooth}
-    body{
-      margin:0;
-      min-height:100vh;
-      color:var(--text);
-      font-family:"DM Sans",sans-serif;
-      background:
-        radial-gradient(circle at 15% -5%,rgba(14,165,233,.22),transparent 29%),
-        radial-gradient(circle at 95% 25%,rgba(37,99,235,.18),transparent 30%),
-        radial-gradient(circle at 50% 100%,rgba(34,211,238,.09),transparent 35%),
-        linear-gradient(180deg,var(--bg),var(--bg2) 55%,#02070d);
-      overflow-x:hidden;
-    }
-
-    body:before{
-      content:"";
-      position:fixed;
-      inset:0;
-      z-index:-2;
-      pointer-events:none;
-      background-image:
-        linear-gradient(rgba(56,189,248,.045) 1px,transparent 1px),
-        linear-gradient(90deg,rgba(56,189,248,.045) 1px,transparent 1px);
-      background-size:52px 52px;
-      mask-image:linear-gradient(to bottom,black,transparent 90%);
-    }
-
-    a{text-decoration:none;color:inherit}
+    *{box-sizing:border-box;font-family:'DM Sans',sans-serif}
+    html,body{margin:0;padding:0;background:var(--bg);color:#fff;overflow:hidden}
+    button,a{-webkit-tap-highlight-color:transparent}
     button{font:inherit}
-    img{display:block;max-width:100%}
+    strong{color:#fff}
 
-    .shell{
-      width:min(100%,760px);
-      margin:auto;
-      padding:24px 16px 55px;
+    .slide{
+      display:none;width:100%;height:100vh;min-height:100vh;overflow-y:auto;overflow-x:hidden;
+      padding:2rem 1.5rem 5.5rem;scroll-behavior:smooth;position:relative;
     }
-
-    .hero{
-      text-align:center;
-      padding:30px 14px 22px;
+    .slide.active{display:flex}
+    .bg-pattern{
+      background-image:
+        radial-gradient(circle at 18% 20%,rgba(34,211,238,.12),transparent 25%),
+        radial-gradient(circle at 82% 75%,rgba(139,92,246,.13),transparent 30%),
+        linear-gradient(90deg,rgba(59,130,246,.055) 1px,transparent 1px),
+        linear-gradient(rgba(59,130,246,.055) 1px,transparent 1px);
+      background-size:auto,auto,52px 52px,52px 52px;
     }
+    .bg-pattern::after{content:"";position:absolute;inset:0;background:linear-gradient(135deg,transparent 0 45%,rgba(34,211,238,.06) 46%,transparent 48% 100%);background-size:360px 360px;pointer-events:none}
+    .glass-card{background:rgba(255,255,255,.07);backdrop-filter:blur(14px);border:1px solid rgba(255,255,255,.11);box-shadow:0 24px 70px rgba(0,0,0,.24)}
+    .pill{background:rgba(255,255,255,.055);border:1px solid rgba(255,255,255,.09)}
+    .gradient-text{background:linear-gradient(135deg,#67e8f9,#60a5fa,#a78bfa);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+    .green-text{background:linear-gradient(135deg,#86efac,#22c55e);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+    .amber-text{background:linear-gradient(135deg,#fde68a,#f59e0b,#fb923c);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+    .rose-text{background:linear-gradient(135deg,#fda4af,#fb7185,#f43f5e);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+    .orb{position:absolute;border-radius:999px;filter:blur(80px);opacity:.2;pointer-events:none}
+    .impact-card{transition:transform .25s ease,border-color .25s ease}
+    .impact-card:hover{transform:translateY(-4px);border-color:rgba(103,232,249,.35)}
+    .number-badge{background:linear-gradient(135deg,rgba(34,211,238,.26),rgba(59,130,246,.22));border:1px solid rgba(103,232,249,.32)}
+    .green-badge{background:linear-gradient(135deg,rgba(34,197,94,.25),rgba(34,211,238,.12));border:1px solid rgba(74,222,128,.32)}
+    .amber-badge{background:linear-gradient(135deg,rgba(245,158,11,.25),rgba(251,191,36,.10));border:1px solid rgba(251,191,36,.32)}
+    .violet-badge{background:linear-gradient(135deg,rgba(139,92,246,.25),rgba(59,130,246,.14));border:1px solid rgba(167,139,250,.32)}
+    .logo-shell{height:82px;min-width:165px;padding:10px 18px;border-radius:22px;display:flex;align-items:center;justify-content:center;background:linear-gradient(145deg,rgba(255,255,255,.98),rgba(226,232,240,.92));border:2px solid rgba(103,232,249,.46);box-shadow:0 16px 48px rgba(37,99,235,.22),0 0 0 6px rgba(34,211,238,.06)}
+    .logo-shell img{max-height:62px;max-width:190px;width:auto;height:auto;object-fit:contain}
+    .logo-shell.uner-logo{padding:6px;min-width:92px;width:92px}
+    .logo-shell.uner-logo img{max-height:68px;max-width:68px;border-radius:14px}
+    .logo-shell.iec-logo{min-width:210px;padding:0;background:transparent;border:0;box-shadow:none;overflow:visible}
+    .logo-shell.iec-logo img{max-height:82px;max-width:240px;filter:drop-shadow(0 14px 28px rgba(0,0,0,.35))}
+    .mini-logo{height:46px;max-width:140px;object-fit:contain;filter:drop-shadow(0 10px 20px rgba(0,0,0,.28))}
 
-    .logo{
-      width:112px;
-      height:112px;
-      margin:0 auto 18px;
-      border-radius:50%;
-      padding:7px;
-      border:1px solid rgba(125,211,252,.28);
-      background:linear-gradient(145deg,rgba(125,211,252,.23),rgba(255,255,255,.03));
-      box-shadow:0 0 50px rgba(14,165,233,.18);
-    }
+    .nav-button{position:fixed;top:50%;z-index:70;transform:translateY(-50%);width:46px;height:46px;border-radius:999px;display:flex;align-items:center;justify-content:center;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.14);backdrop-filter:blur(14px);color:#fff;transition:.2s ease}
+    .nav-button:hover{background:rgba(59,130,246,.25);border-color:rgba(96,165,250,.55)}
+    .dot{width:8px;height:8px;border-radius:999px;background:rgba(255,255,255,.25);transition:.25s ease;border:0;padding:0;cursor:pointer}
+    .dot.active{width:24px;background:linear-gradient(90deg,var(--cyan),var(--blue))}
+    .top-actions{position:fixed;top:14px;left:14px;z-index:80;display:flex;gap:8px;flex-wrap:wrap}
+    .action-button{display:inline-flex;align-items:center;justify-content:center;gap:8px;border-radius:999px;padding:10px 14px;background:rgba(5,10,20,.72);border:1px solid rgba(255,255,255,.14);color:#fff;backdrop-filter:blur(14px);font-size:12px;font-weight:800;letter-spacing:.03em;transition:.2s ease;cursor:pointer}
+    .action-button:hover{background:rgba(37,99,235,.28);border-color:rgba(96,165,250,.55)}
+    .action-button.primary{background:linear-gradient(135deg,rgba(14,165,233,.92),rgba(37,99,235,.92));border-color:rgba(125,211,252,.55)}
+    .flow-arrow{color:#67e8f9;font-size:30px;line-height:1;font-weight:900;text-shadow:0 0 22px rgba(34,211,238,.42)}
+    .section-tag{font-size:13px;font-weight:900;letter-spacing:.18em;text-transform:uppercase;color:#67e8f9}
 
-    .logo img{
-      width:100%;
-      height:100%;
-      object-fit:contain;
-      border-radius:50%;
-    }
-
-    .eyebrow{
-      display:inline-flex;
-      align-items:center;
-      gap:8px;
-      padding:8px 13px;
-      border-radius:999px;
-      color:#a5f3fc;
-      background:rgba(34,211,238,.08);
-      border:1px solid rgba(34,211,238,.22);
-      font-size:11px;
-      font-weight:900;
-      letter-spacing:.12em;
-      text-transform:uppercase;
-    }
-
-    h1{
-      margin:17px auto 10px;
-      max-width:650px;
-      font-size:clamp(28px,5vw,46px);
-      line-height:1.08;
-      letter-spacing:-.035em;
-      font-weight:900;
-    }
-
-    .gradient{
-      background:linear-gradient(135deg,#a5f3fc,#38bdf8 45%,#818cf8);
-      -webkit-background-clip:text;
-      background-clip:text;
-      -webkit-text-fill-color:transparent;
-    }
-
-    .hero p{
-      max-width:610px;
-      margin:14px auto 0;
-      color:#cbd5e1;
-      font-size:clamp(14px,2.4vw,18px);
-      line-height:1.6;
-    }
-
-    .tags{
-      display:flex;
-      flex-wrap:wrap;
-      justify-content:center;
-      gap:8px;
-      margin-top:18px;
-    }
-
-    .tag{
-      display:inline-flex;
-      align-items:center;
-      gap:6px;
-      padding:8px 11px;
-      border-radius:999px;
-      color:#cbd5e1;
-      background:rgba(255,255,255,.045);
-      border:1px solid rgba(255,255,255,.08);
-      font-size:12px;
-      font-weight:700;
-    }
-
-    .notice{
-      display:flex;
-      gap:13px;
-      align-items:center;
-      margin:4px 0 20px;
-      padding:15px 17px;
-      border-radius:20px;
-      background:linear-gradient(135deg,rgba(14,165,233,.14),rgba(37,99,235,.08));
-      border:1px solid rgba(56,189,248,.23);
-    }
-
-    .notice-icon{
-      width:42px;height:42px;
-      flex:0 0 auto;
-      display:grid;
-      place-items:center;
-      border-radius:14px;
-      color:#67e8f9;
-      background:rgba(34,211,238,.10);
-      border:1px solid rgba(103,232,249,.20);
-    }
-
-    .notice strong{display:block;font-size:14px}
-    .notice span{display:block;margin-top:3px;color:var(--muted);font-size:12px;line-height:1.45}
-
-    .section-title{
-      display:flex;
-      align-items:flex-end;
-      justify-content:space-between;
-      gap:10px;
-      margin:25px 5px 12px;
-    }
-
-    .section-title h2{margin:0;font-size:18px;font-weight:900}
-    .section-title span{color:#64748b;font-size:12px}
-
-    .course-list{display:grid;gap:13px}
-
-    .course{
-      --accent:#22d3ee;
-      position:relative;
-      overflow:hidden;
-      border-radius:24px;
-      border:1px solid rgba(255,255,255,.09);
-      background:
-        linear-gradient(135deg,rgba(255,255,255,.075),rgba(255,255,255,.025)),
-        rgba(3,13,24,.80);
-      box-shadow:0 20px 60px rgba(0,0,0,.22);
-      transition:.2s ease;
-    }
-
-    .course:before{
-      content:"";
-      position:absolute;
-      top:0;left:0;right:0;
-      height:2px;
-      background:linear-gradient(90deg,transparent,var(--accent),transparent);
-      opacity:.8;
-    }
-
-    .course:hover{
-      transform:translateY(-2px);
-      border-color:color-mix(in srgb,var(--accent) 45%,transparent);
-    }
-
-    .course-main{
-      width:100%;
-      border:0;
-      color:inherit;
-      background:transparent;
-      cursor:pointer;
-      text-align:left;
-      display:grid;
-      grid-template-columns:58px minmax(0,1fr) 38px;
-      align-items:center;
-      gap:14px;
-      padding:17px;
-    }
-
-    .icon-box{
-      width:58px;height:58px;
-      display:grid;place-items:center;
-      border-radius:19px;
-      color:var(--accent);
-      background:color-mix(in srgb,var(--accent) 11%,transparent);
-      border:1px solid color-mix(in srgb,var(--accent) 27%,transparent);
-    }
-
-    .course-name{
-      display:flex;
-      flex-wrap:wrap;
-      align-items:center;
-      gap:7px;
-      margin:0 0 5px;
-      font-size:16px;
-      line-height:1.25;
-      font-weight:900;
-    }
-
-    .badge{
-      padding:4px 7px;
-      border-radius:999px;
-      color:color-mix(in srgb,var(--accent) 86%,white);
-      background:color-mix(in srgb,var(--accent) 13%,transparent);
-      border:1px solid color-mix(in srgb,var(--accent) 25%,transparent);
-      font-size:9px;
-      font-weight:900;
-      letter-spacing:.08em;
-      text-transform:uppercase;
-    }
-
-    .course-sub{
-      display:flex;
-      flex-wrap:wrap;
-      gap:5px 11px;
-      color:#aebed1;
-      font-size:12px;
-      line-height:1.4;
-    }
-
-    .course-sub span{
-      display:inline-flex;
-      align-items:center;
-      gap:5px;
-    }
-
-    .arrow{
-      width:36px;height:36px;
-      display:grid;place-items:center;
-      border-radius:13px;
-      color:#cbd5e1;
-      background:rgba(255,255,255,.045);
-      border:1px solid rgba(255,255,255,.075);
-      transition:.25s ease;
-    }
-
-    .course.open .arrow{
-      transform:rotate(180deg);
-      color:var(--accent);
-      background:color-mix(in srgb,var(--accent) 10%,transparent);
-    }
-
-    .course-details{
-      max-height:0;
-      opacity:0;
-      overflow:hidden;
-      transition:max-height .4s ease,opacity .25s ease;
-    }
-
-    .course.open .course-details{
-      max-height:700px;
-      opacity:1;
-    }
-
-    .details{
-      margin:0 17px 17px;
-      padding:16px;
-      border-radius:19px;
-      background:rgba(0,0,0,.17);
-      border:1px solid rgba(255,255,255,.07);
-    }
-
-    .details p{
-      margin:0;
-      color:#cbd5e1;
-      font-size:13px;
-      line-height:1.65;
-    }
-
-    .commissions{
-      display:grid;
-      gap:9px;
-      margin-top:14px;
-    }
-
-    .commission{
-      padding:12px;
-      border-radius:14px;
-      background:rgba(255,255,255,.045);
-      border:1px solid rgba(255,255,255,.07);
-    }
-
-    .commission strong{
-      display:block;
-      margin-bottom:4px;
-      color:var(--accent);
-      font-size:10px;
-      letter-spacing:.08em;
-      text-transform:uppercase;
-    }
-
-    .commission span{
-      color:#e2e8f0;
-      font-size:12px;
-      line-height:1.45;
-    }
-
-    .facts{
-      display:grid;
-      grid-template-columns:repeat(3,minmax(0,1fr));
-      gap:8px;
-      margin-top:14px;
-    }
-
-    .fact{
-      padding:11px;
-      border-radius:14px;
-      background:rgba(255,255,255,.04);
-      border:1px solid rgba(255,255,255,.065);
-    }
-
-    .fact small{
-      display:block;
-      margin-bottom:4px;
-      color:#64748b;
-      font-size:9px;
-      font-weight:900;
-      letter-spacing:.08em;
-      text-transform:uppercase;
-    }
-
-    .fact strong{
-      display:block;
-      color:#e2e8f0;
-      font-size:11px;
-      line-height:1.35;
-    }
-
-    .actions{
-      display:grid;
-      grid-template-columns:1fr 47px;
-      gap:9px;
-      margin-top:13px;
-    }
-
-    .cta{
-      min-height:45px;
-      display:flex;
-      align-items:center;
-      justify-content:center;
-      gap:8px;
-      border-radius:15px;
-      font-size:12px;
-      font-weight:900;
-      transition:.18s ease;
-    }
-
-    .cta:hover{transform:translateY(-1px);filter:brightness(1.08)}
-
-    .cta.primary{
-      color:white;
-      background:linear-gradient(135deg,color-mix(in srgb,var(--accent) 75%,#0891b2),color-mix(in srgb,var(--accent) 70%,#2563eb));
-      border:1px solid color-mix(in srgb,var(--accent) 40%,white);
-    }
-
-    .cta.secondary{
-      color:#dbeafe;
-      background:rgba(255,255,255,.055);
-      border:1px solid rgba(255,255,255,.09);
-    }
-
-    .upcoming{
-      margin-top:22px;
-      padding:20px;
-      border-radius:26px;
-      background:
-        radial-gradient(circle at 90% 0%,rgba(34,211,238,.15),transparent 42%),
-        linear-gradient(135deg,rgba(14,165,233,.15),rgba(37,99,235,.08));
-      border:1px solid rgba(56,189,248,.23);
-    }
-
-    .upcoming-label{
-      display:inline-flex;
-      align-items:center;
-      gap:7px;
-      color:#a5f3fc;
-      font-size:10px;
-      font-weight:900;
-      letter-spacing:.12em;
-      text-transform:uppercase;
-    }
-
-    .upcoming h3{margin:10px 0 6px;font-size:21px}
-    .upcoming>p{margin:0;color:#aebed1;font-size:13px;line-height:1.6}
-
-    .upcoming-grid{
-      display:grid;
-      gap:12px;
-      margin-top:16px;
-    }
-
-    .upcoming-card{
-      padding:15px;
-      border-radius:18px;
-      background:rgba(255,255,255,.05);
-      border:1px solid rgba(255,255,255,.08);
-    }
-
-    .upcoming-card h4{margin:0 0 7px;font-size:15px}
-    .upcoming-card p{margin:0;color:#cbd5e1;font-size:12px;line-height:1.6}
-
-    .upcoming-actions{
-      display:flex;
-      flex-wrap:wrap;
-      align-items:center;
-      gap:9px;
-      margin-top:12px;
-    }
-
-    .soon{
-      padding:6px 11px;
-      border-radius:999px;
-      color:#67e8f9;
-      background:rgba(14,165,233,.13);
-      font-size:11px;
-      font-weight:800;
-    }
-
-    .mini-link{
-      padding:8px 12px;
-      border-radius:12px;
-      color:white;
-      background:linear-gradient(135deg,#0891b2,#2563eb);
-      border:1px solid rgba(125,211,252,.35);
-      font-size:11px;
-      font-weight:800;
-    }
-
-    .socials{
-      display:flex;
-      justify-content:center;
-      gap:9px;
-      margin:22px 0 14px;
-    }
-
-    .social{
-      width:44px;height:44px;
-      display:grid;place-items:center;
-      border-radius:15px;
-      color:#cbd5e1;
-      background:rgba(255,255,255,.045);
-      border:1px solid rgba(255,255,255,.075);
-    }
-
-    footer{
-      padding:8px 0 10px;
-      color:#64748b;
-      text-align:center;
-      font-size:11px;
-      line-height:1.7;
-    }
-
-    footer strong{color:#94a3b8}
-
-    .wa-float{
-      position:fixed;
-      right:17px;
-      bottom:17px;
-      z-index:50;
-      width:57px;height:57px;
-      display:grid;place-items:center;
-      border-radius:19px;
-      color:white;
-      background:linear-gradient(135deg,#22c55e,#059669);
-      border:1px solid rgba(187,247,208,.44);
-      box-shadow:0 20px 45px rgba(5,150,105,.28);
-    }
-
-    @media(max-width:560px){
-      .shell{padding:16px 11px 40px}
-      .hero{padding:25px 8px 19px}
-      .logo{width:101px;height:101px}
-      .course-main{grid-template-columns:51px minmax(0,1fr) 34px;padding:14px;gap:11px}
-      .icon-box{width:51px;height:51px;border-radius:17px}
-      .course-name{font-size:14px}
-      .course-sub{font-size:11px}
-      .details{margin:0 14px 14px;padding:14px}
-      .facts{grid-template-columns:1fr}
-      .notice{align-items:flex-start}
-      .wa-float{right:12px;bottom:12px;width:52px;height:52px}
-    }
-
-    @media(prefers-reduced-motion:reduce){
-      *{scroll-behavior:auto!important;transition:none!important}
-    }
+    @media(max-width:768px){.slide{padding:5.3rem .85rem 5.5rem}.nav-button{width:40px;height:40px}.top-actions{top:10px;left:10px;right:10px}.action-button{padding:9px 11px;font-size:10px}.logo-shell{height:62px;min-width:120px}.logo-shell.iec-logo{min-width:170px}.logo-shell.iec-logo img{max-height:66px;max-width:190px}}
+    @media(max-width:640px){body{overflow:hidden}.nav-button{top:auto;bottom:16px;transform:none}#prev-btn{left:14px!important}#next-btn{right:14px!important}#dots{bottom:29px!important;max-width:calc(100vw - 120px)}.hide-mobile{display:none!important}}
+    @media print{body{overflow:visible;background:#070b14}.top-actions,.nav-button,#dots,#slide-counter{display:none!important}.slide{display:flex!important;width:100vw;height:100vh;min-height:100vh;page-break-after:always;break-after:page;overflow:hidden}}
   </style>
 </head>
+<body class="relative">
+  <div class="top-actions">
+    <button class="action-button" onclick="toggleFullscreen()"><i data-lucide="maximize-2" style="width:16px;height:16px"></i> PANTALLA COMPLETA</button>
+    <button class="action-button" onclick="window.print()"><i data-lucide="printer" style="width:16px;height:16px"></i> IMPRIMIR</button>
+  </div>
+  <button id="prev-btn" class="nav-button left-3 md:left-5" onclick="changeSlide(-1)" aria-label="Diapositiva anterior"><i data-lucide="chevron-left" style="width:22px;height:22px"></i></button>
+  <button id="next-btn" class="nav-button right-3 md:right-5" onclick="changeSlide(1)" aria-label="Diapositiva siguiente"><i data-lucide="chevron-right" style="width:22px;height:22px"></i></button>
+  <div id="dots" class="fixed bottom-4 left-1/2 -translate-x-1/2 z-[70] flex items-center justify-center gap-2 flex-wrap"></div>
+  <div id="slide-counter" class="fixed top-4 right-4 z-[70] px-3 py-1.5 rounded-full bg-black/30 border border-white/10 backdrop-blur text-xs text-slate-300"></div>
 
-<body>
-  <main class="shell">
-    <header class="hero">
-      <div class="logo">
-        <img src="https://i.postimg.cc/jSkQKpRK/Diseno-sin-titulo-2026-05-15T105828-195.png" alt="Instituto IEC">
+  <!-- 1 -->
+  <section class="slide active flex-col items-center justify-center bg-gradient-to-br from-[#070b14] via-[#0b162b] to-[#070b14] text-center">
+    <div class="absolute inset-0 bg-pattern"></div><div class="orb w-80 h-80 bg-cyan-400 top-[-120px] left-[-100px]"></div><div class="orb w-96 h-96 bg-violet-500 bottom-[-160px] right-[-120px]"></div>
+    <div class="relative z-10 max-w-6xl mx-auto w-full px-3">
+      <div class="flex items-center justify-center gap-4 md:gap-6 mb-7 flex-wrap">
+        <div class="logo-shell uner-logo"><img src="https://i.postimg.cc/Yqdq1YXT/t-Buru-Upn-400x400.jpg" alt="Facultad de Ciencias Económicas UNER"></div>
+        <div class="h-14 w-px bg-white/20 hide-mobile"></div>
+        <div class="logo-shell iec-logo"><img src="https://i.postimg.cc/jSkQKpRK/Diseno-sin-titulo-2026-05-15T105828-195.png" alt="IEC - Instituto Privado en Economía del Conocimiento"></div>
       </div>
-
-      <span class="eyebrow">
-        <i data-lucide="sparkles" width="15"></i>
-        Capacitaciones 2026
-      </span>
-
-      <h1>Aprende hoy, <span class="gradient">lidera mañana</span></h1>
-
-      <p>Elegí la capacitación que mejor se adapta a vos y comenzá a desarrollar habilidades en Inteligencia Artificial, programación, robótica y tecnología aplicada.</p>
-
-      <div class="tags">
-        <span class="tag"><i data-lucide="monitor-cog" width="14"></i> Modalidad práctica</span>
-        <span class="tag"><i data-lucide="award" width="14"></i> Certificación IEC</span>
-        <span class="tag"><i data-lucide="map-pin" width="14"></i> Paraná</span>
-      </div>
-    </header>
-
-    <section class="notice">
-      <div class="notice-icon"><i data-lucide="calendar-days" width="23"></i></div>
-      <div>
-        <strong>Inscripciones abiertas · Agosto 2026</strong>
-        <span>Tocá cada capacitación para conocer su propuesta, comisiones, fechas y horarios.</span>
-      </div>
-    </section>
-
-    <div class="section-title">
-      <h2>Capacitaciones disponibles</h2>
-      <span>Seleccioná una opción</span>
+      <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-cyan-400/25 bg-cyan-400/10 text-cyan-200 text-xs md:text-sm font-bold tracking-[.18em] uppercase mb-5">🎓 Propuesta académica institucional</div>
+      <h1 class="text-4xl sm:text-5xl md:text-7xl lg:text-8xl font-black leading-[.95] mb-5">PROGRAMA UNIVERSITARIO<br><span class="gradient-text">DE INTELIGENCIA OPERATIVA APLICADA</span></h1>
+      <p class="text-base sm:text-lg md:text-2xl text-slate-300 max-w-4xl mx-auto mb-7">Formación estratégica para docentes universitarios, personal administrativo y profesionales de Ciencias Económicas.</p>
+      <div class="glass-card rounded-3xl p-5 max-w-4xl mx-auto"><p class="text-2xl md:text-4xl font-black">No enseñamos herramientas aisladas. <span class="gradient-text">Diseñamos capacidades para transformar procesos.</span></p></div>
     </div>
+  </section>
 
-    <section class="course-list">
-
-      <!-- EXPERTO IA NIVEL I UNIFICADO -->
-      <article class="course" data-course="Experto en IA Nivel I" style="--accent:#22d3ee">
-        <button class="course-main" type="button" aria-expanded="false">
-          <span class="icon-box"><i data-lucide="brain-circuit" width="27"></i></span>
-          <span>
-            <span class="course-name">Experto en IA · Nivel I <span class="badge">2 comisiones</span></span>
-            <span class="course-sub">
-              <span><i data-lucide="users" width="13"></i> Dos horarios</span>
-              <span><i data-lucide="calendar" width="13"></i> Miércoles o viernes</span>
-            </span>
-          </span>
-          <span class="arrow"><i data-lucide="chevron-down" width="19"></i></span>
-        </button>
-
-        <div class="course-details">
-          <div class="details">
-            <p>Formación inicial para aprender a utilizar Inteligencia Artificial de manera práctica en el trabajo, los estudios, la creación de contenido y la productividad diaria.</p>
-
-            <div class="commissions">
-              <div class="commission">
-                <strong>Comisión A</strong>
-                <span>Miércoles · 16:00 a 18:00 hs · Inicio 05/08</span>
-              </div>
-              <div class="commission">
-                <strong>Comisión B</strong>
-                <span>Viernes · 18:00 a 20:00 hs · Inicio 07/08</span>
-              </div>
-            </div>
-
-            <div class="facts">
-              <div class="fact"><small>Nivel</small><strong>Inicial–intermedio</strong></div>
-              <div class="fact"><small>Modalidad</small><strong>Presencial y práctica</strong></div>
-              <div class="fact"><small>Orientación</small><strong>Aplicaciones reales</strong></div>
-            </div>
-
-            <div class="actions">
-              <a class="cta primary" href="https://www.iec-ia.com.ar/experto_ia_nivel_1.html" target="_blank"><i data-lucide="external-link" width="16"></i> Ver capacitación</a>
-              <a class="cta secondary" href="https://wa.me/5493434295937?text=Hola%20IEC%2C%20quiero%20informaci%C3%B3n%20sobre%20Experto%20en%20IA%20Nivel%20I" target="_blank" aria-label="Consultar por WhatsApp"><i data-lucide="message-circle" width="18"></i></a>
-            </div>
-          </div>
-        </div>
-      </article>
-
-      <!-- EXPERTO IA NIVEL II UNIFICADO -->
-      <article class="course" data-course="Experto en IA Nivel II" style="--accent:#818cf8">
-        <button class="course-main" type="button" aria-expanded="false">
-          <span class="icon-box"><i data-lucide="bot" width="27"></i></span>
-          <span>
-            <span class="course-name">Experto en IA · Nivel II <span class="badge">2 comisiones</span></span>
-            <span class="course-sub">
-              <span><i data-lucide="users" width="13"></i> Dos horarios</span>
-              <span><i data-lucide="calendar" width="13"></i> Miércoles o viernes</span>
-            </span>
-          </span>
-          <span class="arrow"><i data-lucide="chevron-down" width="19"></i></span>
-        </button>
-
-        <div class="course-details">
-          <div class="details">
-            <p>Profundización en agentes, asistentes personalizados, automatización, análisis de información y aplicación estratégica de IA en proyectos profesionales.</p>
-
-            <div class="commissions">
-              <div class="commission">
-                <strong>Comisión A</strong>
-                <span>Miércoles · 18:00 a 20:00 hs · Inicio 05/08</span>
-              </div>
-              <div class="commission">
-                <strong>Comisión B</strong>
-                <span>Viernes · 20:00 a 22:00 hs · Inicio en septiembre</span>
-              </div>
-            </div>
-
-            <div class="facts">
-              <div class="fact"><small>Nivel</small><strong>Intermedio–avanzado</strong></div>
-              <div class="fact"><small>Modalidad</small><strong>Laboratorio aplicado</strong></div>
-              <div class="fact"><small>Enfoque</small><strong>Automatización e IA</strong></div>
-            </div>
-
-            <div class="actions">
-              <a class="cta primary" href="https://www.iec-ia.com.ar/experto_ia_nivel_2.html" target="_blank"><i data-lucide="external-link" width="16"></i> Ver capacitación</a>
-              <a class="cta secondary" href="https://wa.me/5493434295937?text=Hola%20IEC%2C%20quiero%20informaci%C3%B3n%20sobre%20Experto%20en%20IA%20Nivel%20II" target="_blank" aria-label="Consultar por WhatsApp"><i data-lucide="message-circle" width="18"></i></a>
-            </div>
-          </div>
-        </div>
-      </article>
-
-      <!-- PROGRAMADOR EXPERTO -->
-      <article class="course" data-course="Programador Experto con IA" style="--accent:#38bdf8">
-        <button class="course-main" type="button" aria-expanded="false">
-          <span class="icon-box"><i data-lucide="code-xml" width="27"></i></span>
-          <span>
-            <span class="course-name">Programador Experto con IA <span class="badge">Profesional</span></span>
-            <span class="course-sub">
-              <span><i data-lucide="calendar" width="13"></i> Jueves</span>
-              <span><i data-lucide="clock-3" width="13"></i> 18:00 a 22:00</span>
-              <span><i data-lucide="play-circle" width="13"></i> Inicio 06/08</span>
-            </span>
-          </span>
-          <span class="arrow"><i data-lucide="chevron-down" width="19"></i></span>
-        </button>
-
-        <div class="course-details">
-          <div class="details">
-            <p>Desarrollo de aplicaciones, páginas web, sistemas, bases de datos y automatizaciones utilizando Inteligencia Artificial como copiloto de programación.</p>
-
-            <div class="facts">
-              <div class="fact"><small>Perfil</small><strong>Desarrollo Full Stack</strong></div>
-              <div class="fact"><small>Práctica</small><strong>Proyectos funcionales</strong></div>
-              <div class="fact"><small>Herramientas</small><strong>IA + Web + Datos</strong></div>
-            </div>
-
-            <div class="actions">
-              <a class="cta primary" href="https://www.iec-ia.com.ar/programador_experto_ia.html" target="_blank"><i data-lucide="external-link" width="16"></i> Ver capacitación</a>
-              <a class="cta secondary" href="https://wa.me/5493434295937?text=Hola%20IEC%2C%20quiero%20informaci%C3%B3n%20sobre%20Programador%20Experto%20con%20IA" target="_blank" aria-label="Consultar por WhatsApp"><i data-lucide="message-circle" width="18"></i></a>
-            </div>
-          </div>
-        </div>
-      </article>
-
-      <!-- PROGRAMADOR TEENS -->
-      <article class="course" data-course="Programador Teens con IA" style="--accent:#f59e0b">
-        <button class="course-main" type="button" aria-expanded="false">
-          <span class="icon-box"><i data-lucide="gamepad-2" width="27"></i></span>
-          <span>
-            <span class="course-name">Programador Teens con IA <span class="badge">Adolescentes</span></span>
-            <span class="course-sub">
-              <span><i data-lucide="calendar" width="13"></i> Miércoles</span>
-              <span><i data-lucide="clock-3" width="13"></i> 14:00 a 16:00</span>
-              <span><i data-lucide="play-circle" width="13"></i> Inicio 05/08</span>
-            </span>
-          </span>
-          <span class="arrow"><i data-lucide="chevron-down" width="19"></i></span>
-        </button>
-
-        <div class="course-details">
-          <div class="details">
-            <p>Una experiencia para adolescentes donde aprenden programación, videojuegos, diseño digital y creación de proyectos utilizando IA como asistente.</p>
-
-            <div class="facts">
-              <div class="fact"><small>Perfil</small><strong>Adolescentes</strong></div>
-              <div class="fact"><small>Metodología</small><strong>Aprender creando</strong></div>
-              <div class="fact"><small>Proyectos</small><strong>Juegos y aplicaciones</strong></div>
-            </div>
-
-            <div class="actions">
-              <a class="cta primary" href="https://www.iec-ia.com.ar/programador_teens_ia.html" target="_blank"><i data-lucide="external-link" width="16"></i> Ver capacitación</a>
-              <a class="cta secondary" href="https://wa.me/5493434295937?text=Hola%20IEC%2C%20quiero%20informaci%C3%B3n%20sobre%20Programador%20Teens%20con%20IA" target="_blank" aria-label="Consultar por WhatsApp"><i data-lucide="message-circle" width="18"></i></a>
-            </div>
-          </div>
-        </div>
-      </article>
-
-      <!-- ROBOTICA KIDS -->
-      <article class="course" data-course="Robótica Kids" style="--accent:#22c55e">
-        <button class="course-main" type="button" aria-expanded="false">
-          <span class="icon-box"><i data-lucide="cpu" width="27"></i></span>
-          <span>
-            <span class="course-name">Robótica Kids <span class="badge">Infancias</span></span>
-            <span class="course-sub">
-              <span><i data-lucide="calendar" width="13"></i> Sábados</span>
-              <span><i data-lucide="clock-3" width="13"></i> 10:00 a 12:00</span>
-              <span><i data-lucide="play-circle" width="13"></i> Inicio 01/08</span>
-            </span>
-          </span>
-          <span class="arrow"><i data-lucide="chevron-down" width="19"></i></span>
-        </button>
-
-        <div class="course-details">
-          <div class="details">
-            <p>Robótica educativa, circuitos, programación, diseño 3D e Inteligencia Artificial en un espacio creativo para aprender mediante desafíos y proyectos.</p>
-
-            <div class="facts">
-              <div class="fact"><small>Enfoque</small><strong>STEAM y creatividad</strong></div>
-              <div class="fact"><small>Prácticas</small><strong>Robots y circuitos</strong></div>
-              <div class="fact"><small>Entorno</small><strong>Laboratorio IEC</strong></div>
-            </div>
-
-            <div class="actions">
-              <a class="cta primary" href="https://www.iec-ia.com.ar/robotica_kids.html" target="_blank"><i data-lucide="external-link" width="16"></i> Ver capacitación</a>
-              <a class="cta secondary" href="https://wa.me/5493434295937?text=Hola%20IEC%2C%20quiero%20informaci%C3%B3n%20sobre%20Rob%C3%B3tica%20Kids" target="_blank" aria-label="Consultar por WhatsApp"><i data-lucide="message-circle" width="18"></i></a>
-            </div>
-          </div>
-        </div>
-      </article>
-
-      <!-- WEEKENDCLASS -->
-      <article class="course" data-course="WeekendClass De 0 a Producción" style="--accent:#ec4899">
-        <button class="course-main" type="button" aria-expanded="false">
-          <span class="icon-box"><i data-lucide="rocket" width="27"></i></span>
-          <span>
-            <span class="course-name">WeekClass · De 0 a Producción <span class="badge">Intensiva</span></span>
-            <span class="course-sub">
-              <span><i data-lucide="calendar-range" width="13"></i> 17 al 21 de agosto</span>
-              <span><i data-lucide="clock-3" width="13"></i> 14:00 a 17:00</span>
-              <span><i data-lucide="zap" width="13"></i> 5 jornadas</span>
-            </span>
-          </span>
-          <span class="arrow"><i data-lucide="chevron-down" width="19"></i></span>
-        </button>
-
-        <div class="course-details">
-          <div class="details">
-            <p>Semana intensiva de producción tecnológica: desde la idea inicial hasta una solución funcional utilizando IA, diseño, programación y automatización.</p>
-
-            <div class="facts">
-              <div class="fact"><small>Formato</small><strong>Lunes a viernes</strong></div>
-              <div class="fact"><small>Duración</small><strong>15 horas intensivas</strong></div>
-              <div class="fact"><small>Resultado</small><strong>Proyecto listo</strong></div>
-            </div>
-
-            <div class="actions">
-              <a class="cta primary" href="https://www.iec-ia.com.ar/weekendclass.html" target="_blank"><i data-lucide="external-link" width="16"></i> Ver capacitación</a>
-              <a class="cta secondary" href="https://wa.me/5493434295937?text=Hola%20IEC%2C%20quiero%20informaci%C3%B3n%20sobre%20WeekendClass%20De%200%20a%20Producci%C3%B3n" target="_blank" aria-label="Consultar por WhatsApp"><i data-lucide="message-circle" width="18"></i></a>
-            </div>
-          </div>
-        </div>
-      </article>
-
-      <!-- REVIT IA -->
-      <article class="course" data-course="Revit con Inteligencia Artificial" style="--accent:#fb7185">
-        <button class="course-main" type="button" aria-expanded="false">
-          <span class="icon-box"><i data-lucide="building-2" width="27"></i></span>
-          <span>
-            <span class="course-name">Revit + Inteligencia Artificial <span class="badge">BIM</span></span>
-            <span class="course-sub">
-              <span><i data-lucide="calendar" width="13"></i> Martes</span>
-              <span><i data-lucide="clock-3" width="13"></i> 18:00 a 21:00</span>
-              <span><i data-lucide="calendar-plus" width="13"></i> Inicio en septiembre</span>
-            </span>
-          </span>
-          <span class="arrow"><i data-lucide="chevron-down" width="19"></i></span>
-        </button>
-
-        <div class="course-details">
-          <div class="details">
-            <p>Modelado BIM, documentación técnica y optimización de proyectos arquitectónicos mediante Revit y herramientas de Inteligencia Artificial.</p>
-
-            <div class="facts">
-              <div class="fact"><small>Área</small><strong>Arquitectura y obra</strong></div>
-              <div class="fact"><small>Tecnología</small><strong>Revit + BIM + IA</strong></div>
-              <div class="fact"><small>Metodología</small><strong>Proyecto aplicado</strong></div>
-            </div>
-
-            <div class="actions">
-              <a class="cta primary" href="https://www.iec-ia.com.ar/revit_ia.html" target="_blank"><i data-lucide="external-link" width="16"></i> Ver capacitación</a>
-              <a class="cta secondary" href="https://wa.me/5493434295937?text=Hola%20IEC%2C%20quiero%20informaci%C3%B3n%20sobre%20Revit%20con%20Inteligencia%20Artificial" target="_blank" aria-label="Consultar por WhatsApp"><i data-lucide="message-circle" width="18"></i></a>
-            </div>
-          </div>
-        </div>
-      </article>
-
-    </section>
-
-    <section class="upcoming">
-      <span class="upcoming-label"><i data-lucide="sparkles" width="15"></i> Próximamente</span>
-      <h3>Nuevas capacitaciones inteligentes</h3>
-      <p>Propuestas orientadas a la gestión administrativa del ámbito de la salud, potenciadas con Inteligencia Artificial y automatización.</p>
-
-      <div class="upcoming-grid">
-        <article class="upcoming-card" data-course="Secretariado Odontológico Inteligente">
-          <h4>🦷 Secretariado Odontológico Inteligente</h4>
-          <p>Gestión integral de consultorios odontológicos, turnos, atención al paciente, documentación, comunicación y automatización administrativa.</p>
-          <div class="upcoming-actions">
-            <span class="soon">Próximamente</span>
-            <a class="mini-link" href="https://www.iec-ia.com.ar/secretariado_odontologico.html" target="_blank">Ver curso</a>
-          </div>
-        </article>
-
-        <article class="upcoming-card" data-course="Secretariado Médico Inteligente">
-          <h4>🏥 Secretariado Médico Inteligente</h4>
-          <p>Capacitación para clínicas, centros médicos y consultorios con IA, herramientas digitales y automatización de procesos administrativos.</p>
-          <div class="upcoming-actions">
-            <span class="soon">Próximamente</span>
-            <a class="mini-link" href="https://www.iec-ia.com.ar/secretariado_medico.html" target="_blank">Ver curso</a>
-          </div>
-        </article>
+  <!-- 2 -->
+  <section class="slide flex-col items-center justify-center bg-gradient-to-b from-[#070b14] to-[#0b1426]">
+    <div class="absolute inset-0 bg-pattern opacity-70"></div>
+    <div class="relative z-10 max-w-6xl mx-auto w-full px-3">
+      <span class="section-tag">01 · el pedido institucional</span>
+      <h2 class="text-3xl sm:text-4xl md:text-6xl font-black mt-2 mb-6">LA FACULTAD NECESITA CAPACITAR<br><span class="gradient-text">A TRES PÚBLICOS DIFERENTES.</span></h2>
+      <div class="grid md:grid-cols-3 gap-5">
+        <div class="glass-card rounded-3xl p-7 impact-card"><div class="text-5xl mb-4">👩‍🏫</div><h3 class="text-3xl font-black mb-3">Docentes</h3><p class="text-slate-300 leading-7">Uso de tecnologías inteligentes en aulas, planificación, evaluación, tutorías, investigación y producción académica.</p></div>
+        <div class="glass-card rounded-3xl p-7 impact-card border-cyan-400/20 bg-cyan-400/5"><div class="text-5xl mb-4">🏛️</div><h3 class="text-3xl font-black mb-3">Administrativos</h3><p class="text-slate-300 leading-7">Optimización de procesos, gestión documental, automatización, atención y mejora continua de la gestión universitaria.</p></div>
+        <div class="glass-card rounded-3xl p-7 impact-card border-violet-400/20 bg-violet-400/5"><div class="text-5xl mb-4">📊</div><h3 class="text-3xl font-black mb-3">Profesionales</h3><p class="text-slate-300 leading-7">Aplicaciones concretas para contadores, administradores, economistas y perfiles vinculados a Ciencias Económicas.</p></div>
       </div>
-    </section>
-
-    <div class="socials">
-      <a class="social" href="https://www.instagram.com/iecparana/" target="_blank" aria-label="Instagram"><i data-lucide="instagram" width="20"></i></a>
-      <a class="social" href="https://www.iec-ia.com.ar/" target="_blank" aria-label="Sitio IEC"><i data-lucide="globe-2" width="20"></i></a>
-      <a class="social" href="https://wa.me/5493434295937" target="_blank" aria-label="WhatsApp"><i data-lucide="message-circle" width="20"></i></a>
     </div>
+  </section>
 
-    <footer>
-      <strong>Instituto IEC · Centro de Perfeccionamiento en Inteligencia Artificial</strong><br>
-      Paraná, Entre Ríos · Aprende hoy, lidera mañana.
-    </footer>
-  </main>
+  <!-- 3 -->
+  <section class="slide flex-col items-center justify-center bg-gradient-to-b from-[#0b1426] to-[#070b14]">
+    <div class="absolute inset-0 bg-pattern opacity-55"></div>
+    <div class="relative z-10 max-w-6xl mx-auto w-full px-3 text-center">
+      <span class="section-tag text-green-300">02 · enfoque diferencial</span>
+      <h2 class="text-3xl sm:text-4xl md:text-6xl font-black mt-2 mb-7">DE LA IA COMO HERRAMIENTA<br><span class="green-text">A LA INTELIGENCIA OPERATIVA COMO MODELO.</span></h2>
+      <div class="grid md:grid-cols-2 gap-5 text-left">
+        <div class="glass-card rounded-3xl p-7"><div class="text-5xl">🤖</div><h3 class="text-3xl font-black mt-4">Inteligencia Artificial</h3><p class="text-slate-300 mt-3 leading-7">Permite generar, analizar, resumir, clasificar, predecir y asistir tareas específicas.</p><p class="text-cyan-200 font-black mt-4">Pregunta central: ¿cómo realizo mejor esta tarea?</p></div>
+        <div class="glass-card rounded-3xl p-7 border-green-400/20 bg-green-400/5"><div class="text-5xl">🧠</div><h3 class="text-3xl font-black mt-4">Inteligencia Operativa</h3><p class="text-slate-300 mt-3 leading-7">Integra personas, procesos, información, automatización, datos, gobernanza e IA para mejorar sistemas completos.</p><p class="text-green-200 font-black mt-4">Pregunta central: ¿cómo hacemos que toda la organización funcione mejor?</p></div>
+      </div>
+    </div>
+  </section>
 
-  <a class="wa-float" href="https://wa.me/5493434295937?text=Hola%20IEC%2C%20quiero%20informaci%C3%B3n%20sobre%20las%20capacitaciones%20disponibles" target="_blank" aria-label="Consultar por WhatsApp">
-    <i data-lucide="message-circle" width="27"></i>
-  </a>
+  <!-- 4 -->
+  <section class="slide flex-col items-center justify-center bg-gradient-to-b from-[#070b14] to-[#0b1426]">
+    <div class="absolute inset-0 bg-pattern opacity-55"></div>
+    <div class="relative z-10 max-w-6xl mx-auto w-full px-3">
+      <span class="section-tag">03 · arquitectura académica</span>
+      <h2 class="text-3xl sm:text-4xl md:text-6xl font-black mt-2 mb-7">UN PROGRAMA INTEGRAL.<br><span class="gradient-text">TRES TRAYECTOS ESPECÍFICOS.</span></h2>
+      <div class="glass-card rounded-3xl p-6 mb-5 text-center border-cyan-400/20 bg-cyan-400/5"><h3 class="text-3xl font-black">Módulo común: Fundamentos de Inteligencia Operativa</h3><p class="text-slate-300 mt-2">Base conceptual, ética y metodológica compartida por todos los participantes.</p></div>
+      <div class="grid md:grid-cols-3 gap-4 text-center">
+        <div class="glass-card rounded-3xl p-6"><div class="number-badge w-14 h-14 rounded-full grid place-items-center text-2xl font-black mx-auto">1</div><h3 class="text-2xl font-black mt-4">Docencia Universitaria</h3><p class="text-slate-300 mt-2">Aula, evaluación, tutorías e investigación.</p></div>
+        <div class="glass-card rounded-3xl p-6 border-green-400/20"><div class="green-badge w-14 h-14 rounded-full grid place-items-center text-2xl font-black mx-auto">2</div><h3 class="text-2xl font-black mt-4">Gestión Universitaria</h3><p class="text-slate-300 mt-2">Procesos, documentos, datos y automatización.</p></div>
+        <div class="glass-card rounded-3xl p-6 border-violet-400/20"><div class="violet-badge w-14 h-14 rounded-full grid place-items-center text-2xl font-black mx-auto">3</div><h3 class="text-2xl font-black mt-4">Profesionales FCE</h3><p class="text-slate-300 mt-2">Ejercicio profesional, análisis y decisiones.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 5 -->
+  <section class="slide flex-col items-center justify-center bg-gradient-to-b from-[#0b1426] to-[#070b14]">
+    <div class="absolute inset-0 bg-pattern opacity-55"></div>
+    <div class="relative z-10 max-w-6xl mx-auto w-full px-3">
+      <span class="section-tag text-cyan-300">04 · módulo común</span>
+      <h2 class="text-3xl sm:text-4xl md:text-6xl font-black mt-2 mb-7">FUNDAMENTOS DE<br><span class="gradient-text">INTELIGENCIA OPERATIVA.</span></h2>
+      <div class="grid md:grid-cols-5 gap-3 text-center">
+        <div class="glass-card rounded-2xl p-4"><div class="number-badge w-11 h-11 rounded-full grid place-items-center font-black mx-auto">1</div><h3 class="font-black mt-3">Transformación digital</h3><p class="text-slate-400 text-sm mt-2">Contexto, tendencias y nuevas formas de trabajo.</p></div>
+        <div class="glass-card rounded-2xl p-4"><div class="number-badge w-11 h-11 rounded-full grid place-items-center font-black mx-auto">2</div><h3 class="font-black mt-3">IA generativa</h3><p class="text-slate-400 text-sm mt-2">Modelos, asistentes, límites y casos de uso.</p></div>
+        <div class="glass-card rounded-2xl p-4"><div class="number-badge w-11 h-11 rounded-full grid place-items-center font-black mx-auto">3</div><h3 class="font-black mt-3">Prompts</h3><p class="text-slate-400 text-sm mt-2">Instrucciones, contexto, roles, validación y mejora.</p></div>
+        <div class="glass-card rounded-2xl p-4"><div class="number-badge w-11 h-11 rounded-full grid place-items-center font-black mx-auto">4</div><h3 class="font-black mt-3">Procesos y datos</h3><p class="text-slate-400 text-sm mt-2">Información, indicadores y decisiones.</p></div>
+        <div class="glass-card rounded-2xl p-4"><div class="green-badge w-11 h-11 rounded-full grid place-items-center font-black mx-auto">5</div><h3 class="font-black mt-3">Ética y gobernanza</h3><p class="text-slate-400 text-sm mt-2">Privacidad, sesgos, trazabilidad y supervisión humana.</p></div>
+      </div>
+      <div class="mt-6 glass-card rounded-3xl p-6 text-center"><p class="text-xl md:text-3xl font-black">Este módulo alinea lenguaje, criterios y metodología antes de que cada público avance sobre su propio trayecto.</p></div>
+    </div>
+  </section>
+
+  <!-- 6 -->
+  <section class="slide flex-col items-center justify-center bg-gradient-to-b from-[#070b14] to-[#0b1426]">
+    <div class="absolute inset-0 bg-pattern opacity-55"></div>
+    <div class="relative z-10 max-w-6xl mx-auto w-full px-3">
+      <span class="section-tag text-amber-300">05 · trayecto docente</span>
+      <h2 class="text-3xl sm:text-4xl md:text-6xl font-black mt-2 mb-7">INTELIGENCIA OPERATIVA<br><span class="amber-text">PARA LA DOCENCIA UNIVERSITARIA.</span></h2>
+      <div class="grid md:grid-cols-[1.1fr_.9fr] gap-5 items-stretch">
+        <div class="glass-card rounded-3xl p-7"><h3 class="text-3xl font-black mb-5">Objetivo del trayecto</h3><p class="text-slate-300 leading-8 text-lg">Incorporar tecnologías inteligentes para fortalecer la planificación, la enseñanza, la evaluación, el acompañamiento estudiantil y la producción académica, con criterios pedagógicos, éticos y disciplinares.</p></div>
+        <div class="glass-card rounded-3xl p-7 border-amber-400/20 bg-amber-400/5 flex flex-col justify-center text-center"><div class="text-7xl mb-5">👩‍🏫</div><p class="text-amber-300 text-xs font-black tracking-[.18em] uppercase">Resultado esperado</p><h3 class="text-4xl font-black mt-3">Clases más diseñadas, evaluaciones más claras y mejor acompañamiento.</h3></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 7 -->
+  <section class="slide flex-col items-center justify-center bg-gradient-to-b from-[#0b1426] to-[#070b14]">
+    <div class="absolute inset-0 bg-pattern opacity-55"></div>
+    <div class="relative z-10 max-w-6xl mx-auto w-full px-3">
+      <span class="section-tag text-amber-300">06 · contenidos docentes</span>
+      <h2 class="text-3xl sm:text-4xl md:text-6xl font-black mt-2 mb-7">DEL AULA TRADICIONAL<br><span class="amber-text">AL AULA AUMENTADA.</span></h2>
+      <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
+        <div class="glass-card rounded-3xl p-5 impact-card"><span class="text-4xl">🧩</span><h3 class="font-black text-xl mt-3">Diseño de clases</h3><p class="text-slate-400 mt-2">Objetivos, secuencias, actividades y recursos.</p></div>
+        <div class="glass-card rounded-3xl p-5 impact-card"><span class="text-4xl">📚</span><h3 class="font-black text-xl mt-3">Materiales didácticos</h3><p class="text-slate-400 mt-2">Guías, casos, presentaciones y recursos audiovisuales.</p></div>
+        <div class="glass-card rounded-3xl p-5 impact-card"><span class="text-4xl">✅</span><h3 class="font-black text-xl mt-3">Evaluación</h3><p class="text-slate-400 mt-2">Rúbricas, consignas, retroalimentación y criterios.</p></div>
+        <div class="glass-card rounded-3xl p-5 impact-card"><span class="text-4xl">🧭</span><h3 class="font-black text-xl mt-3">Tutorías inteligentes</h3><p class="text-slate-400 mt-2">Seguimiento, orientación y apoyo personalizado.</p></div>
+        <div class="glass-card rounded-3xl p-5 impact-card"><span class="text-4xl">🔎</span><h3 class="font-black text-xl mt-3">Investigación</h3><p class="text-slate-400 mt-2">Búsqueda, organización, revisión y escritura académica.</p></div>
+        <div class="glass-card rounded-3xl p-5 impact-card"><span class="text-4xl">⚖️</span><h3 class="font-black text-xl mt-3">Uso responsable</h3><p class="text-slate-400 mt-2">Criterios institucionales para docentes y estudiantes.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 8 -->
+  <section class="slide flex-col items-center justify-center bg-gradient-to-b from-[#070b14] to-[#0b1426]">
+    <div class="absolute inset-0 bg-pattern opacity-55"></div>
+    <div class="relative z-10 max-w-6xl mx-auto w-full px-3 text-center">
+      <span class="section-tag text-amber-300">07 · proyecto docente</span>
+      <h2 class="text-3xl sm:text-4xl md:text-6xl font-black mt-2 mb-7">CADA DOCENTE FINALIZA<br><span class="amber-text">CON UNA PROPUESTA APLICABLE.</span></h2>
+      <div class="grid md:grid-cols-5 gap-3">
+        <div class="glass-card rounded-2xl p-4"><div class="amber-badge w-11 h-11 rounded-full grid place-items-center font-black mx-auto">1</div><h3 class="font-black mt-3">Materia</h3><p class="text-slate-400 text-sm mt-2">Selecciona una asignatura real.</p></div>
+        <div class="glass-card rounded-2xl p-4"><div class="amber-badge w-11 h-11 rounded-full grid place-items-center font-black mx-auto">2</div><h3 class="font-black mt-3">Problema</h3><p class="text-slate-400 text-sm mt-2">Detecta una mejora pedagógica.</p></div>
+        <div class="glass-card rounded-2xl p-4"><div class="amber-badge w-11 h-11 rounded-full grid place-items-center font-black mx-auto">3</div><h3 class="font-black mt-3">Diseño</h3><p class="text-slate-400 text-sm mt-2">Crea actividades y recursos.</p></div>
+        <div class="glass-card rounded-2xl p-4"><div class="amber-badge w-11 h-11 rounded-full grid place-items-center font-black mx-auto">4</div><h3 class="font-black mt-3">Evaluación</h3><p class="text-slate-400 text-sm mt-2">Define rúbricas y evidencias.</p></div>
+        <div class="glass-card rounded-2xl p-4"><div class="green-badge w-11 h-11 rounded-full grid place-items-center font-black mx-auto">5</div><h3 class="font-black mt-3">Implementación</h3><p class="text-slate-400 text-sm mt-2">Entrega una propuesta lista.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 9 -->
+  <section class="slide flex-col items-center justify-center bg-gradient-to-b from-[#0b1426] to-[#070b14]">
+    <div class="absolute inset-0 bg-pattern opacity-55"></div>
+    <div class="relative z-10 max-w-6xl mx-auto w-full px-3">
+      <span class="section-tag text-green-300">08 · trayecto administrativo</span>
+      <h2 class="text-3xl sm:text-4xl md:text-6xl font-black mt-2 mb-7">INTELIGENCIA OPERATIVA<br><span class="green-text">PARA LA GESTIÓN UNIVERSITARIA.</span></h2>
+      <div class="grid md:grid-cols-[.9fr_1.1fr] gap-5 items-stretch">
+        <div class="glass-card rounded-3xl p-7 border-green-400/20 bg-green-400/5 text-center flex flex-col justify-center"><div class="text-7xl mb-5">🏛️</div><p class="text-green-300 text-xs font-black tracking-[.18em] uppercase">Foco del trayecto</p><h3 class="text-4xl font-black mt-3">Procesos más simples, trazables y medibles.</h3></div>
+        <div class="glass-card rounded-3xl p-7"><h3 class="text-3xl font-black mb-5">Objetivo del trayecto</h3><p class="text-slate-300 leading-8 text-lg">Optimizar procesos administrativos mediante relevamiento, rediseño, automatización, gestión documental, tableros de seguimiento e integración de herramientas digitales.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 10 -->
+  <section class="slide flex-col items-center justify-center bg-gradient-to-b from-[#070b14] to-[#0b1426]">
+    <div class="absolute inset-0 bg-pattern opacity-55"></div>
+    <div class="relative z-10 max-w-6xl mx-auto w-full px-3">
+      <span class="section-tag text-green-300">09 · contenidos administrativos</span>
+      <h2 class="text-3xl sm:text-4xl md:text-6xl font-black mt-2 mb-7">OPTIMIZAR LA GESTIÓN<br><span class="green-text">SIN PERDER CONTROL INSTITUCIONAL.</span></h2>
+      <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
+        <div class="glass-card rounded-3xl p-5 impact-card"><span class="text-4xl">🗺️</span><h3 class="font-black text-xl mt-3">Gestión por procesos</h3><p class="text-slate-400 mt-2">Relevamiento, diagramación y detección de cuellos de botella.</p></div>
+        <div class="glass-card rounded-3xl p-5 impact-card"><span class="text-4xl">📄</span><h3 class="font-black text-xl mt-3">Gestión documental</h3><p class="text-slate-400 mt-2">Digitalización, clasificación y trazabilidad.</p></div>
+        <div class="glass-card rounded-3xl p-5 impact-card"><span class="text-4xl">⚙️</span><h3 class="font-black text-xl mt-3">Automatización</h3><p class="text-slate-400 mt-2">Formularios, notificaciones, derivaciones y flujos de trabajo.</p></div>
+        <div class="glass-card rounded-3xl p-5 impact-card"><span class="text-4xl">📊</span><h3 class="font-black text-xl mt-3">Indicadores</h3><p class="text-slate-400 mt-2">Dashboards, KPIs y seguimiento operativo.</p></div>
+        <div class="glass-card rounded-3xl p-5 impact-card"><span class="text-4xl">💬</span><h3 class="font-black text-xl mt-3">Atención inteligente</h3><p class="text-slate-400 mt-2">Consultas frecuentes, comunicación y respuestas asistidas.</p></div>
+        <div class="glass-card rounded-3xl p-5 impact-card"><span class="text-4xl">🔐</span><h3 class="font-black text-xl mt-3">Gobernanza</h3><p class="text-slate-400 mt-2">Roles, permisos, auditoría y criterios de uso responsable.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 11 -->
+  <section class="slide flex-col items-center justify-center bg-gradient-to-b from-[#0b1426] to-[#070b14]">
+    <div class="absolute inset-0 bg-pattern opacity-55"></div>
+    <div class="relative z-10 max-w-6xl mx-auto w-full px-3 text-center">
+      <span class="section-tag text-green-300">10 · circuito operativo</span>
+      <h2 class="text-3xl sm:text-4xl md:text-6xl font-black mt-2 mb-7">DE UN TRÁMITE MANUAL<br><span class="green-text">A UN FLUJO INTELIGENTE.</span></h2>
+      <div class="grid md:grid-cols-9 gap-3 items-center">
+        <div class="glass-card rounded-2xl p-4"><h3 class="font-black text-cyan-200">Ingreso</h3><p class="text-slate-400 text-sm mt-2">Formulario o solicitud</p></div><div class="flow-arrow hide-mobile">→</div>
+        <div class="glass-card rounded-2xl p-4"><h3 class="font-black text-green-200">Clasificación</h3><p class="text-slate-400 text-sm mt-2">IA + criterios</p></div><div class="flow-arrow hide-mobile">→</div>
+        <div class="glass-card rounded-2xl p-4"><h3 class="font-black text-violet-200">Derivación</h3><p class="text-slate-400 text-sm mt-2">Responsable</p></div><div class="flow-arrow hide-mobile">→</div>
+        <div class="glass-card rounded-2xl p-4"><h3 class="font-black text-amber-200">Seguimiento</h3><p class="text-slate-400 text-sm mt-2">Estado y alertas</p></div><div class="flow-arrow hide-mobile">→</div>
+        <div class="glass-card rounded-2xl p-4"><h3 class="font-black text-green-200">Medición</h3><p class="text-slate-400 text-sm mt-2">Indicadores</p></div>
+      </div>
+      <div class="mt-6 glass-card rounded-3xl p-6 border-green-400/20 bg-green-400/5"><p class="text-xl md:text-3xl font-black">El proyecto final del trayecto administrativo será el rediseño de un proceso real de la Facultad.</p></div>
+    </div>
+  </section>
+
+  <!-- 12 -->
+  <section class="slide flex-col items-center justify-center bg-gradient-to-b from-[#070b14] to-[#0b1426]">
+    <div class="absolute inset-0 bg-pattern opacity-55"></div>
+    <div class="relative z-10 max-w-6xl mx-auto w-full px-3">
+      <span class="section-tag text-violet-300">11 · trayecto profesional</span>
+      <h2 class="text-3xl sm:text-4xl md:text-6xl font-black mt-2 mb-7">INTELIGENCIA OPERATIVA<br><span class="gradient-text">PARA PROFESIONALES DE CIENCIAS ECONÓMICAS.</span></h2>
+      <div class="grid md:grid-cols-2 gap-5">
+        <div class="glass-card rounded-3xl p-7"><h3 class="text-3xl font-black mb-4">Objetivo del trayecto</h3><p class="text-slate-300 leading-8 text-lg">Aplicar tecnologías inteligentes para mejorar la productividad profesional, automatizar tareas repetitivas, analizar información, producir reportes y fortalecer la toma de decisiones.</p></div>
+        <div class="glass-card rounded-3xl p-7 border-violet-400/20 bg-violet-400/5"><div class="text-6xl mb-4">📊</div><h3 class="text-3xl font-black mb-3">Perfiles alcanzados</h3><p class="text-slate-300 leading-7">Contadores, administradores, economistas, consultores, analistas, emprendedores y profesionales vinculados a gestión, finanzas, auditoría y estrategia.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 13 -->
+  <section class="slide flex-col items-center justify-center bg-gradient-to-b from-[#0b1426] to-[#070b14]">
+    <div class="absolute inset-0 bg-pattern opacity-55"></div>
+    <div class="relative z-10 max-w-6xl mx-auto w-full px-3">
+      <span class="section-tag text-violet-300">12 · contenidos profesionales</span>
+      <h2 class="text-3xl sm:text-4xl md:text-6xl font-black mt-2 mb-7">MENOS TAREAS REPETITIVAS.<br><span class="gradient-text">MÁS ANÁLISIS Y VALOR PROFESIONAL.</span></h2>
+      <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
+        <div class="glass-card rounded-3xl p-5 impact-card"><span class="text-4xl">🗂️</span><h3 class="font-black text-xl mt-3">Gestión profesional</h3><p class="text-slate-400 mt-2">Organización, documentación, productividad y flujos de trabajo.</p></div>
+        <div class="glass-card rounded-3xl p-5 impact-card"><span class="text-4xl">🧾</span><h3 class="font-black text-xl mt-3">Informes y reportes</h3><p class="text-slate-400 mt-2">Producción asistida, análisis documental y síntesis ejecutiva.</p></div>
+        <div class="glass-card rounded-3xl p-5 impact-card"><span class="text-4xl">💹</span><h3 class="font-black text-xl mt-3">Análisis financiero</h3><p class="text-slate-400 mt-2">Escenarios, riesgos, simulaciones y lectura de indicadores.</p></div>
+        <div class="glass-card rounded-3xl p-5 impact-card"><span class="text-4xl">🔎</span><h3 class="font-black text-xl mt-3">Auditoría asistida</h3><p class="text-slate-400 mt-2">Revisión, consistencia, hallazgos y documentación de evidencias.</p></div>
+        <div class="glass-card rounded-3xl p-5 impact-card"><span class="text-4xl">📈</span><h3 class="font-black text-xl mt-3">Tableros ejecutivos</h3><p class="text-slate-400 mt-2">Datos, métricas y visualización para decisión.</p></div>
+        <div class="glass-card rounded-3xl p-5 impact-card"><span class="text-4xl">🚀</span><h3 class="font-black text-xl mt-3">Innovación profesional</h3><p class="text-slate-400 mt-2">Nuevos servicios, consultoría asistida y propuestas de valor.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 14 -->
+  <section class="slide flex-col items-center justify-center bg-gradient-to-b from-[#070b14] to-[#0b1426]">
+    <div class="absolute inset-0 bg-pattern opacity-55"></div>
+    <div class="relative z-10 max-w-6xl mx-auto w-full px-3 text-center">
+      <span class="section-tag">13 · metodología</span>
+      <h2 class="text-3xl sm:text-4xl md:text-6xl font-black mt-2 mb-7">APRENDIZAJE BASADO<br><span class="gradient-text">EN PROYECTOS REALES.</span></h2>
+      <div class="grid md:grid-cols-6 gap-3">
+        <div class="glass-card rounded-2xl p-4"><div class="number-badge w-11 h-11 rounded-full grid place-items-center font-black mx-auto">1</div><h3 class="font-bold mt-3 text-cyan-200">Comprender</h3><p class="text-slate-400 text-sm mt-2">Contexto y problema.</p></div>
+        <div class="glass-card rounded-2xl p-4"><div class="number-badge w-11 h-11 rounded-full grid place-items-center font-black mx-auto">2</div><h3 class="font-bold mt-3 text-cyan-200">Analizar</h3><p class="text-slate-400 text-sm mt-2">Datos y procesos.</p></div>
+        <div class="glass-card rounded-2xl p-4"><div class="number-badge w-11 h-11 rounded-full grid place-items-center font-black mx-auto">3</div><h3 class="font-bold mt-3 text-cyan-200">Diseñar</h3><p class="text-slate-400 text-sm mt-2">Solución operativa.</p></div>
+        <div class="glass-card rounded-2xl p-4"><div class="number-badge w-11 h-11 rounded-full grid place-items-center font-black mx-auto">4</div><h3 class="font-bold mt-3 text-cyan-200">Implementar</h3><p class="text-slate-400 text-sm mt-2">Prototipo o mejora.</p></div>
+        <div class="glass-card rounded-2xl p-4"><div class="number-badge w-11 h-11 rounded-full grid place-items-center font-black mx-auto">5</div><h3 class="font-bold mt-3 text-cyan-200">Medir</h3><p class="text-slate-400 text-sm mt-2">Indicadores.</p></div>
+        <div class="glass-card rounded-2xl p-4"><div class="green-badge w-11 h-11 rounded-full grid place-items-center font-black mx-auto">6</div><h3 class="font-bold mt-3 text-green-200">Mejorar</h3><p class="text-slate-400 text-sm mt-2">Iteración continua.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 15 -->
+  <section class="slide flex-col items-center justify-center bg-gradient-to-b from-[#0b1426] to-[#070b14]">
+    <div class="absolute inset-0 bg-pattern opacity-55"></div>
+    <div class="relative z-10 max-w-6xl mx-auto w-full px-3">
+      <span class="section-tag text-cyan-300">14 · evaluación y certificación</span>
+      <h2 class="text-3xl sm:text-4xl md:text-6xl font-black mt-2 mb-7">EVALUACIÓN CONTINUA.<br><span class="gradient-text">CERTIFICACIÓN POR TRAYECTO.</span></h2>
+      <div class="grid md:grid-cols-2 gap-5">
+        <div class="glass-card rounded-3xl p-7"><h3 class="text-3xl font-black mb-4">Evaluación</h3><div class="space-y-3 text-slate-300"><div class="pill rounded-xl p-3">Actividades prácticas por módulo.</div><div class="pill rounded-xl p-3">Resolución de casos del ámbito universitario y profesional.</div><div class="pill rounded-xl p-3">Participación en talleres y laboratorios.</div><div class="pill rounded-xl p-3">Proyecto integrador final.</div></div></div>
+        <div class="glass-card rounded-3xl p-7 border-cyan-400/20 bg-cyan-400/5"><h3 class="text-3xl font-black mb-4">Certificación</h3><p class="text-slate-300 leading-7">Se propone certificar la aprobación del <strong>Programa Universitario de Inteligencia Operativa Aplicada</strong> y especificar el trayecto realizado: Docencia Universitaria, Gestión Universitaria o Profesionales de Ciencias Económicas.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 16 -->
+  <section class="slide flex-col items-center justify-center bg-gradient-to-b from-[#070b14] to-[#0b1426]">
+    <div class="absolute inset-0 bg-pattern opacity-55"></div>
+    <div class="relative z-10 max-w-6xl mx-auto w-full px-3">
+      <span class="section-tag text-green-300">15 · resultados esperados</span>
+      <h2 class="text-3xl sm:text-4xl md:text-6xl font-black mt-2 mb-7">LA FACULTAD OBTIENE<br><span class="green-text">CAPACIDADES INSTALADAS.</span></h2>
+      <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-4 text-center">
+        <div class="glass-card rounded-3xl p-6"><div class="text-5xl">👩‍🏫</div><h3 class="font-black text-xl mt-4">Docentes aumentados</h3><p class="text-slate-400 mt-2">Mejores clases, recursos y evaluaciones.</p></div>
+        <div class="glass-card rounded-3xl p-6"><div class="text-5xl">⚙️</div><h3 class="font-black text-xl mt-4">Procesos optimizados</h3><p class="text-slate-400 mt-2">Gestión más ágil, ordenada y medible.</p></div>
+        <div class="glass-card rounded-3xl p-6"><div class="text-5xl">📊</div><h3 class="font-black text-xl mt-4">Profesionales actualizados</h3><p class="text-slate-400 mt-2">Más productividad y mejores decisiones.</p></div>
+        <div class="glass-card rounded-3xl p-6"><div class="text-5xl">🧠</div><h3 class="font-black text-xl mt-4">Cultura operativa</h3><p class="text-slate-400 mt-2">Innovación aplicada a problemas reales.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 17 -->
+  <section class="slide flex-col items-center justify-center bg-gradient-to-b from-[#0b1426] to-[#070b14]">
+    <div class="absolute inset-0 bg-pattern opacity-55"></div>
+    <div class="relative z-10 max-w-6xl mx-auto w-full px-3">
+      <span class="section-tag text-amber-300">16 · implementación sugerida</span>
+      <h2 class="text-3xl sm:text-4xl md:text-6xl font-black mt-2 mb-7">ACTIVACIÓN SIMPLE<br><span class="amber-text">CON IMPACTO INSTITUCIONAL.</span></h2>
+      <div class="grid md:grid-cols-5 gap-3">
+        <div class="glass-card rounded-2xl p-4"><div class="amber-badge w-11 h-11 rounded-full grid place-items-center font-black">1</div><h3 class="font-bold mt-3 text-amber-200">Validación</h3><p class="text-slate-400 text-sm mt-2">Ajuste con autoridades y áreas.</p></div>
+        <div class="glass-card rounded-2xl p-4"><div class="amber-badge w-11 h-11 rounded-full grid place-items-center font-black">2</div><h3 class="font-bold mt-3 text-amber-200">Convocatoria</h3><p class="text-slate-400 text-sm mt-2">Tres públicos diferenciados.</p></div>
+        <div class="glass-card rounded-2xl p-4"><div class="amber-badge w-11 h-11 rounded-full grid place-items-center font-black">3</div><h3 class="font-bold mt-3 text-amber-200">Módulo común</h3><p class="text-slate-400 text-sm mt-2">Lenguaje y base compartida.</p></div>
+        <div class="glass-card rounded-2xl p-4"><div class="amber-badge w-11 h-11 rounded-full grid place-items-center font-black">4</div><h3 class="font-bold mt-3 text-amber-200">Trayectos</h3><p class="text-slate-400 text-sm mt-2">Aplicación por perfil.</p></div>
+        <div class="glass-card rounded-2xl p-4"><div class="green-badge w-11 h-11 rounded-full grid place-items-center font-black">5</div><h3 class="font-bold mt-3 text-green-200">Proyectos</h3><p class="text-slate-400 text-sm mt-2">Resultados concretos.</p></div>
+      </div>
+      <div class="mt-6 glass-card rounded-3xl p-6 border-amber-400/20 bg-amber-400/5 text-center"><p class="text-xl md:text-3xl font-black">La propuesta puede iniciar como piloto institucional y escalar luego hacia nuevas cohortes o áreas de la Universidad.</p></div>
+    </div>
+  </section>
+
+  <!-- 18 -->
+  <section class="slide flex-col items-center justify-center bg-gradient-to-b from-[#070b14] to-[#0b1426]">
+    <div class="absolute inset-0 bg-pattern opacity-55"></div>
+    <div class="relative z-10 max-w-6xl mx-auto w-full px-3">
+      <span class="section-tag text-cyan-300">17 · mensaje institucional</span>
+      <h2 class="text-3xl sm:text-4xl md:text-6xl font-black mt-2 mb-7">UNA NARRATIVA CLARA<br><span class="gradient-text">PARA PRESENTAR A LA FACULTAD.</span></h2>
+      <div class="glass-card rounded-3xl p-8 border-cyan-400/20 bg-cyan-400/5"><p class="text-2xl md:text-4xl font-black leading-tight">“La Facultad de Ciencias Económicas incorpora un programa de Inteligencia Operativa Aplicada para fortalecer la enseñanza, optimizar la gestión universitaria y actualizar el ejercicio profesional frente a los desafíos de la transformación digital.”</p></div>
+      <div class="grid md:grid-cols-4 gap-4 mt-5 text-center"><div class="pill rounded-2xl p-4 font-bold">Innovación académica</div><div class="pill rounded-2xl p-4 font-bold">Gestión eficiente</div><div class="pill rounded-2xl p-4 font-bold">Profesionales actualizados</div><div class="pill rounded-2xl p-4 font-bold">Impacto medible</div></div>
+    </div>
+  </section>
+
+  <!-- 19 -->
+  <section class="slide flex-col items-center justify-center bg-gradient-to-b from-[#0b1426] to-[#070b14]">
+    <div class="absolute inset-0 bg-pattern opacity-55"></div>
+    <div class="relative z-10 max-w-6xl mx-auto w-full px-3 text-center">
+      <span class="section-tag text-violet-300">18 · diferencial IEC</span>
+      <h2 class="text-3xl sm:text-4xl md:text-6xl font-black mt-2 mb-7">NO ES UN CURSO DE IA.<br><span class="gradient-text">ES UNA METODOLOGÍA DE TRANSFORMACIÓN.</span></h2>
+      <div class="grid md:grid-cols-3 gap-4">
+        <div class="glass-card rounded-3xl p-6"><div class="text-5xl">🧠</div><h3 class="text-2xl font-black mt-4">Integra IA</h3><p class="text-slate-300 mt-2">La usa como componente, no como fin en sí mismo.</p></div>
+        <div class="glass-card rounded-3xl p-6 border-cyan-400/20"><div class="text-5xl">⚙️</div><h3 class="text-2xl font-black mt-4">Ordena procesos</h3><p class="text-slate-300 mt-2">Trabaja sobre circuitos reales y oportunidades de mejora.</p></div>
+        <div class="glass-card rounded-3xl p-6 border-green-400/20"><div class="text-5xl">📈</div><h3 class="text-2xl font-black mt-4">Mide resultados</h3><p class="text-slate-300 mt-2">Busca impacto, evidencias y mejora continua.</p></div>
+      </div>
+      <div class="mt-6 p-6 rounded-3xl bg-violet-400/10 border border-violet-400/20"><p class="text-xl md:text-3xl font-black">La Inteligencia Operativa permite que la Facultad forme, gestione y decida mejor.</p></div>
+    </div>
+  </section>
+
+  <!-- 20 -->
+  <section class="slide flex-col items-center justify-center bg-gradient-to-br from-[#070b14] via-[#0b162b] to-[#070b14] text-center">
+    <div class="absolute inset-0 bg-pattern"></div><div class="orb w-80 h-80 bg-cyan-400 top-[-120px] left-[-100px]"></div><div class="orb w-96 h-96 bg-violet-500 bottom-[-160px] right-[-120px]"></div>
+    <div class="relative z-10 max-w-6xl mx-auto w-full px-3">
+      <div class="flex items-center justify-center gap-4 md:gap-6 mb-7 flex-wrap">
+        <div class="logo-shell uner-logo"><img src="https://i.postimg.cc/Yqdq1YXT/t-Buru-Upn-400x400.jpg" alt="Facultad de Ciencias Económicas UNER"></div>
+        <div class="h-14 w-px bg-white/20 hide-mobile"></div>
+        <div class="logo-shell iec-logo"><img src="https://i.postimg.cc/jSkQKpRK/Diseno-sin-titulo-2026-05-15T105828-195.png" alt="IEC - Instituto Privado en Economía del Conocimiento"></div>
+      </div>
+      <h2 class="text-4xl sm:text-5xl md:text-7xl font-black leading-[.98] mb-6">INTELIGENCIA ARTIFICIAL<br><span class="gradient-text">AL SERVICIO DE LA OPERACIÓN REAL.</span></h2>
+      <div class="glass-card rounded-3xl p-7 max-w-4xl mx-auto"><p class="text-xl md:text-3xl font-black leading-tight">El objetivo no es incorporar tecnología por moda. El objetivo es enseñar mejor, gestionar mejor y decidir mejor.</p></div>
+      <p class="text-slate-400 mt-6 text-sm">Facultad de Ciencias Económicas · UNER · IEC — Instituto Privado en Economía del Conocimiento</p>
+    </div>
+  </section>
 
   <script>
-    /*
-      EVENTOS PERSONALIZADOS DE GOOGLE ANALYTICS 4
-      Propiedad: G-R817QWH97R
+    let current = 0;
+    const slides = Array.from(document.querySelectorAll('.slide'));
+    const dotsContainer = document.getElementById('dots');
+    const counter = document.getElementById('slide-counter');
 
-      Eventos enviados:
-      - abrir_curso
-      - cerrar_curso
-      - ver_capacitacion
-      - click_whatsapp
-      - click_red_social
-      - click_sitio_iec
-      - scroll_profundidad
-      - tiempo_interaccion
-    */
-
-    const courses = document.querySelectorAll('.course');
-
-    /**
-     * Envía un evento a GA4 de forma segura.
-     * Si gtag todavía no terminó de cargar, el evento queda en dataLayer.
-     */
-    function trackEvent(eventName, parameters = {}) {
-      if (typeof window.gtag !== 'function') {
-        window.dataLayer = window.dataLayer || [];
-        window.gtag = function () {
-          window.dataLayer.push(arguments);
-        };
-      }
-
-      window.gtag('event', eventName, {
-        pagina: window.location.pathname,
-        titulo_pagina: document.title,
-        ...parameters
-      });
-    }
-
-    /**
-     * Devuelve el nombre del curso relacionado con el elemento pulsado.
-     */
-    function getCourseName(element) {
-      const course = element.closest('[data-course]');
-      return course ? course.dataset.course : 'General';
-    }
-
-    /**
-     * Apertura y cierre de tarjetas de cursos.
-     */
-    courses.forEach(course => {
-      const button = course.querySelector('.course-main');
-
-      button.addEventListener('click', () => {
-        const isOpen = course.classList.contains('open');
-        const courseName = course.dataset.course || 'Curso sin identificar';
-
-        courses.forEach(item => {
-          item.classList.remove('open');
-          item.querySelector('.course-main').setAttribute('aria-expanded', 'false');
-        });
-
-        if (!isOpen) {
-          course.classList.add('open');
-          button.setAttribute('aria-expanded', 'true');
-
-          trackEvent('abrir_curso', {
-            curso: courseName,
-            seccion: 'capacitaciones_disponibles'
-          });
-        } else {
-          trackEvent('cerrar_curso', {
-            curso: courseName,
-            seccion: 'capacitaciones_disponibles'
-          });
-        }
-      });
+    slides.forEach((_, index) => {
+      const dot = document.createElement('button');
+      dot.className = 'dot';
+      dot.setAttribute('aria-label', `Ir a la diapositiva ${index + 1}`);
+      dot.onclick = () => goToSlide(index);
+      dotsContainer.appendChild(dot);
     });
 
-    /**
-     * Seguimiento centralizado de todos los enlaces.
-     */
-    document.addEventListener('click', event => {
-      const link = event.target.closest('a');
-      if (!link) return;
-
-      event.stopPropagation();
-
-      const href = link.href || '';
-      const courseName = getCourseName(link);
-
-      if (link.classList.contains('primary')) {
-        trackEvent('ver_capacitacion', {
-          curso: courseName,
-          ubicacion_boton: 'tarjeta_curso',
-          destino: href
-        });
-        return;
-      }
-
-      if (link.classList.contains('mini-link')) {
-        trackEvent('ver_capacitacion', {
-          curso: courseName,
-          ubicacion_boton: 'proximamente',
-          destino: href
-        });
-        return;
-      }
-
-      if (
-        link.classList.contains('secondary') ||
-        link.classList.contains('wa-float') ||
-        href.includes('wa.me') ||
-        href.includes('api.whatsapp.com')
-      ) {
-        let ubicacion = 'otro';
-
-        if (link.classList.contains('secondary')) ubicacion = 'tarjeta_curso';
-        if (link.classList.contains('wa-float')) ubicacion = 'boton_flotante';
-        if (link.classList.contains('social')) ubicacion = 'redes_footer';
-
-        trackEvent('click_whatsapp', {
-          curso: courseName,
-          ubicacion_boton: ubicacion,
-          destino: href
-        });
-        return;
-      }
-
-      if (href.includes('instagram.com')) {
-        trackEvent('click_red_social', {
-          red_social: 'Instagram',
-          ubicacion_boton: 'redes_footer',
-          destino: href
-        });
-        return;
-      }
-
-      if (
-        link.classList.contains('social') &&
-        href.includes('iec-ia.com.ar')
-      ) {
-        trackEvent('click_sitio_iec', {
-          ubicacion_boton: 'redes_footer',
-          destino: href
-        });
-      }
-    });
-
-    /**
-     * Profundidad de desplazamiento.
-     * Cada porcentaje se envía una sola vez por carga de página.
-     */
-    const sentScrollMilestones = new Set();
-    const scrollMilestones = [25, 50, 75, 90, 100];
-
-    function trackScrollDepth() {
-      const documentHeight = Math.max(
-        document.body.scrollHeight,
-        document.documentElement.scrollHeight
-      );
-      const viewportBottom = window.scrollY + window.innerHeight;
-      const scrollPercent = documentHeight > 0
-        ? Math.min(100, Math.round((viewportBottom / documentHeight) * 100))
-        : 100;
-
-      scrollMilestones.forEach(milestone => {
-        if (
-          scrollPercent >= milestone &&
-          !sentScrollMilestones.has(milestone)
-        ) {
-          sentScrollMilestones.add(milestone);
-
-          trackEvent('scroll_profundidad', {
-            porcentaje: milestone
-          });
-        }
-      });
+    function updateUI(){
+      slides.forEach((slide, i) => slide.classList.toggle('active', i === current));
+      Array.from(dotsContainer.children).forEach((dot, i) => dot.classList.toggle('active', i === current));
+      counter.textContent = `${current + 1} / ${slides.length}`;
+      document.getElementById('prev-btn').style.opacity = current === 0 ? '.45' : '1';
+      document.getElementById('next-btn').style.opacity = current === slides.length - 1 ? '.45' : '1';
+      if(window.lucide){lucide.createIcons();}
     }
 
-    window.addEventListener('scroll', trackScrollDepth, { passive: true });
-    window.addEventListener('load', trackScrollDepth);
+    function goToSlide(index){
+      current = Math.max(0, Math.min(index, slides.length - 1));
+      updateUI();
+    }
 
-    /**
-     * Tiempo real de interacción con la página.
-     * Solo se contabiliza mientras la pestaña está visible.
-     */
-    const timeMilestones = [30, 60, 120];
-    const sentTimeMilestones = new Set();
-    let visibleSeconds = 0;
+    function changeSlide(direction){
+      goToSlide(current + direction);
+    }
 
-    setInterval(() => {
-      if (document.visibilityState !== 'visible') return;
+    document.addEventListener('keydown', (event) => {
+      if(event.key === 'ArrowRight' || event.key === 'PageDown' || event.key === ' '){changeSlide(1);}
+      if(event.key === 'ArrowLeft' || event.key === 'PageUp'){changeSlide(-1);}
+      if(event.key === 'Home'){goToSlide(0);}
+      if(event.key === 'End'){goToSlide(slides.length - 1);}
+    });
 
-      visibleSeconds += 1;
+    function toggleFullscreen(){
+      if(!document.fullscreenElement){document.documentElement.requestFullscreen?.();}
+      else{document.exitFullscreen?.();}
+    }
 
-      timeMilestones.forEach(seconds => {
-        if (
-          visibleSeconds >= seconds &&
-          !sentTimeMilestones.has(seconds)
-        ) {
-          sentTimeMilestones.add(seconds);
 
-          trackEvent('tiempo_interaccion', {
-            segundos: seconds
-          });
-        }
-      });
-    }, 1000);
-
-    if (window.lucide) lucide.createIcons();
+    updateUI();
+    if(window.lucide){lucide.createIcons();}
   </script>
 </body>
 </html>
