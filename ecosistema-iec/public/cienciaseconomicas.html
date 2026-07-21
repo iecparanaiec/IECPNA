@@ -1,6 +1,17 @@
 <!doctype html>
 <html lang="es">
 <head>
+  <!-- Google Analytics 4 -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-R817QWH97R"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){ dataLayer.push(arguments); }
+    gtag('js', new Date());
+    gtag('config', 'G-R817QWH97R', {
+      send_page_view: true,
+      transport_type: 'beacon'
+    });
+  </script>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>UNER + Instituto IEC | Programa Universitario de Inteligencia Operativa Aplicada</title>
@@ -9,7 +20,6 @@
   <script src="https://cdn.tailwindcss.com/3.4.17"></script>
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
   <script src="https://cdn.jsdelivr.net/npm/lucide@0.468.0/dist/umd/lucide.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
 
   <style>
     :root{
@@ -55,8 +65,12 @@
     .green-badge{background:linear-gradient(135deg,rgba(34,197,94,.25),rgba(34,211,238,.12));border:1px solid rgba(74,222,128,.32)}
     .amber-badge{background:linear-gradient(135deg,rgba(245,158,11,.25),rgba(251,191,36,.10));border:1px solid rgba(251,191,36,.32)}
     .violet-badge{background:linear-gradient(135deg,rgba(139,92,246,.25),rgba(59,130,246,.14));border:1px solid rgba(167,139,250,.32)}
-    .logo-shell{height:76px;min-width:155px;padding:10px 18px;border-radius:22px;display:flex;align-items:center;justify-content:center;background:linear-gradient(145deg,rgba(255,255,255,.98),rgba(226,232,240,.92));border:2px solid rgba(103,232,249,.46);box-shadow:0 16px 48px rgba(37,99,235,.22),0 0 0 6px rgba(34,211,238,.06);color:#0b1426;font-weight:900;letter-spacing:.04em;text-align:center;line-height:1.05}
-    .logo-shell span{display:block;font-size:13px;color:#334155;font-weight:800;letter-spacing:0}
+    .logo-shell{height:82px;min-width:165px;padding:10px 18px;border-radius:22px;display:flex;align-items:center;justify-content:center;background:linear-gradient(145deg,rgba(255,255,255,.98),rgba(226,232,240,.92));border:2px solid rgba(103,232,249,.46);box-shadow:0 16px 48px rgba(37,99,235,.22),0 0 0 6px rgba(34,211,238,.06)}
+    .logo-shell img{max-height:62px;max-width:190px;width:auto;height:auto;object-fit:contain}
+    .logo-shell.uner-logo{padding:6px;min-width:92px;width:92px}
+    .logo-shell.uner-logo img{max-height:68px;max-width:68px;border-radius:14px}
+    .logo-shell.iec-logo{min-width:210px;padding:0;background:transparent;border:0;box-shadow:none;overflow:visible}
+    .logo-shell.iec-logo img{max-height:82px;max-width:240px;filter:drop-shadow(0 14px 28px rgba(0,0,0,.35))}
     .mini-logo{height:46px;max-width:140px;object-fit:contain;filter:drop-shadow(0 10px 20px rgba(0,0,0,.28))}
 
     .nav-button{position:fixed;top:50%;z-index:70;transform:translateY(-50%);width:46px;height:46px;border-radius:999px;display:flex;align-items:center;justify-content:center;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.14);backdrop-filter:blur(14px);color:#fff;transition:.2s ease}
@@ -67,39 +81,32 @@
     .action-button{display:inline-flex;align-items:center;justify-content:center;gap:8px;border-radius:999px;padding:10px 14px;background:rgba(5,10,20,.72);border:1px solid rgba(255,255,255,.14);color:#fff;backdrop-filter:blur(14px);font-size:12px;font-weight:800;letter-spacing:.03em;transition:.2s ease;cursor:pointer}
     .action-button:hover{background:rgba(37,99,235,.28);border-color:rgba(96,165,250,.55)}
     .action-button.primary{background:linear-gradient(135deg,rgba(14,165,233,.92),rgba(37,99,235,.92));border-color:rgba(125,211,252,.55)}
-    .pdf-status{position:fixed;inset:auto 16px 16px auto;z-index:100;max-width:360px;padding:12px 16px;border-radius:16px;background:rgba(7,11,20,.94);border:1px solid rgba(255,255,255,.14);box-shadow:0 20px 50px rgba(0,0,0,.35);font-size:13px;color:#dbeafe;display:none}
-    #pdf-deck{position:fixed;left:-30000px;top:0;width:1600px;background:#070b14;z-index:-9999}
-    #pdf-deck .pdf-page{display:flex!important;width:1600px!important;height:900px!important;min-height:900px!important;overflow:hidden!important;padding:48px 72px 60px!important;page-break-after:always;break-after:page;position:relative}
-    #pdf-deck .pdf-page:last-child{page-break-after:auto;break-after:auto}
     .flow-arrow{color:#67e8f9;font-size:30px;line-height:1;font-weight:900;text-shadow:0 0 22px rgba(34,211,238,.42)}
     .section-tag{font-size:13px;font-weight:900;letter-spacing:.18em;text-transform:uppercase;color:#67e8f9}
 
-    @media(max-width:768px){.slide{padding:5.3rem .85rem 5.5rem}.nav-button{width:40px;height:40px}.top-actions{top:10px;left:10px;right:10px}.action-button{padding:9px 11px;font-size:10px}.logo-shell{height:62px;min-width:120px}}
+    @media(max-width:768px){.slide{padding:5.3rem .85rem 5.5rem}.nav-button{width:40px;height:40px}.top-actions{top:10px;left:10px;right:10px}.action-button{padding:9px 11px;font-size:10px}.logo-shell{height:62px;min-width:120px}.logo-shell.iec-logo{min-width:170px}.logo-shell.iec-logo img{max-height:66px;max-width:190px}}
     @media(max-width:640px){body{overflow:hidden}.nav-button{top:auto;bottom:16px;transform:none}#prev-btn{left:14px!important}#next-btn{right:14px!important}#dots{bottom:29px!important;max-width:calc(100vw - 120px)}.hide-mobile{display:none!important}}
-    @media print{body{overflow:visible;background:#070b14}.top-actions,.nav-button,#dots,#slide-counter,.pdf-status{display:none!important}.slide{display:flex!important;width:100vw;height:100vh;min-height:100vh;page-break-after:always;break-after:page;overflow:hidden}}
+    @media print{body{overflow:visible;background:#070b14}.top-actions,.nav-button,#dots,#slide-counter{display:none!important}.slide{display:flex!important;width:100vw;height:100vh;min-height:100vh;page-break-after:always;break-after:page;overflow:hidden}}
   </style>
 </head>
 <body class="relative">
   <div class="top-actions">
-    <button class="action-button primary" onclick="downloadPDF()" id="download-btn"><i data-lucide="download" style="width:16px;height:16px"></i> DESCARGAR PDF</button>
     <button class="action-button" onclick="toggleFullscreen()"><i data-lucide="maximize-2" style="width:16px;height:16px"></i> PANTALLA COMPLETA</button>
     <button class="action-button" onclick="window.print()"><i data-lucide="printer" style="width:16px;height:16px"></i> IMPRIMIR</button>
   </div>
-  <button id="prev-btn" class="nav-button left-3 md:left-5" onclick="changeSlide(-1)" aria-label="Diapositiva anterior"><i data-lucide="chevron-left" style="width:22px;height:22px"></i></button>
-  <button id="next-btn" class="nav-button right-3 md:right-5" onclick="changeSlide(1)" aria-label="Diapositiva siguiente"><i data-lucide="chevron-right" style="width:22px;height:22px"></i></button>
+  <button id="prev-btn" class="nav-button left-3 md:left-5" aria-label="Diapositiva anterior"><i data-lucide="chevron-left" style="width:22px;height:22px"></i></button>
+  <button id="next-btn" class="nav-button right-3 md:right-5" aria-label="Diapositiva siguiente"><i data-lucide="chevron-right" style="width:22px;height:22px"></i></button>
   <div id="dots" class="fixed bottom-4 left-1/2 -translate-x-1/2 z-[70] flex items-center justify-center gap-2 flex-wrap"></div>
   <div id="slide-counter" class="fixed top-4 right-4 z-[70] px-3 py-1.5 rounded-full bg-black/30 border border-white/10 backdrop-blur text-xs text-slate-300"></div>
-  <div id="pdf-status" class="pdf-status"></div>
-  <div id="pdf-deck" aria-hidden="true"></div>
 
   <!-- 1 -->
   <section class="slide active flex-col items-center justify-center bg-gradient-to-br from-[#070b14] via-[#0b162b] to-[#070b14] text-center">
     <div class="absolute inset-0 bg-pattern"></div><div class="orb w-80 h-80 bg-cyan-400 top-[-120px] left-[-100px]"></div><div class="orb w-96 h-96 bg-violet-500 bottom-[-160px] right-[-120px]"></div>
     <div class="relative z-10 max-w-6xl mx-auto w-full px-3">
       <div class="flex items-center justify-center gap-4 md:gap-6 mb-7 flex-wrap">
-        <div class="logo-shell">UNER<span>Facultad de Ciencias Económicas</span></div>
+        <div class="logo-shell uner-logo"><img src="https://i.postimg.cc/Yqdq1YXT/t-Buru-Upn-400x400.jpg" alt="Facultad de Ciencias Económicas UNER"></div>
         <div class="h-14 w-px bg-white/20 hide-mobile"></div>
-        <div class="logo-shell">IEC<span>Instituto de Educación Continua</span></div>
+        <div class="logo-shell iec-logo"><img src="https://i.postimg.cc/jSkQKpRK/Diseno-sin-titulo-2026-05-15T105828-195.png" alt="IEC - Instituto Privado en Economía del Conocimiento"></div>
       </div>
       <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-cyan-400/25 bg-cyan-400/10 text-cyan-200 text-xs md:text-sm font-bold tracking-[.18em] uppercase mb-5">🎓 Propuesta académica institucional</div>
       <h1 class="text-4xl sm:text-5xl md:text-7xl lg:text-8xl font-black leading-[.95] mb-5">PROGRAMA UNIVERSITARIO<br><span class="gradient-text">DE INTELIGENCIA OPERATIVA APLICADA</span></h1>
@@ -383,109 +390,395 @@
     <div class="absolute inset-0 bg-pattern"></div><div class="orb w-80 h-80 bg-cyan-400 top-[-120px] left-[-100px]"></div><div class="orb w-96 h-96 bg-violet-500 bottom-[-160px] right-[-120px]"></div>
     <div class="relative z-10 max-w-6xl mx-auto w-full px-3">
       <div class="flex items-center justify-center gap-4 md:gap-6 mb-7 flex-wrap">
-        <div class="logo-shell">UNER<span>Facultad de Ciencias Económicas</span></div>
+        <div class="logo-shell uner-logo"><img src="https://i.postimg.cc/Yqdq1YXT/t-Buru-Upn-400x400.jpg" alt="Facultad de Ciencias Económicas UNER"></div>
         <div class="h-14 w-px bg-white/20 hide-mobile"></div>
-        <div class="logo-shell">IEC<span>Inteligencia Operativa Aplicada</span></div>
+        <div class="logo-shell iec-logo"><img src="https://i.postimg.cc/jSkQKpRK/Diseno-sin-titulo-2026-05-15T105828-195.png" alt="IEC - Instituto Privado en Economía del Conocimiento"></div>
       </div>
       <h2 class="text-4xl sm:text-5xl md:text-7xl font-black leading-[.98] mb-6">INTELIGENCIA ARTIFICIAL<br><span class="gradient-text">AL SERVICIO DE LA OPERACIÓN REAL.</span></h2>
       <div class="glass-card rounded-3xl p-7 max-w-4xl mx-auto"><p class="text-xl md:text-3xl font-black leading-tight">El objetivo no es incorporar tecnología por moda. El objetivo es enseñar mejor, gestionar mejor y decidir mejor.</p></div>
-      <p class="text-slate-400 mt-6 text-sm">Facultad de Ciencias Económicas · UNER · Instituto IEC</p>
+      <p class="text-slate-400 mt-6 text-sm">Facultad de Ciencias Económicas · UNER · IEC — Instituto Privado en Economía del Conocimiento</p>
     </div>
   </section>
 
   <script>
+    /*
+      GOOGLE ANALYTICS 4 — MEDICIÓN INTEGRAL DE LA PRESENTACIÓN
+      Propiedad: G-R817QWH97R
+
+      Eventos principales:
+      - presentation_start: inicio de la presentación.
+      - slide_view: visualización de cada diapositiva.
+      - slide_navigation: navegación entre diapositivas.
+      - slide_time: tiempo visible acumulado en cada diapositiva.
+      - interaction_time: hitos de tiempo activo de la sesión.
+      - presentation_progress: avance del 25%, 50%, 75%, 90% y 100%.
+      - presentation_complete: llegada a la última diapositiva.
+      - ui_click: clic en cualquier control o elemento interactivo.
+      - keyboard_navigation: uso de teclado para navegar.
+      - fullscreen_open / fullscreen_close: cambios de pantalla completa.
+      - print_presentation: uso de imprimir.
+      - visibility_change: pestaña visible u oculta.
+      - session_summary: resumen final de interacción.
+      - javascript_error: errores JavaScript no controlados.
+      - promise_rejection: promesas rechazadas sin controlar.
+    */
+
+    const GA_MEASUREMENT_ID = 'G-R817QWH97R';
+    const SESSION_ID = (window.crypto && crypto.randomUUID)
+      ? crypto.randomUUID()
+      : `session_${Date.now()}_${Math.random().toString(36).slice(2)}`;
+
     let current = 0;
     const slides = Array.from(document.querySelectorAll('.slide'));
     const dotsContainer = document.getElementById('dots');
     const counter = document.getElementById('slide-counter');
-    const pdfStatus = document.getElementById('pdf-status');
+    const sessionStartedAt = Date.now();
+    const visitedSlides = new Set();
+    const sentProgress = new Set();
+    const sentTimeMilestones = new Set();
+    const timeMilestones = [15, 30, 60, 120, 300, 600];
+    const slideVisibleSeconds = new Map();
+    let visibleSeconds = 0;
+    let interactionCount = 0;
+    let lastInteractionAt = Date.now();
+    let summarySent = false;
+    let presentationCompleted = false;
+
+    function safeText(value, max = 100) {
+      return String(value ?? '')
+        .replace(/\s+/g, ' ')
+        .trim()
+        .slice(0, max);
+    }
+
+    function getSlideTitle(index = current) {
+      const slide = slides[index];
+      if (!slide) return `Diapositiva ${index + 1}`;
+      const heading = slide.querySelector('h1, h2, h3');
+      return safeText(heading?.textContent || `Diapositiva ${index + 1}`);
+    }
+
+    function getSlideSection(index = current) {
+      const slide = slides[index];
+      return safeText(slide?.querySelector('.section-tag')?.textContent || 'portada');
+    }
+
+    function trackEvent(eventName, parameters = {}, options = {}) {
+      window.dataLayer = window.dataLayer || [];
+      if (typeof window.gtag !== 'function') {
+        window.gtag = function(){ window.dataLayer.push(arguments); };
+      }
+
+      const payload = {
+        session_id: SESSION_ID,
+        page_path: window.location.pathname || '/',
+        page_title_custom: document.title,
+        slide_number: current + 1,
+        slide_title: getSlideTitle(current),
+        slide_section: getSlideSection(current),
+        total_slides: slides.length,
+        ...parameters
+      };
+
+      if (options.beacon) payload.transport_type = 'beacon';
+      window.gtag('event', eventName, payload);
+    }
+
+    function registerInteraction(type, target = '') {
+      interactionCount += 1;
+      lastInteractionAt = Date.now();
+      trackEvent('ui_click', {
+        interaction_type: safeText(type, 40),
+        target_label: safeText(target, 100),
+        interaction_count: interactionCount
+      });
+    }
+
+    function markSlideView(index, source = 'direct') {
+      visitedSlides.add(index);
+      trackEvent('slide_view', {
+        viewed_slide_number: index + 1,
+        viewed_slide_title: getSlideTitle(index),
+        viewed_slide_section: getSlideSection(index),
+        navigation_source: source,
+        unique_slides_viewed: visitedSlides.size,
+        progress_percent: Math.round(((index + 1) / slides.length) * 100)
+      });
+
+      const progress = Math.round(((index + 1) / slides.length) * 100);
+      [25, 50, 75, 90, 100].forEach(milestone => {
+        if (progress >= milestone && !sentProgress.has(milestone)) {
+          sentProgress.add(milestone);
+          trackEvent('presentation_progress', {
+            progress_percent: milestone,
+            unique_slides_viewed: visitedSlides.size
+          });
+        }
+      });
+
+      if (index === slides.length - 1 && !presentationCompleted) {
+        presentationCompleted = true;
+        trackEvent('presentation_complete', {
+          completion_method: source,
+          elapsed_seconds: Math.round((Date.now() - sessionStartedAt) / 1000),
+          unique_slides_viewed: visitedSlides.size
+        });
+      }
+    }
 
     slides.forEach((_, index) => {
       const dot = document.createElement('button');
       dot.className = 'dot';
       dot.setAttribute('aria-label', `Ir a la diapositiva ${index + 1}`);
-      dot.onclick = () => goToSlide(index);
+      dot.dataset.slideIndex = String(index);
+      dot.addEventListener('click', () => {
+        registerInteraction('dot_navigation', `Diapositiva ${index + 1}`);
+        goToSlide(index, 'dot');
+      });
       dotsContainer.appendChild(dot);
     });
 
-    function updateUI(){
+    function updateUI(source = 'system', previous = null) {
       slides.forEach((slide, i) => slide.classList.toggle('active', i === current));
       Array.from(dotsContainer.children).forEach((dot, i) => dot.classList.toggle('active', i === current));
       counter.textContent = `${current + 1} / ${slides.length}`;
       document.getElementById('prev-btn').style.opacity = current === 0 ? '.45' : '1';
       document.getElementById('next-btn').style.opacity = current === slides.length - 1 ? '.45' : '1';
-      if(window.lucide){lucide.createIcons();}
+      slides[current]?.scrollTo({ top: 0, behavior: 'auto' });
+      if (window.lucide) lucide.createIcons();
+
+      if (previous !== null && previous !== current) {
+        trackEvent('slide_navigation', {
+          from_slide: previous + 1,
+          to_slide: current + 1,
+          direction: current > previous ? 'forward' : 'backward',
+          navigation_source: source,
+          from_slide_title: getSlideTitle(previous),
+          to_slide_title: getSlideTitle(current)
+        });
+      }
+      markSlideView(current, source);
     }
 
-    function goToSlide(index){
+    function goToSlide(index, source = 'direct') {
+      const previous = current;
       current = Math.max(0, Math.min(index, slides.length - 1));
-      updateUI();
+      if (previous === current && source !== 'initial') return;
+      updateUI(source, previous);
     }
 
-    function changeSlide(direction){
-      goToSlide(current + direction);
+    function changeSlide(direction, source = 'arrow_button') {
+      const destination = current + direction;
+      if (destination < 0 || destination >= slides.length) {
+        trackEvent('navigation_limit', {
+          attempted_direction: direction > 0 ? 'forward' : 'backward',
+          navigation_source: source
+        });
+        return;
+      }
+      goToSlide(destination, source);
     }
 
-    document.addEventListener('keydown', (event) => {
-      if(event.key === 'ArrowRight' || event.key === 'PageDown' || event.key === ' '){changeSlide(1);}
-      if(event.key === 'ArrowLeft' || event.key === 'PageUp'){changeSlide(-1);}
-      if(event.key === 'Home'){goToSlide(0);}
-      if(event.key === 'End'){goToSlide(slides.length - 1);}
+    document.getElementById('prev-btn')?.addEventListener('click', () => {
+      registerInteraction('previous_button', 'Anterior');
+      changeSlide(-1, 'previous_button');
     });
 
-    function toggleFullscreen(){
-      if(!document.fullscreenElement){document.documentElement.requestFullscreen?.();}
-      else{document.exitFullscreen?.();}
-    }
+    document.getElementById('next-btn')?.addEventListener('click', () => {
+      registerInteraction('next_button', 'Siguiente');
+      changeSlide(1, 'next_button');
+    });
 
-    function setPDFStatus(message, visible = true){
-      pdfStatus.textContent = message;
-      pdfStatus.style.display = visible ? 'block' : 'none';
-    }
+    document.addEventListener('keydown', event => {
+      let handled = true;
+      let action = '';
 
-    async function downloadPDF(){
-      const button = document.getElementById('download-btn');
-      const pdfDeck = document.getElementById('pdf-deck');
-      button.disabled = true;
-      button.style.opacity = '.65';
-      setPDFStatus('Preparando PDF de la presentación...');
+      if (event.key === 'ArrowRight' || event.key === 'PageDown' || event.key === ' ') {
+        action = 'next';
+        changeSlide(1, `keyboard_${event.key === ' ' ? 'space' : event.key}`);
+      } else if (event.key === 'ArrowLeft' || event.key === 'PageUp') {
+        action = 'previous';
+        changeSlide(-1, `keyboard_${event.key}`);
+      } else if (event.key === 'Home') {
+        action = 'first';
+        goToSlide(0, 'keyboard_home');
+      } else if (event.key === 'End') {
+        action = 'last';
+        goToSlide(slides.length - 1, 'keyboard_end');
+      } else {
+        handled = false;
+      }
 
-      try{
-        pdfDeck.innerHTML = '';
-        slides.forEach((slide) => {
-          const clone = slide.cloneNode(true);
-          clone.classList.add('pdf-page');
-          clone.classList.remove('active');
-          clone.style.display = 'flex';
-          pdfDeck.appendChild(clone);
+      if (handled) {
+        event.preventDefault();
+        interactionCount += 1;
+        lastInteractionAt = Date.now();
+        trackEvent('keyboard_navigation', {
+          key_pressed: safeText(event.key, 20),
+          navigation_action: action,
+          interaction_count: interactionCount
         });
+      }
+    });
 
-        if(window.lucide){lucide.createIcons();}
-        await new Promise(resolve => setTimeout(resolve, 400));
-
-        const options = {
-          margin: 0,
-          filename: 'programa-uner-inteligencia-operativa-aplicada.pdf',
-          image: { type: 'jpeg', quality: 0.98 },
-          html2canvas: { scale: 1.4, useCORS: true, backgroundColor: '#070b14', logging: false },
-          jsPDF: { unit: 'px', format: [1600, 900], orientation: 'landscape', hotfixes: ['px_scaling'] },
-          pagebreak: { mode: ['css', 'legacy'], after: '.pdf-page' }
-        };
-
-        await html2pdf().set(options).from(pdfDeck).save();
-        setPDFStatus('PDF generado correctamente.');
-        setTimeout(() => setPDFStatus('', false), 2600);
-      }catch(error){
-        console.error(error);
-        setPDFStatus('No se pudo generar el PDF. Podés usar el botón IMPRIMIR y guardar como PDF.');
-      }finally{
-        button.disabled = false;
-        button.style.opacity = '1';
+    async function toggleFullscreen() {
+      try {
+        if (!document.fullscreenElement) {
+          await document.documentElement.requestFullscreen?.();
+        } else {
+          await document.exitFullscreen?.();
+        }
+      } catch (error) {
+        trackEvent('fullscreen_error', { error_message: safeText(error?.message || error) });
       }
     }
 
-    updateUI();
-    if(window.lucide){lucide.createIcons();}
+    document.querySelector('[onclick="toggleFullscreen()"]')?.removeAttribute('onclick');
+    const fullscreenButton = Array.from(document.querySelectorAll('.action-button'))
+      .find(button => button.textContent.includes('PANTALLA COMPLETA'));
+    fullscreenButton?.addEventListener('click', () => {
+      registerInteraction('fullscreen_button', 'Pantalla completa');
+      toggleFullscreen();
+    });
+
+    document.addEventListener('fullscreenchange', () => {
+      trackEvent(document.fullscreenElement ? 'fullscreen_open' : 'fullscreen_close', {
+        fullscreen_active: Boolean(document.fullscreenElement)
+      });
+    });
+
+    document.querySelector('[onclick="window.print()"]')?.removeAttribute('onclick');
+    const printButton = Array.from(document.querySelectorAll('.action-button'))
+      .find(button => button.textContent.includes('IMPRIMIR'));
+    printButton?.addEventListener('click', () => {
+      registerInteraction('print_button', 'Imprimir');
+      trackEvent('print_presentation', {
+        unique_slides_viewed: visitedSlides.size,
+        elapsed_seconds: Math.round((Date.now() - sessionStartedAt) / 1000)
+      });
+      window.print();
+    });
+
+    document.addEventListener('click', event => {
+      const interactive = event.target.closest('a, button, [role="button"]');
+      if (!interactive) return;
+      if (interactive.matches('#prev-btn, #next-btn, .dot, .action-button')) return;
+
+      const label = interactive.getAttribute('aria-label') || interactive.textContent || interactive.id || interactive.className;
+      interactionCount += 1;
+      lastInteractionAt = Date.now();
+      trackEvent('ui_click', {
+        interaction_type: interactive.tagName.toLowerCase(),
+        target_label: safeText(label, 100),
+        target_href: safeText(interactive.href || '', 200),
+        interaction_count: interactionCount
+      });
+    });
+
+    slides.forEach((slide, index) => {
+      const sentScroll = new Set();
+      slide.addEventListener('scroll', () => {
+        if (index !== current) return;
+        const maxScroll = slide.scrollHeight - slide.clientHeight;
+        const percent = maxScroll <= 0 ? 100 : Math.min(100, Math.round((slide.scrollTop / maxScroll) * 100));
+        [25, 50, 75, 90, 100].forEach(milestone => {
+          if (percent >= milestone && !sentScroll.has(milestone)) {
+            sentScroll.add(milestone);
+            trackEvent('slide_scroll_depth', {
+              scroll_percent: milestone,
+              scrolled_slide_number: index + 1,
+              scrolled_slide_title: getSlideTitle(index)
+            });
+          }
+        });
+      }, { passive: true });
+    });
+
+    setInterval(() => {
+      if (document.visibilityState !== 'visible') return;
+      visibleSeconds += 1;
+      slideVisibleSeconds.set(current, (slideVisibleSeconds.get(current) || 0) + 1);
+
+      timeMilestones.forEach(seconds => {
+        if (visibleSeconds >= seconds && !sentTimeMilestones.has(seconds)) {
+          sentTimeMilestones.add(seconds);
+          trackEvent('interaction_time', {
+            active_seconds: seconds,
+            unique_slides_viewed: visitedSlides.size,
+            interaction_count: interactionCount
+          });
+        }
+      });
+
+      const slideSeconds = slideVisibleSeconds.get(current) || 0;
+      if ([10, 30, 60, 120].includes(slideSeconds)) {
+        trackEvent('slide_time', {
+          time_seconds: slideSeconds,
+          timed_slide_number: current + 1,
+          timed_slide_title: getSlideTitle(current)
+        });
+      }
+    }, 1000);
+
+    document.addEventListener('visibilitychange', () => {
+      trackEvent('visibility_change', {
+        visibility_state: document.visibilityState,
+        active_seconds: visibleSeconds,
+        idle_seconds: Math.max(0, Math.round((Date.now() - lastInteractionAt) / 1000))
+      }, { beacon: document.visibilityState === 'hidden' });
+    });
+
+    function sendSessionSummary(reason) {
+      if (summarySent) return;
+      summarySent = true;
+      const perSlide = Array.from(slideVisibleSeconds.entries())
+        .map(([index, seconds]) => `${index + 1}:${seconds}`)
+        .join('|')
+        .slice(0, 500);
+
+      trackEvent('session_summary', {
+        end_reason: reason,
+        elapsed_seconds: Math.round((Date.now() - sessionStartedAt) / 1000),
+        active_seconds: visibleSeconds,
+        interaction_count: interactionCount,
+        unique_slides_viewed: visitedSlides.size,
+        completion_reached: presentationCompleted,
+        last_slide_number: current + 1,
+        slide_time_map: perSlide
+      }, { beacon: true });
+    }
+
+    window.addEventListener('pagehide', () => sendSessionSummary('pagehide'));
+    window.addEventListener('beforeunload', () => sendSessionSummary('beforeunload'));
+
+    window.addEventListener('error', event => {
+      trackEvent('javascript_error', {
+        error_message: safeText(event.message || 'Error desconocido', 150),
+        error_file: safeText(event.filename || '', 150),
+        error_line: event.lineno || 0,
+        error_column: event.colno || 0
+      }, { beacon: true });
+    });
+
+    window.addEventListener('unhandledrejection', event => {
+      trackEvent('promise_rejection', {
+        error_message: safeText(event.reason?.message || event.reason || 'Promesa rechazada', 150)
+      }, { beacon: true });
+    });
+
+    trackEvent('presentation_start', {
+      referrer: safeText(document.referrer || 'directo', 200),
+      viewport_width: window.innerWidth,
+      viewport_height: window.innerHeight,
+      screen_width: window.screen?.width || 0,
+      screen_height: window.screen?.height || 0,
+      language: navigator.language || 'desconocido',
+      device_memory: navigator.deviceMemory || 0,
+      connection_type: navigator.connection?.effectiveType || 'desconocido'
+    });
+
+    updateUI('initial', null);
+    if (window.lucide) lucide.createIcons();
   </script>
 </body>
 </html>
