@@ -2071,7 +2071,8 @@
       ------------------------------------------------------------
 
       Importante:
-      - El webhook recibe los datos personales.
+      - El webhook recibe los datos personales como formulario URL encoded.
+      - El envío usa mode no-cors para evitar el preflight bloqueado.
       - Google Analytics recibe únicamente eventos y datos no personales.
       - URL de producción:
         https://n8n.smarteco.com.ar/webhook/preinscripcion
@@ -2206,46 +2207,62 @@
       };
     }
 
+    /**
+     * Envía la preinscripción sin preflight CORS.
+     *
+     * Se utiliza application/x-www-form-urlencoded y mode "no-cors".
+     * Esto permite enviar desde www.iec-ia.com.ar hacia n8n.smarteco.com.ar
+     * sin exigir encabezados CORS en el webhook.
+     *
+     * En n8n, los campos quedan disponibles directamente en el body:
+     * $json.body.nombre
+     * $json.body.apellido
+     * $json.body.whatsapp
+     * $json.body.email
+     * $json.body.comision
+     * $json.body.como_se_entero
+     */
     async function sendPreinscription(payload) {
       const controller = new AbortController();
       const timeoutId = window.setTimeout(() => controller.abort(), 15000);
 
+      const formBody = new URLSearchParams();
+
+      Object.entries(payload).forEach(([key, value]) => {
+        if (value === null || value === undefined) {
+          formBody.append(key, "");
+          return;
+        }
+
+        if (typeof value === "object") {
+          formBody.append(key, JSON.stringify(value));
+          return;
+        }
+
+        formBody.append(key, String(value));
+      });
+
       try {
-        const response = await fetch(PREINSCRIPTION_WEBHOOK, {
+        await fetch(PREINSCRIPTION_WEBHOOK, {
           method: "POST",
-          mode: "cors",
+          mode: "no-cors",
           credentials: "omit",
           cache: "no-store",
           redirect: "follow",
           referrerPolicy: "strict-origin-when-cross-origin",
-          headers: {
-            "Content-Type": "application/json",
-            "Accept": "application/json, text/plain, */*"
-          },
-          body: JSON.stringify(payload),
+          body: formBody,
           signal: controller.signal
         });
 
-        const responseText = await response.text();
-        let responseData = null;
-
-        try {
-          responseData = responseText ? JSON.parse(responseText) : null;
-        } catch (_) {
-          responseData = responseText || null;
-        }
-
-        if (!response.ok) {
-          const error = new Error(`El servidor respondió con estado ${response.status}.`);
-          error.status = response.status;
-          error.responseData = responseData;
-          throw error;
-        }
-
+        /*
+         * En mode no-cors la respuesta es opaca y el navegador no permite
+         * leer el código HTTP. Si fetch no lanzó una excepción, el pedido
+         * fue despachado correctamente hacia el webhook.
+         */
         return {
           ok: true,
-          status: response.status,
-          data: responseData
+          status: 0,
+          opaque: true
         };
       } finally {
         window.clearTimeout(timeoutId);
@@ -2390,7 +2407,7 @@
           sendGA4Event("preinscripcion_exitosa", {
             comision: validation.data.comision,
             origen_curso: validation.data.como_se_entero,
-            estado_http: result.status,
+            modo_envio: result.opaque ? "no_cors_form_urlencoded" : "cors",
             submission_id: submissionId
           });
 
