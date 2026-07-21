@@ -768,6 +768,306 @@
 
     .float-wa:hover{transform:translateY(-3px) scale(1.02)}
 
+
+    /* ==========================================================
+       FORMULARIO DE PREINSCRIPCIÓN
+       ========================================================== */
+    .preinscription-section{
+      padding:44px 0 18px;
+      scroll-margin-top:88px;
+    }
+
+    .preinscription-wrap{
+      position:relative;
+      overflow:hidden;
+      display:grid;
+      grid-template-columns:.82fr 1.18fr;
+      gap:18px;
+      padding:22px;
+      border-radius:32px;
+      background:
+        radial-gradient(circle at 0% 0%,rgba(34,211,238,.17),transparent 34%),
+        radial-gradient(circle at 100% 100%,rgba(99,102,241,.16),transparent 38%),
+        linear-gradient(135deg,rgba(7,25,42,.95),rgba(4,10,20,.96));
+      border:1px solid rgba(125,211,252,.25);
+      box-shadow:0 28px 75px rgba(0,0,0,.30);
+    }
+
+    .preinscription-info,
+    .preinscription-form-card{
+      position:relative;
+      z-index:1;
+      border-radius:25px;
+    }
+
+    .preinscription-info{
+      padding:26px;
+      background:rgba(255,255,255,.045);
+      border:1px solid rgba(255,255,255,.08);
+    }
+
+    .form-kicker{
+      display:inline-flex;
+      align-items:center;
+      gap:7px;
+      padding:7px 11px;
+      border-radius:999px;
+      color:#a5f3fc;
+      background:rgba(34,211,238,.09);
+      border:1px solid rgba(34,211,238,.22);
+      font-size:10px;
+      font-weight:900;
+      letter-spacing:.10em;
+      text-transform:uppercase;
+    }
+
+    .preinscription-info h2{
+      margin:16px 0 12px;
+      font-size:clamp(30px,4vw,50px);
+      line-height:1.02;
+      letter-spacing:-.045em;
+      font-weight:900;
+    }
+
+    .preinscription-info > p{
+      margin:0;
+      color:#cbd5e1;
+      font-size:14px;
+      line-height:1.7;
+    }
+
+    .form-benefits{
+      display:grid;
+      gap:10px;
+      margin-top:20px;
+    }
+
+    .form-benefit{
+      display:flex;
+      align-items:flex-start;
+      gap:10px;
+      padding:12px;
+      border-radius:15px;
+      color:#cbd5e1;
+      background:rgba(255,255,255,.045);
+      border:1px solid rgba(255,255,255,.07);
+      font-size:12px;
+      line-height:1.5;
+    }
+
+    .form-benefit i{
+      flex:0 0 auto;
+      margin-top:1px;
+      color:#67e8f9;
+    }
+
+    .preinscription-form-card{
+      padding:25px;
+      background:rgba(3,10,20,.65);
+      border:1px solid rgba(255,255,255,.09);
+    }
+
+    .preinscription-form{
+      display:grid;
+      gap:15px;
+    }
+
+    .form-grid{
+      display:grid;
+      grid-template-columns:repeat(2,minmax(0,1fr));
+      gap:13px;
+    }
+
+    .form-field{
+      display:grid;
+      gap:7px;
+    }
+
+    .form-field.full{
+      grid-column:1 / -1;
+    }
+
+    .form-field label{
+      color:#dbeafe;
+      font-size:12px;
+      font-weight:800;
+    }
+
+    .required-mark{color:#67e8f9}
+
+    .form-control{
+      width:100%;
+      min-height:51px;
+      padding:13px 14px;
+      border-radius:15px;
+      color:#f8fafc;
+      background:rgba(255,255,255,.055);
+      border:1px solid rgba(255,255,255,.10);
+      outline:none;
+      font:inherit;
+      font-size:14px;
+      transition:border-color .18s ease,box-shadow .18s ease,background .18s ease;
+    }
+
+    .form-control::placeholder{color:#64748b}
+
+    .form-control:focus{
+      border-color:rgba(103,232,249,.65);
+      background:rgba(255,255,255,.075);
+      box-shadow:0 0 0 4px rgba(34,211,238,.10);
+    }
+
+    .form-control[aria-invalid="true"]{
+      border-color:rgba(251,113,133,.78);
+      box-shadow:0 0 0 4px rgba(251,113,133,.09);
+    }
+
+    select.form-control{
+      appearance:none;
+      cursor:pointer;
+      background-image:
+        linear-gradient(45deg,transparent 50%,#94a3b8 50%),
+        linear-gradient(135deg,#94a3b8 50%,transparent 50%);
+      background-position:
+        calc(100% - 19px) 22px,
+        calc(100% - 14px) 22px;
+      background-size:5px 5px,5px 5px;
+      background-repeat:no-repeat;
+      padding-right:40px;
+    }
+
+    select.form-control option{
+      color:#0f172a;
+      background:#ffffff;
+    }
+
+    .field-hint{
+      color:#64748b;
+      font-size:10px;
+      line-height:1.4;
+    }
+
+    .field-error{
+      min-height:14px;
+      color:#fda4af;
+      font-size:10px;
+      font-weight:700;
+    }
+
+    .privacy-note{
+      display:flex;
+      align-items:flex-start;
+      gap:9px;
+      padding:12px;
+      border-radius:14px;
+      color:#94a3b8;
+      background:rgba(255,255,255,.035);
+      border:1px solid rgba(255,255,255,.065);
+      font-size:10px;
+      line-height:1.55;
+    }
+
+    .privacy-note i{
+      flex:0 0 auto;
+      color:#67e8f9;
+      margin-top:1px;
+    }
+
+    .submit-button{
+      width:100%;
+      min-height:55px;
+      border:0;
+      border-radius:17px;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      gap:9px;
+      color:white;
+      cursor:pointer;
+      background:linear-gradient(135deg,#0891b2,#2563eb 58%,#6366f1);
+      box-shadow:0 18px 42px rgba(37,99,235,.26);
+      font-size:14px;
+      font-weight:900;
+      transition:transform .18s ease,filter .18s ease,opacity .18s ease;
+    }
+
+    .submit-button:hover:not(:disabled){
+      transform:translateY(-2px);
+      filter:brightness(1.08);
+    }
+
+    .submit-button:disabled{
+      cursor:not-allowed;
+      opacity:.65;
+    }
+
+    .spinner{
+      display:none;
+      width:18px;
+      height:18px;
+      border-radius:50%;
+      border:2px solid rgba(255,255,255,.35);
+      border-top-color:#ffffff;
+      animation:spin .75s linear infinite;
+    }
+
+    .submit-button.loading .spinner{display:block}
+    .submit-button.loading .submit-icon{display:none}
+
+    @keyframes spin{to{transform:rotate(360deg)}}
+
+    .form-status{
+      display:none;
+      padding:14px 15px;
+      border-radius:15px;
+      font-size:12px;
+      font-weight:800;
+      line-height:1.5;
+    }
+
+    .form-status.show{display:block}
+
+    .form-status.success{
+      color:#dcfce7;
+      background:rgba(34,197,94,.12);
+      border:1px solid rgba(74,222,128,.28);
+    }
+
+    .form-status.error{
+      color:#ffe4e6;
+      background:rgba(244,63,94,.11);
+      border:1px solid rgba(251,113,133,.28);
+    }
+
+    .form-status.info{
+      color:#dbeafe;
+      background:rgba(37,99,235,.11);
+      border:1px solid rgba(96,165,250,.25);
+    }
+
+    .honeypot{
+      position:absolute!important;
+      width:1px!important;
+      height:1px!important;
+      padding:0!important;
+      margin:-1px!important;
+      overflow:hidden!important;
+      clip:rect(0,0,0,0)!important;
+      white-space:nowrap!important;
+      border:0!important;
+    }
+
+    @media(max-width:900px){
+      .preinscription-wrap{grid-template-columns:1fr}
+    }
+
+    @media(max-width:620px){
+      .preinscription-wrap{padding:13px;border-radius:25px}
+      .preinscription-info,.preinscription-form-card{padding:19px;border-radius:20px}
+      .form-grid{grid-template-columns:1fr}
+      .form-field.full{grid-column:auto}
+    }
+
     @media(max-width:900px){
       .section-head{grid-template-columns:1fr;gap:10px}
       .foundation,.factoria{grid-template-columns:1fr}
@@ -853,9 +1153,9 @@
         </p>
 
         <div class="hero-cta">
-          <a class="btn btn-primary" href="https://wa.me/5493434295937?text=Hola%20IEC%2C%20quiero%20preinscribirme%20al%20Taller%20Permanente%20Programador%20Experto%20con%20IA" target="_blank" rel="noopener">
+          <a class="btn btn-primary" href="#preinscripcion" data-action="abrir-formulario">
             <i data-lucide="send" width="19"></i>
-            Preinscribirme por WhatsApp
+            Completar preinscripción
           </a>
         </div>
 
@@ -1409,17 +1709,131 @@
             y crecer dentro de un ecosistema de producción, automatización e Inteligencia Artificial.
           </p>
 
-          <a class="btn btn-primary" href="https://wa.me/5493434295937?text=Hola%20IEC%2C%20quiero%20preinscribirme%20al%20Taller%20Permanente%20Programador%20Experto%20con%20IA" target="_blank" rel="noopener">
+          <a class="btn btn-primary" href="#preinscripcion" data-action="abrir-formulario">
             <i data-lucide="message-circle" width="20"></i>
-            Preinscribirme por WhatsApp
+            Completar preinscripción
           </a>
         </div>
       </div>
     </section>
+
+    <section id="preinscripcion" class="preinscription-section" aria-labelledby="preinscripcion-title">
+      <div class="container">
+        <div class="preinscription-wrap">
+          <div class="preinscription-info">
+            <span class="form-kicker">
+              <i data-lucide="clipboard-pen-line" width="15"></i>
+              Preinscripción 2026
+            </span>
+
+            <h2 id="preinscripcion-title">Reservá tu lugar</h2>
+
+            <p>
+              Completá tus datos para preinscribirte al Taller Permanente Programador Experto con Inteligencia Artificial.
+              La información será enviada al equipo del Instituto IEC para continuar el proceso de admisión.
+            </p>
+
+            <div class="form-benefits">
+              <div class="form-benefit">
+                <i data-lucide="check-circle-2" width="17"></i>
+                <span>Taller permanente con ingreso progresivo y actualización continua.</span>
+              </div>
+
+              <div class="form-benefit">
+                <i data-lucide="shield-check" width="17"></i>
+                <span>Tus datos se utilizan exclusivamente para gestionar esta preinscripción.</span>
+              </div>
+
+              <div class="form-benefit">
+                <i data-lucide="messages-square" width="17"></i>
+                <span>El equipo IEC podrá contactarte por WhatsApp o correo electrónico.</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="preinscription-form-card">
+            <form id="preinscription-form" class="preinscription-form" novalidate>
+              <input class="honeypot" type="text" name="website" id="website" tabindex="-1" autocomplete="off" aria-hidden="true">
+
+              <div class="form-grid">
+                <div class="form-field">
+                  <label for="nombre">Nombre <span class="required-mark">*</span></label>
+                  <input class="form-control" type="text" id="nombre" name="nombre" placeholder="Tu nombre" autocomplete="given-name" maxlength="60" required>
+                  <span class="field-error" id="error-nombre"></span>
+                </div>
+
+                <div class="form-field">
+                  <label for="apellido">Apellido <span class="required-mark">*</span></label>
+                  <input class="form-control" type="text" id="apellido" name="apellido" placeholder="Tu apellido" autocomplete="family-name" maxlength="60" required>
+                  <span class="field-error" id="error-apellido"></span>
+                </div>
+
+                <div class="form-field">
+                  <label for="whatsapp">WhatsApp <span class="required-mark">*</span></label>
+                  <input class="form-control" type="tel" id="whatsapp" name="whatsapp" placeholder="Ej.: 343 4295937" autocomplete="tel" inputmode="tel" maxlength="25" required>
+                  <span class="field-hint">Incluí código de área.</span>
+                  <span class="field-error" id="error-whatsapp"></span>
+                </div>
+
+                <div class="form-field">
+                  <label for="email">Correo electrónico <span class="required-mark">*</span></label>
+                  <input class="form-control" type="email" id="email" name="email" placeholder="nombre@correo.com" autocomplete="email" maxlength="120" required>
+                  <span class="field-error" id="error-email"></span>
+                </div>
+
+                <div class="form-field full">
+                  <label for="comision">Comisión elegida <span class="required-mark">*</span></label>
+                  <select class="form-control" id="comision" name="comision" required>
+                    <option value="">Seleccioná una comisión</option>
+                    <option value="Comisión 1 - Jueves 18:00 a 22:00">Comisión 1 · Jueves de 18:00 a 22:00</option>
+                  </select>
+                  <span class="field-error" id="error-comision"></span>
+                </div>
+
+                <div class="form-field full">
+                  <label for="como_se_entero">¿Cómo te enteraste del curso? <span class="required-mark">*</span></label>
+                  <select class="form-control" id="como_se_entero" name="como_se_entero" required>
+                    <option value="">Seleccioná una opción</option>
+                    <option value="Instagram">Instagram</option>
+                    <option value="Facebook">Facebook</option>
+                    <option value="WhatsApp">WhatsApp</option>
+                    <option value="Sitio web del IEC">Sitio web del IEC</option>
+                    <option value="Google">Google</option>
+                    <option value="Recomendación de una persona">Recomendación de una persona</option>
+                    <option value="Alumno o exalumno del IEC">Alumno o exalumno del IEC</option>
+                    <option value="FactorIA">FactorIA</option>
+                    <option value="Publicidad o evento">Publicidad o evento</option>
+                    <option value="Otro">Otro</option>
+                  </select>
+                  <span class="field-error" id="error-como_se_entero"></span>
+                </div>
+              </div>
+
+              <div class="privacy-note">
+                <i data-lucide="lock-keyhole" width="16"></i>
+                <span>
+                  Al enviar el formulario autorizás al Instituto IEC a utilizar estos datos para contactarte
+                  por esta capacitación. Los datos personales no se envían a Google Analytics.
+                </span>
+              </div>
+
+              <button id="submit-preinscription" class="submit-button" type="submit">
+                <span class="spinner" aria-hidden="true"></span>
+                <i class="submit-icon" data-lucide="send" width="19"></i>
+                <span class="submit-text">Enviar preinscripción</span>
+              </button>
+
+              <div id="form-status" class="form-status" role="status" aria-live="polite"></div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </section>
+
   </main>
 
-  <a class="float-wa" href="https://wa.me/5493434295937?text=Hola%20IEC%2C%20quiero%20preinscribirme%20al%20Taller%20Permanente%20Programador%20Experto%20con%20IA" target="_blank" rel="noopener" aria-label="Preinscribirme por WhatsApp">
-    <i data-lucide="message-circle" width="28"></i>
+  <a class="float-wa" href="#preinscripcion" data-action="abrir-formulario" aria-label="Completar preinscripción">
+    <i data-lucide="clipboard-pen-line" width="28"></i>
   </a>
 
   <footer>
@@ -1452,6 +1866,14 @@
       - estado_cuenta_regresiva
       - sincronizacion_hora
       - salida_pagina
+      - ver_formulario_preinscripcion
+      - iniciar_formulario_preinscripcion
+      - seleccionar_comision
+      - seleccionar_origen_curso
+      - error_validacion_preinscripcion
+      - intento_preinscripcion
+      - preinscripcion_exitosa
+      - error_preinscripcion
 
       No se envían nombres, teléfonos, correos ni otros datos personales.
     */
@@ -2049,9 +2471,377 @@
 
     synchronizeInternetTime();
 
+
     /*
       ------------------------------------------------------------
-      13. SALIDA DE LA PÁGINA
+      13. FORMULARIO DE PREINSCRIPCIÓN + WEBHOOK N8N
+      ------------------------------------------------------------
+
+      El formulario se envía como application/x-www-form-urlencoded
+      mediante mode "no-cors", evitando el preflight CORS.
+
+      Webhook:
+      https://n8n.smarteco.com.ar/webhook/preinscripcion
+    */
+
+    const PREINSCRIPTION_WEBHOOK =
+      "https://n8n.smarteco.com.ar/webhook/preinscripcion";
+
+    const preinscriptionForm = document.getElementById("preinscription-form");
+    const formStatus = document.getElementById("form-status");
+    const submitButton = document.getElementById("submit-preinscription");
+    const submitText = submitButton?.querySelector(".submit-text");
+
+    let formStarted = false;
+    let formViewed = false;
+    let formSubmitting = false;
+
+    function showFormStatus(type, message) {
+      if (!formStatus) return;
+      formStatus.className = `form-status show ${type}`;
+      formStatus.textContent = message;
+    }
+
+    function clearFormStatus() {
+      if (!formStatus) return;
+      formStatus.className = "form-status";
+      formStatus.textContent = "";
+    }
+
+    function setSubmitting(isSubmitting) {
+      formSubmitting = isSubmitting;
+
+      if (!submitButton) return;
+
+      submitButton.disabled = isSubmitting;
+      submitButton.classList.toggle("loading", isSubmitting);
+
+      if (submitText) {
+        submitText.textContent = isSubmitting
+          ? "Enviando preinscripción..."
+          : "Enviar preinscripción";
+      }
+    }
+
+    function normalizeText(value) {
+      return String(value || "").replace(/\s+/g, " ").trim();
+    }
+
+    function normalizePhone(value) {
+      return String(value || "")
+        .replace(/[^\d+]/g, "")
+        .replace(/(?!^)\+/g, "")
+        .slice(0, 20);
+    }
+
+    function isValidName(value) {
+      return /^[A-Za-zÁÉÍÓÚÜÑáéíóúüñ' -]{2,60}$/.test(value);
+    }
+
+    function isValidEmail(value) {
+      return /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(value);
+    }
+
+    function isValidPhone(value) {
+      const digits = value.replace(/\D/g, "");
+      return digits.length >= 8 && digits.length <= 15;
+    }
+
+    function setFieldError(fieldName, message) {
+      const input = document.getElementById(fieldName);
+      const error = document.getElementById(`error-${fieldName}`);
+
+      if (input) {
+        input.setAttribute("aria-invalid", message ? "true" : "false");
+      }
+
+      if (error) {
+        error.textContent = message || "";
+      }
+    }
+
+    function clearFieldError(fieldName) {
+      setFieldError(fieldName, "");
+    }
+
+    function validatePreinscriptionForm() {
+      const data = {
+        nombre: normalizeText(document.getElementById("nombre")?.value),
+        apellido: normalizeText(document.getElementById("apellido")?.value),
+        whatsapp: normalizePhone(document.getElementById("whatsapp")?.value),
+        email: normalizeText(document.getElementById("email")?.value).toLowerCase(),
+        comision: normalizeText(document.getElementById("comision")?.value),
+        como_se_entero: normalizeText(document.getElementById("como_se_entero")?.value),
+        website: normalizeText(document.getElementById("website")?.value)
+      };
+
+      const errors = {};
+
+      if (!isValidName(data.nombre)) {
+        errors.nombre = "Ingresá un nombre válido.";
+      }
+
+      if (!isValidName(data.apellido)) {
+        errors.apellido = "Ingresá un apellido válido.";
+      }
+
+      if (!isValidPhone(data.whatsapp)) {
+        errors.whatsapp = "Ingresá un WhatsApp válido con código de área.";
+      }
+
+      if (!isValidEmail(data.email)) {
+        errors.email = "Ingresá un correo electrónico válido.";
+      }
+
+      if (!data.comision) {
+        errors.comision = "Seleccioná una comisión.";
+      }
+
+      if (!data.como_se_entero) {
+        errors.como_se_entero = "Seleccioná cómo te enteraste del curso.";
+      }
+
+      ["nombre", "apellido", "whatsapp", "email", "comision", "como_se_entero"]
+        .forEach((field) => setFieldError(field, errors[field] || ""));
+
+      return {
+        valid: Object.keys(errors).length === 0 && !data.website,
+        data,
+        errors
+      };
+    }
+
+    async function sendPreinscription(payload) {
+      const controller = new AbortController();
+      const timeoutId = window.setTimeout(() => controller.abort(), 15000);
+      const formBody = new URLSearchParams();
+
+      Object.entries(payload).forEach(([key, value]) => {
+        if (value === null || value === undefined) {
+          formBody.append(key, "");
+        } else if (typeof value === "object") {
+          formBody.append(key, JSON.stringify(value));
+        } else {
+          formBody.append(key, String(value));
+        }
+      });
+
+      try {
+        await fetch(PREINSCRIPTION_WEBHOOK, {
+          method: "POST",
+          mode: "no-cors",
+          credentials: "omit",
+          cache: "no-store",
+          redirect: "follow",
+          referrerPolicy: "strict-origin-when-cross-origin",
+          body: formBody,
+          signal: controller.signal
+        });
+
+        return {
+          ok: true,
+          opaque: true
+        };
+      } finally {
+        window.clearTimeout(timeoutId);
+      }
+    }
+
+    if (preinscriptionForm) {
+      const formObserver = new IntersectionObserver((entries) => {
+        entries.forEach((entry) => {
+          if (
+            entry.isIntersecting &&
+            entry.intersectionRatio >= 0.35 &&
+            !formViewed
+          ) {
+            formViewed = true;
+
+            sendGA4Event("ver_formulario_preinscripcion", {
+              ubicacion: "seccion_preinscripcion"
+            });
+
+            formObserver.unobserve(entry.target);
+          }
+        });
+      }, {
+        threshold: [0.35]
+      });
+
+      formObserver.observe(preinscriptionForm);
+
+      preinscriptionForm.addEventListener("focusin", (event) => {
+        const field = event.target.closest("input:not(.honeypot), select");
+
+        if (!field) return;
+
+        if (!formStarted) {
+          formStarted = true;
+
+          sendGA4Event("iniciar_formulario_preinscripcion", {
+            primer_campo: field.name || field.id || "sin_identificar"
+          });
+        }
+      });
+
+      preinscriptionForm.addEventListener("input", (event) => {
+        const field = event.target;
+
+        if (!field?.id) return;
+
+        clearFieldError(field.id);
+        clearFormStatus();
+      });
+
+      document.getElementById("comision")?.addEventListener("change", (event) => {
+        if (!event.target.value) return;
+
+        sendGA4Event("seleccionar_comision", {
+          comision: cleanText(event.target.value)
+        });
+      });
+
+      document.getElementById("como_se_entero")?.addEventListener("change", (event) => {
+        if (!event.target.value) return;
+
+        sendGA4Event("seleccionar_origen_curso", {
+          origen_curso: cleanText(event.target.value)
+        });
+      });
+
+      preinscriptionForm.addEventListener("submit", async (event) => {
+        event.preventDefault();
+
+        if (formSubmitting) return;
+
+        clearFormStatus();
+
+        const validation = validatePreinscriptionForm();
+
+        if (!validation.valid) {
+          const invalidFields = Object.keys(validation.errors);
+
+          sendGA4Event("error_validacion_preinscripcion", {
+            cantidad_campos_invalidos: invalidFields.length,
+            campos_invalidos: invalidFields.join("|")
+          });
+
+          showFormStatus(
+            "error",
+            "Revisá los campos marcados antes de enviar la preinscripción."
+          );
+
+          const firstInvalid = invalidFields.length
+            ? document.getElementById(invalidFields[0])
+            : null;
+
+          firstInvalid?.focus();
+          return;
+        }
+
+        const submissionId =
+          window.crypto?.randomUUID?.() ||
+          `pre-${Date.now()}-${Math.random().toString(16).slice(2)}`;
+
+        const queryParams = new URLSearchParams(window.location.search);
+
+        const payload = {
+          tipo: "preinscripcion_curso",
+          submission_id: submissionId,
+          curso: COURSE_NAME,
+          nivel: "Taller permanente",
+          nombre: validation.data.nombre,
+          apellido: validation.data.apellido,
+          whatsapp: validation.data.whatsapp,
+          email: validation.data.email,
+          comision: validation.data.comision,
+          como_se_entero: validation.data.como_se_entero,
+          origen: "landing_curso_iec",
+          pagina_url: window.location.href,
+          pagina_path: PAGE_PATH,
+          pagina_titulo: PAGE_TITLE,
+          fecha_envio_iso: new Date().toISOString(),
+          zona_horaria: Intl.DateTimeFormat().resolvedOptions().timeZone || "",
+          idioma: navigator.language || "",
+          utm_source: queryParams.get("utm_source") || "",
+          utm_medium: queryParams.get("utm_medium") || "",
+          utm_campaign: queryParams.get("utm_campaign") || "",
+          utm_content: queryParams.get("utm_content") || "",
+          utm_term: queryParams.get("utm_term") || "",
+          consentimiento_contacto: true
+        };
+
+        setSubmitting(true);
+        showFormStatus("info", "Estamos enviando tu preinscripción...");
+
+        sendGA4Event("intento_preinscripcion", {
+          comision: validation.data.comision,
+          origen_curso: validation.data.como_se_entero
+        });
+
+        try {
+          await sendPreinscription(payload);
+
+          sendGA4Event("preinscripcion_exitosa", {
+            comision: validation.data.comision,
+            origen_curso: validation.data.como_se_entero,
+            modo_envio: "no_cors_form_urlencoded",
+            submission_id: submissionId
+          });
+
+          preinscriptionForm.reset();
+
+          [
+            "nombre",
+            "apellido",
+            "whatsapp",
+            "email",
+            "comision",
+            "como_se_entero"
+          ].forEach(clearFieldError);
+
+          showFormStatus(
+            "success",
+            "¡Preinscripción enviada correctamente! El equipo del Instituto IEC se comunicará con vos."
+          );
+        } catch (error) {
+          const isTimeout = error?.name === "AbortError";
+
+          sendGA4Event("error_preinscripcion", {
+            tipo_error: isTimeout ? "tiempo_agotado" : "error_red",
+            mensaje_tecnico: cleanText(error?.message || "Error desconocido")
+          });
+
+          showFormStatus(
+            "error",
+            isTimeout
+              ? "La solicitud demoró demasiado. Revisá tu conexión e intentá nuevamente."
+              : "No pudimos enviar la preinscripción. Intentá nuevamente en unos minutos."
+          );
+        } finally {
+          setSubmitting(false);
+        }
+      });
+    }
+
+    document.querySelectorAll('[data-action="abrir-formulario"]').forEach((link) => {
+      link.addEventListener("click", () => {
+        sendGA4Event("click_navegacion", {
+          elemento: "abrir_formulario_preinscripcion",
+          ubicacion_boton:
+            link.classList.contains("float-wa")
+              ? "boton_flotante"
+              : link.closest(".closing")
+                ? "cierre_pagina"
+                : "hero_principal",
+          destino: "#preinscripcion"
+        });
+      });
+    });
+
+    /*
+      ------------------------------------------------------------
+      14. SALIDA DE LA PÁGINA
       ------------------------------------------------------------
     */
 
@@ -2087,7 +2877,7 @@
 
     /*
       ------------------------------------------------------------
-      14. ICONOS
+      15. ICONOS
       ------------------------------------------------------------
     */
 
