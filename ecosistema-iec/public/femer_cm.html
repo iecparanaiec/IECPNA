@@ -1,0 +1,1216 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <!-- Google Analytics IEC -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-R817QWH97R"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-R817QWH97R');
+  </script>
+
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>FEMER + Instituto IEC | Administración Inteligente para Entidades Médicas</title>
+  <meta name="description" content="Propuesta de capacitación conjunta entre FEMER y el Instituto IEC para el personal administrativo de FEMER y los Círculos Médicos de Entre Ríos.">
+
+  <script src="https://cdn.tailwindcss.com/3.4.17"></script>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/lucide@0.468.0/dist/umd/lucide.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+
+  <style>
+    :root{
+      --cyan:#22d3ee;
+      --blue:#3b82f6;
+      --violet:#8b5cf6;
+      --green:#22c55e;
+      --amber:#f59e0b;
+      --red:#ef4444;
+      --bg:#070b14;
+      --panel:#0d1526;
+    }
+
+    *{box-sizing:border-box;font-family:'DM Sans',sans-serif}
+    html,body{margin:0;padding:0;background:var(--bg)}
+    body{color:#fff;overflow:hidden}
+    button,a{-webkit-tap-highlight-color:transparent}
+    button{font:inherit}
+
+    .slide{
+      display:none;
+      width:100%;
+      height:100vh;
+      min-height:100vh;
+      overflow-y:auto;
+      overflow-x:hidden;
+      padding:5.2rem 1.5rem 5.5rem;
+      scroll-behavior:smooth;
+    }
+
+    .slide.active{display:flex}
+
+    .glass-card{
+      background:rgba(255,255,255,.07);
+      backdrop-filter:blur(14px);
+      border:1px solid rgba(255,255,255,.11);
+      box-shadow:0 24px 70px rgba(0,0,0,.24);
+    }
+
+    .gradient-text{
+      background:linear-gradient(135deg,#67e8f9,#60a5fa,#a78bfa);
+      -webkit-background-clip:text;
+      -webkit-text-fill-color:transparent;
+      background-clip:text;
+    }
+
+    .green-text{
+      background:linear-gradient(135deg,#86efac,#22c55e);
+      -webkit-background-clip:text;
+      -webkit-text-fill-color:transparent;
+      background-clip:text;
+    }
+
+    .amber-text{
+      background:linear-gradient(135deg,#fde68a,#f59e0b,#fb923c);
+      -webkit-background-clip:text;
+      -webkit-text-fill-color:transparent;
+      background-clip:text;
+    }
+
+    .bg-pattern{
+      background-image:
+        radial-gradient(circle at 18% 20%,rgba(34,211,238,.12),transparent 25%),
+        radial-gradient(circle at 82% 75%,rgba(139,92,246,.13),transparent 30%),
+        linear-gradient(90deg,rgba(59,130,246,.055) 1px,transparent 1px),
+        linear-gradient(rgba(59,130,246,.055) 1px,transparent 1px);
+      background-size:auto,auto,52px 52px,52px 52px;
+    }
+
+    .bg-pattern::after{
+      content:"";
+      position:absolute;
+      inset:0;
+      background:linear-gradient(135deg,transparent 0 45%,rgba(34,211,238,.06) 46%,transparent 48% 100%);
+      background-size:360px 360px;
+      pointer-events:none;
+    }
+
+    .orb{
+      position:absolute;
+      border-radius:999px;
+      filter:blur(80px);
+      opacity:.2;
+    }
+
+    .pill{
+      background:rgba(255,255,255,.055);
+      border:1px solid rgba(255,255,255,.09);
+    }
+
+    .impact-card{transition:transform .25s ease,border-color .25s ease}
+    .impact-card:hover{transform:translateY(-4px);border-color:rgba(103,232,249,.35)}
+
+    .nav-button{
+      position:fixed;
+      top:50%;
+      z-index:70;
+      transform:translateY(-50%);
+      width:46px;
+      height:46px;
+      border-radius:999px;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      background:rgba(255,255,255,.08);
+      border:1px solid rgba(255,255,255,.14);
+      backdrop-filter:blur(14px);
+      color:#fff;
+      transition:.2s ease;
+      cursor:pointer;
+    }
+
+    .nav-button:hover{background:rgba(59,130,246,.25);border-color:rgba(96,165,250,.55)}
+    .dot{
+      width:8px;height:8px;border-radius:999px;
+      background:rgba(255,255,255,.25);
+      transition:.25s ease;border:0;padding:0;cursor:pointer;
+    }
+    .dot.active{width:24px;background:linear-gradient(90deg,var(--cyan),var(--blue))}
+
+    .top-actions{
+      position:fixed;
+      top:14px;
+      left:14px;
+      z-index:80;
+      display:flex;
+      gap:8px;
+      flex-wrap:wrap;
+    }
+
+    .action-button{
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      gap:8px;
+      border-radius:999px;
+      padding:10px 14px;
+      background:rgba(5,10,20,.78);
+      border:1px solid rgba(255,255,255,.14);
+      color:#fff;
+      backdrop-filter:blur(14px);
+      font-size:12px;
+      font-weight:800;
+      letter-spacing:.03em;
+      transition:.2s ease;
+      cursor:pointer;
+    }
+
+    .action-button:hover{background:rgba(37,99,235,.28);border-color:rgba(96,165,250,.55)}
+    .action-button.primary{background:linear-gradient(135deg,rgba(14,165,233,.92),rgba(37,99,235,.92));border-color:rgba(125,211,252,.55)}
+
+    .number-badge{
+      background:linear-gradient(135deg,rgba(34,211,238,.26),rgba(59,130,246,.22));
+      border:1px solid rgba(103,232,249,.32);
+    }
+
+    .femer-logo{
+      width:80px;
+      height:80px;
+      object-fit:contain;
+      display:block;
+      filter:drop-shadow(0 14px 30px rgba(0,0,0,.26));
+    }
+
+    .module-tag{
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      border-radius:999px;
+      padding:7px 11px;
+      font-size:11px;
+      font-weight:900;
+      letter-spacing:.12em;
+      color:#a5f3fc;
+      background:rgba(34,211,238,.09);
+      border:1px solid rgba(34,211,238,.22);
+    }
+
+    .process-step{
+      position:relative;
+      padding-left:46px;
+    }
+    .process-step::before{
+      content:"";
+      position:absolute;
+      left:17px;
+      top:38px;
+      bottom:-18px;
+      width:2px;
+      background:linear-gradient(var(--cyan),rgba(59,130,246,.1));
+    }
+    .process-step:last-child::before{display:none}
+
+    .process-number{
+      position:absolute;
+      left:0;
+      top:0;
+      width:36px;
+      height:36px;
+      display:grid;
+      place-items:center;
+      border-radius:999px;
+      font-weight:900;
+      color:white;
+      background:linear-gradient(135deg,#06b6d4,#2563eb);
+      border:1px solid rgba(165,243,252,.4);
+    }
+
+    .pdf-status{
+      position:fixed;
+      inset:auto 16px 16px auto;
+      z-index:100;
+      max-width:360px;
+      padding:12px 16px;
+      border-radius:16px;
+      background:rgba(7,11,20,.96);
+      border:1px solid rgba(255,255,255,.14);
+      box-shadow:0 20px 50px rgba(0,0,0,.35);
+      font-size:13px;
+      color:#dbeafe;
+      display:none;
+    }
+
+    #pdf-deck{
+      position:fixed;
+      left:-30000px;
+      top:0;
+      width:1600px;
+      background:#070b14;
+      z-index:-9999;
+    }
+
+    #pdf-deck .pdf-page{
+      display:flex!important;
+      width:1600px!important;
+      height:900px!important;
+      min-height:900px!important;
+      overflow:hidden!important;
+      padding:48px 72px 60px!important;
+      page-break-after:always;
+      break-after:page;
+      position:relative;
+    }
+
+    #pdf-deck .pdf-page:last-child{page-break-after:auto;break-after:auto}
+    #pdf-deck .pdf-page .top-actions,
+    #pdf-deck .pdf-page .nav-button,
+    #pdf-deck .pdf-page #dots,
+    #pdf-deck .pdf-page #slide-counter{display:none!important}
+
+    @media(max-width:768px){
+      .slide{padding:5.3rem .85rem 5.5rem}
+      .nav-button{width:40px;height:40px}
+      .top-actions{top:10px;left:10px;right:10px}
+      .action-button{padding:9px 11px;font-size:10px}
+      .femer-logo{width:64px;height:64px}
+    }
+
+    @media(max-width:640px){
+      body{overflow:hidden}
+      .nav-button{top:auto;bottom:16px;transform:none}
+      #prev-btn{left:14px!important}
+      #next-btn{right:14px!important}
+      #dots{bottom:29px!important;max-width:calc(100vw - 120px)}
+    }
+
+    @media print{
+      body{overflow:visible;background:#070b14}
+      .top-actions,.nav-button,#dots,#slide-counter,.pdf-status{display:none!important}
+      .slide{
+        display:flex!important;
+        width:100vw;
+        height:100vh;
+        min-height:100vh;
+        page-break-after:always;
+        break-after:page;
+        overflow:hidden;
+      }
+    }
+  </style>
+</head>
+
+<body class="relative">
+
+  <div class="top-actions">
+    <button class="action-button primary" onclick="downloadPDF()" id="download-btn">
+      <i data-lucide="download" style="width:16px;height:16px"></i>
+      DESCARGAR PDF
+    </button>
+    <button class="action-button" onclick="toggleFullscreen()">
+      <i data-lucide="maximize-2" style="width:16px;height:16px"></i>
+      PANTALLA COMPLETA
+    </button>
+    <button class="action-button" onclick="window.print()">
+      <i data-lucide="printer" style="width:16px;height:16px"></i>
+      IMPRIMIR
+    </button>
+  </div>
+
+  <button id="prev-btn" class="nav-button left-3 md:left-5" onclick="changeSlide(-1)" aria-label="Diapositiva anterior">
+    <i data-lucide="chevron-left" style="width:22px;height:22px"></i>
+  </button>
+  <button id="next-btn" class="nav-button right-3 md:right-5" onclick="changeSlide(1)" aria-label="Diapositiva siguiente">
+    <i data-lucide="chevron-right" style="width:22px;height:22px"></i>
+  </button>
+
+  <div id="dots" class="fixed bottom-4 left-1/2 -translate-x-1/2 z-[70] flex items-center justify-center gap-2 flex-wrap"></div>
+  <div id="slide-counter" class="fixed top-4 right-4 z-[70] px-3 py-1.5 rounded-full bg-black/30 border border-white/10 backdrop-blur text-xs text-slate-300"></div>
+  <div id="pdf-status" class="pdf-status"></div>
+  <div id="pdf-deck" aria-hidden="true"></div>
+
+  <!-- 1. PORTADA -->
+  <section class="slide active flex-col items-center justify-center relative bg-gradient-to-br from-[#070b14] via-[#0b162b] to-[#070b14] text-center">
+    <div class="absolute inset-0 bg-pattern"></div>
+    <div class="orb w-80 h-80 bg-cyan-400 top-[-120px] left-[-100px]"></div>
+    <div class="orb w-96 h-96 bg-violet-500 bottom-[-160px] right-[-120px]"></div>
+    <div class="relative z-10 max-w-6xl mx-auto w-full px-3">
+      <div class="flex items-center justify-center gap-5 md:gap-8 mb-7">
+        <a href="https://www.femer.com.ar/" target="_blank" rel="noopener noreferrer">
+          <img src="https://i.postimg.cc/XqY0SfY0/Chat-GPT-Image-12-jul-2026-10-27-32-p-m.png" alt="Federación Médica de Entre Ríos" class="femer-logo">
+        </a>
+        <div class="h-16 w-px bg-white/20"></div>
+        <img src="https://i.postimg.cc/jSkQKpRK/Diseno-sin-titulo-2026-05-15T105828-195.png" alt="Instituto IEC" class="h-16 md:h-24 object-contain">
+      </div>
+
+      <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-cyan-400/25 bg-cyan-400/10 text-cyan-200 text-xs md:text-sm font-bold tracking-[.16em] uppercase mb-5">
+        <span>🏥</span> Propuesta de capacitación conjunta FEMER + IEC
+      </div>
+
+      <h1 class="text-4xl sm:text-5xl md:text-7xl lg:text-8xl font-black leading-[.94] mb-5">
+        ADMINISTRACIÓN INTELIGENTE<br>
+        <span class="gradient-text">PARA ENTIDADES MÉDICAS</span>
+      </h1>
+
+      <p class="text-base sm:text-lg md:text-2xl text-slate-300 max-w-5xl mx-auto mb-7">
+        Programa Provincial de Inteligencia Operativa para el personal administrativo de FEMER y de los Círculos Médicos de Entre Ríos.
+      </p>
+
+      <div class="flex flex-wrap justify-center gap-3">
+        <span class="pill px-4 py-2 rounded-xl text-sm font-semibold text-cyan-200">8 módulos</span>
+        <span class="pill px-4 py-2 rounded-xl text-sm font-semibold text-blue-200">16 horas de formación</span>
+        <span class="pill px-4 py-2 rounded-xl text-sm font-semibold text-violet-200">Modalidad híbrida</span>
+        <span class="pill px-4 py-2 rounded-xl text-sm font-semibold text-green-200">Proyecto aplicado</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- 2. PRESENTACIÓN INSTITUCIONAL -->
+  <section class="slide flex-col items-center justify-center relative bg-gradient-to-b from-[#070b14] to-[#0b1426]">
+    <div class="absolute inset-0 bg-pattern opacity-65"></div>
+    <div class="relative z-10 max-w-6xl mx-auto w-full px-3">
+      <span class="text-cyan-300 font-bold tracking-widest text-sm">01 · PRESENTACIÓN INSTITUCIONAL</span>
+      <h2 class="text-3xl sm:text-4xl md:text-6xl font-black mt-2 mb-6">
+        UNA CAPACITACIÓN CREADA DESDE<br>
+        <span class="gradient-text">LA REALIDAD ADMINISTRATIVA DEL SECTOR MÉDICO</span>
+      </h2>
+
+      <div class="grid md:grid-cols-2 gap-5">
+        <div class="glass-card rounded-3xl p-6 md:p-8">
+          <h3 class="text-2xl font-black text-cyan-300 mb-4">FEMER</h3>
+          <p class="text-slate-300 leading-relaxed">
+            Aporta el conocimiento institucional, la articulación provincial y la experiencia concreta de los procesos que vinculan a la Federación, los Círculos Médicos, los profesionales y las entidades financiadoras.
+          </p>
+        </div>
+        <div class="glass-card rounded-3xl p-6 md:p-8 border-violet-400/20 bg-gradient-to-br from-blue-500/5 to-violet-500/5">
+          <h3 class="text-2xl font-black text-violet-300 mb-4">INSTITUTO IEC</h3>
+          <p class="text-slate-300 leading-relaxed">
+            Aporta el diseño académico, la metodología práctica, las herramientas de Inteligencia Artificial, automatización e Inteligencia Operativa y el acompañamiento para transformar procesos reales.
+          </p>
+        </div>
+      </div>
+
+      <div class="mt-5 glass-card rounded-2xl p-5 text-center">
+        <p class="text-lg md:text-2xl font-bold">
+          El programa se construye como un espacio de trabajo conjunto: FEMER conoce la operación; IEC aporta el método para mejorarla.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 3. FUNDAMENTACIÓN -->
+  <section class="slide flex-col items-center justify-center relative bg-gradient-to-b from-[#0b1426] to-[#070b14]">
+    <div class="absolute inset-0 bg-pattern opacity-55"></div>
+    <div class="relative z-10 max-w-6xl mx-auto w-full px-3">
+      <span class="text-cyan-300 font-bold tracking-widest text-sm">02 · FUNDAMENTACIÓN</span>
+      <h2 class="text-3xl sm:text-4xl md:text-6xl font-black mt-2 mb-5">
+        LA ADMINISTRACIÓN MÉDICA ES<br>
+        <span class="gradient-text">UNA INFRAESTRUCTURA CRÍTICA</span>
+      </h2>
+
+      <p class="text-slate-300 text-lg md:text-xl leading-relaxed max-w-5xl mb-6">
+        El funcionamiento de FEMER y de los Círculos Médicos depende de equipos administrativos capaces de gestionar documentación, convenios, facturación, liquidaciones, débitos, reclamos, padrones, comunicaciones y múltiples relaciones institucionales.
+      </p>
+
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-3">
+        <div class="glass-card rounded-2xl p-5 text-center impact-card"><span class="text-4xl">📄</span><h3 class="font-black mt-3">Documentación</h3><p class="text-slate-400 text-sm mt-1">Convenios, órdenes, autorizaciones, comprobantes y expedientes.</p></div>
+        <div class="glass-card rounded-2xl p-5 text-center impact-card"><span class="text-4xl">💳</span><h3 class="font-black mt-3">Facturación</h3><p class="text-slate-400 text-sm mt-1">Control, carga, presentación, seguimiento y cobro.</p></div>
+        <div class="glass-card rounded-2xl p-5 text-center impact-card"><span class="text-4xl">🔍</span><h3 class="font-black mt-3">Auditoría</h3><p class="text-slate-400 text-sm mt-1">Validaciones administrativas, observaciones y débitos.</p></div>
+        <div class="glass-card rounded-2xl p-5 text-center impact-card"><span class="text-4xl">🤝</span><h3 class="font-black mt-3">Atención</h3><p class="text-slate-400 text-sm mt-1">Médicos, obras sociales, prepagas, mutuales y organismos.</p></div>
+      </div>
+
+      <div class="mt-5 p-5 rounded-2xl bg-amber-400/10 border border-amber-400/25">
+        <p class="text-amber-100 font-semibold text-lg">
+          Modernizar la administración no significa reemplazar personas: significa brindarles mejores herramientas, criterios y sistemas de trabajo.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 4. PROBLEMAS -->
+  <section class="slide flex-col items-center justify-center relative bg-gradient-to-b from-[#070b14] to-[#0b1426]">
+    <div class="absolute inset-0 bg-pattern opacity-55"></div>
+    <div class="relative z-10 max-w-6xl mx-auto w-full px-3">
+      <span class="text-red-300 font-bold tracking-widest text-sm">03 · DESAFÍOS OPERATIVOS</span>
+      <h2 class="text-3xl sm:text-4xl md:text-6xl font-black mt-2 mb-6">
+        CUANDO LOS PROCESOS CRECEN,<br>
+        <span class="amber-text">LA COMPLEJIDAD TAMBIÉN CRECE</span>
+      </h2>
+
+      <div class="grid md:grid-cols-2 gap-4">
+        <div class="glass-card rounded-3xl p-6">
+          <h3 class="text-red-300 font-black text-xl mb-4">Situaciones frecuentes</h3>
+          <div class="space-y-3 text-slate-300">
+            <div class="pill rounded-xl p-3">Información distribuida entre correos, planillas, carpetas y sistemas diferentes.</div>
+            <div class="pill rounded-xl p-3">Carga manual de datos y controles repetitivos.</div>
+            <div class="pill rounded-xl p-3">Consultas recurrentes de médicos sobre pagos, convenios y documentación.</div>
+            <div class="pill rounded-xl p-3">Débitos que requieren clasificación, análisis, reclamo y seguimiento.</div>
+            <div class="pill rounded-xl p-3">Dificultad para obtener indicadores consolidados en tiempo real.</div>
+          </div>
+        </div>
+
+        <div class="glass-card rounded-3xl p-6 border-cyan-400/20 bg-gradient-to-br from-cyan-500/5 to-blue-500/5">
+          <h3 class="text-cyan-300 font-black text-xl mb-4">Consecuencias</h3>
+          <div class="grid grid-cols-2 gap-3">
+            <div class="pill rounded-xl p-4 text-center"><span class="text-3xl">⏱️</span><p class="mt-2 text-sm">Demoras administrativas</p></div>
+            <div class="pill rounded-xl p-4 text-center"><span class="text-3xl">⚠️</span><p class="mt-2 text-sm">Errores evitables</p></div>
+            <div class="pill rounded-xl p-4 text-center"><span class="text-3xl">🔁</span><p class="mt-2 text-sm">Retrabajo permanente</p></div>
+            <div class="pill rounded-xl p-4 text-center"><span class="text-3xl">📉</span><p class="mt-2 text-sm">Baja trazabilidad</p></div>
+          </div>
+          <div class="mt-4 p-4 rounded-xl bg-blue-400/10 border border-blue-400/20">
+            <p class="text-blue-100 font-semibold">
+              La oportunidad no está solamente en digitalizar. Está en rediseñar cómo circula la información y cómo se toman decisiones.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 5. IO -->
+  <section class="slide flex-col items-center justify-center relative bg-gradient-to-b from-[#0b1426] to-[#070b14]">
+    <div class="absolute inset-0 bg-pattern opacity-60"></div>
+    <div class="relative z-10 max-w-6xl mx-auto w-full px-3 text-center">
+      <span class="text-cyan-300 font-bold tracking-widest text-sm">04 · DIFERENCIAL CONCEPTUAL</span>
+      <h2 class="text-3xl sm:text-4xl md:text-6xl font-black mt-2 mb-5">
+        EN UN MUNDO DONDE TODOS HABLAN DE IA,<br>
+        <span class="gradient-text">NOSOTROS HABLAMOS DE INTELIGENCIA OPERATIVA</span>
+      </h2>
+
+      <div class="grid md:grid-cols-2 gap-5 text-left">
+        <div class="glass-card rounded-3xl p-6">
+          <h3 class="text-blue-300 font-black text-2xl mb-4">INTELIGENCIA ARTIFICIAL</h3>
+          <ul class="space-y-3 text-slate-300">
+            <li>• Redacta un correo o una circular.</li>
+            <li>• Resume un convenio o reglamento.</li>
+            <li>• Clasifica información.</li>
+            <li>• Responde preguntas.</li>
+            <li>• Ayuda a realizar una tarea puntual.</li>
+          </ul>
+        </div>
+        <div class="glass-card rounded-3xl p-6 border-cyan-400/25 bg-gradient-to-br from-cyan-500/8 to-violet-500/8">
+          <h3 class="text-cyan-300 font-black text-2xl mb-4">INTELIGENCIA OPERATIVA</h3>
+          <ul class="space-y-3 text-slate-200">
+            <li>• Analiza el proceso completo.</li>
+            <li>• Organiza roles, datos, documentos y decisiones.</li>
+            <li>• Integra IA con automatización y procedimientos.</li>
+            <li>• Genera trazabilidad, alertas e indicadores.</li>
+            <li>• Convierte herramientas aisladas en un sistema de trabajo.</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="mt-5 glass-card rounded-2xl p-5">
+        <p class="text-xl md:text-3xl font-black">
+          La IA es una herramienta. <span class="gradient-text">La Inteligencia Operativa transforma la organización.</span>
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 6. DESTINATARIOS -->
+  <section class="slide flex-col items-center justify-center relative bg-gradient-to-b from-[#070b14] to-[#0b1426]">
+    <div class="absolute inset-0 bg-pattern opacity-55"></div>
+    <div class="relative z-10 max-w-6xl mx-auto w-full px-3">
+      <span class="text-cyan-300 font-bold tracking-widest text-sm">05 · DESTINATARIOS</span>
+      <h2 class="text-3xl sm:text-4xl md:text-6xl font-black mt-2 mb-6">
+        UNA FORMACIÓN PARA QUIENES SOSTIENEN<br>
+        <span class="gradient-text">LA OPERACIÓN ADMINISTRATIVA DIARIA</span>
+      </h2>
+
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+        <div class="glass-card rounded-3xl p-5 text-center impact-card"><span class="text-5xl">🏛️</span><h3 class="font-black mt-3">Personal de FEMER</h3><p class="text-slate-400 text-sm mt-2">Equipos administrativos, técnicos y de coordinación.</p></div>
+        <div class="glass-card rounded-3xl p-5 text-center impact-card"><span class="text-5xl">🏢</span><h3 class="font-black mt-3">Círculos Médicos</h3><p class="text-slate-400 text-sm mt-2">Administración, mesa de entrada, facturación y tesorería.</p></div>
+        <div class="glass-card rounded-3xl p-5 text-center impact-card"><span class="text-5xl">📊</span><h3 class="font-black mt-3">Auditoría y convenios</h3><p class="text-slate-400 text-sm mt-2">Control documental, débitos, nomencladores y acuerdos.</p></div>
+        <div class="glass-card rounded-3xl p-5 text-center impact-card"><span class="text-5xl">👥</span><h3 class="font-black mt-3">Coordinaciones</h3><p class="text-slate-400 text-sm mt-2">Responsables de áreas y equipos de trabajo.</p></div>
+      </div>
+
+      <div class="mt-6 glass-card rounded-2xl p-5">
+        <p class="text-slate-200 text-lg text-center">
+          No se requieren conocimientos previos de programación. La formación parte de las tareas reales que cada participante realiza en su puesto.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 7. OBJETIVOS -->
+  <section class="slide flex-col items-center justify-center relative bg-gradient-to-b from-[#0b1426] to-[#070b14]">
+    <div class="absolute inset-0 bg-pattern opacity-55"></div>
+    <div class="relative z-10 max-w-6xl mx-auto w-full px-3">
+      <span class="text-cyan-300 font-bold tracking-widest text-sm">06 · OBJETIVOS</span>
+      <h2 class="text-3xl sm:text-4xl md:text-6xl font-black mt-2 mb-5">
+        APRENDER A TRABAJAR MEJOR,<br>
+        <span class="gradient-text">CON MÁS CRITERIO, VELOCIDAD Y TRAZABILIDAD</span>
+      </h2>
+
+      <div class="glass-card rounded-3xl p-6 md:p-8 mb-5">
+        <p class="text-slate-200 text-lg md:text-xl leading-relaxed">
+          Capacitar al personal administrativo de FEMER y de los Círculos Médicos de Entre Ríos para analizar, estandarizar y optimizar procesos mediante herramientas digitales, Inteligencia Artificial, automatización e Inteligencia Operativa.
+        </p>
+      </div>
+
+      <div class="grid md:grid-cols-2 gap-3">
+        <div class="pill rounded-xl p-4">✔ Identificar tareas repetitivas, puntos de demora y riesgos administrativos.</div>
+        <div class="pill rounded-xl p-4">✔ Crear documentos, comunicaciones y reportes con asistencia de IA.</div>
+        <div class="pill rounded-xl p-4">✔ Organizar convenios, nomencladores, protocolos y archivos institucionales.</div>
+        <div class="pill rounded-xl p-4">✔ Mejorar procesos de facturación, liquidaciones, débitos y reclamos.</div>
+        <div class="pill rounded-xl p-4">✔ Automatizar formularios, alertas, circuitos y seguimientos.</div>
+        <div class="pill rounded-xl p-4">✔ Diseñar indicadores para la toma de decisiones administrativas.</div>
+        <div class="pill rounded-xl p-4">✔ Aplicar criterios de confidencialidad y uso responsable de datos.</div>
+        <div class="pill rounded-xl p-4">✔ Desarrollar una propuesta de mejora para un proceso real.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 8. ALCANCE -->
+  <section class="slide flex-col items-center justify-center relative bg-gradient-to-b from-[#070b14] to-[#0b1426]">
+    <div class="absolute inset-0 bg-pattern opacity-55"></div>
+    <div class="relative z-10 max-w-6xl mx-auto w-full px-3">
+      <span class="text-cyan-300 font-bold tracking-widest text-sm">07 · ALCANCE OPERATIVO</span>
+      <h2 class="text-3xl sm:text-4xl md:text-6xl font-black mt-2 mb-6">
+        LOS PROCESOS QUE SERÁN<br>
+        <span class="gradient-text">ABORDADOS DURANTE LA CAPACITACIÓN</span>
+      </h2>
+
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-3">
+        <div class="glass-card rounded-2xl p-4"><span class="text-3xl">📥</span><h3 class="font-black mt-2">Mesa de entrada</h3><p class="text-slate-400 text-xs mt-1">Recepción, consultas y derivación.</p></div>
+        <div class="glass-card rounded-2xl p-4"><span class="text-3xl">👨‍⚕️</span><h3 class="font-black mt-2">Gestión de médicos</h3><p class="text-slate-400 text-xs mt-1">Altas, actualizaciones, padrones y legajos.</p></div>
+        <div class="glass-card rounded-2xl p-4"><span class="text-3xl">📑</span><h3 class="font-black mt-2">Convenios</h3><p class="text-slate-400 text-xs mt-1">Versiones, aranceles, vigencias y comunicación.</p></div>
+        <div class="glass-card rounded-2xl p-4"><span class="text-3xl">🧾</span><h3 class="font-black mt-2">Facturación</h3><p class="text-slate-400 text-xs mt-1">Recepción, control, carga y presentación.</p></div>
+        <div class="glass-card rounded-2xl p-4"><span class="text-3xl">💰</span><h3 class="font-black mt-2">Liquidaciones</h3><p class="text-slate-400 text-xs mt-1">Conciliación, distribución y comprobantes.</p></div>
+        <div class="glass-card rounded-2xl p-4"><span class="text-3xl">⚠️</span><h3 class="font-black mt-2">Débitos</h3><p class="text-slate-400 text-xs mt-1">Clasificación, análisis, reclamo y refacturación.</p></div>
+        <div class="glass-card rounded-2xl p-4"><span class="text-3xl">📣</span><h3 class="font-black mt-2">Comunicación</h3><p class="text-slate-400 text-xs mt-1">Correos, circulares, WhatsApp y novedades.</p></div>
+        <div class="glass-card rounded-2xl p-4"><span class="text-3xl">📈</span><h3 class="font-black mt-2">Indicadores</h3><p class="text-slate-400 text-xs mt-1">Volumen, tiempos, errores, cobros y productividad.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 9. METODOLOGÍA -->
+  <section class="slide flex-col items-center justify-center relative bg-gradient-to-b from-[#0b1426] to-[#070b14]">
+    <div class="absolute inset-0 bg-pattern opacity-55"></div>
+    <div class="relative z-10 max-w-6xl mx-auto w-full px-3">
+      <span class="text-cyan-300 font-bold tracking-widest text-sm">08 · METODOLOGÍA</span>
+      <h2 class="text-3xl sm:text-4xl md:text-6xl font-black mt-2 mb-6">
+        CAPACITACIÓN PRÁCTICA,<br>
+        <span class="gradient-text">SITUADA Y ORIENTADA A RESULTADOS</span>
+      </h2>
+
+      <div class="grid md:grid-cols-3 gap-4">
+        <div class="glass-card rounded-3xl p-6 text-center impact-card"><span class="text-5xl">📘</span><h3 class="text-xl font-black mt-4">Conceptos claros</h3><p class="text-slate-300 mt-2">Se explican los fundamentos sin tecnicismos innecesarios.</p></div>
+        <div class="glass-card rounded-3xl p-6 text-center impact-card"><span class="text-5xl">🖥️</span><h3 class="text-xl font-black mt-4">Demostraciones</h3><p class="text-slate-300 mt-2">Cada herramienta se utiliza en vivo sobre ejemplos concretos.</p></div>
+        <div class="glass-card rounded-3xl p-6 text-center impact-card"><span class="text-5xl">🛠️</span><h3 class="text-xl font-black mt-4">Taller aplicado</h3><p class="text-slate-300 mt-2">Los participantes trabajan sobre procesos administrativos reales.</p></div>
+      </div>
+
+      <div class="mt-5 grid grid-cols-2 md:grid-cols-4 gap-3">
+        <div class="pill rounded-xl p-4 text-center">Casos FEMER</div>
+        <div class="pill rounded-xl p-4 text-center">Casos de Círculos</div>
+        <div class="pill rounded-xl p-4 text-center">Trabajo colaborativo</div>
+        <div class="pill rounded-xl p-4 text-center">Proyecto integrador</div>
+      </div>
+
+      <div class="mt-5 p-5 rounded-2xl bg-green-400/10 border border-green-400/25 text-center">
+        <p class="text-green-100 font-bold text-lg">
+          Cada clase debe producir un recurso, una mejora o una herramienta que pueda reutilizarse en el trabajo cotidiano.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 10. MODALIDAD -->
+  <section class="slide flex-col items-center justify-center relative bg-gradient-to-b from-[#070b14] to-[#0b1426]">
+    <div class="absolute inset-0 bg-pattern opacity-55"></div>
+    <div class="relative z-10 max-w-6xl mx-auto w-full px-3">
+      <span class="text-cyan-300 font-bold tracking-widest text-sm">09 · ORGANIZACIÓN ACADÉMICA</span>
+      <h2 class="text-3xl sm:text-4xl md:text-6xl font-black mt-2 mb-6">
+        UNA PROPUESTA FLEXIBLE PARA<br>
+        <span class="gradient-text">ALCANZAR A TODA LA PROVINCIA</span>
+      </h2>
+
+      <div class="grid md:grid-cols-2 gap-5">
+        <div class="glass-card rounded-3xl p-7 text-center">
+          <span class="text-6xl">🏛️</span>
+          <h3 class="text-cyan-300 text-2xl font-black mt-4">PRESENCIAL</h3>
+          <p class="text-slate-300 mt-3">Encuentros en sede acordada por FEMER e IEC, con espacio de laboratorio y acompañamiento directo.</p>
+        </div>
+        <div class="glass-card rounded-3xl p-7 text-center border-blue-400/20">
+          <span class="text-6xl">💻</span>
+          <h3 class="text-blue-300 text-2xl font-black mt-4">VIRTUAL EN VIVO</h3>
+          <p class="text-slate-300 mt-3">Participación sincrónica para administrativos de Círculos Médicos de diferentes localidades.</p>
+        </div>
+      </div>
+
+      <div class="mt-5 grid grid-cols-2 md:grid-cols-4 gap-3">
+        <div class="pill rounded-xl p-4 text-center"><strong>8</strong><br><span class="text-slate-400 text-sm">encuentros</span></div>
+        <div class="pill rounded-xl p-4 text-center"><strong>2 h</strong><br><span class="text-slate-400 text-sm">por encuentro</span></div>
+        <div class="pill rounded-xl p-4 text-center"><strong>16 h</strong><br><span class="text-slate-400 text-sm">carga total</span></div>
+        <div class="pill rounded-xl p-4 text-center"><strong>Híbrida</strong><br><span class="text-slate-400 text-sm">alcance provincial</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 11. MODULOS 1 Y 2 -->
+  <section class="slide flex-col items-center justify-center relative bg-gradient-to-b from-[#0b1426] to-[#070b14]">
+    <div class="absolute inset-0 bg-pattern opacity-55"></div>
+    <div class="relative z-10 max-w-6xl mx-auto w-full px-3">
+      <span class="text-cyan-300 font-bold tracking-widest text-sm">10 · DESARROLLO CURRICULAR</span>
+      <h2 class="text-3xl sm:text-4xl md:text-5xl font-black mt-2 mb-6">
+        MÓDULOS 1 Y 2 · <span class="gradient-text">BASES PARA LA TRANSFORMACIÓN</span>
+      </h2>
+
+      <div class="grid md:grid-cols-2 gap-5">
+        <div class="glass-card rounded-3xl p-6">
+          <div class="module-tag"><span>01</span> MÓDULO</div>
+          <h3 class="text-2xl font-black mt-4 mb-3">La nueva administración de entidades médicas</h3>
+          <ul class="text-slate-300 space-y-2">
+            <li>• Función estratégica del personal administrativo.</li>
+            <li>• Relación entre FEMER, Círculos, médicos y financiadores.</li>
+            <li>• Procesos, datos, documentos, personas y tecnología.</li>
+            <li>• Diferencia entre digitalización, IA e Inteligencia Operativa.</li>
+            <li>• Identificación de tareas repetitivas y puntos críticos.</li>
+          </ul>
+          <div class="mt-4 p-3 rounded-xl bg-cyan-400/10 border border-cyan-400/20">
+            <strong class="text-cyan-200">Taller:</strong> mapa inicial del trabajo administrativo de cada participante.
+          </div>
+        </div>
+
+        <div class="glass-card rounded-3xl p-6">
+          <div class="module-tag"><span>02</span> MÓDULO</div>
+          <h3 class="text-2xl font-black mt-4 mb-3">Mapeo y estandarización de procesos</h3>
+          <ul class="text-slate-300 space-y-2">
+            <li>• Cómo describir un proceso de principio a fin.</li>
+            <li>• Roles, responsables, entradas, decisiones y resultados.</li>
+            <li>• Checklists, protocolos y criterios de control.</li>
+            <li>• Detección de demoras, duplicaciones y retrabajos.</li>
+            <li>• Diseño de procedimientos administrativos claros.</li>
+          </ul>
+          <div class="mt-4 p-3 rounded-xl bg-blue-400/10 border border-blue-400/20">
+            <strong class="text-blue-200">Taller:</strong> rediseño de un circuito administrativo real.
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 12. MODULOS 3 Y 4 -->
+  <section class="slide flex-col items-center justify-center relative bg-gradient-to-b from-[#070b14] to-[#0b1426]">
+    <div class="absolute inset-0 bg-pattern opacity-55"></div>
+    <div class="relative z-10 max-w-6xl mx-auto w-full px-3">
+      <span class="text-cyan-300 font-bold tracking-widest text-sm">11 · DESARROLLO CURRICULAR</span>
+      <h2 class="text-3xl sm:text-4xl md:text-5xl font-black mt-2 mb-6">
+        MÓDULOS 3 Y 4 · <span class="gradient-text">DOCUMENTACIÓN Y COMUNICACIÓN</span>
+      </h2>
+
+      <div class="grid md:grid-cols-2 gap-5">
+        <div class="glass-card rounded-3xl p-6">
+          <div class="module-tag"><span>03</span> MÓDULO</div>
+          <h3 class="text-2xl font-black mt-4 mb-3">Gestión documental inteligente</h3>
+          <ul class="text-slate-300 space-y-2">
+            <li>• Organización de convenios, nomencladores y protocolos.</li>
+            <li>• Criterios de clasificación, nombres y versiones.</li>
+            <li>• Búsqueda inteligente y bases de conocimiento.</li>
+            <li>• Lectura, comparación y resumen asistidos por IA.</li>
+            <li>• Alertas de vencimiento y actualización documental.</li>
+          </ul>
+          <div class="mt-4 p-3 rounded-xl bg-cyan-400/10 border border-cyan-400/20">
+            <strong class="text-cyan-200">Taller:</strong> creación de un asistente documental institucional.
+          </div>
+        </div>
+
+        <div class="glass-card rounded-3xl p-6">
+          <div class="module-tag"><span>04</span> MÓDULO</div>
+          <h3 class="text-2xl font-black mt-4 mb-3">Comunicación institucional asistida por IA</h3>
+          <ul class="text-slate-300 space-y-2">
+            <li>• Correos, circulares, avisos y respuestas formales.</li>
+            <li>• Atención por WhatsApp y canales institucionales.</li>
+            <li>• Comunicación de aranceles, convenios y requisitos.</li>
+            <li>• Prompts reutilizables para tareas administrativas.</li>
+            <li>• Criterios de claridad, tono y validación humana.</li>
+          </ul>
+          <div class="mt-4 p-3 rounded-xl bg-blue-400/10 border border-blue-400/20">
+            <strong class="text-blue-200">Taller:</strong> biblioteca provincial de comunicaciones modelo.
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 13. MODULOS 5 Y 6 -->
+  <section class="slide flex-col items-center justify-center relative bg-gradient-to-b from-[#0b1426] to-[#070b14]">
+    <div class="absolute inset-0 bg-pattern opacity-55"></div>
+    <div class="relative z-10 max-w-6xl mx-auto w-full px-3">
+      <span class="text-cyan-300 font-bold tracking-widest text-sm">12 · DESARROLLO CURRICULAR</span>
+      <h2 class="text-3xl sm:text-4xl md:text-5xl font-black mt-2 mb-6">
+        MÓDULOS 5 Y 6 · <span class="gradient-text">FACTURACIÓN, LIQUIDACIONES Y DÉBITOS</span>
+      </h2>
+
+      <div class="grid md:grid-cols-2 gap-5">
+        <div class="glass-card rounded-3xl p-6">
+          <div class="module-tag"><span>05</span> MÓDULO</div>
+          <h3 class="text-2xl font-black mt-4 mb-3">Facturación y auditoría administrativa</h3>
+          <ul class="text-slate-300 space-y-2">
+            <li>• Recepción y clasificación de prestaciones.</li>
+            <li>• Controles de datos, fechas, autorizaciones y documentación.</li>
+            <li>• Reglas de validación y detección de inconsistencias.</li>
+            <li>• Organización de lotes, estados y observaciones.</li>
+            <li>• Trazabilidad desde la recepción hasta la presentación.</li>
+          </ul>
+          <div class="mt-4 p-3 rounded-xl bg-cyan-400/10 border border-cyan-400/20">
+            <strong class="text-cyan-200">Taller:</strong> matriz de control previo a facturación.
+          </div>
+        </div>
+
+        <div class="glass-card rounded-3xl p-6">
+          <div class="module-tag"><span>06</span> MÓDULO</div>
+          <h3 class="text-2xl font-black mt-4 mb-3">Liquidaciones, conciliaciones y débitos</h3>
+          <ul class="text-slate-300 space-y-2">
+            <li>• Seguimiento de pagos y conciliación de información.</li>
+            <li>• Liquidación por profesional y emisión de comprobantes.</li>
+            <li>• Clasificación de débitos por motivo y prioridad.</li>
+            <li>• Preparación de reclamos y refacturaciones.</li>
+            <li>• Indicadores de recupero, demora y recurrencia.</li>
+          </ul>
+          <div class="mt-4 p-3 rounded-xl bg-blue-400/10 border border-blue-400/20">
+            <strong class="text-blue-200">Taller:</strong> tablero de seguimiento de débitos y recuperos.
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 14. MODULOS 7 Y 8 -->
+  <section class="slide flex-col items-center justify-center relative bg-gradient-to-b from-[#070b14] to-[#0b1426]">
+    <div class="absolute inset-0 bg-pattern opacity-55"></div>
+    <div class="relative z-10 max-w-6xl mx-auto w-full px-3">
+      <span class="text-cyan-300 font-bold tracking-widest text-sm">13 · DESARROLLO CURRICULAR</span>
+      <h2 class="text-3xl sm:text-4xl md:text-5xl font-black mt-2 mb-6">
+        MÓDULOS 7 Y 8 · <span class="gradient-text">AUTOMATIZACIÓN Y PROYECTO APLICADO</span>
+      </h2>
+
+      <div class="grid md:grid-cols-2 gap-5">
+        <div class="glass-card rounded-3xl p-6">
+          <div class="module-tag"><span>07</span> MÓDULO</div>
+          <h3 class="text-2xl font-black mt-4 mb-3">Automatización administrativa accesible</h3>
+          <ul class="text-slate-300 space-y-2">
+            <li>• Formularios, planillas, carpetas y calendarios conectados.</li>
+            <li>• Alertas, avisos y recordatorios automáticos.</li>
+            <li>• Seguimiento de solicitudes y estados.</li>
+            <li>• Generación de reportes y documentos.</li>
+            <li>• Introducción a flujos de automatización sin código.</li>
+          </ul>
+          <div class="mt-4 p-3 rounded-xl bg-cyan-400/10 border border-cyan-400/20">
+            <strong class="text-cyan-200">Taller:</strong> automatización de un circuito administrativo simple.
+          </div>
+        </div>
+
+        <div class="glass-card rounded-3xl p-6">
+          <div class="module-tag"><span>08</span> MÓDULO</div>
+          <h3 class="text-2xl font-black mt-4 mb-3">Proyecto integrador de Inteligencia Operativa</h3>
+          <ul class="text-slate-300 space-y-2">
+            <li>• Selección de un proceso real de FEMER o de un Círculo.</li>
+            <li>• Diagnóstico del funcionamiento actual.</li>
+            <li>• Diseño del proceso mejorado.</li>
+            <li>• Incorporación de documentos, IA, automatización e indicadores.</li>
+            <li>• Presentación y devolución técnica.</li>
+          </ul>
+          <div class="mt-4 p-3 rounded-xl bg-violet-400/10 border border-violet-400/20">
+            <strong class="text-violet-200">Resultado:</strong> propuesta concreta lista para evaluación institucional.
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 15. HERRAMIENTAS -->
+  <section class="slide flex-col items-center justify-center relative bg-gradient-to-b from-[#0b1426] to-[#070b14]">
+    <div class="absolute inset-0 bg-pattern opacity-55"></div>
+    <div class="relative z-10 max-w-6xl mx-auto w-full px-3">
+      <span class="text-cyan-300 font-bold tracking-widest text-sm">14 · HERRAMIENTAS</span>
+      <h2 class="text-3xl sm:text-4xl md:text-6xl font-black mt-2 mb-6">
+        TECNOLOGÍAS SELECCIONADAS POR<br>
+        <span class="gradient-text">UTILIDAD, ACCESIBILIDAD Y APLICACIÓN REAL</span>
+      </h2>
+
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+        <div class="glass-card rounded-2xl p-5 text-center"><span class="text-4xl">🤖</span><h3 class="font-black mt-3">IA Generativa</h3><p class="text-slate-400 text-sm mt-1">ChatGPT, Gemini, Claude o equivalentes.</p></div>
+        <div class="glass-card rounded-2xl p-5 text-center"><span class="text-4xl">☁️</span><h3 class="font-black mt-3">Google Workspace</h3><p class="text-slate-400 text-sm mt-1">Drive, Docs, Sheets, Forms y Calendar.</p></div>
+        <div class="glass-card rounded-2xl p-5 text-center"><span class="text-4xl">📚</span><h3 class="font-black mt-3">Bases de conocimiento</h3><p class="text-slate-400 text-sm mt-1">NotebookLM y asistentes documentales.</p></div>
+        <div class="glass-card rounded-2xl p-5 text-center"><span class="text-4xl">⚙️</span><h3 class="font-black mt-3">Automatización</h3><p class="text-slate-400 text-sm mt-1">Flujos sin código y herramientas integrables.</p></div>
+      </div>
+
+      <div class="mt-6 glass-card rounded-2xl p-6">
+        <h3 class="text-xl font-black text-cyan-300 mb-3">Criterio pedagógico</h3>
+        <p class="text-slate-300 text-lg">
+          Las herramientas no se enseñan como un catálogo. Se incorporan solamente cuando resuelven un problema concreto del proceso administrativo.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 16. SEGURIDAD -->
+  <section class="slide flex-col items-center justify-center relative bg-gradient-to-b from-[#070b14] to-[#0b1426]">
+    <div class="absolute inset-0 bg-pattern opacity-55"></div>
+    <div class="relative z-10 max-w-6xl mx-auto w-full px-3">
+      <span class="text-amber-300 font-bold tracking-widest text-sm">15 · DATOS Y CONFIDENCIALIDAD</span>
+      <h2 class="text-3xl sm:text-4xl md:text-6xl font-black mt-2 mb-6">
+        INNOVAR CON RESPONSABILIDAD:<br>
+        <span class="amber-text">LA INFORMACIÓN MÉDICA REQUIERE CUIDADO</span>
+      </h2>
+
+      <div class="grid md:grid-cols-2 gap-5">
+        <div class="glass-card rounded-3xl p-6">
+          <h3 class="text-amber-300 text-xl font-black mb-4">Principios de trabajo</h3>
+          <ul class="text-slate-300 space-y-3">
+            <li>• No utilizar datos personales o sensibles en herramientas no autorizadas.</li>
+            <li>• Anonimizar ejemplos y materiales de práctica.</li>
+            <li>• Mantener validación humana antes de emitir comunicaciones o decisiones.</li>
+            <li>• Aplicar permisos, accesos y criterios de mínima información necesaria.</li>
+            <li>• Documentar el uso de herramientas y los responsables del proceso.</li>
+          </ul>
+        </div>
+        <div class="glass-card rounded-3xl p-6 border-red-400/20 bg-red-400/5">
+          <h3 class="text-red-300 text-xl font-black mb-4">La IA no reemplaza</h3>
+          <div class="space-y-3">
+            <div class="pill rounded-xl p-3">La auditoría profesional.</div>
+            <div class="pill rounded-xl p-3">La interpretación normativa.</div>
+            <div class="pill rounded-xl p-3">La decisión administrativa responsable.</div>
+            <div class="pill rounded-xl p-3">La supervisión institucional.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 17. ENTREGABLES -->
+  <section class="slide flex-col items-center justify-center relative bg-gradient-to-b from-[#0b1426] to-[#070b14]">
+    <div class="absolute inset-0 bg-pattern opacity-55"></div>
+    <div class="relative z-10 max-w-6xl mx-auto w-full px-3">
+      <span class="text-cyan-300 font-bold tracking-widest text-sm">16 · RESULTADOS DEL CURSADO</span>
+      <h2 class="text-3xl sm:text-4xl md:text-6xl font-black mt-2 mb-6">
+        CADA PARTICIPANTE FINALIZA CON<br>
+        <span class="gradient-text">RECURSOS CONCRETOS PARA SU FUNCIÓN</span>
+      </h2>
+
+      <div class="grid grid-cols-2 md:grid-cols-3 gap-4">
+        <div class="glass-card rounded-2xl p-5 text-center impact-card"><span class="text-4xl">🗺️</span><h3 class="font-black mt-3">Mapa de proceso</h3><p class="text-slate-400 text-sm mt-1">Representación clara de una tarea administrativa real.</p></div>
+        <div class="glass-card rounded-2xl p-5 text-center impact-card"><span class="text-4xl">✅</span><h3 class="font-black mt-3">Checklist de control</h3><p class="text-slate-400 text-sm mt-1">Validaciones estandarizadas para reducir errores.</p></div>
+        <div class="glass-card rounded-2xl p-5 text-center impact-card"><span class="text-4xl">💬</span><h3 class="font-black mt-3">Biblioteca de prompts</h3><p class="text-slate-400 text-sm mt-1">Modelos reutilizables para comunicación y análisis.</p></div>
+        <div class="glass-card rounded-2xl p-5 text-center impact-card"><span class="text-4xl">📚</span><h3 class="font-black mt-3">Asistente documental</h3><p class="text-slate-400 text-sm mt-1">Base de conocimiento sobre documentación seleccionada.</p></div>
+        <div class="glass-card rounded-2xl p-5 text-center impact-card"><span class="text-4xl">📊</span><h3 class="font-black mt-3">Tablero de seguimiento</h3><p class="text-slate-400 text-sm mt-1">Indicadores y estados de un proceso crítico.</p></div>
+        <div class="glass-card rounded-2xl p-5 text-center impact-card"><span class="text-4xl">🚀</span><h3 class="font-black mt-3">Proyecto integrador</h3><p class="text-slate-400 text-sm mt-1">Propuesta de mejora aplicable a la institución.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 18. BENEFICIOS -->
+  <section class="slide flex-col items-center justify-center relative bg-gradient-to-b from-[#070b14] to-[#0b1426]">
+    <div class="absolute inset-0 bg-pattern opacity-55"></div>
+    <div class="relative z-10 max-w-6xl mx-auto w-full px-3">
+      <span class="text-green-300 font-bold tracking-widest text-sm">17 · IMPACTO INSTITUCIONAL</span>
+      <h2 class="text-3xl sm:text-4xl md:text-6xl font-black mt-2 mb-6">
+        BENEFICIOS PARA FEMER Y<br>
+        <span class="green-text">LOS CÍRCULOS MÉDICOS DE ENTRE RÍOS</span>
+      </h2>
+
+      <div class="grid md:grid-cols-2 gap-4">
+        <div class="glass-card rounded-2xl p-5"><h3 class="font-black text-cyan-300">Estandarización provincial</h3><p class="text-slate-300 mt-2">Criterios comunes para documentar, comunicar, controlar y mejorar procesos.</p></div>
+        <div class="glass-card rounded-2xl p-5"><h3 class="font-black text-blue-300">Mayor productividad</h3><p class="text-slate-300 mt-2">Reducción de tareas repetitivas y mejor aprovechamiento del tiempo administrativo.</p></div>
+        <div class="glass-card rounded-2xl p-5"><h3 class="font-black text-violet-300">Menos errores y retrabajo</h3><p class="text-slate-300 mt-2">Uso de checklists, validaciones y trazabilidad sobre circuitos críticos.</p></div>
+        <div class="glass-card rounded-2xl p-5"><h3 class="font-black text-green-300">Mejor atención al médico</h3><p class="text-slate-300 mt-2">Respuestas más claras, rápidas y consistentes sobre trámites y estados.</p></div>
+        <div class="glass-card rounded-2xl p-5"><h3 class="font-black text-amber-300">Información para decidir</h3><p class="text-slate-300 mt-2">Indicadores de tiempos, volúmenes, cobros, débitos y productividad.</p></div>
+        <div class="glass-card rounded-2xl p-5"><h3 class="font-black text-cyan-300">Cultura de mejora continua</h3><p class="text-slate-300 mt-2">Equipos capaces de detectar oportunidades y proponer soluciones.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 19. IMPLEMENTACIÓN -->
+  <section class="slide flex-col items-center justify-center relative bg-gradient-to-b from-[#0b1426] to-[#070b14]">
+    <div class="absolute inset-0 bg-pattern opacity-55"></div>
+    <div class="relative z-10 max-w-6xl mx-auto w-full px-3">
+      <span class="text-cyan-300 font-bold tracking-widest text-sm">18 · PROPUESTA DE IMPLEMENTACIÓN</span>
+      <h2 class="text-3xl sm:text-4xl md:text-6xl font-black mt-2 mb-6">
+        UN PROGRAMA QUE COMIENZA CON CAPACITACIÓN<br>
+        <span class="gradient-text">Y PUEDE EVOLUCIONAR HACIA LA TRANSFORMACIÓN</span>
+      </h2>
+
+      <div class="space-y-5 max-w-5xl">
+        <div class="process-step">
+          <div class="process-number">1</div>
+          <div class="glass-card rounded-2xl p-5">
+            <h3 class="text-xl font-black text-cyan-300">Relevamiento inicial conjunto</h3>
+            <p class="text-slate-300 mt-2">FEMER e IEC seleccionan procesos, casos y documentos que representen la realidad de los participantes.</p>
+          </div>
+        </div>
+        <div class="process-step">
+          <div class="process-number">2</div>
+          <div class="glass-card rounded-2xl p-5">
+            <h3 class="text-xl font-black text-blue-300">Dictado del trayecto formativo</h3>
+            <p class="text-slate-300 mt-2">Ocho encuentros con práctica, actividades y acompañamiento docente.</p>
+          </div>
+        </div>
+        <div class="process-step">
+          <div class="process-number">3</div>
+          <div class="glass-card rounded-2xl p-5">
+            <h3 class="text-xl font-black text-violet-300">Presentación de proyectos</h3>
+            <p class="text-slate-300 mt-2">Los equipos presentan propuestas de mejora construidas sobre procesos reales.</p>
+          </div>
+        </div>
+        <div class="process-step">
+          <div class="process-number">4</div>
+          <div class="glass-card rounded-2xl p-5">
+            <h3 class="text-xl font-black text-green-300">Evaluación de implementación</h3>
+            <p class="text-slate-300 mt-2">FEMER puede seleccionar iniciativas prioritarias para profundizar, estandarizar o escalar.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 20. ROLES -->
+  <section class="slide flex-col items-center justify-center relative bg-gradient-to-b from-[#070b14] to-[#0b1426]">
+    <div class="absolute inset-0 bg-pattern opacity-55"></div>
+    <div class="relative z-10 max-w-6xl mx-auto w-full px-3">
+      <span class="text-cyan-300 font-bold tracking-widest text-sm">19 · TRABAJO CONJUNTO</span>
+      <h2 class="text-3xl sm:text-4xl md:text-6xl font-black mt-2 mb-6">
+        RESPONSABILIDADES DE LA ALIANZA<br>
+        <span class="gradient-text">FEMER + INSTITUTO IEC</span>
+      </h2>
+
+      <div class="grid md:grid-cols-2 gap-5">
+        <div class="glass-card rounded-3xl p-7">
+          <div class="flex items-center gap-4 mb-5">
+            <img src="https://i.postimg.cc/XqY0SfY0/Chat-GPT-Image-12-jul-2026-10-27-32-p-m.png" alt="FEMER" class="w-16 h-16 object-contain">
+            <h3 class="text-3xl font-black">FEMER</h3>
+          </div>
+          <ul class="text-slate-300 space-y-3">
+            <li>• Convocatoria y articulación con los Círculos Médicos.</li>
+            <li>• Identificación de necesidades y casos prioritarios.</li>
+            <li>• Aporte de documentación institucional para prácticas controladas.</li>
+            <li>• Coordinación logística y seguimiento de participantes.</li>
+            <li>• Aval y participación en la certificación.</li>
+          </ul>
+        </div>
+
+        <div class="glass-card rounded-3xl p-7 border-violet-400/20">
+          <div class="flex items-center gap-4 mb-5">
+            <img src="https://i.postimg.cc/jSkQKpRK/Diseno-sin-titulo-2026-05-15T105828-195.png" alt="IEC" class="h-16 object-contain">
+            <h3 class="text-3xl font-black">INSTITUTO IEC</h3>
+          </div>
+          <ul class="text-slate-300 space-y-3">
+            <li>• Diseño curricular y materiales de capacitación.</li>
+            <li>• Equipo docente especializado en IA e Inteligencia Operativa.</li>
+            <li>• Dictado de clases, talleres y actividades prácticas.</li>
+            <li>• Asistencia técnica para el proyecto integrador.</li>
+            <li>• Evaluación académica y emisión conjunta de certificados.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 21. CERTIFICACION -->
+  <section class="slide flex-col items-center justify-center relative bg-gradient-to-b from-[#0b1426] to-[#070b14]">
+    <div class="absolute inset-0 bg-pattern opacity-55"></div>
+    <div class="relative z-10 max-w-6xl mx-auto w-full px-3 text-center">
+      <span class="text-green-300 font-bold tracking-widest text-sm">20 · CERTIFICACIÓN</span>
+      <h2 class="text-3xl sm:text-4xl md:text-6xl font-black mt-2 mb-6">
+        CERTIFICACIÓN CONJUNTA<br>
+        <span class="green-text">FEMER + INSTITUTO IEC</span>
+      </h2>
+
+      <div class="glass-card rounded-3xl p-7 md:p-10 max-w-4xl mx-auto">
+        <span class="text-7xl">🏆</span>
+        <h3 class="text-2xl md:text-4xl font-black mt-5">Administración Inteligente para Entidades Médicas</h3>
+        <p class="text-slate-300 text-lg mt-4">
+          Certificado para quienes cumplan con los criterios de asistencia, participación en actividades y presentación del proyecto integrador.
+        </p>
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-3 mt-6">
+          <div class="pill rounded-xl p-4">Asistencia</div>
+          <div class="pill rounded-xl p-4">Participación</div>
+          <div class="pill rounded-xl p-4">Actividades</div>
+          <div class="pill rounded-xl p-4">Proyecto final</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 22. CIERRE -->
+  <section class="slide flex-col items-center justify-center relative bg-gradient-to-br from-[#070b14] via-[#0b162b] to-[#070b14] text-center">
+    <div class="absolute inset-0 bg-pattern"></div>
+    <div class="orb w-80 h-80 bg-cyan-400 top-[-120px] left-[-100px]"></div>
+    <div class="orb w-96 h-96 bg-violet-500 bottom-[-160px] right-[-120px]"></div>
+    <div class="relative z-10 max-w-6xl mx-auto w-full px-3">
+      <div class="flex items-center justify-center gap-5 md:gap-8 mb-7">
+        <img src="https://i.postimg.cc/XqY0SfY0/Chat-GPT-Image-12-jul-2026-10-27-32-p-m.png" alt="FEMER" class="femer-logo">
+        <div class="h-16 w-px bg-white/20"></div>
+        <img src="https://i.postimg.cc/jSkQKpRK/Diseno-sin-titulo-2026-05-15T105828-195.png" alt="IEC" class="h-16 md:h-24 object-contain">
+      </div>
+
+      <h2 class="text-4xl sm:text-5xl md:text-7xl font-black leading-[.98] mb-6">
+        MODERNIZAR LA ADMINISTRACIÓN ES<br>
+        <span class="gradient-text">FORTALECER TODO EL ECOSISTEMA MÉDICO</span>
+      </h2>
+
+      <p class="text-slate-300 text-lg md:text-2xl max-w-4xl mx-auto mb-7">
+        FEMER impulsa la articulación provincial. Los Círculos Médicos aportan su experiencia territorial. IEC acompaña la formación y la transformación operativa.
+      </p>
+
+      <div class="glass-card rounded-2xl p-6 max-w-4xl mx-auto">
+        <p class="text-xl md:text-3xl font-black">
+          Una capacitación conjunta para que la innovación se convierta en mejores procesos, mejores servicios y mejores decisiones.
+        </p>
+      </div>
+
+      <div class="mt-7 flex flex-wrap justify-center gap-3">
+        <span class="pill px-4 py-2 rounded-xl text-cyan-200">FEMER</span>
+        <span class="pill px-4 py-2 rounded-xl text-blue-200">Círculos Médicos</span>
+        <span class="pill px-4 py-2 rounded-xl text-violet-200">Instituto IEC</span>
+        <span class="pill px-4 py-2 rounded-xl text-green-200">Inteligencia Operativa</span>
+      </div>
+    </div>
+  </section>
+
+  <script>
+    let currentSlide = 0;
+    const slides = Array.from(document.querySelectorAll('.slide'));
+    const dotsContainer = document.getElementById('dots');
+    const counter = document.getElementById('slide-counter');
+
+    function initPresentation(){
+      dotsContainer.innerHTML = '';
+      slides.forEach((_, index) => {
+        const dot = document.createElement('button');
+        dot.className = 'dot';
+        dot.setAttribute('aria-label', `Ir a la diapositiva ${index + 1}`);
+        dot.onclick = () => goToSlide(index);
+        dotsContainer.appendChild(dot);
+      });
+      showSlide(0);
+      if (window.lucide) lucide.createIcons();
+    }
+
+    function showSlide(index){
+      currentSlide = (index + slides.length) % slides.length;
+      slides.forEach((slide, i) => {
+        slide.classList.toggle('active', i === currentSlide);
+        if(i === currentSlide) slide.scrollTop = 0;
+      });
+      Array.from(dotsContainer.children).forEach((dot, i) => {
+        dot.classList.toggle('active', i === currentSlide);
+      });
+      counter.textContent = `${currentSlide + 1} / ${slides.length}`;
+      trackEvent('slide_view', {slide_number: currentSlide + 1});
+    }
+
+    function changeSlide(direction){ showSlide(currentSlide + direction); }
+    function goToSlide(index){ showSlide(index); }
+
+    document.addEventListener('keydown', (event) => {
+      if(['ArrowRight','PageDown',' '].includes(event.key)){
+        event.preventDefault();
+        changeSlide(1);
+      }
+      if(['ArrowLeft','PageUp'].includes(event.key)){
+        event.preventDefault();
+        changeSlide(-1);
+      }
+      if(event.key === 'Home') showSlide(0);
+      if(event.key === 'End') showSlide(slides.length - 1);
+      if(event.key.toLowerCase() === 'f') toggleFullscreen();
+    });
+
+    let touchStartX = null;
+    document.addEventListener('touchstart', e => {
+      touchStartX = e.changedTouches[0].screenX;
+    }, {passive:true});
+
+    document.addEventListener('touchend', e => {
+      if(touchStartX === null) return;
+      const diff = e.changedTouches[0].screenX - touchStartX;
+      if(Math.abs(diff) > 60) changeSlide(diff < 0 ? 1 : -1);
+      touchStartX = null;
+    }, {passive:true});
+
+    function toggleFullscreen(){
+      if(!document.fullscreenElement){
+        document.documentElement.requestFullscreen?.();
+        trackEvent('presentation_fullscreen');
+      } else {
+        document.exitFullscreen?.();
+      }
+    }
+
+    function trackEvent(name, params = {}){
+      if(typeof gtag === 'function') gtag('event', name, params);
+    }
+
+    function setPdfStatus(message, visible = true){
+      const box = document.getElementById('pdf-status');
+      box.textContent = message;
+      box.style.display = visible ? 'block' : 'none';
+    }
+
+    function buildPdfDeck(){
+      const deck = document.getElementById('pdf-deck');
+      deck.innerHTML = '';
+      slides.forEach(slide => {
+        const clone = slide.cloneNode(true);
+        clone.classList.remove('active');
+        clone.classList.add('pdf-page');
+        clone.removeAttribute('style');
+        deck.appendChild(clone);
+      });
+      return deck;
+    }
+
+    async function downloadPDF(){
+      const button = document.getElementById('download-btn');
+      const original = button.innerHTML;
+      button.disabled = true;
+      button.innerHTML = 'GENERANDO PDF...';
+      setPdfStatus('Preparando la presentación completa. No cierre esta ventana.');
+
+      try{
+        const deck = buildPdfDeck();
+        if(window.lucide) lucide.createIcons({nodes: deck.querySelectorAll('[data-lucide]')});
+
+        const options = {
+          margin: 0,
+          filename: 'Programa_FEMER_IEC_Administracion_Inteligente.pdf',
+          image: {type:'jpeg', quality:0.96},
+          html2canvas: {
+            scale: 1.35,
+            useCORS: true,
+            allowTaint: false,
+            backgroundColor: '#070b14',
+            logging: false,
+            windowWidth: 1600,
+            windowHeight: 900
+          },
+          jsPDF: {
+            unit:'px',
+            format:[1600,900],
+            orientation:'landscape',
+            hotfixes:['px_scaling']
+          },
+          pagebreak: {mode:['css','legacy']}
+        };
+
+        await html2pdf().set(options).from(deck).save();
+        setPdfStatus('PDF generado correctamente.');
+        trackEvent('download_pdf', {presentation:'femer_iec_administracion_inteligente'});
+        setTimeout(() => setPdfStatus('', false), 3500);
+      }catch(error){
+        console.error(error);
+        setPdfStatus('No fue posible generar el PDF automáticamente. Puede utilizar el botón IMPRIMIR y seleccionar “Guardar como PDF”.');
+      }finally{
+        button.disabled = false;
+        button.innerHTML = original;
+        if(window.lucide) lucide.createIcons();
+      }
+    }
+
+    window.addEventListener('load', initPresentation);
+  </script>
+</body>
+</html>
