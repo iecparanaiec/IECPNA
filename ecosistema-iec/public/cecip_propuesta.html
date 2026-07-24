@@ -16,7 +16,6 @@
   <script src="https://cdn.tailwindcss.com/3.4.17"></script>
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
   <script src="https://cdn.jsdelivr.net/npm/lucide@0.468.0/dist/umd/lucide.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
   <style>
     :root {
       --cecip-blue: #1677ff;
@@ -61,42 +60,14 @@
     @media (max-width:768px){ .slide{padding:1.2rem .85rem 5rem}.nav-button{width:40px;height:40px}.logo-shell{width:66px;height:66px;flex-basis:66px} }
     @media (max-width:640px){ .nav-button{top:auto;bottom:16px;transform:none}#prev-btn{left:14px!important}#next-btn{right:14px!important}#dots{bottom:29px!important;max-width:calc(100vw - 120px)}.print-btn{top:10px;left:10px;padding:8px 10px}.print-btn span{display:none} }
     @media print { body{overflow:visible;background:#fff}.slide{display:flex!important;height:auto;min-height:100vh;page-break-after:always}.nav-button,#dots,#slide-counter,.print-btn{display:none!important} }
-  
-    .top-actions{position:fixed;top:14px;left:14px;z-index:80;display:flex;gap:8px;flex-wrap:wrap}
-    .action-button{display:inline-flex;align-items:center;justify-content:center;gap:8px;border-radius:999px;padding:10px 14px;background:rgba(5,10,20,.78);border:1px solid rgba(255,255,255,.14);color:#fff;backdrop-filter:blur(14px);font-size:12px;font-weight:800;letter-spacing:.03em;transition:.2s ease;cursor:pointer}
-    .action-button:hover{background:rgba(37,99,235,.28);border-color:rgba(96,165,250,.55)}
-    .action-button.primary{background:linear-gradient(135deg,rgba(14,165,233,.92),rgba(37,99,235,.92));border-color:rgba(125,211,252,.55)}
-    .action-button:disabled{opacity:.55;cursor:wait}
-    .pdf-status{position:fixed;inset:auto 16px 16px auto;z-index:100;max-width:390px;padding:12px 16px;border-radius:16px;background:rgba(7,11,20,.96);border:1px solid rgba(255,255,255,.14);box-shadow:0 20px 50px rgba(0,0,0,.35);font-size:13px;color:#dbeafe;display:none}
-    #pdf-deck{position:fixed;left:-30000px;top:0;width:1600px;background:#060a12;z-index:-9999}
-    #pdf-deck .pdf-page{display:flex!important;width:1600px!important;height:900px!important;min-height:900px!important;overflow:hidden!important;padding:48px 72px 60px!important;page-break-after:always;break-after:page;position:relative}
-    #pdf-deck .pdf-page:last-child{page-break-after:auto;break-after:auto}
-    @media(max-width:768px){.top-actions{top:10px;left:10px;right:10px}.action-button{padding:9px 11px;font-size:10px}.slide{padding-top:5.1rem}}
-    @media print{body{overflow:visible;background:#060a12}.top-actions,.nav-button,#dots,#slide-counter,.pdf-status{display:none!important}.slide{display:flex!important;width:100vw;height:100vh;min-height:100vh;page-break-after:always;break-after:page;overflow:hidden}}
-
   </style>
 </head>
 <body class="relative">
-  
-  <div class="top-actions">
-    <button class="action-button primary" onclick="downloadPDF()" id="download-btn">
-      <i data-lucide="download" style="width:16px;height:16px"></i> DESCARGAR PDF
-    </button>
-    <button class="action-button" onclick="toggleFullscreen()">
-      <i data-lucide="maximize-2" style="width:16px;height:16px"></i> PANTALLA COMPLETA
-    </button>
-    <button class="action-button" onclick="printPresentation()">
-      <i data-lucide="printer" style="width:16px;height:16px"></i> IMPRIMIR
-    </button>
-  </div>
-<button class="print-btn" onclick="window.print()" aria-label="Imprimir o guardar como PDF"><i data-lucide="printer" style="width:16px;height:16px"></i><span>Imprimir / PDF</span></button>
+  <button class="print-btn" onclick="window.print()" aria-label="Imprimir o guardar como PDF"><i data-lucide="printer" style="width:16px;height:16px"></i><span>Imprimir / PDF</span></button>
   <button id="prev-btn" class="nav-button left-3 md:left-5" onclick="changeSlide(-1)" aria-label="Diapositiva anterior"><i data-lucide="chevron-left" style="width:22px;height:22px"></i></button>
   <button id="next-btn" class="nav-button right-3 md:right-5" onclick="changeSlide(1)" aria-label="Diapositiva siguiente"><i data-lucide="chevron-right" style="width:22px;height:22px"></i></button>
   <div id="dots" class="fixed bottom-4 left-1/2 -translate-x-1/2 z-[70] flex items-center justify-center gap-2 flex-wrap"></div>
   <div id="slide-counter" class="fixed top-4 right-4 z-[70] px-3 py-1.5 rounded-full bg-black/30 border border-white/10 backdrop-blur text-xs text-slate-300"></div>
-  <div id="pdf-status" class="pdf-status" role="status" aria-live="polite"></div>
-  <div id="pdf-deck" aria-hidden="true"></div>
-
 
   <!-- 1 PORTADA -->
   <section class="slide active flex-col items-center justify-center relative bg-gradient-to-br from-[#060a12] via-[#0b162b] to-[#060a12] text-center">
@@ -362,202 +333,233 @@
   </section>
 
   <script>
-    let currentSlide = 0;
     const slides = Array.from(document.querySelectorAll('.slide'));
     const dotsContainer = document.getElementById('dots');
     const counter = document.getElementById('slide-counter');
     const prevBtn = document.getElementById('prev-btn');
     const nextBtn = document.getElementById('next-btn');
+    let currentSlide = 0;
+    const sessionStartedAt = Date.now();
 
-    function trackEvent(name, params = {}){
-      if(typeof gtag === 'function'){
-        gtag('event', name, {presentation:'cecip_126_ecosistema_digital', ...params});
-      }
+    function trackEvent(eventName, parameters = {}) {
+      if (typeof gtag !== 'function') return;
+
+      gtag('event', eventName, {
+        presentation_name: 'propuesta_cecip_ecosistema_iec_2026',
+        presentation_version: 'final',
+        ...parameters
+      });
     }
 
-    function getSlideTitle(slide, index){
-      const heading = slide.querySelector('h1,h2,h3');
-      return (heading ? heading.textContent : `Diapositiva ${index + 1}`)
-        .replace(/\s+/g,' ').trim().slice(0,100);
+    function getSlideTitle(slide, index) {
+      const heading = slide.querySelector('h1, h2, h3');
+      const title = heading
+        ? heading.textContent
+        : `Diapositiva ${index + 1}`;
+
+      return title.replace(/\s+/g, ' ').trim().slice(0, 120);
     }
 
-    function createDots(){
-      dotsContainer.innerHTML='';
-      slides.forEach((_,index)=>{
-        const button=document.createElement('button');
-        button.className='dot'+(index===currentSlide?' active':'');
-        button.setAttribute('aria-label',`Ir a diapositiva ${index+1}`);
-        button.addEventListener('click',()=>{
-          trackEvent('slide_navigation',{navigation_method:'dot',destination_slide:index+1});
-          showSlide(index,'dot');
+    function createDots() {
+      dotsContainer.innerHTML = '';
+
+      slides.forEach((_, index) => {
+        const button = document.createElement('button');
+        button.className = 'dot' + (index === currentSlide ? ' active' : '');
+        button.setAttribute('aria-label', `Ir a diapositiva ${index + 1}`);
+
+        button.addEventListener('click', () => {
+          trackEvent('slide_navigation', {
+            navigation_method: 'dot',
+            origin_slide: currentSlide + 1,
+            destination_slide: index + 1
+          });
+
+          showSlide(index, 'dot');
         });
+
         dotsContainer.appendChild(button);
       });
     }
 
-    function showSlide(index,navigationMethod='direct'){
-      if(index<0||index>=slides.length)return;
-      if(slides[currentSlide])slides[currentSlide].classList.remove('active');
-      currentSlide=index;
+    function showSlide(index, navigationMethod = 'direct') {
+      if (index < 0 || index >= slides.length) return;
+
+      slides[currentSlide].classList.remove('active');
+      currentSlide = index;
       slides[currentSlide].classList.add('active');
-      slides[currentSlide].scrollTop=0;
+      slides[currentSlide].scrollTop = 0;
+
       createDots();
-      counter.textContent=`${currentSlide+1} / ${slides.length}`;
-      prevBtn.disabled=currentSlide===0;
-      nextBtn.disabled=currentSlide===slides.length-1;
-      trackEvent('slide_view',{
-        slide_number:currentSlide+1,
-        slide_title:getSlideTitle(slides[currentSlide],currentSlide),
-        navigation_method:navigationMethod
+
+      counter.textContent = `${currentSlide + 1} / ${slides.length}`;
+      prevBtn.disabled = currentSlide === 0;
+      nextBtn.disabled = currentSlide === slides.length - 1;
+
+      trackEvent('slide_view', {
+        slide_number: currentSlide + 1,
+        slide_title: getSlideTitle(slides[currentSlide], currentSlide),
+        navigation_method: navigationMethod,
+        progress_percentage: Math.round(((currentSlide + 1) / slides.length) * 100)
       });
-      if(window.lucide)lucide.createIcons();
+
+      if (window.lucide) lucide.createIcons();
     }
 
-    function changeSlide(direction,navigationMethod='button'){
-      const destination=currentSlide+direction;
-      if(destination<0||destination>=slides.length)return;
-      trackEvent('slide_navigation',{
-        navigation_method:navigationMethod,
-        navigation_direction:direction>0?'next':'previous',
-        origin_slide:currentSlide+1,
-        destination_slide:destination+1
+    function changeSlide(direction, navigationMethod = 'button') {
+      const destination = currentSlide + direction;
+
+      if (destination < 0 || destination >= slides.length) return;
+
+      trackEvent('slide_navigation', {
+        navigation_method: navigationMethod,
+        navigation_direction: direction > 0 ? 'next' : 'previous',
+        origin_slide: currentSlide + 1,
+        destination_slide: destination + 1
       });
-      showSlide(destination,navigationMethod);
+
+      showSlide(destination, navigationMethod);
     }
 
-    document.addEventListener('keydown',(event)=>{
-      if(['ArrowRight','PageDown',' '].includes(event.key)){event.preventDefault();changeSlide(1,'keyboard')}
-      if(['ArrowLeft','PageUp'].includes(event.key)){event.preventDefault();changeSlide(-1,'keyboard')}
-      if(event.key==='Home'){trackEvent('slide_navigation',{navigation_method:'keyboard_home',destination_slide:1});showSlide(0,'keyboard_home')}
-      if(event.key==='End'){trackEvent('slide_navigation',{navigation_method:'keyboard_end',destination_slide:slides.length});showSlide(slides.length-1,'keyboard_end')}
-      if(event.key.toLowerCase()==='f')toggleFullscreen();
+    document.addEventListener('keydown', event => {
+      if (event.key === 'ArrowRight' || event.key === 'PageDown' || event.key === ' ') {
+        event.preventDefault();
+        changeSlide(1, 'keyboard');
+      }
+
+      if (event.key === 'ArrowLeft' || event.key === 'PageUp') {
+        event.preventDefault();
+        changeSlide(-1, 'keyboard');
+      }
+
+      if (event.key === 'Home') {
+        event.preventDefault();
+
+        trackEvent('slide_navigation', {
+          navigation_method: 'keyboard_home',
+          origin_slide: currentSlide + 1,
+          destination_slide: 1
+        });
+
+        showSlide(0, 'keyboard_home');
+      }
+
+      if (event.key === 'End') {
+        event.preventDefault();
+
+        trackEvent('slide_navigation', {
+          navigation_method: 'keyboard_end',
+          origin_slide: currentSlide + 1,
+          destination_slide: slides.length
+        });
+
+        showSlide(slides.length - 1, 'keyboard_end');
+      }
     });
 
-    let touchStartX=null;
-    document.addEventListener('touchstart',e=>{touchStartX=e.changedTouches[0].screenX},{passive:true});
-    document.addEventListener('touchend',e=>{
-      if(touchStartX===null)return;
-      const diff=e.changedTouches[0].screenX-touchStartX;
-      if(Math.abs(diff)>60)changeSlide(diff<0?1:-1,'swipe');
-      touchStartX=null;
-    },{passive:true});
+    let touchStartX = 0;
 
-    async function toggleFullscreen(){
-      try{
-        if(!document.fullscreenElement){
-          await document.documentElement.requestFullscreen?.();
-          trackEvent('presentation_fullscreen',{fullscreen_action:'enter',slide_number:currentSlide+1});
-        }else{
-          await document.exitFullscreen?.();
-          trackEvent('presentation_fullscreen',{fullscreen_action:'exit',slide_number:currentSlide+1});
-        }
-      }catch(error){
-        trackEvent('presentation_error',{error_action:'fullscreen',error_message:String(error?.message||error).slice(0,120)});
+    document.addEventListener('touchstart', event => {
+      touchStartX = event.changedTouches[0].screenX;
+    }, { passive: true });
+
+    document.addEventListener('touchend', event => {
+      const difference = event.changedTouches[0].screenX - touchStartX;
+
+      if (Math.abs(difference) > 65) {
+        changeSlide(difference < 0 ? 1 : -1, 'swipe');
       }
-    }
+    }, { passive: true });
 
-    function printPresentation(){
-      trackEvent('print_presentation',{slide_number:currentSlide+1});
-      window.print();
-    }
+    document.querySelectorAll('a[href]').forEach(link => {
+      link.addEventListener('click', () => {
+        const href = link.getAttribute('href') || '';
+        const text = (
+          link.textContent ||
+          link.getAttribute('aria-label') ||
+          link.querySelector('img')?.getAttribute('alt') ||
+          ''
+        ).replace(/\s+/g, ' ').trim().slice(0, 120);
 
-    function setPdfStatus(message,visible=true){
-      const box=document.getElementById('pdf-status');
-      box.textContent=message;
-      box.style.display=visible?'block':'none';
-    }
-
-    function buildPdfDeck(){
-      const deck=document.getElementById('pdf-deck');
-      deck.innerHTML='';
-      slides.forEach(slide=>{
-        const clone=slide.cloneNode(true);
-        clone.classList.remove('active');
-        clone.classList.add('pdf-page');
-        clone.removeAttribute('style');
-        deck.appendChild(clone);
-      });
-      return deck;
-    }
-
-    async function downloadPDF(){
-      const button=document.getElementById('download-btn');
-      const original=button.innerHTML;
-      button.disabled=true;
-      button.innerHTML='GENERANDO PDF...';
-      setPdfStatus('Preparando la presentación completa. No cierre esta ventana.');
-      trackEvent('pdf_generation_start',{total_slides:slides.length});
-      try{
-        const deck=buildPdfDeck();
-        if(window.lucide)lucide.createIcons({nodes:deck.querySelectorAll('[data-lucide]')});
-        const options={
-          margin:0,
-          filename:'Propuesta_CeCIP_IEC_Ecosistema_Digital_2026.pdf',
-          image:{type:'jpeg',quality:.96},
-          html2canvas:{scale:1.35,useCORS:true,allowTaint:false,backgroundColor:'#060a12',logging:false,windowWidth:1600,windowHeight:900},
-          jsPDF:{unit:'px',format:[1600,900],orientation:'landscape',hotfixes:['px_scaling']},
-          pagebreak:{mode:['css','legacy']}
-        };
-        await html2pdf().set(options).from(deck).save();
-        setPdfStatus('PDF generado correctamente.');
-        trackEvent('download_pdf',{file_name:options.filename,total_slides:slides.length});
-        setTimeout(()=>setPdfStatus('',false),3500);
-      }catch(error){
-        console.error(error);
-        setPdfStatus('No fue posible generar el PDF automáticamente. Utilice IMPRIMIR y seleccione “Guardar como PDF”.');
-        trackEvent('presentation_error',{error_action:'download_pdf',error_message:String(error?.message||error).slice(0,120)});
-      }finally{
-        button.disabled=false;
-        button.innerHTML=original;
-        if(window.lucide)lucide.createIcons();
-      }
-    }
-
-    function registerLinkAnalytics(){
-      document.querySelectorAll('a[href]').forEach(link=>{
-        link.addEventListener('click',()=>{
-          const href=link.getAttribute('href')||'';
-          trackEvent('link_click',{
-            link_url:href,
-            link_text:(link.textContent||link.getAttribute('aria-label')||'').trim().slice(0,100),
-            outbound:/^https?:\/\//i.test(href)&&!href.includes(location.hostname),
-            slide_number:currentSlide+1
-          });
+        trackEvent('link_click', {
+          link_url: href,
+          link_text: text,
+          slide_number: currentSlide + 1,
+          outbound: /^https?:\/\//i.test(href) && !href.includes(location.hostname)
         });
       });
-    }
+    });
 
-    function initPresentation(){
-      createDots();
-      showSlide(0,'initial_load');
-      registerLinkAnalytics();
-      trackEvent('presentation_open',{
-        total_slides:slides.length,
-        viewport_width:window.innerWidth,
-        viewport_height:window.innerHeight
-      });
-      if(window.lucide)lucide.createIcons();
-    }
+    document.querySelectorAll('button').forEach(button => {
+      button.addEventListener('click', () => {
+        const buttonText = (
+          button.textContent ||
+          button.getAttribute('aria-label') ||
+          ''
+        ).replace(/\s+/g, ' ').trim().slice(0, 120);
 
-    const sessionStartedAt=Date.now();
-
-    document.addEventListener('visibilitychange',()=>{
-      trackEvent('presentation_visibility',{
-        visibility_state:document.visibilityState,
-        slide_number:currentSlide+1
+        trackEvent('button_click', {
+          button_text: buttonText,
+          button_id: button.id || '',
+          slide_number: currentSlide + 1
+        });
       });
     });
 
-    window.addEventListener('beforeunload',()=>{
-      const seconds=Math.round((Date.now()-sessionStartedAt)/1000);
-      trackEvent('presentation_session_end',{
-        engagement_seconds:seconds,
-        last_slide_number:currentSlide+1,
-        completion_percentage:Math.round(((currentSlide+1)/slides.length)*100)
+    document.addEventListener('visibilitychange', () => {
+      trackEvent('presentation_visibility', {
+        visibility_state: document.visibilityState,
+        slide_number: currentSlide + 1
       });
     });
 
-    window.addEventListener('load',initPresentation);
+    window.addEventListener('error', event => {
+      trackEvent('presentation_error', {
+        error_message: String(event.message || 'Error desconocido').slice(0, 150),
+        error_source: String(event.filename || '').slice(0, 150),
+        error_line: event.lineno || 0,
+        slide_number: currentSlide + 1
+      });
+    });
+
+    window.addEventListener('unhandledrejection', event => {
+      trackEvent('presentation_error', {
+        error_message: String(event.reason || 'Promesa rechazada').slice(0, 150),
+        error_source: 'unhandledrejection',
+        slide_number: currentSlide + 1
+      });
+    });
+
+    window.addEventListener('beforeunload', () => {
+      const engagementSeconds = Math.round((Date.now() - sessionStartedAt) / 1000);
+
+      trackEvent('presentation_session_end', {
+        engagement_seconds: engagementSeconds,
+        last_slide_number: currentSlide + 1,
+        completion_percentage: Math.round(((currentSlide + 1) / slides.length) * 100)
+      });
+    });
+
+    createDots();
+    counter.textContent = `1 / ${slides.length}`;
+    prevBtn.disabled = true;
+
+    trackEvent('presentation_open', {
+      total_slides: slides.length,
+      viewport_width: window.innerWidth,
+      viewport_height: window.innerHeight,
+      user_language: navigator.language || '',
+      referrer: document.referrer || ''
+    });
+
+    trackEvent('slide_view', {
+      slide_number: 1,
+      slide_title: getSlideTitle(slides[0], 0),
+      navigation_method: 'initial_load',
+      progress_percentage: Math.round((1 / slides.length) * 100)
+    });
+
+    if (window.lucide) lucide.createIcons();
   </script>
 
 </body>
