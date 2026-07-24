@@ -14,7 +14,6 @@
   <script src="https://cdn.tailwindcss.com/3.4.17"></script>
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
   <script src="https://cdn.jsdelivr.net/npm/lucide@0.468.0/dist/umd/lucide.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
   <style>
     :root{--cyan:#22d3ee;--blue:#3b82f6;--violet:#8b5cf6;--green:#22c55e;--amber:#f59e0b;--red:#ef4444;--bg:#060a12;--panel:#0d1526}
     *{box-sizing:border-box;font-family:'DM Sans',sans-serif}html,body{margin:0;background:var(--bg)}body{color:#fff;overflow:hidden}button{font:inherit}
@@ -26,30 +25,27 @@
     .green-text{background:linear-gradient(135deg,#86efac,#22c55e);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
     .amber-text{background:linear-gradient(135deg,#fde68a,#f59e0b,#fb923c);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
     .logo{width:95px;height:95px;object-fit:contain;filter:drop-shadow(0 14px 30px rgba(0,0,0,.35))}.iec-logo{height:90px;max-width:230px;object-fit:contain}
-    .nav{position:fixed;top:50%;z-index:80;transform:translateY(-50%);width:46px;height:46px;border-radius:999px;display:flex;align-items:center;justify-content:center;background:rgba(5,10,20,.75);border:1px solid rgba(255,255,255,.15);backdrop-filter:blur(14px);color:#fff;cursor:pointer}.nav:hover{background:rgba(37,99,235,.3)}
+    .nav{position:fixed;top:50%;z-index:80;transform:translateY(-50%);width:52px;height:52px;border-radius:999px;display:flex;align-items:center;justify-content:center;background:rgba(5,10,20,.92);border:1px solid rgba(103,232,249,.55);box-shadow:0 12px 32px rgba(0,0,0,.38),0 0 0 1px rgba(34,211,238,.08) inset;backdrop-filter:blur(14px);color:#fff;cursor:pointer;transition:.2s ease}.nav:hover{background:rgba(8,145,178,.32);border-color:rgba(103,232,249,.95);transform:translateY(-50%) scale(1.06)}.nav svg{display:block;width:28px;height:28px;stroke:#fff;stroke-width:3.2;fill:none;filter:drop-shadow(0 0 5px rgba(103,232,249,.85));pointer-events:none}
     .actions{position:fixed;top:14px;left:14px;z-index:90;display:flex;gap:8px;flex-wrap:wrap}.action{display:inline-flex;gap:8px;align-items:center;border-radius:999px;padding:10px 14px;background:rgba(5,10,20,.8);border:1px solid rgba(255,255,255,.14);color:#fff;font-size:11px;font-weight:900;letter-spacing:.04em;cursor:pointer}.action.primary{background:linear-gradient(135deg,#0891b2,#2563eb)}
     .dot{width:8px;height:8px;border:0;border-radius:999px;background:rgba(255,255,255,.25);cursor:pointer;transition:.2s}.dot.active{width:24px;background:linear-gradient(90deg,var(--cyan),var(--blue))}
     .card-hover{transition:.25s}.card-hover:hover{transform:translateY(-4px);border-color:rgba(103,232,249,.36)}
     .module{display:inline-flex;gap:8px;align-items:center;padding:7px 11px;border-radius:999px;color:#a5f3fc;background:rgba(34,211,238,.09);border:1px solid rgba(34,211,238,.22);font-size:11px;font-weight:900;letter-spacing:.12em}
     .flow{position:relative;padding-left:48px}.flow:before{content:"";position:absolute;left:18px;top:38px;bottom:-18px;width:2px;background:linear-gradient(var(--cyan),rgba(59,130,246,.1))}.flow:last-child:before{display:none}.flow-n{position:absolute;left:0;top:0;width:38px;height:38px;border-radius:999px;display:grid;place-items:center;font-weight:900;background:linear-gradient(135deg,#06b6d4,#2563eb)}
-    #pdf-deck{position:fixed;left:-30000px;top:0;width:1600px;background:#060a12;z-index:-9999}#pdf-deck .pdf-page{display:flex!important;width:1600px!important;height:900px!important;min-height:900px!important;overflow:hidden!important;padding:48px 72px 60px!important;page-break-after:always;break-after:page;position:relative}
-    .status{position:fixed;right:16px;bottom:16px;z-index:100;display:none;max-width:380px;padding:12px 16px;border-radius:16px;background:rgba(7,11,20,.96);border:1px solid rgba(255,255,255,.14);font-size:13px;color:#dbeafe}
     @media(max-width:768px){.slide{padding:5.5rem .85rem 5.5rem}.logo{width:68px;height:68px}.iec-logo{height:62px}.action{font-size:9px;padding:9px 10px}.nav{width:40px;height:40px}}
-    @media(max-width:640px){.nav{top:auto;bottom:14px;transform:none}#prev{left:14px!important}#next{right:14px!important}#dots{bottom:28px!important;max-width:calc(100vw - 120px)}}
-    @media print{body{overflow:visible}.actions,.nav,#dots,#counter,.status{display:none!important}.slide{display:flex!important;width:100vw;height:100vh;min-height:100vh;overflow:hidden;page-break-after:always}}
+    @media(max-width:640px){.nav{top:auto;bottom:14px;transform:none}.nav:hover{transform:scale(1.06)}#prev{left:14px!important}#next{right:14px!important}#dots{bottom:28px!important;max-width:calc(100vw - 120px)}}
+    @media print{body{overflow:visible}.actions,.nav,#dots,#counter{display:none!important}.slide{display:flex!important;width:100vw;height:100vh;min-height:100vh;overflow:hidden;page-break-after:always}}
   </style>
 </head>
 <body>
   <div class="actions">
-    <button id="download" class="action primary" onclick="downloadPDF()"><i data-lucide="download" class="w-4 h-4"></i> DESCARGAR PDF</button>
     <button class="action" onclick="toggleFullscreen()"><i data-lucide="maximize-2" class="w-4 h-4"></i> PANTALLA COMPLETA</button>
     <button class="action" onclick="window.print()"><i data-lucide="printer" class="w-4 h-4"></i> IMPRIMIR</button>
   </div>
-  <button id="prev" class="nav left-3 md:left-5" onclick="changeSlide(-1)" aria-label="Anterior"><i data-lucide="chevron-left"></i></button>
-  <button id="next" class="nav right-3 md:right-5" onclick="changeSlide(1)" aria-label="Siguiente"><i data-lucide="chevron-right"></i></button>
+  <button id="prev" class="nav left-3 md:left-5" onclick="changeSlide(-1)" aria-label="Diapositiva anterior" title="Anterior"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 18 9 12l6-6" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+  <button id="next" class="nav right-3 md:right-5" onclick="changeSlide(1)" aria-label="Diapositiva siguiente" title="Siguiente"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m9 18 6-6-6-6" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
   <div id="dots" class="fixed bottom-4 left-1/2 -translate-x-1/2 z-[80] flex gap-2 flex-wrap justify-center"></div>
   <div id="counter" class="fixed top-4 right-4 z-[80] px-3 py-1.5 rounded-full bg-black/30 border border-white/10 text-xs text-slate-300"></div>
-  <div id="status" class="status"></div><div id="pdf-deck"></div><main id="presentation"></main>
+  <main id="presentation"></main>
 
 <script>
 const INAES='https://i.postimg.cc/L5NSxz5m/images-(8).png';
@@ -98,9 +94,6 @@ function changeSlide(d){show(current+d)}
 function toggleFullscreen(){if(!document.fullscreenElement){document.documentElement.requestFullscreen?.();track('presentation_fullscreen',{presentation:'inaes_entre_rios_iec'})}else document.exitFullscreen?.()}
 document.addEventListener('keydown',e=>{if(['ArrowRight','PageDown',' '].includes(e.key)){e.preventDefault();changeSlide(1)}if(['ArrowLeft','PageUp'].includes(e.key)){e.preventDefault();changeSlide(-1)}if(e.key==='Home')show(0);if(e.key==='End')show(els.length-1);if(e.key.toLowerCase()==='f')toggleFullscreen()});
 let tx=null;document.addEventListener('touchstart',e=>tx=e.changedTouches[0].screenX,{passive:true});document.addEventListener('touchend',e=>{if(tx===null)return;const d=e.changedTouches[0].screenX-tx;if(Math.abs(d)>60)changeSlide(d<0?1:-1);tx=null},{passive:true});
-function setStatus(t,v=true){const s=document.getElementById('status');s.textContent=t;s.style.display=v?'block':'none'}
-function buildDeck(){const d=document.getElementById('pdf-deck');d.innerHTML='';els.forEach(s=>{const c=s.cloneNode(true);c.classList.remove('active');c.classList.add('pdf-page');d.appendChild(c)});return d}
-async function downloadPDF(){const b=document.getElementById('download'),old=b.innerHTML;b.disabled=true;b.textContent='GENERANDO PDF...';setStatus('Preparando la presentación completa.');try{const deck=buildDeck();lucide?.createIcons({nodes:deck.querySelectorAll('[data-lucide]')});await html2pdf().set({margin:0,filename:'Propuesta_INAES_Entre_Rios_IEC.pdf',image:{type:'jpeg',quality:.96},html2canvas:{scale:1.35,useCORS:true,allowTaint:false,backgroundColor:'#060a12',logging:false,windowWidth:1600,windowHeight:900},jsPDF:{unit:'px',format:[1600,900],orientation:'landscape',hotfixes:['px_scaling']},pagebreak:{mode:['css','legacy']}}).from(deck).save();setStatus('PDF generado correctamente.');track('download_pdf',{presentation:'inaes_entre_rios_iec'});setTimeout(()=>setStatus('',false),3000)}catch(e){console.error(e);setStatus('No se pudo generar automáticamente. Use IMPRIMIR y seleccione Guardar como PDF.')}finally{b.disabled=false;b.innerHTML=old;lucide?.createIcons()}}
 window.addEventListener('load',init);
 </script>
 </body>
