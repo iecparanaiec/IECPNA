@@ -1,0 +1,1591 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-R817QWH97R"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-R817QWH97R');
+  </script>
+
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Experto en Aplicaciones Prácticas con Inteligencia Artificial Nivel II para Unimédica. Automatización inteligente, Google Apps Script e Inteligencia Operativa aplicada a procesos administrativos.">
+  <meta name="theme-color" content="#050a13">
+  <title>Experto en Aplicaciones Prácticas con IA · Nivel II | Unimédica + IEC</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <script src="https://unpkg.com/lucide@0.468.0/dist/umd/lucide.min.js"></script>
+
+  <style>
+    :root{
+      --bg:#040912;
+      --bg-2:#071221;
+      --surface:rgba(255,255,255,.066);
+      --surface-strong:rgba(8,22,40,.88);
+      --line:rgba(255,255,255,.105);
+      --line-cyan:rgba(34,211,238,.24);
+      --text:#f8fafc;
+      --muted:#a7b6c9;
+      --cyan:#22d3ee;
+      --sky:#38bdf8;
+      --blue:#2563eb;
+      --violet:#818cf8;
+      --green:#22c55e;
+      --green-2:#059669;
+      --amber:#f59e0b;
+      --rose:#fb7185;
+      --radius:26px;
+      --shadow:0 24px 70px rgba(0,0,0,.27);
+    }
+
+    *{box-sizing:border-box}
+    html{scroll-behavior:smooth}
+    body{
+      margin:0;
+      min-height:100vh;
+      color:var(--text);
+      font-family:"DM Sans",sans-serif;
+      background:
+        radial-gradient(circle at 12% -7%,rgba(14,165,233,.22),transparent 29%),
+        radial-gradient(circle at 92% 16%,rgba(99,102,241,.18),transparent 27%),
+        radial-gradient(circle at 52% 108%,rgba(34,211,238,.085),transparent 37%),
+        linear-gradient(180deg,var(--bg),var(--bg-2) 58%,#02060b);
+      overflow-x:hidden;
+    }
+
+    body::before{
+      content:"";
+      position:fixed;
+      inset:0;
+      z-index:-2;
+      pointer-events:none;
+      background-image:
+        linear-gradient(rgba(56,189,248,.043) 1px,transparent 1px),
+        linear-gradient(90deg,rgba(56,189,248,.043) 1px,transparent 1px);
+      background-size:58px 58px;
+      mask-image:linear-gradient(to bottom,black,transparent 94%);
+    }
+
+    body::after{
+      content:"";
+      position:fixed;
+      inset:0;
+      z-index:-1;
+      pointer-events:none;
+      background:
+        radial-gradient(circle at 78% 14%,rgba(56,189,248,.7) 0 1px,transparent 2px),
+        radial-gradient(circle at 84% 23%,rgba(129,140,248,.6) 0 1px,transparent 2px),
+        radial-gradient(circle at 70% 68%,rgba(34,211,238,.45) 0 1px,transparent 2px);
+    }
+
+    a{text-decoration:none;color:inherit}
+    img{display:block;max-width:100%}
+    button,input,select,textarea{font:inherit}
+
+    .container{
+      width:min(1140px,100%);
+      margin:0 auto;
+      padding:0 18px;
+    }
+
+    .glass{
+      background:var(--surface);
+      border:1px solid var(--line);
+      backdrop-filter:blur(15px);
+      -webkit-backdrop-filter:blur(15px);
+      box-shadow:var(--shadow);
+    }
+
+    .gradient{
+      background:linear-gradient(135deg,#67e8f9,#38bdf8 44%,#818cf8);
+      -webkit-background-clip:text;
+      background-clip:text;
+      -webkit-text-fill-color:transparent;
+    }
+
+    .topbar{
+      position:sticky;
+      top:0;
+      z-index:60;
+      background:rgba(4,9,18,.80);
+      border-bottom:1px solid rgba(255,255,255,.075);
+      backdrop-filter:blur(18px);
+    }
+
+    .topbar-inner{
+      min-height:70px;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:15px;
+    }
+
+    .brand{
+      display:flex;
+      align-items:center;
+      gap:11px;
+      min-width:0;
+    }
+
+    .brand-logo{
+      width:47px;
+      height:47px;
+      padding:4px;
+      object-fit:contain;
+      border-radius:15px;
+      background:rgba(255,255,255,.05);
+      border:1px solid rgba(255,255,255,.09);
+    }
+
+    .brand-copy strong{
+      display:block;
+      font-size:14px;
+      line-height:1.1;
+      font-weight:900;
+    }
+
+    .brand-copy span{
+      display:block;
+      margin-top:4px;
+      color:#94a3b8;
+      font-size:11px;
+      white-space:nowrap;
+      overflow:hidden;
+      text-overflow:ellipsis;
+    }
+
+    .top-actions{
+      display:flex;
+      align-items:center;
+      gap:9px;
+    }
+
+    .pill-link{
+      min-height:42px;
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      gap:8px;
+      padding:10px 14px;
+      border-radius:999px;
+      color:#e2e8f0;
+      background:rgba(255,255,255,.055);
+      border:1px solid rgba(255,255,255,.09);
+      font-size:12px;
+      font-weight:900;
+      transition:.18s ease;
+      white-space:nowrap;
+    }
+
+    .pill-link:hover{
+      transform:translateY(-1px);
+      color:#fff;
+      border-color:rgba(56,189,248,.42);
+      background:rgba(14,28,48,.92);
+    }
+
+    .hero{
+      padding:72px 0 46px;
+      text-align:center;
+    }
+
+    .hero-logos{
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      gap:12px;
+      margin-bottom:22px;
+    }
+
+    .hero-logo{
+      width:105px;
+      height:105px;
+      padding:8px;
+      border-radius:50%;
+      border:1px solid rgba(125,211,252,.28);
+      background:linear-gradient(145deg,rgba(125,211,252,.20),rgba(255,255,255,.035));
+      box-shadow:0 0 55px rgba(14,165,233,.18);
+    }
+
+    .hero-logo img{
+      width:100%;
+      height:100%;
+      object-fit:contain;
+      border-radius:50%;
+    }
+
+    .partner-badge{
+      min-height:45px;
+      display:flex;
+      align-items:center;
+      gap:9px;
+      padding:10px 15px;
+      border-radius:999px;
+      color:#dbeafe;
+      background:rgba(255,255,255,.05);
+      border:1px solid rgba(255,255,255,.10);
+      font-size:12px;
+      font-weight:900;
+    }
+
+    .eyebrow{
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      padding:8px 14px;
+      border-radius:999px;
+      color:#a5f3fc;
+      background:rgba(34,211,238,.08);
+      border:1px solid rgba(34,211,238,.22);
+      font-size:12px;
+      font-weight:900;
+      letter-spacing:.11em;
+      text-transform:uppercase;
+    }
+
+    h1{
+      max-width:1000px;
+      margin:19px auto 17px;
+      font-size:clamp(40px,6.8vw,82px);
+      line-height:.98;
+      letter-spacing:-.055em;
+      font-weight:900;
+    }
+
+    .hero-copy{
+      max-width:860px;
+      margin:0 auto;
+      color:#cbd5e1;
+      font-size:clamp(17px,2.25vw,22px);
+      line-height:1.58;
+    }
+
+    .hero-copy strong{color:#fff}
+
+    .hero-actions{
+      display:flex;
+      flex-wrap:wrap;
+      justify-content:center;
+      gap:12px;
+      margin-top:28px;
+    }
+
+    .btn{
+      min-height:53px;
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      gap:9px;
+      padding:13px 21px;
+      border-radius:17px;
+      font-size:14px;
+      font-weight:900;
+      border:1px solid transparent;
+      transition:.18s ease;
+      cursor:pointer;
+    }
+
+    .btn:hover{transform:translateY(-2px)}
+
+    .btn-primary{
+      color:#fff;
+      background:linear-gradient(135deg,#0891b2,#2563eb 56%,#6366f1);
+      border-color:rgba(191,219,254,.25);
+      box-shadow:0 18px 44px rgba(37,99,235,.26);
+    }
+
+    .btn-green{
+      color:#fff;
+      background:linear-gradient(135deg,var(--green),var(--green-2));
+      border-color:rgba(187,247,208,.30);
+      box-shadow:0 18px 44px rgba(5,150,105,.24);
+    }
+
+    .btn-secondary{
+      color:#dbeafe;
+      background:rgba(255,255,255,.055);
+      border-color:rgba(255,255,255,.10);
+    }
+
+    .hero-stats{
+      display:grid;
+      grid-template-columns:repeat(4,minmax(0,1fr));
+      gap:12px;
+      margin-top:35px;
+    }
+
+    .stat{
+      padding:18px;
+      border-radius:22px;
+      text-align:left;
+    }
+
+    .stat small{
+      display:block;
+      margin-bottom:6px;
+      color:#64748b;
+      font-size:10px;
+      font-weight:900;
+      letter-spacing:.10em;
+      text-transform:uppercase;
+    }
+
+    .stat strong{
+      display:block;
+      font-size:16px;
+      line-height:1.35;
+    }
+
+    .io-strip{
+      max-width:930px;
+      margin:28px auto 0;
+      padding:18px;
+      display:grid;
+      grid-template-columns:repeat(5,minmax(0,1fr));
+      gap:9px;
+      border-radius:25px;
+      background:linear-gradient(135deg,rgba(14,165,233,.12),rgba(99,102,241,.075));
+      border:1px solid rgba(56,189,248,.22);
+    }
+
+    .io-step{
+      position:relative;
+      padding:13px 8px;
+      border-radius:16px;
+      background:rgba(255,255,255,.045);
+      border:1px solid rgba(255,255,255,.075);
+    }
+
+    .io-step strong{
+      display:block;
+      color:#dbeafe;
+      font-size:12px;
+      font-weight:900;
+    }
+
+    .io-step span{
+      display:block;
+      margin-top:4px;
+      color:#8091a7;
+      font-size:10px;
+    }
+
+    .section{padding:42px 0}
+    .section[id]{scroll-margin-top:84px}
+
+    .section-head{
+      display:grid;
+      grid-template-columns:minmax(0,1fr) minmax(280px,440px);
+      align-items:end;
+      gap:28px;
+      margin-bottom:21px;
+    }
+
+    .section-head h2{
+      margin:0;
+      font-size:clamp(31px,4.3vw,52px);
+      line-height:1.03;
+      letter-spacing:-.043em;
+      font-weight:900;
+    }
+
+    .section-head p{
+      margin:0;
+      color:var(--muted);
+      font-size:14px;
+      line-height:1.7;
+    }
+
+    .foundation{
+      display:grid;
+      grid-template-columns:1.05fr .95fr;
+      gap:16px;
+    }
+
+    .card{
+      padding:25px;
+      border-radius:var(--radius);
+    }
+
+    .card h3{
+      margin:0 0 11px;
+      font-size:21px;
+      font-weight:900;
+    }
+
+    .card p{
+      margin:0;
+      color:#cbd5e1;
+      font-size:15px;
+      line-height:1.76;
+    }
+
+    .check-list{
+      display:grid;
+      gap:10px;
+      margin-top:15px;
+    }
+
+    .check-item{
+      display:flex;
+      align-items:flex-start;
+      gap:10px;
+      padding:12px;
+      border-radius:15px;
+      color:#cbd5e1;
+      background:rgba(255,255,255,.043);
+      border:1px solid rgba(255,255,255,.07);
+      font-size:13px;
+      line-height:1.52;
+    }
+
+    .check-item i{color:#67e8f9;flex:0 0 auto;margin-top:1px}
+
+    .objectives{
+      display:grid;
+      grid-template-columns:repeat(2,minmax(0,1fr));
+      gap:14px;
+    }
+
+    .objective{
+      display:flex;
+      align-items:flex-start;
+      gap:13px;
+      padding:20px;
+      border-radius:22px;
+    }
+
+    .icon-box{
+      width:46px;
+      height:46px;
+      flex:0 0 auto;
+      display:grid;
+      place-items:center;
+      border-radius:15px;
+      color:#67e8f9;
+      background:rgba(56,189,248,.10);
+      border:1px solid rgba(125,211,252,.18);
+    }
+
+    .objective h3{
+      margin:0 0 6px;
+      font-size:17px;
+      font-weight:900;
+    }
+
+    .objective p{
+      margin:0;
+      color:#b7c4d4;
+      font-size:13px;
+      line-height:1.62;
+    }
+
+    .process-lab{
+      position:relative;
+      overflow:hidden;
+      padding:28px;
+      border-radius:31px;
+      background:
+        radial-gradient(circle at 90% 0%,rgba(34,211,238,.13),transparent 38%),
+        linear-gradient(135deg,rgba(14,165,233,.12),rgba(99,102,241,.07));
+      border:1px solid rgba(56,189,248,.22);
+    }
+
+    .process-lab-grid{
+      display:grid;
+      grid-template-columns:.92fr 1.08fr;
+      gap:23px;
+      align-items:center;
+    }
+
+    .process-lab h3{
+      margin:12px 0 11px;
+      font-size:clamp(27px,3.6vw,43px);
+      line-height:1.06;
+      letter-spacing:-.035em;
+      font-weight:900;
+    }
+
+    .process-lab p{
+      margin:0;
+      color:#cbd5e1;
+      font-size:14px;
+      line-height:1.72;
+    }
+
+    .process-output{
+      display:grid;
+      gap:9px;
+    }
+
+    .process-row{
+      display:grid;
+      grid-template-columns:43px minmax(0,1fr);
+      gap:11px;
+      align-items:center;
+      padding:12px;
+      border-radius:16px;
+      background:rgba(255,255,255,.05);
+      border:1px solid rgba(255,255,255,.08);
+    }
+
+    .process-row .mini-icon{
+      width:43px;
+      height:43px;
+      display:grid;
+      place-items:center;
+      border-radius:14px;
+      color:#a5f3fc;
+      background:rgba(34,211,238,.09);
+      border:1px solid rgba(34,211,238,.18);
+    }
+
+    .process-row strong{display:block;font-size:13px}
+    .process-row span{display:block;margin-top:3px;color:#8fa0b5;font-size:11px;line-height:1.42}
+
+    .tools-grid{
+      display:grid;
+      grid-template-columns:repeat(4,minmax(0,1fr));
+      gap:12px;
+    }
+
+    .tool{
+      min-height:155px;
+      padding:18px;
+      border-radius:22px;
+      text-align:center;
+    }
+
+    .tool .icon-box{margin:0 auto 12px}
+    .tool strong{display:block;margin-bottom:5px;font-size:15px}
+    .tool span{display:block;color:#94a3b8;font-size:12px;line-height:1.48}
+
+    .modules{display:grid;gap:14px}
+
+    .module{
+      display:grid;
+      grid-template-columns:76px minmax(0,1fr);
+      gap:17px;
+      align-items:start;
+      padding:22px;
+      border-radius:26px;
+      background:
+        linear-gradient(135deg,rgba(255,255,255,.073),rgba(255,255,255,.022)),
+        rgba(3,13,24,.80);
+      border:1px solid rgba(255,255,255,.09);
+      box-shadow:0 18px 55px rgba(0,0,0,.20);
+      transition:.2s ease;
+    }
+
+    .module:hover{
+      transform:translateY(-2px);
+      border-color:rgba(56,189,248,.24);
+    }
+
+    .module-number{
+      width:76px;
+      height:76px;
+      display:grid;
+      place-items:center;
+      border-radius:21px;
+      color:#bae6fd;
+      background:linear-gradient(145deg,rgba(14,165,233,.20),rgba(37,99,235,.14));
+      border:1px solid rgba(125,211,252,.23);
+      font-size:22px;
+      font-weight:900;
+    }
+
+    .module h3{
+      margin:0 0 8px;
+      font-size:21px;
+      line-height:1.25;
+      font-weight:900;
+    }
+
+    .module p{
+      margin:0;
+      color:#bdc9d8;
+      font-size:14px;
+      line-height:1.66;
+    }
+
+    .module-blocks{
+      display:grid;
+      grid-template-columns:1fr 1fr;
+      gap:10px;
+      margin-top:14px;
+    }
+
+    .module-block{
+      padding:12px;
+      border-radius:15px;
+      background:rgba(255,255,255,.04);
+      border:1px solid rgba(255,255,255,.065);
+    }
+
+    .module-block strong{
+      display:flex;
+      align-items:center;
+      gap:7px;
+      color:#dbeafe;
+      font-size:11px;
+      letter-spacing:.04em;
+      text-transform:uppercase;
+    }
+
+    .module-block ul{
+      margin:9px 0 0;
+      padding-left:17px;
+      color:#aebccd;
+      font-size:12px;
+      line-height:1.58;
+    }
+
+    .module-topics{
+      display:flex;
+      flex-wrap:wrap;
+      gap:7px;
+      margin-top:13px;
+    }
+
+    .topic{
+      padding:7px 10px;
+      border-radius:999px;
+      color:#cbd5e1;
+      background:rgba(255,255,255,.045);
+      border:1px solid rgba(255,255,255,.07);
+      font-size:11px;
+      font-weight:700;
+    }
+
+    .method-grid{
+      display:grid;
+      grid-template-columns:repeat(4,minmax(0,1fr));
+      gap:12px;
+    }
+
+    .method-card{
+      min-height:200px;
+      padding:21px;
+      border-radius:23px;
+    }
+
+    .method-index{
+      width:37px;
+      height:37px;
+      display:grid;
+      place-items:center;
+      border-radius:12px;
+      color:#a5f3fc;
+      background:rgba(34,211,238,.09);
+      border:1px solid rgba(34,211,238,.18);
+      font-size:12px;
+      font-weight:900;
+    }
+
+    .method-card h3{margin:14px 0 8px;font-size:17px}
+    .method-card p{margin:0;color:#aebccd;font-size:12.5px;line-height:1.62}
+
+    .cases-grid{
+      display:grid;
+      grid-template-columns:repeat(3,minmax(0,1fr));
+      gap:13px;
+    }
+
+    .case-card{
+      padding:20px;
+      border-radius:22px;
+    }
+
+    .case-card .icon-box{margin-bottom:13px}
+    .case-card h3{margin:0 0 7px;font-size:17px}
+    .case-card p{margin:0;color:#aebccd;font-size:12.5px;line-height:1.6}
+
+    .project{
+      padding:30px;
+      border-radius:31px;
+      background:
+        radial-gradient(circle at 92% 0%,rgba(129,140,248,.17),transparent 38%),
+        linear-gradient(135deg,rgba(14,165,233,.14),rgba(37,99,235,.08));
+      border:1px solid rgba(56,189,248,.22);
+    }
+
+    .project-grid{
+      display:grid;
+      grid-template-columns:.88fr 1.12fr;
+      gap:24px;
+      align-items:start;
+    }
+
+    .project h3{
+      margin:12px 0 10px;
+      font-size:clamp(29px,4vw,46px);
+      line-height:1.05;
+      letter-spacing:-.04em;
+    }
+
+    .project p{margin:0;color:#cbd5e1;font-size:14px;line-height:1.72}
+
+    .deliverables{
+      display:grid;
+      grid-template-columns:1fr 1fr;
+      gap:9px;
+    }
+
+    .deliverable{
+      display:flex;
+      align-items:flex-start;
+      gap:9px;
+      padding:12px;
+      border-radius:15px;
+      color:#cbd5e1;
+      background:rgba(255,255,255,.045);
+      border:1px solid rgba(255,255,255,.075);
+      font-size:12px;
+      line-height:1.5;
+    }
+
+    .deliverable i{flex:0 0 auto;color:#67e8f9;margin-top:1px}
+
+    .investment-wrap{
+      display:grid;
+      grid-template-columns:.82fr 1.18fr;
+      gap:16px;
+      align-items:stretch;
+    }
+
+    .investment-info{
+      padding:27px;
+      border-radius:29px;
+    }
+
+    .investment-info h3{
+      margin:13px 0 10px;
+      font-size:clamp(28px,3.8vw,44px);
+      line-height:1.05;
+      letter-spacing:-.04em;
+    }
+
+    .investment-info p{
+      margin:0;
+      color:#cbd5e1;
+      font-size:14px;
+      line-height:1.72;
+    }
+
+    .investment-summary{
+      display:grid;
+      gap:10px;
+      margin-top:18px;
+    }
+
+    .investment-line{
+      display:flex;
+      justify-content:space-between;
+      gap:12px;
+      padding:12px 0;
+      border-bottom:1px solid rgba(255,255,255,.075);
+      color:#cbd5e1;
+      font-size:13px;
+    }
+
+    .investment-line strong{color:#fff}
+
+    .price-card{
+      position:relative;
+      overflow:hidden;
+      padding:29px;
+      border-radius:29px;
+      background:
+        radial-gradient(circle at 100% 0%,rgba(34,197,94,.17),transparent 42%),
+        linear-gradient(145deg,rgba(5,150,105,.13),rgba(3,13,24,.92));
+      border:1px solid rgba(74,222,128,.24);
+      box-shadow:0 25px 70px rgba(0,0,0,.28);
+    }
+
+    .discount-badge{
+      position:absolute;
+      top:20px;
+      right:20px;
+      min-width:92px;
+      padding:10px 12px;
+      border-radius:17px;
+      color:#dcfce7;
+      background:rgba(34,197,94,.15);
+      border:1px solid rgba(74,222,128,.30);
+      text-align:center;
+      font-weight:900;
+    }
+
+    .discount-badge strong{display:block;font-size:22px;line-height:1}
+    .discount-badge span{display:block;margin-top:3px;font-size:9px;letter-spacing:.09em;text-transform:uppercase}
+
+    .price-kicker{
+      color:#86efac;
+      font-size:11px;
+      font-weight:900;
+      letter-spacing:.11em;
+      text-transform:uppercase;
+    }
+
+    .regular-price{
+      margin-top:22px;
+      color:#94a3b8;
+      font-size:15px;
+    }
+
+    .regular-price strong{
+      display:block;
+      margin-top:3px;
+      color:#cbd5e1;
+      font-size:30px;
+      text-decoration:line-through;
+      text-decoration-thickness:2px;
+    }
+
+    .cash-price{
+      margin-top:15px;
+      font-size:clamp(48px,7vw,76px);
+      line-height:.95;
+      letter-spacing:-.055em;
+      font-weight:900;
+    }
+
+    .cash-price small{
+      display:block;
+      margin-top:10px;
+      color:#bbf7d0;
+      font-size:14px;
+      line-height:1.4;
+      letter-spacing:0;
+      font-weight:700;
+    }
+
+    .saving{
+      margin-top:17px;
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      padding:9px 12px;
+      border-radius:999px;
+      color:#dcfce7;
+      background:rgba(34,197,94,.11);
+      border:1px solid rgba(74,222,128,.23);
+      font-size:12px;
+      font-weight:900;
+    }
+
+    .payment-notes{
+      display:grid;
+      gap:9px;
+      margin-top:20px;
+    }
+
+    .payment-note{
+      display:flex;
+      align-items:flex-start;
+      gap:9px;
+      color:#cbd5e1;
+      font-size:12px;
+      line-height:1.5;
+    }
+
+    .payment-note i{flex:0 0 auto;color:#86efac;margin-top:1px}
+
+    .closing{
+      margin-top:37px;
+      padding:32px;
+      border-radius:32px;
+      text-align:center;
+      background:
+        radial-gradient(circle at 84% 0%,rgba(34,211,238,.15),transparent 42%),
+        linear-gradient(135deg,rgba(14,165,233,.17),rgba(37,99,235,.09));
+      border:1px solid rgba(56,189,248,.24);
+    }
+
+    .closing h2{
+      max-width:850px;
+      margin:0 auto 12px;
+      font-size:clamp(32px,5vw,58px);
+      line-height:1.02;
+      letter-spacing:-.05em;
+      font-weight:900;
+    }
+
+    .closing p{
+      max-width:760px;
+      margin:0 auto 22px;
+      color:#cbd5e1;
+      font-size:16px;
+      line-height:1.65;
+    }
+
+    footer{
+      padding:34px 0 48px;
+      text-align:center;
+      color:#64748b;
+      font-size:12px;
+      line-height:1.7;
+    }
+
+    footer strong{color:#94a3b8}
+
+    .reveal{
+      opacity:0;
+      transform:translateY(18px);
+      transition:opacity .55s ease,transform .55s ease;
+    }
+
+    .reveal.visible{opacity:1;transform:none}
+
+    @media(max-width:920px){
+      .section-head{grid-template-columns:1fr;gap:10px}
+      .foundation,.process-lab-grid,.project-grid,.investment-wrap{grid-template-columns:1fr}
+      .hero-stats{grid-template-columns:repeat(2,minmax(0,1fr))}
+      .tools-grid,.method-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+      .cases-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+    }
+
+    @media(max-width:650px){
+      .container{padding:0 13px}
+      .topbar-inner{min-height:66px}
+      .brand-logo{width:42px;height:42px}
+      .brand-copy span{max-width:145px}
+      .top-actions .pill-link:first-child{display:none}
+      .hero{padding:48px 0 31px}
+      .hero-logos{flex-direction:column}
+      .hero-logo{width:96px;height:96px}
+      h1{font-size:clamp(38px,11.7vw,57px)}
+      .hero-stats{grid-template-columns:1fr}
+      .io-strip{grid-template-columns:1fr}
+      .objectives{grid-template-columns:1fr}
+      .tools-grid,.method-grid,.cases-grid{grid-template-columns:1fr}
+      .module{grid-template-columns:57px minmax(0,1fr);padding:16px;gap:12px}
+      .module-number{width:57px;height:57px;border-radius:17px;font-size:17px}
+      .module h3{font-size:17px}
+      .module p{font-size:13px}
+      .module-blocks,.deliverables{grid-template-columns:1fr}
+      .process-lab,.project,.price-card,.investment-info{padding:21px}
+      .discount-badge{position:static;display:inline-block;margin-bottom:16px}
+    }
+
+    @media(prefers-reduced-motion:reduce){
+      *,*::before,*::after{transition:none!important;animation:none!important;scroll-behavior:auto!important}
+      .reveal{opacity:1;transform:none}
+    }
+  </style>
+</head>
+
+<body>
+  <header class="topbar">
+    <div class="container topbar-inner">
+      <a class="brand" href="https://www.iec-ia.com.ar/cursos.html" data-nav="logo_iecc">
+        <img class="brand-logo" src="https://i.postimg.cc/jSkQKpRK/Diseno-sin-titulo-2026-05-15T105828-195.png" alt="Instituto IEC">
+        <span class="brand-copy">
+          <strong>Instituto IEC</strong>
+          <span>Centro de Perfeccionamiento en IA</span>
+        </span>
+      </a>
+
+      <div class="top-actions">
+        <a class="pill-link" href="#inversion" data-nav="ver_inversion">
+          <i data-lucide="badge-dollar-sign" width="17"></i>
+          Inversión
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero">
+      <div class="container">
+        <div class="hero-logos">
+          <div class="hero-logo">
+            <img src="https://i.postimg.cc/jSkQKpRK/Diseno-sin-titulo-2026-05-15T105828-195.png" alt="Instituto IEC">
+          </div>
+          <div class="partner-badge">
+            <i data-lucide="handshake" width="18"></i>
+            Comisión exclusiva Unimédica
+          </div>
+        </div>
+
+        <span class="eyebrow">
+          <i data-lucide="workflow" width="16"></i>
+          Nivel II · 8 clases aplicadas
+        </span>
+
+        <h1>Experto en Aplicaciones Prácticas con <span class="gradient">Inteligencia Artificial</span></h1>
+
+        <p class="hero-copy">
+          Una segunda etapa diseñada para pasar del uso de herramientas a la construcción de <strong>procesos administrativos inteligentes</strong>, integrando IA, Google Apps Script, automatización e Inteligencia Operativa en situaciones reales de Unimédica.
+        </p>
+
+        <div class="hero-actions">
+          <a class="btn btn-primary" href="#programa" data-action="ver_programa">
+            <i data-lucide="book-open-check" width="19"></i>
+            Ver las 8 clases
+          </a>
+          <a class="btn btn-green" href="#inversion" data-action="ver_inversion_hero">
+            <i data-lucide="badge-dollar-sign" width="19"></i>
+            Ver inversión
+          </a>
+        </div>
+
+        <div class="hero-stats">
+          <article class="stat glass">
+            <small>Duración</small>
+            <strong>8 clases · 2 meses</strong>
+          </article>
+          <article class="stat glass">
+            <small>Modalidad</small>
+            <strong>Comisión exclusiva</strong>
+          </article>
+          <article class="stat glass">
+            <small>Orientación</small>
+            <strong>Procesos de Unimédica</strong>
+          </article>
+          <article class="stat glass">
+            <small>Resultado</small>
+            <strong>Proyecto funcional aplicado</strong>
+          </article>
+        </div>
+
+        <div class="io-strip" aria-label="Etapas de Inteligencia Operativa">
+          <div class="io-step"><strong>Capturar</strong><span>Datos y solicitudes</span></div>
+          <div class="io-step"><strong>Interpretar</strong><span>Contexto mediante IA</span></div>
+          <div class="io-step"><strong>Decidir</strong><span>Reglas operativas</span></div>
+          <div class="io-step"><strong>Ejecutar</strong><span>Acciones automáticas</span></div>
+          <div class="io-step"><strong>Medir</strong><span>Resultados y mejora</span></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section reveal" id="fundamentacion">
+      <div class="container">
+        <div class="section-head">
+          <h2>De utilizar IA a construir <span class="gradient">Inteligencia Operativa</span></h2>
+          <p>El Nivel II retoma la introducción a Google Apps Script trabajada en el primer nivel y la convierte en una capacidad para diseñar, automatizar y medir procesos completos.</p>
+        </div>
+
+        <div class="foundation">
+          <article class="card glass">
+            <h3>Fundamentación</h3>
+            <p>
+              En el Nivel I, los participantes incorporaron herramientas de Inteligencia Artificial y realizaron una primera aproximación a Google Apps Script aplicado a tareas administrativas. Esta segunda etapa profundiza ese aprendizaje para dejar de pensar en acciones aisladas y comenzar a intervenir procesos completos: desde la recepción de una solicitud hasta su clasificación, validación, documentación, comunicación, seguimiento y medición.
+            </p>
+            <p style="margin-top:13px">
+              La propuesta utiliza la IA no solamente para generar contenido o código, sino también para relevar procesos, detectar cuellos de botella, proponer mejoras y colaborar en el desarrollo de soluciones operativas concretas para Unimédica.
+            </p>
+          </article>
+
+          <article class="card glass">
+            <h3>El cambio de nivel</h3>
+            <div class="check-list">
+              <div class="check-item"><i data-lucide="arrow-right-circle" width="18"></i><span>De automatizar una tarea a diseñar un circuito administrativo completo.</span></div>
+              <div class="check-item"><i data-lucide="arrow-right-circle" width="18"></i><span>De pedirle respuestas a una IA a integrarla dentro de un proceso real.</span></div>
+              <div class="check-item"><i data-lucide="arrow-right-circle" width="18"></i><span>De escribir scripts aislados a construir módulos reutilizables y controlados.</span></div>
+              <div class="check-item"><i data-lucide="arrow-right-circle" width="18"></i><span>De observar datos a generar indicadores, alertas y decisiones operativas.</span></div>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section reveal" id="objetivos">
+      <div class="container">
+        <div class="section-head">
+          <h2>Objetivos del Nivel II</h2>
+          <p>El recorrido está diseñado para que cada participante pueda analizar una necesidad de su sector y convertirla progresivamente en una solución funcional.</p>
+        </div>
+
+        <div class="objectives">
+          <article class="objective glass">
+            <div class="icon-box"><i data-lucide="scan-search" width="22"></i></div>
+            <div><h3>Mapear procesos con IA</h3><p>Describir, ordenar y visualizar actores, tareas, decisiones, documentos y puntos críticos.</p></div>
+          </article>
+          <article class="objective glass">
+            <div class="icon-box"><i data-lucide="git-branch" width="22"></i></div>
+            <div><h3>Diseñar arquitecturas operativas</h3><p>Definir entradas, reglas, validaciones, acciones, salidas, responsables e indicadores.</p></div>
+          </article>
+          <article class="objective glass">
+            <div class="icon-box"><i data-lucide="braces" width="22"></i></div>
+            <div><h3>Profundizar Apps Script</h3><p>Crear automatizaciones reutilizables y conectadas con los servicios de Google Workspace.</p></div>
+          </article>
+          <article class="objective glass">
+            <div class="icon-box"><i data-lucide="brain-circuit" width="22"></i></div>
+            <div><h3>Integrar IA a los flujos</h3><p>Clasificar, interpretar, resumir y estructurar información dentro de una automatización.</p></div>
+          </article>
+          <article class="objective glass">
+            <div class="icon-box"><i data-lucide="file-cog" width="22"></i></div>
+            <div><h3>Automatizar documentos</h3><p>Generar archivos, informes, comunicaciones y respaldos a partir de datos reales.</p></div>
+          </article>
+          <article class="objective glass">
+            <div class="icon-box"><i data-lucide="gauge" width="22"></i></div>
+            <div><h3>Medir el funcionamiento</h3><p>Construir indicadores para conocer tiempos, estados, desvíos y resultados del proceso.</p></div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section reveal" id="analizador">
+      <div class="container">
+        <div class="process-lab">
+          <div class="process-lab-grid">
+            <div>
+              <span class="eyebrow"><i data-lucide="wand-sparkles" width="15"></i> Proyecto transversal</span>
+              <h3>Analizador de Procesos con IA</h3>
+              <p>
+                Cada participante describirá un proceso real de su sector. La IA será utilizada para convertir esa descripción en una estructura operativa, detectar oportunidades de mejora y proponer una arquitectura de automatización. Luego, durante el curso, se construirá una parte funcional de esa solución con Apps Script y otras herramientas.
+              </p>
+            </div>
+
+            <div class="process-output">
+              <div class="process-row"><div class="mini-icon"><i data-lucide="users" width="20"></i></div><div><strong>Actores y responsabilidades</strong><span>Quién inicia, interviene, valida, aprueba y recibe el resultado.</span></div></div>
+              <div class="process-row"><div class="mini-icon"><i data-lucide="route" width="20"></i></div><div><strong>Mapa del proceso actual</strong><span>Secuencia de actividades, decisiones, documentos y excepciones.</span></div></div>
+              <div class="process-row"><div class="mini-icon"><i data-lucide="triangle-alert" width="20"></i></div><div><strong>Cuellos de botella</strong><span>Demoras, duplicaciones, reprocesos y controles manuales evitables.</span></div></div>
+              <div class="process-row"><div class="mini-icon"><i data-lucide="bot" width="20"></i></div><div><strong>Propuesta de automatización</strong><span>Acciones posibles con IA, Apps Script, webhooks y orquestación.</span></div></div>
+              <div class="process-row"><div class="mini-icon"><i data-lucide="chart-no-axes-combined" width="20"></i></div><div><strong>Indicadores de mejora</strong><span>Qué medir para demostrar ahorro de tiempo, calidad y trazabilidad.</span></div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section reveal" id="herramientas">
+      <div class="container">
+        <div class="section-head">
+          <h2>Herramientas integradas</h2>
+          <p>Las plataformas aparecen como medios para resolver necesidades operativas concretas. No se enseñan de manera aislada, sino conectadas dentro de un mismo flujo.</p>
+        </div>
+
+        <div class="tools-grid">
+          <article class="tool glass"><div class="icon-box"><i data-lucide="braces" width="23"></i></div><strong>Google Apps Script</strong><span>Automatización avanzada de Workspace, triggers y módulos reutilizables.</span></article>
+          <article class="tool glass"><div class="icon-box"><i data-lucide="sparkles" width="23"></i></div><strong>Gemini / AI Studio</strong><span>Interpretación, clasificación, resumen y generación estructurada.</span></article>
+          <article class="tool glass"><div class="icon-box"><i data-lucide="table-2" width="23"></i></div><strong>Google Sheets</strong><span>Datos operativos, estados, validaciones, registros e indicadores.</span></article>
+          <article class="tool glass"><div class="icon-box"><i data-lucide="file-text" width="23"></i></div><strong>Docs y Drive</strong><span>Plantillas, documentos automáticos, archivos y trazabilidad.</span></article>
+          <article class="tool glass"><div class="icon-box"><i data-lucide="mail-cog" width="23"></i></div><strong>Gmail</strong><span>Notificaciones, respuestas, clasificación y seguimiento automático.</span></article>
+          <article class="tool glass"><div class="icon-box"><i data-lucide="notebook-tabs" width="23"></i></div><strong>Forms y Calendar</strong><span>Captura de solicitudes, agenda, eventos y disparadores de procesos.</span></article>
+          <article class="tool glass"><div class="icon-box"><i data-lucide="webhook" width="23"></i></div><strong>APIs y Webhooks</strong><span>Conexión de sistemas mediante solicitudes, JSON y respuestas estructuradas.</span></article>
+          <article class="tool glass"><div class="icon-box"><i data-lucide="workflow" width="23"></i></div><strong>n8n + Looker</strong><span>Introducción a orquestación, integración y visualización operativa.</span></article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section reveal" id="programa">
+      <div class="container">
+        <div class="section-head">
+          <h2>Diseño curricular · 8 clases</h2>
+          <p>Cada encuentro incorpora una capacidad nueva sobre el mismo proyecto real, de modo que el aprendizaje avance desde el relevamiento hasta una solución integrada y medible.</p>
+        </div>
+
+        <div class="modules">
+          <article class="module">
+            <div class="module-number">01</div>
+            <div>
+              <h3>Ingeniería de Procesos con Inteligencia Artificial</h3>
+              <p>Introducción al pensamiento por procesos y a la Inteligencia Operativa. Se utiliza IA para transformar una descripción cotidiana del trabajo en un mapa estructurado del proceso actual.</p>
+              <div class="module-blocks">
+                <div class="module-block"><strong><i data-lucide="book-open" width="15"></i> Contenidos</strong><ul><li>IA vs. Inteligencia Operativa.</li><li>Actores, entradas, tareas, decisiones y salidas.</li><li>Entrevista y relevamiento de procesos.</li><li>Detección de demoras, reprocesos y duplicaciones.</li></ul></div>
+                <div class="module-block"><strong><i data-lucide="hammer" width="15"></i> Aplicación</strong><ul><li>Selección de un proceso real.</li><li>Creación del mapa AS-IS con IA.</li><li>Diagnóstico inicial de oportunidades.</li><li>Definición del desafío del proyecto.</li></ul></div>
+              </div>
+              <div class="module-topics"><span class="topic">Mapeo con IA</span><span class="topic">Procesos AS-IS</span><span class="topic">Cuellos de botella</span><span class="topic">Diagnóstico</span></div>
+            </div>
+          </article>
+
+          <article class="module">
+            <div class="module-number">02</div>
+            <div>
+              <h3>Arquitectura de Automatización e Inteligencia Operativa</h3>
+              <p>Conversión del mapa actual en una propuesta de proceso mejorado. Se define qué debe capturarse, interpretarse, decidirse, ejecutarse y medirse.</p>
+              <div class="module-blocks">
+                <div class="module-block"><strong><i data-lucide="book-open" width="15"></i> Contenidos</strong><ul><li>Proceso actual y proceso objetivo.</li><li>Reglas, validaciones y excepciones.</li><li>Intervención humana y automatización.</li><li>Arquitectura IEC de Inteligencia Operativa.</li></ul></div>
+                <div class="module-block"><strong><i data-lucide="hammer" width="15"></i> Aplicación</strong><ul><li>Diseño del flujo TO-BE.</li><li>Definición de datos y responsables.</li><li>Priorización de automatizaciones.</li><li>Plan técnico del prototipo.</li></ul></div>
+              </div>
+              <div class="module-topics"><span class="topic">Proceso TO-BE</span><span class="topic">Reglas de negocio</span><span class="topic">Arquitectura</span><span class="topic">Priorización</span></div>
+            </div>
+          </article>
+
+          <article class="module">
+            <div class="module-number">03</div>
+            <div>
+              <h3>Google Apps Script Nivel II aplicado a procesos</h3>
+              <p>Profundización del trabajo iniciado en el primer nivel. Se construyen scripts organizados, reutilizables y preparados para operar con datos administrativos reales.</p>
+              <div class="module-blocks">
+                <div class="module-block"><strong><i data-lucide="book-open" width="15"></i> Contenidos</strong><ul><li>Funciones reutilizables y estructura del proyecto.</li><li>Triggers automáticos y programados.</li><li>Properties Service, logs y manejo de errores.</li><li>Lectura, escritura y validación avanzada en Sheets.</li></ul></div>
+                <div class="module-block"><strong><i data-lucide="hammer" width="15"></i> Aplicación</strong><ul><li>Base operativa del proyecto.</li><li>Registro de estados y movimientos.</li><li>Validaciones automáticas.</li><li>Primer módulo funcional.</li></ul></div>
+              </div>
+              <div class="module-topics"><span class="topic">Apps Script</span><span class="topic">Triggers</span><span class="topic">Logs</span><span class="topic">Sheets avanzado</span></div>
+            </div>
+          </article>
+
+          <article class="module">
+            <div class="module-number">04</div>
+            <div>
+              <h3>Integración de Inteligencia Artificial mediante APIs</h3>
+              <p>Incorporación de modelos de IA dentro de Apps Script para interpretar información, clasificar solicitudes, extraer datos y devolver respuestas estructuradas.</p>
+              <div class="module-blocks">
+                <div class="module-block"><strong><i data-lucide="book-open" width="15"></i> Contenidos</strong><ul><li>Concepto de API, endpoint, token y método.</li><li>JSON y respuestas estructuradas.</li><li>Prompts de sistema y criterios operativos.</li><li>Integración con Gemini / Google AI Studio.</li></ul></div>
+                <div class="module-block"><strong><i data-lucide="hammer" width="15"></i> Aplicación</strong><ul><li>Clasificación automática de información.</li><li>Extracción de campos relevantes.</li><li>Resumen o análisis de casos.</li><li>Actualización automática del proceso.</li></ul></div>
+              </div>
+              <div class="module-topics"><span class="topic">APIs</span><span class="topic">Gemini</span><span class="topic">JSON</span><span class="topic">Salidas estructuradas</span></div>
+            </div>
+          </article>
+
+          <article class="module">
+            <div class="module-number">05</div>
+            <div>
+              <h3>Automatización Documental y Gestión de Archivos</h3>
+              <p>Diseño de circuitos capaces de crear, completar, ordenar y archivar documentación institucional a partir de datos registrados durante el proceso.</p>
+              <div class="module-blocks">
+                <div class="module-block"><strong><i data-lucide="book-open" width="15"></i> Contenidos</strong><ul><li>Plantillas dinámicas en Google Docs.</li><li>Generación y almacenamiento de PDF.</li><li>Creación de carpetas y nomenclaturas.</li><li>Metadatos, permisos y trazabilidad básica.</li></ul></div>
+                <div class="module-block"><strong><i data-lucide="hammer" width="15"></i> Aplicación</strong><ul><li>Documento automático del proyecto.</li><li>Archivo en la carpeta correspondiente.</li><li>Registro del enlace y estado.</li><li>Control de documentos faltantes.</li></ul></div>
+              </div>
+              <div class="module-topics"><span class="topic">Google Docs</span><span class="topic">PDF</span><span class="topic">Drive</span><span class="topic">Trazabilidad</span></div>
+            </div>
+          </article>
+
+          <article class="module">
+            <div class="module-number">06</div>
+            <div>
+              <h3>Comunicaciones y Seguimientos Inteligentes</h3>
+              <p>Automatización de avisos, respuestas, recordatorios y derivaciones para que la información correcta llegue a la persona indicada en el momento adecuado.</p>
+              <div class="module-blocks">
+                <div class="module-block"><strong><i data-lucide="book-open" width="15"></i> Contenidos</strong><ul><li>Envíos desde Gmail con contenido dinámico.</li><li>Recordatorios por estado y vencimiento.</li><li>Respuestas sugeridas o redactadas por IA.</li><li>Calendar como agenda y disparador.</li></ul></div>
+                <div class="module-block"><strong><i data-lucide="hammer" width="15"></i> Aplicación</strong><ul><li>Notificación automática del proceso.</li><li>Seguimiento de pendientes.</li><li>Derivación según clasificación.</li><li>Registro de comunicaciones realizadas.</li></ul></div>
+              </div>
+              <div class="module-topics"><span class="topic">Gmail</span><span class="topic">Calendar</span><span class="topic">Recordatorios</span><span class="topic">Derivaciones</span></div>
+            </div>
+          </article>
+
+          <article class="module">
+            <div class="module-number">07</div>
+            <div>
+              <h3>Orquestación, Webhooks e Indicadores Operativos</h3>
+              <p>Integración de las partes construidas y apertura hacia herramientas de automatización externas. Se incorporan métricas para observar el desempeño real del proceso.</p>
+              <div class="module-blocks">
+                <div class="module-block"><strong><i data-lucide="book-open" width="15"></i> Contenidos</strong><ul><li>Webhooks y comunicación entre sistemas.</li><li>Introducción a n8n como orquestador.</li><li>Indicadores de volumen, tiempo y estado.</li><li>Alertas, semáforos y visualización en Looker.</li></ul></div>
+                <div class="module-block"><strong><i data-lucide="hammer" width="15"></i> Aplicación</strong><ul><li>Integración del flujo completo.</li><li>Registro de métricas operativas.</li><li>Tablero básico de seguimiento.</li><li>Alertas sobre desvíos o pendientes.</li></ul></div>
+              </div>
+              <div class="module-topics"><span class="topic">Webhooks</span><span class="topic">n8n</span><span class="topic">KPIs</span><span class="topic">Looker Studio</span></div>
+            </div>
+          </article>
+
+          <article class="module">
+            <div class="module-number">08</div>
+            <div>
+              <h3>Proyecto Integrador de Inteligencia Operativa</h3>
+              <p>Consolidación, prueba y presentación de una solución aplicada a un proceso real de Unimédica, incluyendo el diagnóstico inicial, la arquitectura propuesta, el prototipo y sus indicadores.</p>
+              <div class="module-blocks">
+                <div class="module-block"><strong><i data-lucide="book-open" width="15"></i> Contenidos</strong><ul><li>Prueba funcional y corrección de errores.</li><li>Documentación del flujo y del código.</li><li>Evaluación de impacto esperado.</li><li>Escalabilidad y próximos pasos.</li></ul></div>
+                <div class="module-block"><strong><i data-lucide="presentation" width="15"></i> Presentación final</strong><ul><li>Proceso original y problemática.</li><li>Mapa y oportunidades detectadas.</li><li>Automatización implementada.</li><li>Indicadores, impacto y propuesta de evolución.</li></ul></div>
+              </div>
+              <div class="module-topics"><span class="topic">Proyecto real</span><span class="topic">Prototipo funcional</span><span class="topic">Impacto</span><span class="topic">Presentación</span></div>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section reveal" id="metodologia">
+      <div class="container">
+        <div class="section-head">
+          <h2>Metodología de trabajo</h2>
+          <p>El curso funciona como un laboratorio aplicado. Cada participante aprende sobre un proceso verdadero de su actividad y no sobre ejercicios descontextualizados.</p>
+        </div>
+
+        <div class="method-grid">
+          <article class="method-card glass"><div class="method-index">01</div><h3>Relevar</h3><p>Describir cómo se realiza actualmente el proceso, quiénes intervienen y qué información circula.</p></article>
+          <article class="method-card glass"><div class="method-index">02</div><h3>Analizar</h3><p>Utilizar IA para mapear, ordenar, detectar problemas y encontrar oportunidades de automatización.</p></article>
+          <article class="method-card glass"><div class="method-index">03</div><h3>Construir</h3><p>Desarrollar progresivamente módulos con Apps Script, IA y servicios de Google Workspace.</p></article>
+          <article class="method-card glass"><div class="method-index">04</div><h3>Medir</h3><p>Definir indicadores que permitan evaluar tiempo, calidad, trazabilidad y reducción de reprocesos.</p></article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section reveal" id="casos">
+      <div class="container">
+        <div class="section-head">
+          <h2>Procesos posibles de Unimédica</h2>
+          <p>Los proyectos se seleccionarán según las necesidades y posibilidades reales de cada participante o sector.</p>
+        </div>
+
+        <div class="cases-grid">
+          <article class="case-card glass"><div class="icon-box"><i data-lucide="inbox" width="22"></i></div><h3>Mesa de entradas</h3><p>Recepción, clasificación, asignación, seguimiento y respuesta de solicitudes.</p></article>
+          <article class="case-card glass"><div class="icon-box"><i data-lucide="file-check-2" width="22"></i></div><h3>Control documental</h3><p>Validación de requisitos, detección de faltantes y organización automática.</p></article>
+          <article class="case-card glass"><div class="icon-box"><i data-lucide="stethoscope" width="22"></i></div><h3>Prestaciones</h3><p>Registro, clasificación, control de estados y notificaciones a responsables.</p></article>
+          <article class="case-card glass"><div class="icon-box"><i data-lucide="search-check" width="22"></i></div><h3>Auditoría</h3><p>Preparación de información, resúmenes, comparaciones y alertas de inconsistencias.</p></article>
+          <article class="case-card glass"><div class="icon-box"><i data-lucide="files" width="22"></i></div><h3>Convenios</h3><p>Lectura asistida, extracción de condiciones, comparación y resumen ejecutivo.</p></article>
+          <article class="case-card glass"><div class="icon-box"><i data-lucide="chart-column-big" width="22"></i></div><h3>Informes administrativos</h3><p>Consolidación de datos, documentos periódicos e indicadores automáticos.</p></article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section reveal" id="proyecto">
+      <div class="container">
+        <div class="project">
+          <div class="project-grid">
+            <div>
+              <span class="eyebrow"><i data-lucide="rocket" width="15"></i> Resultado esperado</span>
+              <h3>Un prototipo funcional para un proceso real</h3>
+              <p>
+                El objetivo no es que todos construyan el mismo sistema, sino que cada participante pueda aplicar una metodología común para transformar una necesidad concreta de su sector en una solución de Inteligencia Operativa documentada, medible y preparada para evolucionar.
+              </p>
+            </div>
+            <div class="deliverables">
+              <div class="deliverable"><i data-lucide="check-circle-2" width="17"></i><span>Mapa del proceso actual y del proceso mejorado.</span></div>
+              <div class="deliverable"><i data-lucide="check-circle-2" width="17"></i><span>Diagnóstico de problemas y oportunidades.</span></div>
+              <div class="deliverable"><i data-lucide="check-circle-2" width="17"></i><span>Arquitectura de automatización definida.</span></div>
+              <div class="deliverable"><i data-lucide="check-circle-2" width="17"></i><span>Módulo funcional desarrollado en Apps Script.</span></div>
+              <div class="deliverable"><i data-lucide="check-circle-2" width="17"></i><span>Integración de IA para interpretar información.</span></div>
+              <div class="deliverable"><i data-lucide="check-circle-2" width="17"></i><span>Documentación o comunicación automática.</span></div>
+              <div class="deliverable"><i data-lucide="check-circle-2" width="17"></i><span>Indicadores para medir el funcionamiento.</span></div>
+              <div class="deliverable"><i data-lucide="check-circle-2" width="17"></i><span>Presentación de impacto y próximos pasos.</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section reveal" id="inversion">
+      <div class="container">
+        <div class="section-head">
+          <h2>Inversión del curso</h2>
+          <p>La formación completa comprende ocho clases distribuidas en dos meses, con acompañamiento práctico sobre los proyectos aplicados.</p>
+        </div>
+
+        <div class="investment-wrap">
+          <article class="investment-info glass">
+            <span class="eyebrow"><i data-lucide="wallet-cards" width="15"></i> Modalidad mensual</span>
+            <h3>$120.000 por mes</h3>
+            <p>Valor individual por participante, abonado en dos mensualidades durante el desarrollo del curso.</p>
+            <div class="investment-summary">
+              <div class="investment-line"><span>Duración total</span><strong>2 meses</strong></div>
+              <div class="investment-line"><span>Cantidad de clases</span><strong>8 encuentros</strong></div>
+              <div class="investment-line"><span>Valor mensual</span><strong>$120.000</strong></div>
+              <div class="investment-line"><span>Valor regular total</span><strong>$240.000</strong></div>
+            </div>
+          </article>
+
+          <article class="price-card">
+            <div class="discount-badge"><strong>16,7%</strong><span>de descuento</span></div>
+            <div class="price-kicker">Promoción por pago anticipado en efectivo</div>
+            <div class="regular-price">Valor regular del curso<strong>$240.000</strong></div>
+            <div class="cash-price">$200.000<small>Pago único en efectivo por el curso completo</small></div>
+            <div class="saving"><i data-lucide="piggy-bank" width="17"></i> Ahorro total de $40.000</div>
+            <div class="payment-notes">
+              <div class="payment-note"><i data-lucide="badge-check" width="17"></i><span>El beneficio equivale a un descuento exacto del 16,67%, presentado comercialmente como 16,7%.</span></div>
+              <div class="payment-note"><i data-lucide="calendar-days" width="17"></i><span>La promoción corresponde al pago completo anticipado y no se acumula con otros beneficios.</span></div>
+              <div class="payment-note"><i data-lucide="graduation-cap" width="17"></i><span>Incluye las ocho clases, materiales digitales y acompañamiento sobre el proyecto.</span></div>
+            </div>
+          </article>
+        </div>
+
+        <div class="closing">
+          <h2>El siguiente nivel no es usar más IA. Es hacer que los procesos funcionen mejor.</h2>
+          <p>Una propuesta exclusiva para que los participantes de Unimédica puedan transformar conocimientos previos en soluciones administrativas concretas, integradas y medibles.</p>
+          <a class="btn btn-green" href="#programa" data-action="volver_programa"><i data-lucide="book-open-check" width="19"></i> Revisar las 8 clases</a>
+        </div>
+      </div>
+    </section>
+  </main>
+  <footer>
+    <div class="container">
+      <strong>Instituto IEC · Instituto Privado en Economía del Conocimiento</strong><br>
+      Comisión exclusiva Unimédica · Paraná, Entre Ríos · Aprende hoy, lidera mañana.
+    </div>
+  </footer>
+
+  <script>
+    /* ============================================================
+       CONFIGURACIÓN GENERAL + GOOGLE ANALYTICS 4
+       ============================================================ */
+
+    const COURSE_NAME = "Experto en Aplicaciones Prácticas con IA Nivel II - Unimédica";
+    const PAGE_TYPE = "landing_curso_exclusivo";
+    const PAGE_PATH = window.location.pathname;
+    const PAGE_TITLE = document.title;
+    const SESSION_START = Date.now();
+
+    function sendGA4Event(eventName, parameters = {}) {
+      if (typeof window.gtag !== "function") return;
+
+      window.gtag("event", eventName, {
+        curso: COURSE_NAME,
+        organizacion: "Unimédica",
+        nivel: "Nivel II",
+        tipo_pagina: PAGE_TYPE,
+        pagina: PAGE_PATH,
+        titulo_pagina: PAGE_TITLE,
+        ...parameters
+      });
+    }
+
+    function cleanText(value) {
+      return String(value || "").replace(/\s+/g, " ").trim().slice(0, 120);
+    }
+
+    function normalizeText(value) {
+      return String(value || "").replace(/\s+/g, " ").trim();
+    }
+
+    function normalizePhone(value) {
+      return String(value || "")
+        .replace(/[^\d+]/g, "")
+        .replace(/(?!^)\+/g, "")
+        .slice(0, 18);
+    }
+
+    /* ============================================================
+       ICONOS + ANIMACIONES
+       ============================================================ */
+
+    if (window.lucide) window.lucide.createIcons();
+
+    const revealObserver = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add("visible");
+          revealObserver.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.10 });
+
+    document.querySelectorAll(".reveal").forEach((element) => revealObserver.observe(element));
+
+    /* ============================================================
+       CLICS Y NAVEGACIÓN
+       ============================================================ */
+
+    document.querySelectorAll("[data-nav]").forEach((link) => {
+      link.addEventListener("click", () => {
+        sendGA4Event("click_navegacion", {
+          elemento: link.dataset.nav,
+          destino: link.getAttribute("href") || ""
+        });
+      });
+    });
+
+    document.querySelectorAll("[data-action]").forEach((element) => {
+      element.addEventListener("click", () => {
+        sendGA4Event("click_cta_curso", {
+          accion: element.dataset.action,
+          texto_boton: cleanText(element.textContent)
+        });
+      });
+    });
+
+    /* ============================================================
+       PROFUNDIDAD DE SCROLL
+       ============================================================ */
+
+    const scrollMilestones = [25, 50, 75, 90, 100];
+    const reachedScrollMilestones = new Set();
+
+    function measureScrollDepth() {
+      const documentHeight = Math.max(document.body.scrollHeight, document.documentElement.scrollHeight);
+      const available = Math.max(documentHeight - window.innerHeight, 1);
+      const percentage = Math.min(100, Math.round((window.scrollY / available) * 100));
+
+      scrollMilestones.forEach((milestone) => {
+        if (percentage >= milestone && !reachedScrollMilestones.has(milestone)) {
+          reachedScrollMilestones.add(milestone);
+          sendGA4Event("scroll_profundidad", { porcentaje: milestone });
+        }
+      });
+    }
+
+    window.addEventListener("scroll", measureScrollDepth, { passive: true });
+    window.addEventListener("resize", measureScrollDepth);
+    measureScrollDepth();
+
+    /* ============================================================
+       TIEMPO DE INTERACCIÓN
+       ============================================================ */
+
+    [15, 30, 60, 120, 180, 300].forEach((seconds) => {
+      window.setTimeout(() => {
+        if (document.visibilityState === "visible") {
+          sendGA4Event("tiempo_interaccion", { segundos: seconds });
+        }
+      }, seconds * 1000);
+    });
+
+    /* ============================================================
+       VISUALIZACIÓN DE SECCIONES, MÓDULOS, HERRAMIENTAS Y CASOS
+       ============================================================ */
+
+    function observeUnique(selector, eventName, extractor, threshold = 0.45) {
+      const viewed = new Set();
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach((entry) => {
+          if (!entry.isIntersecting || entry.intersectionRatio < threshold) return;
+          const data = extractor(entry.target);
+          const key = JSON.stringify(data);
+          if (viewed.has(key)) return;
+          viewed.add(key);
+          sendGA4Event(eventName, data);
+          observer.unobserve(entry.target);
+        });
+      }, { threshold: [threshold] });
+
+      document.querySelectorAll(selector).forEach((element) => observer.observe(element));
+    }
+
+    observeUnique("main .section", "ver_seccion", (section) => ({
+      seccion: cleanText(section.querySelector("h2")?.textContent || section.id || "Sin título")
+    }), 0.25);
+
+    observeUnique(".module", "ver_modulo", (module) => ({
+      numero_modulo: cleanText(module.querySelector(".module-number")?.textContent),
+      nombre_modulo: cleanText(module.querySelector("h3")?.textContent)
+    }), 0.50);
+
+    observeUnique(".tool", "ver_herramienta", (tool) => ({
+      herramienta: cleanText(tool.querySelector("strong")?.textContent)
+    }), 0.60);
+
+    observeUnique(".case-card", "ver_caso_aplicacion", (card) => ({
+      caso: cleanText(card.querySelector("h3")?.textContent)
+    }), 0.55);
+
+    const priceCard = document.querySelector(".price-card");
+    if (priceCard) {
+      const priceObserver = new IntersectionObserver((entries) => {
+        entries.forEach((entry) => {
+          if (!entry.isIntersecting) return;
+          sendGA4Event("ver_promocion_pago", {
+            valor_regular: 240000,
+            valor_promocional: 200000,
+            ahorro: 40000,
+            porcentaje_descuento: 16.67
+          });
+          priceObserver.disconnect();
+        });
+      }, { threshold: 0.55 });
+      priceObserver.observe(priceCard);
+    }
+
+    /* ============================================================
+       SALIDA DE PÁGINA
+       ============================================================ */
+
+    let exitEventSent = false;
+
+    function reportExit() {
+      if (exitEventSent) return;
+      exitEventSent = true;
+      sendGA4Event("salida_pagina", {
+        segundos_sesion: Math.round((Date.now() - SESSION_START) / 1000),
+        profundidad_maxima: Math.max(0, ...reachedScrollMilestones)
+      });
+    }
+
+    window.addEventListener("pagehide", reportExit);
+  </script>
+</body>
+</html>
