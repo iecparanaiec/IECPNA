@@ -1,0 +1,1129 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-R817QWH97R"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-R817QWH97R');
+  </script>
+
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#070b14" />
+  <meta name="description" content="Propuesta de implementación in situ de Inteligencia Operativa y ERP inteligente para Unimédica mediante la metodología Smarteo del Instituto IEC." />
+  <title>Unimédica + Instituto IEC | Implementación Smarteo e Inteligencia Operativa</title>
+
+  <script src="https://cdn.tailwindcss.com/3.4.17"></script>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
+  <script src="https://cdn.jsdelivr.net/npm/lucide@0.468.0/dist/umd/lucide.min.js"></script>
+
+  <style>
+    :root{
+      --cyan:#22d3ee;
+      --blue:#3b82f6;
+      --violet:#8b5cf6;
+      --green:#22c55e;
+      --amber:#f59e0b;
+      --rose:#f43f5e;
+      --bg:#070b14;
+    }
+
+    *{box-sizing:border-box;font-family:'DM Sans',sans-serif}
+    html,body{margin:0;padding:0;background:var(--bg)}
+    body{color:#fff;overflow:hidden}
+    button,a{-webkit-tap-highlight-color:transparent}
+    button{font:inherit}
+
+    .slide{
+      display:none;
+      width:100%;
+      height:100vh;
+      min-height:100vh;
+      overflow-y:auto;
+      overflow-x:hidden;
+      padding:2rem 1.5rem 5.5rem;
+      scroll-behavior:smooth;
+    }
+    .slide.active{display:flex}
+
+    .glass-card{
+      background:rgba(255,255,255,.07);
+      backdrop-filter:blur(14px);
+      -webkit-backdrop-filter:blur(14px);
+      border:1px solid rgba(255,255,255,.11);
+      box-shadow:0 24px 70px rgba(0,0,0,.24);
+    }
+
+    .gradient-text{
+      background:linear-gradient(135deg,#67e8f9,#60a5fa,#a78bfa);
+      -webkit-background-clip:text;
+      -webkit-text-fill-color:transparent;
+      background-clip:text;
+    }
+
+    .green-text{
+      background:linear-gradient(135deg,#86efac,#22c55e);
+      -webkit-background-clip:text;
+      -webkit-text-fill-color:transparent;
+      background-clip:text;
+    }
+
+    .amber-text{
+      background:linear-gradient(135deg,#fde68a,#f59e0b,#fb923c);
+      -webkit-background-clip:text;
+      -webkit-text-fill-color:transparent;
+      background-clip:text;
+    }
+
+    .rose-text{
+      background:linear-gradient(135deg,#fda4af,#fb7185,#f43f5e);
+      -webkit-background-clip:text;
+      -webkit-text-fill-color:transparent;
+      background-clip:text;
+    }
+
+    .bg-pattern{
+      background-image:
+        radial-gradient(circle at 18% 20%,rgba(34,211,238,.12),transparent 25%),
+        radial-gradient(circle at 82% 75%,rgba(139,92,246,.13),transparent 30%),
+        linear-gradient(90deg,rgba(59,130,246,.055) 1px,transparent 1px),
+        linear-gradient(rgba(59,130,246,.055) 1px,transparent 1px);
+      background-size:auto,auto,52px 52px,52px 52px;
+    }
+
+    .bg-pattern::after{
+      content:"";
+      position:absolute;
+      inset:0;
+      background:linear-gradient(135deg,transparent 0 45%,rgba(34,211,238,.06) 46%,transparent 48% 100%);
+      background-size:360px 360px;
+      pointer-events:none;
+    }
+
+    .orb{
+      position:absolute;
+      border-radius:999px;
+      filter:blur(80px);
+      opacity:.2;
+    }
+
+    .pill{
+      background:rgba(255,255,255,.055);
+      border:1px solid rgba(255,255,255,.09);
+    }
+
+    .impact-card{transition:transform .25s ease,border-color .25s ease}
+    .impact-card:hover{transform:translateY(-4px);border-color:rgba(103,232,249,.35)}
+
+    .nav-button{
+      position:fixed;
+      top:50%;
+      z-index:70;
+      transform:translateY(-50%);
+      width:46px;height:46px;border-radius:999px;
+      display:flex;align-items:center;justify-content:center;
+      background:rgba(255,255,255,.08);
+      border:1px solid rgba(255,255,255,.14);
+      backdrop-filter:blur(14px);
+      color:#fff;transition:.2s ease;
+    }
+    .nav-button:hover{background:rgba(59,130,246,.25);border-color:rgba(96,165,250,.55)}
+
+    .dot{
+      width:8px;height:8px;border-radius:999px;
+      background:rgba(255,255,255,.25);
+      transition:.25s ease;border:0;padding:0;
+    }
+    .dot.active{width:24px;background:linear-gradient(90deg,var(--cyan),var(--blue))}
+
+    .top-actions{
+      position:fixed;top:14px;left:14px;z-index:80;
+      display:flex;gap:8px;flex-wrap:wrap;
+    }
+
+    .action-button{
+      display:inline-flex;align-items:center;justify-content:center;gap:8px;
+      border-radius:999px;padding:10px 14px;
+      background:rgba(5,10,20,.72);
+      border:1px solid rgba(255,255,255,.14);
+      color:#fff;backdrop-filter:blur(14px);
+      font-size:12px;font-weight:800;letter-spacing:.03em;
+      transition:.2s ease;cursor:pointer;
+    }
+    .action-button:hover{background:rgba(37,99,235,.28);border-color:rgba(96,165,250,.55)}
+    .action-button.primary{
+      background:linear-gradient(135deg,rgba(14,165,233,.92),rgba(37,99,235,.92));
+      border-color:rgba(125,211,252,.55)
+    }
+
+    .number-badge{
+      background:linear-gradient(135deg,rgba(34,211,238,.26),rgba(59,130,246,.22));
+      border:1px solid rgba(103,232,249,.32);
+    }
+
+    .timeline-line{
+      height:2px;
+      background:linear-gradient(90deg,rgba(34,211,238,.15),rgba(96,165,250,.8),rgba(139,92,246,.15));
+    }
+
+    .role-badge{
+      display:inline-flex;align-items:center;gap:8px;
+      padding:8px 12px;border-radius:999px;
+      font-weight:900;font-size:12px;letter-spacing:.05em;
+      background:rgba(59,130,246,.12);color:#bfdbfe;
+      border:1px solid rgba(96,165,250,.28);
+    }
+
+    .result-card{
+      background:
+        radial-gradient(circle at 85% 15%,rgba(34,197,94,.16),transparent 28%),
+        linear-gradient(135deg,rgba(255,255,255,.08),rgba(255,255,255,.04));
+      border:1px solid rgba(74,222,128,.28);
+      box-shadow:0 24px 80px rgba(34,197,94,.08);
+    }
+
+    .warning-card{
+      background:
+        radial-gradient(circle at 85% 15%,rgba(245,158,11,.12),transparent 28%),
+        linear-gradient(135deg,rgba(255,255,255,.07),rgba(255,255,255,.035));
+      border:1px solid rgba(251,191,36,.25);
+    }
+
+
+    @media(max-width:768px){
+      .slide{padding:5.3rem .85rem 5.5rem}
+      .nav-button{width:40px;height:40px}
+      .top-actions{top:10px;left:10px;right:10px}
+      .action-button{padding:9px 11px;font-size:10px}
+    }
+
+    @media(max-width:640px){
+      body{overflow:hidden}
+      .nav-button{top:auto;bottom:16px;transform:none}
+      #prev-btn{left:14px!important}
+      #next-btn{right:14px!important}
+      #dots{bottom:29px!important;max-width:calc(100vw - 120px)}
+    }
+
+    @media print{
+      body{overflow:visible;background:#070b14}
+      .top-actions,.nav-button,#dots,#slide-counter{display:none!important}
+      .slide{
+        display:flex!important;width:100vw;height:100vh;min-height:100vh;
+        page-break-after:always;break-after:page;overflow:hidden;
+      }
+    }
+  </style>
+</head>
+
+<body class="relative">
+  <div class="top-actions">
+    <button class="action-button primary" onclick="toggleFullscreen()">
+      <i data-lucide="maximize-2" style="width:16px;height:16px"></i>
+      PANTALLA COMPLETA
+    </button>
+    <button class="action-button" onclick="window.print()">
+      <i data-lucide="printer" style="width:16px;height:16px"></i>
+      IMPRIMIR
+    </button>
+  </div>
+
+  <button id="prev-btn" class="nav-button left-3 md:left-5" onclick="changeSlide(-1)" aria-label="Diapositiva anterior">
+    <i data-lucide="chevron-left" style="width:22px;height:22px"></i>
+  </button>
+  <button id="next-btn" class="nav-button right-3 md:right-5" onclick="changeSlide(1)" aria-label="Diapositiva siguiente">
+    <i data-lucide="chevron-right" style="width:22px;height:22px"></i>
+  </button>
+
+  <div id="dots" class="fixed bottom-4 left-1/2 -translate-x-1/2 z-[70] flex items-center justify-center gap-2 flex-wrap"></div>
+  <div id="slide-counter" class="fixed top-4 right-4 z-[70] px-3 py-1.5 rounded-full bg-black/30 border border-white/10 backdrop-blur text-xs text-slate-300"></div>
+
+  <!-- 1 · PORTADA -->
+  <section class="slide active flex-col items-center justify-center relative bg-gradient-to-br from-[#070b14] via-[#0b162b] to-[#070b14] text-center">
+    <div class="absolute inset-0 bg-pattern"></div>
+    <div class="orb w-80 h-80 bg-cyan-400 top-[-120px] left-[-100px]"></div>
+    <div class="orb w-96 h-96 bg-violet-500 bottom-[-160px] right-[-120px]"></div>
+
+    <div class="relative z-10 max-w-6xl mx-auto w-full px-3">
+      <div class="flex items-center justify-center gap-4 md:gap-6 mb-7">
+        <img src="https://i.postimg.cc/Z5Sn2gzD/Chat-GPT-Image-12-jul-2026-10-45-09-p-m.png" style="height:72px;object-fit:contain;filter:drop-shadow(0 12px 25px rgba(0,0,0,.25));" alt="Unimédica Paraná"/>
+        <div class="h-14 w-px bg-white/20"></div>
+        <img src="https://i.postimg.cc/jSkQKpRK/Diseno-sin-titulo-2026-05-15T105828-195.png" alt="Instituto IEC" class="h-14 md:h-20 object-contain" />
+      </div>
+
+      <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-cyan-400/25 bg-cyan-400/10 text-cyan-200 text-xs md:text-sm font-bold tracking-[.18em] uppercase mb-5">
+        <span>🧠</span> Programa Integral de Inteligencia Operativa
+      </div>
+
+      <h1 class="text-4xl sm:text-5xl md:text-7xl lg:text-8xl font-black leading-[.95] mb-5">
+        IMPLEMENTACIÓN <span class="gradient-text">SMARTEO</span><br>
+        EN UNIMÉDICA
+      </h1>
+
+      <p class="text-base sm:text-lg md:text-2xl text-slate-300 max-w-4xl mx-auto mb-7">
+        Diagnóstico in situ, rediseño de procesos, automatización y desarrollo progresivo de un ERP inteligente con IA sobre la infraestructura propia de Unimédica.
+      </p>
+
+      <div class="flex flex-wrap justify-center gap-3">
+        <span class="pill px-4 py-2 rounded-xl text-sm font-semibold text-cyan-200">Trabajo in situ</span>
+        <span class="pill px-4 py-2 rounded-xl text-sm font-semibold text-blue-200">ERP modular</span>
+        <span class="pill px-4 py-2 rounded-xl text-sm font-semibold text-violet-200">Inteligencia Artificial aplicada</span>
+        <span class="pill px-4 py-2 rounded-xl text-sm font-semibold text-green-200">Servidor propio</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- 2 · FUNDAMENTACIÓN -->
+  <section class="slide flex-col items-center justify-center relative bg-gradient-to-b from-[#070b14] to-[#0b1426]">
+    <div class="absolute inset-0 bg-pattern opacity-70"></div>
+    <div class="relative z-10 max-w-6xl mx-auto w-full px-3">
+      <div class="mb-6">
+        <span class="text-cyan-300 font-bold tracking-widest text-sm">01 · FUNDAMENTACIÓN</span>
+        <h2 class="text-3xl sm:text-4xl md:text-6xl font-black mt-2">
+          NO SE TRATA SOLO DE CREAR UN ERP.<br>
+          <span class="gradient-text">SE TRATA DE TRANSFORMAR CÓMO OPERA UNIMÉDICA.</span>
+        </h2>
+      </div>
+
+      <div class="grid md:grid-cols-2 gap-5">
+        <div class="glass-card rounded-3xl p-6 md:p-8">
+          <div class="text-5xl mb-4">🔍</div>
+          <h3 class="text-3xl font-black mb-3">Comprender antes de desarrollar</h3>
+          <p class="text-slate-300 leading-relaxed">
+            La propuesta comienza dentro de Unimédica, observando cómo se ejecutan realmente los procesos administrativos, cómo circula la información, qué herramientas se utilizan y dónde aparecen demoras, reprocesos o pérdidas de trazabilidad.
+          </p>
+        </div>
+
+        <div class="glass-card rounded-3xl p-6 md:p-8 border-blue-400/20 bg-gradient-to-br from-cyan-500/5 to-blue-500/5">
+          <div class="text-5xl mb-4">⚙️</div>
+          <h3 class="text-3xl font-black mb-3">Construir desde la operación real</h3>
+          <p class="text-slate-300 leading-relaxed">
+            El sistema se desarrolla de forma modular y progresiva a partir de necesidades validadas, evitando imponer una solución genérica y permitiendo que cada módulo tenga una utilidad concreta desde su puesta en funcionamiento.
+          </p>
+        </div>
+      </div>
+
+      <div class="mt-6 glass-card rounded-2xl p-5 text-center">
+        <p class="text-lg md:text-2xl font-bold">
+          El ERP será la interfaz visible de un ecosistema más amplio de Inteligencia Operativa.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 3 · QUÉ ES SMARTEO -->
+  <section class="slide flex-col items-center justify-center relative bg-gradient-to-b from-[#0b1426] to-[#070b14]">
+    <div class="absolute inset-0 bg-pattern opacity-55"></div>
+    <div class="relative z-10 max-w-6xl mx-auto w-full px-3">
+      <div class="text-center mb-7">
+        <span class="text-violet-300 font-bold tracking-widest text-sm">02 · METODOLOGÍA IEC</span>
+        <h2 class="text-3xl sm:text-4xl md:text-6xl font-black mt-2">
+          ¿QUÉ ES <span class="gradient-text">SMARTEO?</span>
+        </h2>
+      </div>
+
+      <div class="glass-card rounded-3xl p-7 md:p-10 border-violet-400/20 bg-gradient-to-br from-blue-500/5 to-violet-500/5">
+        <p class="text-xl md:text-3xl font-black leading-relaxed text-center">
+          Smarteo es una metodología de transformación organizacional desarrollada por el Instituto IEC que integra análisis funcional, Inteligencia Artificial, automatización, desarrollo de software y mejora continua para convertir procesos administrativos tradicionales en sistemas inteligentes.
+        </p>
+      </div>
+
+      <div class="grid md:grid-cols-5 gap-3 mt-6">
+        <div class="glass-card rounded-2xl p-4 text-center"><div class="number-badge w-11 h-11 rounded-full grid place-items-center mx-auto font-black">1</div><h3 class="font-bold mt-3">Captura</h3><p class="text-slate-400 text-sm mt-2">Datos, documentos y eventos.</p></div>
+        <div class="glass-card rounded-2xl p-4 text-center"><div class="number-badge w-11 h-11 rounded-full grid place-items-center mx-auto font-black">2</div><h3 class="font-bold mt-3">Integración</h3><p class="text-slate-400 text-sm mt-2">Conexión entre áreas y sistemas.</p></div>
+        <div class="glass-card rounded-2xl p-4 text-center"><div class="number-badge w-11 h-11 rounded-full grid place-items-center mx-auto font-black">3</div><h3 class="font-bold mt-3">Inteligencia</h3><p class="text-slate-400 text-sm mt-2">Interpretación y reglas operativas.</p></div>
+        <div class="glass-card rounded-2xl p-4 text-center"><div class="number-badge w-11 h-11 rounded-full grid place-items-center mx-auto font-black">4</div><h3 class="font-bold mt-3">Automatización</h3><p class="text-slate-400 text-sm mt-2">Ejecución de acciones.</p></div>
+        <div class="glass-card rounded-2xl p-4 text-center"><div class="number-badge w-11 h-11 rounded-full grid place-items-center mx-auto font-black">5</div><h3 class="font-bold mt-3">Gobernanza</h3><p class="text-slate-400 text-sm mt-2">Control, métricas y mejora.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 4 · OBJETIVO GENERAL -->
+  <section class="slide flex-col items-center justify-center relative bg-gradient-to-b from-[#070b14] to-[#0b1426]">
+    <div class="absolute inset-0 bg-pattern opacity-55"></div>
+    <div class="relative z-10 max-w-6xl mx-auto w-full px-3">
+      <div class="mb-6">
+        <span class="text-cyan-300 font-bold tracking-widest text-sm">03 · OBJETIVO GENERAL</span>
+        <h2 class="text-3xl sm:text-4xl md:text-6xl font-black mt-2">
+          CONSTRUIR UN ECOSISTEMA<br>
+          <span class="gradient-text">OPERATIVO, INTELIGENTE Y PROPIO</span>
+        </h2>
+      </div>
+
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+        <div class="glass-card rounded-3xl p-5 impact-card"><span class="text-4xl">🧭</span><h3 class="font-black mt-3">Relevar</h3><p class="text-slate-400 text-sm mt-2">Comprender estructura, roles y circuitos reales.</p></div>
+        <div class="glass-card rounded-3xl p-5 impact-card"><span class="text-4xl">🧩</span><h3 class="font-black mt-3">Rediseñar</h3><p class="text-slate-400 text-sm mt-2">Eliminar fricciones y ordenar procesos.</p></div>
+        <div class="glass-card rounded-3xl p-5 impact-card"><span class="text-4xl">💻</span><h3 class="font-black mt-3">Desarrollar</h3><p class="text-slate-400 text-sm mt-2">Crear módulos funcionales y escalables.</p></div>
+        <div class="glass-card rounded-3xl p-5 impact-card"><span class="text-4xl">🤖</span><h3 class="font-black mt-3">Inteligenciar</h3><p class="text-slate-400 text-sm mt-2">Incorporar IA, alertas y automatizaciones.</p></div>
+      </div>
+
+      <div class="mt-6 result-card rounded-3xl p-6 text-center">
+        <p class="text-xl md:text-3xl font-black">
+          Resultado esperado: un ERP evolutivo, conectado con la operación real y administrado sobre la infraestructura tecnológica propia de Unimédica.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 5 · IMPLEMENTADOR -->
+  <section class="slide flex-col items-center justify-center relative bg-gradient-to-b from-[#0b1426] to-[#070b14]">
+    <div class="absolute inset-0 bg-pattern opacity-55"></div>
+    <div class="relative z-10 max-w-6xl mx-auto w-full px-3">
+      <div class="mb-6">
+        <span class="text-blue-300 font-bold tracking-widest text-sm">04 · IMPLEMENTACIÓN IN SITU</span>
+        <h2 class="text-3xl sm:text-4xl md:text-6xl font-black mt-2">
+          UN IMPLEMENTADOR DENTRO DE<br>
+          <span class="gradient-text">UNIMÉDICA DOS VECES POR SEMANA</span>
+        </h2>
+      </div>
+
+      <div class="grid md:grid-cols-[.8fr_1.2fr] gap-5 items-stretch">
+        <div class="glass-card rounded-3xl p-7 text-center border-cyan-400/20 bg-cyan-400/5">
+          <div class="role-badge">IMPLEMENTADOR EMPRESARIAL IEC</div>
+          <p class="text-7xl font-black mt-6">2×</p>
+          <p class="text-2xl font-black mt-2">por semana</p>
+          <div class="timeline-line my-6"></div>
+          <p class="text-6xl font-black">4 h</p>
+          <p class="text-slate-300 mt-2">por jornada</p>
+          <p class="text-cyan-200 font-bold mt-5">8 horas semanales in situ</p>
+        </div>
+
+        <div class="glass-card rounded-3xl p-6 md:p-8">
+          <h3 class="text-3xl font-black">Función del implementador</h3>
+          <div class="grid sm:grid-cols-2 gap-3 mt-5">
+            <div class="pill rounded-xl p-4">Relevamiento de áreas, roles y herramientas.</div>
+            <div class="pill rounded-xl p-4">Entrevistas con responsables y equipos.</div>
+            <div class="pill rounded-xl p-4">Observación de circuitos administrativos reales.</div>
+            <div class="pill rounded-xl p-4">Detección de cuellos de botella y reprocesos.</div>
+            <div class="pill rounded-xl p-4">Documentación funcional de procesos.</div>
+            <div class="pill rounded-xl p-4">Priorización de oportunidades de automatización.</div>
+            <div class="pill rounded-xl p-4">Validación de módulos con usuarios.</div>
+            <div class="pill rounded-xl p-4">Capacitación y acompañamiento en adopción.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 6 · PROGRAMADOR -->
+  <section class="slide flex-col items-center justify-center relative bg-gradient-to-b from-[#070b14] to-[#0b1426]">
+    <div class="absolute inset-0 bg-pattern opacity-55"></div>
+    <div class="relative z-10 max-w-6xl mx-auto w-full px-3">
+      <div class="mb-6">
+        <span class="text-violet-300 font-bold tracking-widest text-sm">05 · DESARROLLO TECNOLÓGICO</span>
+        <h2 class="text-3xl sm:text-4xl md:text-6xl font-black mt-2">
+          UN PROGRAMADOR ASIGNADO<br>
+          <span class="gradient-text">A LA CREACIÓN DE LOS SISTEMAS</span>
+        </h2>
+      </div>
+
+      <div class="grid md:grid-cols-2 gap-5">
+        <div class="glass-card rounded-3xl p-6 md:p-8 border-violet-400/20 bg-gradient-to-br from-blue-500/5 to-violet-500/5">
+          <div class="text-5xl mb-4">👨‍💻</div>
+          <p class="text-violet-300 text-xs font-bold tracking-widest">DESARROLLADOR DE SISTEMAS E IA · IEC</p>
+          <h3 class="text-3xl font-black mt-3">Desarrollo modular y progresivo</h3>
+          <p class="text-slate-300 mt-4 leading-relaxed">
+            El programador transformará los relevamientos funcionales en módulos concretos del ERP, automatizaciones, integraciones y herramientas de apoyo operativo.
+          </p>
+        </div>
+
+        <div class="glass-card rounded-3xl p-6 md:p-8">
+          <h3 class="text-2xl font-black mb-4">Responsabilidades principales</h3>
+          <div class="space-y-3 text-slate-300">
+            <div class="pill rounded-xl p-3">Desarrollo frontend y backend del ERP.</div>
+            <div class="pill rounded-xl p-3">Integración con IA y motores de reglas.</div>
+            <div class="pill rounded-xl p-3">Automatización documental y administrativa.</div>
+            <div class="pill rounded-xl p-3">Diseño de APIs e integraciones.</div>
+            <div class="pill rounded-xl p-3">Dashboards e indicadores operativos.</div>
+            <div class="pill rounded-xl p-3">Documentación técnica y versionado.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 7 · GINO -->
+  <section class="slide flex-col items-center justify-center relative bg-gradient-to-b from-[#0b1426] to-[#070b14]">
+    <div class="absolute inset-0 bg-pattern opacity-55"></div>
+    <div class="relative z-10 max-w-6xl mx-auto w-full px-3">
+      <div class="text-center mb-7">
+        <span class="text-green-300 font-bold tracking-widest text-sm">06 · RESPONSABLE TÉCNICO INTERNO</span>
+        <h2 class="text-3xl sm:text-4xl md:text-6xl font-black mt-2">
+          TRABAJO CONJUNTO CON<br>
+          <span class="green-text">GINO GALLUSI</span>
+        </h2>
+      </div>
+
+      <div class="grid md:grid-cols-[.9fr_1.1fr] gap-5">
+        <div class="result-card rounded-3xl p-7 text-center">
+          <div class="text-6xl">🛡️</div>
+          <h3 class="text-3xl font-black mt-4">Responsable de control de implementación</h3>
+          <p class="text-slate-300 mt-4 leading-relaxed">
+            Gino Gallusi actuará como referente técnico interno de Unimédica y punto de articulación con el equipo IEC.
+          </p>
+        </div>
+
+        <div class="glass-card rounded-3xl p-6 md:p-8">
+          <h3 class="text-2xl font-black mb-4">Funciones previstas</h3>
+          <div class="grid sm:grid-cols-2 gap-3">
+            <div class="pill rounded-xl p-4">Control técnico de procesos automatizados.</div>
+            <div class="pill rounded-xl p-4">Validación de arquitectura y despliegues.</div>
+            <div class="pill rounded-xl p-4">Coordinación de accesos e infraestructura.</div>
+            <div class="pill rounded-xl p-4">Supervisión de seguridad y permisos.</div>
+            <div class="pill rounded-xl p-4">Acompañamiento en pruebas y puesta en producción.</div>
+            <div class="pill rounded-xl p-4">Control de implementación sobre servidor propio.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 8 · MODELO COLABORATIVO -->
+  <section class="slide flex-col items-center justify-center relative bg-gradient-to-b from-[#070b14] to-[#0b1426]">
+    <div class="absolute inset-0 bg-pattern opacity-55"></div>
+    <div class="relative z-10 max-w-6xl mx-auto w-full px-3">
+      <div class="text-center mb-6">
+        <span class="text-cyan-300 font-bold tracking-widest text-sm">07 · CÉLULA DE IMPLEMENTACIÓN</span>
+        <h2 class="text-3xl sm:text-4xl md:text-6xl font-black mt-2">
+          UN SOLO EQUIPO.<br>
+          <span class="gradient-text">CUATRO RESPONSABILIDADES COMPLEMENTARIAS.</span>
+        </h2>
+      </div>
+
+      <div class="grid md:grid-cols-4 gap-4">
+        <div class="glass-card rounded-3xl p-5 text-center">
+          <span class="text-5xl">🧭</span>
+          <h3 class="font-black mt-4">Implementador IEC</h3>
+          <p class="text-slate-400 text-sm mt-2">Diagnóstico, procesos, documentación y validación funcional.</p>
+        </div>
+        <div class="glass-card rounded-3xl p-5 text-center">
+          <span class="text-5xl">💻</span>
+          <h3 class="font-black mt-4">Programador IEC</h3>
+          <p class="text-slate-400 text-sm mt-2">Desarrollo, integración, automatización e IA.</p>
+        </div>
+        <div class="glass-card rounded-3xl p-5 text-center border-green-400/20">
+          <span class="text-5xl">🛡️</span>
+          <h3 class="font-black mt-4">Gino Gallusi</h3>
+          <p class="text-slate-400 text-sm mt-2">Control técnico, infraestructura y despliegue interno.</p>
+        </div>
+        <div class="glass-card rounded-3xl p-5 text-center border-violet-400/20">
+          <span class="text-5xl">👥</span>
+          <h3 class="font-black mt-4">Referentes de área</h3>
+          <p class="text-slate-400 text-sm mt-2">Validación operativa, pruebas y retroalimentación.</p>
+        </div>
+      </div>
+
+      <div class="mt-6 glass-card rounded-2xl p-5 text-center border-cyan-400/20">
+        <p class="text-lg md:text-2xl font-bold">
+          Cada módulo será relevado, diseñado, desarrollado, probado y validado de manera conjunta.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 9 · ETAPA 1 -->
+  <section class="slide flex-col items-center justify-center relative bg-gradient-to-b from-[#0b1426] to-[#070b14]">
+    <div class="absolute inset-0 bg-pattern opacity-55"></div>
+    <div class="relative z-10 max-w-6xl mx-auto w-full px-3">
+      <div class="mb-6">
+        <span class="text-cyan-300 font-bold tracking-widest text-sm">08 · ETAPA 1</span>
+        <h2 class="text-3xl sm:text-4xl md:text-6xl font-black mt-2">
+          DIAGNÓSTICO ORGANIZACIONAL<br>
+          <span class="gradient-text">Y MAPA OPERATIVO DE UNIMÉDICA</span>
+        </h2>
+      </div>
+
+      <div class="grid md:grid-cols-2 gap-5">
+        <div class="glass-card rounded-3xl p-6 md:p-8">
+          <h3 class="text-2xl font-black mb-4">Actividades</h3>
+          <div class="space-y-3 text-slate-300">
+            <div class="pill rounded-xl p-3">Aplicación del diagnóstico general institucional.</div>
+            <div class="pill rounded-xl p-3">Identificación de áreas, responsables y dependencias.</div>
+            <div class="pill rounded-xl p-3">Entrevistas y recorridos por sector.</div>
+            <div class="pill rounded-xl p-3">Inventario de planillas, documentos y sistemas.</div>
+            <div class="pill rounded-xl p-3">Detección de puntos críticos y riesgos operativos.</div>
+          </div>
+        </div>
+
+        <div class="result-card rounded-3xl p-6 md:p-8">
+          <p class="text-green-300 text-xs font-bold tracking-widest">ENTREGABLE PRINCIPAL</p>
+          <h3 class="text-3xl font-black mt-3">Mapa Operativo de Unimédica</h3>
+          <p class="text-slate-300 mt-4 leading-relaxed">
+            Documento consolidado que describe la estructura institucional, los procesos prioritarios, los flujos de información, las herramientas actuales y las oportunidades iniciales de automatización.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 10 · ETAPA 2 -->
+  <section class="slide flex-col items-center justify-center relative bg-gradient-to-b from-[#070b14] to-[#0b1426]">
+    <div class="absolute inset-0 bg-pattern opacity-55"></div>
+    <div class="relative z-10 max-w-6xl mx-auto w-full px-3">
+      <div class="text-center mb-6">
+        <span class="text-violet-300 font-bold tracking-widest text-sm">09 · ETAPA 2</span>
+        <h2 class="text-3xl sm:text-4xl md:text-6xl font-black mt-2">
+          INGENIERÍA Y REDISEÑO<br>
+          <span class="gradient-text">DE PROCESOS</span>
+        </h2>
+      </div>
+
+      <div class="grid md:grid-cols-4 gap-4">
+        <div class="glass-card rounded-3xl p-5 text-center">
+          <div class="number-badge w-12 h-12 rounded-full grid place-items-center mx-auto font-black">1</div>
+          <h3 class="font-black mt-4">AS IS</h3>
+          <p class="text-slate-400 text-sm mt-2">Cómo funciona hoy el proceso.</p>
+        </div>
+        <div class="glass-card rounded-3xl p-5 text-center">
+          <div class="number-badge w-12 h-12 rounded-full grid place-items-center mx-auto font-black">2</div>
+          <h3 class="font-black mt-4">Diagnóstico</h3>
+          <p class="text-slate-400 text-sm mt-2">Demoras, errores, riesgos y duplicaciones.</p>
+        </div>
+        <div class="glass-card rounded-3xl p-5 text-center">
+          <div class="number-badge w-12 h-12 rounded-full grid place-items-center mx-auto font-black">3</div>
+          <h3 class="font-black mt-4">TO BE</h3>
+          <p class="text-slate-400 text-sm mt-2">Cómo debería funcionar el proceso.</p>
+        </div>
+        <div class="glass-card rounded-3xl p-5 text-center">
+          <div class="number-badge w-12 h-12 rounded-full grid place-items-center mx-auto font-black">4</div>
+          <h3 class="font-black mt-4">Automatización</h3>
+          <p class="text-slate-400 text-sm mt-2">Qué reglas, IA y acciones incorporar.</p>
+        </div>
+      </div>
+
+      <div class="mt-6 warning-card rounded-3xl p-6 text-center">
+        <p class="text-xl md:text-3xl font-black">
+          No se automatiza el desorden: primero se comprende y mejora el proceso; luego se desarrolla la tecnología.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 11 · ETAPA 3 -->
+  <section class="slide flex-col items-center justify-center relative bg-gradient-to-b from-[#0b1426] to-[#070b14]">
+    <div class="absolute inset-0 bg-pattern opacity-55"></div>
+    <div class="relative z-10 max-w-6xl mx-auto w-full px-3">
+      <div class="mb-6">
+        <span class="text-blue-300 font-bold tracking-widest text-sm">10 · ETAPA 3</span>
+        <h2 class="text-3xl sm:text-4xl md:text-6xl font-black mt-2">
+          ARQUITECTURA DEL<br>
+          <span class="gradient-text">ERP INTELIGENTE</span>
+        </h2>
+      </div>
+
+      <div class="grid md:grid-cols-3 gap-4">
+        <div class="glass-card rounded-3xl p-6">
+          <p class="text-cyan-300 text-xs font-bold tracking-widest">CAPA OPERATIVA</p>
+          <h3 class="text-2xl font-black mt-3">Gestión diaria</h3>
+          <p class="text-slate-300 mt-3">Usuarios, expedientes, tareas, documentos, estados, responsables y vencimientos.</p>
+        </div>
+        <div class="glass-card rounded-3xl p-6 border-blue-400/20">
+          <p class="text-blue-300 text-xs font-bold tracking-widest">CAPA DE INTELIGENCIA</p>
+          <h3 class="text-2xl font-black mt-3">IA y reglas</h3>
+          <p class="text-slate-300 mt-3">Clasificación, extracción, alertas, recomendaciones, controles y asistencia contextual.</p>
+        </div>
+        <div class="glass-card rounded-3xl p-6 border-violet-400/20">
+          <p class="text-violet-300 text-xs font-bold tracking-widest">CAPA ESTRATÉGICA</p>
+          <h3 class="text-2xl font-black mt-3">Indicadores</h3>
+          <p class="text-slate-300 mt-3">Dashboards, trazabilidad, tiempos, carga de trabajo, desempeño y oportunidades de mejora.</p>
+        </div>
+      </div>
+
+      <div class="mt-6 glass-card rounded-3xl p-6">
+        <div class="flex flex-wrap items-center justify-center gap-3 text-center">
+          <span class="pill px-4 py-3 rounded-xl font-bold">Personas</span>
+          <span>→</span>
+          <span class="pill px-4 py-3 rounded-xl font-bold">Procesos</span>
+          <span>→</span>
+          <span class="pill px-4 py-3 rounded-xl font-bold">Datos</span>
+          <span>→</span>
+          <span class="pill px-4 py-3 rounded-xl font-bold">IA</span>
+          <span>→</span>
+          <span class="pill px-4 py-3 rounded-xl font-bold">Automatización</span>
+          <span>→</span>
+          <span class="pill px-4 py-3 rounded-xl font-bold">Decisión</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 12 · ETAPA 4 -->
+  <section class="slide flex-col items-center justify-center relative bg-gradient-to-b from-[#070b14] to-[#0b1426]">
+    <div class="absolute inset-0 bg-pattern opacity-55"></div>
+    <div class="relative z-10 max-w-6xl mx-auto w-full px-3">
+      <div class="mb-6">
+        <span class="text-cyan-300 font-bold tracking-widest text-sm">11 · ETAPA 4</span>
+        <h2 class="text-3xl sm:text-4xl md:text-6xl font-black mt-2">
+          DESARROLLO MODULAR<br>
+          <span class="gradient-text">Y PUESTA EN PRODUCCIÓN PROGRESIVA</span>
+        </h2>
+      </div>
+
+      <div class="grid md:grid-cols-3 gap-4">
+        <div class="glass-card rounded-3xl p-6">
+          <div class="number-badge w-12 h-12 rounded-full grid place-items-center font-black">A</div>
+          <h3 class="text-2xl font-black mt-4">Priorizar</h3>
+          <p class="text-slate-300 mt-3">Seleccionar procesos de alto impacto y factibilidad inmediata.</p>
+        </div>
+        <div class="glass-card rounded-3xl p-6">
+          <div class="number-badge w-12 h-12 rounded-full grid place-items-center font-black">B</div>
+          <h3 class="text-2xl font-black mt-4">Prototipar</h3>
+          <p class="text-slate-300 mt-3">Construir un módulo funcional mínimo para validar con usuarios.</p>
+        </div>
+        <div class="glass-card rounded-3xl p-6">
+          <div class="number-badge w-12 h-12 rounded-full grid place-items-center font-black">C</div>
+          <h3 class="text-2xl font-black mt-4">Implementar</h3>
+          <p class="text-slate-300 mt-3">Desplegar, capacitar, medir y ajustar antes del siguiente módulo.</p>
+        </div>
+      </div>
+
+      <div class="mt-6 grid grid-cols-2 md:grid-cols-4 gap-3">
+        <div class="pill rounded-xl p-4 text-center font-bold">Recepción y mesa de entradas</div>
+        <div class="pill rounded-xl p-4 text-center font-bold">Prestaciones y autorizaciones</div>
+        <div class="pill rounded-xl p-4 text-center font-bold">Auditoría y documentación</div>
+        <div class="pill rounded-xl p-4 text-center font-bold">Facturación y seguimiento</div>
+        <div class="pill rounded-xl p-4 text-center font-bold">Convenios y contratos</div>
+        <div class="pill rounded-xl p-4 text-center font-bold">Compras y proveedores</div>
+        <div class="pill rounded-xl p-4 text-center font-bold">RRHH y solicitudes internas</div>
+        <div class="pill rounded-xl p-4 text-center font-bold">Indicadores ejecutivos</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 13 · IA -->
+  <section class="slide flex-col items-center justify-center relative bg-gradient-to-b from-[#0b1426] to-[#070b14]">
+    <div class="absolute inset-0 bg-pattern opacity-55"></div>
+    <div class="relative z-10 max-w-6xl mx-auto w-full px-3">
+      <div class="text-center mb-6">
+        <span class="text-violet-300 font-bold tracking-widest text-sm">12 · INTELIGENCIA ARTIFICIAL APLICADA</span>
+        <h2 class="text-3xl sm:text-4xl md:text-6xl font-black mt-2">
+          LA IA COMO PARTE DEL<br>
+          <span class="gradient-text">CIRCUITO OPERATIVO</span>
+        </h2>
+      </div>
+
+      <div class="grid md:grid-cols-2 gap-4">
+        <div class="glass-card rounded-3xl p-6 impact-card"><span class="text-4xl">📄</span><h3 class="text-xl font-black mt-3">Lectura documental</h3><p class="text-slate-300 mt-2">Extracción, clasificación y validación de información.</p></div>
+        <div class="glass-card rounded-3xl p-6 impact-card"><span class="text-4xl">📬</span><h3 class="text-xl font-black mt-3">Gestión de comunicaciones</h3><p class="text-slate-300 mt-2">Resúmenes, derivaciones y respuestas asistidas.</p></div>
+        <div class="glass-card rounded-3xl p-6 impact-card"><span class="text-4xl">🚨</span><h3 class="text-xl font-black mt-3">Alertas inteligentes</h3><p class="text-slate-300 mt-2">Detección de faltantes, vencimientos y situaciones críticas.</p></div>
+        <div class="glass-card rounded-3xl p-6 impact-card border-violet-400/20"><span class="text-4xl">🧠</span><h3 class="text-xl font-black mt-3">Copiloto operativo</h3><p class="text-slate-300 mt-2">Consultas internas sobre procedimientos, estados y prioridades.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 14 · SERVIDOR -->
+  <section class="slide flex-col items-center justify-center relative bg-gradient-to-b from-[#070b14] to-[#0b1426]">
+    <div class="absolute inset-0 bg-pattern opacity-55"></div>
+    <div class="relative z-10 max-w-6xl mx-auto w-full px-3">
+      <div class="mb-6">
+        <span class="text-green-300 font-bold tracking-widest text-sm">13 · INFRAESTRUCTURA Y SOBERANÍA TECNOLÓGICA</span>
+        <h2 class="text-3xl sm:text-4xl md:text-6xl font-black mt-2">
+          DESARROLLO SOBRE EL<br>
+          <span class="green-text">SERVIDOR PROPIO DE UNIMÉDICA</span>
+        </h2>
+      </div>
+
+      <div class="grid md:grid-cols-2 gap-5">
+        <div class="result-card rounded-3xl p-6 md:p-8">
+          <div class="text-5xl">🗄️</div>
+          <h3 class="text-3xl font-black mt-4">Control institucional</h3>
+          <p class="text-slate-300 mt-4 leading-relaxed">
+            Los módulos se desplegarán en la infraestructura tecnológica definida por Unimédica, bajo control y supervisión de su responsable técnico.
+          </p>
+        </div>
+
+        <div class="glass-card rounded-3xl p-6 md:p-8">
+          <div class="space-y-3">
+            <div class="pill rounded-xl p-4">Mayor control sobre datos y accesos.</div>
+            <div class="pill rounded-xl p-4">Integración con servicios internos existentes.</div>
+            <div class="pill rounded-xl p-4">Despliegues coordinados y documentados.</div>
+            <div class="pill rounded-xl p-4">Continuidad operativa y escalabilidad institucional.</div>
+            <div class="pill rounded-xl p-4">Versionado, respaldos y trazabilidad técnica.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 15 · GOBERNANZA -->
+  <section class="slide flex-col items-center justify-center relative bg-gradient-to-b from-[#0b1426] to-[#070b14]">
+    <div class="absolute inset-0 bg-pattern opacity-55"></div>
+    <div class="relative z-10 max-w-6xl mx-auto w-full px-3">
+      <div class="text-center mb-6">
+        <span class="text-amber-300 font-bold tracking-widest text-sm">14 · GOBERNANZA DEL PROYECTO</span>
+        <h2 class="text-3xl sm:text-4xl md:text-6xl font-black mt-2">
+          REUNIONES, VALIDACIONES<br>
+          <span class="amber-text">Y CONTROL DE AVANCE</span>
+        </h2>
+      </div>
+
+      <div class="grid md:grid-cols-4 gap-4">
+        <div class="glass-card rounded-3xl p-5 text-center"><span class="text-4xl">📍</span><h3 class="font-black mt-3">Seguimiento semanal</h3><p class="text-slate-400 text-sm mt-2">Actividades realizadas y hallazgos.</p></div>
+        <div class="glass-card rounded-3xl p-5 text-center"><span class="text-4xl">🗂️</span><h3 class="font-black mt-3">Backlog priorizado</h3><p class="text-slate-400 text-sm mt-2">Procesos y módulos ordenados por impacto.</p></div>
+        <div class="glass-card rounded-3xl p-5 text-center"><span class="text-4xl">✅</span><h3 class="font-black mt-3">Validación funcional</h3><p class="text-slate-400 text-sm mt-2">Aprobación por referentes de área.</p></div>
+        <div class="glass-card rounded-3xl p-5 text-center"><span class="text-4xl">🛡️</span><h3 class="font-black mt-3">Validación técnica</h3><p class="text-slate-400 text-sm mt-2">Control de Gino Gallusi y despliegue.</p></div>
+      </div>
+
+      <div class="mt-6 warning-card rounded-3xl p-6">
+        <p class="text-center text-lg md:text-2xl font-black">
+          Ningún módulo pasa a producción sin validación funcional de Unimédica y control técnico de infraestructura.
+        </p>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- 16 · MANUALES POR ACTOR -->
+  <section class="slide flex-col items-center justify-center relative bg-gradient-to-b from-[#0b1426] to-[#070b14]">
+    <div class="absolute inset-0 bg-pattern opacity-55"></div>
+    <div class="relative z-10 max-w-6xl mx-auto w-full px-3">
+      <div class="mb-6">
+        <span class="text-cyan-300 font-bold tracking-widest text-sm">15 · MANUALES DE PROCESOS POR ACTOR</span>
+        <h2 class="text-3xl sm:text-4xl md:text-6xl font-black mt-2">
+          CADA ACTOR CONOCE<br>
+          <span class="gradient-text">QUÉ HACE, CUÁNDO Y CON QUÉ CRITERIO</span>
+        </h2>
+      </div>
+
+      <div class="grid md:grid-cols-[.9fr_1.1fr] gap-5">
+        <div class="glass-card rounded-3xl p-6 md:p-8 border-cyan-400/20 bg-cyan-400/5">
+          <div class="text-5xl">📚</div>
+          <h3 class="text-3xl font-black mt-4">Manual operativo por actor</h3>
+          <p class="text-slate-300 mt-4 leading-relaxed">
+            Cada proceso redefinido contará con un manual específico para los distintos actores que intervienen en su ejecución, control y seguimiento.
+          </p>
+          <p class="text-slate-300 mt-4 leading-relaxed">
+            El objetivo es que cada persona comprenda con claridad su función dentro del circuito y cómo se relaciona con los demás sectores, sistemas y automatizaciones.
+          </p>
+        </div>
+
+        <div class="glass-card rounded-3xl p-6 md:p-8">
+          <h3 class="text-2xl font-black mb-4">Actores contemplados</h3>
+          <div class="grid sm:grid-cols-2 gap-3">
+            <div class="pill rounded-xl p-4">Personal administrativo que inicia o ejecuta tareas.</div>
+            <div class="pill rounded-xl p-4">Responsables de área que validan decisiones.</div>
+            <div class="pill rounded-xl p-4">Auditores y sectores de control.</div>
+            <div class="pill rounded-xl p-4">Equipos técnicos e informáticos.</div>
+            <div class="pill rounded-xl p-4">Gerencia y niveles de supervisión.</div>
+            <div class="pill rounded-xl p-4">Usuarios internos vinculados al proceso.</div>
+            <div class="pill rounded-xl p-4">Sistemas y automatizaciones que ejecutan acciones.</div>
+            <div class="pill rounded-xl p-4">Actores externos cuando corresponda.</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="mt-6 result-card rounded-3xl p-6 text-center">
+        <p class="text-xl md:text-3xl font-black">
+          El proceso deja de depender del conocimiento informal de una persona y pasa a convertirse en conocimiento institucional documentado.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 17 · CONTENIDO DE LOS MANUALES -->
+  <section class="slide flex-col items-center justify-center relative bg-gradient-to-b from-[#070b14] to-[#0b1426]">
+    <div class="absolute inset-0 bg-pattern opacity-55"></div>
+    <div class="relative z-10 max-w-6xl mx-auto w-full px-3">
+      <div class="text-center mb-6">
+        <span class="text-violet-300 font-bold tracking-widest text-sm">16 · ESTRUCTURA DOCUMENTAL</span>
+        <h2 class="text-3xl sm:text-4xl md:text-6xl font-black mt-2">
+          QUÉ CONTENDRÁ CADA<br>
+          <span class="gradient-text">MANUAL DE PROCESO</span>
+        </h2>
+      </div>
+
+      <div class="grid md:grid-cols-3 gap-4">
+        <div class="glass-card rounded-3xl p-5"><span class="text-4xl">🎯</span><h3 class="font-black mt-3">Objetivo del proceso</h3><p class="text-slate-400 text-sm mt-2">Finalidad, alcance y resultado esperado.</p></div>
+        <div class="glass-card rounded-3xl p-5"><span class="text-4xl">👤</span><h3 class="font-black mt-3">Rol del actor</h3><p class="text-slate-400 text-sm mt-2">Responsabilidades, permisos y límites de intervención.</p></div>
+        <div class="glass-card rounded-3xl p-5"><span class="text-4xl">🔁</span><h3 class="font-black mt-3">Secuencia operativa</h3><p class="text-slate-400 text-sm mt-2">Paso a paso desde el inicio hasta el cierre.</p></div>
+        <div class="glass-card rounded-3xl p-5"><span class="text-4xl">⚖️</span><h3 class="font-black mt-3">Criterios de decisión</h3><p class="text-slate-400 text-sm mt-2">Reglas, validaciones, excepciones y derivaciones.</p></div>
+        <div class="glass-card rounded-3xl p-5"><span class="text-4xl">🤖</span><h3 class="font-black mt-3">Automatizaciones</h3><p class="text-slate-400 text-sm mt-2">Acciones ejecutadas por el sistema y la IA.</p></div>
+        <div class="glass-card rounded-3xl p-5"><span class="text-4xl">📊</span><h3 class="font-black mt-3">Indicadores y control</h3><p class="text-slate-400 text-sm mt-2">Tiempos, alertas, responsables y métricas.</p></div>
+        <div class="glass-card rounded-3xl p-5"><span class="text-4xl">📄</span><h3 class="font-black mt-3">Documentación asociada</h3><p class="text-slate-400 text-sm mt-2">Formularios, archivos, plantillas y comprobantes.</p></div>
+        <div class="glass-card rounded-3xl p-5"><span class="text-4xl">🚨</span><h3 class="font-black mt-3">Tratamiento de excepciones</h3><p class="text-slate-400 text-sm mt-2">Qué hacer ante errores, faltantes o casos especiales.</p></div>
+        <div class="result-card rounded-3xl p-5"><span class="text-4xl">🔄</span><h3 class="font-black mt-3">Mejora continua</h3><p class="text-slate-300 text-sm mt-2">Versiones, ajustes y retroalimentación periódica.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 18 · PROCESOS REDEFINIDOS -->
+  <section class="slide flex-col items-center justify-center relative bg-gradient-to-b from-[#0b1426] to-[#070b14]">
+    <div class="absolute inset-0 bg-pattern opacity-55"></div>
+    <div class="relative z-10 max-w-6xl mx-auto w-full px-3">
+      <div class="mb-6">
+        <span class="text-green-300 font-bold tracking-widest text-sm">17 · PROCESOS REDEFINIDOS CON INTELIGENCIA OPERATIVA</span>
+        <h2 class="text-3xl sm:text-4xl md:text-6xl font-black mt-2">
+          DEL PROCEDIMIENTO INFORMAL<br>
+          <span class="green-text">AL PROCESO INSTITUCIONAL INTELIGENTE</span>
+        </h2>
+      </div>
+
+      <div class="grid md:grid-cols-2 gap-5">
+        <div class="warning-card rounded-3xl p-6 md:p-8">
+          <p class="text-amber-300 text-xs font-bold tracking-widest">PROCESO ACTUAL · AS IS</p>
+          <h3 class="text-3xl font-black mt-3">Dependencia del conocimiento individual</h3>
+          <div class="space-y-3 mt-5 text-slate-300">
+            <div class="pill rounded-xl p-3">Pasos conocidos de manera informal.</div>
+            <div class="pill rounded-xl p-3">Criterios diferentes según la persona.</div>
+            <div class="pill rounded-xl p-3">Controles manuales y dispersos.</div>
+            <div class="pill rounded-xl p-3">Información repartida en múltiples herramientas.</div>
+            <div class="pill rounded-xl p-3">Dificultad para capacitar reemplazos.</div>
+          </div>
+        </div>
+
+        <div class="result-card rounded-3xl p-6 md:p-8">
+          <p class="text-green-300 text-xs font-bold tracking-widest">PROCESO REDEFINIDO · TO BE</p>
+          <h3 class="text-3xl font-black mt-3">Conocimiento institucional y operativo</h3>
+          <div class="space-y-3 mt-5 text-slate-300">
+            <div class="pill rounded-xl p-3">Secuencia documentada y validada.</div>
+            <div class="pill rounded-xl p-3">Reglas homogéneas para todos los actores.</div>
+            <div class="pill rounded-xl p-3">Alertas y controles automatizados.</div>
+            <div class="pill rounded-xl p-3">Trazabilidad completa dentro del ERP.</div>
+            <div class="pill rounded-xl p-3">Manual disponible para capacitación y auditoría.</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="mt-6 glass-card rounded-3xl p-6 border-green-400/20 bg-green-400/5 text-center">
+        <p class="text-xl md:text-3xl font-black">
+          Cada manual reflejará el proceso mejorado, no una simple copia de la forma actual de trabajar.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 16 · ENTREGABLES -->
+  <section class="slide flex-col items-center justify-center relative bg-gradient-to-b from-[#070b14] to-[#0b1426]">
+    <div class="absolute inset-0 bg-pattern opacity-55"></div>
+    <div class="relative z-10 max-w-6xl mx-auto w-full px-3">
+      <div class="mb-6">
+        <span class="text-cyan-300 font-bold tracking-widest text-sm">18 · ENTREGABLES</span>
+        <h2 class="text-3xl sm:text-4xl md:text-6xl font-black mt-2">
+          RESULTADOS CONCRETOS<br>
+          <span class="gradient-text">DE LA IMPLEMENTACIÓN</span>
+        </h2>
+      </div>
+
+      <div class="grid md:grid-cols-3 gap-4">
+        <div class="glass-card rounded-3xl p-5"><span class="text-4xl">🗺️</span><h3 class="font-black mt-3">Mapa Operativo</h3><p class="text-slate-400 text-sm mt-2">Estructura, procesos y herramientas actuales.</p></div>
+        <div class="glass-card rounded-3xl p-5"><span class="text-4xl">📘</span><h3 class="font-black mt-3">Manual General de Procesos</h3><p class="text-slate-400 text-sm mt-2">Procesos AS IS, TO BE, reglas y responsables.</p></div>
+        <div class="glass-card rounded-3xl p-5"><span class="text-4xl">👥</span><h3 class="font-black mt-3">Manuales por Actor</h3><p class="text-slate-400 text-sm mt-2">Funciones, pasos, decisiones y controles por rol.</p></div>
+        <div class="glass-card rounded-3xl p-5"><span class="text-4xl">🧠</span><h3 class="font-black mt-3">Procesos Redefinidos</h3><p class="text-slate-400 text-sm mt-2">Circuitos mejorados con Inteligencia Operativa.</p></div>
+        <div class="glass-card rounded-3xl p-5"><span class="text-4xl">🧱</span><h3 class="font-black mt-3">Arquitectura ERP</h3><p class="text-slate-400 text-sm mt-2">Módulos, permisos, datos e integraciones.</p></div>
+        <div class="glass-card rounded-3xl p-5"><span class="text-4xl">💻</span><h3 class="font-black mt-3">Módulos funcionales</h3><p class="text-slate-400 text-sm mt-2">Desarrollados, testeados y desplegados.</p></div>
+        <div class="glass-card rounded-3xl p-5"><span class="text-4xl">🤖</span><h3 class="font-black mt-3">Automatizaciones e IA</h3><p class="text-slate-400 text-sm mt-2">Clasificación, alertas y asistencia.</p></div>
+        <div class="result-card rounded-3xl p-5"><span class="text-4xl">📊</span><h3 class="font-black mt-3">Dashboard Ejecutivo</h3><p class="text-slate-300 text-sm mt-2">Indicadores, tiempos y control operativo.</p></div>
+        <div class="glass-card rounded-3xl p-5"><span class="text-4xl">🔄</span><h3 class="font-black mt-3">Sistema de Versionado</h3><p class="text-slate-400 text-sm mt-2">Actualización y mejora continua de manuales.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 17 · BENEFICIOS -->
+  <section class="slide flex-col items-center justify-center relative bg-gradient-to-b from-[#0b1426] to-[#070b14]">
+    <div class="absolute inset-0 bg-pattern opacity-55"></div>
+    <div class="relative z-10 max-w-6xl mx-auto w-full px-3">
+      <div class="text-center mb-6">
+        <span class="text-green-300 font-bold tracking-widest text-sm">19 · IMPACTO ESPERADO</span>
+        <h2 class="text-3xl sm:text-4xl md:text-6xl font-black mt-2">
+          BENEFICIOS PARA<br>
+          <span class="green-text">UNIMÉDICA</span>
+        </h2>
+      </div>
+
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+        <div class="glass-card rounded-3xl p-5 text-center"><span class="text-4xl">⏱️</span><h3 class="font-black mt-3">Menos tiempos</h3><p class="text-slate-400 text-sm mt-2">Reducción de tareas manuales y esperas.</p></div>
+        <div class="glass-card rounded-3xl p-5 text-center"><span class="text-4xl">🔎</span><h3 class="font-black mt-3">Más trazabilidad</h3><p class="text-slate-400 text-sm mt-2">Estados, responsables y acciones registradas.</p></div>
+        <div class="glass-card rounded-3xl p-5 text-center"><span class="text-4xl">📉</span><h3 class="font-black mt-3">Menos errores</h3><p class="text-slate-400 text-sm mt-2">Validaciones automáticas y reglas comunes.</p></div>
+        <div class="glass-card rounded-3xl p-5 text-center"><span class="text-4xl">📈</span><h3 class="font-black mt-3">Mejor decisión</h3><p class="text-slate-400 text-sm mt-2">Indicadores operativos actualizados.</p></div>
+      </div>
+
+      <div class="mt-6 result-card rounded-3xl p-6 text-center">
+        <p class="text-xl md:text-3xl font-black">
+          El objetivo no es reemplazar al equipo: es darle mejores sistemas, mejor información y mayor capacidad operativa.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 18 · ALCANCE -->
+  <section class="slide flex-col items-center justify-center relative bg-gradient-to-b from-[#070b14] to-[#0b1426]">
+    <div class="absolute inset-0 bg-pattern opacity-55"></div>
+    <div class="relative z-10 max-w-6xl mx-auto w-full px-3">
+      <div class="mb-6">
+        <span class="text-violet-300 font-bold tracking-widest text-sm">20 · ALCANCE Y CRITERIOS</span>
+        <h2 class="text-3xl sm:text-4xl md:text-6xl font-black mt-2">
+          IMPLEMENTACIÓN PROGRESIVA,<br>
+          <span class="gradient-text">VALIDADA Y ESCALABLE</span>
+        </h2>
+      </div>
+
+      <div class="grid md:grid-cols-2 gap-5">
+        <div class="glass-card rounded-3xl p-6 md:p-8">
+          <p class="text-green-300 text-xs font-bold tracking-widest">INCLUIDO</p>
+          <div class="space-y-3 mt-4">
+            <div class="pill rounded-xl p-3">Relevamiento y documentación funcional.</div>
+            <div class="pill rounded-xl p-3">Diseño de arquitectura y módulos.</div>
+            <div class="pill rounded-xl p-3">Desarrollo e implementación progresiva.</div>
+            <div class="pill rounded-xl p-3">Automatizaciones e IA acordadas.</div>
+            <div class="pill rounded-xl p-3">Pruebas, capacitación y documentación.</div>
+          </div>
+        </div>
+
+        <div class="warning-card rounded-3xl p-6 md:p-8">
+          <p class="text-amber-300 text-xs font-bold tracking-widest">SUJETO A PRIORIZACIÓN</p>
+          <div class="space-y-3 mt-4">
+            <div class="pill rounded-xl p-3">Cantidad de módulos simultáneos.</div>
+            <div class="pill rounded-xl p-3">Integraciones con terceros.</div>
+            <div class="pill rounded-xl p-3">Migraciones masivas de datos históricos.</div>
+            <div class="pill rounded-xl p-3">Requerimientos regulatorios especiales.</div>
+            <div class="pill rounded-xl p-3">Cambios mayores de alcance institucional.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 19 · CIERRE -->
+  <section class="slide flex-col items-center justify-center relative bg-gradient-to-br from-[#070b14] via-[#0b162b] to-[#070b14] text-center">
+    <div class="absolute inset-0 bg-pattern"></div>
+    <div class="orb w-80 h-80 bg-cyan-400 top-[-120px] left-[-100px]"></div>
+    <div class="orb w-96 h-96 bg-violet-500 bottom-[-160px] right-[-120px]"></div>
+
+    <div class="relative z-10 max-w-5xl mx-auto w-full px-3">
+      <div class="flex items-center justify-center gap-4 md:gap-6 mb-7">
+        <img src="https://i.postimg.cc/Z5Sn2gzD/Chat-GPT-Image-12-jul-2026-10-45-09-p-m.png" style="height:72px;object-fit:contain;filter:drop-shadow(0 12px 25px rgba(0,0,0,.25));" alt="Unimédica Paraná"/>
+        <div class="h-14 w-px bg-white/20"></div>
+        <img src="https://i.postimg.cc/jSkQKpRK/Diseno-sin-titulo-2026-05-15T105828-195.png" alt="Instituto IEC" class="h-14 md:h-20 object-contain" />
+      </div>
+
+      <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-cyan-400/25 bg-cyan-400/10 text-cyan-200 text-xs md:text-sm font-bold tracking-[.18em] uppercase mb-5">
+        PROPUESTA DE TRABAJO CONJUNTO
+      </div>
+
+      <h2 class="text-4xl sm:text-5xl md:text-7xl font-black leading-[.98] mb-5">
+        DE LOS PROCESOS ACTUALES<br>
+        A UNA <span class="gradient-text">UNIMÉDICA INTELIGENTE.</span>
+      </h2>
+
+      <p class="text-lg md:text-2xl text-slate-300 max-w-4xl mx-auto">
+        Implementador in situ, programador dedicado, control técnico interno y desarrollo sobre servidor propio para construir un ERP que evolucione junto con la organización.
+      </p>
+
+      <div class="mt-8 glass-card rounded-3xl p-6 max-w-4xl mx-auto">
+        <p class="text-xl md:text-3xl font-black">PROGRAMA INTEGRAL DE INTELIGENCIA OPERATIVA</p>
+        <p class="text-slate-300 mt-3">Metodología Smarteo · Instituto IEC + Unimédica</p>
+        <p class="text-cyan-300 font-bold mt-2">Diagnóstico · Procesos · ERP · IA · Automatización · Mejora continua</p>
+      </div>
+
+      <p class="text-slate-500 mt-6 text-sm">
+        Instituto IEC · Gualeguaychú 449, Paraná · WhatsApp 343 5010523 · Instagram @iecparana
+      </p>
+    </div>
+  </section>
+
+  <script>
+    const COURSE_NAME = "Programa Integral de Inteligencia Operativa Unimedica";
+    const PAGE_TYPE = "presentacion_smarteo";
+    const PAGE_PATH = window.location.pathname;
+    const PAGE_TITLE = document.title;
+    const SESSION_START = Date.now();
+
+    function sendGA4Event(eventName, parameters = {}) {
+      if (typeof window.gtag !== "function") return;
+      window.gtag("event", eventName, {
+        propuesta: COURSE_NAME,
+        tipo_pagina: PAGE_TYPE,
+        pagina: PAGE_PATH,
+        titulo_pagina: PAGE_TITLE,
+        ...parameters
+      });
+    }
+
+    let current = 0;
+    const slides = Array.from(document.querySelectorAll('.slide'));
+    const dotsContainer = document.getElementById('dots');
+    const counter = document.getElementById('slide-counter');
+
+    slides.forEach((_, index) => {
+      const dot = document.createElement('button');
+      dot.className = 'dot';
+      dot.setAttribute('aria-label', `Ir a la diapositiva ${index + 1}`);
+      dot.onclick = () => goSlide(index);
+      dotsContainer.appendChild(dot);
+    });
+
+    const dots = Array.from(document.querySelectorAll('.dot'));
+
+    function updateNavigation(){
+      dots.forEach((dot,index)=>dot.classList.toggle('active',index===current));
+      counter.textContent = `${current + 1} / ${slides.length}`;
+      sendGA4Event("ver_diapositiva", {
+        numero_diapositiva: current + 1,
+        total_diapositivas: slides.length
+      });
+    }
+
+    function goSlide(index){
+      slides[current].classList.remove('active');
+      current = (index + slides.length) % slides.length;
+      slides[current].classList.add('active');
+      slides[current].scrollTop = 0;
+      updateNavigation();
+    }
+
+    function changeSlide(direction){goSlide(current + direction)}
+
+    document.addEventListener('keydown', event => {
+      if(event.key === 'ArrowRight' || event.key === 'PageDown') changeSlide(1);
+      if(event.key === 'ArrowLeft' || event.key === 'PageUp') changeSlide(-1);
+      if(event.key === 'Home') goSlide(0);
+      if(event.key === 'End') goSlide(slides.length - 1);
+    });
+
+    let touchStartX = 0;
+    document.addEventListener('touchstart', event => {
+      touchStartX = event.changedTouches[0].screenX;
+    }, {passive:true});
+
+    document.addEventListener('touchend', event => {
+      const diff = touchStartX - event.changedTouches[0].screenX;
+      if(Math.abs(diff) > 55) changeSlide(diff > 0 ? 1 : -1);
+    }, {passive:true});
+
+    async function toggleFullscreen(){
+      try{
+        if(!document.fullscreenElement) {
+          await document.documentElement.requestFullscreen();
+          sendGA4Event("activar_pantalla_completa");
+        } else {
+          await document.exitFullscreen();
+          sendGA4Event("salir_pantalla_completa");
+        }
+      }catch(error){
+        alert('El navegador no permitió activar la pantalla completa.');
+      }
+    }
+
+    [30,60,120,180,300].forEach(seconds => {
+      setTimeout(() => {
+        if(document.visibilityState === "visible"){
+          sendGA4Event("tiempo_interaccion", {segundos:seconds});
+        }
+      }, seconds * 1000);
+    });
+
+    window.addEventListener("beforeunload", () => {
+      sendGA4Event("salida_presentacion", {
+        segundos_totales: Math.round((Date.now() - SESSION_START) / 1000),
+        ultima_diapositiva: current + 1
+      });
+    });
+
+    updateNavigation();
+    lucide.createIcons();
+  </script>
+</body>
+</html>
