@@ -1,0 +1,2541 @@
+<!DOCTYPE html>
+<html lang="es-AR">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>ViviendaSion — Conciliación Bancaria</title>
+
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="/styles/bancaria.css" />
+
+  <style>
+    :root{
+      color-scheme:dark;
+      --bg:#08111f;--bg2:#0d1728;--panel:#101c2f;--panel2:#142238;
+      --line:#26364e;--text:#e7eef8;--muted:#91a2b9;--brand:#4ea1ff;
+      --green:#39d98a;--yellow:#f6c453;--red:#ff6b7a;--purple:#b693ff;
+      --shadow:0 20px 50px rgba(0,0,0,.28)
+    }
+    *{box-sizing:border-box}
+    html{background:var(--bg)}
+    body{margin:0;background:radial-gradient(circle at 15% -20%,rgba(78,161,255,.17),transparent 30%),linear-gradient(180deg,var(--bg),#091421 55%,#07101c);color:var(--text);font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;min-height:100vh}
+    button,input,select{font:inherit}
+    button{cursor:pointer}
+    button:disabled{opacity:.55;cursor:not-allowed}
+    a{color:inherit}
+    header{backdrop-filter:blur(18px);box-shadow:0 10px 30px rgba(0,0,0,.25)}
+    main{padding-top:28px!important;padding-bottom:48px!important}
+    .card{background:linear-gradient(180deg,rgba(16,28,47,.97),rgba(10,20,35,.97));border:1px solid var(--line);box-shadow:var(--shadow)}
+    .soft{background:rgba(17,31,51,.85);border:1px solid #2a3b55;color:var(--text);box-shadow:inset 0 1px 0 rgba(255,255,255,.025)}
+    input.soft,select.soft{min-height:40px;outline:none;transition:.2s ease}
+    input.soft::placeholder{color:#71839d}
+    input.soft:focus,select.soft:focus{border-color:var(--brand);box-shadow:0 0 0 3px rgba(78,161,255,.13)}
+    select.soft{appearance:auto}
+    .text-vs{color:#f4f8ff}
+    .tab-btn{border:1px solid transparent;border-radius:10px;padding:9px 13px;color:#a8b6ca;background:transparent;font-size:.9rem;transition:.2s ease}
+    .tab-btn:hover{color:#fff;background:rgba(255,255,255,.05)}
+    .tab-btn[aria-selected="true"]{color:#fff;background:rgba(78,161,255,.15);border-color:rgba(78,161,255,.4);box-shadow:0 0 0 1px rgba(78,161,255,.08) inset}
+    .pill,.tag{display:inline-flex;align-items:center;gap:5px;white-space:nowrap;border:1px solid currentColor;border-color:color-mix(in srgb,currentColor 28%,transparent);font-weight:700}
+    .pill{border-radius:999px;padding:5px 9px;font-size:.74rem}
+    .tag{border-radius:7px;padding:3px 7px;font-size:.68rem;background:rgba(255,255,255,.045);color:#bac8db}
+    .btn{border-radius:10px;padding:9px 13px;border:1px solid #31435e;transition:.2s ease}
+    .btn:hover{transform:translateY(-1px);filter:brightness(1.08)}
+    .drop{min-height:170px;border:1.5px dashed #3a5273!important;display:flex;align-items:center;justify-content:center;transition:.2s ease;background:linear-gradient(180deg,rgba(255,255,255,.018),rgba(255,255,255,.005))}
+    .drop:hover{border-color:var(--brand)!important;background:rgba(78,161,255,.055)}
+    .tbl{border-collapse:separate;border-spacing:0;min-width:840px}
+    .tbl thead th{position:sticky;top:0;background:#142238;color:#aab9cc;font-size:.72rem;text-transform:uppercase;letter-spacing:.045em;border-bottom:1px solid var(--line);z-index:2}
+    .tbl tbody td{border-bottom:1px solid rgba(51,69,94,.62);vertical-align:middle}
+    .tbl tbody tr:last-child td{border-bottom:0}
+    .hover-row{transition:.15s ease}
+    .hover-row:hover{background:rgba(78,161,255,.055)}
+    .metrics-grid{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:14px}
+    .panel{min-width:0}
+    .clamp{max-height:460px;overflow:auto}
+    .spin{animation:spin .75s linear infinite}
+    @keyframes spin{to{transform:rotate(360deg)}}
+    dialog{background:transparent;color:var(--text);border:0;box-shadow:var(--shadow)}
+    dialog::backdrop{background:rgba(2,8,18,.76);backdrop-filter:blur(5px)}
+    dialog .soft{background:#101c2f}
+    #lista-ctas .soft{transition:.18s ease}
+    #lista-ctas .soft:hover{border-color:#3b5577;background:#14243a}
+    #toast{max-width:min(420px,calc(100vw - 32px));font-weight:700}
+    #view-conc>div:first-child .soft,#view-metrics>.soft,#view-arca>.soft{border-color:#2d405d}
+    #rec-engine-status,#rec-last-run,#rec-webhook-status{letter-spacing:-.02em}
+    ::-webkit-scrollbar{width:10px;height:10px}
+    ::-webkit-scrollbar-track{background:#091421}
+    ::-webkit-scrollbar-thumb{background:#30435f;border-radius:10px;border:2px solid #091421}
+    ::-webkit-scrollbar-thumb:hover{background:#405877}
+    @media(max-width:1279px){header>div{flex-direction:column;align-items:stretch!important;gap:12px}header nav{overflow-x:auto;padding-bottom:3px}.metrics-grid{grid-template-columns:repeat(3,minmax(0,1fr))}}
+    @media(max-width:768px){main{padding-left:14px!important;padding-right:14px!important}header>div{padding-left:14px!important;padding-right:14px!important}.metrics-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.card{padding:15px!important}.drop{min-height:145px}.pill{font-size:.68rem}.tab-btn{padding:8px 10px}.grid-cols-3{grid-template-columns:1fr!important}.col-span-2,.col-span-3{grid-column:span 1/span 1!important}}
+    @media(max-width:480px){.metrics-grid{grid-template-columns:1fr}#kpi-mov,#kpi-match,#kpi-open{display:none}}
+  </style>
+
+</head>
+<body class="min-h-screen">
+  <header class="bg-gray-900/90 border-b border-gray-800 sticky top-0 z-10">
+    <div class="max-w-screen-2xl mx-auto px-6 py-4 flex items-center justify-between">
+      <div class="flex items-center gap-3">
+        <button type="button" id="btn-volver" class="text-gray-300 hover:text-white flex items-center gap-2">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m7 7H3"/>
+          </svg>
+          Volver
+        </button>
+        <div class="h-6 w-px bg-gray-700"></div>
+        <h1 class="text-xl font-bold text-vs">Conciliación Bancaria</h1>
+      </div>
+
+      <nav class="flex items-center gap-2" role="tablist" aria-label="Navegación principal">
+        <button type="button" class="tab-btn" id="tab-conc" role="tab" aria-selected="true" data-tab="conc">Conciliación</button>
+        <button type="button" class="tab-btn" id="tab-metrics" role="tab" aria-selected="false" data-tab="metrics">Métricas</button>
+        <button type="button" class="tab-btn" id="tab-arca" role="tab" aria-selected="false" data-tab="arca">🏛 ARCA</button>
+        <span class="h-6 w-px bg-gray-700 mx-2"></span>
+        <span id="kpi-mov" class="pill bg-blue-600/20 text-blue-400">0 movs</span>
+        <span id="kpi-match" class="pill bg-emerald-600/20 text-emerald-400">0 conciliados</span>
+        <span id="kpi-open" class="pill bg-yellow-600/20 text-yellow-400">0 pendientes</span>
+        <button type="button" id="btn-add-cta" class="bg-green-600 hover:bg-green-700 text-white px-3 py-2 rounded text-sm">➕ Cuenta</button>
+      </nav>
+    </div>
+  </header>
+
+  <main class="max-w-screen-2xl mx-auto px-6 py-6">
+    <div class="grid grid-cols-1 xl:grid-cols-12 gap-6">
+      <aside class="xl:col-span-3 card rounded-xl p-5">
+        <div class="flex items-center justify-between mb-3">
+          <h2 class="text-lg font-semibold text-vs">🏦 Cuentas bancarias</h2>
+          <input id="q-cta" class="soft rounded px-3 py-1 text-sm" placeholder="Buscar…" autocomplete="off">
+        </div>
+        <div id="lista-ctas" class="space-y-2 max-h-[70vh] overflow-y-auto"></div>
+      </aside>
+
+      <section class="xl:col-span-9 card rounded-xl p-5">
+        <div class="grid grid-cols-1 md:grid-cols-4 gap-3 mb-4 text-xs">
+          <div class="soft rounded px-3 py-2 text-gray-300">
+            Webhook banco:
+            <b class="text-white break-all">https://n8n.smarteco.com.ar/webhook/digitalizacion_banco</b>
+          </div>
+          <div class="soft rounded px-3 py-2 text-gray-300">
+            Webhook facturas:
+            <b class="text-white break-all">https://n8n.smarteco.com.ar/webhook/digitalizacion_facturas</b>
+          </div>
+          <div class="soft rounded px-3 py-2 text-gray-300">
+            Webhook conciliación:
+            <b class="text-white break-all">https://n8n.smarteco.com.ar/webhook/reconciliacion</b>
+          </div>
+          <div class="soft rounded px-3 py-2 text-gray-300">
+            Webhook ARCA status:
+            <b class="text-white break-all">https://n8n.smarteco.com.ar/webhook-test/arca_status</b>
+          </div>
+        </div>
+
+        <div id="view-conc" role="tabpanel">
+          <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+            <div class="soft rounded p-4">
+              <div class="flex items-center justify-between mb-2">
+                <h3 class="font-semibold text-vs">📥 Digitalizar resumen bancario</h3>
+                <div class="text-xs text-gray-400">Webhook n8n • banco</div>
+              </div>
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-3">
+                <label class="text-sm">Cuenta
+                  <select id="up-cta" class="soft w-full rounded px-3 py-2 mt-1"></select>
+                </label>
+                <label class="text-sm">Tolerancia importe
+                  <input id="cfg-tol" type="number" step="0.0001" class="soft w-full rounded px-3 py-2 mt-1" placeholder="0.02 (=2%)">
+                </label>
+              </div>
+              <div id="drop-bank" class="soft rounded drop p-5 text-center">
+                <input id="file-bank" type="file" class="hidden" accept=".pdf,.csv,.xls,.xlsx,.txt,.jpg,.jpeg,.png" />
+                <div class="text-gray-400">
+                  <div class="text-4xl mb-1">📄</div>
+                  Soltá el archivo del banco o
+                  <button type="button" class="underline text-blue-400" id="btn-pick-bank">elegí uno</button>
+                  <div class="text-xs mt-1">
+                    Se envía a <b>digitalizacion_banco</b> (campo binario: <b>archivo</b>).
+                  </div>
+                </div>
+                <div id="bank-name" class="hidden text-sm mt-2"></div>
+              </div>
+              <div id="bank-status" class="text-xs text-gray-400 mt-2"></div>
+            </div>
+
+            <div class="soft rounded p-4">
+              <div class="flex items-center justify-between mb-2">
+                <h3 class="font-semibold text-vs">🧾 Digitalizar facturas / remitos / tickets</h3>
+                <div class="text-xs text-gray-400">Webhook n8n • facturas</div>
+              </div>
+              <div id="drop-doc" class="soft rounded drop p-5 text-center">
+                <input id="file-doc" type="file" class="hidden" multiple accept=".pdf,.jpg,.jpeg,.png" />
+                <div class="text-gray-400">
+                  <div class="text-4xl mb-1">🧷</div>
+                  Soltá los comprobantes o
+                  <button type="button" class="underline text-blue-400" id="btn-pick-doc">elegí archivos</button>
+                  <div class="text-xs mt-1">
+                    Se envían a <b>digitalizacion_facturas</b> (campo binario: <b>archivo</b>).
+                  </div>
+                </div>
+                <div id="doc-queue" class="text-xs text-gray-400 mt-2"></div>
+              </div>
+              <div id="doc-status" class="text-xs text-gray-400 mt-2"></div>
+            </div>
+          </div>
+
+          <div class="grid grid-cols-1 lg:grid-cols-3 gap-4 mt-6">
+            <div class="soft rounded p-4">
+              <div class="text-sm text-gray-400">Estado del motor</div>
+              <div id="rec-engine-status" class="text-lg font-semibold mt-1 text-blue-400">Listo para conciliar</div>
+              <div id="rec-engine-detail" class="text-xs text-gray-500 mt-2">
+                El sistema usará movimientos bancarios + facturas emitidas + facturas recibidas.
+              </div>
+            </div>
+
+            <div class="soft rounded p-4">
+              <div class="text-sm text-gray-400">Última conciliación</div>
+              <div id="rec-last-run" class="text-lg font-semibold mt-1">—</div>
+              <div id="rec-last-summary" class="text-xs text-gray-500 mt-2">
+                Sin ejecuciones todavía.
+              </div>
+            </div>
+
+            <div class="soft rounded p-4">
+              <div class="text-sm text-gray-400">Resultado webhook</div>
+              <div id="rec-webhook-status" class="text-lg font-semibold mt-1">—</div>
+              <div id="rec-webhook-message" class="text-xs text-gray-500 mt-2">
+                Esperando ejecución manual.
+              </div>
+            </div>
+          </div>
+
+          <div class="mt-6">
+            <div class="flex flex-wrap items-center justify-between gap-2 mb-3">
+              <div class="flex flex-wrap items-center gap-3">
+                <h3 class="text-lg font-semibold text-vs">🔗 Conciliación</h3>
+                <select id="flt-cta" class="soft rounded px-3 py-1 text-sm"></select>
+                <select id="flt-estado" class="soft rounded px-3 py-1 text-sm">
+                  <option value="">Todos</option>
+                  <option value="conciliado">✅ Conciliados</option>
+                  <option value="pendiente">⏳ Pendientes</option>
+                  <option value="observado">⚠️ Observados</option>
+                </select>
+                <select id="flt-tipo" class="soft rounded px-3 py-1 text-sm">
+                  <option value="">Todos</option>
+                  <option value="credito">Créditos</option>
+                  <option value="debito">Débitos</option>
+                </select>
+                <input id="q-mov" class="soft rounded px-3 py-1 text-sm" placeholder="Buscar descripción, ref, tercero…" autocomplete="off">
+              </div>
+              <div class="flex items-center gap-2">
+                <button type="button" id="btn-reconciliar" class="bg-blue-600 hover:bg-blue-700 text-white btn text-sm">
+                  ⚙️ Reconciliar ahora
+                </button>
+                <button type="button" id="btn-export" class="soft btn text-sm">📤 Exportar CSV</button>
+              </div>
+            </div>
+
+            <div class="soft rounded p-4 mb-4">
+              <div class="flex flex-wrap items-center gap-4 text-sm">
+                <span class="pill bg-slate-700/40 text-slate-200">Motor: <b id="rec-mode">Webhook n8n</b></span>
+                <span class="pill bg-emerald-600/20 text-emerald-400">Exactos: <b id="rec-count-exact">0</b></span>
+                <span class="pill bg-blue-600/20 text-blue-400">Probables: <b id="rec-count-probable">0</b></span>
+                <span class="pill bg-yellow-600/20 text-yellow-400">Pendientes: <b id="rec-count-pending">0</b></span>
+                <span class="pill bg-red-600/20 text-red-400">Observados: <b id="rec-count-observed">0</b></span>
+              </div>
+              <div id="rec-summary-text" class="text-xs text-gray-400 mt-3">
+                Cuando ejecutes la conciliación, acá se mostrará el resumen devuelto por n8n.
+              </div>
+            </div>
+
+            <div class="soft rounded overflow-auto">
+              <table class="w-full text-sm tbl">
+                <thead>
+                  <tr>
+                    <th class="text-left p-2">Fecha</th>
+                    <th class="text-left p-2">Cuenta</th>
+                    <th class="text-left p-2">Descripción</th>
+                    <th class="text-right p-2">Débito</th>
+                    <th class="text-right p-2">Crédito</th>
+                    <th class="text-left p-2">Estado</th>
+                    <th class="text-left p-2">Match</th>
+                    <th class="text-left p-2">Acciones</th>
+                  </tr>
+                </thead>
+                <tbody id="tb-movs"></tbody>
+              </table>
+            </div>
+
+            <div class="soft rounded p-4 mt-4">
+              <div class="flex items-center justify-between mb-2">
+                <h4 class="font-semibold text-vs">🧠 Resultado de conciliación</h4>
+                <span id="rec-response-badge" class="pill bg-gray-600/30 text-gray-300">Sin ejecutar</span>
+              </div>
+              <div id="rec-response-detail" class="text-sm text-gray-400">
+                Acá podés mostrar mensajes del webhook, observaciones del motor y cantidad de coincidencias encontradas.
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div id="view-metrics" class="hidden" role="tabpanel">
+          <div class="flex flex-wrap items-center gap-3 mb-4">
+            <h3 class="text-lg font-semibold text-vs">📊 Métricas</h3>
+            <select id="m-cta" class="soft rounded px-3 py-1 text-sm"></select>
+            <input id="m-from" type="date" class="soft rounded px-3 py-1 text-sm">
+            <input id="m-to" type="date" class="soft rounded px-3 py-1 text-sm">
+            <button type="button" id="m-apply" class="bg-blue-600 hover:bg-blue-700 text-white btn text-sm">
+              Aplicar
+            </button>
+            <div class="text-xs text-gray-400">
+              Vista resumida de ingresos/egresos, conciliación y top contrapartes.
+            </div>
+          </div>
+
+          <div class="metrics-grid">
+            <div class="soft rounded p-4 panel">
+              <div class="text-sm text-gray-400">Movimientos</div>
+              <div id="mx-movs" class="text-2xl font-bold mt-1">0</div>
+            </div>
+            <div class="soft rounded p-4 panel">
+              <div class="text-sm text-gray-400">Ingresos</div>
+              <div id="mx-in" class="text-2xl font-bold text-emerald-400 mt-1">$ 0,00</div>
+            </div>
+            <div class="soft rounded p-4 panel">
+              <div class="text-sm text-gray-400">Egresos</div>
+              <div id="mx-out" class="text-2xl font-bold text-red-400 mt-1">$ 0,00</div>
+            </div>
+            <div class="soft rounded p-4 panel">
+              <div class="text-sm text-gray-400">% Conciliado</div>
+              <div id="mx-pct" class="text-2xl font-bold mt-1">0%</div>
+            </div>
+            <div class="soft rounded p-4 panel">
+              <div class="text-sm text-gray-400">Pendientes</div>
+              <div id="mx-pend" class="text-2xl font-bold mt-1">0</div>
+            </div>
+            <div class="soft rounded p-4 panel">
+              <div class="text-sm text-gray-400">Observados</div>
+              <div id="mx-obs" class="text-2xl font-bold mt-1">0</div>
+            </div>
+          </div>
+
+          <div class="soft rounded p-4 mt-6 panel">
+            <div class="flex items-center justify-between mb-2">
+              <h4 class="font-semibold">Flujo diario (ingresos / egresos)</h4>
+              <div class="text-xs text-gray-400">
+                Total: <span id="mx-flujo-total">$ 0,00</span>
+              </div>
+            </div>
+            <div id="mx-flujo" class="space-y-2 clamp"></div>
+          </div>
+
+          <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mt-6">
+            <div class="soft rounded p-4 panel">
+              <h4 class="font-semibold mb-2">Top contrapartes (créditos)</h4>
+              <table class="w-full text-sm">
+                <thead class="text-gray-400">
+                  <tr>
+                    <th class="text-left p-2">Contraparte</th>
+                    <th class="text-right p-2">Crédito</th>
+                    <th class="text-right p-2">#</th>
+                  </tr>
+                </thead>
+                <tbody id="mx-top-cred"></tbody>
+              </table>
+            </div>
+            <div class="soft rounded p-4 panel">
+              <h4 class="font-semibold mb-2">Top contrapartes (débitos)</h4>
+              <table class="w-full text-sm">
+                <thead class="text-gray-400">
+                  <tr>
+                    <th class="text-left p-2">Contraparte</th>
+                    <th class="text-right p-2">Débito</th>
+                    <th class="text-right p-2">#</th>
+                  </tr>
+                </thead>
+                <tbody id="mx-top-deb"></tbody>
+              </table>
+            </div>
+          </div>
+
+          <div class="soft rounded p-4 mt-6 panel">
+            <h4 class="font-semibold mb-2">Impuestos / Comisiones detectados</h4>
+            <table class="w-full text-sm">
+              <thead class="text-gray-400">
+                <tr>
+                  <th class="text-left p-2">Concepto</th>
+                  <th class="text-right p-2">Total</th>
+                  <th class="text-right p-2">#</th>
+                </tr>
+              </thead>
+              <tbody id="mx-tax"></tbody>
+            </table>
+          </div>
+        </div>
+
+        <div id="view-arca" class="hidden" role="tabpanel">
+          <div class="soft rounded-xl p-5 mb-6">
+            <div class="flex items-center justify-between mb-4">
+              <h3 class="text-lg font-semibold text-vs">🏛 Buscar en ARCA</h3>
+              <div class="flex items-center gap-2">
+                <span id="arca-count-emitidos" class="pill bg-blue-600/20 text-blue-400">0 emitidos</span>
+                <span id="arca-count-recibidos" class="pill bg-purple-600/20 text-purple-400">0 recibidos</span>
+                <button type="button" id="btn-arca-limpiar" class="soft px-3 py-1 rounded text-xs text-gray-400 hover:text-red-400">🗑 Limpiar</button>
+              </div>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-3 mb-4">
+              <label class="text-sm">
+                CUIT
+                <input id="arca-cuit" type="text" inputmode="numeric" maxlength="11" class="soft w-full rounded px-3 py-2 mt-1 font-mono" placeholder="30715870009" autocomplete="off">
+              </label>
+              <label class="text-sm">
+                Usuario ARCA
+                <input id="arca-user" type="text" class="soft w-full rounded px-3 py-2 mt-1" placeholder="20370430439" autocomplete="off">
+              </label>
+              <label class="text-sm">
+                Contraseña
+                <input id="arca-pass" type="password" class="soft w-full rounded px-3 py-2 mt-1" autocomplete="new-password">
+              </label>
+              <div class="text-sm flex flex-col gap-2 justify-end">
+                <label class="flex items-center gap-2 cursor-pointer">
+                  <input id="arca-chk-emitidos" type="checkbox" checked class="w-4 h-4 accent-blue-500">
+                  <span>Emitidos</span>
+                  <span class="tag bg-blue-900/30 text-blue-400">t=E</span>
+                </label>
+                <label class="flex items-center gap-2 cursor-pointer">
+                  <input id="arca-chk-recibidos" type="checkbox" checked class="w-4 h-4 accent-purple-500">
+                  <span>Recibidos</span>
+                  <span class="tag bg-purple-900/30 text-purple-400">t=R</span>
+                </label>
+              </div>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-3 items-end">
+              <label class="text-sm">
+                Fecha desde
+                <input id="arca-desde" type="date" class="soft w-full rounded px-3 py-2 mt-1">
+              </label>
+              <label class="text-sm">
+                Fecha hasta
+                <input id="arca-hasta" type="date" class="soft w-full rounded px-3 py-2 mt-1">
+              </label>
+              <div class="flex flex-col gap-1">
+                <button type="button" id="btn-arca-buscar" class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded text-sm font-semibold">
+                  🔍 Buscar en ARCA
+                </button>
+                <div id="arca-status" class="text-xs text-gray-500">
+                  ⏱ AFIP SDK puede tardar varios minutos.
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="soft rounded-xl p-4 mb-6">
+            <h4 class="font-semibold mb-3 text-blue-400">📤 Comprobantes Emitidos
+              <span id="arca-count-emitidos-tbl" class="text-gray-400 font-normal text-sm ml-2"></span>
+            </h4>
+            <div class="clamp">
+              <table class="w-full text-sm tbl">
+                <thead>
+                  <tr class="text-gray-400 text-xs">
+                    <th class="text-left p-2">Fecha</th>
+                    <th class="text-left p-2">Tipo</th>
+                    <th class="text-left p-2">Nro.</th>
+                    <th class="text-left p-2">Receptor</th>
+                    <th class="text-left p-2">Moneda</th>
+                    <th class="text-right p-2">Imp. Total</th>
+                    <th class="text-center p-2">Acción</th>
+                  </tr>
+                </thead>
+                <tbody id="arca-tbody-emitidos">
+                  <tr><td colspan="7" class="p-4 text-center text-gray-500">Buscá comprobantes para verlos acá</td></tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <div class="soft rounded-xl p-4">
+            <h4 class="font-semibold mb-3 text-purple-400">📥 Comprobantes Recibidos
+              <span id="arca-count-recibidos-tbl" class="text-gray-400 font-normal text-sm ml-2"></span>
+            </h4>
+            <div class="clamp">
+              <table class="w-full text-sm tbl">
+                <thead>
+                  <tr class="text-gray-400 text-xs">
+                    <th class="text-left p-2">Fecha</th>
+                    <th class="text-left p-2">Tipo</th>
+                    <th class="text-left p-2">Nro.</th>
+                    <th class="text-left p-2">Receptor</th>
+                    <th class="text-left p-2">Moneda</th>
+                    <th class="text-right p-2">Imp. Total</th>
+                    <th class="text-center p-2">Acción</th>
+                  </tr>
+                </thead>
+                <tbody id="arca-tbody-recibidos">
+                  <tr><td colspan="7" class="p-4 text-center text-gray-500">Buscá comprobantes para verlos acá</td></tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
+  </main>
+
+  <dialog id="dlg-cta" class="w-full max-w-lg p-0 rounded-xl">
+    <form method="dialog" class="soft rounded-xl">
+      <div class="px-6 py-3 border-b border-gray-700 flex items-center justify-between">
+        <h3 class="text-lg font-semibold text-vs" id="dlg-cta-title">Cuenta bancaria</h3>
+        <button type="submit" class="text-gray-300 hover:text-white" value="cancel" aria-label="Cerrar diálogo">✖</button>
+      </div>
+      <div class="p-6 grid grid-cols-2 gap-3 text-sm">
+        <label class="col-span-2">Alias / Nombre
+          <input id="cta-alias" class="soft w-full rounded px-3 py-2 mt-1">
+        </label>
+        <label>Banco
+          <input id="cta-banco" class="soft w-full rounded px-3 py-2 mt-1">
+        </label>
+        <label>Moneda
+          <select id="cta-moneda" class="soft w-full rounded px-3 py-2 mt-1">
+            <option value="ARS">ARS</option>
+            <option value="USD">USD</option>
+          </select>
+        </label>
+        <label class="col-span-2">CBU/alias
+          <input id="cta-cbu" class="soft w-full rounded px-3 py-2 mt-1">
+        </label>
+        <input id="cta-id" type="hidden">
+      </div>
+      <div class="px-6 py-3 border-t border-gray-700 flex justify-end gap-2">
+        <button type="submit" class="soft px-3 py-2 rounded text-sm" value="cancel">Cancelar</button>
+        <button type="button" id="btn-cta-save" class="bg-blue-600 hover:bg-blue-700 text-white px-3 py-2 rounded text-sm">
+          💾 Guardar
+        </button>
+      </div>
+    </form>
+  </dialog>
+
+  <dialog id="dlg-mov" class="w-full max-w-4xl p-0 rounded-xl">
+    <form method="dialog" class="soft rounded-xl">
+      <div class="px-6 py-3 border-b border-gray-700 flex items-center justify-between">
+        <h3 class="text-lg font-semibold text-vs">Revisión de movimiento</h3>
+        <button type="submit" class="text-gray-300 hover:text-white" value="cancel" aria-label="Cerrar diálogo">✖</button>
+      </div>
+      <div class="p-6 grid grid-cols-3 gap-3 text-sm">
+        <div class="col-span-3">
+          <div id="mov-head" class="text-gray-300"></div>
+        </div>
+        <div class="col-span-2">
+          <h4 class="font-medium mb-2">Sugerencias</h4>
+          <div id="sugg" class="space-y-2 max-h-72 overflow-y-auto"></div>
+        </div>
+        <div>
+          <h4 class="font-medium mb-2">Vinculados</h4>
+          <div id="linked" class="space-y-2"></div>
+        </div>
+        <div class="col-span-3 border-t border-gray-700 pt-3 flex justify-between items-center">
+          <div id="mov-status" class="text-xs text-gray-400"></div>
+          <div class="flex gap-2">
+            <button type="button" id="btn-mov-clear" class="soft px-3 py-2 rounded text-sm">🧹 Limpiar</button>
+            <button type="button" id="btn-mov-accept" class="bg-green-600 hover:bg-green-700 text-white px-3 py-2 rounded text-sm">✅ Confirmar</button>
+          </div>
+        </div>
+      </div>
+    </form>
+  </dialog>
+
+  <dialog id="dlg-arca-vincular" class="w-full max-w-2xl p-0 rounded-xl">
+    <div class="soft rounded-xl">
+      <div class="px-6 py-3 border-b border-gray-700 flex items-center justify-between">
+        <h3 class="text-lg font-semibold text-vs">🔗 Vincular comprobante ARCA</h3>
+        <button type="button" id="btn-arca-dlg-cerrar" class="text-gray-300 hover:text-white" aria-label="Cerrar diálogo">✖</button>
+      </div>
+      <div class="p-6">
+        <div class="soft rounded p-3 mb-4" id="arca-dlg-comp-info"></div>
+        <h4 class="font-medium text-sm mb-2 text-gray-400">Movimientos bancarios pendientes (por importe aproximado)</h4>
+        <div id="arca-dlg-movs-lista" class="space-y-2 max-h-80 overflow-y-auto"></div>
+      </div>
+    </div>
+  </dialog>
+
+  <div id="toast" class="fixed top-4 right-4 hidden text-white px-4 py-2 rounded-lg shadow-lg z-50"></div>
+
+  <script>
+    (() => {
+      "use strict";
+
+      const KEY_CTAS = "vsion_bancos_ctas";
+      const KEY_MOVS = "vsion_bancos_movs";
+      const KEY_DOCS = "vsion_bancos_docs";
+      const KEY_CFG = "vsion_bancos_cfg";
+      const KEY_ARCA_EMITIDOS = "vsion_arca_emitidos";
+      const KEY_ARCA_RECIBIDOS = "vsion_arca_recibidos";
+
+      const WEBHOOKS = {
+        banco: "https://n8n.smarteco.com.ar/webhook/digitalizacion_banco",
+        docs: "https://n8n.smarteco.com.ar/webhook/digitalizacion_facturas",
+        conciliacion: "https://n8n.smarteco.com.ar/webhook/reconciliacion",
+        arca: "https://n8n.smarteco.com.ar/webhook-test/arca",
+        arcaStatus: "https://n8n.smarteco.com.ar/webhook-test/arca_status",
+      };
+
+      const ARCA_POLL_INTERVAL_MS = 4000;
+      const ARCA_START_TIMEOUT_MS = 45000;
+      const ARCA_STATUS_TIMEOUT_MS = 45000;
+      const ARCA_MAX_POLL_ERRORS = 4;
+
+      const $ = (selector, ctx = document) => ctx.querySelector(selector);
+
+      const state = {
+        cuentas: lsGet(KEY_CTAS, []),
+        movimientos: lsGet(KEY_MOVS, []),
+        documentos: lsGet(KEY_DOCS, []),
+        cfg: lsGet(KEY_CFG, { tolerancia: 0.02, dias: 5 }),
+        arcaEmitidos: lsGet(KEY_ARCA_EMITIDOS, []),
+        arcaRecibidos: lsGet(KEY_ARCA_RECIBIDOS, []),
+        arcaCompCache: new Map(),
+        arcaPolling: {
+          timer: null,
+          active: false,
+          jobId: null,
+          startedAt: null,
+          errorCount: 0,
+        },
+      };
+
+      function lsGet(key, fallback) {
+        try {
+          const raw = localStorage.getItem(key);
+          return raw ? JSON.parse(raw) : fallback;
+        } catch {
+          return fallback;
+        }
+      }
+
+      function lsSet(key, val) {
+        localStorage.setItem(key, JSON.stringify(val));
+      }
+
+      function persist() {
+        lsSet(KEY_CTAS, state.cuentas);
+        lsSet(KEY_MOVS, state.movimientos);
+        lsSet(KEY_DOCS, state.documentos);
+        lsSet(KEY_CFG, state.cfg);
+      }
+
+      function persistARCA() {
+        lsSet(KEY_ARCA_EMITIDOS, state.arcaEmitidos);
+        lsSet(KEY_ARCA_RECIBIDOS, state.arcaRecibidos);
+      }
+
+      function uuid() {
+        return crypto.randomUUID();
+      }
+
+      function localISODate(date = new Date()) {
+        const y = date.getFullYear();
+        const m = String(date.getMonth() + 1).padStart(2, "0");
+        const d = String(date.getDate()).padStart(2, "0");
+        return `${y}-${m}-${d}`;
+      }
+
+      function todayISO() {
+        return localISODate(new Date());
+      }
+
+      function esc(str = "") {
+        return String(str)
+          .replaceAll("&", "&amp;")
+          .replaceAll("<", "&lt;")
+          .replaceAll(">", "&gt;")
+          .replaceAll('"', "&quot;")
+          .replaceAll("'", "&#39;");
+      }
+
+      function normalizeText(str = "") {
+        return String(str).trim().replace(/\s+/g, " ");
+      }
+
+      function normalizeKeyText(str = "") {
+        return normalizeText(str).toLowerCase();
+      }
+
+      function parseNum(v) {
+        if (typeof v === "number") return Number.isFinite(v) ? v : 0;
+        if (typeof v !== "string") return Number(v) || 0;
+
+        const s = v.trim().replace(/\s/g, "").replace(/[^\d,.\-]/g, "");
+        if (!s) return 0;
+
+        if (s.includes(",") && s.includes(".")) {
+          const lastComma = s.lastIndexOf(",");
+          const lastDot = s.lastIndexOf(".");
+          const decPos = Math.max(lastComma, lastDot);
+          const decSep = s[decPos];
+          const thousandsSep = decSep === "," ? "." : ",";
+          return Number(s.replace(new RegExp("\\" + thousandsSep, "g"), "").replace(decSep, ".")) || 0;
+        }
+
+        if (s.includes(",") && !s.includes(".")) {
+          return Number(s.replace(/\./g, "").replace(",", ".")) || 0;
+        }
+
+        return Number(s.replace(/,/g, "")) || 0;
+      }
+
+      function normalizeDate(value) {
+        if (!value) return null;
+
+        if (value instanceof Date && !isNaN(value)) {
+          return localISODate(value);
+        }
+
+        const s = String(value).trim();
+        if (!s) return null;
+        if (/^\d{4}-\d{2}-\d{2}$/.test(s)) return s;
+
+        let m = s.match(/^(\d{1,2})\/(\d{1,2})\/(\d{4})$/);
+        if (m) {
+          return `${m[3]}-${m[2].padStart(2, "0")}-${m[1].padStart(2, "0")}`;
+        }
+
+        m = s.match(/^(\d{4})\/(\d{1,2})\/(\d{1,2})$/);
+        if (m) {
+          return `${m[1]}-${m[2].padStart(2, "0")}-${m[3].padStart(2, "0")}`;
+        }
+
+        const d = new Date(s);
+        if (!isNaN(d)) return localISODate(d);
+        return null;
+      }
+
+      function fmtFecha(value) {
+        const iso = normalizeDate(value);
+        if (!iso) return "—";
+        const [y, m, d] = iso.split("-");
+        return `${d}/${m}/${y}`;
+      }
+
+      function fmtMoney(value, currency = "ARS") {
+        const amount = Number(value) || 0;
+        const cur = currency === "USD" ? "USD" : "ARS";
+        return amount.toLocaleString("es-AR", {
+          style: "currency",
+          currency: cur,
+          minimumFractionDigits: 2,
+        });
+      }
+
+      function abs(n) {
+        return Math.abs(Number(n) || 0);
+      }
+
+      function isoADDMMYYYY(iso) {
+        const norm = normalizeDate(iso);
+        if (!norm) return "";
+        const [y, m, d] = norm.split("-");
+        return `${d}/${m}/${y}`;
+      }
+
+      function toast(msg, ok = true) {
+        const el = $("#toast");
+        if (!el) return;
+        el.textContent = msg;
+        el.className = `fixed top-4 right-4 text-white px-4 py-2 rounded-lg shadow-lg z-50 ${ok ? "bg-emerald-600" : "bg-red-600"}`;
+        el.classList.remove("hidden");
+        clearTimeout(toast._timer);
+        toast._timer = setTimeout(() => el.classList.add("hidden"), 2400);
+      }
+
+      function saveConfigFromUI() {
+        const tolEl = $("#cfg-tol");
+        const tol = Math.max(0, Number(tolEl?.value || state.cfg.tolerancia || 0.02));
+        state.cfg.tolerancia = tol;
+        persist();
+      }
+
+      function aliasCuenta(id) {
+        return state.cuentas.find((c) => c.id === id)?.alias || "(sin cuenta)";
+      }
+
+      function monedaCuenta(id) {
+        return state.cuentas.find((c) => c.id === id)?.moneda || "ARS";
+      }
+
+      function estadoBadge(estado) {
+        if (estado === "conciliado") return '<span class="pill bg-emerald-600/20 text-emerald-400">✅ Conciliado</span>';
+        if (estado === "observado") return '<span class="pill bg-amber-600/20 text-amber-400">⚠️ Observado</span>';
+        return '<span class="pill bg-gray-600/30 text-gray-300">⏳ Pendiente</span>';
+      }
+
+      function showLoadingButton(btn, text) {
+        if (!btn) return () => {};
+        const prev = btn.innerHTML;
+        btn.disabled = true;
+        btn.innerHTML = `${esc(text)} <span class="inline-block w-4 h-4 border-2 border-blue-400 border-t-transparent rounded-full align-[-2px] spin"></span>`;
+        return () => {
+          btn.disabled = false;
+          btn.innerHTML = prev;
+        };
+      }
+
+      function makeMovDedupeKey(m) {
+        return [
+          m.ctaId || "",
+          normalizeDate(m.fecha) || "",
+          normalizeKeyText(m.desc || ""),
+          Number(m.deb || 0).toFixed(2),
+          Number(m.cred || 0).toFixed(2),
+          normalizeKeyText(m.ref || ""),
+          normalizeKeyText(m.tercero || ""),
+        ].join("|");
+      }
+
+      function makeDocDedupeKey(doc) {
+        return [
+          normalizeKeyText(doc.tipo || ""),
+          normalizeKeyText(doc.numero || ""),
+          normalizeDate(doc.fecha) || "",
+          Number(doc.monto || 0).toFixed(2),
+          normalizeKeyText(doc.tercero || ""),
+          normalizeKeyText(doc.ref || ""),
+          String(doc.moneda || "ARS").toUpperCase(),
+        ].join("|");
+      }
+
+      function dentroTol(a, b, tol) {
+        const av = abs(a);
+        const bv = abs(b);
+        const base = Math.max(av, bv, 1);
+        return Math.abs(av - bv) <= base * Math.max(0, Number(tol) || 0);
+      }
+
+      function normalizeMovimiento(raw, ctaId) {
+        const refs = Array.isArray(raw?.referencias) ? raw.referencias : [];
+        const ref = raw?.cuit || raw?.cbu || raw?.referencia || refs[0] || raw?.ref || "";
+        return {
+          id: uuid(),
+          ctaId,
+          fecha: normalizeDate(raw?.fecha || raw?.date) || todayISO(),
+          desc: normalizeText(raw?.descripcion || raw?.description || raw?.desc || ""),
+          deb: parseNum(raw?.debito ?? raw?.debit ?? raw?.egreso ?? raw?.out ?? 0),
+          cred: parseNum(raw?.credito ?? raw?.credit ?? raw?.ingreso ?? raw?.in ?? 0),
+          saldo: parseNum(raw?.saldo_posterior ?? raw?.saldo ?? raw?.balance ?? 0),
+          ref: normalizeText(ref),
+          tipo: normalizeText(raw?.tipo || raw?.kind || ""),
+          tercero: normalizeText(raw?.tercero || raw?.counterparty || ""),
+          cuit: normalizeText(raw?.cuit || ""),
+          canal: normalizeText(raw?.canal || ""),
+          estado: "pendiente",
+          links: [],
+          sugerenciasArca: [],
+          conciliacionOrigen: null,
+          conciliacionScore: null,
+          raw,
+        };
+      }
+
+      function normalizeDocumento(raw, fileName = "") {
+        return {
+          id: uuid(),
+          tipo: normalizeText(raw?.tipo || raw?.kind || raw?.doc_type || "DOC"),
+          numero: normalizeText(raw?.numero || raw?.nro || raw?.number || ""),
+          fecha: normalizeDate(raw?.fecha || raw?.date) || todayISO(),
+          monto: parseNum(raw?.monto ?? raw?.total ?? raw?.importe ?? 0),
+          tercero: normalizeText(raw?.tercero || raw?.proveedor || raw?.cliente || raw?.counterparty || ""),
+          moneda: String(raw?.moneda || raw?.currency || "ARS").toUpperCase(),
+          ref: normalizeText(raw?.ref || raw?.referencia || ""),
+          origen: "OCR",
+          archivos: fileName ? [fileName] : [],
+        };
+      }
+
+      function docsEnVentana(fecha, dias) {
+        const base = new Date(normalizeDate(fecha) || todayISO()).getTime();
+        const ms = 86400000 * (Number(dias) || 5);
+        return state.documentos.filter((d) => {
+          const t = new Date(normalizeDate(d.fecha) || todayISO()).getTime();
+          return Math.abs(t - base) <= ms;
+        });
+      }
+
+      function inferDocNature(doc) {
+        const t = normalizeKeyText(`${doc.tipo} ${doc.tercero} ${doc.ref}`);
+        if (/(factura|fc|venta|cliente|cobro|recibo emitido|emitid)/.test(t)) return "credito";
+        if (/(proveedor|compra|gasto|ticket|remito|recibid|debito)/.test(t)) return "debito";
+        return "indefinido";
+      }
+
+      function filterDocsByMovementType(docs, mov) {
+        const nature = mov.cred > 0 ? "credito" : mov.deb > 0 ? "debito" : "indefinido";
+        if (nature === "indefinido") return docs;
+        const preferred = docs.filter((d) => {
+          const dn = inferDocNature(d);
+          return dn === nature || dn === "indefinido";
+        });
+        return preferred.length ? preferred : docs;
+      }
+
+      function buscarCombinacion(docs, objetivo, tol) {
+        const candidatos = docs.slice(0, 30);
+        const n = candidatos.length;
+
+        for (let i = 0; i < n; i++) {
+          if (dentroTol(candidatos[i].monto, objetivo, tol)) return [candidatos[i]];
+          for (let j = i + 1; j < n; j++) {
+            const s2 = candidatos[i].monto + candidatos[j].monto;
+            if (dentroTol(s2, objetivo, tol)) return [candidatos[i], candidatos[j]];
+            for (let k = j + 1; k < n; k++) {
+              const s3 = s2 + candidatos[k].monto;
+              if (dentroTol(s3, objetivo, tol)) return [candidatos[i], candidatos[j], candidatos[k]];
+            }
+          }
+        }
+
+        let acc = 0;
+        const seleccion = [];
+        for (const d of [...candidatos].sort((a, b) => b.monto - a.monto)) {
+          if (acc + d.monto <= objetivo * (1 + tol)) {
+            acc += d.monto;
+            seleccion.push(d);
+            if (dentroTol(acc, objetivo, tol)) return seleccion;
+          }
+        }
+
+        return null;
+      }
+
+      async function callWebhook(body, url, { retries = 4, timeoutMs = 300000, headers = {} } = {}) {
+        let lastErr;
+
+        for (let i = 0; i < retries; i++) {
+          const ctrl = new AbortController();
+          let timer = null;
+
+          try {
+            timer = setTimeout(() => ctrl.abort(), timeoutMs);
+
+            const resp = await fetch(url, {
+              method: "POST",
+              body,
+              headers,
+              signal: ctrl.signal,
+              mode: "cors",
+              credentials: "omit",
+            });
+
+            const text = await resp.text();
+            clearTimeout(timer);
+
+            if (!resp.ok) {
+              throw new Error(`HTTP ${resp.status} ${text?.slice(0, 300) || ""}`.trim());
+            }
+
+            try {
+              return JSON.parse(text);
+            } catch {
+              return text;
+            }
+          } catch (err) {
+            clearTimeout(timer);
+            lastErr = err;
+            if (i < retries - 1) {
+              await new Promise((r) => setTimeout(r, 800 * Math.pow(2, i)));
+            }
+          }
+        }
+
+        throw lastErr || new Error("Webhook error");
+      }
+
+      function isLikelyInvoiceObject(obj) {
+        if (!obj || typeof obj !== "object" || Array.isArray(obj)) return false;
+        return (
+          "fecha_de_emision" in obj ||
+          "tipo_de_comprobante" in obj ||
+          "numero_desde" in obj ||
+          "imp_total" in obj ||
+          "cod_autorizacion" in obj
+        );
+      }
+
+      function extractArcaResult(raw) {
+        if (raw == null) {
+          throw new Error("El webhook no devolvió contenido");
+        }
+
+        if (typeof raw === "string") {
+          const trimmed = raw.trim();
+          if (!trimmed) throw new Error("El webhook devolvió una respuesta vacía");
+          try {
+            return extractArcaResult(JSON.parse(trimmed));
+          } catch {
+            throw new Error(trimmed);
+          }
+        }
+
+        if (Array.isArray(raw)) {
+          return {
+            ok: true,
+            status: "done",
+            total: raw.length,
+            emitidos: raw,
+            recibidos: [],
+            message: null,
+            error: null,
+            jobId: null,
+          };
+        }
+
+        if (typeof raw !== "object") {
+          throw new Error("El webhook no devolvió un JSON válido");
+        }
+
+        if (raw.resultado !== undefined) return extractArcaResult(raw.resultado);
+        if (raw.response !== undefined) return extractArcaResult(raw.response);
+        if (raw.payload !== undefined && (Array.isArray(raw.payload) || typeof raw.payload === "object")) {
+          return extractArcaResult(raw.payload);
+        }
+
+        if (isLikelyInvoiceObject(raw)) {
+          return {
+            ok: true,
+            status: "done",
+            total: 1,
+            emitidos: [raw],
+            recibidos: [],
+            message: null,
+            error: null,
+            jobId: null,
+          };
+        }
+
+        if (Array.isArray(raw.emitidos) || Array.isArray(raw.recibidos)) {
+          return {
+            ok: raw.ok !== false,
+            status: raw.status || raw.estado || "done",
+            total: Number(raw.total || (raw.emitidos?.length || 0) + (raw.recibidos?.length || 0)),
+            emitidos: Array.isArray(raw.emitidos) ? raw.emitidos : [],
+            recibidos: Array.isArray(raw.recibidos) ? raw.recibidos : [],
+            jobId: raw.jobId || raw.jobid || raw.job_id || raw.id || raw.requestId || raw.request_id || null,
+            error: raw.error || null,
+            message: raw.message || raw.mensaje || null,
+          };
+        }
+
+        if (Array.isArray(raw.comprobantes)) {
+          return {
+            ok: raw.ok !== false,
+            status: raw.status || raw.estado || "done",
+            total: Number(raw.total || raw.comprobantes.length || 0),
+            emitidos: raw.comprobantes,
+            recibidos: [],
+            jobId: raw.jobId || raw.jobid || raw.job_id || raw.id || raw.requestId || raw.request_id || null,
+            error: raw.error || null,
+            message: raw.message || raw.mensaje || null,
+          };
+        }
+
+        if (Array.isArray(raw.items)) {
+          return {
+            ok: raw.ok !== false,
+            status: raw.status || raw.estado || "done",
+            total: Number(raw.total || raw.items.length || 0),
+            emitidos: raw.items,
+            recibidos: [],
+            jobId: raw.jobId || raw.jobid || raw.job_id || raw.id || raw.requestId || raw.request_id || null,
+            error: raw.error || null,
+            message: raw.message || raw.mensaje || null,
+          };
+        }
+
+        if (Array.isArray(raw.data)) {
+          return {
+            ok: raw.ok !== false,
+            status: raw.status || raw.estado || "done",
+            total: Number(raw.total || raw.data.length || 0),
+            emitidos: raw.data,
+            recibidos: [],
+            jobId: raw.jobId || raw.jobid || raw.job_id || raw.id || raw.requestId || raw.request_id || null,
+            error: raw.error || null,
+            message: raw.message || raw.mensaje || null,
+          };
+        }
+
+        return {
+          ok: raw.ok !== false,
+          status: raw.status || raw.estado || "",
+          total: Number(raw.total || 0),
+          emitidos: [],
+          recibidos: [],
+          jobId: raw.jobId || raw.jobid || raw.job_id || raw.id || raw.requestId || raw.request_id || null,
+          error: raw.error || null,
+          message: raw.message || raw.mensaje || null,
+          processed: raw.processed ?? raw.procesadas ?? raw.current ?? 0,
+          expected: raw.expected ?? raw.cantidad ?? raw.total ?? 0,
+        };
+      }
+
+      function getArcaJobId(result) {
+        return result?.jobId || result?.jobid || result?.job_id || result?.id || result?.requestId || result?.request_id || null;
+      }
+
+      function getArcaStatusValue(result) {
+        return normalizeKeyText(result?.status || result?.estado || "");
+      }
+
+      function isArcaDone(result) {
+        if (!result || typeof result !== "object") return false;
+        const status = getArcaStatusValue(result);
+
+        if (["done", "completed", "success", "ok", "finished", "finalizado", "completo", "terminado"].includes(status)) {
+          return true;
+        }
+
+        if (isArcaProcessing(result)) return false;
+
+        const hasResults =
+          (Array.isArray(result.emitidos) && result.emitidos.length > 0) ||
+          (Array.isArray(result.recibidos) && result.recibidos.length > 0);
+
+        return hasResults;
+      }
+
+      function isArcaProcessing(result) {
+        const status = getArcaStatusValue(result);
+        return ["processing", "pending", "queued", "running", "in_progress", "en_proceso", "procesando"].includes(status);
+      }
+
+      function isArcaError(result) {
+        if (!result || typeof result !== "object") return true;
+        return result.ok === false || !!result.error;
+      }
+
+      function setTab(tab) {
+        ["conc", "metrics", "arca"].forEach((id) => {
+          const view = $(`#view-${id}`);
+          const btn = $(`#tab-${id}`);
+          if (view) {
+            view.style.display = tab === id ? "" : "none";
+            view.classList.toggle("hidden", tab !== id);
+          }
+          if (btn) btn.setAttribute("aria-selected", tab === id ? "true" : "false");
+        });
+
+        if (tab === "metrics") renderMetrics();
+        if (tab === "arca") renderARCA();
+      }
+
+      window.showTab = setTab;
+
+      function renderAccountOptions() {
+        const opts = state.cuentas
+          .map((c) => `<option value="${esc(c.id)}">${esc(c.alias)}${c.moneda ? ` (${esc(c.moneda)})` : ""}</option>`)
+          .join("");
+
+        const fallback = '<option value="">(agregá una cuenta)</option>';
+        $("#up-cta").innerHTML = opts || fallback;
+        $("#flt-cta").innerHTML = '<option value="">(Todas)</option>' + opts;
+        $("#m-cta").innerHTML = '<option value="">(Todas)</option>' + opts;
+      }
+
+      function renderCuentas() {
+        const q = normalizeKeyText($("#q-cta")?.value || "");
+        const lst = $("#lista-ctas");
+        if (!lst) return;
+
+        lst.innerHTML = "";
+
+        state.cuentas
+          .filter((c) => !q || normalizeKeyText(c.alias).includes(q) || normalizeKeyText(c.banco).includes(q) || normalizeKeyText(c.cbu).includes(q))
+          .forEach((cta) => {
+            const cantMovs = state.movimientos.filter((m) => m.ctaId === cta.id).length;
+            const div = document.createElement("div");
+            div.className = "soft rounded p-3";
+            div.innerHTML = `
+              <div class="flex items-center justify-between">
+                <div>
+                  <div class="font-medium">${esc(cta.alias)} <span class="tag">${esc(cta.moneda || "ARS")}</span></div>
+                  <div class="text-xs text-gray-400">${esc(cta.banco || "-")} • ${esc(cta.cbu || "")}</div>
+                  <div class="text-xs text-gray-500 mt-1">${cantMovs} movimiento${cantMovs !== 1 ? "s" : ""}</div>
+                </div>
+                <div class="flex gap-2">
+                  <button type="button" class="text-blue-400 text-xs underline" data-edit="${esc(cta.id)}">Editar</button>
+                  <button type="button" class="text-red-400 text-xs underline" data-del="${esc(cta.id)}">Eliminar</button>
+                </div>
+              </div>
+            `;
+
+            div.addEventListener("click", (e) => {
+              const btnEdit = e.target.closest("[data-edit]");
+              if (btnEdit) {
+                abrirDialogCuenta(btnEdit.dataset.edit);
+                return;
+              }
+
+              const btnDel = e.target.closest("[data-del]");
+              if (btnDel) {
+                if (!confirm("¿Eliminar cuenta y sus movimientos?")) return;
+                state.cuentas = state.cuentas.filter((c) => c.id !== cta.id);
+                state.movimientos = state.movimientos.filter((m) => m.ctaId !== cta.id);
+                persist();
+                renderAll();
+              }
+            });
+
+            lst.appendChild(div);
+          });
+
+        renderAccountOptions();
+      }
+
+      function getFilteredMovimientosForGrid() {
+        const ctaId = $("#flt-cta")?.value || "";
+        const estado = $("#flt-estado")?.value || "";
+        const tipo = $("#flt-tipo")?.value || "";
+        const q = normalizeKeyText($("#q-mov")?.value || "");
+
+        return state.movimientos
+          .filter((m) => {
+            const fecha = normalizeDate(m.fecha);
+            if (!fecha) return false;
+
+            const hitQuery =
+              !q ||
+              normalizeKeyText(m.desc).includes(q) ||
+              normalizeKeyText(m.ref).includes(q) ||
+              normalizeKeyText(m.tercero).includes(q) ||
+              normalizeKeyText(m.cuit).includes(q);
+
+            const hitTipo =
+              !tipo ||
+              (tipo === "credito" && Number(m.cred) > 0) ||
+              (tipo === "debito" && Number(m.deb) > 0);
+
+            return (!ctaId || m.ctaId === ctaId) && (!estado || (m.estado || "pendiente") === estado) && hitTipo && hitQuery;
+          })
+          .sort((a, b) => {
+            const da = new Date(normalizeDate(a.fecha) || "1900-01-01").getTime();
+            const db = new Date(normalizeDate(b.fecha) || "1900-01-01").getTime();
+            return db - da;
+          });
+      }
+
+      function renderKPIs() {
+        const ctaId = $("#flt-cta")?.value || "";
+        const movs = state.movimientos.filter((m) => !ctaId || m.ctaId === ctaId);
+        const conciliados = movs.filter((m) => m.estado === "conciliado").length;
+        const pendientes = movs.filter((m) => m.estado === "pendiente").length;
+
+        $("#kpi-mov").textContent = `${movs.length} movs`;
+        $("#kpi-match").textContent = `${conciliados} conciliados`;
+        $("#kpi-open").textContent = `${pendientes} pendientes`;
+      }
+
+      function renderTabla() {
+        const tbody = $("#tb-movs");
+        if (!tbody) return;
+        tbody.innerHTML = "";
+
+        const rows = getFilteredMovimientosForGrid();
+
+        if (!rows.length) {
+          tbody.innerHTML = `<tr><td colspan="8" class="p-4 text-center text-gray-500">No hay movimientos para mostrar</td></tr>`;
+          return;
+        }
+
+        rows.forEach((mov) => {
+          const tr = document.createElement("tr");
+          tr.className = "hover-row";
+          const curr = monedaCuenta(mov.ctaId);
+
+          const linksHtml = (mov.links || [])
+            .map((lk) => {
+              if (String(lk).startsWith("arca:")) {
+                const parts = String(lk).split(":");
+                const origen = parts[1] || "?";
+                return `<span class="tag">🏛 ${esc(origen)}</span>`;
+              }
+
+              const doc = state.documentos.find((d) => d.id === lk);
+              if (!doc) return "";
+              return `<span class="tag">${esc(doc.tipo || "DOC")} ${esc(doc.numero || "")} · ${esc(fmtMoney(doc.monto || 0, doc.moneda || "ARS"))}</span>`;
+            })
+            .filter(Boolean)
+            .join(" ");
+
+          const refTag = mov.ref ? `<span class="tag">${esc(mov.ref)}</span>` : "";
+          const descText = esc(mov.desc || "");
+          const terceroText = mov.tercero ? ` — <span class="text-gray-400">${esc(mov.tercero)}</span>` : "";
+
+          tr.innerHTML = `
+            <td class="p-2 whitespace-nowrap">${esc(fmtFecha(mov.fecha))}</td>
+            <td class="p-2">${esc(aliasCuenta(mov.ctaId))}</td>
+            <td class="p-2">${descText}${terceroText} ${refTag}</td>
+            <td class="p-2 text-right ${Number(mov.deb) > 0 ? "text-red-400" : ""}">${Number(mov.deb) > 0 ? esc(fmtMoney(mov.deb, curr)) : ""}</td>
+            <td class="p-2 text-right ${Number(mov.cred) > 0 ? "text-green-400" : ""}">${Number(mov.cred) > 0 ? esc(fmtMoney(mov.cred, curr)) : ""}</td>
+            <td class="p-2">${estadoBadge(mov.estado)}</td>
+            <td class="p-2">${linksHtml || "—"}</td>
+            <td class="p-2"><button type="button" class="soft px-2 py-1 rounded text-xs" data-rev="${esc(mov.id)}">Revisar</button></td>
+          `;
+
+          tr.addEventListener("click", (e) => {
+            const btn = e.target.closest("[data-rev]");
+            if (btn) abrirDialogMov(btn.dataset.rev);
+          });
+
+          tbody.appendChild(tr);
+        });
+      }
+
+      function renderRecSummaryFromResult(result) {
+        const resumen = result?.resumen || {};
+        $("#rec-count-exact").textContent = String(resumen.conciliados ?? 0);
+        $("#rec-count-probable").textContent = String(resumen.conSugerencias ?? 0);
+        $("#rec-count-pending").textContent = String(resumen.pendientes ?? 0);
+        $("#rec-count-observed").textContent = String(state.movimientos.filter((m) => m.estado === "observado").length);
+
+        $("#rec-summary-text").textContent =
+          result?.mensaje ||
+          `${resumen.conciliados || 0} conciliados · ${resumen.pendientes || 0} pendientes · ${resumen.conSugerencias || 0} con sugerencias`;
+
+        $("#rec-response-badge").textContent = result?.ok ? "Webhook OK" : "Sin ejecutar";
+        $("#rec-response-badge").className = `pill ${result?.ok ? "bg-emerald-600/20 text-emerald-400" : "bg-gray-600/30 text-gray-300"}`;
+        $("#rec-response-detail").textContent = result?.detalle || result?.mensaje || "Sin detalles.";
+      }
+
+      function renderAll() {
+        renderCuentas();
+        renderKPIs();
+        renderTabla();
+        $("#cfg-tol").value = state.cfg.tolerancia;
+      }
+
+      function abrirDialogCuenta(id = null) {
+        const cta = id
+          ? state.cuentas.find((c) => c.id === id)
+          : { id: uuid(), alias: "", banco: "", cbu: "", moneda: "ARS" };
+
+        if (!cta) return;
+
+        $("#cta-id").value = cta.id;
+        $("#cta-alias").value = cta.alias || "";
+        $("#cta-banco").value = cta.banco || "";
+        $("#cta-cbu").value = cta.cbu || "";
+        $("#cta-moneda").value = cta.moneda || "ARS";
+        $("#dlg-cta-title").textContent = id ? "Editar cuenta" : "Nueva cuenta";
+        $("#dlg-cta").showModal();
+      }
+
+      function guardarCuenta() {
+        const cta = {
+          id: $("#cta-id").value || uuid(),
+          alias: normalizeText($("#cta-alias").value),
+          banco: normalizeText($("#cta-banco").value),
+          cbu: normalizeText($("#cta-cbu").value),
+          moneda: $("#cta-moneda").value || "ARS",
+        };
+
+        if (!cta.alias) {
+          toast("Ingresá un alias de cuenta", false);
+          return;
+        }
+
+        const idx = state.cuentas.findIndex((c) => c.id === cta.id);
+        if (idx >= 0) state.cuentas[idx] = cta;
+        else state.cuentas.push(cta);
+
+        persist();
+        $("#dlg-cta").close();
+        renderAll();
+        toast("Cuenta guardada");
+      }
+
+      function setupDrop(zone, input, onFiles) {
+        if (!zone || !input) return;
+
+        zone.addEventListener("dragover", (e) => {
+          e.preventDefault();
+          zone.classList.add("bg-slate-800/40");
+        });
+
+        zone.addEventListener("dragleave", () => zone.classList.remove("bg-slate-800/40"));
+
+        zone.addEventListener("drop", (e) => {
+          e.preventDefault();
+          zone.classList.remove("bg-slate-800/40");
+          const files = e.dataTransfer?.files;
+          if (files?.length) onFiles(files);
+        });
+      }
+
+      function onBankFile(file) {
+        if (!file) return;
+        $("#bank-name").classList.remove("hidden");
+        $("#bank-name").textContent = `${file.name} (${Math.round(file.size / 1024)} KB)`;
+        $("#bank-status").textContent = "";
+        uploadBankFile(file);
+      }
+
+      async function uploadBankFile(file) {
+        const ctaId = $("#up-cta").value || "";
+        if (!ctaId) {
+          toast("Elegí una cuenta destino", false);
+          return;
+        }
+
+        const fd = new FormData();
+        fd.append("archivo", file, file.name);
+        fd.append("cuenta_id", ctaId);
+
+        $("#bank-status").innerHTML =
+          'Enviando a n8n… <span class="inline-block w-4 h-4 border-2 border-blue-400 border-t-transparent rounded-full align-[-2px] spin"></span>';
+
+        let movsBanco = [];
+
+        try {
+          const resp = await callWebhook(fd, WEBHOOKS.banco);
+
+          if (Array.isArray(resp)) {
+            if (resp.some((r) => Array.isArray(r?.movimientos))) {
+              resp.forEach((r) => {
+                if (Array.isArray(r.movimientos)) movsBanco.push(...r.movimientos);
+              });
+            } else {
+              movsBanco = resp;
+            }
+          } else if (resp && Array.isArray(resp.movimientos)) {
+            movsBanco = resp.movimientos;
+          }
+        } catch (err) {
+          $("#bank-status").textContent = `Error: ${err?.message || err}`;
+          toast("Error digitalizando banco", false);
+          return;
+        }
+
+        if (!movsBanco.length) {
+          $("#bank-status").textContent = "El webhook no devolvió movimientos.";
+          return;
+        }
+
+        const existentes = new Set(state.movimientos.map(makeMovDedupeKey));
+        let importados = 0;
+
+        movsBanco.forEach((raw) => {
+          const mov = normalizeMovimiento(raw, ctaId);
+          const key = makeMovDedupeKey(mov);
+          if (!existentes.has(key)) {
+            state.movimientos.push(mov);
+            existentes.add(key);
+            importados++;
+          }
+        });
+
+        persist();
+        renderAll();
+        $("#bank-status").textContent = `OK: ${importados} movimientos importados`;
+        toast(`Resumen bancario importado: ${importados} movs`);
+        reconciliarLocal();
+      }
+
+      function onDocFiles(fileList) {
+        const files = [...fileList];
+        $("#doc-queue").innerHTML = files.map((f) => `• ${esc(f.name)}`).join("<br>");
+        uploadDocs(files);
+      }
+
+      async function uploadDocs(files) {
+        $("#doc-status").innerHTML =
+          'Enviando a n8n… <span class="inline-block w-4 h-4 border-2 border-blue-400 border-t-transparent rounded-full align-[-2px] spin"></span>';
+
+        let archivosOK = 0;
+        let docsOK = 0;
+        const fallidos = [];
+
+        for (const file of files) {
+          const fd = new FormData();
+          fd.append("archivo", file, file.name);
+
+          try {
+            const resp = await callWebhook(fd, WEBHOOKS.docs);
+            const items = Array.isArray(resp) ? resp : resp?.documentos || resp?.docs || resp?.items || [resp];
+
+            const existentes = new Set(state.documentos.map(makeDocDedupeKey));
+            items.filter(Boolean).forEach((d) => {
+              const nuevo = normalizeDocumento(d, file.name);
+              const key = makeDocDedupeKey(nuevo);
+              if (!existentes.has(key)) {
+                state.documentos.push(nuevo);
+                existentes.add(key);
+                docsOK++;
+              }
+            });
+
+            archivosOK++;
+          } catch (err) {
+            fallidos.push(`${file.name}: ${err?.message || err}`);
+          }
+        }
+
+        persist();
+        renderAll();
+
+        if (!fallidos.length) {
+          $("#doc-status").textContent = `Procesados: ${archivosOK} archivos, ${docsOK} documentos.`;
+          toast(`Comprobantes importados: ${docsOK}`);
+        } else {
+          $("#doc-status").innerHTML =
+            `Procesados: ${archivosOK}/${files.length} archivos, ${docsOK} documentos.<br><span class="text-red-400">${esc(fallidos.join(" | "))}</span>`;
+          toast("Algunos comprobantes fallaron", false);
+        }
+
+        reconciliarLocal();
+      }
+
+      function reconciliarLocal() {
+        saveConfigFromUI();
+        const tol = state.cfg.tolerancia;
+        let conciliados = 0;
+
+        const documentosUsados = new Set(
+          state.movimientos.flatMap((m) =>
+            m.estado === "conciliado"
+              ? (m.links || []).filter((link) => !String(link).startsWith("arca:"))
+              : []
+          )
+        );
+
+        for (const mov of state.movimientos) {
+          if (mov.estado === "conciliado" && (mov.links || []).length) continue;
+
+          const objetivo = abs(mov.cred || mov.deb || 0);
+          if (!objetivo) continue;
+
+          const monedaMov = String(monedaCuenta(mov.ctaId) || "ARS").toUpperCase();
+          let candidatos = docsEnVentana(mov.fecha, state.cfg.dias || 5)
+            .filter((d) => d.monto > 0)
+            .filter((d) => !documentosUsados.has(d.id))
+            .filter((d) => String(d.moneda || "ARS").toUpperCase() === monedaMov);
+
+          candidatos = filterDocsByMovementType(candidatos, mov);
+
+          const exacto = candidatos.find((d) => dentroTol(d.monto, objetivo, tol));
+          if (exacto) {
+            mov.links = [exacto.id];
+            documentosUsados.add(exacto.id);
+            mov.estado = "conciliado";
+            mov.conciliacionOrigen = "local";
+            mov.conciliacionScore = 100;
+            conciliados++;
+            continue;
+          }
+
+          const combo = buscarCombinacion(candidatos, objetivo, tol);
+          if (combo?.length) {
+            mov.links = combo.map((d) => d.id);
+            combo.forEach((d) => documentosUsados.add(d.id));
+            mov.estado = "conciliado";
+            mov.conciliacionOrigen = "local";
+            mov.conciliacionScore = 85;
+            conciliados++;
+          } else if (!(mov.links || []).length) {
+            mov.estado = "pendiente";
+          }
+        }
+
+        persist();
+        renderAll();
+        toast(`Reconciliación local: ${conciliados} conciliado(s)`);
+      }
+
+      async function reconciliarARCA() {
+        const ctaId = $("#flt-cta").value || state.cuentas[0]?.id || "";
+        if (!ctaId) {
+          toast("Seleccioná una cuenta antes de reconciliar", false);
+          return;
+        }
+
+        saveConfigFromUI();
+
+        const movsFiltrados = state.movimientos.filter((m) => m.ctaId === ctaId);
+        if (!movsFiltrados.length) {
+          toast("No hay movimientos para reconciliar", false);
+          return;
+        }
+
+        const stopLoading = showLoadingButton($("#btn-reconciliar"), "⏳ Reconciliando…");
+        $("#rec-engine-status").textContent = "Consultando comprobantes ARCA…";
+        $("#rec-engine-status").className = "text-lg font-semibold mt-1 text-yellow-400";
+
+        const cta = state.cuentas.find((c) => c.id === ctaId);
+
+        const payload = {
+          cuenta_id: ctaId,
+          tolerancia: state.cfg.tolerancia,
+          dias: Number(state.cfg.dias || 5),
+          movimientos: movsFiltrados.map((m) => ({
+            id: m.id,
+            ctaId: m.ctaId,
+            fecha: normalizeDate(m.fecha),
+            desc: m.desc || "",
+            deb: Number(m.deb || 0),
+            cred: Number(m.cred || 0),
+            saldo: Number(m.saldo || 0),
+            ref: m.ref || "",
+            tipo: m.tipo || "",
+            tercero: m.tercero || "",
+            cuit: m.cuit || "",
+            canal: m.canal || "",
+            estado: m.estado || "pendiente",
+            links: m.links || [],
+            moneda: cta?.moneda || "ARS",
+          })),
+        };
+
+        try {
+          const raw = await callWebhook(
+            JSON.stringify(payload),
+            WEBHOOKS.conciliacion,
+            { retries: 2, timeoutMs: 120000, headers: { "Content-Type": "application/json" } }
+          );
+
+          const result = Array.isArray(raw) ? raw[0] : raw;
+          if (!result?.ok) {
+            throw new Error(result?.error || "Respuesta inesperada del webhook");
+          }
+
+          aplicarResultadosARCA(result);
+          renderRecSummaryFromResult(result);
+
+          const resumen = result.resumen || {};
+          $("#rec-engine-status").textContent = "✅ Reconciliación completada";
+          $("#rec-engine-status").className = "text-lg font-semibold mt-1 text-emerald-400";
+          $("#rec-last-run").textContent = new Date().toLocaleString("es-AR");
+          $("#rec-last-summary").textContent =
+            `${resumen.conciliados || 0} conciliados · ${resumen.pendientes || 0} pendientes · ${resumen.conSugerencias || 0} con sugerencias`;
+          $("#rec-webhook-status").textContent = "✅ OK";
+          $("#rec-webhook-status").className = "text-lg font-semibold mt-1 text-emerald-400";
+          $("#rec-webhook-message").textContent =
+            `${resumen.emitidosDisponibles || 0} emitidos + ${resumen.recibidosDisponibles || 0} recibidos leídos de ARCA`;
+
+          toast(`Reconciliación OK: ${resumen.conciliados || 0} conciliados`);
+        } catch (err) {
+          console.error("reconciliarARCA()", err);
+          $("#rec-engine-status").textContent = "Error al reconciliar";
+          $("#rec-engine-status").className = "text-lg font-semibold mt-1 text-red-400";
+          $("#rec-webhook-status").textContent = "❌ Error";
+          $("#rec-webhook-status").className = "text-lg font-semibold mt-1 text-red-400";
+          $("#rec-webhook-message").textContent = err?.message || String(err);
+          $("#rec-response-badge").textContent = "Error";
+          $("#rec-response-badge").className = "pill bg-red-600/20 text-red-400";
+          $("#rec-response-detail").textContent = err?.message || String(err);
+          toast(`Error al reconciliar: ${err?.message || err}`, false);
+        } finally {
+          stopLoading();
+          renderAll();
+        }
+      }
+
+      function aplicarResultadosARCA(result) {
+        const movResults = Array.isArray(result?.movimientos) ? result.movimientos : [];
+
+        for (const res of movResults) {
+          const idx = state.movimientos.findIndex((m) => m.id === res.id);
+          if (idx < 0) continue;
+
+          const mov = state.movimientos[idx];
+          mov.sugerenciasArca = Array.isArray(res.sugerencias) ? res.sugerencias : mov.sugerenciasArca || [];
+
+          if (res.estado === "conciliado") {
+            mov.estado = "conciliado";
+            mov.conciliacionOrigen = "arca";
+            mov.conciliacionScore = res.score ?? 100;
+
+            const linksArca = (res.links || [])
+              .filter((l) => l?.origen && l?.compId)
+              .map((l) => `arca:${l.origen}:${l.compId}`);
+
+            const ya = new Set(mov.links || []);
+            for (const lk of linksArca) {
+              if (!ya.has(lk)) mov.links = [...(mov.links || []), lk];
+            }
+          } else if ((mov.links || []).length === 0 && mov.estado !== "conciliado") {
+            mov.estado = "pendiente";
+          }
+
+          state.movimientos[idx] = mov;
+        }
+
+        persist();
+      }
+
+      function abrirDialogMov(id) {
+        const mov = state.movimientos.find((m) => m.id === id);
+        if (!mov) return;
+
+        $("#dlg-mov").dataset.id = id;
+
+        const curr = monedaCuenta(mov.ctaId);
+        $("#mov-head").innerHTML = `
+          <div class="flex items-center justify-between">
+            <div>
+              <div class="font-medium">${esc(aliasCuenta(mov.ctaId))} • ${esc(fmtFecha(mov.fecha))}</div>
+              <div class="text-xs text-gray-400">
+                ${esc(mov.desc || "")}
+                ${mov.tercero ? ` • ${esc(mov.tercero)}` : ""}
+                ${mov.ref ? ` • ${esc(mov.ref)}` : ""}
+              </div>
+            </div>
+            <div class="text-right">
+              <div class="text-lg font-bold ${mov.deb > 0 ? "text-red-400" : "text-green-400"}">
+                ${esc(mov.deb > 0 ? "-" + fmtMoney(mov.deb, curr) : "+" + fmtMoney(mov.cred, curr))}
+              </div>
+            </div>
+          </div>
+        `;
+
+        const suggContainer = $("#sugg");
+        suggContainer.innerHTML = "";
+
+        let docsLocal = docsEnVentana(mov.fecha, state.cfg.dias || 5)
+          .sort((a, b) => Math.abs(a.monto - abs(mov.cred || mov.deb)) - Math.abs(b.monto - abs(mov.cred || mov.deb)));
+        docsLocal = filterDocsByMovementType(docsLocal, mov);
+
+        if (docsLocal.length) {
+          const hdr = document.createElement("div");
+          hdr.className = "text-xs text-gray-500 mb-1";
+          hdr.textContent = "📄 Documentos locales";
+          suggContainer.appendChild(hdr);
+        }
+
+        docsLocal.forEach((doc) => {
+          const el = document.createElement("div");
+          el.className = "soft rounded p-2 flex items-center justify-between";
+          el.innerHTML = `
+            <div>
+              <div class="font-medium">${esc(doc.tipo || "DOC")} ${esc(doc.numero || "")} <span class="tag">${esc(doc.tercero || "")}</span></div>
+              <div class="text-xs text-gray-400">${esc(fmtFecha(doc.fecha))} • ${esc(doc.ref || "")}</div>
+            </div>
+            <div class="flex items-center gap-2">
+              <div class="font-bold">${esc(fmtMoney(doc.monto, doc.moneda || "ARS"))}</div>
+              <button type="button" class="bg-blue-600 hover:bg-blue-700 text-white px-2 py-1 rounded text-xs" data-add="${esc(doc.id)}">Agregar</button>
+            </div>
+          `;
+
+          el.addEventListener("click", (e) => {
+            const btn = e.target.closest("[data-add]");
+            if (!btn) return;
+            mov.links = Array.from(new Set([...(mov.links || []), btn.dataset.add]));
+            recalcEstado(mov);
+            renderLinked(mov);
+            persist();
+          });
+
+          suggContainer.appendChild(el);
+        });
+
+        renderSugerenciasARCA(mov, suggContainer);
+        renderLinked(mov);
+        recalcEstado(mov);
+        $("#dlg-mov").showModal();
+      }
+
+      function renderSugerenciasARCA(mov, container) {
+        const suggs = (mov.sugerenciasArca || []).filter((s) => s?.origen);
+        if (!suggs.length) return;
+
+        const sep = document.createElement("div");
+        sep.className = "text-xs text-gray-500 mt-3 mb-1 border-t border-gray-700 pt-2";
+        sep.textContent = "🏛 Comprobantes ARCA";
+        container.appendChild(sep);
+
+        suggs.forEach((sug) => {
+          const el = document.createElement("div");
+          el.className = "soft rounded p-2 flex items-center justify-between";
+
+          const origenBadge =
+            sug.origen === "emitido"
+              ? '<span class="pill bg-blue-600/20 text-blue-400">emitido</span>'
+              : '<span class="pill bg-purple-600/20 text-purple-400">recibido</span>';
+
+          const scoreColor = sug.score >= 70 ? "text-emerald-400" : sug.score >= 50 ? "text-yellow-400" : "text-gray-400";
+          const arcaKey = `arca:${sug.origen}:${sug.compId}`;
+          const yaVinculado = (mov.links || []).includes(arcaKey);
+
+          el.innerHTML = `
+            <div>
+              <div class="font-medium">${esc(sug.tipo || "Comprobante")} ${esc(sug.nroDesde || "")} ${origenBadge}</div>
+              <div class="text-xs text-gray-400">${esc(sug.fecha || "—")} · ${esc(sug.denominacion || "—")}</div>
+            </div>
+            <div class="flex items-center gap-2">
+              <div class="font-bold">${esc(fmtMoney(sug.total || 0, sug.moneda || monedaCuenta(mov.ctaId)))}</div>
+              <span class="text-xs ${scoreColor}">${esc(String(sug.score ?? 0))}pts</span>
+              ${
+                yaVinculado
+                  ? '<span class="pill bg-emerald-600/20 text-emerald-400">✅ Vinculado</span>'
+                  : `<button type="button" class="bg-blue-600 hover:bg-blue-700 text-white px-2 py-1 rounded text-xs" data-arca-add="${esc(String(sug.compId))}" data-arca-origen="${esc(sug.origen)}">Vincular</button>`
+              }
+            </div>
+          `;
+
+          el.addEventListener("click", (e) => {
+            const btn = e.target.closest("[data-arca-add]");
+            if (!btn) return;
+            const key = `arca:${btn.dataset.arcaOrigen}:${btn.dataset.arcaAdd}`;
+            mov.links = Array.from(new Set([...(mov.links || []), key]));
+            mov.conciliacionOrigen = "manual";
+            recalcEstado(mov);
+            persist();
+            renderAll();
+            renderLinked(mov);
+            toast("Comprobante ARCA vinculado");
+          });
+
+          container.appendChild(el);
+        });
+      }
+
+      function renderLinked(mov) {
+        const container = $("#linked");
+        container.innerHTML = "";
+
+        if (!(mov.links || []).length) {
+          container.innerHTML = `<div class="text-xs text-gray-500">Sin elementos vinculados</div>`;
+          return;
+        }
+
+        (mov.links || []).forEach((lk) => {
+          const el = document.createElement("div");
+          el.className = "soft rounded p-2 flex items-center justify-between";
+
+          if (String(lk).startsWith("arca:")) {
+            const parts = String(lk).split(":");
+            const origen = parts[1] || "?";
+            const compId = parts[2] || "";
+            const badge =
+              origen === "emitido"
+                ? '<span class="pill bg-blue-600/20 text-blue-400">emitido</span>'
+                : '<span class="pill bg-purple-600/20 text-purple-400">recibido</span>';
+
+            const sug = (mov.sugerenciasArca || []).find((s) => String(s.compId) === String(compId));
+            const total = sug ? fmtMoney(sug.total || 0, sug.moneda || monedaCuenta(mov.ctaId)) : "—";
+
+            el.innerHTML = `
+              <div>
+                <div class="font-medium">🏛 Comprobante ARCA ${badge}</div>
+                <div class="text-xs text-gray-400">ID: ${esc(compId)} · ${esc(sug?.tipo || "")} ${esc(sug?.nroDesde || "")}</div>
+              </div>
+              <div class="flex items-center gap-2">
+                <div class="font-bold">${esc(total)}</div>
+                <button type="button" class="bg-red-600 hover:bg-red-700 text-white px-2 py-1 rounded text-xs" data-del-lk="${esc(lk)}">Quitar</button>
+              </div>
+            `;
+          } else {
+            const doc = state.documentos.find((d) => d.id === lk);
+            if (!doc) return;
+
+            el.innerHTML = `
+              <div>
+                <div class="font-medium">${esc(doc.tipo || "DOC")} ${esc(doc.numero || "")}</div>
+                <div class="text-xs text-gray-400">${esc(fmtFecha(doc.fecha))} • ${esc(doc.tercero || "")}</div>
+              </div>
+              <div class="flex items-center gap-2">
+                <div class="font-bold">${esc(fmtMoney(doc.monto, doc.moneda || "ARS"))}</div>
+                <button type="button" class="bg-red-600 hover:bg-red-700 text-white px-2 py-1 rounded text-xs" data-del-lk="${esc(lk)}">Quitar</button>
+              </div>
+            `;
+          }
+
+          el.addEventListener("click", (e) => {
+            const btn = e.target.closest("[data-del-lk]");
+            if (!btn) return;
+            mov.links = (mov.links || []).filter((x) => x !== btn.dataset.delLk);
+            recalcEstado(mov);
+            renderLinked(mov);
+            persist();
+          });
+
+          container.appendChild(el);
+        });
+      }
+
+      function recalcEstado(mov) {
+        const objetivo = abs(mov.cred || mov.deb || 0);
+
+        const suma = (mov.links || []).reduce((acc, lk) => {
+          if (String(lk).startsWith("arca:")) {
+            const compId = String(lk).split(":")[2];
+            const sug = (mov.sugerenciasArca || []).find((s) => String(s.compId) === String(compId));
+            return acc + (sug ? Number(sug.total || 0) : 0);
+          }
+
+          const doc = state.documentos.find((d) => d.id === lk);
+          return acc + (doc ? Number(doc.monto || 0) : 0);
+        }, 0);
+
+        const ok = dentroTol(suma, objetivo, state.cfg.tolerancia || 0.02);
+
+        mov.estado = (mov.links || []).length ? (ok ? "conciliado" : "observado") : "pendiente";
+
+        if (mov.estado === "conciliado" && !mov.conciliacionOrigen) {
+          mov.conciliacionOrigen = "manual";
+        }
+
+        $("#mov-status").textContent =
+          `Vinculados ${(mov.links || []).length} • Suma ${fmtMoney(suma, monedaCuenta(mov.ctaId))} • Objetivo ${fmtMoney(objetivo, monedaCuenta(mov.ctaId))} • Estado: ${mov.estado}`;
+      }
+
+      function clearMovimientoLinks() {
+        const id = $("#dlg-mov").dataset.id;
+        const mov = state.movimientos.find((m) => m.id === id);
+        if (!mov) return;
+
+        mov.links = [];
+        mov.estado = "pendiente";
+        mov.conciliacionOrigen = null;
+        mov.conciliacionScore = null;
+        persist();
+        renderAll();
+        abrirDialogMov(id);
+      }
+
+      function acceptMovimientoLinks() {
+        const id = $("#dlg-mov").dataset.id;
+        const mov = state.movimientos.find((m) => m.id === id);
+        if (!mov) return;
+
+        recalcEstado(mov);
+        if ((mov.links || []).length && !mov.conciliacionOrigen) {
+          mov.conciliacionOrigen = "manual";
+        }
+
+        persist();
+        $("#dlg-mov").close();
+        renderAll();
+        toast("Movimiento actualizado");
+      }
+
+      function renderMetrics() {
+        const ctaId = $("#m-cta").value || "";
+        const defaultFrom = new Date(new Date().getFullYear(), new Date().getMonth(), 1).toISOString().slice(0, 10);
+        const defaultTo = todayISO();
+
+        const from = normalizeDate($("#m-from").value) || defaultFrom;
+        const to = normalizeDate($("#m-to").value) || defaultTo;
+
+        $("#m-from").value = from;
+        $("#m-to").value = to;
+
+        const movs = state.movimientos.filter((m) => {
+          const fecha = normalizeDate(m.fecha);
+          return fecha && (!ctaId || m.ctaId === ctaId) && fecha >= from && fecha <= to;
+        });
+
+        const currency = ctaId ? monedaCuenta(ctaId) : "ARS";
+
+        const totalIn = movs.reduce((a, m) => a + abs(m.cred || 0), 0);
+        const totalOut = movs.reduce((a, m) => a + abs(m.deb || 0), 0);
+        const conciliados = movs.filter((m) => m.estado === "conciliado").length;
+        const pendientes = movs.filter((m) => m.estado === "pendiente").length;
+        const observados = movs.filter((m) => m.estado === "observado").length;
+        const pct = movs.length ? Math.round((100 * conciliados) / movs.length) : 0;
+
+        $("#mx-movs").textContent = String(movs.length);
+        $("#mx-in").textContent = fmtMoney(totalIn, currency);
+        $("#mx-out").textContent = fmtMoney(totalOut, currency);
+        $("#mx-pct").textContent = `${pct}%`;
+        $("#mx-pend").textContent = String(pendientes);
+        $("#mx-obs").textContent = String(observados);
+
+        const byDay = {};
+        movs.forEach((m) => {
+          const fecha = normalizeDate(m.fecha);
+          if (!fecha) return;
+          if (!byDay[fecha]) byDay[fecha] = { in: 0, out: 0 };
+          byDay[fecha].in += abs(m.cred || 0);
+          byDay[fecha].out += abs(m.deb || 0);
+        });
+
+        const flujoEl = $("#mx-flujo");
+        flujoEl.innerHTML = "";
+        let saldoAcum = 0;
+
+        Object.keys(byDay).sort().forEach((fecha) => {
+          const { in: ing, out: egr } = byDay[fecha];
+          saldoAcum += ing - egr;
+          const maxVal = Math.max(ing, egr, 1);
+          const pIn = Math.round((100 * ing) / maxVal);
+          const pOut = Math.round((100 * egr) / maxVal);
+
+          const div = document.createElement("div");
+          div.innerHTML = `
+            <div class="flex items-center justify-between text-xs text-gray-400">
+              <span>${esc(fmtFecha(fecha))}</span>
+              <span>${esc(fmtMoney(ing - egr, currency))}</span>
+            </div>
+            <div class="meter-row">
+              <div class="bar w-full"><span style="width:${pIn}%; background:#065f46"></span></div>
+              <div class="bar w-full"><span style="width:${pOut}%; background:#7f1d1d"></span></div>
+            </div>
+          `;
+          flujoEl.appendChild(div);
+        });
+
+        $("#mx-flujo-total").textContent = fmtMoney(saldoAcum, currency);
+
+        function topBy(filterFn, field, amountField) {
+          const map = new Map();
+
+          movs.filter(filterFn).forEach((m) => {
+            const key = (m[field] || m.tercero || m.desc || "—").toString().toUpperCase();
+            const cur = map.get(key) || { sum: 0, cnt: 0 };
+            cur.sum += abs(m[amountField] || 0);
+            cur.cnt += 1;
+            map.set(key, cur);
+          });
+
+          return [...map.entries()].sort((a, b) => b[1].sum - a[1].sum).slice(0, 10);
+        }
+
+        const topCred = topBy((m) => m.cred > 0, "tercero", "cred");
+        const topDeb = topBy((m) => m.deb > 0, "tercero", "deb");
+
+        const tblCred = $("#mx-top-cred");
+        tblCred.innerHTML = "";
+        if (!topCred.length) {
+          tblCred.innerHTML = `<tr><td colspan="3" class="p-2 text-center text-gray-500">Sin datos</td></tr>`;
+        } else {
+          topCred.forEach(([nombre, { sum, cnt }]) => {
+            const tr = document.createElement("tr");
+            tr.innerHTML = `<td class="p-2">${esc(nombre)}</td><td class="p-2 text-right">${esc(fmtMoney(sum, currency))}</td><td class="p-2 text-right">${cnt}</td>`;
+            tblCred.appendChild(tr);
+          });
+        }
+
+        const tblDeb = $("#mx-top-deb");
+        tblDeb.innerHTML = "";
+        if (!topDeb.length) {
+          tblDeb.innerHTML = `<tr><td colspan="3" class="p-2 text-center text-gray-500">Sin datos</td></tr>`;
+        } else {
+          topDeb.forEach(([nombre, { sum, cnt }]) => {
+            const tr = document.createElement("tr");
+            tr.innerHTML = `<td class="p-2">${esc(nombre)}</td><td class="p-2 text-right">${esc(fmtMoney(sum, currency))}</td><td class="p-2 text-right">${cnt}</td>`;
+            tblDeb.appendChild(tr);
+          });
+        }
+
+        const KEYWORDS_TAX = ["IMP.", "IMPUESTO", "IVA", "SIRCREB", "DEB. LEY", "COMISION", "COM.", "GASTO", "SERVICIO", "ACREDITAMIENTO"];
+        const taxMap = new Map();
+
+        movs
+          .filter((m) => KEYWORDS_TAX.some((kw) => (m.desc || "").toUpperCase().includes(kw)))
+          .forEach((m) => {
+            const key = (m.desc || "—").toUpperCase();
+            const cur = taxMap.get(key) || { sum: 0, cnt: 0 };
+            cur.sum += abs(m.deb || m.cred || 0);
+            cur.cnt += 1;
+            taxMap.set(key, cur);
+          });
+
+        const tblTax = $("#mx-tax");
+        tblTax.innerHTML = "";
+
+        const taxRows = [...taxMap.entries()].sort((a, b) => b[1].sum - a[1].sum);
+        if (!taxRows.length) {
+          tblTax.innerHTML = `<tr><td colspan="3" class="p-2 text-center text-gray-500">Sin impuestos o comisiones detectados</td></tr>`;
+        } else {
+          taxRows.forEach(([concepto, { sum, cnt }]) => {
+            const tr = document.createElement("tr");
+            tr.innerHTML = `<td class="p-2">${esc(concepto)}</td><td class="p-2 text-right">${esc(fmtMoney(sum, currency))}</td><td class="p-2 text-right">${cnt}</td>`;
+            tblTax.appendChild(tr);
+          });
+        }
+      }
+
+      function exportCSV() {
+        const rows = [
+          ["fecha", "cuenta", "desc", "tercero", "cuit", "debito", "credito", "estado", "ref", "links"].join(","),
+        ];
+
+        getFilteredMovimientosForGrid().forEach((m) => {
+          rows.push(
+            [
+              normalizeDate(m.fecha) || "",
+              aliasCuenta(m.ctaId),
+              normalizeText(m.desc || ""),
+              normalizeText(m.tercero || ""),
+              m.cuit || "",
+              m.deb || "",
+              m.cred || "",
+              m.estado || "",
+              m.ref || "",
+              (m.links || []).join("|"),
+            ]
+              .map((v) => `"${String(v).replace(/"/g, '""')}"`)
+              .join(",")
+          );
+        });
+
+        const csv = "\uFEFF" + rows.join("\r\n");
+        const url = URL.createObjectURL(new Blob([csv], { type: "text/csv;charset=utf-8" }));
+        const a = document.createElement("a");
+        a.href = url;
+        a.download = `conciliacion_${todayISO()}.csv`;
+        document.body.appendChild(a);
+        a.click();
+        a.remove();
+        setTimeout(() => URL.revokeObjectURL(url), 0);
+      }
+
+      function renderTablaARCA(comprobantes, tbodyId, origen) {
+        const tbody = $(`#${tbodyId}`);
+        if (!tbody) return;
+
+        tbody.innerHTML = "";
+        if (!comprobantes.length) {
+          tbody.innerHTML = `<tr><td colspan="7" class="p-4 text-center text-gray-500">Sin comprobantes</td></tr>`;
+          return;
+        }
+
+        comprobantes.forEach((c, index) => {
+          const tr = document.createElement("tr");
+          tr.className = "hover-row";
+
+          const total = Number(c.imp_total || c.total || 0);
+          const fecha = normalizeDate(c.fecha_de_emision || c.fecha) || "";
+          const tipo = normalizeText(c.tipo_de_comprobante || c.tipo || "—");
+          const nro = c.numero_desde
+            ? `${String(c.punto_de_venta || "").padStart(4, "0")}-${String(c.numero_desde).padStart(8, "0")}`
+            : normalizeText(c.nro || c.numero || "—");
+          const receptor = normalizeText(c.denominacion_receptor || c.denominacion_emisor || "—");
+          const moneda = String(c.moneda || "ARS").toUpperCase() === "$" ? "ARS" : String(c.moneda || "ARS").toUpperCase();
+          const id = normalizeText(c.cod_autorizacion || c.id || `${origen}-${index}-${nro}`);
+          const arcaKey = `arca:${origen}:${id}`;
+          const yaVinculado = state.movimientos.some((m) => (m.links || []).includes(arcaKey));
+
+          const compKey = uuid();
+          state.arcaCompCache.set(compKey, {
+            origen,
+            id,
+            total,
+            fecha: fecha || c.fecha_de_emision || c.fecha || "",
+            tipo,
+            nro,
+            receptor,
+            moneda,
+          });
+
+          tr.innerHTML = `
+            <td class="p-2 whitespace-nowrap text-xs">${esc(fmtFecha(fecha || c.fecha_de_emision || c.fecha))}</td>
+            <td class="p-2 text-xs">${esc(tipo)}</td>
+            <td class="p-2 text-xs font-mono">${esc(nro)}</td>
+            <td class="p-2 text-xs">${esc(receptor)}</td>
+            <td class="p-2 text-xs">${esc(moneda)}</td>
+            <td class="p-2 text-right text-xs font-semibold ${total >= 0 ? "text-emerald-400" : "text-red-400"}">${esc(fmtMoney(total, moneda))}</td>
+            <td class="p-2 text-center">
+              ${
+                yaVinculado
+                  ? '<span class="pill bg-emerald-600/20 text-emerald-400 text-xs">✅ Vinculado</span>'
+                  : `<button type="button" class="soft px-2 py-1 rounded text-xs" data-comp-key="${esc(compKey)}">Usar en conciliación</button>`
+              }
+            </td>
+          `;
+
+          tr.querySelector("[data-comp-key]")?.addEventListener("click", (e) => {
+            const key = e.currentTarget.dataset.compKey;
+            const comp = state.arcaCompCache.get(key);
+            if (comp) abrirDialogVincularARCA(comp);
+          });
+
+          tbody.appendChild(tr);
+        });
+      }
+
+      function renderARCA() {
+        $("#arca-count-emitidos").textContent = `${state.arcaEmitidos.length} emitidos`;
+        $("#arca-count-recibidos").textContent = `${state.arcaRecibidos.length} recibidos`;
+        $("#arca-count-emitidos-tbl").textContent = `(${state.arcaEmitidos.length})`;
+        $("#arca-count-recibidos-tbl").textContent = `(${state.arcaRecibidos.length})`;
+
+        state.arcaCompCache.clear();
+        renderTablaARCA(state.arcaEmitidos, "arca-tbody-emitidos", "emitido");
+        renderTablaARCA(state.arcaRecibidos, "arca-tbody-recibidos", "recibido");
+      }
+
+      function stopArcaPolling() {
+        if (state.arcaPolling.timer) {
+          clearTimeout(state.arcaPolling.timer);
+          state.arcaPolling.timer = null;
+        }
+        state.arcaPolling.active = false;
+        state.arcaPolling.jobId = null;
+        state.arcaPolling.startedAt = null;
+        state.arcaPolling.errorCount = 0;
+      }
+
+      function setArcaStatus(text, tone = "gray") {
+        const el = $("#arca-status");
+        if (!el) return;
+
+        const colorMap = {
+          gray: "text-xs text-gray-500",
+          yellow: "text-xs text-yellow-400",
+          blue: "text-xs text-blue-400",
+          emerald: "text-xs text-emerald-400",
+          red: "text-xs text-red-400",
+        };
+
+        el.textContent = text;
+        el.className = `${colorMap[tone] || colorMap.gray} mt-2`;
+      }
+
+      function finalizeArcaSearch(result) {
+        state.arcaEmitidos = Array.isArray(result.emitidos) ? result.emitidos : [];
+        state.arcaRecibidos = Array.isArray(result.recibidos) ? result.recibidos : [];
+        persistARCA();
+        renderARCA();
+
+        const total = Number(result.total || (state.arcaEmitidos.length + state.arcaRecibidos.length));
+        setArcaStatus(`✅ ${state.arcaEmitidos.length} emitidos · ${state.arcaRecibidos.length} recibidos`, "emerald");
+        toast(`ARCA: ${total} comprobantes obtenidos`);
+      }
+
+      function scheduleNextArcaPoll(jobId) {
+        state.arcaPolling.timer = setTimeout(() => pollArcaStatus(jobId), ARCA_POLL_INTERVAL_MS);
+      }
+
+      async function pollArcaStatus(jobId) {
+        if (!jobId || !state.arcaPolling.active) return;
+
+        const payload = { jobId };
+
+        try {
+          setArcaStatus("Consultando estado de ARCA…", "blue");
+
+          const raw = await callWebhook(
+            JSON.stringify(payload),
+            WEBHOOKS.arcaStatus,
+            {
+              retries: 1,
+              timeoutMs: ARCA_STATUS_TIMEOUT_MS,
+              headers: { "Content-Type": "application/json" },
+            }
+          );
+
+          state.arcaPolling.errorCount = 0;
+          const result = extractArcaResult(raw);
+
+          if (isArcaError(result)) {
+            stopArcaPolling();
+            const msg = result.error || result.message || "Error procesando ARCA";
+            setArcaStatus(`❌ ${msg}`, "red");
+            toast(`Error buscando en ARCA: ${msg}`, false);
+            return;
+          }
+
+          if (isArcaDone(result)) {
+            stopArcaPolling();
+            finalizeArcaSearch(result);
+            return;
+          }
+
+          if (!isArcaProcessing(result) && !getArcaJobId(result)) {
+            stopArcaPolling();
+            throw new Error(result.message || "El webhook ARCA status no devolvió avance ni resultado final");
+          }
+
+          const processed = Number(result.processed ?? result.procesadas ?? result.current ?? 0);
+          const total = Number(result.expected ?? result.cantidad ?? result.total ?? 0);
+          const message = result.message || result.mensaje || "";
+
+          if (total > 0) {
+            setArcaStatus(`⏳ Procesando ${processed}/${total}${message ? ` · ${message}` : ""}`, "yellow");
+          } else {
+            setArcaStatus(`⏳ ${message || "Procesando comprobantes en ARCA…"}`, "yellow");
+          }
+
+          scheduleNextArcaPoll(jobId);
+        } catch (err) {
+          state.arcaPolling.errorCount += 1;
+
+          if (state.arcaPolling.errorCount >= ARCA_MAX_POLL_ERRORS) {
+            stopArcaPolling();
+            setArcaStatus(`❌ ${err?.message || err}`, "red");
+            toast(`Error buscando en ARCA: ${err?.message || err}`, false);
+            return;
+          }
+
+          setArcaStatus(`⏳ Reintentando estado ARCA… (${state.arcaPolling.errorCount}/${ARCA_MAX_POLL_ERRORS})`, "yellow");
+          scheduleNextArcaPoll(jobId);
+        }
+      }
+
+      async function buscarEnARCA() {
+        const cuit = normalizeText($("#arca-cuit").value);
+        const username = normalizeText($("#arca-user").value);
+        const password = $("#arca-pass").value || "";
+        const fechaDesde = isoADDMMYYYY($("#arca-desde").value);
+        const fechaHasta = isoADDMMYYYY($("#arca-hasta").value);
+        const emitidos = $("#arca-chk-emitidos").checked;
+        const recibidos = $("#arca-chk-recibidos").checked;
+
+        if (!cuit || !username || !password) {
+          toast("Completá CUIT, usuario y contraseña de ARCA", false);
+          return;
+        }
+
+        if (!fechaDesde || !fechaHasta) {
+          toast("Seleccioná el rango de fechas", false);
+          return;
+        }
+
+        if (!emitidos && !recibidos) {
+          toast("Marcá al menos Emitidos o Recibidos", false);
+          return;
+        }
+
+        stopArcaPolling();
+
+        const stopLoading = showLoadingButton($("#btn-arca-buscar"), "⏳ Iniciando…");
+        setArcaStatus("Iniciando consulta ARCA…", "yellow");
+
+        const payload = {
+          cuit,
+          username,
+          password,
+          fechaDesde,
+          fechaHasta,
+          emitidos,
+          recibidos,
+        };
+
+        try {
+          const raw = await callWebhook(
+            JSON.stringify(payload),
+            WEBHOOKS.arca,
+            {
+              retries: 1,
+              timeoutMs: ARCA_START_TIMEOUT_MS,
+              headers: { "Content-Type": "application/json" },
+            }
+          );
+
+          const result = extractArcaResult(raw);
+          console.log("Respuesta inicial ARCA normalizada:", result);
+
+          if (isArcaError(result)) {
+            throw new Error(result.error || result.message || "Respuesta inesperada");
+          }
+
+          if (isArcaDone(result)) {
+            finalizeArcaSearch(result);
+            return;
+          }
+
+          const jobId = getArcaJobId(result);
+
+          if (!jobId) {
+            console.error("Respuesta inicial ARCA sin jobId:", result);
+            throw new Error(result.message || result.mensaje || "El webhook ARCA no devolvió jobId ni resultado final");
+          }
+
+          state.arcaPolling.active = true;
+          state.arcaPolling.jobId = jobId;
+          state.arcaPolling.startedAt = Date.now();
+          state.arcaPolling.errorCount = 0;
+
+          const total = Number(result.total ?? result.expected ?? 0);
+          const msg = result.message || result.mensaje || "Consulta iniciada";
+          setArcaStatus(`⏳ ${msg}${total > 0 ? ` · 0/${total}` : ""}`, "yellow");
+          toast("Consulta ARCA iniciada");
+
+          scheduleNextArcaPoll(jobId);
+        } catch (err) {
+          console.error("buscarEnARCA()", err);
+          stopArcaPolling();
+          setArcaStatus(`❌ ${err?.message || err}`, "red");
+          toast(`Error buscando en ARCA: ${err?.message || err}`, false);
+        } finally {
+          stopLoading();
+        }
+      }
+
+      function abrirDialogVincularARCA(comp) {
+        const dlg = $("#dlg-arca-vincular");
+        if (!dlg) return;
+
+        $("#arca-dlg-comp-info").innerHTML = `
+          <div class="font-medium">${esc(comp.tipo)} · ${esc(comp.nro)}</div>
+          <div class="text-xs text-gray-400">${esc(comp.receptor)} · ${esc(fmtFecha(comp.fecha))}</div>
+          <div class="text-lg font-bold ${comp.total >= 0 ? "text-emerald-400" : "text-red-400"} mt-1">${esc(fmtMoney(comp.total, comp.moneda || "ARS"))}</div>
+        `;
+
+        const tol = state.cfg.tolerancia || 0.02;
+        const candidatos = state.movimientos
+          .filter((m) => m.estado !== "conciliado")
+          .map((m) => {
+            const monto = abs(m.cred || m.deb);
+            const diff = Math.abs(monto - abs(comp.total)) / Math.max(monto, 1);
+            return { ...m, _diff: diff };
+          })
+          .filter((m) => m._diff <= 0.3)
+          .sort((a, b) => a._diff - b._diff)
+          .slice(0, 20);
+
+        const lista = $("#arca-dlg-movs-lista");
+        lista.innerHTML = "";
+
+        if (!candidatos.length) {
+          lista.innerHTML = '<div class="text-gray-500 text-sm p-2">No hay movimientos pendientes cercanos a este importe.</div>';
+        }
+
+        candidatos.forEach((m) => {
+          const el = document.createElement("div");
+          el.className = "soft rounded p-2 flex items-center justify-between hover-row";
+          const dentro = dentroTol(abs(m.cred || m.deb), abs(comp.total), tol);
+
+          el.innerHTML = `
+            <div>
+              <div class="font-medium text-sm">${esc(aliasCuenta(m.ctaId))} · ${esc(fmtFecha(m.fecha))}</div>
+              <div class="text-xs text-gray-400">${esc(m.desc || "")}${m.tercero ? ` · ${esc(m.tercero)}` : ""}</div>
+            </div>
+            <div class="flex items-center gap-2">
+              <div class="font-bold text-sm ${abs(m.cred) > 0 ? "text-emerald-400" : "text-red-400"}">${esc(fmtMoney(abs(m.cred || m.deb), monedaCuenta(m.ctaId)))}</div>
+              ${dentro ? '<span class="tag text-emerald-400">≈ importe</span>' : ""}
+              <button type="button" class="bg-blue-600 hover:bg-blue-700 text-white px-2 py-1 rounded text-xs" data-mov-id="${esc(m.id)}">Vincular</button>
+            </div>
+          `;
+
+          el.querySelector("[data-mov-id]").addEventListener("click", () => {
+            const mov = state.movimientos.find((x) => x.id === m.id);
+            if (!mov) return;
+
+            const arcaKey = `arca:${comp.origen}:${comp.id}`;
+            mov.links = Array.from(new Set([...(mov.links || []), arcaKey]));
+            mov.sugerenciasArca = mov.sugerenciasArca || [];
+
+            const yaEsta = mov.sugerenciasArca.find((s) => String(s.compId) === String(comp.id));
+            if (!yaEsta) {
+              mov.sugerenciasArca.push({
+                compId: comp.id,
+                origen: comp.origen,
+                tipo: comp.tipo,
+                nroDesde: comp.nro,
+                denominacion: comp.receptor,
+                fecha: normalizeDate(comp.fecha) || comp.fecha,
+                total: comp.total,
+                moneda: comp.moneda || "ARS",
+                score: 100,
+              });
+            }
+
+            mov.conciliacionOrigen = "manual";
+            recalcEstado(mov);
+            persist();
+            renderAll();
+            renderARCA();
+            dlg.close();
+            toast("Comprobante ARCA vinculado al movimiento");
+          });
+
+          lista.appendChild(el);
+        });
+
+        dlg.showModal();
+      }
+
+      function limpiarARCA() {
+        stopArcaPolling();
+        if (!confirm("¿Limpiar los comprobantes ARCA cargados?")) return;
+        state.arcaEmitidos = [];
+        state.arcaRecibidos = [];
+        persistARCA();
+        renderARCA();
+        setArcaStatus("Datos ARCA limpiados.", "gray");
+        toast("Comprobantes ARCA eliminados");
+      }
+
+      function setDefaultDates() {
+        const current = new Date();
+        const firstDay = localISODate(new Date(current.getFullYear(), current.getMonth(), 1));
+        const now = todayISO();
+        const lastDay = localISODate(new Date(current.getFullYear(), current.getMonth() + 1, 0));
+
+        $("#m-from").value = firstDay;
+        $("#m-to").value = now;
+        $("#arca-desde").value = firstDay;
+        $("#arca-hasta").value = lastDay;
+      }
+
+      function seedDemoAccounts() {
+        // Producción: no se crean cuentas ficticias automáticamente.
+        // Las cuentas se cargan desde el botón “Cuenta”.
+      }
+
+      function bindEvents() {
+        $("#btn-volver")?.addEventListener("click", () => {
+          location.href = "./index.html";
+        });
+
+        document.querySelectorAll("[data-tab]").forEach((btn) => {
+          btn.addEventListener("click", () => setTab(btn.dataset.tab));
+        });
+
+        $("#btn-add-cta")?.addEventListener("click", () => abrirDialogCuenta());
+        $("#btn-cta-save")?.addEventListener("click", guardarCuenta);
+
+        $("#q-cta")?.addEventListener("input", renderCuentas);
+        $("#flt-cta")?.addEventListener("change", () => {
+          renderKPIs();
+          renderTabla();
+        });
+        $("#flt-estado")?.addEventListener("change", renderTabla);
+        $("#flt-tipo")?.addEventListener("change", renderTabla);
+        $("#q-mov")?.addEventListener("input", () => {
+          renderKPIs();
+          renderTabla();
+        });
+        $("#cfg-tol")?.addEventListener("change", saveConfigFromUI);
+
+        $("#btn-reconciliar")?.addEventListener("click", reconciliarARCA);
+        $("#btn-export")?.addEventListener("click", exportCSV);
+
+        $("#btn-mov-clear")?.addEventListener("click", clearMovimientoLinks);
+        $("#btn-mov-accept")?.addEventListener("click", acceptMovimientoLinks);
+
+        $("#m-apply")?.addEventListener("click", renderMetrics);
+
+        $("#btn-arca-buscar")?.addEventListener("click", buscarEnARCA);
+        $("#btn-arca-limpiar")?.addEventListener("click", limpiarARCA);
+        $("#btn-arca-dlg-cerrar")?.addEventListener("click", () => $("#dlg-arca-vincular")?.close());
+
+        $("#btn-pick-bank")?.addEventListener("click", () => $("#file-bank")?.click());
+        $("#file-bank")?.addEventListener("change", (e) => {
+          const file = e.target.files?.[0];
+          if (file) onBankFile(file);
+        });
+
+        $("#btn-pick-doc")?.addEventListener("click", () => $("#file-doc")?.click());
+        $("#file-doc")?.addEventListener("change", (e) => {
+          const files = e.target.files;
+          if (files?.length) onDocFiles(files);
+        });
+
+        setupDrop($("#drop-bank"), $("#file-bank"), (files) => onBankFile(files[0]));
+        setupDrop($("#drop-doc"), $("#file-doc"), (files) => onDocFiles(files));
+
+        window.addEventListener("beforeunload", stopArcaPolling);
+      }
+
+      function init() {
+        seedDemoAccounts();
+        setDefaultDates();
+        bindEvents();
+        renderAll();
+        renderARCA();
+        setArcaStatus("⏱ AFIP SDK puede tardar varios minutos.", "gray");
+        setTab("conc");
+      }
+
+      document.addEventListener("DOMContentLoaded", init);
+    })();
+  </script>
+</body>
+</html>
