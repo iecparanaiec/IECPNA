@@ -1,0 +1,456 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Inteligencia Operativa para Alineación Total S.A. | Conciliación Bancaria Inteligente</title>
+  <script src="https://cdn.tailwindcss.com/3.4.17"></script>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
+  <script src="https://cdn.jsdelivr.net/npm/lucide@0.263.0/dist/umd/lucide.min.js"></script>
+  <style>
+    * { font-family: 'DM Sans', sans-serif; }
+    html, body { margin: 0; padding: 0; background: #0a0e1a; color: white; }
+    body { width: 100%; min-height: 100vh; overflow: hidden; }
+
+    .slide {
+      display: none;
+      width: 100%;
+      min-height: 100vh;
+      height: 100vh;
+      overflow-y: auto;
+      overflow-x: hidden;
+      padding: 2rem 1.5rem;
+      box-sizing: border-box;
+      scroll-behavior: smooth;
+    }
+    .slide.active { display: flex; }
+    .slide-inner { position: relative; z-index: 10; width: 100%; max-width: 1180px; margin: 0 auto; }
+
+    .glass-card {
+      background: rgba(255, 255, 255, 0.08);
+      backdrop-filter: blur(14px);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      box-shadow: 0 24px 90px rgba(0,0,0,.18);
+    }
+    .soft-card {
+      background: rgba(255,255,255,.055);
+      border: 1px solid rgba(255,255,255,.09);
+    }
+    .gradient-text {
+      background: linear-gradient(135deg, #38bdf8, #60a5fa, #818cf8);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .gold-text {
+      background: linear-gradient(135deg, #fbbf24, #f59e0b, #f97316);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .bg-pattern {
+      background-image:
+        linear-gradient(90deg, transparent 0 47%, rgba(14,165,233,0.16) 48%, transparent 49% 100%),
+        linear-gradient(0deg, transparent 0 47%, rgba(59,130,246,0.11) 48%, transparent 49% 100%),
+        repeating-linear-gradient(90deg, transparent 0 90px, rgba(56,189,248,0.10) 91px, transparent 93px),
+        repeating-linear-gradient(0deg, transparent 0 78px, rgba(96,165,250,0.08) 79px, transparent 81px),
+        radial-gradient(circle at 18% 48%, rgba(56, 189, 248, 0.10) 0%, transparent 45%),
+        radial-gradient(circle at 80% 84%, rgba(59, 130, 246, 0.09) 0%, transparent 45%),
+        radial-gradient(circle at 50% 10%, rgba(129, 140, 248, 0.07) 0%, transparent 40%);
+      background-size: 220px 220px, 180px 180px, 280px 280px, 260px 260px, auto, auto, auto;
+    }
+    .bg-pattern::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background-image:
+        radial-gradient(circle, rgba(56,189,248,0.34) 0 1px, transparent 2px),
+        linear-gradient(135deg, transparent 0 42%, rgba(14,165,233,0.10) 43%, transparent 45% 100%);
+      background-size: 34px 34px, 320px 320px;
+      opacity: .48;
+      pointer-events: none;
+    }
+    .pulse-border { animation: pulse-border 2s ease-in-out infinite; }
+    @keyframes pulse-border {
+      0%, 100% { border-color: rgba(56, 189, 248, 0.25); box-shadow: 0 0 0 rgba(14,165,233,0); }
+      50% { border-color: rgba(14, 165, 233, 0.65); box-shadow: 0 0 38px rgba(14,165,233,.16); }
+    }
+    .scrollbar-soft::-webkit-scrollbar { width: 8px; }
+    .scrollbar-soft::-webkit-scrollbar-thumb { background: rgba(56, 189, 248, .35); border-radius: 999px; }
+    .dot { width: 8px; height: 8px; border-radius: 999px; background: rgba(255,255,255,.25); transition: all .2s ease; }
+    .dot.active { background: #0ea5e9; transform: scale(1.35); width: 22px; }
+    .number-badge {
+      background: linear-gradient(135deg, rgba(14,165,233,.30), rgba(59,130,246,.20));
+      border: 1px solid rgba(56,189,248,.30);
+    }
+    .metric-card {
+      background: linear-gradient(135deg, rgba(255,255,255,.075), rgba(255,255,255,.035));
+      border: 1px solid rgba(255,255,255,.10);
+      border-radius: 1.5rem;
+    }
+    .big-number { letter-spacing: -0.08em; }
+    .bar-track { height: 16px; border-radius: 999px; background: rgba(255,255,255,.08); overflow: hidden; }
+    .bar-fill { height: 100%; border-radius: 999px; background: linear-gradient(90deg, #38bdf8, #60a5fa, #818cf8); }
+    .bar-fill-gold { background: linear-gradient(90deg, #fbbf24, #f59e0b, #f97316); }
+    .flow-card { background: rgba(255,255,255,.055); border: 1px solid rgba(255,255,255,.09); }
+    .flow-card.active { border-color: rgba(56,189,248,.68); background: rgba(14,165,233,.14); box-shadow: 0 0 36px rgba(14,165,233,.10); }
+    .browser-shell {
+      background: linear-gradient(135deg, rgba(15, 23, 42, .96), rgba(15, 26, 46, .92));
+      border: 1px solid rgba(56, 189, 248, .26);
+      box-shadow: 0 30px 110px rgba(0,0,0,.45);
+    }
+    .browser-dot { width: 11px; height: 11px; border-radius: 999px; display: inline-block; }
+    .price-card {
+      background: linear-gradient(135deg, rgba(14,165,233,.12), rgba(59,130,246,.08), rgba(129,140,248,.06));
+      border: 1px solid rgba(56,189,248,.20);
+    }
+    .roadmap-line {
+      background: linear-gradient(180deg, rgba(56,189,248,.0), rgba(56,189,248,.45), rgba(56,189,248,.0));
+    }
+
+    @media (max-width: 640px) {
+      body { overflow-y: auto; }
+      .slide { padding: 1rem .8rem 4.4rem; height: auto; min-height: 100vh; }
+      .text-8xl { font-size: 3.15rem; line-height: .94; }
+      .text-7xl { font-size: 2.75rem; line-height: .96; }
+      .text-6xl { font-size: 2.35rem; line-height: 1; }
+      .text-5xl { font-size: 2rem; line-height: 1.05; }
+      .text-4xl { font-size: 1.75rem; line-height: 1.08; }
+      .text-3xl { font-size: 1.45rem; }
+      .mobile-hide { display: none !important; }
+      .demo-frame { height: 70vh !important; }
+    }
+  </style>
+</head>
+<body class="relative bg-[#0a0e1a]">
+  <button id="prev-btn" aria-label="Anterior" class="fixed left-2 md:left-5 top-1/2 -translate-y-1/2 z-50 bg-white/10 hover:bg-white/20 backdrop-blur border border-white/10 rounded-full w-10 h-10 md:w-11 md:h-11 flex items-center justify-center transition text-white" onclick="changeSlide(-1)">
+    <i data-lucide="chevron-left" style="width:20px;height:20px;"></i>
+  </button>
+  <button id="next-btn" aria-label="Siguiente" class="fixed right-2 md:right-5 top-1/2 -translate-y-1/2 z-50 bg-white/10 hover:bg-white/20 backdrop-blur border border-white/10 rounded-full w-10 h-10 md:w-11 md:h-11 flex items-center justify-center transition text-white" onclick="changeSlide(1)">
+    <i data-lucide="chevron-right" style="width:20px;height:20px;"></i>
+  </button>
+
+  <div id="dots" class="fixed bottom-4 left-1/2 -translate-x-1/2 z-50 flex gap-2 flex-wrap justify-center px-2 max-w-[92vw]"></div>
+
+  <section class="slide active flex-col items-center justify-center bg-gradient-to-br from-[#0a0e1a] via-[#0f1a2e] to-[#0a0e1a] text-center relative scrollbar-soft">
+    <div class="absolute inset-0 bg-pattern opacity-70"></div>
+    <div class="absolute top-0 left-0 w-1/2 h-1/2 bg-gradient-to-r from-sky-500/10 to-transparent rounded-full blur-3xl"></div>
+    <div class="absolute bottom-0 right-0 w-1/2 h-1/2 bg-gradient-to-l from-blue-500/10 to-transparent rounded-full blur-3xl"></div>
+    <div class="slide-inner px-4">
+      <img src="https://i.postimg.cc/cLFRRRS7/Chat-GPT-Image-2-ago-2026-07-39-03-p-m.png" alt="Alineación Total S.A." class="h-24 md:h-32 lg:h-36 mx-auto mb-5 object-contain drop-shadow-2xl" />
+      <div class="inline-block px-4 py-1.5 md:px-5 md:py-2 rounded-full border border-sky-400/30 bg-sky-400/10 text-sky-300 text-xs md:text-sm font-semibold tracking-wider mb-5">PROPUESTA DE INTELIGENCIA OPERATIVA</div>
+      <h1 class="text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-black leading-none mb-4">RECUPERAR <span class="gradient-text">330 HORAS</span><br class="hidden md:block" /> AL AÑO</h1>
+      <p class="text-lg md:text-2xl text-gray-300 max-w-4xl mx-auto mb-7">Primera etapa: Conciliación Bancaria Inteligente para liberar al dueño de la carga operativa y devolverle foco comercial.</p>
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-3 md:gap-4 max-w-4xl mx-auto">
+        <div class="glass-card rounded-2xl p-4 border border-white/5"><span class="text-3xl block mb-2">🏦</span><b class="text-white">Bancos + Postnet</b><p class="text-gray-400 text-sm mt-1">Lectura y cruce automático</p></div>
+        <div class="glass-card rounded-2xl p-4 border border-white/5"><span class="text-3xl block mb-2">🤖</span><b class="text-white">IA + OCR</b><p class="text-gray-400 text-sm mt-1">Digitalización de comprobantes</p></div>
+        <div class="glass-card rounded-2xl p-4 border border-white/5 pulse-border"><span class="text-3xl block mb-2">⏱️</span><b class="text-white">90% menos tiempo</b><p class="text-gray-400 text-sm mt-1">De carga manual a validación</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="slide flex-col items-center justify-center bg-gradient-to-b from-[#0a0e1a] to-[#0f1a2e] relative scrollbar-soft">
+    <div class="absolute inset-0 bg-pattern opacity-40"></div>
+    <div class="slide-inner px-4">
+      <h2 class="text-4xl md:text-6xl font-black text-white mb-4">HOY EL DUEÑO ESTÁ <span class="gradient-text">ATRAPADO EN LO OPERATIVO</span></h2>
+      <p class="text-gray-300 text-base md:text-xl mb-6 max-w-4xl">El proceso actual depende de PDFs bancarios, Excel, comprobantes, resúmenes de Postnet y controles manuales. El problema no es solo el tiempo: es que ese tiempo lo está absorbiendo el dueño.</p>
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-4 md:gap-5">
+        <div class="glass-card rounded-3xl p-5 md:p-7 border border-white/5">
+          <h3 class="text-sky-300 font-bold text-xl mb-4">Circuito manual actual</h3>
+          <div class="grid grid-cols-2 gap-3 text-sm md:text-base">
+            <div class="flow-card rounded-2xl p-4">📩 PDF del banco</div>
+            <div class="flow-card rounded-2xl p-4">📊 Excel mensual</div>
+            <div class="flow-card rounded-2xl p-4">💳 Postnet por separado</div>
+            <div class="flow-card rounded-2xl p-4">🧾 Facturas y tickets</div>
+            <div class="flow-card rounded-2xl p-4">🔎 Cruce manual</div>
+            <div class="flow-card rounded-2xl p-4">⚠️ Diferencias</div>
+            <div class="flow-card rounded-2xl p-4">🕒 Revisión</div>
+            <div class="flow-card rounded-2xl p-4">✅ Conciliación</div>
+          </div>
+        </div>
+        <div class="glass-card rounded-3xl p-5 md:p-7 border border-sky-400/20 bg-gradient-to-br from-sky-500/5 to-blue-500/5">
+          <h3 class="text-blue-300 font-bold text-xl mb-4">Costo invisible</h3>
+          <div class="space-y-4">
+            <div class="metric-card p-5"><p class="text-gray-400 text-sm">Tiempo mensual estimado</p><p class="text-5xl font-black gradient-text big-number">30 h</p></div>
+            <div class="metric-card p-5"><p class="text-gray-400 text-sm">Tiempo anual absorbido</p><p class="text-5xl font-black gradient-text big-number">360 h</p></div>
+            <div class="p-4 rounded-2xl bg-amber-400/10 border border-amber-400/20 text-amber-100 font-semibold">Cada hora en Excel es una hora menos para vender, negociar y dirigir.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="slide flex-col items-center justify-center bg-gradient-to-b from-[#0f1a2e] to-[#0a0e1a] relative scrollbar-soft">
+    <div class="absolute inset-0 bg-pattern opacity-40"></div>
+    <div class="slide-inner px-4">
+      <div class="text-center mb-7">
+        <h2 class="text-4xl md:text-6xl font-black text-white mb-3">PROYECCIÓN DE <span class="gradient-text">VOLUMEN OPERATIVO</span></h2>
+        <p class="text-gray-300 text-base md:text-xl max-w-4xl mx-auto">A partir de 6 vehículos por día, más ventas de neumáticos, repuestos, cobros por tarjeta, transferencias y proveedores, la conciliación se vuelve un cuello de botella mensual.</p>
+      </div>
+      <div class="grid grid-cols-1 md:grid-cols-4 gap-4 mb-5">
+        <div class="metric-card p-5 text-center"><span class="text-4xl">🚗</span><p class="text-gray-400 text-sm mt-3">Trabajos diarios</p><p class="text-4xl font-black text-white">6</p></div>
+        <div class="metric-card p-5 text-center"><span class="text-4xl">📅</span><p class="text-gray-400 text-sm mt-3">Operaciones mensuales</p><p class="text-4xl font-black text-white">132</p></div>
+        <div class="metric-card p-5 text-center"><span class="text-4xl">💳</span><p class="text-gray-400 text-sm mt-3">Movimientos estimados</p><p class="text-4xl font-black text-white">1.8k–2.5k</p></div>
+        <div class="metric-card p-5 text-center"><span class="text-4xl">⏱️</span><p class="text-gray-400 text-sm mt-3">Conciliación manual</p><p class="text-4xl font-black text-white">28–35 h</p></div>
+      </div>
+      <div class="glass-card rounded-3xl p-5 md:p-7 border border-white/5">
+        <p class="text-xl md:text-3xl font-black text-center">El número clave no es cuántos movimientos hay.<br /><span class="gold-text">El número clave es cuántas horas del dueño consume resolverlos.</span></p>
+      </div>
+    </div>
+  </section>
+
+  <section class="slide flex-col items-center justify-center bg-gradient-to-b from-[#0a0e1a] to-[#0f1a2e] relative scrollbar-soft">
+    <div class="absolute inset-0 bg-pattern opacity-40"></div>
+    <div class="slide-inner px-4">
+      <h2 class="text-4xl md:text-6xl font-black text-white mb-6 text-center">DE <span class="gradient-text">CARGA MANUAL</span> A VALIDACIÓN INTELIGENTE</h2>
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-5">
+        <div class="glass-card rounded-3xl p-5 md:p-7 border border-white/5">
+          <h3 class="text-red-300 font-black text-2xl mb-4">Antes</h3>
+          <div class="space-y-3 text-gray-200">
+            <div class="flow-card rounded-2xl p-4">1. Descargar PDF bancario</div>
+            <div class="flow-card rounded-2xl p-4">2. Pasar movimientos a Excel</div>
+            <div class="flow-card rounded-2xl p-4">3. Buscar operaciones de Postnet</div>
+            <div class="flow-card rounded-2xl p-4">4. Cruzar facturas y comprobantes</div>
+            <div class="flow-card rounded-2xl p-4">5. Revisar diferencias una por una</div>
+          </div>
+        </div>
+        <div class="glass-card rounded-3xl p-5 md:p-7 border border-sky-400/20 bg-gradient-to-br from-sky-500/5 to-blue-500/5">
+          <h3 class="text-sky-300 font-black text-2xl mb-4">Después</h3>
+          <div class="space-y-3 text-gray-200">
+            <div class="flow-card active rounded-2xl p-4">1. Subir PDF / resumen bancario</div>
+            <div class="flow-card active rounded-2xl p-4">2. IA lee, clasifica y normaliza</div>
+            <div class="flow-card active rounded-2xl p-4">3. Cruce automático con facturas y cobros</div>
+            <div class="flow-card active rounded-2xl p-4">4. Sistema muestra coincidencias y alertas</div>
+            <div class="flow-card active rounded-2xl p-4">5. El dueño valida excepciones</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="slide flex-col items-center justify-center bg-gradient-to-b from-[#0f1a2e] to-[#0a0e1a] relative scrollbar-soft">
+    <div class="absolute inset-0 bg-pattern opacity-40"></div>
+    <div class="slide-inner px-4">
+      <div class="text-center mb-6">
+        <h2 class="text-4xl md:text-6xl font-black text-white">IMPACTO EN <span class="gradient-text">HORAS-HOMBRE DEL DUEÑO</span></h2>
+        <p class="text-gray-300 text-base md:text-xl mt-3 max-w-4xl mx-auto">La automatización no elimina el control. Elimina la carga repetitiva que hoy le impide concentrarse en ventas y dirección.</p>
+      </div>
+      <div class="glass-card rounded-3xl p-5 md:p-8 border border-white/5">
+        <div class="mb-7">
+          <div class="flex justify-between text-sm md:text-base mb-2"><span class="text-gray-300">Proceso actual</span><span class="font-black text-white">30 horas/mes</span></div>
+          <div class="bar-track"><div class="bar-fill-gold" style="width:100%"></div></div>
+        </div>
+        <div class="mb-7">
+          <div class="flex justify-between text-sm md:text-base mb-2"><span class="text-gray-300">Con Inteligencia Operativa</span><span class="font-black text-white">2 a 3 horas/mes</span></div>
+          <div class="bar-track"><div class="bar-fill" style="width:10%"></div></div>
+        </div>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-4 text-center">
+          <div class="metric-card p-5"><p class="text-gray-400 text-sm">Optimización estimada</p><p class="text-6xl font-black gradient-text big-number">90%</p></div>
+          <div class="metric-card p-5"><p class="text-gray-400 text-sm">Horas recuperadas por año</p><p class="text-6xl font-black gradient-text big-number">330</p></div>
+          <div class="metric-card p-5"><p class="text-gray-400 text-sm">Jornadas equivalentes</p><p class="text-6xl font-black gradient-text big-number">41</p></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="slide flex-col items-center justify-center bg-gradient-to-b from-[#0a0e1a] to-[#0f1a2e] relative scrollbar-soft">
+    <div class="absolute inset-0 bg-pattern opacity-40"></div>
+    <div class="slide-inner px-4">
+      <h2 class="text-4xl md:text-6xl font-black text-white mb-6 text-center">¿QUÉ COMPRA REALMENTE <span class="gradient-text">ALINEACIÓN TOTAL?</span></h2>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+        <div class="glass-card rounded-3xl p-6 md:p-8 border border-white/5">
+          <p class="text-gray-400 text-sm font-bold tracking-widest mb-3">NO ES SOLO</p>
+          <h3 class="text-3xl md:text-4xl font-black text-white mb-5">Un sistema de conciliación bancaria</h3>
+          <p class="text-gray-300 text-lg">Eso es únicamente el primer módulo visible.</p>
+        </div>
+        <div class="glass-card rounded-3xl p-6 md:p-8 border border-sky-400/20 bg-gradient-to-br from-sky-500/5 to-blue-500/5 pulse-border">
+          <p class="text-sky-300 text-sm font-bold tracking-widest mb-3">SÍ ES</p>
+          <h3 class="text-3xl md:text-4xl font-black gradient-text mb-5">La primera etapa de una plataforma de Inteligencia Operativa</h3>
+          <p class="text-gray-200 text-lg">Una base para automatizar bancos, compras, stock, clientes, WhatsApp, reportes y decisiones gerenciales.</p>
+        </div>
+      </div>
+      <div class="mt-5 glass-card rounded-3xl p-5 md:p-7 border border-white/5 text-center">
+        <p class="text-xl md:text-3xl font-black">El objetivo no es tener más pantallas.<br /><span class="gold-text">El objetivo es devolverle tiempo al dueño.</span></p>
+      </div>
+    </div>
+  </section>
+
+  <section class="slide flex-col items-center justify-start bg-gradient-to-b from-[#0f1a2e] to-[#0a0e1a] relative scrollbar-soft">
+    <div class="absolute inset-0 bg-pattern opacity-40"></div>
+    <div class="slide-inner px-4 pb-8">
+      <div class="text-center mb-5">
+        <h2 class="text-4xl md:text-6xl font-black text-white">DEMO EN VIVO: <span class="gradient-text">ERP BANCARIO</span></h2>
+        <p class="text-gray-300 text-base md:text-lg mt-2 max-w-4xl mx-auto">Maqueta funcional montada para visualizar el flujo: carga de archivos, digitalización, conciliación y métricas.</p>
+      </div>
+      <div class="browser-shell rounded-3xl overflow-hidden">
+        <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-3 p-4 border-b border-white/10 bg-white/[.035]">
+          <div class="flex items-center gap-2">
+            <span class="browser-dot bg-red-400"></span><span class="browser-dot bg-amber-400"></span><span class="browser-dot bg-green-400"></span>
+            <div class="ml-3 px-4 py-2 rounded-full bg-white/8 border border-white/10 text-gray-300 text-xs md:text-sm break-all">https://www.iec-ia.com.ar/bancariaat.html</div>
+          </div>
+          <a href="https://www.iec-ia.com.ar/bancariaat.html" target="_blank" rel="noopener" class="inline-flex items-center justify-center gap-2 px-4 py-2 rounded-xl bg-sky-500/80 hover:bg-sky-500 text-white font-bold text-sm transition">
+            <span>Abrir demo</span><i data-lucide="external-link" style="width:16px;height:16px;"></i>
+          </a>
+        </div>
+        <iframe title="ERP Bancario Alineación Total" src="https://www.iec-ia.com.ar/bancariaat.html" class="demo-frame w-full bg-[#0b1120]" style="height:76vh;border:0;"></iframe>
+      </div>
+      <p class="text-gray-400 text-xs md:text-sm mt-3 text-center">Si el navegador bloquea la carga embebida, usar el botón “Abrir demo”.</p>
+    </div>
+  </section>
+
+  <section class="slide flex-col items-center justify-center bg-gradient-to-b from-[#0a0e1a] to-[#0f1a2e] relative scrollbar-soft">
+    <div class="absolute inset-0 bg-pattern opacity-40"></div>
+    <div class="slide-inner px-4">
+      <h2 class="text-4xl md:text-6xl font-black text-white mb-6 text-center">PLAN DE <span class="gradient-text">IMPLEMENTACIÓN</span></h2>
+      <div class="grid grid-cols-1 lg:grid-cols-[1fr_1fr] gap-5">
+        <div class="glass-card rounded-3xl p-6 md:p-7 border border-white/5">
+          <h3 class="text-sky-300 font-black text-2xl mb-4">Duración estimada: 2 meses</h3>
+          <div class="space-y-4">
+            <div class="soft-card rounded-2xl p-4"><b class="text-white">Mes 1 · Relevamiento + parametrización</b><p class="text-gray-300 text-sm mt-1">2 visitas semanales de 2 horas. Mapeo real del circuito, bancos, Postnet, facturas, excepciones y criterios de conciliación.</p></div>
+            <div class="soft-card rounded-2xl p-4"><b class="text-white">Mes 2 · Ajustes + validación</b><p class="text-gray-300 text-sm mt-1">1 visita semanal de 2 horas. Pruebas con información real, capacitación y puesta en marcha controlada.</p></div>
+            <div class="p-4 rounded-2xl bg-sky-400/10 border border-sky-400/20"><b class="text-sky-200">Total presencial:</b> <span class="text-white font-black">24 horas</span> de implementación operativa.</div>
+          </div>
+        </div>
+        <div class="glass-card rounded-3xl p-6 md:p-7 border border-sky-400/20 bg-gradient-to-br from-sky-500/5 to-blue-500/5">
+          <h3 class="text-blue-300 font-black text-2xl mb-4">Desarrollo y adaptación</h3>
+          <div class="space-y-3 text-gray-200">
+            <div class="soft-card rounded-2xl p-4">⚙️ Ajuste del módulo bancario</div>
+            <div class="soft-card rounded-2xl p-4">🏦 Integración con formatos de resumen</div>
+            <div class="soft-card rounded-2xl p-4">💳 Reglas para Postnet, tarjetas y transferencias</div>
+            <div class="soft-card rounded-2xl p-4">🧾 Cruce con facturas y comprobantes</div>
+            <div class="soft-card rounded-2xl p-4">📊 Reportes y métricas ejecutivas</div>
+          </div>
+          <div class="mt-4 p-4 rounded-2xl bg-blue-400/10 border border-blue-400/20"><b class="text-blue-200">Dedicación técnica estimada:</b> <span class="text-white font-black">96 horas</span> de programación y pruebas.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="slide flex-col items-center justify-center bg-gradient-to-b from-[#0f1a2e] to-[#0a0e1a] relative scrollbar-soft">
+    <div class="absolute inset-0 bg-pattern opacity-40"></div>
+    <div class="slide-inner px-4">
+      <div class="text-center mb-7">
+        <h2 class="text-4xl md:text-6xl font-black text-white">FORMATO DE <span class="gradient-text">INVERSIÓN</span></h2>
+        <p class="text-gray-300 text-base md:text-xl mt-2 max-w-4xl mx-auto">Propuesta pensada como etapa inicial de Inteligencia Operativa, con una entrada baja para validar el proceso y avanzar con seguridad.</p>
+      </div>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-5 max-w-5xl mx-auto">
+        <div class="price-card rounded-3xl p-6 md:p-8">
+          <p class="text-sky-300 text-sm font-bold tracking-widest mb-2">ETAPA 0</p>
+          <h3 class="text-3xl font-black text-white mb-3">Diagnóstico e inicio</h3>
+          <p class="text-6xl font-black gradient-text mb-4">USD 800</p>
+          <ul class="text-gray-300 space-y-2 text-sm md:text-base">
+            <li>• Relevamiento del circuito real</li>
+            <li>• Análisis de resúmenes y Postnet</li>
+            <li>• Parametrización inicial</li>
+            <li>• Diseño operativo del flujo</li>
+          </ul>
+          <div class="mt-5 p-4 rounded-2xl bg-green-400/10 border border-green-400/20 text-green-200 font-bold">Se descuenta del proyecto completo.</div>
+        </div>
+        <div class="price-card rounded-3xl p-6 md:p-8 pulse-border">
+          <p class="text-blue-300 text-sm font-bold tracking-widest mb-2">ETAPA 1</p>
+          <h3 class="text-3xl font-black text-white mb-3">Conciliación Bancaria Inteligente</h3>
+          <p class="text-6xl font-black gradient-text mb-4">USD 3.000</p>
+          <ul class="text-gray-300 space-y-2 text-sm md:text-base">
+            <li>• Desarrollo y adaptación</li>
+            <li>• Implementación presencial</li>
+            <li>• Capacitación y pruebas</li>
+            <li>• Puesta en marcha controlada</li>
+            <li>• Base para nuevos módulos</li>
+          </ul>
+          <div class="mt-5 p-4 rounded-2xl bg-sky-400/10 border border-sky-400/20 text-sky-100 font-bold">No es venta de horas. Es implementación de inteligencia operativa.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="slide flex-col items-center justify-center bg-gradient-to-b from-[#0a0e1a] to-[#0f1a2e] relative scrollbar-soft">
+    <div class="absolute inset-0 bg-pattern opacity-40"></div>
+    <div class="slide-inner px-4">
+      <h2 class="text-4xl md:text-6xl font-black text-white mb-6 text-center">ROADMAP: <span class="gradient-text">ESTO RECIÉN EMPIEZA</span></h2>
+      <div class="relative max-w-5xl mx-auto">
+        <div class="absolute left-5 md:left-1/2 top-0 bottom-0 w-px roadmap-line mobile-hide"></div>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div class="glass-card rounded-3xl p-5 border border-sky-400/20"><div class="number-badge w-11 h-11 rounded-full flex items-center justify-center text-white font-black mb-3">1</div><h3 class="text-sky-300 font-black text-xl">Conciliación bancaria</h3><p class="text-gray-300 text-sm mt-2">Bancos, Postnet, facturas, comprobantes y métricas.</p></div>
+          <div class="glass-card rounded-3xl p-5 border border-white/5"><div class="number-badge w-11 h-11 rounded-full flex items-center justify-center text-white font-black mb-3">2</div><h3 class="text-sky-300 font-black text-xl">Compras y proveedores</h3><p class="text-gray-300 text-sm mt-2">Control de facturas, pagos, vencimientos y documentos.</p></div>
+          <div class="glass-card rounded-3xl p-5 border border-white/5"><div class="number-badge w-11 h-11 rounded-full flex items-center justify-center text-white font-black mb-3">3</div><h3 class="text-sky-300 font-black text-xl">Stock y neumáticos</h3><p class="text-gray-300 text-sm mt-2">Rotación, alertas de faltantes y sugerencias de compra.</p></div>
+          <div class="glass-card rounded-3xl p-5 border border-white/5"><div class="number-badge w-11 h-11 rounded-full flex items-center justify-center text-white font-black mb-3">4</div><h3 class="text-sky-300 font-black text-xl">CRM y WhatsApp IA</h3><p class="text-gray-300 text-sm mt-2">Seguimiento de clientes, turnos, postventa y recuperación.</p></div>
+          <div class="glass-card rounded-3xl p-5 border border-white/5"><div class="number-badge w-11 h-11 rounded-full flex items-center justify-center text-white font-black mb-3">5</div><h3 class="text-sky-300 font-black text-xl">Tablero gerencial</h3><p class="text-gray-300 text-sm mt-2">Indicadores en tiempo real para dirigir sin perseguir datos.</p></div>
+          <div class="glass-card rounded-3xl p-5 border border-white/5"><div class="number-badge w-11 h-11 rounded-full flex items-center justify-center text-white font-black mb-3">6</div><h3 class="text-sky-300 font-black text-xl">IA predictiva</h3><p class="text-gray-300 text-sm mt-2">Compras sugeridas, demanda, clientes en riesgo y decisiones anticipadas.</p></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="slide flex-col items-center justify-center bg-gradient-to-br from-[#0a0e1a] via-[#0f1a2e] to-[#0a0e1a] text-center relative scrollbar-soft">
+    <div class="absolute inset-0 bg-pattern opacity-55"></div>
+    <div class="absolute top-0 right-0 w-1/2 h-1/2 bg-gradient-to-l from-sky-500/10 to-transparent rounded-full blur-3xl"></div>
+    <div class="slide-inner px-4 max-w-5xl">
+      <img src="https://i.postimg.cc/cLFRRRS7/Chat-GPT-Image-2-ago-2026-07-39-03-p-m.png" alt="Alineación Total S.A." class="h-24 md:h-32 mx-auto mb-6 object-contain" />
+      <h2 class="text-4xl sm:text-5xl md:text-7xl font-black text-white leading-tight mb-6">NO QUEREMOS VENDERTE <span class="gradient-text">UN SOFTWARE</span></h2>
+      <div class="glass-card rounded-3xl p-6 md:p-9 border border-white/5 max-w-3xl mx-auto">
+        <p class="text-2xl md:text-4xl font-black text-white leading-tight">Queremos devolverte el tiempo para hacer crecer Alineación Total.</p>
+        <p class="text-gray-300 text-base md:text-lg mt-5">La conciliación bancaria es el primer paso. La inteligencia operativa es el camino.</p>
+        <div class="mt-6 flex flex-wrap justify-center gap-2 md:gap-3 text-xs md:text-sm">
+          <span class="px-4 py-2 bg-sky-400/20 rounded-full border border-sky-400/30 text-sky-300">Integrar</span>
+          <span class="px-4 py-2 bg-blue-400/20 rounded-full border border-blue-400/30 text-blue-300">Automatizar</span>
+          <span class="px-4 py-2 bg-indigo-400/20 rounded-full border border-indigo-400/30 text-indigo-300">Medir</span>
+          <span class="px-4 py-2 bg-amber-400/20 rounded-full border border-amber-400/30 text-amber-300">Decidir</span>
+        </div>
+      </div>
+      <p class="text-gray-400 mt-6 text-sm">Propuesta de Inteligencia Operativa Empresarial · Etapa 1</p>
+    </div>
+  </section>
+
+  <script>
+    const slides = Array.from(document.querySelectorAll('.slide'));
+    const dotsContainer = document.getElementById('dots');
+    let currentSlide = 0;
+
+    function buildDots() {
+      dotsContainer.innerHTML = '';
+      slides.forEach((_, index) => {
+        const dot = document.createElement('button');
+        dot.className = 'dot' + (index === currentSlide ? ' active' : '');
+        dot.setAttribute('aria-label', 'Ir a pantalla ' + (index + 1));
+        dot.onclick = () => goToSlide(index);
+        dotsContainer.appendChild(dot);
+      });
+    }
+
+    function goToSlide(index) {
+      currentSlide = Math.max(0, Math.min(index, slides.length - 1));
+      slides.forEach((slide, i) => {
+        slide.classList.toggle('active', i === currentSlide);
+        if (i === currentSlide) slide.scrollTop = 0;
+      });
+      Array.from(dotsContainer.children).forEach((dot, i) => dot.classList.toggle('active', i === currentSlide));
+      document.getElementById('prev-btn').style.opacity = currentSlide === 0 ? '.35' : '1';
+      document.getElementById('next-btn').style.opacity = currentSlide === slides.length - 1 ? '.35' : '1';
+    }
+
+    function changeSlide(direction) {
+      goToSlide(currentSlide + direction);
+    }
+
+    document.addEventListener('keydown', (event) => {
+      if (event.key === 'ArrowRight' || event.key === 'PageDown' || event.key === ' ') changeSlide(1);
+      if (event.key === 'ArrowLeft' || event.key === 'PageUp') changeSlide(-1);
+      if (event.key === 'Home') goToSlide(0);
+      if (event.key === 'End') goToSlide(slides.length - 1);
+    });
+
+    let touchStartX = 0;
+    let touchEndX = 0;
+    document.addEventListener('touchstart', (event) => { touchStartX = event.changedTouches[0].screenX; }, { passive: true });
+    document.addEventListener('touchend', (event) => {
+      touchEndX = event.changedTouches[0].screenX;
+      const delta = touchStartX - touchEndX;
+      if (Math.abs(delta) > 70) changeSlide(delta > 0 ? 1 : -1);
+    }, { passive: true });
+
+    buildDots();
+    goToSlide(0);
+    if (window.lucide) window.lucide.createIcons();
+  </script>
+</body>
+</html>
