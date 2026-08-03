@@ -1,0 +1,506 @@
+<!DOCTYPE html>
+
+<html lang="es">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<meta content="#07152b" name="theme-color"/>
+<title>Controltec + Instituto IEC | Semana de la Seguridad Electrónica</title>
+<meta content="Propuesta para que Controltec Paraná sea auspiciante oficial de la Semana de la Seguridad Electrónica, con certificación nacional y bolsa de empleo de IEC Services articulada con CeCIP y una red de más de 300 comercios e industrias." name="description"/>
+<!-- Google Analytics IEC -->
+<script async="" src="https://www.googletagmanager.com/gtag/js?id=G-R817QWH97R"></script>
+<script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-R817QWH97R');
+  </script>
+<script src="https://cdn.tailwindcss.com/3.4.17"></script>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800;900&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.jsdelivr.net/npm/lucide@0.468.0/dist/umd/lucide.min.js"></script>
+<style>
+    :root{
+      --cyan:#22d3ee;
+      --blue:#2563eb;
+      --violet:#8b5cf6;
+      --green:#22c55e;
+      --amber:#f59e0b;
+      --red:#38bdf8;
+      --bg:#070b14;
+      --panel:#0d1526;
+      --control:#2563eb;
+      --control-dark:#0b3a82;
+    }
+
+    *{box-sizing:border-box;font-family:'DM Sans',sans-serif}
+    html,body{margin:0;padding:0;background:var(--bg)}
+    body{color:#fff;overflow:hidden}
+    button,a{-webkit-tap-highlight-color:transparent}
+    button{font:inherit}
+
+    .slide{
+      display:none;
+      width:100%;
+      height:100vh;
+      min-height:100vh;
+      overflow-y:auto;
+      overflow-x:hidden;
+      padding:5.3rem 1.5rem 5.5rem;
+      scroll-behavior:smooth;
+    }
+    .slide.active{display:flex}
+
+    .glass-card{
+      background:rgba(255,255,255,.07);
+      backdrop-filter:blur(14px);
+      border:1px solid rgba(255,255,255,.11);
+      box-shadow:0 24px 70px rgba(0,0,0,.24);
+    }
+    .gradient-text{
+      background:linear-gradient(135deg,#67e8f9,#60a5fa,#a78bfa);
+      -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
+    }
+    .control-text{
+      background:linear-gradient(135deg,#67e8f9,#2563eb,#93c5fd);
+      -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
+    }
+    .green-text{
+      background:linear-gradient(135deg,#86efac,#22c55e);
+      -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
+    }
+    .amber-text{
+      background:linear-gradient(135deg,#fde68a,#f59e0b,#fb923c);
+      -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
+    }
+    .bg-pattern{
+      background-image:
+        radial-gradient(circle at 16% 18%,rgba(37,99,235,.16),transparent 26%),
+        radial-gradient(circle at 84% 76%,rgba(37,99,235,.15),transparent 30%),
+        linear-gradient(90deg,rgba(255,255,255,.045) 1px,transparent 1px),
+        linear-gradient(rgba(255,255,255,.045) 1px,transparent 1px);
+      background-size:auto,auto,52px 52px,52px 52px;
+    }
+    .bg-pattern::after{
+      content:"";position:absolute;inset:0;
+      background:linear-gradient(135deg,transparent 0 45%,rgba(34,211,238,.055) 46%,transparent 48% 100%);
+      background-size:360px 360px;pointer-events:none;
+    }
+    .orb{position:absolute;border-radius:999px;filter:blur(80px);opacity:.22}
+    .pill{background:rgba(255,255,255,.055);border:1px solid rgba(255,255,255,.09)}
+    .impact-card{transition:transform .25s ease,border-color .25s ease}
+    .impact-card:hover{transform:translateY(-4px);border-color:rgba(103,232,249,.45)}
+
+    .controltec-logo-link{display:inline-flex;align-items:center;justify-content:center;text-decoration:none}
+    .controltec-logo{width:min(390px,72vw);max-height:112px;object-fit:contain;display:block;filter:drop-shadow(0 18px 36px rgba(0,0,0,.32))}
+    .controltec-logo-card{width:min(290px,80%);max-height:82px;object-position:left center}
+    .partner-logos{display:flex;align-items:center;justify-content:center;gap:26px;flex-wrap:wrap}
+    .partner-logo-box{
+      width:112px;height:112px;min-width:112px;max-width:112px;padding:10px;
+      border-radius:999px;overflow:hidden;position:relative;
+      background:radial-gradient(circle at 35% 28%,rgba(37,99,235,.24),rgba(3,12,29,.96) 70%);
+      border:1px solid rgba(34,211,238,.6);
+      display:flex;align-items:center;justify-content:center;
+      box-shadow:0 0 0 6px rgba(37,99,235,.08),0 16px 38px rgba(0,0,0,.38),inset 0 0 24px rgba(34,211,238,.08)
+    }
+    .partner-logo-box::after{content:"";position:absolute;inset:5px;border-radius:999px;border:1px solid rgba(255,255,255,.08);pointer-events:none}
+    .partner-logo{width:88px;height:88px;max-width:88px;max-height:88px;object-fit:contain;display:block;border-radius:999px}
+    .partner-logo.services{width:88px;height:88px;max-height:88px}
+    .partner-logo.balcarce{width:82px;height:82px;max-height:82px}
+    .partner-logo.cecip{width:88px;height:88px;max-height:88px}
+    .institution-logo-row{display:flex;align-items:center;justify-content:center;gap:18px;flex-wrap:wrap}
+    .institution-logo-card{
+      width:94px;height:94px;min-width:94px;max-width:94px;padding:8px;
+      border-radius:999px;overflow:hidden;position:relative;
+      background:radial-gradient(circle at 35% 28%,rgba(37,99,235,.22),rgba(3,12,29,.96) 72%);
+      display:flex;align-items:center;justify-content:center;
+      border:1px solid rgba(34,211,238,.48);
+      box-shadow:0 0 0 5px rgba(37,99,235,.07),0 12px 28px rgba(0,0,0,.34),inset 0 0 18px rgba(34,211,238,.07)
+    }
+    .institution-logo-card::after{content:"";position:absolute;inset:4px;border-radius:999px;border:1px solid rgba(255,255,255,.07);pointer-events:none}
+    .institution-logo-card img{width:74px;height:74px;max-width:74px;max-height:74px;object-fit:contain;border-radius:999px;display:block}
+
+
+    .nav-button{
+      position:fixed;top:50%;z-index:70;transform:translateY(-50%);width:46px;height:46px;
+      border-radius:999px;display:flex;align-items:center;justify-content:center;
+      background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.14);
+      backdrop-filter:blur(14px);color:#fff;transition:.2s ease;cursor:pointer;
+    }
+    .nav-button:hover{background:rgba(37,99,235,.28);border-color:rgba(103,232,249,.65)}
+    .dot{width:8px;height:8px;border-radius:999px;background:rgba(255,255,255,.25);transition:.25s ease;border:0;padding:0;cursor:pointer}
+    .dot.active{width:24px;background:linear-gradient(90deg,#22d3ee,#2563eb)}
+
+    .top-actions{position:fixed;top:14px;left:14px;z-index:80;display:flex;gap:8px;flex-wrap:wrap}
+    .action-button{
+      display:inline-flex;align-items:center;justify-content:center;gap:8px;border-radius:999px;padding:10px 14px;
+      background:rgba(5,10,20,.78);border:1px solid rgba(255,255,255,.14);color:#fff;
+      backdrop-filter:blur(14px);font-size:12px;font-weight:800;letter-spacing:.03em;transition:.2s ease;cursor:pointer;
+    }
+    .action-button:hover{background:rgba(37,99,235,.25);border-color:rgba(103,232,249,.58)}
+
+    .module-tag{
+      display:inline-flex;align-items:center;gap:8px;border-radius:999px;padding:7px 11px;font-size:11px;
+      font-weight:900;letter-spacing:.12em;color:#cffafe;background:rgba(34,211,238,.10);border:1px solid rgba(103,232,249,.28);
+    }
+    .process-step{position:relative;padding-left:46px}
+    .process-step::before{content:"";position:absolute;left:17px;top:38px;bottom:-18px;width:2px;background:linear-gradient(#22d3ee,rgba(37,99,235,.1))}
+    .process-step:last-child::before{display:none}
+    .process-number{position:absolute;left:0;top:0;width:36px;height:36px;display:grid;place-items:center;border-radius:999px;font-weight:900;color:white;background:linear-gradient(135deg,#06b6d4,#2563eb);border:1px solid rgba(255,255,255,.32)}
+
+    @media(max-width:768px){
+      .slide{padding:5.4rem .85rem 5.8rem}.nav-button{width:40px;height:40px}.top-actions{top:10px;left:10px;right:10px}
+      .action-button{padding:9px 11px;font-size:10px}.controltec-logo{width:min(300px,74vw);max-height:86px}
+      .partner-logos{gap:14px}.partner-logo-box{width:88px;height:88px;min-width:88px;max-width:88px;padding:7px}.partner-logo{width:68px;height:68px;max-width:68px;max-height:68px}.partner-logo.services{width:68px;height:68px;max-height:68px}.partner-logo.balcarce{width:64px;height:64px;max-height:64px}
+      .institution-logo-row{gap:12px}.institution-logo-card{width:76px;height:76px;min-width:76px;max-width:76px;padding:6px}.institution-logo-card img{width:60px;height:60px;max-width:60px;max-height:60px}
+    }
+    @media(max-width:640px){
+      body{overflow:hidden}.nav-button{top:auto;bottom:16px;transform:none}#prev-btn{left:14px!important}#next-btn{right:14px!important}
+      #dots{bottom:29px!important;max-width:calc(100vw - 120px)}
+    }
+    @media print{
+      body{overflow:visible;background:#070b14}.top-actions,.nav-button,#dots,#slide-counter{display:none!important}
+      .slide{display:flex!important;width:100vw;height:100vh;min-height:100vh;page-break-after:always;break-after:page;overflow:hidden}
+    }
+  </style>
+</head>
+<body class="relative">
+<div class="top-actions">
+<button class="action-button" onclick="toggleFullscreen()"><i data-lucide="maximize-2" style="width:16px;height:16px"></i> PANTALLA COMPLETA</button>
+<button class="action-button" onclick="window.print()"><i data-lucide="printer" style="width:16px;height:16px"></i> IMPRIMIR</button>
+</div>
+<button aria-label="Diapositiva anterior" class="nav-button left-3 md:left-5" id="prev-btn" onclick="changeSlide(-1)"><i data-lucide="chevron-left" style="width:22px;height:22px"></i></button>
+<button aria-label="Diapositiva siguiente" class="nav-button right-3 md:right-5" id="next-btn" onclick="changeSlide(1)"><i data-lucide="chevron-right" style="width:22px;height:22px"></i></button>
+<div class="fixed bottom-4 left-1/2 -translate-x-1/2 z-[70] flex items-center justify-center gap-2 flex-wrap" id="dots"></div>
+<div class="fixed top-4 right-4 z-[70] px-3 py-1.5 rounded-full bg-black/30 border border-white/10 backdrop-blur text-xs text-slate-300" id="slide-counter"></div>
+<!-- 1 PORTADA -->
+<section class="slide active flex-col items-center justify-center relative bg-gradient-to-br from-[#070b14] via-[#0b1a33] to-[#071126] text-center">
+<div class="absolute inset-0 bg-pattern"></div>
+<div class="orb w-80 h-80 bg-blue-600 top-[-120px] left-[-100px]"></div>
+<div class="orb w-96 h-96 bg-blue-600 bottom-[-160px] right-[-120px]"></div>
+<div class="relative z-10 max-w-6xl mx-auto w-full px-3">
+<div class="mb-8">
+<a class="controltec-logo-link mb-5" href="https://www.controltecparana.com.ar/" rel="noopener noreferrer" target="_blank"><img alt="Controltec Paraná" class="controltec-logo" src="https://i.postimg.cc/L8cc3vbt/logo-tienda-controltecparana-com-ar.png"/></a>
+<div class="partner-logos">
+<div class="partner-logo-box"><img alt="Instituto IEC" class="partner-logo" src="https://i.postimg.cc/jSkQKpRK/Diseno-sin-titulo-2026-05-15T105828-195.png"/></div>
+<div class="partner-logo-box"><img alt="Instituto Balcarce" class="partner-logo balcarce" src="https://i.postimg.cc/ZRM20cp7/images-(16).jpg"/></div>
+<div class="partner-logo-box"><img alt="IEC Services" class="partner-logo services" src="https://i.postimg.cc/Vkqx4XPd/Chat-GPT-Image-24-jul-2026-08-44-23-p-m.png"/></div>
+<div class="partner-logo-box"><img alt="CeCIP" class="partner-logo cecip" src="https://i.postimg.cc/hGLPnRwk/Chat-GPT-Image-22-jul-2026-01-46-28-p-m.png"/></div>
+</div>
+</div>
+<div class="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-cyan-400/30 bg-blue-400/10 text-cyan-100 text-xs md:text-sm font-bold tracking-[.16em] uppercase mb-5">Propuesta de alianza estratégica</div>
+<h1 class="text-4xl sm:text-5xl md:text-7xl lg:text-8xl font-black leading-[.94] mb-5">SEMANA DE LA SEGURIDAD ELECTRÓNICA<br/><span class="gradient-text">CONTROLTEC COMO AUSPICIANTE OFICIAL</span></h1>
+<p class="text-base sm:text-lg md:text-2xl text-slate-300 max-w-5xl mx-auto mb-7">De Cero a Instalador Profesional · Propuesta de auspicio oficial para Controltec</p>
+<div class="flex flex-wrap justify-center gap-3">
+<span class="pill px-4 py-2 rounded-xl text-sm font-semibold text-cyan-200">Nuevos instaladores</span>
+<span class="pill px-4 py-2 rounded-xl text-sm font-semibold text-blue-200">Nuevos compradores</span>
+<span class="pill px-4 py-2 rounded-xl text-sm font-semibold text-violet-200">Marca presente</span>
+<span class="pill px-4 py-2 rounded-xl text-sm font-semibold text-green-200">Alianza regional</span>
+</div>
+</div>
+</section>
+<!-- 2 RESUMEN -->
+<section class="slide flex-col items-center justify-center relative bg-gradient-to-b from-[#070b14] to-[#08172d]">
+<div class="absolute inset-0 bg-pattern opacity-60"></div>
+<div class="relative z-10 max-w-6xl mx-auto w-full px-3">
+<span class="text-cyan-300 font-bold tracking-widest text-sm">01 · RESUMEN EJECUTIVO</span>
+<h2 class="text-3xl sm:text-4xl md:text-6xl font-black mt-2 mb-6">UNA SEMANA PARA FORMAR INSTALADORES<br/><span class="gradient-text">Y CONECTARLOS CON EL MERCADO REAL</span></h2>
+<div class="grid md:grid-cols-2 gap-5">
+<div class="glass-card rounded-3xl p-6 md:p-8"><h3 class="text-2xl font-black text-cyan-300 mb-4">La propuesta</h3><p class="text-slate-300 leading-relaxed text-lg">Invitar a Controltec Paraná a participar como auspiciante oficial y aliado técnico-comercial de la Semana de la Seguridad Electrónica: una experiencia intensiva que formará nuevos instaladores de cámaras IP, cámaras WiFi, alarmas, redes, mantenimiento y diagnóstico.</p></div>
+<div class="glass-card rounded-3xl p-6 md:p-8 border-blue-400/20 bg-gradient-to-br from-blue-500/5 to-blue-500/5"><h3 class="text-2xl font-black text-blue-300 mb-4">El resultado esperado</h3><p class="text-slate-300 leading-relaxed text-lg">Cada egresado se convierte en un potencial cliente profesional que necesitará cámaras, NVR, alarmas, sensores, switches PoE, herramientas, soporte técnico, garantías y reposición de equipos.</p></div>
+</div>
+<div class="mt-5 glass-card rounded-2xl p-5 text-center"><p class="text-lg md:text-2xl font-bold">IEC forma al instalador. Controltec puede convertirse en <span class="control-text">su proveedor de confianza desde el primer día.</span></p></div>
+</div>
+</section>
+<!-- 3 CONTROLTEC -->
+<section class="slide flex-col items-center justify-center relative bg-gradient-to-b from-[#08172d] to-[#070b14]">
+<div class="absolute inset-0 bg-pattern opacity-55"></div>
+<div class="relative z-10 max-w-6xl mx-auto w-full px-3">
+<span class="text-cyan-300 font-bold tracking-widest text-sm">02 · ALIADO ESTRATÉGICO</span>
+<h2 class="text-3xl sm:text-4xl md:text-6xl font-black mt-2 mb-6">¿POR QUÉ <span class="control-text">CONTROLTEC PARANÁ?</span></h2>
+<div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+<div class="glass-card rounded-3xl p-5 text-center impact-card"><span class="text-5xl">🛡️</span><h3 class="font-black mt-3">Seguridad electrónica</h3><p class="text-slate-400 text-sm mt-2">Especialización integral para hogares y empresas.</p></div>
+<div class="glass-card rounded-3xl p-5 text-center impact-card"><span class="text-5xl">🏆</span><h3 class="font-black mt-3">Marcas autorizadas</h3><p class="text-slate-400 text-sm mt-2">Distribuidor autorizado Hikvision y Garnet Technology.</p></div>
+<div class="glass-card rounded-3xl p-5 text-center impact-card"><span class="text-5xl">🔧</span><h3 class="font-black mt-3">Respaldo técnico</h3><p class="text-slate-400 text-sm mt-2">Asesoramiento, diagnóstico y servicio postventa.</p></div>
+<div class="glass-card rounded-3xl p-5 text-center impact-card"><span class="text-5xl">📍</span><h3 class="font-black mt-3">Presencia regional</h3><p class="text-slate-400 text-sm mt-2">Más de siete años de trayectoria en Paraná.</p></div>
+</div>
+<div class="mt-6 p-5 rounded-2xl bg-blue-400/10 border border-cyan-400/25"><p class="text-cyan-100 font-semibold text-lg">Controltec reúne los tres factores que necesita un nuevo instalador: productos profesionales, asesoramiento técnico y garantía local.</p></div>
+</div>
+</section>
+<!-- 4 OPORTUNIDAD -->
+<section class="slide flex-col items-center justify-center relative bg-gradient-to-b from-[#070b14] to-[#0b1426]">
+<div class="absolute inset-0 bg-pattern opacity-55"></div>
+<div class="relative z-10 max-w-6xl mx-auto w-full px-3">
+<span class="text-amber-300 font-bold tracking-widest text-sm">03 · OPORTUNIDAD COMERCIAL</span>
+<h2 class="text-3xl sm:text-4xl md:text-6xl font-black mt-2 mb-6">CADA NUEVO INSTALADOR NECESITA<br/><span class="amber-text">UN PROVEEDOR PARA CRECER</span></h2>
+<div class="grid md:grid-cols-2 gap-5">
+<div class="glass-card rounded-3xl p-6"><h3 class="text-amber-300 font-black text-xl mb-4">Necesidades iniciales</h3><div class="space-y-3 text-slate-300"><div class="pill rounded-xl p-3">Kit de herramientas y elementos de medición.</div><div class="pill rounded-xl p-3">Cámaras IP y cámaras WiFi para sus primeros trabajos.</div><div class="pill rounded-xl p-3">NVR, switches PoE, discos y accesorios.</div><div class="pill rounded-xl p-3">Centrales de alarma, sensores, sirenas y controles.</div><div class="pill rounded-xl p-3">Asistencia para seleccionar y dimensionar equipos.</div></div></div>
+<div class="glass-card rounded-3xl p-6 border-cyan-400/20 bg-gradient-to-br from-blue-500/5 to-blue-500/5"><h3 class="text-cyan-300 font-black text-xl mb-4">Relación de largo plazo</h3><div class="grid grid-cols-2 gap-3"><div class="pill rounded-xl p-4 text-center"><span class="text-3xl">🛒</span><p class="mt-2 text-sm">Compras recurrentes</p></div><div class="pill rounded-xl p-4 text-center"><span class="text-3xl">📦</span><p class="mt-2 text-sm">Reposición de equipos</p></div><div class="pill rounded-xl p-4 text-center"><span class="text-3xl">🧠</span><p class="mt-2 text-sm">Asesoramiento técnico</p></div><div class="pill rounded-xl p-4 text-center"><span class="text-3xl">🤝</span><p class="mt-2 text-sm">Fidelización profesional</p></div></div></div>
+</div>
+</div>
+</section>
+<!-- 5 CURSO -->
+<section class="slide flex-col items-center justify-center relative bg-gradient-to-b from-[#0b1426] to-[#070b14]">
+<div class="absolute inset-0 bg-pattern opacity-60"></div>
+<div class="relative z-10 max-w-6xl mx-auto w-full px-3 text-center">
+<span class="text-cyan-300 font-bold tracking-widest text-sm">04 · LA CAPACITACIÓN</span>
+<h2 class="text-3xl sm:text-4xl md:text-7xl font-black mt-2 mb-4">SEMANA DE LA SEGURIDAD ELECTRÓNICA<br/><span class="gradient-text">DE CERO A INSTALADOR PROFESIONAL</span></h2>
+<p class="text-slate-300 text-lg md:text-2xl max-w-5xl mx-auto mb-7">Una semana intensiva, presencial y 100% práctica para pasar de cero a instalador profesional de seguridad electrónica moderna.</p>
+<div class="grid grid-cols-2 md:grid-cols-4 gap-4 text-left">
+<div class="glass-card rounded-2xl p-5"><span class="text-4xl">📹</span><h3 class="font-black mt-3">Videovigilancia</h3><p class="text-slate-400 text-sm">Cámaras IP, WiFi y grabación NVR.</p></div>
+<div class="glass-card rounded-2xl p-5"><span class="text-4xl">🚨</span><h3 class="font-black mt-3">Alarmas</h3><p class="text-slate-400 text-sm">Centrales, sensores, sirenas y programación.</p></div>
+<div class="glass-card rounded-2xl p-5"><span class="text-4xl">🌐</span><h3 class="font-black mt-3">Redes</h3><p class="text-slate-400 text-sm">UTP, RJ45, PoE, IP y acceso remoto.</p></div>
+<div class="glass-card rounded-2xl p-5"><span class="text-4xl">🧰</span><h3 class="font-black mt-3">Mantenimiento</h3><p class="text-slate-400 text-sm">Diagnóstico, tester y resolución de fallas.</p></div>
+</div>
+</div>
+</section>
+<!-- 6 MODALIDAD -->
+<section class="slide flex-col items-center justify-center relative bg-gradient-to-b from-[#070b14] to-[#08172d]">
+<div class="absolute inset-0 bg-pattern opacity-55"></div>
+<div class="relative z-10 max-w-6xl mx-auto w-full px-3">
+<span class="text-cyan-300 font-bold tracking-widest text-sm">05 · MODALIDAD INTENSIVA</span>
+<h2 class="text-3xl sm:text-4xl md:text-6xl font-black mt-2 mb-6">UNA SEMANA. CUATRO ENCUENTROS.<br/><span class="gradient-text">17 HORAS DE FORMACIÓN PRÁCTICA.</span></h2>
+<div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+<div class="glass-card rounded-3xl p-6 text-center"><div class="text-cyan-300 font-black text-xl">LUNES</div><div class="text-3xl font-black mt-3">09:00</div><div class="text-slate-400">a 12:00</div></div>
+<div class="glass-card rounded-3xl p-6 text-center"><div class="text-blue-300 font-black text-xl">MIÉRCOLES</div><div class="text-3xl font-black mt-3">09:00</div><div class="text-slate-400">a 12:00</div></div>
+<div class="glass-card rounded-3xl p-6 text-center"><div class="text-violet-300 font-black text-xl">VIERNES</div><div class="text-3xl font-black mt-3">09:00</div><div class="text-slate-400">a 12:00</div></div>
+<div class="glass-card rounded-3xl p-6 text-center border-green-400/25"><div class="text-green-300 font-black text-xl">SÁBADO</div><div class="text-3xl font-black mt-3">09:00</div><div class="text-slate-400">a 17:00</div></div>
+</div>
+<div class="mt-5 grid md:grid-cols-3 gap-4"><div class="pill rounded-2xl p-5 text-center"><span class="text-3xl">🍽️</span><h3 class="font-black mt-2">Almuerzo incluido</h3></div><div class="pill rounded-2xl p-5 text-center"><span class="text-3xl">🛠️</span><h3 class="font-black mt-2">Proyecto final real</h3></div><div class="pill rounded-2xl p-5 text-center"><span class="text-3xl">🏅</span><h3 class="font-black mt-2">Entrega de certificados</h3></div></div>
+</div>
+</section>
+<!-- 7 TEMARIO 1 -->
+<section class="slide flex-col items-center justify-center relative bg-gradient-to-b from-[#08172d] to-[#070b14]">
+<div class="absolute inset-0 bg-pattern opacity-55"></div>
+<div class="relative z-10 max-w-6xl mx-auto w-full px-3">
+<span class="text-cyan-300 font-bold tracking-widest text-sm">06 · DESARROLLO CURRICULAR</span>
+<h2 class="text-3xl sm:text-4xl md:text-5xl font-black mt-2 mb-6">INSTALACIÓN Y REDES · <span class="gradient-text">LA BASE DEL OFICIO</span></h2>
+<div class="grid md:grid-cols-2 gap-5">
+<div class="glass-card rounded-3xl p-6"><div class="module-tag">01 · FUNDAMENTOS</div><h3 class="text-2xl font-black mt-4 mb-3">Seguridad electrónica moderna</h3><ul class="text-slate-300 space-y-2"><li>• Tipos de instalaciones y relevamiento.</li><li>• Cámaras IP y cámaras WiFi.</li><li>• NVR, discos, routers y switches.</li><li>• Sistemas PoE e inyectores.</li><li>• Herramientas y seguridad de trabajo.</li></ul></div>
+<div class="glass-card rounded-3xl p-6"><div class="module-tag">02 · INSTALACIÓN</div><h3 class="text-2xl font-black mt-4 mb-3">Cableado UTP y montaje profesional</h3><ul class="text-slate-300 space-y-2"><li>• Categorías y tendido de cable UTP.</li><li>• Crimpado RJ45 y norma T568B.</li><li>• Uso del tester de red.</li><li>• Canalizaciones y terminaciones.</li><li>• Ángulos, altura y reducción de puntos ciegos.</li></ul></div>
+</div>
+</div>
+</section>
+<!-- 8 TEMARIO 2 -->
+<section class="slide flex-col items-center justify-center relative bg-gradient-to-b from-[#070b14] to-[#0b1426]">
+<div class="absolute inset-0 bg-pattern opacity-55"></div>
+<div class="relative z-10 max-w-6xl mx-auto w-full px-3">
+<span class="text-cyan-300 font-bold tracking-widest text-sm">07 · DESARROLLO CURRICULAR</span>
+<h2 class="text-3xl sm:text-4xl md:text-5xl font-black mt-2 mb-6">CONFIGURACIÓN Y ALARMAS · <span class="gradient-text">SISTEMAS OPERATIVOS</span></h2>
+<div class="grid md:grid-cols-2 gap-5">
+<div class="glass-card rounded-3xl p-6"><div class="module-tag">03 · CONFIGURACIÓN</div><h3 class="text-2xl font-black mt-4 mb-3">Redes, NVR y acceso remoto</h3><ul class="text-slate-300 space-y-2"><li>• Direcciones IP, DHCP e IP fija.</li><li>• Alta y configuración de cámaras.</li><li>• Grabación, detección y notificaciones.</li><li>• Usuarios, permisos y contraseñas.</li><li>• Acceso desde celular y monitoreo remoto.</li></ul></div>
+<div class="glass-card rounded-3xl p-6"><div class="module-tag">04 · ALARMAS</div><h3 class="text-2xl font-black mt-4 mb-3">Instalación y programación</h3><ul class="text-slate-300 space-y-2"><li>• Centrales y zonas.</li><li>• Sensores PIR y magnéticos.</li><li>• Barreras, sirenas y controles.</li><li>• Alimentación, respaldo y programación.</li><li>• Configuración y avisos desde celular.</li></ul></div>
+</div>
+</div>
+</section>
+<!-- 9 DIAGNOSTICO -->
+<section class="slide flex-col items-center justify-center relative bg-gradient-to-b from-[#0b1426] to-[#070b14]">
+<div class="absolute inset-0 bg-pattern opacity-55"></div>
+<div class="relative z-10 max-w-6xl mx-auto w-full px-3">
+<span class="text-amber-300 font-bold tracking-widest text-sm">08 · DIFERENCIAL TÉCNICO</span>
+<h2 class="text-3xl sm:text-4xl md:text-6xl font-black mt-2 mb-6">NO SOLO INSTALAR:<br/><span class="amber-text">APRENDER A ENCONTRAR LA FALLA</span></h2>
+<div class="grid md:grid-cols-2 gap-5">
+<div class="glass-card rounded-3xl p-6"><h3 class="text-amber-300 text-xl font-black mb-4">Uso del tester de medición</h3><ul class="text-slate-300 space-y-3"><li>• Medición de tensión alterna y continua.</li><li>• Continuidad y resistencia.</li><li>• Detección de cortocircuitos.</li><li>• Verificación de fuentes y fusibles.</li><li>• Pérdidas de tensión y falsos contactos.</li><li>• Comprobación de alimentación en cámaras y alarmas.</li></ul></div>
+<div class="glass-card rounded-3xl p-6 border-cyan-400/20 bg-blue-400/5"><h3 class="text-cyan-300 text-xl font-black mb-4">Fallas reales</h3><div class="space-y-3"><div class="pill rounded-xl p-3">Cámara sin alimentación o fuera de línea.</div><div class="pill rounded-xl p-3">Fallas de red, conectores o PoE.</div><div class="pill rounded-xl p-3">Sensores con falsas activaciones.</div><div class="pill rounded-xl p-3">Sirenas, fuentes o respaldos defectuosos.</div><div class="pill rounded-xl p-3">Equipos que reinician o pierden comunicación.</div></div></div>
+</div>
+</div>
+</section>
+<!-- 10 SABADO -->
+<section class="slide flex-col items-center justify-center relative bg-gradient-to-b from-[#070b14] to-[#08172d]">
+<div class="absolute inset-0 bg-pattern opacity-55"></div>
+<div class="relative z-10 max-w-6xl mx-auto w-full px-3">
+<span class="text-green-300 font-bold tracking-widest text-sm">09 · JORNADA INTENSIVA</span>
+<h2 class="text-3xl sm:text-4xl md:text-6xl font-black mt-2 mb-6">SÁBADO DE 09:00 A 17:00<br/><span class="green-text">DEL APRENDIZAJE AL TRABAJO REAL</span></h2>
+<div class="grid md:grid-cols-3 gap-4">
+<div class="glass-card rounded-3xl p-6 text-center impact-card"><span class="text-5xl">🧩</span><h3 class="text-xl font-black mt-4">Proyecto integrador</h3><p class="text-slate-300 mt-2">Diseño, instalación, configuración y puesta en marcha de un sistema completo.</p></div>
+<div class="glass-card rounded-3xl p-6 text-center impact-card"><span class="text-5xl">🔍</span><h3 class="text-xl font-black mt-4">Diagnóstico técnico</h3><p class="text-slate-300 mt-2">Simulación de fallas y resolución utilizando tester digital y tester de red.</p></div>
+<div class="glass-card rounded-3xl p-6 text-center impact-card"><span class="text-5xl">🍽️</span><h3 class="text-xl font-black mt-4">Almuerzo y networking</h3><p class="text-slate-300 mt-2">Intercambio entre alumnos, docentes, empresas y profesionales del sector.</p></div>
+</div>
+</div>
+</section>
+<!-- 11 BONUS DIGITAL -->
+<section class="slide flex-col items-center justify-center relative bg-gradient-to-b from-[#08172d] to-[#070b14]">
+<div class="absolute inset-0 bg-pattern opacity-55"></div>
+<div class="relative z-10 max-w-6xl mx-auto w-full px-3">
+<span class="text-violet-300 font-bold tracking-widest text-sm">10 · BONUS PROFESIONAL</span>
+<h2 class="text-3xl sm:text-4xl md:text-6xl font-black mt-2 mb-6">EL SÁBADO TAMBIÉN CREAN<br/><span class="gradient-text">SU MARCA Y SU PÁGINA WEB</span></h2>
+<div class="grid md:grid-cols-2 gap-5">
+<div class="glass-card rounded-3xl p-7 text-center"><span class="text-6xl">🎨</span><h3 class="text-violet-300 text-2xl font-black mt-4">LOGO PROFESIONAL</h3><p class="text-slate-300 mt-3">Identidad visual para presupuestos, redes sociales, WhatsApp, indumentaria y presentación comercial.</p></div>
+<div class="glass-card rounded-3xl p-7 text-center border-blue-400/20"><span class="text-6xl">🌐</span><h3 class="text-blue-300 text-2xl font-black mt-4">PÁGINA WEB</h3><p class="text-slate-300 mt-3">Sitio con servicios, galería, contacto y botón de WhatsApp listo para compartir con potenciales clientes.</p></div>
+</div>
+<div class="mt-5 p-5 rounded-2xl bg-violet-400/10 border border-violet-400/25 text-center"><p class="text-violet-100 font-bold text-lg">El egresado termina con el oficio, una certificación, una identidad profesional y herramientas para comenzar a captar clientes.</p></div>
+</div>
+</section>
+<!-- 12 CERTIFICACION -->
+<section class="slide flex-col items-center justify-center relative bg-gradient-to-b from-[#070b14] to-[#0b1426] text-center">
+<div class="absolute inset-0 bg-pattern opacity-55"></div>
+<div class="relative z-10 max-w-6xl mx-auto w-full px-3">
+<span class="text-green-300 font-bold tracking-widest text-sm">11 · CERTIFICACIÓN Y EMPLEO</span>
+<h2 class="text-3xl sm:text-4xl md:text-6xl font-black mt-2 mb-6">CERTIFICACIÓN, EMPLEO Y CONEXIÓN CON<br/><span class="gradient-text">300 COMERCIOS E INDUSTRIAS</span></h2>
+<div class="grid md:grid-cols-2 gap-5 text-left">
+<div class="glass-card rounded-3xl p-7">
+<div class="institution-logo-row mb-5"><div class="institution-logo-card"><img alt="Instituto IEC" src="https://i.postimg.cc/jSkQKpRK/Diseno-sin-titulo-2026-05-15T105828-195.png"/></div><div class="institution-logo-card"><img alt="Instituto Balcarce" src="https://i.postimg.cc/ZRM20cp7/images-(16).jpg"/></div></div>
+<h3 class="text-green-300 text-2xl font-black">Certificado oficial nacional</h3><p class="text-slate-300 mt-3">Entrega de certificación emitida conjuntamente por el Instituto IEC y el Instituto Balcarce, sujeta a asistencia, participación y aprobación del proyecto final.</p></div>
+<div class="glass-card rounded-3xl p-7 border-blue-400/20">
+<div class="institution-logo-row mb-5"><div class="institution-logo-card"><img alt="IEC Services" src="https://i.postimg.cc/Vkqx4XPd/Chat-GPT-Image-24-jul-2026-08-44-23-p-m.png"/></div><div class="institution-logo-card"><img alt="CeCIP" src="https://i.postimg.cc/hGLPnRwk/Chat-GPT-Image-22-jul-2026-01-46-28-p-m.png"/></div></div>
+<h3 class="text-blue-300 text-2xl font-black">Bolsa de Empleo IEC Services</h3><p class="text-slate-300 mt-3">Acceso preferencial a oportunidades de instalación, mantenimiento, reparación y proyectos de seguridad electrónica gestionados por IEC Services, en articulación con CeCIP y su red confirmada de más de 300 comercios e industrias.</p></div>
+</div>
+<div class="mt-5 p-5 rounded-2xl bg-gradient-to-r from-blue-500/15 to-cyan-400/10 border border-cyan-300/25 text-center"><p class="text-xl md:text-2xl font-black text-cyan-100">IEC Services gestionará la vinculación laboral junto a CeCIP, conectando a los egresados con una red confirmada de más de 300 comercios e industrias.</p><p class="text-slate-300 mt-2">La bolsa de empleo se integra a una estructura comercial concreta: IEC Services administrará las oportunidades y CeCIP facilitará la vinculación con comercios e industrias que demanden instalaciones, mantenimiento, reparación y soporte técnico.</p></div></div>
+</section>
+<!-- 13 BENEFICIOS CONTROLTEC -->
+<section class="slide flex-col items-center justify-center relative bg-gradient-to-b from-[#0b1426] to-[#070b14]">
+<div class="absolute inset-0 bg-pattern opacity-55"></div>
+<div class="relative z-10 max-w-6xl mx-auto w-full px-3">
+<span class="text-cyan-300 font-bold tracking-widest text-sm">12 · BENEFICIOS DEL AUSPICIO</span>
+<h2 class="text-3xl sm:text-4xl md:text-6xl font-black mt-2 mb-6">¿QUÉ RECIBE <span class="control-text">CONTROLTEC?</span></h2>
+<div class="grid md:grid-cols-2 gap-4">
+<div class="glass-card rounded-2xl p-5"><h3 class="font-black text-cyan-300">Presencia institucional</h3><p class="text-slate-300 mt-2">Logo y mención como auspiciante oficial en campaña, landing, piezas digitales y presentación del curso.</p></div>
+<div class="glass-card rounded-2xl p-5"><h3 class="font-black text-blue-300">Contacto con futuros compradores</h3><p class="text-slate-300 mt-2">Acceso directo a una comunidad de instaladores que comenzará a necesitar equipamiento y podrá recibir trabajos derivados por IEC Services a través de la red empresarial de CeCIP, integrada por más de 300 comercios e industrias.</p></div>
+<div class="glass-card rounded-2xl p-5"><h3 class="font-black text-violet-300">Demostración de productos</h3><p class="text-slate-300 mt-2">Posibilidad de exhibir cámaras, alarmas, accesorios y soluciones durante las prácticas.</p></div>
+<div class="glass-card rounded-2xl p-5"><h3 class="font-black text-green-300">Posicionamiento técnico</h3><p class="text-slate-300 mt-2">Controltec como proveedor recomendado y punto de consulta para los egresados.</p></div>
+<div class="glass-card rounded-2xl p-5"><h3 class="font-black text-amber-300">Contenido conjunto</h3><p class="text-slate-300 mt-2">Registro fotográfico, videos, testimonios y publicaciones colaborativas.</p></div>
+<div class="glass-card rounded-2xl p-5"><h3 class="font-black text-cyan-300">Fidelización temprana</h3><p class="text-slate-300 mt-2">Vínculo comercial desde la etapa inicial de formación profesional.</p></div>
+</div>
+</div>
+</section>
+<!-- 14 VISIBILIDAD -->
+<section class="slide flex-col items-center justify-center relative bg-gradient-to-b from-[#070b14] to-[#08172d]">
+<div class="absolute inset-0 bg-pattern opacity-55"></div>
+<div class="relative z-10 max-w-6xl mx-auto w-full px-3">
+<span class="text-cyan-300 font-bold tracking-widest text-sm">13 · VISIBILIDAD DE MARCA</span>
+<h2 class="text-3xl sm:text-4xl md:text-6xl font-black mt-2 mb-6">CONTROLTEC PRESENTE<br/><span class="control-text">ANTES, DURANTE Y DESPUÉS</span></h2>
+<div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+<div class="glass-card rounded-2xl p-5 text-center"><span class="text-4xl">📣</span><h3 class="font-black mt-3">Campaña previa</h3><p class="text-slate-400 text-sm mt-1">Flyers, reels, historias y publicaciones.</p></div>
+<div class="glass-card rounded-2xl p-5 text-center"><span class="text-4xl">🖥️</span><h3 class="font-black mt-3">Landing del curso</h3><p class="text-slate-400 text-sm mt-1">Logo, descripción y enlace institucional.</p></div>
+<div class="glass-card rounded-2xl p-5 text-center"><span class="text-4xl">🎤</span><h3 class="font-black mt-3">Participación presencial</h3><p class="text-slate-400 text-sm mt-1">Presentación de la empresa y sus marcas.</p></div>
+<div class="glass-card rounded-2xl p-5 text-center"><span class="text-4xl">📸</span><h3 class="font-black mt-3">Contenido posterior</h3><p class="text-slate-400 text-sm mt-1">Certificación, egresados y resultados.</p></div>
+</div>
+<div class="mt-6 glass-card rounded-2xl p-6"><h3 class="text-xl font-black text-cyan-300 mb-3">Presencia sugerida en certificados</h3><p class="text-slate-300 text-lg">Mención institucional como “Empresa Auspiciante” sin interferir con la certificación académica emitida por Instituto IEC e Instituto Balcarce.</p></div>
+</div>
+</section>
+<!-- 15 APORTE -->
+<section class="slide flex-col items-center justify-center relative bg-gradient-to-b from-[#08172d] to-[#070b14]">
+<div class="absolute inset-0 bg-pattern opacity-55"></div>
+<div class="relative z-10 max-w-6xl mx-auto w-full px-3">
+<span class="text-amber-300 font-bold tracking-widest text-sm">14 · MODALIDADES DE PARTICIPACIÓN</span>
+<h2 class="text-3xl sm:text-4xl md:text-6xl font-black mt-2 mb-6">EL APORTE PUEDE ADAPTARSE<br/><span class="amber-text">A LOS OBJETIVOS DE CONTROLTEC</span></h2>
+<div class="grid md:grid-cols-3 gap-4">
+<div class="glass-card rounded-3xl p-6"><span class="text-5xl">📹</span><h3 class="text-xl font-black mt-4">Equipamiento</h3><p class="text-slate-300 mt-2">Préstamo o aporte de cámaras IP, WiFi, NVR, switches PoE, alarmas, sensores y accesorios para prácticas.</p></div>
+<div class="glass-card rounded-3xl p-6"><span class="text-5xl">🎁</span><h3 class="text-xl font-black mt-4">Beneficios comerciales</h3><p class="text-slate-300 mt-2">Descuento para egresados, primera compra, kits iniciales o promociones exclusivas.</p></div>
+<div class="glass-card rounded-3xl p-6"><span class="text-5xl">🧑‍🏫</span><h3 class="text-xl font-black mt-4">Participación técnica</h3><p class="text-slate-300 mt-2">Presentación institucional, demostración de productos y recomendaciones de selección.</p></div>
+</div>
+<div class="mt-5 p-5 rounded-2xl bg-amber-400/10 border border-amber-400/25 text-center"><p class="text-amber-100 font-bold text-lg">La modalidad final se acuerda conjuntamente, priorizando un intercambio de valor concreto y sostenible.</p></div>
+</div>
+</section>
+<!-- 16 ROLES -->
+<section class="slide flex-col items-center justify-center relative bg-gradient-to-b from-[#070b14] to-[#0b1426]">
+<div class="absolute inset-0 bg-pattern opacity-55"></div>
+<div class="relative z-10 max-w-6xl mx-auto w-full px-3">
+<span class="text-cyan-300 font-bold tracking-widest text-sm">15 · RESPONSABILIDADES</span>
+<h2 class="text-3xl sm:text-4xl md:text-6xl font-black mt-2 mb-6">UNA ALIANZA CON<br/><span class="gradient-text">ROLES CLAROS</span></h2>
+<div class="grid md:grid-cols-3 gap-5">
+<div class="glass-card rounded-3xl p-6"><div class="institution-logo-row mb-5"><div class="institution-logo-card"><img alt="Instituto IEC" src="https://i.postimg.cc/jSkQKpRK/Diseno-sin-titulo-2026-05-15T105828-195.png"/></div><div class="institution-logo-card"><img alt="Instituto Balcarce" src="https://i.postimg.cc/ZRM20cp7/images-(16).jpg"/></div></div><h3 class="text-2xl font-black mb-4">FORMACIÓN Y CERTIFICACIÓN</h3><ul class="text-slate-300 space-y-3"><li>• Organización integral e inscripciones.</li><li>• Diseño curricular, docentes y materiales.</li><li>• Equipamiento y coordinación de prácticas.</li><li>• Evaluación y certificación académica conjunta.</li></ul></div>
+<div class="glass-card rounded-3xl p-6 border-blue-400/20"><div class="institution-logo-row mb-5"><div class="institution-logo-card"><img alt="IEC Services" src="https://i.postimg.cc/Vkqx4XPd/Chat-GPT-Image-24-jul-2026-08-44-23-p-m.png"/></div><div class="institution-logo-card"><img alt="CeCIP" src="https://i.postimg.cc/hGLPnRwk/Chat-GPT-Image-22-jul-2026-01-46-28-p-m.png"/></div></div><h3 class="text-2xl font-black mb-4">EMPLEO Y RED EMPRESARIAL</h3><ul class="text-slate-300 space-y-3"><li>• IEC Services administrará la Bolsa de Empleo.</li><li>• CeCIP articulará la vinculación con más de 300 comercios e industrias.</li><li>• Derivación de instalaciones, reparaciones y mantenimientos.</li><li>• Seguimiento de técnicos y calidad del servicio.</li></ul></div>
+<div class="glass-card rounded-3xl p-6 border-cyan-400/20"><a class="controltec-logo-link mb-5" href="https://www.controltecparana.com.ar/" rel="noopener noreferrer" target="_blank"><img alt="Controltec Paraná" class="controltec-logo controltec-logo-card" src="https://i.postimg.cc/L8cc3vbt/logo-tienda-controltecparana-com-ar.png"/></a><h3 class="text-2xl font-black mb-4">AUSPICIO Y PROVISIÓN</h3><ul class="text-slate-300 space-y-3"><li>• Acompañamiento como auspiciante oficial.</li><li>• Material institucional y catálogo.</li><li>• Participación técnica durante el cursado.</li><li>• Beneficios comerciales para egresados.</li><li>• Continuidad como proveedor recomendado.</li></ul></div>
+</div>
+</div>
+</section>
+<!-- 17 CIRCUITO -->
+<section class="slide flex-col items-center justify-center relative bg-gradient-to-b from-[#0b1426] to-[#070b14]">
+<div class="absolute inset-0 bg-pattern opacity-55"></div>
+<div class="relative z-10 max-w-6xl mx-auto w-full px-3">
+<span class="text-green-300 font-bold tracking-widest text-sm">16 · CIRCUITO DE VALOR</span>
+<h2 class="text-3xl sm:text-4xl md:text-6xl font-black mt-2 mb-6">FORMACIÓN, EMPLEO Y<br/><span class="gradient-text">ABASTECIMIENTO PROFESIONAL</span></h2>
+<div class="space-y-5 max-w-5xl mx-auto">
+<div class="process-step"><div class="process-number">1</div><div class="glass-card rounded-2xl p-5"><h3 class="text-xl font-black text-cyan-300">IEC forma nuevos instaladores</h3><p class="text-slate-300 mt-2">Conocimientos técnicos, práctica real, diagnóstico y herramientas comerciales.</p></div></div>
+<div class="process-step"><div class="process-number">2</div><div class="glass-card rounded-2xl p-5"><h3 class="text-xl font-black text-blue-300">IEC Services y CeCIP conectan con más de 300 comercios e industrias</h3><p class="text-slate-300 mt-2">IEC Services gestionará las oportunidades laborales y CeCIP facilitará el acceso a una red confirmada de más de 300 comercios e industrias.</p></div></div>
+<div class="process-step"><div class="process-number">3</div><div class="glass-card rounded-2xl p-5"><h3 class="text-xl font-black text-violet-300">Controltec acompaña el crecimiento</h3><p class="text-slate-300 mt-2">Equipamiento, asesoramiento, garantía, soporte y relación comercial.</p></div></div>
+<div class="process-step"><div class="process-number">4</div><div class="glass-card rounded-2xl p-5"><h3 class="text-xl font-black text-green-300">Se fortalece el sector regional</h3><p class="text-slate-300 mt-2">Más técnicos capacitados, mejores instalaciones y clientes con mayor respaldo.</p></div></div>
+</div>
+</div>
+</section>
+<!-- 18 SIGUIENTE PASO -->
+<section class="slide flex-col items-center justify-center relative bg-gradient-to-b from-[#070b14] to-[#08172d]">
+<div class="absolute inset-0 bg-pattern opacity-55"></div>
+<div class="relative z-10 max-w-6xl mx-auto w-full px-3 text-center">
+<span class="text-cyan-300 font-bold tracking-widest text-sm">17 · SIGUIENTE PASO</span>
+<h2 class="text-3xl sm:text-4xl md:text-6xl font-black mt-2 mb-6">CONSTRUIR LA PRIMERA<br/><span class="gradient-text">SEMANA DE LA SEGURIDAD ELECTRÓNICA</span></h2>
+<div class="glass-card rounded-3xl p-7 md:p-10 max-w-5xl mx-auto text-left">
+<div class="grid md:grid-cols-2 gap-4">
+<div class="pill rounded-xl p-4">1. Definir la modalidad de auspicio.</div><div class="pill rounded-xl p-4">2. Seleccionar equipos para demostración.</div><div class="pill rounded-xl p-4">3. Acordar beneficio para egresados.</div><div class="pill rounded-xl p-4">4. Incorporar la identidad de Controltec.</div><div class="pill rounded-xl p-4">5. Coordinar participación técnica.</div><div class="pill rounded-xl p-4">6. Lanzar la campaña conjunta.</div>
+</div>
+</div>
+<p class="text-slate-300 text-lg md:text-2xl max-w-4xl mx-auto mt-7">La propuesta queda abierta para definir junto a Controltec una participación que genere resultados comerciales, institucionales y formativos.</p>
+</div>
+</section>
+<!-- 19 CIERRE -->
+<section class="slide flex-col items-center justify-center relative bg-gradient-to-br from-[#070b14] via-[#0b1a33] to-[#071126] text-center">
+<div class="absolute inset-0 bg-pattern"></div>
+<div class="orb w-80 h-80 bg-blue-600 top-[-120px] left-[-100px]"></div>
+<div class="orb w-96 h-96 bg-blue-600 bottom-[-160px] right-[-120px]"></div>
+<div class="relative z-10 max-w-6xl mx-auto w-full px-3">
+<div class="mb-8">
+<a class="controltec-logo-link mb-5" href="https://www.controltecparana.com.ar/" rel="noopener noreferrer" target="_blank"><img alt="Controltec Paraná" class="controltec-logo" src="https://i.postimg.cc/L8cc3vbt/logo-tienda-controltecparana-com-ar.png"/></a>
+<div class="partner-logos">
+<div class="partner-logo-box"><img alt="Instituto IEC" class="partner-logo" src="https://i.postimg.cc/jSkQKpRK/Diseno-sin-titulo-2026-05-15T105828-195.png"/></div>
+<div class="partner-logo-box"><img alt="Instituto Balcarce" class="partner-logo balcarce" src="https://i.postimg.cc/ZRM20cp7/images-(16).jpg"/></div>
+<div class="partner-logo-box"><img alt="IEC Services" class="partner-logo services" src="https://i.postimg.cc/Vkqx4XPd/Chat-GPT-Image-24-jul-2026-08-44-23-p-m.png"/></div>
+<div class="partner-logo-box"><img alt="CeCIP" class="partner-logo cecip" src="https://i.postimg.cc/hGLPnRwk/Chat-GPT-Image-22-jul-2026-01-46-28-p-m.png"/></div>
+</div>
+</div>
+<h2 class="text-4xl sm:text-5xl md:text-7xl font-black leading-[.98] mb-6">FORMAR AL INSTALADOR.<br/><span class="gradient-text">CONECTARLO CON OPORTUNIDADES REALES.</span></h2>
+<p class="text-slate-300 text-lg md:text-2xl max-w-4xl mx-auto mb-7">Una alianza entre formación, IEC Services, la red empresarial de CeCIP con más de 300 comercios e industrias y un proveedor técnico de referencia para fortalecer la seguridad electrónica en Paraná y la región.</p>
+<div class="flex flex-wrap justify-center gap-3"><a class="action-button primary !px-6 !py-3" href="https://www.controltecparana.com.ar/" rel="noopener noreferrer" target="_blank">CONTROLTEC PARANÁ</a><a class="action-button !px-6 !py-3" href="https://www.iec-ia.com.ar/" rel="noopener noreferrer" target="_blank">INSTITUTO IEC</a><span class="action-button !px-6 !py-3">INSTITUTO BALCARCE</span><span class="action-button !px-6 !py-3">IEC SERVICES</span><span class="action-button !px-6 !py-3">CeCIP</span></div>
+</div>
+</section>
+<script>
+  const slides = Array.from(document.querySelectorAll('.slide'));
+  const dotsContainer = document.getElementById('dots');
+  const counter = document.getElementById('slide-counter');
+  let currentSlide = 0;
+
+  function createDots(){
+    dotsContainer.innerHTML='';
+    slides.forEach((_,index)=>{
+      const dot=document.createElement('button');
+      dot.className='dot'+(index===0?' active':'');
+      dot.setAttribute('aria-label',`Ir a diapositiva ${index+1}`);
+      dot.onclick=()=>showSlide(index);
+      dotsContainer.appendChild(dot);
+    });
+  }
+
+  function showSlide(index){
+    currentSlide=(index+slides.length)%slides.length;
+    slides.forEach((slide,i)=>slide.classList.toggle('active',i===currentSlide));
+    Array.from(dotsContainer.children).forEach((dot,i)=>dot.classList.toggle('active',i===currentSlide));
+    counter.textContent=`${currentSlide+1} / ${slides.length}`;
+    slides[currentSlide].scrollTop=0;
+  }
+
+  function changeSlide(direction){showSlide(currentSlide+direction)}
+
+  document.addEventListener('keydown',(event)=>{
+    if(event.key==='ArrowRight'||event.key==='PageDown'||event.key===' '){event.preventDefault();changeSlide(1)}
+    if(event.key==='ArrowLeft'||event.key==='PageUp'){event.preventDefault();changeSlide(-1)}
+    if(event.key==='Home'){event.preventDefault();showSlide(0)}
+    if(event.key==='End'){event.preventDefault();showSlide(slides.length-1)}
+    if(event.key.toLowerCase()==='f') toggleFullscreen();
+  });
+
+  function toggleFullscreen(){
+    if(!document.fullscreenElement){document.documentElement.requestFullscreen().catch(()=>{})}
+    else{document.exitFullscreen().catch(()=>{})}
+  }
+
+  createDots();showSlide(0);
+  if(window.lucide) lucide.createIcons({attrs:{'stroke-width':1.8}});
+
+  let touchStartX=0;
+  document.addEventListener('touchstart',e=>{touchStartX=e.changedTouches[0].screenX},{passive:true});
+  document.addEventListener('touchend',e=>{
+    const diff=e.changedTouches[0].screenX-touchStartX;
+    if(Math.abs(diff)>70) changeSlide(diff<0?1:-1);
+  },{passive:true});
+</script>
+</body>
+</html>
