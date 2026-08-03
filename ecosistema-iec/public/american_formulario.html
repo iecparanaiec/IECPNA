@@ -1,0 +1,958 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Relevamiento institucional de American English Institute para definir los contenidos de su nueva página web." />
+  <title>Relevamiento Institucional | American English Institute</title>
+
+  <script src="https://cdn.tailwindcss.com/3.4.17"></script>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
+  <script src="https://cdn.jsdelivr.net/npm/lucide@0.468.0/dist/umd/lucide.min.js"></script>
+
+  <style>
+    :root{
+      --cyan:#22d3ee;
+      --blue:#3b82f6;
+      --violet:#8b5cf6;
+      --green:#22c55e;
+      --amber:#f59e0b;
+      --red:#ef4444;
+      --pink:#ff0a78;
+      --navy:#0a2f57;
+      --bg:#070b14;
+      --panel:#0d1525;
+      --text:#f8fafc;
+      --muted:#94a3b8;
+    }
+
+    *{box-sizing:border-box;font-family:'DM Sans',sans-serif}
+    html{scroll-behavior:smooth}
+    html,body{margin:0;min-height:100%;background:var(--bg);color:var(--text)}
+    body{overflow-x:hidden}
+    button,input,textarea,select{font:inherit}
+    button,a,label{-webkit-tap-highlight-color:transparent}
+
+    .bg-pattern{
+      position:fixed;inset:0;pointer-events:none;z-index:0;
+      background-image:
+        radial-gradient(circle at 15% 10%,rgba(34,211,238,.11),transparent 26%),
+        radial-gradient(circle at 88% 82%,rgba(139,92,246,.12),transparent 31%),
+        radial-gradient(circle at 72% 8%,rgba(255,10,120,.08),transparent 24%),
+        linear-gradient(90deg,rgba(59,130,246,.045) 1px,transparent 1px),
+        linear-gradient(rgba(59,130,246,.045) 1px,transparent 1px);
+      background-size:auto,auto,auto,52px 52px,52px 52px;
+    }
+
+    .orb{position:fixed;border-radius:999px;filter:blur(90px);opacity:.16;pointer-events:none;z-index:0}
+    .glass{
+      background:rgba(255,255,255,.065);
+      border:1px solid rgba(255,255,255,.11);
+      backdrop-filter:blur(18px);
+      box-shadow:0 24px 80px rgba(0,0,0,.28);
+    }
+    .gradient-text{
+      background:linear-gradient(135deg,#67e8f9,#60a5fa,#a78bfa,#f472b6);
+      -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
+    }
+
+    .topbar{
+      position:fixed;left:0;right:0;top:0;z-index:80;
+      background:rgba(7,11,20,.84);backdrop-filter:blur(18px);
+      border-bottom:1px solid rgba(255,255,255,.09);
+    }
+
+    #navigation{
+      position:fixed !important;
+      left:0 !important;right:0 !important;bottom:0 !important;
+      z-index:10000 !important;
+      pointer-events:auto !important;
+      isolation:isolate;
+    }
+    #navigation .btn{
+      position:relative;
+      z-index:10001;
+      pointer-events:auto !important;
+      touch-action:manipulation;
+    }
+
+    .progress-track{height:4px;background:rgba(255,255,255,.08)}
+    .progress-fill{
+      height:100%;width:0;
+      background:linear-gradient(90deg,var(--cyan),var(--blue),var(--violet),var(--pink));
+      transition:width .35s ease
+    }
+
+    .step{display:none;animation:fadeIn .28s ease}
+    .step.active{display:block}
+    @keyframes fadeIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+
+    .question-card{
+      background:rgba(255,255,255,.052);
+      border:1px solid rgba(255,255,255,.095);
+      border-radius:24px;padding:22px;
+      transition:border-color .2s ease,transform .2s ease;
+    }
+    .question-card:focus-within{border-color:rgba(103,232,249,.38)}
+    .question-card.invalid{border-color:rgba(248,113,113,.75);box-shadow:0 0 0 3px rgba(239,68,68,.09)}
+
+    .option-label{
+      display:flex;align-items:flex-start;gap:12px;
+      padding:13px 14px;border-radius:15px;cursor:pointer;
+      background:rgba(255,255,255,.035);border:1px solid rgba(255,255,255,.075);
+      transition:.18s ease;
+    }
+    .option-label:hover{background:rgba(59,130,246,.09);border-color:rgba(96,165,250,.26)}
+    .option-label:has(input:checked){background:rgba(34,211,238,.10);border-color:rgba(103,232,249,.38)}
+    .option-label > input[type="radio"],.option-label > input[type="checkbox"]{
+      margin-top:2px;width:18px;height:18px;accent-color:#22d3ee;flex:0 0 auto
+    }
+
+    .other-option{
+      grid-column:1 / -1;
+      display:grid;
+      grid-template-columns:1fr;
+      gap:10px;
+      padding:14px;
+      border-radius:16px;
+      background:rgba(255,255,255,.035);
+      border:1px solid rgba(255,255,255,.075);
+      transition:.18s ease;
+    }
+    .other-option:focus-within{border-color:rgba(103,232,249,.38);background:rgba(34,211,238,.07)}
+    .other-option .option-label{padding:0;background:transparent;border:0;border-radius:0}
+    .other-option .option-label:hover{background:transparent;border-color:transparent}
+
+    .text-input,.text-area,.select-input{
+      width:100%;color:#fff;background:rgba(2,6,23,.72);
+      border:1px solid rgba(255,255,255,.13);border-radius:14px;
+      padding:13px 14px;outline:none;transition:.18s ease;
+    }
+    .text-input:focus,.text-area:focus,.select-input:focus{
+      border-color:rgba(103,232,249,.62);box-shadow:0 0 0 3px rgba(34,211,238,.09)
+    }
+    .text-area{min-height:112px;resize:vertical}
+    .select-input option{background:#0f172a;color:#fff}
+
+    .btn{
+      display:inline-flex;align-items:center;justify-content:center;gap:9px;
+      min-height:48px;padding:11px 18px;border-radius:999px;border:1px solid rgba(255,255,255,.14);
+      color:#fff;font-weight:800;cursor:pointer;transition:.18s ease;
+      background:rgba(255,255,255,.07);
+    }
+    .btn:hover{transform:translateY(-1px);border-color:rgba(103,232,249,.42)}
+    .btn-primary{
+      background:linear-gradient(135deg,#0891b2,#2563eb,#7c3aed);
+      border-color:rgba(125,211,252,.48);
+      box-shadow:0 12px 36px rgba(37,99,235,.20)
+    }
+    .btn-success{
+      background:linear-gradient(135deg,#16a34a,#059669);
+      border-color:rgba(134,239,172,.42)
+    }
+    .btn:disabled{opacity:.55;cursor:not-allowed;transform:none}
+
+    .toast{
+      position:fixed;right:18px;bottom:82px;z-index:120;max-width:390px;
+      display:none;padding:14px 16px;border-radius:16px;
+      background:rgba(7,11,20,.96);border:1px solid rgba(103,232,249,.34);
+      box-shadow:0 22px 60px rgba(0,0,0,.38);color:#dbeafe;font-size:14px;
+    }
+    .toast.error{border-color:rgba(248,113,113,.48);color:#fecaca}
+
+    .required-mark{color:#fca5a5}
+    .section-chip{
+      display:inline-flex;align-items:center;gap:8px;padding:8px 12px;border-radius:999px;
+      background:rgba(34,211,238,.10);border:1px solid rgba(103,232,249,.25);
+      color:#a5f3fc;font-size:12px;font-weight:900;letter-spacing:.08em;text-transform:uppercase
+    }
+
+    .brand-mark{
+      width:46px;height:46px;border-radius:14px;
+      display:grid;place-items:center;
+      background:linear-gradient(135deg,#0a2f57,#2563eb,#8b5cf6,#ff0a78);
+      border:1px solid rgba(255,255,255,.18);
+      box-shadow:0 12px 30px rgba(37,99,235,.25);
+      font-weight:900;font-size:13px;letter-spacing:.05em;
+    }
+    .hero-mark{
+      width:104px;height:104px;border-radius:30px;
+      display:grid;place-items:center;margin:0 auto;
+      background:linear-gradient(135deg,#0a2f57,#2563eb 48%,#8b5cf6 72%,#ff0a78);
+      border:1px solid rgba(255,255,255,.20);
+      box-shadow:0 25px 80px rgba(37,99,235,.30);
+      font-weight:900;font-size:25px;letter-spacing:.08em;
+    }
+
+    .review-card{
+      border-radius:20px;padding:18px;
+      background:rgba(255,255,255,.04);
+      border:1px solid rgba(255,255,255,.09)
+    }
+
+    @media(max-width:768px){
+      .question-card{padding:17px;border-radius:19px}
+      .toast{left:14px;right:14px;bottom:82px;max-width:none}
+    }
+  </style>
+</head>
+<body>
+  <div class="bg-pattern"></div>
+  <div class="orb w-80 h-80 bg-cyan-400 -top-24 -left-24"></div>
+  <div class="orb w-96 h-96 bg-violet-500 -bottom-32 -right-28"></div>
+  <div class="orb w-72 h-72 bg-pink-500 top-1/3 -right-24"></div>
+
+  <header class="topbar">
+    <div class="max-w-6xl mx-auto px-4 py-3 flex items-center justify-between gap-4">
+      <div class="flex items-center gap-3 min-w-0">
+        <div class="brand-mark shrink-0">AEI</div>
+        <div class="min-w-0">
+          <p class="font-black text-sm sm:text-base truncate">Relevamiento Institucional American</p>
+          <p id="step-label" class="text-xs text-slate-400 truncate">Presentación</p>
+        </div>
+      </div>
+      <div class="flex items-center gap-3 shrink-0">
+        <span id="step-counter" class="px-3 py-1.5 rounded-full bg-white/5 border border-white/10 text-xs font-bold text-slate-300">1 / 12</span>
+      </div>
+    </div>
+    <div class="progress-track"><div id="progress-fill" class="progress-fill"></div></div>
+  </header>
+
+  <main class="relative max-w-6xl mx-auto px-4 pt-28 pb-32" style="z-index:10">
+    <form id="american-form" novalidate>
+      <div id="steps-container"></div>
+    </form>
+  </main>
+
+  <footer id="navigation" class="bg-[#070b14]/90 backdrop-blur-xl border-t border-white/10">
+    <div class="max-w-6xl mx-auto px-4 py-3 flex items-center justify-between gap-3">
+      <button type="button" id="prev-btn" class="btn">
+        <i data-lucide="arrow-left" class="w-4 h-4"></i> Anterior
+      </button>
+      <div class="hidden md:block text-xs text-slate-500 text-center">
+        Las respuestas se enviarán al finalizar.
+      </div>
+      <button type="button" id="next-btn" class="btn btn-primary">
+        Siguiente <i data-lucide="arrow-right" class="w-4 h-4"></i>
+      </button>
+    </div>
+  </footer>
+
+  <div id="toast" class="toast" role="status" aria-live="polite"></div>
+
+<script>
+  const WEBHOOK_URL = 'https://n8n.smarteco.com.ar/webhook/american_respuestas';
+
+  const sections = [
+    {
+      id:'responsable',
+      title:'Datos de quien responde',
+      icon:'user-round',
+      intro:'Estos datos nos permiten contextualizar la información y contactar al referente si fuera necesario.',
+      questions:[
+        text('nombre_apellido','Nombre y apellido',true,'Ingrese su nombre completo'),
+        text('cargo','Cargo o función dentro del instituto',true,'Ej.: CEO, Dirección, Coordinación Académica'),
+        text('email','Correo electrónico',true,'nombre@american.com.ar','email'),
+        text('telefono','Teléfono o WhatsApp',false,'Ej.: 343 0000000','tel')
+      ]
+    },
+    {
+      id:'institucion',
+      title:'Identidad institucional',
+      icon:'building-2',
+      questions:[
+        text('nombre_oficial','Nombre oficial completo del instituto',true,'Escriba el nombre tal como debe aparecer en la web'),
+        text('nombre_corto','Nombre comercial o forma abreviada',false,'Ej.: American English Institute'),
+        text('anio_fundacion','Año de fundación',false,'Ej.: 1998'),
+        textarea('historia','Breve historia del instituto',true,'Cuéntenos cómo nació, cómo evolucionó y cuáles fueron sus principales hitos.'),
+        textarea('mision','Misión institucional',true,'¿Cuál es el propósito central del instituto?'),
+        textarea('vision','Visión institucional',false,'¿Cómo imaginan el futuro del instituto?'),
+        multi('valores','¿Qué valores representan mejor al instituto?',['Excelencia académica','Cercanía humana','Innovación','Compromiso','Inclusión','Responsabilidad','Trayectoria','Aprendizaje continuo'],true,true),
+        textarea('diferenciales','¿Qué diferencia a American de otros institutos de inglés?',true,'Metodología, experiencia, resultados, atención, certificaciones, comunidad, etc.')
+      ]
+    },
+    {
+      id:'sedes_contacto',
+      title:'Sedes y contacto',
+      icon:'map-pin',
+      questions:[
+        textarea('sedes','Detalle las sedes, direcciones y localidades',true,'Una sede por línea. Incluya dirección completa y localidad.'),
+        textarea('horarios_atencion','Horarios de atención institucional',true,'Indique días y horarios.'),
+        textarea('telefonos','Teléfonos y WhatsApp institucionales',true,'Aclare para qué se utiliza cada número.'),
+        text('email_general','Correo institucional principal',true,'contacto@american.com.ar','email'),
+        text('google_maps','Enlace de Google Maps',false,'Pegue aquí el enlace de ubicación'),
+        multi('canales_contacto','¿Qué canales deben mostrarse en la web?',['WhatsApp','Teléfono','Correo electrónico','Formulario web','Instagram','Facebook','TikTok','YouTube','LinkedIn'],true,true)
+      ]
+    },
+    {
+      id:'oferta_academica',
+      title:'Oferta académica',
+      icon:'graduation-cap',
+      intro:'No necesitamos programas completos en esta etapa. Buscamos saber qué cursos y servicios deben aparecer.',
+      questions:[
+        multi('publicos','¿A qué públicos está dirigida la propuesta académica?',['Niños','Adolescentes','Adultos','Profesionales','Empresas','Instituciones educativas','Docentes'],true,true),
+        multi('tipos_curso','¿Qué tipos de cursos ofrecen?',['Cursos regulares','Cursos intensivos','Clases individuales','Clases grupales','Preparación para exámenes internacionales','Inglés para empresas','Inglés para viajeros','Conversación','Apoyo escolar','Formación docente'],true,true),
+        textarea('listado_cursos','Liste los cursos que deben aparecer en la página',true,'Para cada curso indique nombre, público, nivel, modalidad y duración aproximada.'),
+        multi('modalidades','Modalidades disponibles',['Presencial','Virtual en vivo','Híbrida','Clases grabadas','In company'],true,true),
+        textarea('niveles','¿Cómo organizan los niveles?',true,'Ej.: inicial, básico, intermedio, avanzado; A1 a C2; Kids, Teens, Adults.'),
+        textarea('certificaciones','¿Qué certificaciones, exámenes o acreditaciones ofrecen o preparan?',false,'Incluya instituciones certificadoras y alcance de cada propuesta.'),
+        textarea('empresas','¿Qué servicios brindan a empresas u organizaciones?',false,'Capacitaciones, evaluaciones de nivel, programas a medida, etc.')
+      ]
+    },
+    {
+      id:'metodologia',
+      title:'Metodología de enseñanza',
+      icon:'book-open-check',
+      questions:[
+        textarea('metodo','Explique cómo se enseña inglés en American',true,'Describa el enfoque pedagógico de forma clara y sencilla.'),
+        multi('ejes','¿Qué aspectos se priorizan?',['Conversación','Comprensión auditiva','Lectura','Escritura','Gramática','Pronunciación','Preparación de exámenes','Inglés aplicado a situaciones reales'],true,true),
+        textarea('materiales','¿Qué materiales o recursos utilizan?',false,'Libros, plataforma, contenidos propios, actividades, laboratorios, etc.'),
+        textarea('evaluacion','¿Cómo se evalúa y acompaña el progreso del alumno?',true,'Evaluaciones, devoluciones, informes, seguimiento, tutorías, etc.'),
+        textarea('experiencia','¿Qué experiencias complementarias ofrecen?',false,'Clubes de conversación, eventos, viajes, talleres, intercambios, actividades culturales.')
+      ]
+    },
+    {
+      id:'equipo',
+      title:'Autoridades y equipo',
+      icon:'users-round',
+      questions:[
+        textarea('autoridades','¿Qué autoridades deben aparecer en la web?',true,'Nombre, cargo y breve descripción de cada persona.'),
+        textarea('equipo_docente','¿Qué información desean mostrar del equipo docente?',true,'Nombres, especialidades, certificaciones, experiencia o una presentación general.'),
+        single('mostrar_equipo','¿Desean publicar perfiles individuales del equipo?',['Sí, de todo el equipo','Solo autoridades y coordinadores','Solo una presentación institucional del equipo','Todavía no está definido'],true,true),
+        textarea('mensaje_director','¿Desean incluir un mensaje del CEO o director?',false,'Puede escribir aquí el mensaje o indicar qué debería comunicar.')
+      ]
+    },
+    {
+      id:'alumnos_comunidad',
+      title:'Alumnos y comunidad',
+      icon:'heart-handshake',
+      questions:[
+        textarea('datos_institucionales','¿Qué datos o logros pueden comunicarse?',false,'Cantidad de alumnos, egresados, años de trayectoria, sedes, resultados, premios, etc.'),
+        textarea('testimonios','¿Qué testimonios o historias deberían incorporarse?',false,'Puede indicar nombres, experiencias o tipos de testimonios que deberían solicitarse.'),
+        multi('contenido_comunidad','¿Qué contenidos desean mostrar?',['Testimonios de alumnos','Testimonios de padres','Historias de egresados','Actividades culturales','Eventos institucionales','Viajes o intercambios','Graduaciones','Convenios y alianzas'],false,true),
+        textarea('convenios','Liste convenios, alianzas o instituciones relacionadas',false,'Indique cuáles pueden mostrarse públicamente.')
+      ]
+    },
+    {
+      id:'inscripciones',
+      title:'Inscripciones y consultas',
+      icon:'clipboard-list',
+      questions:[
+        textarea('proceso_actual','¿Cómo es actualmente el proceso de inscripción?',true,'Describa desde la primera consulta hasta la confirmación del alumno.'),
+        multi('datos_inscripcion','¿Qué datos necesitan solicitar a un interesado?',['Nombre y apellido','Edad o fecha de nacimiento','Teléfono','Correo electrónico','Curso de interés','Nivel actual','Disponibilidad horaria','Modalidad preferida','Sede preferida'],true,true),
+        single('test_nivel','¿Realizan test de nivel?',['Sí, online','Sí, presencial','Sí, mediante entrevista','No','Depende del curso'],true,true),
+        textarea('medios_pago','¿Qué medios de pago aceptan?',false,'Transferencia, efectivo, tarjetas, débito, link de pago, etc.'),
+        single('precios_web','¿Los precios deben publicarse en la página?',['Sí, todos los precios','Solo precios desde o de referencia','No, deben consultarse','Todavía no está definido'],true,true),
+        textarea('cta_principal','¿Cuál debería ser la acción principal de la página?',true,'Ej.: hablar por WhatsApp, solicitar entrevista, hacer test de nivel, inscribirse.')
+      ]
+    },
+    {
+      id:'web_actual',
+      title:'Página actual y nueva web',
+      icon:'monitor-smartphone',
+      questions:[
+        textarea('problemas_actuales','¿Qué problemas tiene hoy la página institucional?',true,'Información desactualizada, difícil navegación, falta de formularios, diseño, posicionamiento, etc.'),
+        multi('objetivos_web','¿Qué objetivos debe cumplir la nueva página?',['Presentar institucionalmente a American','Conseguir nuevos alumnos','Mostrar cursos y horarios','Facilitar las inscripciones','Recibir consultas por WhatsApp','Realizar test de nivel','Mostrar sedes y contacto','Publicar novedades','Ofrecer servicios a empresas','Mejorar el posicionamiento en Google'],true,true),
+        multi('secciones','¿Qué secciones deben existir?',['Inicio','Nosotros','Cursos','Metodología','Equipo','Sedes','Horarios','Empresas','Certificaciones','Testimonios','Novedades','Preguntas frecuentes','Contacto','Inscripciones','Campus virtual'],true,true),
+        textarea('conservar','¿Qué información o elementos de la web actual deben conservarse?',false,'Textos, secciones, funcionalidades, enlaces o mensajes.'),
+        textarea('eliminar','¿Qué debería eliminarse o cambiarse?',false,'Contenido viejo, elementos que generan confusión o funciones que ya no se usan.'),
+        textarea('referencias','¿Qué páginas o estilos visuales les gustan?',false,'Puede pegar enlaces o describir qué les resulta atractivo.')
+      ]
+    },
+    {
+      id:'campus_funciones',
+      title:'Campus y funcionalidades',
+      icon:'laptop',
+      questions:[
+        single('campus_actual','¿Actualmente cuentan con campus o portal para alumnos?',['Sí, propio','Sí, de un proveedor externo','Utilizan herramientas separadas','No cuentan con campus'],true,true),
+        multi('funciones_campus','¿Qué funciones consideran importantes para una futura plataforma?',['Acceso para alumnos','Acceso para docentes','Acceso para padres','Material de estudio','Actividades y tareas','Evaluaciones','Calificaciones','Asistencia','Pagos y estado de cuenta','Biblioteca digital','Clases grabadas','Certificados','Calendario','Mensajes y notificaciones','Seguimiento del progreso'],false,true),
+        textarea('prioridad_funciones','¿Qué funcionalidades deberían implementarse primero?',false,'Ordene las funciones prioritarias para una primera etapa.'),
+        textarea('integraciones','¿Con qué herramientas o sistemas debería integrarse?',false,'WhatsApp, medios de pago, Google Calendar, plataformas educativas, sistema administrativo, etc.')
+      ]
+    },
+    {
+      id:'comunicacion',
+      title:'Comunicación y contenidos',
+      icon:'megaphone',
+      questions:[
+        textarea('redes','Indique las redes sociales oficiales',false,'Pegue los enlaces de Instagram, Facebook, TikTok, YouTube, LinkedIn u otras.'),
+        multi('contenidos_publicar','¿Qué contenidos desean publicar habitualmente?',['Inicio de cursos','Nuevas comisiones','Eventos','Actividades de alumnos','Consejos de inglés','Historias de egresados','Convenios','Exámenes y certificaciones','Promociones','Noticias institucionales'],true,true),
+        textarea('preguntas_frecuentes','¿Cuáles son las preguntas más frecuentes que reciben?',true,'Incluya consultas sobre niveles, edades, horarios, precios, modalidades e inscripciones.'),
+        textarea('responsable_actualizacion','¿Quién será responsable de mantener actualizada la web?',true,'Nombre, cargo o área responsable.'),
+        single('frecuencia','¿Con qué frecuencia podrían actualizar contenidos?',['Semanalmente','Quincenalmente','Mensualmente','Solo cuando haya novedades','Necesitarían asistencia externa'],true,true)
+      ]
+    },
+    {
+      id:'prioridades_finales',
+      title:'Prioridades y cierre',
+      icon:'list-checks',
+      questions:[
+        multi('prioridades','Seleccione hasta cinco prioridades para la nueva web',['Actualizar la imagen institucional','Presentar correctamente la oferta académica','Aumentar consultas','Mejorar las inscripciones','Ordenar la información','Incorporar test de nivel','Mostrar sedes y horarios','Presentar metodología y equipo','Integrar WhatsApp','Implementar campus virtual','Mejorar Google y SEO','Automatizar respuestas frecuentes'],true,true,5),
+        textarea('principal_objetivo','¿Cuál es el principal resultado que esperan obtener con la nueva página?',true,'Describa el objetivo más importante.'),
+        textarea('informacion_faltante','¿Qué información todavía no tienen organizada y habría que construir?',false,'Textos, listados de cursos, preguntas frecuentes, historia, metodología, datos del equipo, etc.'),
+        textarea('observaciones','Comentarios u observaciones finales',false,'Incluya cualquier aspecto que debamos considerar para adaptar la propuesta.')
+      ]
+    }
+  ];
+
+  function text(id,label,required=false,placeholder='',inputType='text'){
+    return {id,type:'text',inputType,label,required,placeholder}
+  }
+  function textarea(id,label,required=false,placeholder=''){
+    return {id,type:'textarea',label,required,placeholder}
+  }
+  function multi(id,label,options,required=false,other=true,max=0){
+    return {id,type:'multi',label,options,required,other,max}
+  }
+  function single(id,label,options,required=false,other=true){
+    return {id,type:'single',label,options,required,other}
+  }
+
+  const introStep = {id:'inicio',title:'Presentación'};
+  const reviewStep = {id:'revision',title:'Revisión y envío'};
+  const allSteps = [introStep,...sections,reviewStep];
+  let currentStep = 0;
+  let isSubmitting = false;
+
+  const container = document.getElementById('steps-container');
+
+  function refreshIcons(){
+    try{
+      if(window.lucide && typeof window.lucide.createIcons === 'function'){
+        window.lucide.createIcons();
+      }
+    }catch(error){
+      console.warn('Los íconos no pudieron inicializarse.', error);
+    }
+  }
+
+  function escapeHtml(value=''){
+    return String(value).replace(/[&<>'"]/g, char => ({
+      '&':'&amp;','<':'&lt;','>':'&gt;',"'":'&#039;','"':'&quot;'
+    }[char]));
+  }
+
+  function renderIntro(){
+    return `
+      <section class="step active" data-step="inicio">
+        <div class="min-h-[67vh] flex items-center justify-center">
+          <div class="max-w-4xl w-full text-center">
+            <div class="hero-mark">AEI</div>
+            <span class="section-chip mt-7">
+              <i data-lucide="scan-search" class="w-4 h-4"></i>
+              Relevamiento institucional
+            </span>
+            <h1 class="text-4xl sm:text-5xl md:text-7xl font-black leading-[.98] mt-6">
+              CONSTRUYAMOS LA NUEVA<br>
+              <span class="gradient-text">EXPERIENCIA DIGITAL</span>
+            </h1>
+            <p class="text-lg sm:text-xl text-slate-300 mt-6 max-w-3xl mx-auto">
+              Este formulario permitirá conocer en profundidad a <strong>American English Institute</strong>
+              y definir qué información, secciones y funcionalidades deben incorporarse a su nueva página institucional.
+            </p>
+
+            <div class="grid sm:grid-cols-3 gap-4 mt-8 text-left">
+              <div class="glass rounded-2xl p-5">
+                <i data-lucide="clock-3" class="w-7 h-7 text-cyan-300"></i>
+                <p class="font-black mt-3">15 a 20 minutos</p>
+                <p class="text-sm text-slate-400 mt-1">El formulario está dividido por temas.</p>
+              </div>
+              <div class="glass rounded-2xl p-5">
+                <i data-lucide="file-text" class="w-7 h-7 text-blue-300"></i>
+                <p class="font-black mt-3">Solo información</p>
+                <p class="text-sm text-slate-400 mt-1">No se solicitan imágenes ni archivos.</p>
+              </div>
+              <div class="glass rounded-2xl p-5">
+                <i data-lucide="sparkles" class="w-7 h-7 text-violet-300"></i>
+                <p class="font-black mt-3">Base para la web final</p>
+                <p class="text-sm text-slate-400 mt-1">Las respuestas orientarán contenidos y funciones.</p>
+              </div>
+            </div>
+
+            <p class="text-sm text-slate-500 mt-7">
+              Las preguntas con <span class="required-mark">*</span> son obligatorias.
+            </p>
+          </div>
+        </div>
+      </section>`;
+  }
+
+  function renderQuestion(section,q,index){
+    const fieldName = `${section.id}__${q.id}`;
+    const required = q.required ? '<span class="required-mark">*</span>' : '';
+    let body='';
+
+    if(q.type==='text'){
+      body = `<input class="text-input" type="${q.inputType || 'text'}" id="${fieldName}" name="${fieldName}"
+        placeholder="${escapeHtml(q.placeholder||'')}" ${q.required?'required':''} />`;
+    } else if(q.type==='textarea'){
+      body = `<textarea class="text-area" id="${fieldName}" name="${fieldName}"
+        placeholder="${escapeHtml(q.placeholder||'')}" ${q.required?'required':''}></textarea>`;
+    } else if(q.type==='single'){
+      body = `<div class="grid sm:grid-cols-2 gap-2">
+        ${q.options.map(opt=>`
+          <label class="option-label">
+            <input type="radio" name="${fieldName}" value="${escapeHtml(opt)}" ${q.required?'required':''}>
+            <span>${escapeHtml(opt)}</span>
+          </label>`).join('')}
+        ${q.other?`
+          <div class="other-option">
+            <label class="option-label">
+              <input type="radio" name="${fieldName}" value="Otro" ${q.required?'required':''}>
+              <span class="font-semibold">Otro (especifique)</span>
+            </label>
+            <input type="text" class="text-input other-input" data-for="${fieldName}" placeholder="Escriba aquí su respuesta..." autocomplete="off">
+          </div>`:''}
+      </div>`;
+    } else if(q.type==='multi'){
+      body = `<div class="grid sm:grid-cols-2 gap-2">
+        ${q.options.map(opt=>`
+          <label class="option-label">
+            <input type="checkbox" name="${fieldName}" value="${escapeHtml(opt)}" data-max="${q.max||''}">
+            <span>${escapeHtml(opt)}</span>
+          </label>`).join('')}
+        ${q.other?`
+          <div class="other-option">
+            <label class="option-label">
+              <input type="checkbox" name="${fieldName}" value="Otro" data-max="${q.max||''}">
+              <span class="font-semibold">Otro (especifique)</span>
+            </label>
+            <input type="text" class="text-input other-input" data-for="${fieldName}" placeholder="Escriba aquí su respuesta..." autocomplete="off">
+          </div>`:''}
+      </div>
+      ${q.max?`<p class="text-xs text-amber-300 mt-3">Puede seleccionar hasta ${q.max} opciones.</p>`:''}`;
+    }
+
+    return `
+      <article class="question-card" data-question="${fieldName}" data-type="${q.type}"
+        data-required="${q.required?'true':'false'}" data-max="${q.max||''}">
+        <div class="flex gap-3 items-start mb-4">
+          <span class="w-8 h-8 rounded-full bg-cyan-400/10 border border-cyan-400/20 text-cyan-200 grid place-items-center text-xs font-black shrink-0">${index+1}</span>
+          <h3 class="font-bold text-base sm:text-lg leading-snug">${escapeHtml(q.label)} ${required}</h3>
+        </div>
+        ${body}
+        <p class="validation-message hidden text-sm text-red-300 mt-3">
+          Complete esta pregunta para continuar.
+        </p>
+      </article>`;
+  }
+
+  function renderSection(section,stepIndex){
+    return `
+      <section class="step" data-step="${section.id}">
+        <div class="mb-8">
+          <span class="section-chip">
+            <i data-lucide="${section.icon}" class="w-4 h-4"></i>
+            Sección ${stepIndex} de ${sections.length}
+          </span>
+          <h2 class="text-3xl sm:text-5xl font-black mt-4">${escapeHtml(section.title)}</h2>
+          <p class="text-slate-400 mt-3 max-w-3xl">
+            ${escapeHtml(section.intro || 'Complete la información con el mayor nivel de detalle posible.')}
+          </p>
+        </div>
+        <div class="space-y-5">
+          ${section.questions.map((q,i)=>renderQuestion(section,q,i)).join('')}
+        </div>
+      </section>`;
+  }
+
+  function renderReview(){
+    return `
+      <section class="step" data-step="revision">
+        <div class="mb-8">
+          <span class="section-chip">
+            <i data-lucide="send" class="w-4 h-4"></i>
+            Último paso
+          </span>
+          <h2 class="text-3xl sm:text-5xl font-black mt-4">Revisión y envío</h2>
+          <p class="text-slate-400 mt-3">
+            Revise el resumen general antes de enviar la información.
+          </p>
+        </div>
+
+        <div class="glass rounded-3xl p-5 sm:p-7">
+          <div id="review-summary"></div>
+        </div>
+
+        <label class="option-label mt-5">
+          <input type="checkbox" id="confirmation" />
+          <span>Confirmo que revisé las respuestas y autorizo su envío para preparar la propuesta institucional.</span>
+        </label>
+
+        <div class="mt-7 flex flex-col sm:flex-row gap-3">
+          <button type="button" id="submit-btn" class="btn btn-success flex-1">
+            <i data-lucide="send" class="w-5 h-5"></i>
+            Enviar relevamiento
+          </button>
+          <button type="button" id="download-btn" class="btn">
+            <i data-lucide="download" class="w-5 h-5"></i>
+            Descargar copia JSON
+          </button>
+        </div>
+
+        <div id="submit-error" class="hidden mt-5 rounded-2xl p-4 bg-red-400/10 border border-red-400/25 text-red-200 text-sm"></div>
+      </section>`;
+  }
+
+  function buildForm(){
+    container.innerHTML =
+      renderIntro() +
+      sections.map((s,i)=>renderSection(s,i+1)).join('') +
+      renderReview();
+
+    bindInputs();
+    updateUI();
+    refreshIcons();
+  }
+
+  function bindInputs(){
+    document.querySelectorAll('#american-form input, #american-form textarea').forEach(el=>{
+      el.addEventListener('input',()=>{
+        if(el.classList.contains('other-input')){
+          const wrapper = el.closest('.other-option');
+          const selector = wrapper?.querySelector('input[type="checkbox"], input[type="radio"]');
+          if(selector && el.value.trim()) selector.checked = true;
+        }
+        clearInvalid(el);
+      });
+
+      el.addEventListener('change',()=>{
+        enforceMax(el);
+        clearInvalid(el);
+      });
+    });
+  }
+
+  function enforceMax(el){
+    if(el.type!=='checkbox') return;
+    const max = Number(el.dataset.max||0);
+    if(!max) return;
+
+    const checked = document.querySelectorAll(`input[name="${CSS.escape(el.name)}"]:checked`);
+    if(checked.length > max){
+      el.checked = false;
+      showToast(`Puede seleccionar hasta ${max} opciones.`, true);
+    }
+  }
+
+  function clearInvalid(el){
+    const card = el.closest('.question-card');
+    if(card){
+      card.classList.remove('invalid');
+      card.querySelector('.validation-message')?.classList.add('hidden');
+    }
+  }
+
+  function getCurrentStepElement(){
+    return document.querySelectorAll('.step')[currentStep];
+  }
+
+  function validateCurrentStep(){
+    if(currentStep===0 || currentStep===allSteps.length-1) return true;
+
+    const step = getCurrentStepElement();
+    let valid = true;
+
+    step.querySelectorAll('.question-card[data-required="true"]').forEach(card=>{
+      const name = card.dataset.question;
+      const type = card.dataset.type;
+      let answered = false;
+
+      if(type==='multi'){
+        answered = card.querySelectorAll(`input[name="${CSS.escape(name)}"]:checked`).length > 0;
+      } else if(type==='single'){
+        answered = !!card.querySelector(`input[name="${CSS.escape(name)}"]:checked`);
+      } else {
+        answered = !!card.querySelector(`[name="${CSS.escape(name)}"]`)?.value.trim();
+      }
+
+      if(!answered){
+        valid = false;
+        card.classList.add('invalid');
+        card.querySelector('.validation-message')?.classList.remove('hidden');
+      }
+    });
+
+    if(!valid){
+      step.querySelector('.question-card.invalid')?.scrollIntoView({behavior:'smooth',block:'center'});
+      showToast('Complete las preguntas obligatorias antes de continuar.', true);
+    }
+
+    return valid;
+  }
+
+  function nextStep(){
+    if(!validateCurrentStep()) return;
+
+    if(currentStep < allSteps.length - 1){
+      currentStep++;
+
+      if(currentStep === allSteps.length - 1){
+        renderReviewSummary();
+      }
+
+      updateUI();
+      window.scrollTo({top:0,behavior:'smooth'});
+    }
+  }
+
+  function previousStep(){
+    if(currentStep > 0){
+      currentStep--;
+      updateUI();
+      window.scrollTo({top:0,behavior:'smooth'});
+    }
+  }
+
+  function updateUI(){
+    document.querySelectorAll('.step').forEach((step,i)=>{
+      step.classList.toggle('active', i===currentStep);
+    });
+
+    const step = allSteps[currentStep];
+    document.getElementById('step-label').textContent = step.title;
+    document.getElementById('step-counter').textContent = `${currentStep+1} / ${allSteps.length}`;
+    document.getElementById('progress-fill').style.width =
+      `${(currentStep/(allSteps.length-1))*100}%`;
+
+    const prev = document.getElementById('prev-btn');
+    const next = document.getElementById('next-btn');
+
+    prev.style.visibility = currentStep===0 ? 'hidden' : 'visible';
+    next.style.display = currentStep===allSteps.length-1 ? 'none' : 'inline-flex';
+    next.innerHTML = currentStep===0
+      ? `Comenzar <i data-lucide="arrow-right" class="w-4 h-4"></i>`
+      : `Siguiente <i data-lucide="arrow-right" class="w-4 h-4"></i>`;
+
+    refreshIcons();
+  }
+
+  function collectData(){
+    const payload = {
+      formulario:'Relevamiento Institucional - American English Institute',
+      version:'2.0',
+      fecha_envio:new Date().toISOString(),
+      timezone:Intl.DateTimeFormat().resolvedOptions().timeZone,
+      origen:window.location.href,
+      user_agent:navigator.userAgent,
+      respuestas:{}
+    };
+
+    sections.forEach(section=>{
+      payload.respuestas[section.id] = {
+        titulo:section.title,
+        respuestas:{}
+      };
+
+      section.questions.forEach(q=>{
+        const name = `${section.id}__${q.id}`;
+        let value;
+
+        if(q.type==='multi'){
+          value = Array.from(document.querySelectorAll(`input[name="${CSS.escape(name)}"]:checked`)).map(el=>{
+            if(el.value==='Otro'){
+              const other = el.closest('.other-option')?.querySelector('.other-input')?.value.trim();
+              return other ? `Otro: ${other}` : 'Otro';
+            }
+            return el.value;
+          });
+        } else if(q.type==='single'){
+          const checked = document.querySelector(`input[name="${CSS.escape(name)}"]:checked`);
+          value = checked?.value || '';
+
+          if(value==='Otro'){
+            const other = checked.closest('.other-option')?.querySelector('.other-input')?.value.trim();
+            value = other ? `Otro: ${other}` : 'Otro';
+          }
+        } else {
+          value = document.querySelector(`[name="${CSS.escape(name)}"]`)?.value.trim() || '';
+        }
+
+        payload.respuestas[section.id].respuestas[q.id] = {
+          pregunta:q.label,
+          respuesta:value
+        };
+      });
+    });
+
+    payload.respondente = {
+      nombre_apellido:payload.respuestas.responsable.respuestas.nombre_apellido.respuesta,
+      cargo:payload.respuestas.responsable.respuestas.cargo.respuesta,
+      email:payload.respuestas.responsable.respuestas.email.respuesta,
+      telefono:payload.respuestas.responsable.respuestas.telefono.respuesta
+    };
+
+    return payload;
+  }
+
+  function renderReviewSummary(){
+    const data = collectData();
+    const total = sections.reduce((sum,s)=>sum+s.questions.length,0);
+    const answered = sections.reduce((sum,s)=>{
+      return sum + s.questions.filter(q=>{
+        const v = data.respuestas[s.id].respuestas[q.id].respuesta;
+        return Array.isArray(v) ? v.length>0 : String(v||'').trim()!=='';
+      }).length;
+    },0);
+
+    const priorities =
+      data.respuestas.prioridades_finales.respuestas.prioridades.respuesta || [];
+
+    document.getElementById('review-summary').innerHTML = `
+      <div class="grid sm:grid-cols-3 gap-4 mb-6">
+        <div class="review-card">
+          <p class="text-xs text-slate-400 uppercase font-bold tracking-widest">Responsable</p>
+          <p class="font-black mt-2">${escapeHtml(data.respondente.nombre_apellido||'Sin identificar')}</p>
+          <p class="text-sm text-slate-400">${escapeHtml(data.respondente.cargo||'')}</p>
+        </div>
+        <div class="review-card">
+          <p class="text-xs text-slate-400 uppercase font-bold tracking-widest">Preguntas respondidas</p>
+          <p class="text-3xl font-black mt-2">${answered} / ${total}</p>
+        </div>
+        <div class="review-card">
+          <p class="text-xs text-slate-400 uppercase font-bold tracking-widest">Prioridades web</p>
+          <p class="text-3xl font-black mt-2">${priorities.length}</p>
+          <p class="text-sm text-slate-400">seleccionadas</p>
+        </div>
+      </div>
+
+      <h3 class="text-xl font-black mb-3">Prioridades declaradas</h3>
+      <div class="flex flex-wrap gap-2">
+        ${priorities.length
+          ? priorities.map(p=>`<span class="px-3 py-2 rounded-full bg-cyan-400/10 border border-cyan-400/20 text-cyan-100 text-sm">${escapeHtml(p)}</span>`).join('')
+          : '<span class="text-slate-500">No se seleccionaron prioridades.</span>'}
+      </div>
+
+      <div class="mt-6 rounded-2xl bg-blue-400/8 border border-blue-400/20 p-4 text-sm text-slate-300">
+        <strong>Destino:</strong> las respuestas serán enviadas al webhook institucional de n8n para preparar la propuesta final de la página de American English Institute.
+      </div>`;
+  }
+
+  async function submitForm(){
+    if(isSubmitting) return;
+
+    if(!document.getElementById('confirmation').checked){
+      showToast('Confirme la revisión de las respuestas antes de enviar.', true);
+      return;
+    }
+
+    const button = document.getElementById('submit-btn');
+    const errorBox = document.getElementById('submit-error');
+
+    errorBox.classList.add('hidden');
+    isSubmitting = true;
+    button.disabled = true;
+    button.innerHTML = '<span class="animate-pulse">Enviando respuestas...</span>';
+
+    const payload = collectData();
+
+    try{
+      const response = await fetch(WEBHOOK_URL,{
+        method:'POST',
+        headers:{
+          'Content-Type':'application/json',
+          'Accept':'application/json'
+        },
+        body:JSON.stringify(payload)
+      });
+
+      if(!response.ok){
+        throw new Error(`El servidor respondió con estado ${response.status}`);
+      }
+
+      showSuccess(payload);
+    }catch(error){
+      console.error(error);
+      errorBox.innerHTML = `
+        <strong>No se pudo completar el envío.</strong><br>
+        ${escapeHtml(error.message)}. Verifique que el workflow de n8n esté activo y que el webhook permita solicitudes desde este dominio.
+      `;
+      errorBox.classList.remove('hidden');
+      showToast('No se pudo enviar el formulario.', true);
+    }finally{
+      isSubmitting = false;
+      button.disabled = false;
+      button.innerHTML = '<i data-lucide="send" class="w-5 h-5"></i> Enviar relevamiento';
+      refreshIcons();
+    }
+  }
+
+  function showSuccess(payload){
+    document.getElementById('navigation').style.display='none';
+
+    container.innerHTML = `
+      <section class="step active">
+        <div class="min-h-[70vh] flex items-center justify-center">
+          <div class="max-w-3xl w-full text-center glass rounded-[32px] p-7 sm:p-12">
+            <div class="hero-mark">AEI</div>
+            <div class="w-20 h-20 rounded-full bg-green-400/15 border border-green-400/30 grid place-items-center mx-auto mt-7">
+              <i data-lucide="check" class="w-10 h-10 text-green-300"></i>
+            </div>
+            <span class="section-chip mt-6" style="color:#bbf7d0;border-color:rgba(74,222,128,.28);background:rgba(34,197,94,.10)">
+              Envío completado
+            </span>
+            <h2 class="text-4xl sm:text-6xl font-black mt-5">¡Muchas gracias!</h2>
+            <p class="text-lg text-slate-300 mt-4">
+              ${payload.respondente.nombre_apellido
+                ? `Las respuestas de <strong>${escapeHtml(payload.respondente.nombre_apellido)}</strong> fueron enviadas correctamente.`
+                : 'Las respuestas fueron enviadas correctamente.'}
+            </p>
+            <p class="text-slate-400 mt-3">
+              La información será utilizada para adaptar los contenidos, secciones y funcionalidades de la nueva página institucional.
+            </p>
+            <div class="mt-7 rounded-2xl bg-white/5 border border-white/10 p-5 text-left">
+              <p class="text-sm text-slate-400">Fecha y hora del envío</p>
+              <p class="font-bold mt-1">${new Date().toLocaleString('es-AR')}</p>
+            </div>
+            <button type="button" class="btn mt-7" onclick="location.reload()">
+              <i data-lucide="rotate-ccw" class="w-4 h-4"></i>
+              Cargar otra respuesta
+            </button>
+          </div>
+        </div>
+      </section>`;
+
+    document.getElementById('step-label').textContent='Envío completado';
+    document.getElementById('progress-fill').style.width='100%';
+    refreshIcons();
+    window.scrollTo({top:0,behavior:'smooth'});
+  }
+
+  function downloadJSON(){
+    const blob = new Blob(
+      [JSON.stringify(collectData(),null,2)],
+      {type:'application/json'}
+    );
+
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = `relevamiento_american_${new Date().toISOString().slice(0,10)}.json`;
+    document.body.appendChild(a);
+    a.click();
+    a.remove();
+    URL.revokeObjectURL(url);
+  }
+
+  function showToast(message,isError=false){
+    const toast = document.getElementById('toast');
+    toast.textContent = message;
+    toast.classList.toggle('error',isError);
+    toast.style.display='block';
+
+    clearTimeout(window.__toastTimer);
+    window.__toastTimer = setTimeout(()=>{
+      toast.style.display='none';
+    },4200);
+  }
+
+  document.getElementById('prev-btn').addEventListener('click', previousStep);
+  document.getElementById('next-btn').addEventListener('click', nextStep);
+
+  buildForm();
+
+  document.getElementById('submit-btn').addEventListener('click', submitForm);
+  document.getElementById('download-btn').addEventListener('click', downloadJSON);
+</script>
+</body>
+</html>
