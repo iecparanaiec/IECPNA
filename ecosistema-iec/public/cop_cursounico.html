@@ -1,0 +1,226 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-R817QWH97R"></script>
+  <script>
+    window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)}
+    gtag('js',new Date());gtag('config','G-R817QWH97R');
+  </script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1.0">
+  <meta name="description" content="Propuesta institucional COP + Instituto IEC para una comisión exclusiva del curso Experto en Aplicaciones Prácticas con Inteligencia Artificial Nivel I.">
+  <meta name="theme-color" content="#06111d">
+  <title>COP + Instituto IEC | Experto en Aplicaciones Prácticas con IA · Nivel I</title>
+  <script src="https://cdn.tailwindcss.com/3.4.17"></script>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/lucide@0.468.0/dist/umd/lucide.min.js"></script>
+  <style>
+    :root{--bg:#050b13;--panel:#0d1726;--cyan:#22d3ee;--blue:#3b82f6;--violet:#8b5cf6;--green:#22c55e;--amber:#f59e0b}
+    *{box-sizing:border-box;font-family:'DM Sans',sans-serif}html,body{margin:0;background:var(--bg);color:#fff}body{overflow:hidden}
+    button,a{-webkit-tap-highlight-color:transparent}button{font:inherit}
+    .slide{display:none;width:100%;height:100vh;min-height:100vh;overflow-y:auto;overflow-x:hidden;padding:5.1rem 1.4rem 5.2rem;position:relative}
+    .slide.active{display:flex}.glass{background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.11);backdrop-filter:blur(15px);box-shadow:0 25px 70px rgba(0,0,0,.25)}
+    .gradient-text{background:linear-gradient(135deg,#67e8f9,#60a5fa,#a78bfa);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+    .green-text{background:linear-gradient(135deg,#86efac,#22c55e);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+    .amber-text{background:linear-gradient(135deg,#fde68a,#f59e0b,#fb923c);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+    .pattern{position:absolute;inset:0;background-image:radial-gradient(circle at 14% 14%,rgba(34,211,238,.13),transparent 25%),radial-gradient(circle at 84% 78%,rgba(139,92,246,.13),transparent 30%),linear-gradient(90deg,rgba(59,130,246,.05) 1px,transparent 1px),linear-gradient(rgba(59,130,246,.05) 1px,transparent 1px);background-size:auto,auto,52px 52px,52px 52px;pointer-events:none}
+    .orb{position:absolute;border-radius:999px;filter:blur(80px);opacity:.2}.pill{background:rgba(255,255,255,.055);border:1px solid rgba(255,255,255,.09)}
+    .top-actions{position:fixed;top:14px;left:14px;z-index:90;display:flex;gap:8px;flex-wrap:wrap}.action{display:inline-flex;align-items:center;gap:8px;padding:10px 14px;border-radius:999px;color:white;background:rgba(5,11,19,.82);border:1px solid rgba(255,255,255,.14);backdrop-filter:blur(14px);font-size:11px;font-weight:900;letter-spacing:.04em;cursor:pointer}.action.primary{background:linear-gradient(135deg,#0891b2,#2563eb)}
+    .nav{position:fixed;top:50%;transform:translateY(-50%);z-index:80;width:46px;height:46px;border-radius:999px;display:grid;place-items:center;color:white;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.14);backdrop-filter:blur(14px);cursor:pointer}.nav:hover,.action:hover{border-color:rgba(103,232,249,.5)}
+    .dot{width:8px;height:8px;border:0;border-radius:999px;background:rgba(255,255,255,.25);padding:0;cursor:pointer}.dot.active{width:24px;background:linear-gradient(90deg,var(--cyan),var(--blue))}
+    .logo{object-fit:contain;filter:drop-shadow(0 14px 30px rgba(0,0,0,.25))}.cop-logo{height:76px;max-width:250px}.iec-logo{height:74px;max-width:210px}.brand-divider{height:62px;width:1px;background:rgba(255,255,255,.22)}
+    .eyebrow{display:inline-flex;align-items:center;gap:8px;padding:8px 13px;border-radius:999px;color:#a5f3fc;background:rgba(34,211,238,.09);border:1px solid rgba(34,211,238,.24);font-size:11px;font-weight:900;letter-spacing:.14em;text-transform:uppercase}
+    .card-hover{transition:.22s ease}.card-hover:hover{transform:translateY(-4px);border-color:rgba(103,232,249,.36)}
+    .module{display:grid;grid-template-columns:58px minmax(0,1fr);gap:14px;padding:17px;border-radius:22px;background:rgba(255,255,255,.055);border:1px solid rgba(255,255,255,.09)}
+    .module-number{width:58px;height:58px;border-radius:18px;display:grid;place-items:center;font-weight:900;background:linear-gradient(145deg,rgba(14,165,233,.23),rgba(37,99,235,.14));border:1px solid rgba(125,211,252,.25);color:#bae6fd}
+    .tool{display:flex;align-items:center;gap:11px;padding:13px;border-radius:17px;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.08)}
+    .tool-icon{width:39px;height:39px;display:grid;place-items:center;border-radius:13px;background:rgba(34,211,238,.10);border:1px solid rgba(34,211,238,.18);color:#67e8f9;flex:0 0 auto}
+    .price{background:radial-gradient(circle at 90% 0%,rgba(34,197,94,.18),transparent 34%),linear-gradient(135deg,rgba(255,255,255,.08),rgba(255,255,255,.035));border:1px solid rgba(74,222,128,.3);box-shadow:0 25px 80px rgba(34,197,94,.08)}
+    @media(max-width:760px){.slide{padding:5.4rem .85rem 5.3rem}.top-actions{top:10px;left:10px;right:10px}.action{font-size:9px;padding:8px 10px}.nav{width:40px;height:40px}.cop-logo,.iec-logo{height:54px;max-width:150px}.brand-divider{height:45px}}
+    @media(max-width:640px){.nav{top:auto;bottom:14px;transform:none}#prev{left:12px!important}#next{right:12px!important}#dots{bottom:27px!important;max-width:calc(100vw - 115px)}.module{grid-template-columns:48px minmax(0,1fr);padding:13px}.module-number{width:48px;height:48px;border-radius:15px}}
+    @media print{body{overflow:visible}.top-actions,.nav,#dots,#counter{display:none!important}.slide{display:flex!important;width:100vw;height:100vh;min-height:100vh;page-break-after:always;overflow:hidden}}
+  </style>
+</head>
+<body>
+  <div class="top-actions">
+    <button class="action" onclick="toggleFullscreen()"><i data-lucide="maximize-2" width="16"></i>PANTALLA COMPLETA</button>
+    <button class="action" onclick="window.print()"><i data-lucide="printer" width="16"></i>IMPRIMIR</button>
+  </div>
+  <button id="prev" class="nav left-3 md:left-5" onclick="changeSlide(-1)" aria-label="Anterior"><i data-lucide="chevron-left"></i></button>
+  <button id="next" class="nav right-3 md:right-5" onclick="changeSlide(1)" aria-label="Siguiente"><i data-lucide="chevron-right"></i></button>
+  <div id="dots" class="fixed bottom-4 left-1/2 -translate-x-1/2 z-[80] flex gap-2 items-center justify-center flex-wrap"></div>
+  <div id="counter" class="fixed top-4 right-4 z-[80] px-3 py-1.5 rounded-full bg-black/30 border border-white/10 backdrop-blur text-xs text-slate-300"></div>
+
+  <!-- 1 PORTADA -->
+  <section class="slide active flex-col items-center justify-center text-center bg-gradient-to-br from-[#050b13] via-[#0a1930] to-[#050b13]">
+    <div class="pattern"></div><div class="orb w-80 h-80 bg-cyan-400 -top-32 -left-24"></div><div class="orb w-96 h-96 bg-violet-500 -bottom-40 -right-28"></div>
+    <div class="relative z-10 max-w-6xl mx-auto w-full">
+      <div class="flex items-center justify-center gap-5 md:gap-8 mb-7">
+        <img class="logo cop-logo" src="https://i.postimg.cc/3r2Rq6Td/Chat-GPT-Image-13-jul-2026-12-10-33-p-m.png" alt="Círculo Odontológico de Paraná">
+        <div class="brand-divider"></div>
+        <img class="logo iec-logo" src="https://i.postimg.cc/jSkQKpRK/Diseno-sin-titulo-2026-05-15T105828-195.png" alt="Instituto IEC">
+      </div>
+      <span class="eyebrow"><i data-lucide="handshake" width="16"></i>Propuesta institucional · Comisión exclusiva COP</span>
+      <h1 class="text-4xl sm:text-5xl md:text-7xl lg:text-8xl font-black leading-[.94] mt-5 mb-5">EXPERTO EN APLICACIONES<br><span class="gradient-text">PRÁCTICAS CON IA</span></h1>
+      <p class="text-lg md:text-2xl text-slate-300 max-w-5xl mx-auto">Nivel I adaptado al trabajo cotidiano del personal administrativo del Círculo Odontológico de Paraná.</p>
+      <div class="flex flex-wrap justify-center gap-3 mt-7"><span class="pill px-4 py-2 rounded-xl text-sm font-bold text-cyan-200">8 clases</span><span class="pill px-4 py-2 rounded-xl text-sm font-bold text-blue-200">Comisión exclusiva</span><span class="pill px-4 py-2 rounded-xl text-sm font-bold text-violet-200">Más de 10 herramientas</span><span class="pill px-4 py-2 rounded-xl text-sm font-bold text-green-200">Aplicación inmediata</span></div>
+    </div>
+  </section>
+
+  <!-- 2 ENFOQUE -->
+  <section class="slide flex-col items-center justify-center bg-gradient-to-b from-[#050b13] to-[#0b1526]">
+    <div class="pattern opacity-70"></div><div class="relative z-10 max-w-6xl mx-auto w-full">
+      <span class="text-cyan-300 font-black tracking-widest text-sm">01 · PROPUESTA</span>
+      <h2 class="text-3xl md:text-6xl font-black mt-2 mb-6">UNA CAPACITACIÓN PARA<br><span class="gradient-text">POTENCIAR A TODO EL EQUIPO</span></h2>
+      <div class="grid md:grid-cols-2 gap-5">
+        <article class="glass rounded-3xl p-6 md:p-8"><i data-lucide="users-round" class="text-cyan-300" width="46"></i><h3 class="text-2xl font-black mt-4">Un programa común</h3><p class="text-slate-300 leading-relaxed mt-3">La comisión estará integrada exclusivamente por personal del COP. Todos accederán al mismo programa académico, independientemente del área en la que se desempeñen.</p></article>
+        <article class="glass rounded-3xl p-6 md:p-8 border-violet-400/20 bg-gradient-to-br from-blue-500/5 to-violet-500/5"><i data-lucide="sliders-horizontal" class="text-violet-300" width="46"></i><h3 class="text-2xl font-black mt-4">Aplicación personalizada</h3><p class="text-slate-300 leading-relaxed mt-3">Los ejemplos, ejercicios y proyectos se adaptarán a las tareas de cada participante, para que las herramientas se incorporen directamente a sus procesos reales de trabajo.</p></article>
+      </div>
+      <div class="mt-5 glass rounded-2xl p-5 text-center"><p class="text-lg md:text-2xl font-black">El objetivo no es enseñar una herramienta aislada, sino desarrollar <span class="gradient-text">criterio, autonomía y capacidad práctica</span> para trabajar con IA.</p></div>
+    </div>
+  </section>
+
+  <!-- 3 OPORTUNIDAD COP -->
+  <section class="slide flex-col items-center justify-center bg-gradient-to-b from-[#0b1526] to-[#050b13]">
+    <div class="pattern opacity-55"></div><div class="relative z-10 max-w-6xl mx-auto w-full">
+      <span class="text-blue-300 font-black tracking-widest text-sm">02 · OPORTUNIDAD INSTITUCIONAL</span>
+      <h2 class="text-3xl md:text-6xl font-black mt-2 mb-5">DE LAS TAREAS COTIDIANAS A<br><span class="gradient-text">NUEVAS FORMAS DE TRABAJAR</span></h2>
+      <p class="text-slate-300 text-lg md:text-xl max-w-5xl leading-relaxed mb-6">El relevamiento institucional del COP identifica una operación amplia, con información, documentación, atención, comunicación, facturación, auditorías, formación y seguimiento. El curso brindará herramientas para que cada integrante pueda revisar y mejorar la manera en que resuelve sus propias tareas.</p>
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-3">
+        <div class="glass rounded-2xl p-5 card-hover"><i data-lucide="file-text" class="text-cyan-300"></i><h3 class="font-black mt-3">Documentación</h3><p class="text-slate-400 text-sm mt-1">Leer, resumir, redactar y organizar información.</p></div>
+        <div class="glass rounded-2xl p-5 card-hover"><i data-lucide="message-square" class="text-blue-300"></i><h3 class="font-black mt-3">Comunicación</h3><p class="text-slate-400 text-sm mt-1">Crear respuestas y contenidos claros.</p></div>
+        <div class="glass rounded-2xl p-5 card-hover"><i data-lucide="search-check" class="text-violet-300"></i><h3 class="font-black mt-3">Análisis</h3><p class="text-slate-400 text-sm mt-1">Consultar fuentes y detectar información útil.</p></div>
+        <div class="glass rounded-2xl p-5 card-hover"><i data-lucide="lightbulb" class="text-green-300"></i><h3 class="font-black mt-3">Innovación</h3><p class="text-slate-400 text-sm mt-1">Diseñar mejoras y soluciones propias.</p></div>
+      </div>
+      <div class="mt-5 p-5 rounded-2xl bg-cyan-400/10 border border-cyan-400/25"><p class="text-cyan-100 font-bold text-lg">La adaptación al COP estará en los casos prácticos: cada participante trabajará con situaciones vinculadas a su función, sin convertir el curso en una capacitación técnica específica de un solo sector.</p></div>
+    </div>
+  </section>
+
+  <!-- 4 HERRAMIENTAS -->
+  <section class="slide flex-col items-center justify-center bg-gradient-to-b from-[#050b13] to-[#0b1526]">
+    <div class="pattern opacity-55"></div><div class="relative z-10 max-w-6xl mx-auto w-full">
+      <span class="text-violet-300 font-black tracking-widest text-sm">03 · ECOSISTEMA DE HERRAMIENTAS</span>
+      <h2 class="text-3xl md:text-6xl font-black mt-2 mb-5">MÁS DE 10 HERRAMIENTAS<br><span class="gradient-text">APLICABLES A CADA PUESTO</span></h2>
+      <p class="text-slate-300 text-lg max-w-4xl mb-6">El programa combina plataformas actuales para trabajar con texto, archivos, imágenes, diseño, investigación, voz, pantalla compartida, sitios web y asistentes inteligentes.</p>
+      <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-3">
+        <div class="tool"><div class="tool-icon"><i data-lucide="message-circle"></i></div><div><strong>ChatGPT</strong><p class="text-xs text-slate-400">Conversación, archivos y productividad.</p></div></div>
+        <div class="tool"><div class="tool-icon"><i data-lucide="palette"></i></div><div><strong>Canva IA</strong><p class="text-xs text-slate-400">Diseño y presentaciones.</p></div></div>
+        <div class="tool"><div class="tool-icon"><i data-lucide="book-open-check"></i></div><div><strong>NotebookLM</strong><p class="text-xs text-slate-400">Fuentes propias e investigación.</p></div></div>
+        <div class="tool"><div class="tool-icon"><i data-lucide="bot"></i></div><div><strong>Google AI Studio</strong><p class="text-xs text-slate-400">Voz, cámara y asistentes.</p></div></div>
+        <div class="tool"><div class="tool-icon"><i data-lucide="braces"></i></div><div><strong>Prompts y JSON</strong><p class="text-xs text-slate-400">Instrucciones y resultados estructurados.</p></div></div>
+        <div class="tool"><div class="tool-icon"><i data-lucide="globe-2"></i></div><div><strong>Creación web</strong><p class="text-xs text-slate-400">Propuestas y recursos digitales.</p></div></div>
+        <div class="tool"><div class="tool-icon"><i data-lucide="files"></i></div><div><strong>Gestión documental</strong><p class="text-xs text-slate-400">Lectura, síntesis y organización.</p></div></div>
+        <div class="tool"><div class="tool-icon"><i data-lucide="image"></i></div><div><strong>IA Generativa</strong><p class="text-xs text-slate-400">Textos, ideas e imágenes.</p></div></div>
+        <div class="tool"><div class="tool-icon"><i data-lucide="sparkles"></i></div><div><strong>Guías y agentes</strong><p class="text-xs text-slate-400">Asistentes especializados.</p></div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 5 CLASES 1-4 -->
+  <section class="slide flex-col items-center justify-center bg-gradient-to-b from-[#0b1526] to-[#050b13]">
+    <div class="pattern opacity-50"></div><div class="relative z-10 max-w-6xl mx-auto w-full">
+      <span class="text-cyan-300 font-black tracking-widest text-sm">04 · PROGRAMA NIVEL I</span>
+      <h2 class="text-3xl md:text-5xl font-black mt-2 mb-5">CLASES 1 A 4<br><span class="gradient-text">COMPRENDER, ORDENAR Y APLICAR</span></h2>
+      <div class="grid md:grid-cols-2 gap-4">
+        <article class="module"><div class="module-number">1</div><div><h3 class="text-xl font-black">Inteligencia Artificial: tu mejor aliada</h3><p class="text-sm text-slate-300 mt-2">Introducción a la IA, evolución, aplicaciones, oportunidades, límites, buenas prácticas y uso responsable. Primeros ejercicios vinculados al trabajo cotidiano.</p></div></article>
+        <article class="module"><div class="module-number">2</div><div><h3 class="text-xl font-black">Introducción a ChatGPT</h3><p class="text-sm text-slate-300 mt-2">Interfaz, conversaciones, archivos, generación de contenido y organización de consultas. Transformación de necesidades reales en pedidos claros y reutilizables.</p></div></article>
+        <article class="module"><div class="module-number">3</div><div><h3 class="text-xl font-black">Redescubrimiento de procesos con IA</h3><p class="text-sm text-slate-300 mt-2">Identificación de tareas repetitivas, puntos de demora, información dispersa y oportunidades de mejora. En el COP se trabajará sobre cómo mirar cada proceso administrativo para detectar qué puede asistirse, simplificarse u ordenarse con IA.</p></div></article>
+        <article class="module"><div class="module-number">4</div><div><h3 class="text-xl font-black">Canva IA y diseño inteligente</h3><p class="text-sm text-slate-300 mt-2">Creación de piezas visuales, presentaciones, formularios y códigos QR. Desarrollo de materiales claros, profesionales y editables para la comunicación institucional.</p></div></article>
+      </div>
+    </div>
+  </section>
+
+  <!-- 6 CLASES 5-8 -->
+  <section class="slide flex-col items-center justify-center bg-gradient-to-b from-[#050b13] to-[#0b1526]">
+    <div class="pattern opacity-50"></div><div class="relative z-10 max-w-6xl mx-auto w-full">
+      <span class="text-blue-300 font-black tracking-widest text-sm">05 · PROGRAMA NIVEL I</span>
+      <h2 class="text-3xl md:text-5xl font-black mt-2 mb-5">CLASES 5 A 8<br><span class="gradient-text">INVESTIGAR, INTERACTUAR E INTEGRAR</span></h2>
+      <div class="grid md:grid-cols-2 gap-4">
+        <article class="module"><div class="module-number">5</div><div><h3 class="text-xl font-black">NotebookLM y fuentes confiables</h3><p class="text-sm text-slate-300 mt-2">Trabajo con documentos propios: carga de materiales, consultas, resúmenes, comparación de contenidos y generación de recursos con respaldo documental.</p></div></article>
+        <article class="module"><div class="module-number">6</div><div><h3 class="text-xl font-black">Ingeniería de Prompts y AI Studio Live</h3><p class="text-sm text-slate-300 mt-2">Diseño de instrucciones precisas, formatos estructurados como JSON y utilización de voz, cámara y pantalla compartida para interactuar con IA en tiempo real.</p></div></article>
+        <article class="module"><div class="module-number">7</div><div><h3 class="text-xl font-black">Creación de guías y agentes</h3><p class="text-sm text-slate-300 mt-2">Construcción de asistentes especializados mediante instrucciones, criterios de respuesta y bases de conocimiento. Prototipos aplicables a necesidades concretas.</p></div></article>
+        <article class="module border-violet-400/25 bg-gradient-to-br from-blue-500/5 to-violet-500/5"><div class="module-number">8</div><div><h3 class="text-xl font-black">Proyecto final integrador</h3><p class="text-sm text-slate-300 mt-2">Integración de investigación, contenido, diseño, prompts y asistentes en una solución vinculada con una necesidad real del participante o de la institución.</p></div></article>
+      </div>
+    </div>
+  </section>
+
+  <!-- 7 METODOLOGIA -->
+  <section class="slide flex-col items-center justify-center bg-gradient-to-b from-[#0b1526] to-[#050b13]">
+    <div class="pattern opacity-55"></div><div class="relative z-10 max-w-6xl mx-auto w-full">
+      <span class="text-green-300 font-black tracking-widest text-sm">06 · METODOLOGÍA</span>
+      <h2 class="text-3xl md:text-6xl font-black mt-2 mb-6">APRENDER HACIENDO<br><span class="green-text">DESDE LA PRIMERA CLASE</span></h2>
+      <div class="grid md:grid-cols-3 gap-4">
+        <article class="glass rounded-3xl p-6 text-center card-hover"><i data-lucide="presentation" class="text-cyan-300 mx-auto" width="46"></i><h3 class="text-xl font-black mt-4">Demostración guiada</h3><p class="text-slate-300 mt-2">Cada herramienta se explica y utiliza en vivo, con consignas claras y acompañamiento docente.</p></article>
+        <article class="glass rounded-3xl p-6 text-center card-hover"><i data-lucide="laptop" class="text-blue-300 mx-auto" width="46"></i><h3 class="text-xl font-black mt-4">Práctica individual</h3><p class="text-slate-300 mt-2">Cada participante trabaja sobre actividades aplicadas a su función, ritmo y necesidad concreta.</p></article>
+        <article class="glass rounded-3xl p-6 text-center card-hover"><i data-lucide="target" class="text-violet-300 mx-auto" width="46"></i><h3 class="text-xl font-black mt-4">Resultado aplicable</h3><p class="text-slate-300 mt-2">Las clases producen recursos, prompts, materiales y soluciones que pueden reutilizarse después del curso.</p></article>
+      </div>
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-3 mt-5">
+        <div class="pill rounded-2xl p-4 text-center"><p class="text-3xl font-black">8</p><p class="text-xs text-slate-400 mt-1">clases presenciales</p></div>
+        <div class="pill rounded-2xl p-4 text-center"><p class="text-3xl font-black">16 h</p><p class="text-xs text-slate-400 mt-1">de formación práctica</p></div>
+        <div class="pill rounded-2xl p-4 text-center"><p class="text-3xl font-black">10+</p><p class="text-xs text-slate-400 mt-1">herramientas de IA</p></div>
+        <div class="pill rounded-2xl p-4 text-center"><p class="text-3xl font-black">1</p><p class="text-xs text-slate-400 mt-1">proyecto integrador</p></div>
+      </div>
+      <p class="text-center text-slate-400 text-sm mt-5">No se requieren conocimientos previos de programación ni experiencia avanzada con herramientas digitales.</p>
+    </div>
+  </section>
+
+  <!-- 8 BENEFICIOS Y NIVEL II -->
+  <section class="slide flex-col items-center justify-center bg-gradient-to-b from-[#050b13] to-[#0b1526]">
+    <div class="pattern opacity-55"></div><div class="relative z-10 max-w-6xl mx-auto w-full">
+      <span class="text-violet-300 font-black tracking-widest text-sm">07 · IMPACTO Y CONTINUIDAD</span>
+      <h2 class="text-3xl md:text-6xl font-black mt-2 mb-6">UNA BASE COMÚN PARA<br><span class="gradient-text">SEGUIR EVOLUCIONANDO</span></h2>
+      <div class="grid md:grid-cols-2 gap-5">
+        <article class="glass rounded-3xl p-6 md:p-8"><h3 class="text-2xl font-black text-cyan-300">Resultados esperados</h3><div class="space-y-3 mt-5 text-slate-300"><div class="pill rounded-xl p-3">✓ Mayor autonomía para utilizar herramientas de IA.</div><div class="pill rounded-xl p-3">✓ Reducción de tiempo en tareas de lectura, redacción y creación.</div><div class="pill rounded-xl p-3">✓ Mejor organización y aprovechamiento de información institucional.</div><div class="pill rounded-xl p-3">✓ Nuevas capacidades para redescubrir procesos y proponer mejoras aplicables.</div><div class="pill rounded-xl p-3">✓ Lenguaje y criterios comunes dentro del equipo.</div></div></article>
+        <article class="glass rounded-3xl p-6 md:p-8 border-violet-400/25 bg-gradient-to-br from-blue-500/5 to-violet-500/5"><span class="eyebrow"><i data-lucide="arrow-up-right" width="15"></i>Continuidad académica real</span><h3 class="text-3xl font-black mt-5">Nivel II · automatización y agentes</h3><p class="text-slate-300 leading-relaxed mt-4">Luego del Nivel I, el COP podrá evaluar una segunda etapa de ocho clases enfocada en automatización profesional con Google Apps Script, Google Workspace inteligente, agentes con Google AI Studio, Claude para proyectos profesionales, video con IA y Google Omni, audio con Suno e integración de herramientas.</p><div class="grid grid-cols-2 gap-2 mt-5"><span class="pill rounded-xl p-3 text-sm text-slate-200">Apps Script + Workspace</span><span class="pill rounded-xl p-3 text-sm text-slate-200">Agentes con AI Studio</span><span class="pill rounded-xl p-3 text-sm text-slate-200">Claude documental</span><span class="pill rounded-xl p-3 text-sm text-slate-200">Video y audio con IA</span></div><div class="mt-5 p-4 rounded-2xl bg-violet-400/10 border border-violet-400/20"><p class="text-violet-100 font-bold">La presente propuesta comercial corresponde al Nivel I. El Nivel II queda presentado únicamente como continuidad académica posterior.</p></div></article>
+      </div>
+    </div>
+  </section>
+
+  <!-- 9 INVERSIÓN Y CIERRE -->
+  <section class="slide flex-col items-center justify-center bg-gradient-to-br from-[#050b13] via-[#071719] to-[#0b1526]">
+    <div class="pattern opacity-45"></div><div class="orb w-96 h-96 bg-green-500 -top-44 -right-28"></div>
+    <div class="relative z-10 max-w-6xl mx-auto w-full">
+      <div class="text-center mb-6"><span class="text-green-300 font-black tracking-widest text-sm">08 · PROPUESTA ECONÓMICA</span><h2 class="text-3xl md:text-6xl font-black mt-2">COMISIÓN EXCLUSIVA<br><span class="green-text">PARA EL COP</span></h2></div>
+      <div class="grid lg:grid-cols-[1.1fr_.9fr] gap-5 items-stretch">
+        <article class="price rounded-3xl p-7 md:p-9">
+          <span class="inline-flex px-3 py-2 rounded-full text-xs font-black tracking-wider bg-green-400/10 border border-green-400/25 text-green-200">BENEFICIO INSTITUCIONAL EXCLUSIVO COP</span>
+          <p class="text-slate-300 mt-6">Valor general mensual por participante:</p>
+          <p class="text-3xl md:text-5xl font-black text-slate-400 mt-2 line-through decoration-2">$120.000</p>
+          <div class="mt-5 flex flex-wrap items-end gap-4">
+            <div>
+              <p class="text-xs font-black tracking-[.16em] text-green-300 uppercase">Valor exclusivo para el personal del COP</p>
+              <p class="text-5xl md:text-7xl font-black green-text mt-2">$100.000</p>
+              <p class="text-green-200 font-bold mt-1">por participante y por mes</p>
+            </div>
+            <div class="px-5 py-4 rounded-2xl bg-green-400/15 border border-green-400/30 text-center">
+              <p class="text-3xl md:text-4xl font-black text-green-300">16,7% OFF</p>
+              <p class="text-xs font-bold text-green-100 mt-1">descuento institucional</p>
+            </div>
+          </div>
+          <div class="grid sm:grid-cols-2 gap-3 mt-6">
+            <div class="pill rounded-xl p-4"><p class="text-xs text-slate-400">Duración</p><p class="font-black mt-1">8 encuentros · 16 horas</p></div>
+            <div class="pill rounded-xl p-4"><p class="text-xs text-slate-400">Modalidad</p><p class="font-black mt-1">Presencial · Comisión exclusiva COP</p></div>
+            <div class="pill rounded-xl p-4"><p class="text-xs text-slate-400">Incluye</p><p class="font-black mt-1">Materiales y actividades prácticas</p></div>
+            <div class="pill rounded-xl p-4"><p class="text-xs text-slate-400">Certificación</p><p class="font-black mt-1">Instituto IEC</p></div>
+          </div>
+          <div class="mt-5 p-4 rounded-2xl bg-green-400/10 border border-green-400/20">
+            <p class="text-green-100 font-bold">Cada participante obtiene un ahorro mensual de $20.000 respecto del valor general vigente del curso.</p>
+          </div>
+        </article>
+        <article class="glass rounded-3xl p-7 md:p-9"><h3 class="text-2xl font-black">Próximos pasos</h3><div class="space-y-4 mt-6"><div class="flex gap-3"><span class="w-9 h-9 shrink-0 rounded-full grid place-items-center font-black bg-cyan-400/10 border border-cyan-400/20">1</span><div><p class="font-black">Confirmar participantes</p><p class="text-sm text-slate-400">Definir la nómina del personal que integrará la comisión.</p></div></div><div class="flex gap-3"><span class="w-9 h-9 shrink-0 rounded-full grid place-items-center font-black bg-blue-400/10 border border-blue-400/20">2</span><div><p class="font-black">Definir día y horario</p><p class="text-sm text-slate-400">Acordar una franja compatible con la dinámica institucional.</p></div></div><div class="flex gap-3"><span class="w-9 h-9 shrink-0 rounded-full grid place-items-center font-black bg-violet-400/10 border border-violet-400/20">3</span><div><p class="font-black">Iniciar la comisión</p><p class="text-sm text-slate-400">Comenzar el Nivel I con actividades adaptadas al equipo del COP.</p></div></div></div><div class="mt-7 p-5 rounded-2xl bg-cyan-400/10 border border-cyan-400/20 text-center"><p class="text-xl font-black">COP + Instituto IEC</p><p class="text-slate-300 mt-2">Tecnología aplicada a las personas que sostienen la institución todos los días.</p></div></article>
+      </div>
+    </div>
+  </section>
+
+<script>
+  const slides=[...document.querySelectorAll('.slide')];let current=0;
+  const dots=document.getElementById('dots'),counter=document.getElementById('counter');
+  slides.forEach((_,i)=>{const b=document.createElement('button');b.className='dot';b.setAttribute('aria-label',`Ir a diapositiva ${i+1}`);b.onclick=()=>showSlide(i);dots.appendChild(b)});
+  function showSlide(index){current=(index+slides.length)%slides.length;slides.forEach((s,i)=>s.classList.toggle('active',i===current));[...dots.children].forEach((d,i)=>d.classList.toggle('active',i===current));counter.textContent=`${current+1} / ${slides.length}`;slides[current].scrollTop=0;gtag?.('event','ver_diapositiva',{diapositiva:current+1,titulo:slides[current].querySelector('h1,h2')?.textContent?.trim().slice(0,80)||''});lucide.createIcons()}
+  function changeSlide(dir){showSlide(current+dir)}
+  document.addEventListener('keydown',e=>{if(['ArrowRight','PageDown',' '].includes(e.key)){e.preventDefault();changeSlide(1)}if(['ArrowLeft','PageUp'].includes(e.key)){e.preventDefault();changeSlide(-1)}if(e.key==='Home')showSlide(0);if(e.key==='End')showSlide(slides.length-1)});
+  function toggleFullscreen(){if(!document.fullscreenElement)document.documentElement.requestFullscreen?.();else document.exitFullscreen?.()}
+  lucide.createIcons();showSlide(0);
+</script>
+</body>
+</html>
