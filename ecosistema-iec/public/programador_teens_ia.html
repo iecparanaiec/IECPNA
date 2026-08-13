@@ -1194,7 +1194,7 @@
         <section class="countdown-wrap" aria-label="Cuenta regresiva para el inicio del taller">
           <div class="countdown-title">
             <i data-lucide="timer-reset" width="17"></i>
-            Cuenta regresiva para el primer encuentro
+            Cuenta regresiva para el nuevo ciclo
           </div>
 
           <div id="countdown" class="countdown">
@@ -1220,11 +1220,11 @@
           </div>
 
           <div id="countdown-expired" class="countdown-expired">
-            El taller ya comenzó. Consultá por incorporación y disponibilidad.
+            El nuevo ciclo del taller ya comenzó. Consultá por incorporación y disponibilidad.
           </div>
 
           <p class="countdown-note">
-            Primer encuentro: jueves 6 de agosto de 2026 a las 14:00 hs.
+            Nuevo ciclo: jueves 24 de septiembre de 2026 a las 16:00 hs.
           </p>
         </section>
 
@@ -1234,16 +1234,16 @@
             <strong>Taller permanente</strong>
           </div>
           <div class="stat glass">
+            <small>Horario</small>
+            <strong>Jueves · 16:00 a 18:00</strong>
+          </div>
+          <div class="stat glass">
+            <small>Nuevo ciclo</small>
+            <strong>Inicio 24/09/2026</strong>
+          </div>
+          <div class="stat glass">
             <small>Metodología</small>
             <strong>Aprender creando</strong>
-          </div>
-          <div class="stat glass">
-            <small>Enfoque</small>
-            <strong>Programación + IA</strong>
-          </div>
-          <div class="stat glass">
-            <small>Proyección</small>
-            <strong>Futuro académico y profesional</strong>
           </div>
         </div>
       </div>
@@ -1688,7 +1688,7 @@
             <div class="form-benefits">
               <div class="form-benefit">
                 <i data-lucide="check-circle-2" width="17"></i>
-                <span>Taller permanente con acompañamiento y aprendizaje progresivo.</span>
+                <span>Taller permanente · Jueves de 16:00 a 18:00 · Nuevo ciclo desde el 24/09.</span>
               </div>
 
               <div class="form-benefit">
@@ -1737,7 +1737,7 @@
                   <label for="comision">Comisión elegida <span class="required-mark">*</span></label>
                   <select class="form-control" id="comision" name="comision" required>
                     <option value="">Seleccioná una comisión</option>
-                    <option value="Comisión 1 - Miércoles 14:00 a 16:00">Comisión 1 · Miércoles de 14:00 a 16:00</option>
+                    <option value="Taller permanente - Jueves 16:00 a 18:00 - Nuevo ciclo 24/09">Taller permanente · Jueves de 16:00 a 18:00 · Nuevo ciclo 24/09</option>
                   </select>
                   <span class="field-error" id="error-comision"></span>
                 </div>
@@ -2248,7 +2248,7 @@
       ------------------------------------------------------------
     */
 
-    const EVENT_START = new Date("2026-08-05T14:00:00-03:00").getTime();
+    const EVENT_START = new Date("2026-09-24T16:00:00-03:00").getTime();
 
     let internetNowAtSync = null;
     let browserNowAtSync = null;
