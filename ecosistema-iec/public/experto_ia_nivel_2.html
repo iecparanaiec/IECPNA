@@ -1105,11 +1105,11 @@
           </div>
 
           <div id="countdown-expired" class="countdown-expired">
-            La primera comisión ya comenzó. Consultá por disponibilidad o por la próxima comisión.
+            La nueva comisión ya comenzó. Consultá por disponibilidad o próximas ediciones.
           </div>
 
           <p class="countdown-note">
-            Primera comisión: miércoles 5 de agosto de 2026 a las 18:00 hs.
+            Nueva comisión: miércoles 23 de septiembre de 2026 a las 18:00 hs.
           </p>
         </section>
 
@@ -1123,12 +1123,12 @@
             <strong>Presencial y aplicada</strong>
           </div>
           <div class="stat glass">
-            <small>Nivel</small>
-            <strong>Intermedio–avanzado</strong>
+            <small>Horario</small>
+            <strong>Miércoles · 18:00 a 20:00</strong>
           </div>
           <div class="stat glass">
-            <small>Certificación</small>
-            <strong>Instituto IEC</strong>
+            <small>Inicio</small>
+            <strong>23/09/2026</strong>
           </div>
         </div>
       </div>
@@ -1392,27 +1392,17 @@
     <section class="section">
       <div class="container">
         <div class="section-head">
-          <h2>Comisiones disponibles</h2>
-          <p>Elegí el horario que mejor se adapte a tu agenda. La propuesta y los contenidos son equivalentes en ambas comisiones.</p>
+          <h2>Comisión disponible</h2>
+          <p>Nueva comisión de septiembre para continuar profundizando en automatización, agentes y aplicaciones profesionales de Inteligencia Artificial.</p>
         </div>
 
-        <div class="commissions">
+        <div class="commissions" style="grid-template-columns:1fr;">
           <article class="commission glass">
-            <span class="commission-label">Comisión A</span>
+            <span class="commission-label">Nueva comisión</span>
             <h3>Miércoles</h3>
             <ul>
               <li><i data-lucide="clock-3" width="17"></i> 18:00 a 20:00 hs</li>
-              <li><i data-lucide="calendar-check" width="17"></i> Inicio 05/08</li>
-              <li><i data-lucide="monitor-cog" width="17"></i> Laboratorio práctico IEC</li>
-            </ul>
-          </article>
-
-          <article class="commission glass">
-            <span class="commission-label">Comisión B</span>
-            <h3>Viernes</h3>
-            <ul>
-              <li><i data-lucide="clock-3" width="17"></i> 20:00 a 22:00 hs</li>
-              <li><i data-lucide="calendar-check" width="17"></i> Inicio en septiembre</li>
+              <li><i data-lucide="calendar-check" width="17"></i> Inicio 23/09/2026</li>
               <li><i data-lucide="monitor-cog" width="17"></i> Laboratorio práctico IEC</li>
             </ul>
           </article>
@@ -1445,14 +1435,14 @@
             <h2 id="preinscripcion-title">Reservá tu lugar</h2>
 
             <p>
-              Completá tus datos y elegí la comisión que mejor se adapte a tu disponibilidad.
+              Completá tus datos para preinscribirte en la nueva comisión de septiembre.
               La preinscripción será enviada al equipo del Instituto IEC para continuar el proceso de admisión.
             </p>
 
             <div class="form-benefits">
               <div class="form-benefit">
                 <i data-lucide="check-circle-2" width="17"></i>
-                <span>Dos comisiones disponibles con el mismo contenido académico.</span>
+                <span>Nueva comisión disponible los miércoles de 18:00 a 20:00.</span>
               </div>
 
               <div class="form-benefit">
@@ -1501,8 +1491,7 @@
                   <label for="comision">Comisión elegida <span class="required-mark">*</span></label>
                   <select class="form-control" id="comision" name="comision" required>
                     <option value="">Seleccioná una comisión</option>
-                    <option value="Comisión 1 - Miércoles 18:00 a 20:00">Comisión 1 · Miércoles de 18:00 a 20:00</option>
-                    <option value="Comisión 2 - Viernes 20:00 a 22:00">Comisión 2 · Viernes de 20:00 a 22:00</option>
+                    <option value="Nueva comisión - Miércoles 18:00 a 20:00 - Inicio 23/09">Nueva comisión · Miércoles de 18:00 a 20:00 · Inicio 23/09</option>
                   </select>
                   <span class="field-error" id="error-comision"></span>
                 </div>
@@ -1894,7 +1883,7 @@
       ------------------------------------------------------------
     */
 
-    const EVENT_START = new Date("2026-08-05T18:00:00-03:00").getTime();
+    const EVENT_START = new Date("2026-09-23T18:00:00-03:00").getTime();
 
     let internetNowAtSync = null;
     let browserNowAtSync = null;
