@@ -1,0 +1,780 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Registro de profesionales para integrar la red de IEC Service." />
+  <title>Registro de Profesionales | IEC Service</title>
+
+  <script src="https://cdn.tailwindcss.com/3.4.17"></script>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
+  <script src="https://cdn.jsdelivr.net/npm/lucide@0.468.0/dist/umd/lucide.min.js"></script>
+
+  <style>
+    :root{
+      --cyan:#7dd3fc;
+      --blue:#38bdf8;
+      --navy:#06131f;
+      --panel:#0b1824;
+      --text:#f8fafc;
+      --muted:#94a3b8;
+      --green:#22c55e;
+      --red:#ef4444;
+    }
+
+    *{box-sizing:border-box;font-family:'DM Sans',sans-serif}
+    html{scroll-behavior:smooth}
+    html,body{margin:0;min-height:100%;background:var(--navy);color:var(--text)}
+    body{overflow-x:hidden}
+    button,input,textarea,select{font:inherit}
+    button,a,label{-webkit-tap-highlight-color:transparent}
+
+    .bg-pattern{
+      position:fixed;inset:0;pointer-events:none;z-index:0;
+      background-image:
+        radial-gradient(circle at 15% 10%,rgba(125,211,252,.13),transparent 28%),
+        radial-gradient(circle at 88% 82%,rgba(56,189,248,.10),transparent 30%),
+        linear-gradient(90deg,rgba(125,211,252,.035) 1px,transparent 1px),
+        linear-gradient(rgba(125,211,252,.035) 1px,transparent 1px);
+      background-size:auto,auto,52px 52px,52px 52px;
+    }
+
+    .glass{
+      background:rgba(255,255,255,.055);
+      border:1px solid rgba(255,255,255,.10);
+      backdrop-filter:blur(18px);
+      box-shadow:0 24px 80px rgba(0,0,0,.30);
+    }
+
+    .gradient-text{
+      background:linear-gradient(135deg,#e0f2fe,#7dd3fc,#38bdf8);
+      -webkit-background-clip:text;
+      -webkit-text-fill-color:transparent;
+      background-clip:text;
+    }
+
+    .topbar{
+      position:fixed;left:0;right:0;top:0;z-index:80;
+      background:rgba(6,19,31,.90);
+      backdrop-filter:blur(18px);
+      border-bottom:1px solid rgba(255,255,255,.08);
+    }
+
+    #navigation{
+      position:fixed !important;
+      left:0 !important;right:0 !important;bottom:0 !important;
+      z-index:10000 !important;
+      background:rgba(6,19,31,.92);
+      backdrop-filter:blur(18px);
+      border-top:1px solid rgba(255,255,255,.08);
+    }
+
+    .progress-track{height:4px;background:rgba(255,255,255,.08)}
+    .progress-fill{
+      height:100%;width:0;
+      background:linear-gradient(90deg,#7dd3fc,#38bdf8);
+      transition:width .35s ease;
+    }
+
+    .step{display:none;animation:fadeIn .28s ease}
+    .step.active{display:block}
+    @keyframes fadeIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+
+    .question-card{
+      background:rgba(255,255,255,.05);
+      border:1px solid rgba(255,255,255,.09);
+      border-radius:24px;
+      padding:22px;
+      transition:.2s ease;
+    }
+    .question-card:focus-within{border-color:rgba(125,211,252,.42)}
+    .question-card.invalid{
+      border-color:rgba(248,113,113,.75);
+      box-shadow:0 0 0 3px rgba(239,68,68,.09)
+    }
+
+    .option-label{
+      display:flex;align-items:flex-start;gap:12px;
+      padding:13px 14px;border-radius:15px;cursor:pointer;
+      background:rgba(255,255,255,.035);
+      border:1px solid rgba(255,255,255,.075);
+      transition:.18s ease;
+    }
+    .option-label:hover{background:rgba(56,189,248,.08);border-color:rgba(125,211,252,.28)}
+    .option-label:has(input:checked){background:rgba(56,189,248,.11);border-color:rgba(125,211,252,.40)}
+    .option-label input{margin-top:2px;width:18px;height:18px;accent-color:#38bdf8}
+
+    .other-option{
+      grid-column:1 / -1;
+      display:grid;
+      gap:10px;
+      padding:14px;
+      border-radius:16px;
+      background:rgba(255,255,255,.035);
+      border:1px solid rgba(255,255,255,.075);
+    }
+
+    .text-input,.text-area{
+      width:100%;color:#fff;
+      background:rgba(2,6,23,.72);
+      border:1px solid rgba(255,255,255,.13);
+      border-radius:14px;
+      padding:13px 14px;
+      outline:none;
+      transition:.18s ease;
+    }
+    .text-input:focus,.text-area:focus{
+      border-color:rgba(125,211,252,.62);
+      box-shadow:0 0 0 3px rgba(56,189,248,.09)
+    }
+    .text-area{min-height:112px;resize:vertical}
+
+    .btn{
+      display:inline-flex;align-items:center;justify-content:center;gap:9px;
+      min-height:48px;padding:11px 18px;border-radius:999px;
+      border:1px solid rgba(255,255,255,.14);
+      color:#fff;font-weight:800;cursor:pointer;transition:.18s ease;
+      background:rgba(255,255,255,.07);
+    }
+    .btn:hover{transform:translateY(-1px);border-color:rgba(125,211,252,.42)}
+    .btn-primary{
+      background:linear-gradient(135deg,#0369a1,#0284c7,#38bdf8);
+      border-color:rgba(125,211,252,.48);
+      box-shadow:0 12px 36px rgba(2,132,199,.22)
+    }
+    .btn-success{
+      background:linear-gradient(135deg,#16a34a,#059669);
+      border-color:rgba(134,239,172,.42)
+    }
+    .btn:disabled{opacity:.55;cursor:not-allowed;transform:none}
+
+    .toast{
+      position:fixed;right:18px;bottom:82px;z-index:120;max-width:390px;
+      display:none;padding:14px 16px;border-radius:16px;
+      background:rgba(6,19,31,.97);
+      border:1px solid rgba(125,211,252,.34);
+      box-shadow:0 22px 60px rgba(0,0,0,.38);
+      color:#dbeafe;font-size:14px;
+    }
+    .toast.error{border-color:rgba(248,113,113,.48);color:#fecaca}
+
+    .required-mark{color:#fca5a5}
+    .section-chip{
+      display:inline-flex;align-items:center;gap:8px;
+      padding:8px 12px;border-radius:999px;
+      background:rgba(56,189,248,.10);
+      border:1px solid rgba(125,211,252,.25);
+      color:#bae6fd;font-size:12px;font-weight:900;
+      letter-spacing:.08em;text-transform:uppercase
+    }
+
+    .brand-mark,.hero-mark{
+      display:grid;place-items:center;
+      background:rgba(255,255,255,.03);
+      border:1px solid rgba(255,255,255,.12);
+      box-shadow:0 12px 30px rgba(2,132,199,.20);
+      overflow:hidden;
+    }
+    .brand-mark{width:46px;height:46px;border-radius:14px}
+    .hero-mark{width:120px;height:120px;border-radius:28px;margin:0 auto}
+    .brand-mark img,.hero-mark img{
+      width:100%;
+      height:100%;
+      object-fit:contain;
+      display:block;
+    }
+
+    .review-card{
+      border-radius:20px;padding:18px;
+      background:rgba(255,255,255,.04);
+      border:1px solid rgba(255,255,255,.09)
+    }
+
+    @media(max-width:768px){
+      .question-card{padding:17px;border-radius:19px}
+      .toast{left:14px;right:14px;bottom:82px;max-width:none}
+    }
+  </style>
+</head>
+
+<body>
+  <div class="bg-pattern"></div>
+
+  <header class="topbar">
+    <div class="max-w-5xl mx-auto px-4 py-3 flex items-center justify-between gap-4">
+      <div class="flex items-center gap-3 min-w-0">
+        <div class="brand-mark shrink-0"><img src="https://i.postimg.cc/kXydPSfg/Chat-GPT-Image-24-jul-2026-08-44-23-p-m.png" alt="IEC Service"></div>
+        <div class="min-w-0">
+          <p class="font-black text-sm sm:text-base truncate">IEC Service · Red de Profesionales</p>
+          <p id="step-label" class="text-xs text-slate-400 truncate">Presentación</p>
+        </div>
+      </div>
+      <span id="step-counter" class="px-3 py-1.5 rounded-full bg-white/5 border border-white/10 text-xs font-bold text-slate-300">1 / 4</span>
+    </div>
+    <div class="progress-track"><div id="progress-fill" class="progress-fill"></div></div>
+  </header>
+
+  <main class="relative max-w-5xl mx-auto px-4 pt-28 pb-32" style="z-index:10">
+    <form id="iecservice-form" novalidate>
+      <div id="steps-container"></div>
+    </form>
+  </main>
+
+  <footer id="navigation">
+    <div class="max-w-5xl mx-auto px-4 py-3 flex items-center justify-between gap-3">
+      <button type="button" id="prev-btn" class="btn">
+        <i data-lucide="arrow-left" class="w-4 h-4"></i> Anterior
+      </button>
+      <div class="hidden md:block text-xs text-slate-500 text-center">
+        Tus datos se enviarán al finalizar.
+      </div>
+      <button type="button" id="next-btn" class="btn btn-primary">
+        Siguiente <i data-lucide="arrow-right" class="w-4 h-4"></i>
+      </button>
+    </div>
+  </footer>
+
+  <div id="toast" class="toast" role="status" aria-live="polite"></div>
+
+<script>
+  const WEBHOOK_URL = 'https://n8n.smarteco.com.ar/webhook/iecservices';
+
+  const sections = [
+    {
+      id:'datos',
+      title:'Datos personales',
+      icon:'user-round',
+      intro:'Queremos conocerte y poder contactarte para futuras oportunidades dentro de la red IEC Service.',
+      questions:[
+        text('nombre_apellido','Nombre y apellido',true,'Ej.: Juan Pérez'),
+        text('telefono','Teléfono / WhatsApp',true,'Ej.: 343 0000000','tel'),
+        text('localidad','Localidad',true,'Ej.: Paraná, Oro Verde, Colonia Avellaneda')
+      ]
+    },
+    {
+      id:'perfil',
+      title:'Perfil profesional',
+      icon:'wrench',
+      intro:'Contanos a qué te dedicás. Podés seleccionar más de una especialidad.',
+      questions:[
+        multi('especialidades','¿Qué servicios realizás?',[
+          'Electricidad',
+          'Seguridad electrónica',
+          'Refrigeración / Aire acondicionado',
+          'Construcción en seco',
+          'Plomería / Sanitarista',
+          'Gas',
+          'Carpintería / Melamina',
+          'Reparación de celulares',
+          'Reparación de PC / informática',
+          'Vidriería / Cartelería',
+          'Calefacción',
+          'Domótica / Automatización'
+        ],true,true),
+        single('experiencia','¿Cuántos años de experiencia tenés?',[
+          'Menos de 1 año',
+          '1 a 3 años',
+          '4 a 6 años',
+          '7 a 10 años',
+          'Más de 10 años'
+        ],true,false),
+        single('independiente','¿Trabajás actualmente de manera independiente?',['Sí','No','A veces'],true,false),
+        single('movilidad','¿Contás con movilidad propia?',['Sí','No'],true,false),
+        textarea('descripcion','Contanos brevemente qué tipo de trabajos realizás',false,'Ej.: instalaciones eléctricas domiciliarias, reparación de aires acondicionados, colocación de cámaras, etc.')
+      ]
+    }
+  ];
+
+  function text(id,label,required=false,placeholder='',inputType='text'){
+    return {id,type:'text',inputType,label,required,placeholder};
+  }
+  function textarea(id,label,required=false,placeholder=''){
+    return {id,type:'textarea',label,required,placeholder};
+  }
+  function multi(id,label,options,required=false,other=true){
+    return {id,type:'multi',label,options,required,other};
+  }
+  function single(id,label,options,required=false,other=true){
+    return {id,type:'single',label,options,required,other};
+  }
+
+  const introStep = {id:'inicio',title:'Presentación'};
+  const reviewStep = {id:'revision',title:'Revisión y envío'};
+  const allSteps = [introStep,...sections,reviewStep];
+
+  let currentStep = 0;
+  let isSubmitting = false;
+  const container = document.getElementById('steps-container');
+
+  function refreshIcons(){
+    try{
+      if(window.lucide && typeof window.lucide.createIcons === 'function'){
+        window.lucide.createIcons();
+      }
+    }catch(error){
+      console.warn('No se pudieron inicializar los íconos.', error);
+    }
+  }
+
+  function escapeHtml(value=''){
+    return String(value).replace(/[&<>'"]/g, char => ({
+      '&':'&amp;','<':'&lt;','>':'&gt;',"'":'&#039;','"':'&quot;'
+    }[char]));
+  }
+
+  function renderIntro(){
+    return `
+      <section class="step active" data-step="inicio">
+        <div class="min-h-[67vh] flex items-center justify-center">
+          <div class="max-w-4xl w-full text-center">
+            <div class="hero-mark"><img src="https://i.postimg.cc/kXydPSfg/Chat-GPT-Image-24-jul-2026-08-44-23-p-m.png" alt="IEC Service"></div>
+
+            <span class="section-chip mt-7">
+              <i data-lucide="users-round" class="w-4 h-4"></i>
+              Convocatoria abierta
+            </span>
+
+            <h1 class="text-4xl sm:text-5xl md:text-7xl font-black leading-[.98] mt-6">
+              SUMATE A LA RED DE<br>
+              <span class="gradient-text">PROFESIONALES IEC SERVICE</span>
+            </h1>
+
+            <p class="text-lg sm:text-xl text-slate-300 mt-6 max-w-3xl mx-auto">
+              Estamos conformando nuestra cartera de profesionales y técnicos de Paraná y la región.
+              Completá tus datos para que podamos conocerte y tenerte en cuenta para futuras oportunidades y proyectos.
+            </p>
+
+            <div class="grid sm:grid-cols-3 gap-4 mt-8 text-left">
+              <div class="glass rounded-2xl p-5">
+                <i data-lucide="clock-3" class="w-7 h-7 text-sky-300"></i>
+                <p class="font-black mt-3">2 minutos</p>
+                <p class="text-sm text-slate-400 mt-1">Un registro rápido y simple.</p>
+              </div>
+              <div class="glass rounded-2xl p-5">
+                <i data-lucide="network" class="w-7 h-7 text-sky-300"></i>
+                <p class="font-black mt-3">Trabajo en red</p>
+                <p class="text-sm text-slate-400 mt-1">Conectamos profesionales con proyectos reales.</p>
+              </div>
+              <div class="glass rounded-2xl p-5">
+                <i data-lucide="briefcase-business" class="w-7 h-7 text-sky-300"></i>
+                <p class="font-black mt-3">Nuevas oportunidades</p>
+                <p class="text-sm text-slate-400 mt-1">Tu perfil quedará dentro de nuestra base profesional.</p>
+              </div>
+            </div>
+
+            <p class="text-sm text-slate-500 mt-7">
+              Las preguntas con <span class="required-mark">*</span> son obligatorias.
+            </p>
+          </div>
+        </div>
+      </section>`;
+  }
+
+  function renderQuestion(section,q,index){
+    const fieldName = `${section.id}__${q.id}`;
+    const required = q.required ? '<span class="required-mark">*</span>' : '';
+    let body='';
+
+    if(q.type==='text'){
+      body = `<input class="text-input" type="${q.inputType || 'text'}" id="${fieldName}" name="${fieldName}"
+        placeholder="${escapeHtml(q.placeholder||'')}" ${q.required?'required':''} />`;
+    } else if(q.type==='textarea'){
+      body = `<textarea class="text-area" id="${fieldName}" name="${fieldName}"
+        placeholder="${escapeHtml(q.placeholder||'')}" ${q.required?'required':''}></textarea>`;
+    } else if(q.type==='single'){
+      body = `<div class="grid sm:grid-cols-2 gap-2">
+        ${q.options.map(opt=>`
+          <label class="option-label">
+            <input type="radio" name="${fieldName}" value="${escapeHtml(opt)}" ${q.required?'required':''}>
+            <span>${escapeHtml(opt)}</span>
+          </label>`).join('')}
+        ${q.other?`
+          <div class="other-option">
+            <label class="option-label" style="padding:0;background:transparent;border:0">
+              <input type="radio" name="${fieldName}" value="Otro" ${q.required?'required':''}>
+              <span class="font-semibold">Otro (especifique)</span>
+            </label>
+            <input type="text" class="text-input other-input" data-for="${fieldName}" placeholder="Escribí aquí..." autocomplete="off">
+          </div>`:''}
+      </div>`;
+    } else if(q.type==='multi'){
+      body = `<div class="grid sm:grid-cols-2 gap-2">
+        ${q.options.map(opt=>`
+          <label class="option-label">
+            <input type="checkbox" name="${fieldName}" value="${escapeHtml(opt)}">
+            <span>${escapeHtml(opt)}</span>
+          </label>`).join('')}
+        ${q.other?`
+          <div class="other-option">
+            <label class="option-label" style="padding:0;background:transparent;border:0">
+              <input type="checkbox" name="${fieldName}" value="Otro">
+              <span class="font-semibold">Otra especialidad</span>
+            </label>
+            <input type="text" class="text-input other-input" data-for="${fieldName}" placeholder="Indicá tu especialidad..." autocomplete="off">
+          </div>`:''}
+      </div>`;
+    }
+
+    return `
+      <article class="question-card" data-question="${fieldName}" data-type="${q.type}" data-required="${q.required?'true':'false'}">
+        <div class="flex gap-3 items-start mb-4">
+          <span class="w-8 h-8 rounded-full bg-sky-400/10 border border-sky-400/20 text-sky-200 grid place-items-center text-xs font-black shrink-0">${index+1}</span>
+          <h3 class="font-bold text-base sm:text-lg leading-snug">${escapeHtml(q.label)} ${required}</h3>
+        </div>
+        ${body}
+        <p class="validation-message hidden text-sm text-red-300 mt-3">
+          Complete esta pregunta para continuar.
+        </p>
+      </article>`;
+  }
+
+  function renderSection(section,stepIndex){
+    return `
+      <section class="step" data-step="${section.id}">
+        <div class="mb-8">
+          <span class="section-chip">
+            <i data-lucide="${section.icon}" class="w-4 h-4"></i>
+            Paso ${stepIndex} de ${sections.length}
+          </span>
+          <h2 class="text-3xl sm:text-5xl font-black mt-4">${escapeHtml(section.title)}</h2>
+          <p class="text-slate-400 mt-3 max-w-3xl">${escapeHtml(section.intro || '')}</p>
+        </div>
+
+        <div class="space-y-5">
+          ${section.questions.map((q,i)=>renderQuestion(section,q,i)).join('')}
+        </div>
+      </section>`;
+  }
+
+  function renderReview(){
+    return `
+      <section class="step" data-step="revision">
+        <div class="mb-8">
+          <span class="section-chip">
+            <i data-lucide="send" class="w-4 h-4"></i>
+            Último paso
+          </span>
+          <h2 class="text-3xl sm:text-5xl font-black mt-4">Revisá y enviá tus datos</h2>
+          <p class="text-slate-400 mt-3">Verificá la información antes de sumarte a la base de profesionales IEC Service.</p>
+        </div>
+
+        <div class="glass rounded-3xl p-5 sm:p-7">
+          <div id="review-summary"></div>
+        </div>
+
+        <label class="option-label mt-5">
+          <input type="checkbox" id="confirmation" />
+          <span>Confirmo que los datos ingresados son correctos y autorizo a IEC Service a utilizarlos para contactarme por oportunidades relacionadas con sus servicios.</span>
+        </label>
+
+        <div class="mt-7">
+          <button type="button" id="submit-btn" class="btn btn-success w-full">
+            <i data-lucide="send" class="w-5 h-5"></i>
+            Enviar mi registro
+          </button>
+        </div>
+
+        <div id="submit-error" class="hidden mt-5 rounded-2xl p-4 bg-red-400/10 border border-red-400/25 text-red-200 text-sm"></div>
+      </section>`;
+  }
+
+  function buildForm(){
+    container.innerHTML =
+      renderIntro() +
+      sections.map((s,i)=>renderSection(s,i+1)).join('') +
+      renderReview();
+
+    bindInputs();
+    updateUI();
+    refreshIcons();
+
+    document.getElementById('submit-btn').addEventListener('click', submitForm);
+  }
+
+  function bindInputs(){
+    document.querySelectorAll('#iecservice-form input, #iecservice-form textarea').forEach(el=>{
+      el.addEventListener('input',()=>{
+        if(el.classList.contains('other-input')){
+          const wrapper = el.closest('.other-option');
+          const selector = wrapper?.querySelector('input[type="checkbox"], input[type="radio"]');
+          if(selector && el.value.trim()) selector.checked = true;
+        }
+        clearInvalid(el);
+      });
+      el.addEventListener('change',()=>clearInvalid(el));
+    });
+  }
+
+  function clearInvalid(el){
+    const card = el.closest('.question-card');
+    if(card){
+      card.classList.remove('invalid');
+      card.querySelector('.validation-message')?.classList.add('hidden');
+    }
+  }
+
+  function getCurrentStepElement(){
+    return document.querySelectorAll('.step')[currentStep];
+  }
+
+  function validateCurrentStep(){
+    if(currentStep===0 || currentStep===allSteps.length-1) return true;
+
+    const step = getCurrentStepElement();
+    let valid = true;
+
+    step.querySelectorAll('.question-card[data-required="true"]').forEach(card=>{
+      const name = card.dataset.question;
+      const type = card.dataset.type;
+      let answered = false;
+
+      if(type==='multi'){
+        answered = card.querySelectorAll(`input[name="${CSS.escape(name)}"]:checked`).length > 0;
+      } else if(type==='single'){
+        answered = !!card.querySelector(`input[name="${CSS.escape(name)}"]:checked`);
+      } else {
+        answered = !!card.querySelector(`[name="${CSS.escape(name)}"]`)?.value.trim();
+      }
+
+      if(!answered){
+        valid = false;
+        card.classList.add('invalid');
+        card.querySelector('.validation-message')?.classList.remove('hidden');
+      }
+    });
+
+    if(!valid){
+      step.querySelector('.question-card.invalid')?.scrollIntoView({behavior:'smooth',block:'center'});
+      showToast('Completá las preguntas obligatorias antes de continuar.', true);
+    }
+
+    return valid;
+  }
+
+  function nextStep(){
+    if(!validateCurrentStep()) return;
+
+    if(currentStep < allSteps.length - 1){
+      currentStep++;
+
+      if(currentStep === allSteps.length - 1){
+        renderReviewSummary();
+      }
+
+      updateUI();
+      window.scrollTo({top:0,behavior:'smooth'});
+    }
+  }
+
+  function previousStep(){
+    if(currentStep > 0){
+      currentStep--;
+      updateUI();
+      window.scrollTo({top:0,behavior:'smooth'});
+    }
+  }
+
+  function updateUI(){
+    document.querySelectorAll('.step').forEach((step,i)=>{
+      step.classList.toggle('active', i===currentStep);
+    });
+
+    const step = allSteps[currentStep];
+    document.getElementById('step-label').textContent = step.title;
+    document.getElementById('step-counter').textContent = `${currentStep+1} / ${allSteps.length}`;
+    document.getElementById('progress-fill').style.width =
+      `${(currentStep/(allSteps.length-1))*100}%`;
+
+    const prev = document.getElementById('prev-btn');
+    const next = document.getElementById('next-btn');
+
+    prev.style.visibility = currentStep===0 ? 'hidden' : 'visible';
+    next.style.display = currentStep===allSteps.length-1 ? 'none' : 'inline-flex';
+    next.innerHTML = currentStep===0
+      ? `Comenzar <i data-lucide="arrow-right" class="w-4 h-4"></i>`
+      : `Siguiente <i data-lucide="arrow-right" class="w-4 h-4"></i>`;
+
+    refreshIcons();
+  }
+
+  function collectData(){
+    const getText = name => document.querySelector(`[name="${CSS.escape(name)}"]`)?.value.trim() || '';
+    const getSingle = name => document.querySelector(`input[name="${CSS.escape(name)}"]:checked`)?.value || '';
+
+    const especialidades = Array.from(document.querySelectorAll('input[name="perfil__especialidades"]:checked')).map(el=>{
+      if(el.value==='Otro'){
+        const other = el.closest('.other-option')?.querySelector('.other-input')?.value.trim();
+        return other ? other : 'Otro';
+      }
+      return el.value;
+    });
+
+    const payload = {
+      formulario:'Registro de Profesionales - IEC Service',
+      version:'1.0',
+      fecha_envio:new Date().toISOString(),
+      timezone:Intl.DateTimeFormat().resolvedOptions().timeZone,
+      origen:window.location.href,
+
+      nombre_apellido:getText('datos__nombre_apellido'),
+      telefono:getText('datos__telefono'),
+      localidad:getText('datos__localidad'),
+
+      especialidades,
+      especialidades_texto:especialidades.join(', '),
+      experiencia:getSingle('perfil__experiencia'),
+      independiente:getSingle('perfil__independiente'),
+      movilidad:getSingle('perfil__movilidad'),
+      descripcion:getText('perfil__descripcion'),
+
+      estado:'nuevo',
+      origen_lead:'formulario_web_iec_service'
+    };
+
+    return payload;
+  }
+
+  function renderReviewSummary(){
+    const data = collectData();
+
+    document.getElementById('review-summary').innerHTML = `
+      <div class="grid sm:grid-cols-2 gap-4">
+        <div class="review-card">
+          <p class="text-xs text-slate-400 uppercase font-bold tracking-widest">Profesional</p>
+          <p class="font-black text-xl mt-2">${escapeHtml(data.nombre_apellido || 'Sin identificar')}</p>
+          <p class="text-sm text-slate-400 mt-1">${escapeHtml(data.localidad || '')}</p>
+          <p class="text-sm text-slate-400">${escapeHtml(data.telefono || '')}</p>
+        </div>
+
+        <div class="review-card">
+          <p class="text-xs text-slate-400 uppercase font-bold tracking-widest">Experiencia</p>
+          <p class="font-black text-xl mt-2">${escapeHtml(data.experiencia || '-')}</p>
+          <p class="text-sm text-slate-400 mt-1">Movilidad: ${escapeHtml(data.movilidad || '-')}</p>
+        </div>
+      </div>
+
+      <div class="review-card mt-4">
+        <p class="text-xs text-slate-400 uppercase font-bold tracking-widest">Especialidades</p>
+        <div class="flex flex-wrap gap-2 mt-3">
+          ${data.especialidades.length
+            ? data.especialidades.map(v=>`<span class="px-3 py-2 rounded-full bg-sky-400/10 border border-sky-400/20 text-sky-100 text-sm">${escapeHtml(v)}</span>`).join('')
+            : '<span class="text-slate-500">Sin especialidades seleccionadas.</span>'}
+        </div>
+      </div>
+
+      <div class="mt-5 rounded-2xl bg-sky-400/8 border border-sky-400/20 p-4 text-sm text-slate-300">
+        Al enviar, tu información ingresará automáticamente a la base de profesionales de IEC Service.
+      </div>`;
+  }
+
+  async function submitForm(){
+    if(isSubmitting) return;
+
+    if(!document.getElementById('confirmation').checked){
+      showToast('Confirmá que los datos son correctos antes de enviar.', true);
+      return;
+    }
+
+    const button = document.getElementById('submit-btn');
+    const errorBox = document.getElementById('submit-error');
+    const payload = collectData();
+
+    errorBox.classList.add('hidden');
+    isSubmitting = true;
+    button.disabled = true;
+    button.innerHTML = '<span class="animate-pulse">Enviando registro...</span>';
+
+    try{
+      const response = await fetch(WEBHOOK_URL,{
+        method:'POST',
+        headers:{
+          'Content-Type':'application/json',
+          'Accept':'application/json'
+        },
+        body:JSON.stringify(payload)
+      });
+
+      if(!response.ok){
+        throw new Error(`El servidor respondió con estado ${response.status}`);
+      }
+
+      showSuccess(payload);
+
+    }catch(error){
+      console.error(error);
+      errorBox.innerHTML = `
+        <strong>No se pudo completar el envío.</strong><br>
+        ${escapeHtml(error.message)}. Verificá que el workflow de n8n esté activo y que el webhook permita solicitudes desde este dominio.
+      `;
+      errorBox.classList.remove('hidden');
+      showToast('No se pudo enviar el formulario.', true);
+
+    }finally{
+      isSubmitting = false;
+      button.disabled = false;
+      button.innerHTML = '<i data-lucide="send" class="w-5 h-5"></i> Enviar mi registro';
+      refreshIcons();
+    }
+  }
+
+  function showSuccess(payload){
+    document.getElementById('navigation').style.display='none';
+
+    container.innerHTML = `
+      <section class="step active">
+        <div class="min-h-[70vh] flex items-center justify-center">
+          <div class="max-w-3xl w-full text-center glass rounded-[32px] p-7 sm:p-12">
+            <div class="hero-mark"><img src="https://i.postimg.cc/kXydPSfg/Chat-GPT-Image-24-jul-2026-08-44-23-p-m.png" alt="IEC Service"></div>
+
+            <div class="w-20 h-20 rounded-full bg-green-400/15 border border-green-400/30 grid place-items-center mx-auto mt-7">
+              <i data-lucide="check" class="w-10 h-10 text-green-300"></i>
+            </div>
+
+            <span class="section-chip mt-6" style="color:#bbf7d0;border-color:rgba(74,222,128,.28);background:rgba(34,197,94,.10)">
+              Registro completado
+            </span>
+
+            <h2 class="text-4xl sm:text-6xl font-black mt-5">¡Ya sos parte de nuestra base!</h2>
+
+            <p class="text-lg text-slate-300 mt-4">
+              Gracias, <strong>${escapeHtml(payload.nombre_apellido)}</strong>.
+              Recibimos correctamente tus datos.
+            </p>
+
+            <p class="text-slate-400 mt-3">
+              IEC Service podrá contactarte cuando surjan oportunidades o proyectos relacionados con tu perfil profesional.
+            </p>
+
+            <div class="mt-7 rounded-2xl bg-white/5 border border-white/10 p-5 text-left">
+              <p class="text-sm text-slate-400">Fecha y hora del envío</p>
+              <p class="font-bold mt-1">${new Date().toLocaleString('es-AR')}</p>
+            </div>
+          </div>
+        </div>
+      </section>`;
+
+    document.getElementById('step-label').textContent='Registro completado';
+    document.getElementById('progress-fill').style.width='100%';
+    refreshIcons();
+    window.scrollTo({top:0,behavior:'smooth'});
+  }
+
+  function showToast(message,isError=false){
+    const toast = document.getElementById('toast');
+    toast.textContent = message;
+    toast.classList.toggle('error',isError);
+    toast.style.display='block';
+
+    clearTimeout(window.__toastTimer);
+    window.__toastTimer = setTimeout(()=>{
+      toast.style.display='none';
+    },4200);
+  }
+
+  document.getElementById('prev-btn').addEventListener('click', previousStep);
+  document.getElementById('next-btn').addEventListener('click', nextStep);
+
+  buildForm();
+</script>
+</body>
+</html>
