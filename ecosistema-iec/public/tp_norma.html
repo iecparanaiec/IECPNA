@@ -1,0 +1,426 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>TP Integrador · Inteligencia Operativa · IEC</title>
+  <script src="https://cdn.tailwindcss.com/3.4.17"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,600;14..32,700;14..32,800;14..32,900&display=swap" rel="stylesheet" />
+  <script src="https://cdn.jsdelivr.net/npm/lucide@0.468.0/dist/umd/lucide.min.js"></script>
+  <style>
+    /* Estilo característico IEC: fondo oscuro con acentos neón, glassmorphism y tipografía moderna */
+    :root {
+      --bg-deep: #070b14;
+      --panel: #0d1525;
+      --text-main: #f2f6ff;
+      --text-muted: #94a3b8;
+      --cyan: #22d3ee;
+      --blue: #3b82f6;
+      --violet: #8b5cf6;
+      --green: #22c55e;
+      --amber: #f59e0b;
+      --red: #ef4444;
+      --glass: rgba(255, 255, 255, 0.05);
+      --border-glass: rgba(255, 255, 255, 0.08);
+    }
+    * { box-sizing: border-box; font-family: 'Inter', sans-serif; }
+    html, body { margin: 0; min-height: 100%; background: var(--bg-deep); color: var(--text-main); scroll-behavior: smooth; }
+    body { overflow-x: hidden; padding: 0; }
+    .bg-pattern {
+      position: fixed; inset: 0; pointer-events: none; z-index: 0;
+      background-image: radial-gradient(circle at 20% 30%, rgba(34,211,238,0.08) 0%, transparent 35%),
+                        radial-gradient(circle at 80% 70%, rgba(139,92,246,0.10) 0%, transparent 40%),
+                        linear-gradient(90deg, rgba(59,130,246,0.03) 1px, transparent 1px),
+                        linear-gradient(rgba(59,130,246,0.03) 1px, transparent 1px);
+      background-size: auto, auto, 56px 56px, 56px 56px;
+    }
+    .orb {
+      position: fixed; border-radius: 999px; filter: blur(100px); opacity: 0.13; pointer-events: none; z-index: 0;
+    }
+    .glass {
+      background: var(--glass);
+      border: 1px solid var(--border-glass);
+      backdrop-filter: blur(14px);
+      box-shadow: 0 20px 48px rgba(0,0,0,0.3);
+    }
+    .gradient-text {
+      background: linear-gradient(135deg, #67e8f9, #60a5fa, #a78bfa);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .section-chip {
+      display: inline-flex; align-items: center; gap: 8px;
+      padding: 8px 14px; border-radius: 999px;
+      background: rgba(34,211,238,0.08);
+      border: 1px solid rgba(34,211,238,0.20);
+      color: #a5f3fc; font-weight: 800; font-size: 0.7rem;
+      letter-spacing: 0.06em; text-transform: uppercase;
+    }
+    .btn {
+      display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+      padding: 12px 24px; border-radius: 999px; font-weight: 700;
+      border: 1px solid rgba(255,255,255,0.10);
+      background: rgba(255,255,255,0.04);
+      color: #fff; cursor: pointer; transition: 0.2s ease;
+    }
+    .btn-primary {
+      background: linear-gradient(135deg, #0891b2, #2563eb);
+      border-color: rgba(103,232,249,0.4);
+      box-shadow: 0 8px 28px rgba(37,99,235,0.2);
+    }
+    .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 12px 36px rgba(37,99,235,0.35); }
+    .btn-outline { border-color: rgba(255,255,255,0.2); background: transparent; }
+    .btn-outline:hover { background: rgba(255,255,255,0.06); border-color: rgba(103,232,249,0.4); }
+    .btn-success {
+      background: linear-gradient(135deg, #16a34a, #059669);
+      border-color: rgba(134,239,172,0.4);
+    }
+    .card-iec {
+      background: rgba(255,255,255,0.03);
+      border: 1px solid rgba(255,255,255,0.06);
+      border-radius: 24px;
+      padding: 24px;
+      transition: 0.25s ease;
+    }
+    .card-iec:hover { border-color: rgba(103,232,249,0.2); background: rgba(255,255,255,0.05); }
+    .step-indicator {
+      display: flex; align-items: center; gap: 8px;
+    }
+    .dot { width: 10px; height: 10px; border-radius: 999px; background: rgba(255,255,255,0.08); transition: 0.3s; }
+    .dot.active { background: var(--cyan); box-shadow: 0 0 16px rgba(34,211,238,0.4); }
+    .dot.done { background: var(--blue); }
+    .progress-bar { height: 3px; background: rgba(255,255,255,0.05); border-radius: 99px; overflow: hidden; }
+    .progress-fill { height: 100%; width: 0%; background: linear-gradient(90deg, var(--cyan), var(--blue), var(--violet)); transition: width 0.4s ease; }
+    .step { display: none; animation: fadeUp 0.3s ease; }
+    .step.active { display: block; }
+    @keyframes fadeUp { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: translateY(0); } }
+    .tag {
+      display: inline-block; padding: 4px 12px; border-radius: 999px;
+      background: rgba(34,211,238,0.08); border: 1px solid rgba(34,211,238,0.12);
+      color: #a5f3fc; font-size: 0.7rem; font-weight: 700;
+    }
+    .tag-amber { background: rgba(245,158,11,0.08); border-color: rgba(245,158,11,0.15); color: #fcd34d; }
+    .tag-violet { background: rgba(139,92,246,0.08); border-color: rgba(139,92,246,0.15); color: #c4b5fd; }
+    .tag-green { background: rgba(34,197,94,0.08); border-color: rgba(34,197,94,0.15); color: #86efac; }
+    .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
+    @media (max-width: 768px) { .grid-2 { grid-template-columns: 1fr; } }
+    .footer-nav {
+      position: fixed; bottom: 0; left: 0; right: 0; z-index: 100;
+      background: rgba(7,11,20,0.88); backdrop-filter: blur(16px);
+      border-top: 1px solid rgba(255,255,255,0.06);
+      padding: 12px 20px;
+    }
+    .brand-logo-cop { height: 52px; max-width: 180px; object-fit: contain; }
+    .brand-logo-iec { height: 52px; max-width: 160px; object-fit: contain; }
+    .brand-divider { width: 1px; height: 44px; background: rgba(255,255,255,0.12); flex-shrink: 0; }
+    .mermaid-placeholder {
+      background: rgba(2,6,23,0.6);
+      border-radius: 16px;
+      padding: 24px;
+      border: 1px solid rgba(255,255,255,0.06);
+      font-family: 'Courier New', monospace;
+      font-size: 0.8rem;
+      color: #b9c7e0;
+      white-space: pre-wrap;
+      line-height: 1.5;
+    }
+  </style>
+</head>
+<body>
+  <div class="bg-pattern"></div>
+  <div class="orb w-80 h-80 bg-cyan-400 -top-20 -left-20"></div>
+  <div class="orb w-96 h-96 bg-violet-500 -bottom-28 -right-24"></div>
+
+  <!-- Header fijo -->
+  <header class="fixed top-0 left-0 right-0 z-50 bg-[#070b14]/80 backdrop-blur-xl border-b border-white/5">
+    <div class="max-w-7xl mx-auto px-4 py-3 flex items-center justify-between">
+      <div class="flex items-center gap-4">
+        <img src="https://i.postimg.cc/jSkQKpRK/Diseno-sin-titulo-2026-05-15T105828-195.png" alt="IEC" class="brand-logo-iec" />
+        <div class="brand-divider hidden sm:block"></div>
+        <span class="text-sm font-bold tracking-tight text-slate-300 hidden sm:block">Inteligencia Operativa</span>
+      </div>
+      <div class="flex items-center gap-3">
+        <span id="step-label" class="text-xs text-slate-400 font-medium">Presentación</span>
+        <span class="px-3 py-1 rounded-full bg-white/5 border border-white/10 text-xs font-bold text-slate-300" id="step-counter">1 / 8</span>
+      </div>
+    </div>
+    <div class="progress-bar"><div class="progress-fill" id="progress-fill"></div></div>
+  </header>
+
+  <!-- Contenido principal -->
+  <main class="relative max-w-6xl mx-auto px-4 pt-28 pb-32 z-10">
+    <div id="steps-container"></div>
+  </main>
+
+  <!-- Navegación fija -->
+  <footer class="footer-nav flex items-center justify-between">
+    <button id="prev-btn" class="btn btn-outline text-sm"><i data-lucide="arrow-left" class="w-4 h-4"></i> Anterior</button>
+    <div class="hidden md:block text-xs text-slate-500 text-center">TP Integrador · IEC House</div>
+    <button id="next-btn" class="btn btn-primary text-sm">Siguiente <i data-lucide="arrow-right" class="w-4 h-4"></i></button>
+  </footer>
+
+  <script>
+    // ---- DATOS DE LAS SECCIONES ----
+    const sections = [
+      { id: 'intro', title: 'Presentación', icon: 'house' },
+      { id: 'desafio', title: 'El desafío', icon: 'target' },
+      { id: 'norma', title: 'Conocer a Norma', icon: 'user-round' },
+      { id: 'descubrimiento', title: 'Descubrimiento', icon: 'search' },
+      { id: 'as-is', title: 'AS-IS', icon: 'git-branch' },
+      { id: 'to-be', title: 'TO-BE', icon: 'sparkles' },
+      { id: 'automation', title: 'Automatización', icon: 'bot' },
+      { id: 'cierre', title: 'Cierre', icon: 'check-circle' }
+    ];
+
+    let currentStep = 0;
+
+    // ---- RENDER ----
+    function renderIntro() {
+      return `
+        <section class="step active" data-step="intro">
+          <div class="min-h-[70vh] flex flex-col items-center justify-center text-center">
+            <div class="flex items-center justify-center gap-4 sm:gap-6 mb-6">
+              <img src="https://i.postimg.cc/jSkQKpRK/Diseno-sin-titulo-2026-05-15T105828-195.png" alt="IEC" class="brand-logo-iec" />
+              <div class="brand-divider"></div>
+              <span class="text-xs font-bold text-slate-400 uppercase tracking-widest">TP Integrador</span>
+            </div>
+            <span class="section-chip"><i data-lucide="sparkles" class="w-4 h-4"></i> Inteligencia Operativa</span>
+            <h1 class="text-4xl sm:text-6xl md:text-7xl font-black leading-[1.05] mt-6">
+              Ayudando a <span class="gradient-text">Norma</span><br/>
+              a automatizar su trabajo
+            </h1>
+            <p class="text-lg text-slate-300 max-w-3xl mx-auto mt-4">
+              Descubrir, comprender y transformar un proceso laboral.
+              <br class="hidden sm:block" />
+              <span class="text-slate-400 text-sm">Círculo Odontológico de Paraná · Instituto IEC</span>
+            </p>
+            <div class="grid sm:grid-cols-3 gap-4 mt-8 w-full max-w-4xl text-left">
+              <div class="glass rounded-2xl p-5"><i data-lucide="compass" class="w-6 h-6 text-cyan-300"></i><p class="font-bold mt-2">Descubrir</p><p class="text-sm text-slate-400">El proceso real de Norma</p></div>
+              <div class="glass rounded-2xl p-5"><i data-lucide="brain" class="w-6 h-6 text-blue-300"></i><p class="font-bold mt-2">Comprender</p><p class="text-sm text-slate-400">Problemas y oportunidades</p></div>
+              <div class="glass rounded-2xl p-5"><i data-lucide="rocket" class="w-6 h-6 text-violet-300"></i><p class="font-bold mt-2">Transformar</p><p class="text-sm text-slate-400">Con IA, OCR y n8n</p></div>
+            </div>
+            <p class="text-xs text-slate-500 mt-8 max-w-xl">No automatices lo que no entiendes · Comienza por Norma</p>
+          </div>
+        </section>
+      `;
+    }
+
+    function renderDesafio() {
+      return `
+        <section class="step" data-step="desafio">
+          <span class="section-chip"><i data-lucide="target" class="w-4 h-4"></i> El desafío</span>
+          <h2 class="text-3xl sm:text-5xl font-black mt-4">El problema de Norma</h2>
+          <div class="card-iec mt-6">
+            <p class="text-slate-300 text-lg leading-relaxed">
+              <span class="font-bold text-white">Norma</span> trabaja en <span class="font-bold text-cyan-300">IEC House</span>, empresa de construcción de viviendas industrializadas.
+              <br/><br/>
+              Recibe facturas de proveedores en <span class="tag">PDF</span>, <span class="tag">imágenes</span>, <span class="tag">correos</span>.
+              Cada proveedor tiene condiciones distintas: <span class="tag-amber">contado</span>, <span class="tag-amber">30/60/90 días</span>, <span class="tag-amber">transferencia</span>, <span class="tag-amber">cheque</span>.
+              <br/><br/>
+              Pero el gran problema: <strong class="text-violet-300">¿a qué centro de costo corresponde cada factura?</strong>
+              <br/>
+              Obra, depósito, administración, logística, mantenimiento...
+            </p>
+          </div>
+          <div class="grid-2 mt-6">
+            <div class="card-iec"><h3 class="font-bold text-cyan-300">📥 Entradas</h3><ul class="text-sm text-slate-300 mt-2 space-y-1"><li>Facturas (PDF, imagen, email)</li><li>Datos de proveedores</li><li>Condiciones de pago</li></ul></div>
+            <div class="card-iec"><h3 class="font-bold text-violet-300">🎯 Centro de costo</h3><p class="text-sm text-slate-300 mt-2">Descubrir a qué proyecto/área pertenece cada gasto.</p></div>
+          </div>
+        </section>
+      `;
+    }
+
+    function renderNorma() {
+      return `
+        <section class="step" data-step="norma">
+          <span class="section-chip"><i data-lucide="user-round" class="w-4 h-4"></i> Perfil operativo</span>
+          <h2 class="text-3xl sm:text-5xl font-black mt-4">Conocer a Norma</h2>
+          <div class="card-iec mt-6">
+            <div class="grid sm:grid-cols-2 gap-4 text-sm">
+              <div><span class="text-slate-400">Rol:</span> <span class="font-medium">Administración · Cuentas a pagar</span></div>
+              <div><span class="text-slate-400">Jornada:</span> <span class="font-medium">Recepción, registro, control de pagos</span></div>
+              <div><span class="text-slate-400">Interactúa con:</span> <span class="font-medium">Proveedores, tesorería, obras</span></div>
+              <div><span class="text-slate-400">Herramientas:</span> <span class="font-medium">ERP, Excel, email, WhatsApp</span></div>
+              <div class="col-span-2"><span class="text-slate-400">Tareas repetitivas:</span> <span class="font-medium">Clasificar facturas, asignar centro de costo, calcular vencimientos</span></div>
+              <div class="col-span-2"><span class="text-slate-400">Cuellos de botella:</span> <span class="font-medium">Autorizaciones, información faltante, proveedores desconocidos</span></div>
+            </div>
+          </div>
+          <div class="mt-6 p-4 rounded-xl bg-white/5 border border-white/10">
+            <p class="text-sm text-slate-400"><span class="font-bold text-white">📌 Briefing oculto:</span> IEC House tiene 3 obras activas, 120 proveedores, usa un ERP básico. Norma recibe 20-30 facturas/día.</p>
+          </div>
+        </section>
+      `;
+    }
+
+    function renderDescubrimiento() {
+      return `
+        <section class="step" data-step="descubrimiento">
+          <span class="section-chip"><i data-lucide="search" class="w-4 h-4"></i> Descubrimiento</span>
+          <h2 class="text-3xl sm:text-5xl font-black mt-4">Investigar el proceso</h2>
+          <div class="card-iec mt-6">
+            <p class="text-slate-300">Utilizamos <span class="tag">IA</span> para simular entrevistas, generar preguntas y construir hipótesis.</p>
+            <div class="grid sm:grid-cols-3 gap-3 mt-4">
+              <div class="bg-white/5 p-3 rounded-xl border border-white/10"><span class="font-bold text-cyan-300">1.</span> ¿Cómo recibe las facturas?</div>
+              <div class="bg-white/5 p-3 rounded-xl border border-white/10"><span class="font-bold text-cyan-300">2.</span> ¿Qué datos extrae?</div>
+              <div class="bg-white/5 p-3 rounded-xl border border-white/10"><span class="font-bold text-cyan-300">3.</span> ¿Cómo asigna centro de costo?</div>
+              <div class="bg-white/5 p-3 rounded-xl border border-white/10"><span class="font-bold text-cyan-300">4.</span> ¿Quién autoriza?</div>
+              <div class="bg-white/5 p-3 rounded-xl border border-white/10"><span class="font-bold text-cyan-300">5.</span> ¿Cómo controla pagos?</div>
+              <div class="bg-white/5 p-3 rounded-xl border border-white/10"><span class="font-bold text-cyan-300">6.</span> ¿Qué ocurre con errores?</div>
+            </div>
+          </div>
+          <div class="mt-4 p-4 rounded-xl bg-violet-500/10 border border-violet-500/20">
+            <p class="text-sm text-violet-200"><span class="font-bold">🧠 IA como consultora:</span> Prompt para descubrir el proceso completo y detectar información faltante.</p>
+          </div>
+        </section>
+      `;
+    }
+
+    function renderAsIs() {
+      return `
+        <section class="step" data-step="as-is">
+          <span class="section-chip"><i data-lucide="git-branch" class="w-4 h-4"></i> AS-IS</span>
+          <h2 class="text-3xl sm:text-5xl font-black mt-4">Proceso actual de Norma</h2>
+          <div class="mermaid-placeholder mt-4">
+            graph TD
+              A[Recepción factura] --> B{¿Proveedor existe?}
+              B -->|Sí| C[Registrar datos manual]
+              B -->|No| D[Buscar / contactar]
+              C --> E[Clasificar centro de costo]
+              E --> F{¿Se identifica?}
+              F -->|Sí| G[Calcular vencimiento]
+              F -->|No| H[Consultar a obra/área]
+              G --> I[Solicitar autorización]
+              I --> J[Programar pago]
+              J --> K[Registrar en ERP]
+              K --> L[Controlar pagos]
+              H --> C
+          </div>
+          <div class="grid-2 mt-4">
+            <div class="card-iec"><span class="tag-amber">⚠️ Problemas</span><ul class="text-sm text-slate-300 mt-2 space-y-1"><li>Mucha carga manual</li><li>Centro de costo incierto</li><li>Duplicación de datos</li><li>Demoras en autorización</li></ul></div>
+            <div class="card-iec"><span class="tag">📊 Tiempos</span><ul class="text-sm text-slate-300 mt-2 space-y-1"><li>Revisión: 10-15 min/factura</li><li>Clasificación: 5-10 min</li><li>Autorización: 1-2 días</li></ul></div>
+          </div>
+        </section>
+      `;
+    }
+
+    function renderToBe() {
+      return `
+        <section class="step" data-step="to-be">
+          <span class="section-chip"><i data-lucide="sparkles" class="w-4 h-4"></i> TO-BE</span>
+          <h2 class="text-3xl sm:text-5xl font-black mt-4">Proceso rediseñado</h2>
+          <div class="mermaid-placeholder mt-4">
+            graph TD
+              A[Factura recibida] --> B[OCR + IA extraen datos]
+              B --> C[Identificar proveedor automático]
+              C --> D{Confianza > X%?}
+              D -->|Sí| E[Asignar centro de costo]
+              D -->|No| F[Notificar a Norma]
+              E --> G[Calcular vencimiento]
+              G --> H[Registrar en sistema]
+              H --> I[Programar pago]
+              I --> J[Control automático de pagos]
+              F --> K[Revisión de Norma]
+              K --> E
+          </div>
+          <div class="grid-2 mt-4">
+            <div class="card-iec"><span class="tag-green">✅ Automatizado</span><ul class="text-sm text-slate-300 mt-2 space-y-1"><li>OCR + extracción</li><li>Identificación de proveedor</li><li>Asignación centro de costo (IA)</li><li>Cálculo de vencimiento</li></ul></div>
+            <div class="card-iec"><span class="tag-violet">🧠 IA</span><ul class="text-sm text-slate-300 mt-2 space-y-1"><li>Clasificación de gastos</li><li>Detección de duplicados</li><li>Asignación con confianza</li><li>Anomalías y excepciones</li></ul></div>
+          </div>
+        </section>
+      `;
+    }
+
+    function renderAutomation() {
+      return `
+        <section class="step" data-step="automation">
+          <span class="section-chip"><i data-lucide="bot" class="w-4 h-4"></i> Automatización</span>
+          <h2 class="text-3xl sm:text-5xl font-black mt-4">n8n + IA + OCR</h2>
+          <div class="card-iec mt-4">
+            <p class="text-slate-300">Workflow conceptual en <span class="tag">n8n</span>:</p>
+            <div class="grid sm:grid-cols-2 gap-3 mt-3 text-sm">
+              <div class="bg-white/5 p-3 rounded-xl border border-white/10">1. Webhook (recepción)</div>
+              <div class="bg-white/5 p-3 rounded-xl border border-white/10">2. OCR (extraer datos)</div>
+              <div class="bg-white/5 p-3 rounded-xl border border-white/10">3. Identificar proveedor (CUIT)</div>
+              <div class="bg-white/5 p-3 rounded-xl border border-white/10">4. IA: clasificar centro de costo</div>
+              <div class="bg-white/5 p-3 rounded-xl border border-white/10">5. Validar y calcular vencimiento</div>
+              <div class="bg-white/5 p-3 rounded-xl border border-white/10">6. Registrar y programar pago</div>
+            </div>
+          </div>
+          <div class="mt-4 p-4 rounded-xl bg-blue-500/10 border border-blue-500/20">
+            <p class="text-sm text-blue-200"><span class="font-bold">⚙️ Implementación funcional:</span> trigger webhook + OCR simulado con datos de prueba. Resto del flujo diagramado y validado.</p>
+          </div>
+          <div class="card-iec mt-4">
+            <span class="tag-amber">🔮 Umbral de confianza</span>
+            <p class="text-sm text-slate-300 mt-2">Se definió un umbral del <strong class="text-white">85%</strong> para asignación automática de centro de costo. Por debajo, deriva a revisión de Norma. Justificación: equilibrio entre automatización y precisión, reduciendo errores críticos.</p>
+          </div>
+        </section>
+      `;
+    }
+
+    function renderCierre() {
+      return `
+        <section class="step" data-step="cierre">
+          <div class="min-h-[60vh] flex flex-col items-center justify-center text-center">
+            <span class="section-chip"><i data-lucide="check-circle" class="w-4 h-4"></i> Cierre</span>
+            <h2 class="text-4xl sm:text-6xl font-black mt-6 gradient-text">De Norma a la IO</h2>
+            <div class="glass rounded-3xl p-8 max-w-3xl w-full mt-6">
+              <p class="text-lg text-slate-300">Proceso → Datos → Decisiones → Automatización → <strong class="text-cyan-300">Inteligencia Operativa</strong></p>
+              <div class="grid grid-cols-2 gap-3 mt-6 text-left text-sm">
+                <div><span class="tag">ANTES</span><br/><span class="text-slate-400">Norma recibe, revisa, busca, registra, clasifica, autoriza, paga.</span></div>
+                <div><span class="tag-green">DESPUÉS</span><br/><span class="text-slate-400">Sistema procesa, OCR extrae, IA clasifica, n8n orquesta, Norma supervisa.</span></div>
+              </div>
+            </div>
+            <p class="text-xs text-slate-500 mt-6 max-w-xl">No reemplazar a Norma, hacer que trabaje mejor. <br/>TP Integrador · Instituto IEC</p>
+          </div>
+        </section>
+      `;
+    }
+
+    // ---- ARMAR FORMULARIO ----
+    function buildForm() {
+      const container = document.getElementById('steps-container');
+      container.innerHTML = renderIntro() + renderDesafio() + renderNorma() + renderDescubrimiento() +
+                            renderAsIs() + renderToBe() + renderAutomation() + renderCierre();
+      refreshIcons();
+      updateUI();
+    }
+
+    function refreshIcons() {
+      if (window.lucide && typeof lucide.createIcons === 'function') lucide.createIcons();
+    }
+
+    function updateUI() {
+      const steps = document.querySelectorAll('.step');
+      steps.forEach((el, i) => el.classList.toggle('active', i === currentStep));
+      const step = sections[currentStep];
+      document.getElementById('step-label').textContent = step.title;
+      document.getElementById('step-counter').textContent = `${currentStep + 1} / ${sections.length}`;
+      document.getElementById('progress-fill').style.width = `${(currentStep / (sections.length - 1)) * 100}%`;
+      document.getElementById('prev-btn').style.visibility = currentStep === 0 ? 'hidden' : 'visible';
+      const next = document.getElementById('next-btn');
+      next.style.display = currentStep === sections.length - 1 ? 'none' : 'inline-flex';
+      next.innerHTML = currentStep === 0 ? 'Comenzar <i data-lucide="arrow-right" class="w-4 h-4"></i>' : 'Siguiente <i data-lucide="arrow-right" class="w-4 h-4"></i>';
+      refreshIcons();
+    }
+
+    function nextStep() {
+      if (currentStep < sections.length - 1) { currentStep++; updateUI(); window.scrollTo({ top: 0, behavior: 'smooth' }); }
+    }
+    function prevStep() {
+      if (currentStep > 0) { currentStep--; updateUI(); window.scrollTo({ top: 0, behavior: 'smooth' }); }
+    }
+
+    // ---- EVENTOS ----
+    document.addEventListener('DOMContentLoaded', () => {
+      buildForm();
+      document.getElementById('next-btn').addEventListener('click', nextStep);
+      document.getElementById('prev-btn').addEventListener('click', prevStep);
+    });
+
+    // Exponer para compatibilidad
+    window.nextStep = nextStep;
+    window.prevStep = prevStep;
+  </script>
+</body>
+</html>
