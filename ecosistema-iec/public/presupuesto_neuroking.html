@@ -1,0 +1,485 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>NeuroKing | Propuesta Estratégica - FactorIA by IEC</title>
+<style>
+:root{
+  --bg:#05070b;
+  --bg2:#0a1020;
+  --panel:rgba(14,22,38,.84);
+  --panel2:rgba(8,13,24,.9);
+  --line:rgba(255,255,255,.09);
+  --cyan:#5ee7ff;
+  --blue:#3ea6ff;
+  --violet:#8b7cff;
+  --green:#4de2a8;
+  --text:#f6f9ff;
+  --muted:#91a0b4;
+  --shadow:0 24px 70px rgba(0,0,0,.45);
+}
+*{box-sizing:border-box}
+html,body{margin:0;width:100%;height:100%;font-family:Inter,Segoe UI,Arial,sans-serif;background:
+radial-gradient(circle at 10% 10%,rgba(94,231,255,.1),transparent 30%),
+radial-gradient(circle at 85% 80%,rgba(139,124,255,.1),transparent 28%),
+linear-gradient(135deg,#03050a,#08101c 55%,#05070b);color:var(--text);overflow:hidden}
+button,a{font:inherit}
+.presentation{width:100vw;height:100vh;position:relative;overflow:hidden}
+.gridbg{position:absolute;inset:0;pointer-events:none;opacity:.25;background-image:
+linear-gradient(rgba(255,255,255,.025) 1px,transparent 1px),
+linear-gradient(90deg,rgba(255,255,255,.025) 1px,transparent 1px);
+background-size:44px 44px}
+.top{position:absolute;top:0;left:0;right:0;height:74px;display:flex;align-items:center;justify-content:space-between;padding:0 34px;border-bottom:1px solid var(--line);background:rgba(3,5,10,.72);backdrop-filter:blur(16px);z-index:20}
+.brand{display:flex;align-items:center;gap:14px}.mark{width:38px;height:38px;border-radius:12px;display:grid;place-items:center;font-weight:900;color:#031219;background:linear-gradient(135deg,var(--cyan),#dffcff)}
+.brand strong{font-size:13px;letter-spacing:.14em}.brand span{display:block;color:var(--muted);font-size:10px;letter-spacing:.12em;text-transform:uppercase;margin-top:3px}
+.fs{width:38px;height:38px;border-radius:12px;border:1px solid var(--line);background:rgba(255,255,255,.03);color:white;cursor:pointer}
+.tabs{position:absolute;top:74px;left:0;right:0;height:52px;display:flex;gap:7px;align-items:center;padding:0 26px;overflow-x:auto;border-bottom:1px solid rgba(255,255,255,.05);background:rgba(4,7,13,.58);backdrop-filter:blur(14px);z-index:19;scrollbar-width:none}
+.tabs::-webkit-scrollbar{display:none}
+.tab{white-space:nowrap;border:0;border-radius:999px;padding:8px 13px;background:transparent;color:#7f8da1;cursor:pointer;font-size:12px;font-weight:800}
+.tab.active{background:linear-gradient(135deg,var(--cyan),#c8f8ff);color:#071018}
+.stage{position:absolute;inset:126px 0 70px}
+.slide{position:absolute;inset:0;opacity:0;transform:translateX(28px) scale(.99);pointer-events:none;transition:.35s ease;overflow:auto}
+.slide.active{opacity:1;transform:none;pointer-events:auto}
+.inner{width:min(1320px,calc(100% - 76px));min-height:100%;margin:auto;padding:34px 0 42px;display:flex;align-items:center}
+.two{width:100%;display:grid;grid-template-columns:1.05fr .95fr;gap:52px;align-items:center}
+.eyebrow{color:var(--cyan);font-size:12px;font-weight:900;letter-spacing:.15em;text-transform:uppercase;margin-bottom:17px}
+h1,h2,h3,p{margin-top:0}
+h1{font-size:clamp(56px,7vw,104px);line-height:.92;letter-spacing:-.065em;margin-bottom:24px}
+h2{font-size:clamp(40px,4.7vw,70px);line-height:.98;letter-spacing:-.05em;margin-bottom:20px}
+h3{font-size:22px;letter-spacing:-.03em;margin-bottom:10px}
+.grad{background:linear-gradient(95deg,var(--cyan),#f4ffff 48%,#bfb7ff);-webkit-background-clip:text;background-clip:text;color:transparent}
+.lead{font-size:clamp(18px,1.7vw,26px);line-height:1.45;color:#b7c4d4;max-width:980px}
+.note{color:var(--muted);font-size:13px;line-height:1.55}
+.tags{display:flex;gap:9px;flex-wrap:wrap;margin-top:26px}.tag{border:1px solid var(--line);border-radius:999px;padding:8px 12px;color:#c1cfdf;font-size:12px;background:rgba(255,255,255,.025)}
+.hero-card{min-height:430px;border:1px solid var(--line);border-radius:34px;background:
+radial-gradient(circle at 25% 20%,rgba(94,231,255,.12),transparent 34%),
+linear-gradient(145deg,rgba(15,24,42,.94),rgba(7,12,22,.8));box-shadow:var(--shadow);padding:30px;position:relative;overflow:hidden}
+.hero-card:before{content:"";position:absolute;inset:0;background-image:
+linear-gradient(rgba(255,255,255,.025) 1px,transparent 1px),
+linear-gradient(90deg,rgba(255,255,255,.025) 1px,transparent 1px);background-size:52px 52px;opacity:.45}
+.metric-stack{position:relative;display:grid;gap:12px;margin-top:12px}
+.metric{padding:18px;border:1px solid rgba(255,255,255,.08);border-radius:18px;background:rgba(4,9,16,.64);backdrop-filter:blur(8px)}
+.metric strong{display:block;font-size:26px}.metric span{display:block;color:#8594a8;font-size:11px;text-transform:uppercase;letter-spacing:.12em;margin-top:4px}
+.quote{margin-top:28px;border-left:2px solid var(--cyan);padding:6px 0 6px 20px;font-size:clamp(24px,2.4vw,38px);line-height:1.24;letter-spacing:-.035em}
+.cards3,.cards4{width:100%;display:grid;gap:16px;margin-top:30px}.cards3{grid-template-columns:repeat(3,1fr)}.cards4{grid-template-columns:repeat(4,1fr)}
+.card{border:1px solid var(--line);border-radius:23px;padding:23px;background:linear-gradient(145deg,rgba(15,23,39,.82),rgba(7,11,19,.76));min-height:185px;position:relative;overflow:hidden}
+.card:after{content:"";position:absolute;left:0;top:0;right:0;height:2px;background:linear-gradient(90deg,transparent,var(--cyan),transparent);opacity:.4}
+.num{width:38px;height:38px;border-radius:12px;display:grid;place-items:center;border:1px solid rgba(94,231,255,.16);background:rgba(94,231,255,.08);color:var(--cyan);font-weight:900;font-size:12px;margin-bottom:28px}
+.card p{color:#8f9db0;font-size:13px;line-height:1.5;margin-bottom:0}
+.big-idea{border-radius:28px;padding:28px;border:1px solid rgba(94,231,255,.18);background:linear-gradient(135deg,rgba(94,231,255,.07),rgba(139,124,255,.055));margin-top:28px}
+.big-idea strong{font-size:28px;letter-spacing:-.04em}.big-idea p{margin:10px 0 0;color:#9cabbc;line-height:1.55}
+.timeline{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-top:30px}
+.month{border:1px solid var(--line);border-radius:26px;padding:26px;background:linear-gradient(145deg,rgba(15,23,39,.9),rgba(7,11,19,.78));min-height:380px;position:relative}
+.month:first-child{border-color:rgba(94,231,255,.28)}
+.month small{color:var(--cyan);font-weight:900;letter-spacing:.14em;text-transform:uppercase}
+.month h3{font-size:28px;margin:14px 0 17px}
+.month ul{list-style:none;padding:0;margin:0;display:grid;gap:10px}
+.month li{color:#98a7b9;font-size:13px;line-height:1.45;padding-left:18px;position:relative}
+.month li:before{content:"";position:absolute;width:7px;height:7px;border-radius:50%;background:var(--cyan);left:0;top:6px}
+.result{position:absolute;bottom:23px;left:26px;right:26px;border-top:1px solid var(--line);padding-top:14px;color:#e5eef9;font-size:12px;font-weight:800}
+.shift{display:grid;grid-template-columns:1fr auto 1fr;gap:24px;align-items:center;margin-top:34px}
+.shiftbox{border:1px solid var(--line);border-radius:28px;padding:28px;background:rgba(255,255,255,.025);min-height:340px}
+.shiftbox h3{font-size:30px}.shiftbox ul{list-style:none;margin:24px 0 0;padding:0;display:grid;gap:13px}
+.shiftbox li{color:#9cabbc;font-size:14px;padding-left:22px;position:relative}.shiftbox li:before{content:"•";color:var(--cyan);position:absolute;left:0}
+.arrow{font-size:42px;color:var(--cyan)}
+.kpi-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:15px;margin-top:30px}
+.kpi{border:1px solid var(--line);border-radius:22px;padding:22px;background:rgba(255,255,255,.025)}
+.kpi strong{display:block;font-size:26px;margin-bottom:8px}.kpi span{color:#8d9caf;font-size:13px;line-height:1.45}
+.demo-layout{width:100%;display:grid;grid-template-columns:.9fr 1.1fr;gap:48px;align-items:center}
+.phone-wrap{display:flex;justify-content:center;position:relative}
+.glow{position:absolute;width:390px;height:390px;border-radius:50%;background:radial-gradient(circle,rgba(94,231,255,.18),rgba(139,124,255,.06) 50%,transparent 72%);filter:blur(10px)}
+.phone{position:relative;width:335px;aspect-ratio:9/19.5;border-radius:50px;padding:10px;background:linear-gradient(155deg,#202737,#06070a 44%,#242b38);border:1px solid rgba(255,255,255,.18);box-shadow:0 35px 80px rgba(0,0,0,.55);z-index:2}
+.phone:before{content:"";position:absolute;top:8px;left:50%;transform:translateX(-50%);width:36%;height:23px;border-radius:0 0 15px 15px;background:#050609;z-index:4}
+.screen{width:100%;height:100%;border-radius:40px;overflow:hidden;background:#111}.screen iframe{width:100%;height:100%;border:0;background:white}
+.soft-note{border:1px solid rgba(94,231,255,.15);border-radius:20px;padding:18px;background:rgba(94,231,255,.05);color:#9db0c3;font-size:13px;line-height:1.55;margin-top:22px}
+.demo-link{display:inline-block;margin-top:18px;padding:12px 15px;border-radius:13px;text-decoration:none;border:1px solid rgba(94,231,255,.25);background:rgba(94,231,255,.07);font-size:13px;font-weight:800}
+.invest{display:grid;grid-template-columns:1.05fr .95fr;gap:22px;margin-top:28px}
+.price,.maint{border-radius:30px;padding:32px;border:1px solid var(--line);background:linear-gradient(145deg,rgba(15,23,39,.91),rgba(7,11,19,.8))}
+.price{border-color:rgba(94,231,255,.23)}
+.label{font-size:11px;color:var(--cyan);font-weight:900;text-transform:uppercase;letter-spacing:.15em}
+.amount{font-size:clamp(64px,7vw,100px);font-weight:900;letter-spacing:-.07em;line-height:1;margin:14px 0 8px}.amount small{font-size:.25em;color:#8da0b7;letter-spacing:.01em}
+.inst{margin-top:25px}.row{display:grid;grid-template-columns:90px 95px 1fr;gap:12px;padding:14px 0;border-top:1px solid var(--line);font-size:13px}.row span{color:#91a0b4}
+.maint strong{display:block;font-size:46px;letter-spacing:-.04em;margin:19px 0 12px}.maint p{color:#8f9eb0;font-size:13px;line-height:1.55}
+.fine{margin-top:24px;padding-top:16px;border-top:1px solid var(--line);font-size:11px!important;color:#69798d!important}
+.close{text-align:center;max-width:1000px;margin:auto}.close h2{font-size:clamp(56px,7vw,102px)}.close .lead{margin:auto}
+.bottom{position:absolute;bottom:0;left:0;right:0;height:70px;display:grid;grid-template-columns:1fr auto 1fr;align-items:center;padding:0 28px;border-top:1px solid var(--line);background:rgba(3,5,10,.74);backdrop-filter:blur(16px);z-index:20}
+.progress{display:flex;align-items:center;gap:12px}.count{font-size:11px;color:#7e8ca0;letter-spacing:.12em}.track{width:min(300px,24vw);height:4px;background:rgba(255,255,255,.06);border-radius:99px;overflow:hidden}.fill{height:100%;background:linear-gradient(90deg,var(--cyan),var(--violet));width:0;transition:.3s ease}
+.nav{display:flex;gap:8px}.nav button{min-width:44px;height:40px;border-radius:13px;border:1px solid var(--line);background:rgba(255,255,255,.03);color:white;cursor:pointer}.foot{justify-self:end;color:#667589;font-size:10px;letter-spacing:.12em;text-transform:uppercase}
+@media(max-width:950px){
+  body{overflow:auto}.presentation{height:auto;min-height:100vh}.top{position:sticky}.tabs{position:sticky;top:74px}.stage{position:relative;inset:auto;min-height:calc(100vh - 126px)}.slide{display:none;position:relative;opacity:1;transform:none}.slide.active{display:block}.inner{width:min(100% - 34px,850px);padding:45px 0 110px}.two,.demo-layout,.invest{grid-template-columns:1fr}.cards3,.cards4,.timeline,.kpi-grid{grid-template-columns:1fr 1fr}.shift{grid-template-columns:1fr}.arrow{transform:rotate(90deg);justify-self:center}.bottom{position:fixed}.foot{display:none}
+}
+@media(max-width:620px){
+ .top{height:66px;padding:0 15px}.tabs{top:66px}.brand span{display:none}.cards3,.cards4,.timeline,.kpi-grid{grid-template-columns:1fr}.month{min-height:auto;padding-bottom:90px}.row{grid-template-columns:70px 75px 1fr;font-size:11px}.phone{width:300px}.bottom{padding:0 14px;grid-template-columns:1fr auto}.track{width:34vw}
+}
+</style>
+</head>
+<body>
+<main class="presentation" id="presentation">
+<div class="gridbg"></div>
+
+<header class="top">
+  <div class="brand">
+    <div class="mark">IEC</div>
+    <div><strong>FactorIA by IEC</strong><span>Desarrollo de Sistemas · Automatización</span></div>
+  </div>
+  <button class="fs" id="fs">⛶</button>
+</header>
+
+<nav class="tabs">
+  <button class="tab active" data-i="0">Inicio</button>
+  <button class="tab" data-i="1">El desafío</button>
+  <button class="tab" data-i="2">La transformación</button>
+  <button class="tab" data-i="3">Plan 90 días</button>
+  <button class="tab" data-i="4">Quick Wins</button>
+  <button class="tab" data-i="5">Capa estratégica</button>
+  <button class="tab" data-i="6">Indicadores</button>
+  <button class="tab" data-i="7">Visualización</button>
+  <button class="tab" data-i="8">Inversión</button>
+  <button class="tab" data-i="9">Cierre</button>
+</nav>
+
+<section class="stage">
+
+<article class="slide active">
+<div class="inner">
+<div class="two">
+<section>
+  <div class="eyebrow">Propuesta de implementación · NeuroKing</div>
+  <h1>De operar todo<br>a <span class="grad">dirigir mejor.</span></h1>
+  <p class="lead">Un sistema pensado para que NeuroKing deje de depender de información dispersa, tareas manuales y seguimiento constante, y pueda transformar su operación diaria en información útil para decidir, crecer y escalar.</p>
+  <div class="tags">
+    <span class="tag">90 días</span><span class="tag">Quick Wins</span><span class="tag">Automatización</span><span class="tag">Gestión basada en datos</span>
+  </div>
+  <div class="quote">El objetivo no es solamente digitalizar NeuroKing. Es <strong>liberar capacidad de gestión.</strong></div>
+</section>
+
+<aside class="hero-card">
+  <div class="eyebrow">Cambio de modelo</div>
+  <div class="metric-stack">
+    <div class="metric"><strong>Menos seguimiento manual</strong><span>Operación</span></div>
+    <div class="metric"><strong>Más información visible</strong><span>Control</span></div>
+    <div class="metric"><strong>Más tiempo para decidir</strong><span>Estrategia</span></div>
+    <div class="metric"><strong>Más capacidad para crecer</strong><span>Escalabilidad</span></div>
+  </div>
+</aside>
+</div>
+</div>
+</article>
+
+<article class="slide">
+<div class="inner">
+<section style="width:100%">
+  <div class="eyebrow">El desafío actual</div>
+  <h2>Cuando la operación ocupa todo el tiempo, <span class="grad">la estrategia queda para después.</span></h2>
+  <p class="lead">En un negocio que crece, administrar alumnos, profesores, horarios, cobros, rutinas, evaluaciones y comunicaciones puede convertirse rápidamente en una carga que absorbe tiempo de dirección.</p>
+
+  <div class="cards4">
+    <div class="card"><div class="num">01</div><h3>Información dispersa</h3><p>Datos repartidos entre mensajes, planillas, personas y registros difíciles de seguir.</p></div>
+    <div class="card"><div class="num">02</div><h3>Dependencia operativa</h3><p>Muchas decisiones requieren preguntar, revisar o reconstruir qué pasó antes de actuar.</p></div>
+    <div class="card"><div class="num">03</div><h3>Tareas repetitivas</h3><p>Recordatorios, seguimientos, controles y avisos consumen tiempo sin aportar valor estratégico.</p></div>
+    <div class="card"><div class="num">04</div><h3>Poca visibilidad</h3><p>Cuesta responder rápido preguntas simples sobre rendimiento, deuda, carga de profesores o evolución.</p></div>
+  </div>
+
+  <div class="big-idea">
+    <strong>El problema no es la falta de esfuerzo.</strong>
+    <p>El problema es que demasiada energía termina puesta en sostener la operación en lugar de usarla para mejorar el negocio.</p>
+  </div>
+</section>
+</div>
+</article>
+
+<article class="slide">
+<div class="inner">
+<section style="width:100%">
+  <div class="eyebrow">La transformación propuesta</div>
+  <h2>Pasar de administrar tareas a <span class="grad">gestionar el negocio.</span></h2>
+  <p class="lead">El sistema funciona como una capa operativa común: captura lo que sucede, ordena la información y deja disponible una lectura clara para que la dirección pueda actuar sobre datos y no sobre intuiciones aisladas.</p>
+
+  <div class="shift">
+    <div class="shiftbox">
+      <div class="eyebrow">Hoy</div>
+      <h3>NeuroKing operativo</h3>
+      <ul>
+        <li>Buscar información.</li>
+        <li>Preguntar estados.</li>
+        <li>Controlar vencimientos.</li>
+        <li>Coordinar horarios manualmente.</li>
+        <li>Revisar quién hizo qué.</li>
+        <li>Responder urgencias del día.</li>
+      </ul>
+    </div>
+
+    <div class="arrow">→</div>
+
+    <div class="shiftbox" style="border-color:rgba(94,231,255,.25)">
+      <div class="eyebrow">Objetivo</div>
+      <h3>NeuroKing estratégico</h3>
+      <ul>
+        <li>Ver información consolidada.</li>
+        <li>Anticipar problemas.</li>
+        <li>Medir rendimiento.</li>
+        <li>Entender capacidad y demanda.</li>
+        <li>Automatizar tareas repetitivas.</li>
+        <li>Tomar decisiones con contexto.</li>
+      </ul>
+    </div>
+  </div>
+</section>
+</div>
+</article>
+
+<article class="slide">
+<div class="inner">
+<section style="width:100%">
+  <div class="eyebrow">Plan de implementación</div>
+  <h2>90 días para construir capacidad, <span class="grad">no sólo software.</span></h2>
+  <p class="lead">La implementación está dividida para obtener resultados visibles desde el primer mes y sumar complejidad sólo cuando la base ya está funcionando.</p>
+
+  <div class="timeline">
+    <div class="month">
+      <small>Mes 1</small><h3>Empezar a operar</h3>
+      <ul>
+        <li>Base de datos y usuarios.</li>
+        <li>Alumnos y profesores.</li>
+        <li>Agenda y turnos.</li>
+        <li>Pagos y deudas.</li>
+        <li>Panel administrativo inicial.</li>
+        <li>Primeros indicadores.</li>
+      </ul>
+      <div class="result">Resultado: control centralizado de la operación básica.</div>
+    </div>
+    <div class="month">
+      <small>Mes 2</small><h3>Automatizar y conectar</h3>
+      <ul>
+        <li>Panel de profesores.</li>
+        <li>Rutinas y evaluaciones.</li>
+        <li>Seguimiento de evolución.</li>
+        <li>Guardias y disponibilidad.</li>
+        <li>Cobranzas avanzadas.</li>
+        <li>Automatizaciones mediante n8n.</li>
+      </ul>
+      <div class="result">Resultado: primer hito funcional integrado.</div>
+    </div>
+    <div class="month">
+      <small>Mes 3</small><h3>Consolidar y decidir</h3>
+      <ul>
+        <li>Integración de módulos.</li>
+        <li>Liquidaciones.</li>
+        <li>Indicadores de gestión.</li>
+        <li>Historial de acciones.</li>
+        <li>Pruebas y optimización.</li>
+        <li>Entrega del sistema total.</li>
+      </ul>
+      <div class="result">Resultado: sistema preparado para gestión y crecimiento.</div>
+    </div>
+  </div>
+</section>
+</div>
+</article>
+
+<article class="slide">
+<div class="inner">
+<section style="width:100%">
+  <div class="eyebrow">Mes 1 · Quick Wins</div>
+  <h2>Resolver primero lo que hoy <span class="grad">consume tiempo todos los días.</span></h2>
+  <p class="lead">Los Quick Wins apuntan a reducir fricción operacional y generar una primera fuente confiable de información sobre la cual después automatizar y medir.</p>
+
+  <div class="cards3">
+    <div class="card"><div class="num">01</div><h3>Control de alumnos</h3><p>Información centralizada, estado y seguimiento sin depender de búsquedas manuales.</p></div>
+    <div class="card"><div class="num">02</div><h3>Cobranzas visibles</h3><p>Pagos, deudas y pendientes identificados rápidamente para actuar antes.</p></div>
+    <div class="card"><div class="num">03</div><h3>Agenda ordenada</h3><p>Clases, turnos, horarios y responsables concentrados en un mismo lugar.</p></div>
+  </div>
+
+  <div class="big-idea">
+    <strong>El Quick Win real es tiempo recuperado.</strong>
+    <p>Cada tarea que deja de depender de memoria, mensajes o seguimiento manual devuelve capacidad a la dirección para ocuparse de clientes, equipo, calidad, expansión y crecimiento.</p>
+  </div>
+</section>
+</div>
+</article>
+
+<article class="slide">
+<div class="inner">
+<section style="width:100%">
+  <div class="eyebrow">La capa estratégica</div>
+  <h2>Cuando el sistema registra la operación, NeuroKing puede empezar a <span class="grad">leer su propio negocio.</span></h2>
+
+  <div class="cards4">
+    <div class="card"><div class="num">A</div><h3>Demanda</h3><p>Qué horarios tienen mayor ocupación, dónde hay capacidad disponible y cuándo aparecen cuellos de botella.</p></div>
+    <div class="card"><div class="num">B</div><h3>Clientes</h3><p>Altas, bajas, permanencia, inactividad, deuda y comportamiento general de los alumnos.</p></div>
+    <div class="card"><div class="num">C</div><h3>Equipo</h3><p>Carga, disponibilidad, asignación, guardias y distribución del trabajo entre profesores.</p></div>
+    <div class="card"><div class="num">D</div><h3>Finanzas</h3><p>Cobranza, deuda, liquidaciones y evolución de ingresos asociados a la operación.</p></div>
+  </div>
+
+  <div class="quote">El sistema deja de ser un lugar donde “cargar datos” y se convierte en una <strong>herramienta para detectar oportunidades y problemas.</strong></div>
+</section>
+</div>
+</article>
+
+<article class="slide">
+<div class="inner">
+<section style="width:100%">
+  <div class="eyebrow">Información para decidir</div>
+  <h2>Preguntas que el sistema debería poder responder <span class="grad">sin reconstruir la historia.</span></h2>
+  <div class="kpi-grid">
+    <div class="kpi"><strong>Ocupación</strong><span>¿Qué franjas horarias están saturadas y cuáles tienen capacidad ociosa?</span></div>
+    <div class="kpi"><strong>Deuda</strong><span>¿Cuánto tenemos pendiente de cobro y desde cuándo?</span></div>
+    <div class="kpi"><strong>Retención</strong><span>¿Qué alumnos están activos, inactivos o muestran riesgo de abandono?</span></div>
+    <div class="kpi"><strong>Profesores</strong><span>¿Cómo está distribuida la carga y qué disponibilidad real existe?</span></div>
+    <div class="kpi"><strong>Evolución</strong><span>¿Qué seguimiento se está realizando y dónde falta intervención?</span></div>
+    <div class="kpi"><strong>Gestión</strong><span>¿Qué tareas pueden automatizarse y cuáles requieren atención humana?</span></div>
+  </div>
+
+  <div class="big-idea">
+    <strong>De datos operativos a decisiones concretas.</strong>
+    <p>La meta final es que NeuroKing pueda usar la información diaria para planificar horarios, asignar recursos, anticipar cobranzas, mejorar el servicio y sostener crecimiento sin aumentar proporcionalmente la carga administrativa.</p>
+  </div>
+</section>
+</div>
+</article>
+
+<article class="slide">
+<div class="inner">
+<div class="demo-layout">
+  <section>
+    <div class="eyebrow">Visualización del concepto</div>
+    <h2>Así puede sentirse <span class="grad">la experiencia NeuroKing.</span></h2>
+    <p class="lead" style="font-size:20px">La siguiente interfaz sirve para visualizar cómo podría organizarse la experiencia de alumnos, profesores y administración dentro del sistema.</p>
+
+    <div class="soft-note">
+      Esta visualización no define el sistema de forma rígida. <strong style="color:white">Todo se puede modificar.</strong> La maqueta se armó a partir de una conversación y funciona como punto de partida para validar recorridos, módulos y experiencia antes de consolidarlos.
+    </div>
+
+    <a class="demo-link" href="https://neuroking-azure.vercel.app/" target="_blank" rel="noopener">↗ Abrir NeuroKing</a>
+  </section>
+
+  <div class="phone-wrap">
+    <div class="glow"></div>
+    <div class="phone">
+      <div class="screen">
+        <iframe id="neurokingFrame" src="https://neuroking-azure.vercel.app/" title="NeuroKing"></iframe>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+</article>
+
+<article class="slide">
+<div class="inner">
+<section style="width:100%">
+  <div class="eyebrow">Propuesta económica</div>
+  <h2>Inversión para la <span class="grad">implementación completa.</span></h2>
+
+  <div class="invest">
+    <div class="price">
+      <div class="label">Desarrollo e implementación · 3 meses</div>
+      <div class="amount">750<small>USD</small></div>
+      <div class="note">Inversión total del proyecto.</div>
+
+      <div class="inst">
+        <div class="row"><strong>Cuota 1</strong><strong>USD 250</strong><span>Al inicio del proyecto.</span></div>
+        <div class="row"><strong>Cuota 2</strong><strong>USD 250</strong><span>Contra entrega del primer hito, al finalizar el segundo mes.</span></div>
+        <div class="row"><strong>Cuota 3</strong><strong>USD 250</strong><span>Contra entrega del sistema total, al finalizar el tercer mes.</span></div>
+      </div>
+    </div>
+
+    <div class="maint">
+      <div class="label">Mantenimiento posterior</div>
+      <strong>$50.000 <span style="font-size:16px;color:#8191a4">ARS / mes</span></strong>
+      <p>Soporte técnico, corrección de errores, monitoreo básico, ajustes menores y mantenimiento de las automatizaciones implementadas.</p>
+      <p class="fine">Servicios externos con costo propio —hosting, dominio, WhatsApp API, plataformas de pago, servicios de IA u otras APIs— no están incluidos y se informarán previamente en caso de ser necesarios. Nuevos módulos o cambios estructurales se cotizan por separado.</p>
+    </div>
+  </div>
+</section>
+</div>
+</article>
+
+<article class="slide">
+<div class="inner">
+<section class="close">
+  <div class="eyebrow">NeuroKing · Próxima etapa</div>
+  <h2>Menos tiempo sosteniendo la operación.<br><span class="grad">Más tiempo construyendo el negocio.</span></h2>
+  <p class="lead">La propuesta busca que en 90 días NeuroKing cuente con una base tecnológica que no sólo ordene lo que ya hace, sino que le permita empezar a gestionar con más información, más previsibilidad y mayor capacidad de crecimiento.</p>
+  <div class="quote" style="text-align:left;margin:42px auto 0;max-width:850px">
+    <strong>Ordenar → Automatizar → Medir → Decidir → Mejorar.</strong>
+  </div>
+  <div class="tags" style="justify-content:center;margin-top:34px">
+    <span class="tag">FactorIA by IEC</span><span class="tag">Inteligencia Operativa</span><span class="tag">NeuroKing</span>
+  </div>
+</section>
+</div>
+</article>
+
+</section>
+
+<footer class="bottom">
+  <div class="progress"><span class="count" id="count">01 / 10</span><div class="track"><div class="fill" id="fill"></div></div></div>
+  <div class="nav"><button id="prev">←</button><button id="next">→</button></div>
+  <div class="foot">Navegá con ← →</div>
+</footer>
+</main>
+
+<script>
+(()=>{
+const slides=[...document.querySelectorAll('.slide')];
+const tabs=[...document.querySelectorAll('.tab')];
+const fill=document.getElementById('fill');
+const count=document.getElementById('count');
+let current=0;
+
+function pad(n){return String(n).padStart(2,'0')}
+function reloadNeuroKing(){
+  const frame = document.getElementById('neurokingFrame');
+  if(!frame) return;
+
+  const baseUrl = 'https://neuroking-azure.vercel.app/';
+  frame.src = 'about:blank';
+
+  // Fuerza una carga completamente nueva para volver a mostrar
+  // la animación / experiencia de inicio de NeuroKing.
+  setTimeout(() => {
+    frame.src = baseUrl + '?presentation_reload=' + Date.now();
+  }, 80);
+}
+
+function go(i){
+  if(i<0)i=slides.length-1;
+  if(i>=slides.length)i=0;
+  current=i;
+  slides.forEach((s,x)=>s.classList.toggle('active',x===i));
+  tabs.forEach((t,x)=>t.classList.toggle('active',x===i));
+  tabs[i]?.scrollIntoView({behavior:'smooth',inline:'center',block:'nearest'});
+  fill.style.width=((i+1)/slides.length*100)+'%';
+  count.textContent=`${pad(i+1)} / ${pad(slides.length)}`;
+
+  // La pestaña "Visualización" es la número 8 (índice 7).
+  // Cada ingreso reinicia la aplicación embebida.
+  if(i === 7){
+    reloadNeuroKing();
+  }
+
+  history.replaceState(null,'','#slide-'+(i+1));
+}
+tabs.forEach((t,i)=>t.onclick=()=>go(i));
+document.getElementById('prev').onclick=()=>go(current-1);
+document.getElementById('next').onclick=()=>go(current+1);
+document.addEventListener('keydown',e=>{
+  if(['ArrowRight','PageDown',' '].includes(e.key)){e.preventDefault();go(current+1)}
+  if(['ArrowLeft','PageUp'].includes(e.key)){e.preventDefault();go(current-1)}
+  if(e.key==='Home'){e.preventDefault();go(0)}
+  if(e.key==='End'){e.preventDefault();go(slides.length-1)}
+});
+document.getElementById('fs').onclick=async()=>{
+  try{
+    if(!document.fullscreenElement) await document.getElementById('presentation').requestFullscreen();
+    else await document.exitFullscreen();
+  }catch(e){}
+};
+const m=location.hash.match(/slide-(\d+)/i);
+go(m?Math.max(0,Math.min(slides.length-1,Number(m[1])-1)):0);
+})();
+</script>
+</body>
+</html>
