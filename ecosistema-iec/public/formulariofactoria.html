@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Prospección de Comercios - La Factoría</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        body {
+            background-color: #0b0f19;
+            color: #e2e8f0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 20px;
+        }
+        .container {
+            background: linear-gradient(135deg, #111827 0%, #1e1b4b 100%);
+            border: 1px solid #312e81;
+            border-radius: 16px;
+            padding: 40px;
+            width: 100%;
+            max-width: 550px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5), 0 0 30px rgba(99, 102, 241, 0.15);
+        }
+        h2 {
+            text-align: center;
+            color: #ffffff;
+            margin-bottom: 10px;
+            font-size: 28px;
+            letter-spacing: 0.5px;
+        }
+        p.subtitle {
+            text-align: center;
+            color: #a5b4fc;
+            margin-bottom: 30px;
+            font-size: 14px;
+        }
+        .form-group {
+            margin-bottom: 22px;
+        }
+        label {
+            display: block;
+            margin-bottom: 8px;
+            color: #c7d2fe;
+            font-size: 14px;
+            font-weight: 600;
+        }
+        input, select, textarea {
+            width: 100%;
+            padding: 12px 16px;
+            background-color: #0f172a;
+            border: 1px solid #4338ca;
+            border-radius: 8px;
+            color: #ffffff;
+            font-size: 15px;
+            transition: all 0.3s ease;
+        }
+        input:focus, select:focus, textarea:focus {
+            outline: none;
+            border-color: #818cf8;
+            box-shadow: 0 0 0 3px rgba(129, 140, 248, 0.3);
+        }
+        textarea {
+            resize: vertical;
+            height: 100px;
+        }
+        .btn-submit {
+            width: 100%;
+            padding: 14px;
+            background: linear-gradient(90deg, #3b82f6 0%, #8b5cf6 100%);
+            border: none;
+            border-radius: 8px;
+            color: white;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: transform 0.2s, opacity 0.2s;
+            margin-top: 10px;
+            box-shadow: 0 4px 15px rgba(139, 92, 246, 0.4);
+        }
+        .btn-submit:hover {
+            opacity: 0.9;
+            transform: translateY(-1px);
+        }
+        .btn-submit:active {
+            transform: translateY(1px);
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h2>La Factoría</h2>
+    <p class="subtitle">Ingreso de datos para prospección web</p>
+    
+    <form id="prospeccionForm">
+        <div class="form-group">
+            <label for="comercio">Nombre del Comercio *</label>
+            <input type="text" id="comercio" placeholder="Ej. Almacén Don Pepe" required>
+        </div>
+
+        <div class="form-group">
+            <label for="rubro">Rubro / Sector *</label>
+            <input type="text" id="rubro" placeholder="Ej. Indumentaria, Gastronomía..." required>
+        </div>
+
+        <div class="form-group">
+            <label for="contacto">Nombre de Contacto</label>
+            <input type="text" id="contacto" placeholder="Ej. Juan Pérez">
+        </div>
+
+        <div class="form-group">
+            <label for="telefono">Teléfono / WhatsApp *</label>
+            <input type="tel" id="telefono" placeholder="Ej. 3434111222" required>
+        </div>
+
+        <div class="form-group">
+            <label for="Instagram">Instagram / Redes Sociales</label>
+            <input type="text" id="instagram" placeholder="Ej. @comercio.ok">
+        </div>
+
+        <div class="form-group">
+            <label for="observaciones">Observaciones / Notas adicionales</label>
+            <textarea id="observaciones" placeholder="Detalles de lo que necesita o estado del interés..."></textarea>
+        </div>
+
+        <button type="submit" class="btn-submit">Enviar Datos a WhatsApp</button>
+    </form>
+</div>
+
+<script>
+    document.getElementById('prospeccionForm').addEventListener('submit', function(e) {
+        e.preventDefault();
+        
+        // Obtener los valores del formulario
+        const comercio = document.getElementById('comercio').value;
+        const rubro = document.getElementById('rubro').value;
+        const contacto = document.getElementById('contacto').value || 'No especificado';
+        const telefono = document.getElementById('telefono').value;
+        const instagram = document.getElementById('instagram').value || 'No tiene / No especificado';
+        const observaciones = document.getElementById('observaciones').value || 'Sin observaciones';
+
+        // Armar el mensaje para WhatsApp
+        const mensaje = `*NUEVO PROSPECTO - LA FACTORÍA*%0A%0A` +
+                        `🏪 *Comercio:* ${comercio}%0A` +
+                        `🚀 *Rubro:* ${rubro}%0A` +
+                        `👤 *Contacto:* ${contacto}%0A` +
+                        `📞 *Teléfono:* ${telefono}%0A` +
+                        `📸 *Instagram:* ${instagram}%0A` +
+                        `📝 *Notas:* ${observaciones}`;
+
+        // Número de destino
+        const numeroWhatsapp = "5493434480285"; 
+
+        // Redirección
+        window.open(`https://wa.me/${numeroWhatsapp}?text=${mensaje}`, '_blank');
+    });
+</script>
+
+</body>
+</html>
