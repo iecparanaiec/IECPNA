@@ -1,0 +1,275 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>Proyecto de Implementación · Smarteo + Mutual ECO</title>
+<meta name="description" content="Proyecto de implementación de Smarteo en la Oficina de Cobranzas de Mutual ECO"/>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Space+Grotesk:wght@500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#020713;--bg2:#051326;--panel:rgba(6,22,42,.78);--panel2:rgba(8,28,52,.92);
+  --line:rgba(67,183,255,.24);--text:#f7fbff;--muted:#9db1c9;--cyan:#00d8ff;
+  --blue:#1595ff;--violet:#7b45ff;--magenta:#bb42ff;--orange:#f97316;--green:#35e7b4;
+  --yellow:#ffd166;--danger:#ff647c;--shadow:0 24px 70px rgba(0,0,0,.38)
+}
+*{box-sizing:border-box}
+html,body{width:100%;height:100%;margin:0;overflow:hidden;background:var(--bg);color:var(--text);font-family:Inter,system-ui,-apple-system,Segoe UI,sans-serif}
+body{background:radial-gradient(circle at 85% 10%,rgba(21,149,255,.16),transparent 28%),radial-gradient(circle at 12% 86%,rgba(123,69,255,.12),transparent 30%),linear-gradient(180deg,#031020,#01050d 72%)}
+button{font:inherit}.deck{position:relative;width:100vw;height:100vh;min-height:650px;overflow:hidden}
+.deck:before{content:"";position:absolute;inset:0;pointer-events:none;background-image:linear-gradient(rgba(255,255,255,.022) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.018) 1px,transparent 1px);background-size:42px 42px;mask-image:linear-gradient(to bottom,rgba(0,0,0,.85),transparent 85%)}
+.glow{position:absolute;border-radius:50%;filter:blur(88px);opacity:.2;pointer-events:none;animation:float 14s ease-in-out infinite alternate}.g1{width:380px;height:380px;background:#006eff;right:-130px;top:10%}.g2{width:330px;height:330px;background:#7a32ff;left:-150px;bottom:-20px;animation-delay:-4s}.g3{width:260px;height:260px;background:#f97316;right:18%;bottom:-150px;animation-delay:-8s}@keyframes float{to{transform:translate3d(25px,-20px,0) scale(1.06)}}
+.topbar{position:absolute;z-index:30;left:0;right:0;top:0;height:82px;padding:0 4.2vw;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid rgba(255,255,255,.055);background:linear-gradient(180deg,rgba(1,7,16,.88),rgba(1,7,16,.16));backdrop-filter:blur(10px)}
+.brand{display:flex;align-items:center;gap:14px}.brand-mark{width:38px;height:38px;border-radius:13px;display:grid;place-items:center;border:1px solid rgba(0,216,255,.38);background:linear-gradient(145deg,rgba(0,216,255,.16),rgba(123,69,255,.13));box-shadow:0 0 28px rgba(0,216,255,.12)}.brand-mark i{color:var(--cyan);font-size:1.15rem}.brand-name{font-family:"Space Grotesk";font-weight:800;font-size:1.55rem;letter-spacing:-.045em}.brand-x{color:#526b84;font-size:.9rem}.eco{font-weight:900;font-size:1.3rem;color:#73ccfb;letter-spacing:-.06em}.eco b{color:var(--orange)}
+.top-actions{display:flex;align-items:center;gap:12px}.top-note{font-size:.74rem;letter-spacing:.15em;color:#aec1d6;text-transform:uppercase}.top-note strong{background:linear-gradient(90deg,var(--cyan),var(--orange));-webkit-background-clip:text;background-clip:text;color:transparent}.icon-btn,.nav-btn{border:1px solid rgba(66,179,255,.28);background:rgba(7,26,49,.68);color:white;border-radius:12px;display:grid;place-items:center;transition:.2s}.icon-btn{width:40px;height:40px}.icon-btn:hover,.nav-btn:hover{transform:translateY(-1px);border-color:rgba(0,216,255,.75);box-shadow:0 0 28px rgba(0,216,255,.12)}
+.slides{position:absolute;inset:82px 0 76px}.slide{position:absolute;inset:0;opacity:0;visibility:hidden;transform:translateX(3%);transition:opacity .5s ease,transform .62s cubic-bezier(.2,.75,.25,1),visibility .5s;pointer-events:none}.slide.active{opacity:1;visibility:visible;transform:translateX(0);pointer-events:auto}.slide.leave-left{transform:translateX(-3%)}.slide-inner{height:100%;padding:3.7vh 4.4vw 2.7vh}.reveal{opacity:0;transform:translateY(17px);filter:blur(4px)}.slide.active .reveal{animation:reveal .68s cubic-bezier(.2,.78,.2,1) forwards}.slide.active .d1{animation-delay:.08s}.slide.active .d2{animation-delay:.16s}.slide.active .d3{animation-delay:.24s}.slide.active .d4{animation-delay:.32s}@keyframes reveal{to{opacity:1;transform:none;filter:blur(0)}}
+.eyebrow{font-size:.7rem;letter-spacing:.23em;color:#79defe;font-weight:800;text-transform:uppercase;margin-bottom:8px}.heading{font-family:"Space Grotesk";font-weight:800;font-size:clamp(2rem,3vw,3.35rem);line-height:1.02;letter-spacing:-.05em;margin:0}.gradient{background:linear-gradient(90deg,var(--cyan),var(--blue) 32%,var(--violet) 66%,var(--orange));-webkit-background-clip:text;background-clip:text;color:transparent}.sub{color:#aec0d4;font-size:clamp(.95rem,1.15vw,1.12rem);line-height:1.55;margin-top:14px;max-width:920px}.panel{background:linear-gradient(180deg,rgba(9,31,57,.9),rgba(5,17,33,.68));border:1px solid rgba(55,179,255,.22);box-shadow:var(--shadow),inset 0 1px 0 rgba(255,255,255,.04);backdrop-filter:blur(10px)}
+.pill{display:inline-flex;align-items:center;gap:8px;padding:8px 12px;border-radius:999px;border:1px solid rgba(0,216,255,.26);background:rgba(5,25,46,.66);font-size:.72rem;letter-spacing:.07em;color:#d2e7f5;text-transform:uppercase}.pill i{color:var(--cyan)}
+
+/* 1 */
+.hero{height:100%;display:grid;grid-template-columns:1.08fr .92fr;gap:4vw;align-items:center}.hero h1{font-family:"Space Grotesk";font-size:clamp(3.25rem,5.1vw,6rem);line-height:.91;letter-spacing:-.065em;margin:16px 0 0;max-width:980px}.hero p{font-size:clamp(1.02rem,1.28vw,1.3rem);color:#b3c4d6;line-height:1.55;max-width:820px;margin:23px 0}.hero-tags{display:flex;gap:10px;flex-wrap:wrap}.hero-card{height:min(60vh,590px);border-radius:30px;position:relative;overflow:hidden;background:radial-gradient(circle at 50% 38%,rgba(0,216,255,.12),transparent 35%),linear-gradient(180deg,rgba(8,30,56,.94),rgba(3,13,27,.88));border:1px solid rgba(50,184,255,.24);box-shadow:0 28px 90px rgba(0,0,0,.42)}.orbit{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:68%;aspect-ratio:1;border-radius:50%;border:1px solid rgba(0,216,255,.13)}.orbit:before,.orbit:after{content:"";position:absolute;inset:13%;border-radius:50%;border:1px solid rgba(123,69,255,.13)}.orbit:after{inset:27%;border-color:rgba(249,115,22,.15)}.hero-core{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:170px;height:170px;border-radius:50%;display:grid;place-items:center;text-align:center;background:linear-gradient(180deg,rgba(8,40,70,.95),rgba(4,18,36,.9));border:1px solid rgba(0,216,255,.48);box-shadow:0 0 60px rgba(0,216,255,.14)}.hero-core i{font-size:2.5rem;color:var(--cyan)}.hero-core strong{display:block;font-family:"Space Grotesk";font-size:1.3rem}.hero-core span{display:block;color:#8fa7bd;font-size:.8rem}.float-card{position:absolute;padding:13px 16px;border-radius:16px;background:rgba(4,17,34,.84);border:1px solid rgba(59,179,255,.25);box-shadow:0 14px 40px rgba(0,0,0,.3);font-size:.77rem;color:#cde0ee}.float-card i{color:var(--cyan);margin-right:7px}.fc1{left:7%;top:16%}.fc2{right:7%;top:20%}.fc3{left:9%;bottom:17%}.fc4{right:8%;bottom:16%}.hero-footer{position:absolute;left:26px;right:26px;bottom:24px;border-top:1px solid rgba(255,255,255,.06);padding-top:16px;display:flex;justify-content:space-between;align-items:end}.hero-footer strong{font-family:"Space Grotesk";font-size:1.15rem}.hero-footer small{display:block;color:#94a9bd;margin-top:4px}.hero-footer .accent{color:var(--orange);font-weight:800}
+
+/* 2 */
+.two-col{display:grid;grid-template-columns:1fr 1fr;gap:2.1vw;margin-top:3vh;height:calc(100% - 120px)}.state-panel{border-radius:28px;padding:28px 30px;display:flex;flex-direction:column;justify-content:space-between}.state-panel.before{background:linear-gradient(180deg,rgba(18,25,39,.88),rgba(6,13,23,.74));border:1px solid rgba(255,255,255,.08)}.state-panel.after{background:linear-gradient(180deg,rgba(8,35,59,.92),rgba(5,19,38,.72));border:1px solid rgba(0,216,255,.23)}.side-label{font-size:.68rem;letter-spacing:.16em;text-transform:uppercase;color:#8195ab;font-weight:800}.side-label.cyan{color:#77e0ff}.list{display:grid;gap:13px;margin:22px 0}.item{display:flex;gap:14px;align-items:flex-start;padding:15px 16px;border-radius:17px;background:rgba(255,255,255,.025);border:1px solid rgba(255,255,255,.055)}.item .ic{width:38px;height:38px;border-radius:12px;display:grid;place-items:center;flex:0 0 auto;background:rgba(249,115,22,.08);border:1px solid rgba(249,115,22,.16);color:var(--orange)}.after .item .ic{background:rgba(0,216,255,.08);border-color:rgba(0,216,255,.18);color:var(--cyan)}.item strong{display:block;font-size:.94rem}.item p{margin:3px 0 0;color:#94a8bc;font-size:.78rem;line-height:1.45}.big-call{font-family:"Space Grotesk";font-size:1.6rem;letter-spacing:-.04em;line-height:1.1}.big-call span{color:var(--cyan)}
+
+/* 3 */
+.flow-wrap{margin-top:3.3vh;position:relative}.flow-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:13px}.flow-grid + .flow-grid{margin-top:13px}.step{position:relative;min-height:178px;padding:19px;border-radius:21px;background:linear-gradient(180deg,rgba(9,31,57,.9),rgba(5,18,34,.72));border:1px solid rgba(56,180,255,.22)}.step .n{position:absolute;right:15px;top:13px;font-family:"Space Grotesk";font-size:.75rem;color:#6383a2}.step .ic{width:46px;height:46px;border-radius:14px;display:grid;place-items:center;background:rgba(0,216,255,.08);border:1px solid rgba(0,216,255,.2);color:var(--cyan);font-size:1.15rem}.step.orange .ic{background:rgba(249,115,22,.08);border-color:rgba(249,115,22,.2);color:var(--orange)}.step strong{display:block;margin-top:15px;font-size:.96rem}.step p{margin:5px 0 0;color:#91a7bd;font-size:.76rem;line-height:1.42}.flow-message{margin-top:16px;padding:13px 17px;border-radius:15px;border:1px solid rgba(0,216,255,.22);background:rgba(0,216,255,.055);display:flex;align-items:center;gap:11px;color:#c9ddea;font-size:.82rem}.flow-message i{color:var(--cyan);font-size:1.1rem}
+
+/* 4 */
+.office{display:grid;grid-template-columns:1.06fr .94fr;gap:2vw;margin-top:3vh;height:calc(100% - 118px)}.office-map{border-radius:28px;padding:24px}.office-title{font-family:"Space Grotesk";font-size:1.22rem;margin-bottom:15px}.desk-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}.desk{min-height:103px;padding:16px;border-radius:18px;background:rgba(6,24,46,.7);border:1px solid rgba(54,179,255,.2);display:flex;gap:12px;align-items:center}.avatar{width:43px;height:43px;border-radius:14px;display:grid;place-items:center;background:linear-gradient(145deg,rgba(0,216,255,.16),rgba(21,149,255,.12));border:1px solid rgba(0,216,255,.26);color:#b9f6ff;font-family:"Space Grotesk";font-weight:800}.desk strong{font-size:.9rem}.desk small{display:block;color:#8fa5ba;font-size:.72rem;margin-top:4px}.desk.wide{grid-column:span 2}.desk.orange{border-color:rgba(249,115,22,.23)}.desk.orange .avatar{background:rgba(249,115,22,.08);border-color:rgba(249,115,22,.24);color:#ffad72}.roles{display:grid;gap:11px}.role{padding:16px 18px;border-radius:19px;background:rgba(7,26,49,.72);border:1px solid rgba(255,255,255,.07);display:flex;gap:13px}.role>i{width:40px;height:40px;display:grid;place-items:center;border-radius:12px;background:rgba(0,216,255,.08);border:1px solid rgba(0,216,255,.16);color:var(--cyan);flex:0 0 auto}.role.orange>i{background:rgba(249,115,22,.08);border-color:rgba(249,115,22,.18);color:var(--orange)}.role strong{display:block;font-size:.9rem}.role p{margin:4px 0 0;color:#93a8bc;font-size:.75rem;line-height:1.4}
+
+/* 5 */
+.pillars{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-top:3.2vh}.pillar{min-height:340px;border-radius:24px;padding:22px;display:flex;flex-direction:column;background:linear-gradient(180deg,rgba(9,31,57,.9),rgba(5,17,33,.72));border:1px solid rgba(57,180,255,.22)}.pillar .ic{width:50px;height:50px;border-radius:15px;display:grid;place-items:center;font-size:1.25rem;background:rgba(0,216,255,.08);border:1px solid rgba(0,216,255,.19);color:var(--cyan)}.pillar:nth-child(even) .ic{background:rgba(249,115,22,.08);border-color:rgba(249,115,22,.2);color:var(--orange)}.pillar h3{font-family:"Space Grotesk";font-size:1.08rem;margin:18px 0 8px}.pillar p{color:#91a7bb;font-size:.78rem;line-height:1.48;margin:0}.mini-points{margin-top:auto;display:grid;gap:8px}.mini{padding:8px 10px;border-radius:10px;background:rgba(255,255,255,.025);border:1px solid rgba(255,255,255,.05);font-size:.7rem;color:#c1d2e0}.mini i{color:var(--cyan);margin-right:7px}.pillar:nth-child(even) .mini i{color:var(--orange)}
+
+/* 6 */
+.integration-grid{display:grid;grid-template-columns:1fr 230px 1fr;grid-template-rows:1fr 1fr;column-gap:34px;row-gap:16px;align-items:center;margin-top:2.4vh}.source-card{border-radius:18px;padding:15px 18px;background:rgba(5,22,42,.82);border:1px solid rgba(54,180,255,.22);display:flex;align-items:center;gap:13px;min-height:87px}.source-card.right{border-color:rgba(249,115,22,.22)}.source-card .ic{width:43px;height:43px;border-radius:13px;display:grid;place-items:center;background:rgba(0,216,255,.07);color:var(--cyan);font-size:1.2rem}.source-card.right .ic{background:rgba(249,115,22,.07);color:var(--orange)}.source-card strong{display:block;font-size:.9rem}.source-card span{display:block;color:#8fa6bc;font-size:.72rem;margin-top:3px;line-height:1.35}.hub{grid-column:2;grid-row:1 / span 2;justify-self:center;width:180px;height:180px;border-radius:50%;display:grid;place-items:center;text-align:center;background:radial-gradient(circle at 50% 20%,rgba(0,216,255,.13),transparent 45%),rgba(6,25,47,.92);border:1px solid rgba(0,216,255,.48);box-shadow:0 0 58px rgba(0,216,255,.12);position:relative}.hub:before{content:"";position:absolute;inset:-32px;border-radius:50%;border:1px solid rgba(0,216,255,.08)}.hub i{font-size:2.1rem;color:var(--cyan)}.hub strong{display:block;font-family:"Space Grotesk";font-size:1.2rem}.hub span{display:block;color:#8fa5bc;font-size:.75rem}.roadmap{margin-top:2.4vh;padding-top:2.2vh;border-top:1px solid rgba(58,180,255,.18)}.timeline{display:grid;grid-template-columns:1fr .72fr .72fr;gap:12px}.phase{position:relative;border-radius:20px;padding:18px 20px;min-height:130px;background:linear-gradient(135deg,rgba(0,216,255,.08),rgba(5,20,38,.88));border:1px solid rgba(0,216,255,.28)}.phase.purple{background:linear-gradient(135deg,rgba(123,69,255,.12),rgba(15,12,45,.88));border-color:rgba(142,80,255,.35)}.phase.orange{background:linear-gradient(135deg,rgba(249,115,22,.12),rgba(50,24,8,.8));border-color:rgba(249,115,22,.34)}.phase .num{position:absolute;right:15px;top:13px;color:#6a8aa7;font-family:"Space Grotesk";font-size:.72rem}.phase h3{font-family:"Space Grotesk";font-size:1.18rem;margin:0}.phase h3 span{font-size:1.9rem;color:var(--cyan)}.phase.purple h3 span{color:#b48aff}.phase.orange h3 span{color:#ff9c59}.phase p{margin:6px 0 0;color:#94a9be;font-size:.75rem;line-height:1.4}.price{margin-top:10px;display:inline-flex;align-items:center;gap:7px;padding:7px 10px;border-radius:10px;background:rgba(0,216,255,.07);border:1px solid rgba(0,216,255,.2);font-weight:800;font-size:.8rem;color:#c6f9ff}.purple .price{background:rgba(123,69,255,.09);border-color:rgba(123,69,255,.22);color:#dbcaff}.orange .price{background:rgba(249,115,22,.09);border-color:rgba(249,115,22,.23);color:#ffd0ad}.road-note{margin-top:11px;color:#8da3b9;font-size:.72rem}.road-note strong{color:#dce8f2}
+
+/* 7 */
+.data-layout{display:grid;grid-template-columns:1.05fr .95fr;gap:2vw;margin-top:3vh;height:calc(100% - 118px)}.metrics{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}.metric{padding:18px;border-radius:19px;background:rgba(7,26,49,.72);border:1px solid rgba(55,180,255,.18)}.metric i{color:var(--cyan);font-size:1.05rem}.metric strong{display:block;font-family:"Space Grotesk";font-size:1.03rem;margin-top:8px}.metric span{display:block;color:#8ea5bb;font-size:.72rem;margin-top:3px}.copilot{border-radius:26px;padding:24px;position:relative;overflow:hidden}.copilot:before{content:"";position:absolute;width:240px;height:240px;border-radius:50%;background:rgba(123,69,255,.12);filter:blur(55px);right:-90px;top:-90px}.copilot-head{display:flex;align-items:center;gap:12px;position:relative}.copilot-head .orb{width:46px;height:46px;border-radius:15px;display:grid;place-items:center;background:linear-gradient(145deg,rgba(0,216,255,.14),rgba(123,69,255,.15));border:1px solid rgba(0,216,255,.25);color:var(--cyan)}.copilot-head strong{font-family:"Space Grotesk";font-size:1.06rem}.copilot-head span{display:block;color:#8fa5bc;font-size:.72rem;margin-top:2px}.chat{display:grid;gap:10px;margin-top:20px;position:relative}.bubble{padding:12px 14px;border-radius:15px;font-size:.76rem;line-height:1.42}.bubble.user{margin-left:18%;background:rgba(21,149,255,.12);border:1px solid rgba(21,149,255,.22);color:#d9ebfb}.bubble.ai{margin-right:8%;background:rgba(255,255,255,.035);border:1px solid rgba(255,255,255,.07);color:#becfde}.bubble.ai strong{color:#fff}
+
+/* 8 */
+.closing{height:100%;display:grid;place-items:center;text-align:center}.closing-inner{max-width:1080px}.closing .kicker{font-size:.74rem;letter-spacing:.25em;color:#7fdfff;text-transform:uppercase;font-weight:800}.closing h2{font-family:"Space Grotesk";font-size:clamp(3.2rem,5vw,5.8rem);line-height:.93;letter-spacing:-.06em;margin:18px auto 0}.closing p{max-width:820px;margin:25px auto 0;color:#aebfd0;font-size:1.1rem;line-height:1.55}.closing-card{margin:32px auto 0;max-width:860px;border-radius:24px;padding:22px 26px;display:grid;grid-template-columns:repeat(3,1fr);gap:12px;text-align:left}.closing-card div{padding:10px 14px}.closing-card strong{display:block;font-size:.88rem}.closing-card span{display:block;color:#8ea4ba;font-size:.73rem;margin-top:4px}.closing-card i{color:var(--cyan);margin-right:7px}.signature{margin-top:30px;font-family:"Space Grotesk";font-size:1.25rem;font-weight:800;letter-spacing:.08em}.signature span{background:linear-gradient(90deg,var(--cyan),var(--orange));-webkit-background-clip:text;background-clip:text;color:transparent}
+
+.controls{position:absolute;z-index:30;left:0;right:0;bottom:0;height:76px;padding:0 4.2vw;background:linear-gradient(0deg,rgba(1,6,14,.92),rgba(1,6,14,.22));backdrop-filter:blur(9px);border-top:1px solid rgba(255,255,255,.05)}.progress{position:absolute;top:0;left:0;right:0;height:2px;background:rgba(255,255,255,.05)}.progress-fill{height:100%;width:12.5%;background:linear-gradient(90deg,var(--cyan),var(--violet),var(--orange));transition:width .35s ease}.controls-row{height:100%;display:flex;align-items:center;justify-content:space-between}.counter{font-family:"Space Grotesk";font-weight:700;color:#7890a9;font-size:.76rem}.counter span:first-child{color:#d9edf8}.dots{display:flex;gap:7px;align-items:center}.dot{width:7px;height:7px;border-radius:50%;background:#354d67;border:none;padding:0;cursor:pointer;transition:.2s}.dot.active{width:24px;border-radius:999px;background:linear-gradient(90deg,var(--cyan),var(--orange))}.navs{display:flex;gap:9px}.nav-btn{width:40px;height:40px}.nav-btn.primary{background:linear-gradient(135deg,rgba(0,216,255,.12),rgba(123,69,255,.13));border-color:rgba(0,216,255,.38)}
+@media(max-width:1150px){.top-note{display:none}.slides{inset-top:82px}.hero{grid-template-columns:1fr 1fr}.pillars{grid-template-columns:repeat(2,1fr)}.pillar{min-height:250px}.integration-grid{grid-template-columns:1fr 180px 1fr}.hub{width:150px;height:150px}.timeline{grid-template-columns:1fr 1fr 1fr}.slide-inner{padding-left:3vw;padding-right:3vw}}
+</style>
+</head>
+<body>
+<div class="deck" id="deck">
+  <div class="glow g1"></div><div class="glow g2"></div><div class="glow g3"></div>
+  <header class="topbar">
+    <div class="brand"><div class="brand-mark"><i class="bi bi-diagram-3-fill"></i></div><div class="brand-name">SMARTEO</div><div class="brand-x">×</div><div class="eco">MUTUAL <b>ECO</b></div></div>
+    <div class="top-actions"><div class="top-note">INTELIGENCIA OPERATIVA · <strong>MENOS IA. MÁS IO.</strong></div><button class="icon-btn" id="fullscreenBtn" aria-label="Pantalla completa"><i class="bi bi-arrows-fullscreen"></i></button></div>
+  </header>
+
+  <main class="slides">
+    <!-- 1 -->
+    <section class="slide active" aria-label="Portada">
+      <div class="slide-inner hero">
+        <div class="reveal">
+          <div class="pill"><i class="bi bi-buildings"></i> PROYECTO DE IMPLEMENTACIÓN · OFICINA DE COBRANZAS</div>
+          <h1>De una gestión fragmentada a una <span class="gradient">operación centralizada.</span></h1>
+          <p>Smarteo organiza personas, carteras, comunicaciones, convenios, comprobantes y resultados dentro de un mismo circuito operativo.</p>
+          <div class="hero-tags"><span class="pill"><i class="bi bi-person-vcard"></i> Ficha única por socio</span><span class="pill"><i class="bi bi-chat-square-text"></i> Comunicación centralizada</span><span class="pill"><i class="bi bi-graph-up-arrow"></i> Gestión medible</span></div>
+        </div>
+        <div class="hero-card reveal d2">
+          <div class="orbit"></div>
+          <div class="hero-core"><div><i class="bi bi-diagram-3-fill"></i><strong>SMARTEO</strong><span>núcleo operativo</span></div></div>
+          <div class="float-card fc1"><i class="bi bi-file-earmark-spreadsheet"></i> Reportes 83 / 70</div>
+          <div class="float-card fc2"><i class="bi bi-whatsapp"></i> WhatsApp / Meta</div>
+          <div class="float-card fc3"><i class="bi bi-file-earmark-check"></i> Convenios / comprobantes</div>
+          <div class="float-card fc4"><i class="bi bi-bar-chart-line"></i> Indicadores / Copilot</div>
+          <div class="hero-footer"><div><strong>Oficina de Cobranzas Inteligente</strong><small>Proceso + tecnología + datos + seguimiento.</small></div><div class="accent">Mutual ECO</div></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 2 -->
+    <section class="slide" aria-label="De la fragmentación a la inteligencia operativa">
+      <div class="slide-inner">
+        <div class="eyebrow reveal">PUNTO DE PARTIDA</div>
+        <h2 class="heading reveal d1">El problema no es la falta de trabajo. <span class="gradient">Es la información separada del proceso.</span></h2>
+        <div class="two-col">
+          <div class="state-panel before reveal d2">
+            <div><div class="side-label">HOY · OPERACIÓN DISTRIBUIDA</div><div class="list">
+              <div class="item"><div class="ic"><i class="bi bi-filetype-xlsx"></i></div><div><strong>Reportes y planillas</strong><p>El Reporte 83 y el 70 funcionan como entradas separadas de la gestión diaria.</p></div></div>
+              <div class="item"><div class="ic"><i class="bi bi-whatsapp"></i></div><div><strong>Conversaciones dispersas</strong><p>La continuidad depende de líneas, teléfonos y seguimiento individual.</p></div></div>
+              <div class="item"><div class="ic"><i class="bi bi-search"></i></div><div><strong>Consultas externas</strong><p>Nosis, Agil Data y otras fuentes se usan sin una trazabilidad centralizada.</p></div></div>
+              <div class="item"><div class="ic"><i class="bi bi-receipt"></i></div><div><strong>Comprobantes y conciliación</strong><p>El pago circula por otros canales hasta poder validarse administrativamente.</p></div></div>
+            </div></div>
+            <div class="big-call">La operación existe. <span>La información no vive en un solo lugar.</span></div>
+          </div>
+          <div class="state-panel after reveal d3">
+            <div><div class="side-label cyan">CON SMARTEO · OPERACIÓN POR PERSONA</div><div class="list">
+              <div class="item"><div class="ic"><i class="bi bi-person-vcard"></i></div><div><strong>Una ficha única</strong><p>La persona no se duplica cuando vuelve a aparecer en un nuevo Reporte 83.</p></div></div>
+              <div class="item"><div class="ic"><i class="bi bi-clock-history"></i></div><div><strong>Historia operativa completa</strong><p>Chats, notas, convenios, pagos y estados quedan vinculados al mismo expediente.</p></div></div>
+              <div class="item"><div class="ic"><i class="bi bi-collection"></i></div><div><strong>Carteras dinámicas</strong><p>La cartera es una asignación de trabajo, no una nueva base paralela.</p></div></div>
+              <div class="item"><div class="ic"><i class="bi bi-speedometer2"></i></div><div><strong>Gestión medible</strong><p>Cada acción deja datos para coordinar, medir y mejorar la recuperación.</p></div></div>
+            </div></div>
+            <div class="big-call">La información deja de acompañar al operador. <span>Pasa a pertenecer a la organización.</span></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 3 -->
+    <section class="slide" aria-label="Flujo operativo">
+      <div class="slide-inner">
+        <div class="eyebrow reveal">FLUJO OPERATIVO</div>
+        <h2 class="heading reveal d1">Del Reporte 83 al recupero. <span class="gradient">Un solo circuito de trabajo.</span></h2>
+        <div class="flow-wrap reveal d2">
+          <div class="flow-grid">
+            <div class="step"><span class="n">01</span><div class="ic"><i class="bi bi-upload"></i></div><strong>Ingreso</strong><p>Reporte 83 actualiza deuda, mora y situación del socio.</p></div>
+            <div class="step"><span class="n">02</span><div class="ic"><i class="bi bi-funnel"></i></div><strong>Segmentación</strong><p>Entidad, fecha de cobro, nivel de mora, monto y reincidencia.</p></div>
+            <div class="step"><span class="n">03</span><div class="ic"><i class="bi bi-collection"></i></div><strong>Carteras</strong><p>Selección y asignación de casos a los operadores.</p></div>
+            <div class="step"><span class="n">04</span><div class="ic"><i class="bi bi-chat-square-text"></i></div><strong>Gestión</strong><p>Contacto, notas, ampliación de datos y estado de situación.</p></div>
+          </div>
+          <div class="flow-grid">
+            <div class="step orange"><span class="n">05</span><div class="ic"><i class="bi bi-file-earmark-text"></i></div><strong>Convenio</strong><p>Promesa o acuerdo con cronograma y seguimiento de cumplimiento.</p></div>
+            <div class="step orange"><span class="n">06</span><div class="ic"><i class="bi bi-paperclip"></i></div><strong>Comprobante</strong><p>La evidencia de pago queda asociada a la ficha del socio.</p></div>
+            <div class="step orange"><span class="n">07</span><div class="ic"><i class="bi bi-bank2"></i></div><strong>Conciliación</strong><p>Tesorería valida, rechaza o solicita revisión del pago.</p></div>
+            <div class="step orange"><span class="n">08</span><div class="ic"><i class="bi bi-graph-up-arrow"></i></div><strong>Análisis</strong><p>Recupero, desempeño, convenios, caídas y reincidencias.</p></div>
+          </div>
+          <div class="flow-message"><i class="bi bi-shield-check"></i><strong>Regla central:</strong>&nbsp;si Juan Pérez aparece en septiembre y nuevamente en octubre, se actualiza su situación actual y se conserva todo su historial. No se duplica.</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 4 -->
+    <section class="slide" aria-label="Implementación en la oficina">
+      <div class="slide-inner">
+        <div class="eyebrow reveal">OFICINA DE COBRANZAS INTELIGENTE</div>
+        <h2 class="heading reveal d1">La tecnología se adapta a <span class="gradient">los roles reales de la oficina.</span></h2>
+        <div class="office">
+          <div class="office-map panel reveal d2">
+            <div class="office-title">Esquema operativo propuesto</div>
+            <div class="desk-grid">
+              <div class="desk"><div class="avatar">01</div><div><strong>Operador</strong><small>Cartera · contacto · estado · notas</small></div></div>
+              <div class="desk"><div class="avatar">02</div><div><strong>Operador</strong><small>Cartera · contacto · estado · notas</small></div></div>
+              <div class="desk"><div class="avatar">03</div><div><strong>Operador</strong><small>Cartera · contacto · estado · notas</small></div></div>
+              <div class="desk"><div class="avatar">04</div><div><strong>Operador</strong><small>Cartera · contacto · estado · notas</small></div></div>
+              <div class="desk wide orange"><div class="avatar">C</div><div><strong>Coordinación de cobranzas</strong><small>Segmentación · distribución · supervisión · objetivos</small></div></div>
+              <div class="desk wide orange"><div class="avatar">T</div><div><strong>Administración / Tesorería</strong><small>Comprobantes · validación · conciliación · cierre</small></div></div>
+            </div>
+          </div>
+          <div class="roles reveal d3">
+            <div class="role"><i class="bi bi-person-workspace"></i><div><strong>El operador sabe qué hacer</strong><p>Ve su cartera, el contexto previo y las acciones pendientes de cada caso.</p></div></div>
+            <div class="role"><i class="bi bi-diagram-2"></i><div><strong>Coordinación ve el conjunto</strong><p>Asigna, redistribuye y detecta carteras o gestiones detenidas.</p></div></div>
+            <div class="role orange"><i class="bi bi-check2-square"></i><div><strong>Tesorería mantiene la validación</strong><p>El cobrador registra; administración confirma el pago y deja trazabilidad.</p></div></div>
+            <div class="role orange"><i class="bi bi-eye"></i><div><strong>Dirección ve resultados</strong><p>Recupero, objetivos y comportamiento operativo sin consolidar reportes manuales.</p></div></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 5 -->
+    <section class="slide" aria-label="Módulos principales">
+      <div class="slide-inner">
+        <div class="eyebrow reveal">PLATAFORMA OPERATIVA</div>
+        <h2 class="heading reveal d1">Cuatro capacidades concentran <span class="gradient">el trabajo cotidiano.</span></h2>
+        <div class="pillars">
+          <div class="pillar reveal d1"><div class="ic"><i class="bi bi-funnel"></i></div><h3>Segmentación</h3><p>Ingreso del Reporte 83, normalización y priorización de socios según reglas operativas.</p><div class="mini-points"><div class="mini"><i class="bi bi-check2"></i>Historial sin duplicados</div><div class="mini"><i class="bi bi-check2"></i>Fechas de cobro configurables</div><div class="mini"><i class="bi bi-check2"></i>Reincidencia identificable</div></div></div>
+          <div class="pillar reveal d2"><div class="ic"><i class="bi bi-collection"></i></div><h3>Carteras</h3><p>Creación y asignación de grupos de trabajo sin perder la identidad única del socio.</p><div class="mini-points"><div class="mini"><i class="bi bi-check2"></i>Asignación por operador</div><div class="mini"><i class="bi bi-check2"></i>Redistribución dinámica</div><div class="mini"><i class="bi bi-check2"></i>Objetivos por cartera</div></div></div>
+          <div class="pillar reveal d3"><div class="ic"><i class="bi bi-chat-dots"></i></div><h3>Gestión del socio</h3><p>Comunicación, ampliación de información, notas y cambios de estado en una sola ficha.</p><div class="mini-points"><div class="mini"><i class="bi bi-check2"></i>Historial centralizado</div><div class="mini"><i class="bi bi-check2"></i>Nosis / Agil Data</div><div class="mini"><i class="bi bi-check2"></i>Resumen operativo</div></div></div>
+          <div class="pillar reveal d4"><div class="ic"><i class="bi bi-file-earmark-check"></i></div><h3>Convenios y conciliación</h3><p>Cronogramas de pago, comprobantes, validación administrativa y control de caídas.</p><div class="mini-points"><div class="mini"><i class="bi bi-check2"></i>Promesas y convenios</div><div class="mini"><i class="bi bi-check2"></i>Cuotas y vencimientos</div><div class="mini"><i class="bi bi-check2"></i>Conciliación trazable</div></div></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 6 -->
+    <section class="slide" aria-label="Integraciones y plan de implementación">
+      <div class="slide-inner">
+        <div class="eyebrow reveal">IMPLEMENTACIÓN E INTEGRACIONES</div>
+        <h2 class="heading reveal d1">Primero ordenamos la operación. <span class="gradient">Después conectamos las fuentes.</span></h2>
+        <div class="integration-grid reveal d2">
+          <div class="source-card"><div class="ic"><i class="bi bi-whatsapp"></i></div><div><strong>WhatsApp / Meta</strong><span>Canal institucional e historial centralizado.</span></div></div>
+          <div class="hub"><div><i class="bi bi-diagram-3-fill"></i><strong>SMARTEO</strong><span>núcleo operativo</span></div></div>
+          <div class="source-card right"><div class="ic"><i class="bi bi-search"></i></div><div><strong>Nosis / Agil Data</strong><span>Ampliación controlada de información.</span></div></div>
+          <div class="source-card"><div class="ic"><i class="bi bi-file-earmark-spreadsheet"></i></div><div><strong>Reportes 83 / 70</strong><span>Ingreso periódico y normalización.</span></div></div>
+          <div class="source-card right"><div class="ic"><i class="bi bi-envelope"></i></div><div><strong>Comprobantes / Correo</strong><span>Documentos ligados al expediente del socio.</span></div></div>
+        </div>
+        <div class="roadmap reveal d3">
+          <div class="timeline">
+            <div class="phase"><span class="num">MESES 1–6</span><h3><span>6 meses</span> · Implementación</h3><p>Relevamiento, configuración, adaptación de la maqueta, piloto, capacitación, integraciones prioritarias y puesta en marcha.</p><div class="price"><i class="bi bi-cash-stack"></i> USD 1.100 / mes</div></div>
+            <div class="phase purple"><span class="num">MESES 7–9</span><h3><span>3 meses</span> · Medición</h3><p>Seguimiento de indicadores, ajustes operativos y validación de resultados en funcionamiento real.</p><div class="price"><i class="bi bi-graph-up-arrow"></i> USD 500 / mes</div></div>
+            <div class="phase orange"><span class="num">MES 10+</span><h3><span>Grow Partner</span></h3><p>Continuidad, mejora mensual, automatizaciones y evolución de nuevas necesidades detectadas.</p><div class="price"><i class="bi bi-infinity"></i> USD 500 / mes</div></div>
+          </div>
+          <div class="road-note">La inversión se reduce después de los primeros seis meses porque Smarteo pasa de una etapa intensiva de construcción e implementación a un esquema de <strong>acompañamiento, medición y mejora continua.</strong></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 7 -->
+    <section class="slide" aria-label="Indicadores y Copilot">
+      <div class="slide-inner">
+        <div class="eyebrow reveal">MEDIR PARA MEJORAR</div>
+        <h2 class="heading reveal d1">La operación diaria se convierte en <span class="gradient">información para decidir.</span></h2>
+        <div class="data-layout">
+          <div class="metrics reveal d2">
+            <div class="metric"><i class="bi bi-currency-dollar"></i><strong>Recupero</strong><span>Diario, mensual, por cartera y por operador.</span></div>
+            <div class="metric"><i class="bi bi-telephone-outbound"></i><strong>Contacto efectivo</strong><span>Intentos, respuestas y efectividad real.</span></div>
+            <div class="metric"><i class="bi bi-file-earmark-check"></i><strong>Convenios</strong><span>Generados, vigentes, cumplidos y caídos.</span></div>
+            <div class="metric"><i class="bi bi-calendar-check"></i><strong>Promesas</strong><span>Monto comprometido y porcentaje de cumplimiento.</span></div>
+            <div class="metric"><i class="bi bi-arrow-repeat"></i><strong>Reincidencia</strong><span>Socios que vuelven a mora y frecuencia.</span></div>
+            <div class="metric"><i class="bi bi-person-workspace"></i><strong>Desempeño</strong><span>Objetivos y resultados por operador.</span></div>
+          </div>
+          <div class="copilot panel reveal d3">
+            <div class="copilot-head"><div class="orb"><i class="bi bi-stars"></i></div><div><strong>Smarteo Copilot</strong><span>Consultas sobre la operación ya ordenada.</span></div></div>
+            <div class="chat">
+              <div class="bubble user">¿Cuánto se recuperó este mes y qué cartera está por debajo del objetivo?</div>
+              <div class="bubble ai"><strong>Copilot:</strong> compara recupero, metas y evolución por cartera para señalar dónde intervenir.</div>
+              <div class="bubble user">¿Cuántos convenios están vencidos y quiénes reincidieron en el último Reporte 83?</div>
+              <div class="bubble ai"><strong>Copilot:</strong> cruza convenios, vencimientos e historial mensual sin reconstruir la información manualmente.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 8 -->
+    <section class="slide" aria-label="Cierre">
+      <div class="slide-inner closing">
+        <div class="closing-inner">
+          <div class="kicker reveal">OBJETIVO FINAL</div>
+          <h2 class="reveal d1">No implementar otro sistema.<br><span class="gradient">Implementar una nueva forma de operar.</span></h2>
+          <p class="reveal d2">Una oficina donde cada persona sabe qué gestionar, la organización conserva la historia, la dirección puede medir resultados y la tecnología automatiza solamente después de ordenar el proceso.</p>
+          <div class="closing-card panel reveal d3">
+            <div><strong><i class="bi bi-1-circle"></i>Implementar</strong><span>6 meses · USD 1.100/mes</span></div>
+            <div><strong><i class="bi bi-2-circle"></i>Medir y ajustar</strong><span>3 meses · USD 500/mes</span></div>
+            <div><strong><i class="bi bi-3-circle"></i>Grow Partner</strong><span>Continuidad · USD 500/mes</span></div>
+          </div>
+          <div class="signature reveal d4">SMARTEO · <span>MENOS IA. MÁS IO.</span></div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="controls">
+    <div class="progress"><div class="progress-fill" id="progressFill"></div></div>
+    <div class="controls-row"><div class="counter"><span id="currentSlide">01</span> / <span id="totalSlides">08</span></div><div class="dots" id="dots"></div><div class="navs"><button class="nav-btn" id="prevBtn" aria-label="Anterior"><i class="bi bi-arrow-left"></i></button><button class="nav-btn primary" id="nextBtn" aria-label="Siguiente"><i class="bi bi-arrow-right"></i></button></div></div>
+  </footer>
+</div>
+<script>
+(() => {
+  const slides=[...document.querySelectorAll('.slide')];
+  const prevBtn=document.getElementById('prevBtn'), nextBtn=document.getElementById('nextBtn');
+  const currentSlide=document.getElementById('currentSlide'), totalSlides=document.getElementById('totalSlides');
+  const progressFill=document.getElementById('progressFill'), dotsWrap=document.getElementById('dots');
+  const fullscreenBtn=document.getElementById('fullscreenBtn'), deck=document.getElementById('deck');
+  let index=0;
+  totalSlides.textContent=String(slides.length).padStart(2,'0');
+  const dots=slides.map((_,i)=>{const b=document.createElement('button');b.className='dot'+(i===0?' active':'');b.setAttribute('aria-label',`Ir a diapositiva ${i+1}`);b.addEventListener('click',()=>go(i));dotsWrap.appendChild(b);return b;});
+  function ui(){currentSlide.textContent=String(index+1).padStart(2,'0');progressFill.style.width=`${((index+1)/slides.length)*100}%`;dots.forEach((d,i)=>d.classList.toggle('active',i===index));}
+  function go(next){next=Math.max(0,Math.min(slides.length-1,next));if(next===index)return;const old=slides[index];old.classList.remove('active');old.classList.toggle('leave-left',next>index);index=next;slides.forEach((s,i)=>{if(i!==index)s.classList.remove('active');});slides[index].classList.remove('leave-left');requestAnimationFrame(()=>slides[index].classList.add('active'));ui();}
+  prevBtn.addEventListener('click',()=>go(index-1));nextBtn.addEventListener('click',()=>go(index+1));
+  document.addEventListener('keydown',e=>{if(['ArrowRight','PageDown',' ','Enter'].includes(e.key)){e.preventDefault();go(index+1)}if(['ArrowLeft','PageUp'].includes(e.key)){e.preventDefault();go(index-1)}if(e.key==='Home')go(0);if(e.key==='End')go(slides.length-1)});
+  fullscreenBtn.addEventListener('click',async()=>{try{if(!document.fullscreenElement)await deck.requestFullscreen();else await document.exitFullscreen()}catch(_){}});
+  let startX=0;deck.addEventListener('touchstart',e=>{startX=e.changedTouches[0].screenX},{passive:true});deck.addEventListener('touchend',e=>{const dx=e.changedTouches[0].screenX-startX;if(Math.abs(dx)>55)go(index+(dx<0?1:-1))},{passive:true});
+  ui();
+})();
+</script>
+</body>
+</html>
