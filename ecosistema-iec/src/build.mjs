@@ -2,11 +2,15 @@
 import fs from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
+import crypto from "node:crypto";
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 const SRC = path.join(ROOT, "src", "pages");
 const OUT = path.join(ROOT, "public");
 const SITE = "https://www.iec-ia.com.ar";
+
+// Versión por contenido: los navegadores guardan /assets una semana, así cada cambio se descarga de nuevo
+const ver = (file) => "/assets/" + file + "?v=" + crypto.createHash("md5").update(fs.readFileSync(path.join(OUT, "assets", file))).digest("hex").slice(0, 8);
 
 const NAV = [
   ["capacitaciones", "/capacitaciones", "Capacitaciones"],
@@ -173,7 +177,7 @@ function page(meta, main) {
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@300;400;500;600;700&family=DM+Mono:wght@400;500&display=swap">
-  <link rel="stylesheet" href="/assets/site.css">${introGuard}
+  <link rel="stylesheet" href="${ver("site.css")}">${introGuard}
   <script>try{var n=+sessionStorage.getItem("iec-nav");sessionStorage.removeItem("iec-nav");if(n&&Date.now()-n<3000)document.documentElement.classList.add("pt-enter")}catch(e){}</script>
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-R817QWH97R"></script>
   <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-R817QWH97R');</script>${jsonld}
@@ -183,8 +187,8 @@ function page(meta, main) {
 ${main.replace("{{last-call}}", fs.readFileSync(path.join(SRC, "_last-call.html"), "utf8")).replaceAll("{{arrow}}", arrow).trim()}
 ${FOOTER}
 
-  <script src="/assets/site.js" defer></script>
-  <script src="/assets/assistant.js" defer></script>${meta.hero3d ? '\n  <script type="module" src="/assets/hero3d.js"></script>' : ""}
+  <script src="${ver("site.js")}" defer></script>
+  <script src="${ver("assistant.js")}" defer></script>${meta.hero3d ? `\n  <script type="module" src="${ver("hero3d.js")}"></script>` : ""}
 </body>
 </html>
 `;
