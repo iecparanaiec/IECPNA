@@ -1004,3 +1004,40 @@ button { font: inherit; color: inherit; cursor: pointer; }
 @keyframes lgGlowIn { from { opacity: 0; transform: scale(.78); } }
 /* El halo oscuro queda solo detrás del texto, para que se vea la red llegando al logo */
 .intro__core::before { width: min(520px, 90vw); height: 230px; top: auto; bottom: -40px; transform: translateX(-50%); border-radius: 50%; background: radial-gradient(closest-side, rgba(5,5,5,.92), rgba(5,5,5,.6) 60%, transparent); }
+
+/* ---------- Portada: video vertical del ecosistema en un celular ---------- */
+.hero-phone { position: relative; justify-self: start; align-self: center; margin-left: clamp(24px, 6vw, 110px); display: flex; flex-direction: column; align-items: center; gap: 18px; opacity: 0; transform: translateY(40px) scale(.94); transition: opacity .8s var(--ease) .15s, transform 1s var(--ease) .15s; pointer-events: auto; }
+.chapter.is-active .hero-phone { opacity: 1; transform: none; }
+.chapter.is-leaving .hero-phone { opacity: 0; transform: translateY(-30px) scale(.96); transition-duration: .35s; transition-delay: 0s; }
+.hero-phone::before { content: ""; position: absolute; left: 50%; top: 45%; width: 150%; aspect-ratio: 1; transform: translate(-50%, -50%); border-radius: 50%; background: radial-gradient(circle, rgba(34,211,238,.22), rgba(139,92,246,.12) 44%, transparent 70%); filter: blur(22px); animation: phoneAura 5s ease-in-out infinite alternate; pointer-events: none; z-index: -1; }
+.hero-phone__shell { position: relative; height: min(64vh, 620px); aspect-ratio: 9 / 19.5; border-radius: 42px; padding: 12px; background: linear-gradient(145deg, #181d2c, #05070d 42%, #151827); border: 1px solid rgba(255,255,255,.2); box-shadow: 0 34px 90px rgba(0,0,0,.6), 0 0 60px rgba(34,211,238,.16), inset 0 0 0 1px rgba(255,255,255,.04); transform: perspective(1200px) rotateY(-6deg) rotateX(1deg); animation: phoneFloat 5.4s ease-in-out infinite; }
+.hero-phone__shell::before { content: ""; position: absolute; top: 18px; left: 50%; transform: translateX(-50%); width: 31%; height: 22px; border-radius: 999px; background: #020307; z-index: 5; box-shadow: 0 1px 0 rgba(255,255,255,.08); }
+.hero-phone__screen { position: absolute; inset: 12px; border-radius: 32px; overflow: hidden; background: #000; }
+.hero-phone__video { width: 100%; height: 100%; object-fit: cover; display: block; background: #000; }
+.hero-phone__fallback { position: absolute; inset: 0; display: grid; place-items: center; padding: 20px; text-align: center; color: var(--white); font-weight: 600; background: radial-gradient(circle, rgba(34,211,238,.18), #05070d 70%); }
+.hero-phone__sound { right: 22px; bottom: 22px; z-index: 6; }
+.hero-phone__label { display: inline-flex; align-items: center; gap: 8px; padding: 8px 14px; border-radius: 999px; border: 1px solid rgba(34,211,238,.3); background: rgba(5,8,16,.8); font-family: var(--mono); font-size: 11px; letter-spacing: .12em; text-transform: uppercase; color: #e4e4e7; white-space: nowrap; }
+.hero-phone__label i { width: 7px; height: 7px; border-radius: 50%; background: var(--green); box-shadow: 0 0 10px var(--green); animation: pulse 1.6s ease-in-out infinite; }
+@keyframes phoneAura { to { transform: translate(-50%, -52%) scale(1.12); filter: blur(28px); } }
+@keyframes phoneFloat { 50% { transform: perspective(1200px) rotateY(2deg) rotateX(-1deg) translateY(-10px); } }
+@media (max-width: 1100px) and (min-width: 901px) { .hero-phone { margin-left: 16px; } .hero-phone__shell { height: min(56vh, 520px); } }
+@media (max-width: 900px) {
+  .hero-phone { order: -1; justify-self: center; margin: 0 0 14px; gap: 8px; }
+  .hero-phone__shell { height: clamp(150px, calc(100svh - 610px), 300px); border-radius: 26px; padding: 7px; transform: none; }
+  .hero-phone__shell::before { top: 11px; height: 12px; }
+  .hero-phone__screen { inset: 7px; border-radius: 20px; }
+  .hero-phone__sound { right: 12px; bottom: 12px; width: 32px; height: 32px; }
+  .hero-phone__label { font-size: 9.5px; padding: 6px 10px; }
+}
+@media (prefers-reduced-motion: reduce) { .hero-phone__shell, .hero-phone::before { animation: none; } }
+.hero-phone [hidden] { display: none !important; }
+/* Celular: el video va como miniatura vertical junto al título */
+@media (max-width: 900px) {
+  .chapter .wrap { position: relative; }
+  .hero-phone { position: absolute; right: var(--gutter); top: 0; order: 0; margin: 0; width: clamp(84px, 24vw, 108px); gap: 0; }
+  .hero-phone::before { width: 220%; }
+  .hero-phone__shell { height: auto; width: 100%; }
+  .hero-phone__label { display: none; }
+  .chapter:has(.hero-phone) .eco-logos,
+  .chapter:has(.hero-phone) h1 { max-width: calc(100% - clamp(84px, 24vw, 108px) - 14px); }
+}

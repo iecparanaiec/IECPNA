@@ -453,6 +453,34 @@
     });
   });
 
+  /* ---------- Portada: video del ecosistema en el celular ---------- */
+  const heroPhone = document.querySelector("[data-hero-phone]");
+  if (heroPhone) {
+    const hv = heroPhone.querySelector("video");
+    const chapter = heroPhone.closest(".chapter");
+    const sound = heroPhone.querySelector(".hero-phone__sound");
+    const fallback = heroPhone.querySelector(".hero-phone__fallback");
+    const sync = () => {
+      const introOn = doc.classList.contains("intro-running") || (document.querySelector(".intro") && !doc.classList.contains("intro-seen"));
+      const show = chapter.classList.contains("is-active") && !document.hidden && !introOn;
+      if (show && hv.paused && !hv.error && !reduced) { const p = hv.play(); if (p && p.catch) p.catch(() => {}); }
+      if (!show && !hv.paused) hv.pause();
+    };
+    hv.addEventListener("error", () => { hv.hidden = true; fallback.hidden = false; sound.hidden = true; });
+    sound.addEventListener("click", () => {
+      const on = hv.muted;
+      hv.muted = !on;
+      if (on) { const p = hv.play(); if (p && p.catch) p.catch(() => {}); }
+      sound.setAttribute("aria-pressed", String(on));
+      sound.setAttribute("aria-label", on ? "Silenciar" : "Activar sonido");
+    });
+    window.addEventListener("scroll", () => requestAnimationFrame(sync), { passive: true });
+    document.addEventListener("visibilitychange", sync);
+    document.addEventListener("iec:intro-done", () => setTimeout(sync, 400));
+    if (reduced) hv.setAttribute("controls", "");
+    setTimeout(sync, 300);
+  }
+
   /* ---------- Cuenta regresiva de las últimas capacitaciones del año ---------- */
   document.querySelectorAll("[data-countdown]").forEach((box) => {
     const target = new Date(box.dataset.countdown).getTime();
