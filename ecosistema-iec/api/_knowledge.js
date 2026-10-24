@@ -54,7 +54,7 @@ Página: /confian
 - Implementación: Mutual Eco (implementación de Inteligencia Operativa y sistema inteligente), Instituto Bioquímico Privado (ERP de RR. HH. y contaduría con IA, en producción), SIL Servicio Integral de Limpieza (ERP, en producción), CeCIP (convenio ComercIA Inteligente), American English Institute (ERP y campus virtual, en implementación), Dr Tecno (e-commerce con IA), Aroma (e-commerce y asistente de IA por WhatsApp).
 - Capacitación en IA para equipos: Unimédica, FEMER, Red Rural, COP Paraná y Municipalidad de Paraná (oficios con IA).
 - Proyectos en desarrollo: DJ Consultora, Fundación Lazos y Delta 3.
-- Eventos: Campus Party Argentina.
+- Eventos y alianzas: Campus Party Argentina; Mutual Entrerriana 16 de Septiembre (convenio de trabajo mutuo).
 
 # Otras páginas
 Novedades y eventos: /novedades. Contacto y formulario: /contacto.

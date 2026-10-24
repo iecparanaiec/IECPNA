@@ -32,7 +32,7 @@
     { k: ["qgis", "revit", "bim", "arquitect", "mapa"], a: "QGIS Inicial empieza el lunes 16/11 de 18 a 20 h (8 clases) y Revit + IA el martes 17/11 de 18 a 21 h. [QGIS](/qgis) [Revit + IA](/revit_ia)" },
     { k: ["odont", "médic", "medic", "secretar", "salud", "consultorio"], a: "Secretariado Odontológico Inteligente tiene comisión los lunes de 14 a 16 h (desde el 16/11) y los jueves de 16 a 18 h (desde el 19/11). Secretariado Médico Inteligente arranca el lunes 16/11. [Ver capacitaciones](/capacitaciones?area=salud)" },
     { k: ["weekclass", "intensiv", "semana"], a: "La WeekClass De 0 a Producción es una semana intensiva, del 16 al 20 de noviembre de 14 a 17 h: de la idea a una solución funcional con IA. [Ver WeekClass](/weekendclass)" },
-    { k: ["confían", "confian", "clientes", "casos"], a: "Trabajamos con Mutual Eco, el Instituto Bioquímico Privado, SIL, CeCIP, American English Institute, Dr Tecno, Aroma, Unimédica, FEMER, la Municipalidad de Paraná y más. [Ver casos](/confian)" },
+    { k: ["confían", "confian", "clientes", "casos"], a: "Trabajamos con Mutual Eco, el Instituto Bioquímico Privado, SIL, CeCIP, American English Institute, Dr Tecno, Aroma, Unimédica, FEMER, la Municipalidad de Paraná, la Mutual Entrerriana 16 de Septiembre y más. [Ver casos](/confian)" },
   ];
 
   const norm = (s) => s.toLowerCase().normalize("NFD").replace(/[̀-ͯ]/g, "");
