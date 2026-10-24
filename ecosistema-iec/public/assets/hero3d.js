@@ -281,8 +281,6 @@ function init() {
   renderer.domElement.setAttribute("aria-hidden", "true");
 
   let layout = { x: 0, y: 0, s: 1 };
-  // En el primer capítulo el celular con el video ocupa el centro: la figura se corre y se achica
-  let layoutFirst = { x: 0, y: 0, s: 1 };
   function resize() {
     const w = host.clientWidth, h = host.clientHeight;
     const pr = Math.min(window.devicePixelRatio || 1, 1.75);
@@ -296,9 +294,6 @@ function init() {
     layout = w <= 900
       ? { x: 0, y: viewH * 0.22, s: Math.min(0.85, viewW / 5) }
       : { x: viewW * 0.21, y: 0, s: Math.min(1.05, viewW / 7.2) };
-    layoutFirst = w <= 900
-      ? { x: layout.x, y: layout.y, s: layout.s }
-      : { x: viewW * 0.33, y: viewH * 0.02, s: layout.s * 0.62 };
   }
   resize();
   window.addEventListener("resize", resize);
@@ -336,10 +331,8 @@ function init() {
 
     mouse.x += (mouse.tx - mouse.x) * 0.05;
     mouse.y += (mouse.ty - mouse.y) * 0.05;
-    const k0 = Math.min(1, Math.max(0, curT / 0.8));
-    const k = k0 * k0 * (3 - 2 * k0);
-    group.position.set(layoutFirst.x + (layout.x - layoutFirst.x) * k, layoutFirst.y + (layout.y - layoutFirst.y) * k, 0);
-    group.scale.setScalar(layoutFirst.s + (layout.s - layoutFirst.s) * k);
+    group.position.set(layout.x, layout.y, 0);
+    group.scale.setScalar(layout.s);
     // Cada forma mira al frente en su pausa y gira suave durante la transformación
     const spin = Math.sin((curT % 1) * Math.PI) * 0.9;
     group.rotation.y = (reduced ? 0 : Math.sin(time * 0.35) * 0.35) + spin + mouse.x * 0.4;
