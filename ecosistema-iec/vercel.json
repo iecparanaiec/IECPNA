@@ -1,0 +1,42 @@
+{
+  "framework": null,
+  "installCommand": "npm install",
+  "buildCommand": "node src/build.mjs",
+  "outputDirectory": "public",
+  "rewrites": [
+    { "source": "/capacitaciones", "destination": "/capacitaciones.html" },
+    { "source": "/inteligencia-operativa", "destination": "/inteligencia-operativa.html" },
+    { "source": "/quienes-somos", "destination": "/quienes-somos.html" },
+    { "source": "/confian", "destination": "/confian.html" },
+    { "source": "/novedades", "destination": "/novedades.html" },
+    { "source": "/contacto", "destination": "/contacto.html" },
+    { "source": "/experto_ia_nivel_1", "destination": "/experto_ia_nivel_1.html" },
+    { "source": "/experto_ia_nivel_2", "destination": "/experto_ia_nivel_2.html" },
+    { "source": "/programador_experto_ia", "destination": "/programador_experto_ia.html" },
+    { "source": "/programador_teens_ia", "destination": "/programador_teens_ia.html" },
+    { "source": "/robotica_kids", "destination": "/robotica_kids.html" },
+    { "source": "/qgis", "destination": "/qgis.html" },
+    { "source": "/weekendclass", "destination": "/weekendclass.html" },
+    { "source": "/revit_ia", "destination": "/revit_ia.html" },
+    { "source": "/secretariado_odontologico", "destination": "/secretariado_odontologico.html" },
+    { "source": "/secretariado_medico", "destination": "/secretariado_medico.html" }
+  ],
+  "redirects": [
+    { "source": "/cursos.html", "destination": "/capacitaciones", "permanent": true },
+    { "source": "/cursos", "destination": "/capacitaciones", "permanent": true },
+    { "source": "/soluciones", "destination": "/inteligencia-operativa", "permanent": true },
+    { "source": "/implementacion", "destination": "/inteligencia-operativa", "permanent": true },
+    { "source": "/factor-ia", "destination": "/quienes-somos#factoria", "permanent": true },
+    { "source": "/co-nexus", "destination": "/quienes-somos", "permanent": true },
+    { "source": "/nosotros", "destination": "/quienes-somos", "permanent": true },
+    { "source": "/noticias", "destination": "/novedades", "permanent": true },
+    { "source": "/domotica", "destination": "/inteligencia-operativa", "permanent": true },
+    { "source": "/cafeteria", "destination": "/", "permanent": true }
+  ],
+  "headers": [
+    {
+      "source": "/(img|assets|video)/(.*)",
+      "headers": [{ "key": "Cache-Control", "value": "public, max-age=604800" }]
+    }
+  ]
+}

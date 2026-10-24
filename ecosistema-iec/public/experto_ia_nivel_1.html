@@ -1032,7 +1032,7 @@
 <body>
   <header class="topbar">
     <div class="container topbar-inner">
-      <a class="brand" href="https://www.iec-ia.com.ar/cursos.html">
+      <a class="brand" href="/capacitaciones">
         <img src="https://i.postimg.cc/jSkQKpRK/Diseno-sin-titulo-2026-05-15T105828-195.png" alt="Instituto IEC">
         <span>
           <strong>Instituto IEC</strong>
@@ -1040,7 +1040,7 @@
         </span>
       </a>
 
-      <a class="back-button" href="https://www.iec-ia.com.ar/cursos.html" aria-label="Volver al menú de cursos">
+      <a class="back-button" href="/capacitaciones" aria-label="Volver al menú de cursos">
         <i data-lucide="arrow-left" width="18"></i>
         Volver a Cursos
       </a>
@@ -1103,7 +1103,7 @@
           </div>
 
           <p class="countdown-note">
-            Nueva Comisión A: lunes 19 de octubre de 2026 a las 16:00 hs.
+            Última comisión del año · Intensivo: lunes 16 de noviembre de 2026 a las 16:00 hs. Lunes y jueves durante un mes.
           </p>
         </section>
 
@@ -1406,21 +1406,21 @@
 
         <div class="commissions">
           <article class="commission glass">
-            <span class="commission-label">Comisión A</span>
+            <span class="commission-label">Última del año · Día 1</span>
             <h3>Lunes</h3>
             <ul>
               <li><i data-lucide="clock-3" width="17"></i> 16:00 a 18:00 hs</li>
-              <li><i data-lucide="calendar-check" width="17"></i> Nueva comisión · Inicio 19/10</li>
+              <li><i data-lucide="calendar-check" width="17"></i> Del 16/11 al 7/12</li>
               <li><i data-lucide="monitor-cog" width="17"></i> Laboratorio práctico IEC</li>
             </ul>
           </article>
 
           <article class="commission glass">
-            <span class="commission-label">Comisión B</span>
+            <span class="commission-label">Última del año · Día 2</span>
             <h3>Jueves</h3>
             <ul>
               <li><i data-lucide="clock-3" width="17"></i> 14:00 a 16:00 hs</li>
-              <li><i data-lucide="calendar-check" width="17"></i> Nueva comisión · Inicio 22/10</li>
+              <li><i data-lucide="calendar-check" width="17"></i> Del 19/11 al 10/12</li>
               <li><i data-lucide="monitor-cog" width="17"></i> Laboratorio práctico IEC</li>
             </ul>
           </article>
@@ -1453,7 +1453,7 @@
             <h2 id="preinscripcion-title">Reservá tu lugar</h2>
 
             <p>
-              Completá tus datos y elegí una de las nuevas comisiones de octubre que mejor se adapte a tu disponibilidad.
+              Completá tus datos para reservar tu lugar en la última comisión del año: intensivo de lunes y jueves durante un mes (8 clases, del 16/11 al 10/12).
               La preinscripción será enviada al equipo del Instituto IEC para continuar el proceso de admisión.
             </p>
 
@@ -1507,8 +1507,7 @@
                   <label for="comision">Comisión elegida <span class="required-mark">*</span></label>
                   <select class="form-control" id="comision" name="comision" required>
                     <option value="">Seleccioná una comisión</option>
-                    <option value="Comisión A - Lunes 16:00 a 18:00 - Inicio 19/10">Comisión A · Lunes de 16:00 a 18:00 · Inicio 19/10</option>
-                    <option value="Comisión B - Jueves 14:00 a 16:00 - Inicio 22/10">Comisión B · Jueves de 14:00 a 16:00 · Inicio 22/10</option>
+                    <option value="Intensivo última del año - Lunes 16 a 18 y jueves 14 a 16 - Del 16/11 al 10/12">Intensivo · Lunes 16 a 18 h y jueves 14 a 16 h · Del 16/11 al 10/12</option>
                   </select>
                   <span class="field-error" id="error-comision"></span>
                 </div>
@@ -1894,7 +1893,7 @@
       ------------------------------------------------------------
     */
 
-    const EVENT_START = new Date("2026-10-19T16:00:00-03:00").getTime();
+    const EVENT_START = new Date("2026-11-16T16:00:00-03:00").getTime();
 
     let internetNowAtSync = null;
     let browserNowAtSync = null;

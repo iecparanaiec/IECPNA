@@ -1,0 +1,331 @@
+<!doctype html>
+<html lang="es-AR" class="no-js">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Inteligencia Operativa (IO) | IEC · Cómo implementamos IA en organizaciones</title>
+  <meta name="description" content="Qué es la Inteligencia Operativa y cómo la implementamos: metodología SMARTEO 3.0, medición propia, La FactorIA, ODO IO y ComercIA Inteligente.">
+  <link rel="canonical" href="https://www.iec-ia.com.ar/inteligencia-operativa">
+  <meta name="theme-color" content="#050505">
+  <meta property="og:type" content="website">
+  <meta property="og:locale" content="es_AR">
+  <meta property="og:site_name" content="IEC · Instituto privado en Economía del Conocimiento">
+  <meta property="og:url" content="https://www.iec-ia.com.ar/inteligencia-operativa">
+  <meta property="og:title" content="Inteligencia Operativa | IEC">
+  <meta property="og:description" content="Qué es la Inteligencia Operativa y cómo la implementamos: metodología SMARTEO 3.0, medición propia, La FactorIA, ODO IO y ComercIA Inteligente.">
+  <meta property="og:image" content="https://www.iec-ia.com.ar/og-image.jpg">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="icon" type="image/png" href="/favicon.png">
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@300;400;500;600;700&family=DM+Mono:wght@400;500&display=swap">
+  <link rel="stylesheet" href="/assets/site.css">
+  <script>try{var n=+sessionStorage.getItem("iec-nav");sessionStorage.removeItem("iec-nav");if(n&&Date.now()-n<3000)document.documentElement.classList.add("pt-enter")}catch(e){}</script>
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-R817QWH97R"></script>
+  <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-R817QWH97R');</script>
+</head>
+<body>
+  <div class="pt" aria-hidden="true">
+    <div class="pt__panel"></div>
+    <div class="pt__mark"><span class="pt__ring"></span><img src="/img/logos/iec.webp" alt="" width="64" height="64"></div>
+  </div>
+  <a class="skip" href="#main">Saltar al contenido</a>
+  <header class="site-header">
+    <div class="wrap">
+      <a class="brand" href="/" aria-label="IEC, ir al inicio">
+        <img src="/img/logos/iec.webp" alt="" width="40" height="40">
+        <span>IEC<small>Economía del Conocimiento</small></span>
+      </a>
+      <nav class="nav" aria-label="Principal">
+        <a href="/capacitaciones">Capacitaciones</a>
+        <a href="/inteligencia-operativa" aria-current="page">Inteligencia Operativa</a>
+        <a href="/quienes-somos">Quiénes somos</a>
+        <a href="/confian">Confían en nosotros</a>
+        <a href="/novedades">Novedades</a>
+        <a href="/contacto">Contacto</a>
+      </nav>
+      <div class="header-cta">
+        <div class="social">
+          <a class="social__btn" href="https://www.instagram.com/iecparana/" target="_blank" rel="noopener" aria-label="Instagram de IEC (@iecparana)" title="Instagram"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg></a>
+          <a class="social__btn" href="https://www.linkedin.com/company/iec-instituto-privado-en-economia-del-conocimiento/" target="_blank" rel="noopener" aria-label="LinkedIn de IEC" title="LinkedIn"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M4.98 3.5a2.5 2.5 0 1 1 0 5 2.5 2.5 0 0 1 0-5zM3 9h4v12H3zM9 9h3.8v1.7h.05c.53-1 1.83-2.05 3.77-2.05C20.2 8.65 21 11 21 14v7h-4v-6.2c0-1.48-.03-3.38-2.06-3.38-2.06 0-2.38 1.6-2.38 3.27V21H9z"/></svg></a>
+        </div>
+        <a class="btn btn--ghost" href="https://wa.me/5493434664964?text=Hola%20IEC%2C%20quiero%20un%20diagn%C3%B3stico%20de%20Inteligencia%20Operativa" target="_blank" rel="noopener">Para empresas</a>
+        <a class="btn" href="/capacitaciones">Inscribite</a>
+        <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="mobile-menu" aria-label="Abrir menú"><span></span></button>
+      </div>
+    </div>
+  </header>
+  <div class="mobile-menu" id="mobile-menu">
+    <nav aria-label="Menú móvil">
+      <a href="/capacitaciones">Capacitaciones <small>01</small></a>
+      <a href="/inteligencia-operativa" aria-current="page">Inteligencia Operativa <small>02</small></a>
+      <a href="/quienes-somos">Quiénes somos <small>03</small></a>
+      <a href="/confian">Confían en nosotros <small>04</small></a>
+      <a href="/novedades">Novedades <small>05</small></a>
+      <a href="/contacto">Contacto <small>06</small></a>
+    </nav>
+    <div class="mobile-menu__foot">
+      <div class="social">
+          <a class="social__btn" href="https://www.instagram.com/iecparana/" target="_blank" rel="noopener" aria-label="Instagram de IEC (@iecparana)" title="Instagram"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg></a>
+          <a class="social__btn" href="https://www.linkedin.com/company/iec-instituto-privado-en-economia-del-conocimiento/" target="_blank" rel="noopener" aria-label="LinkedIn de IEC" title="LinkedIn"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M4.98 3.5a2.5 2.5 0 1 1 0 5 2.5 2.5 0 0 1 0-5zM3 9h4v12H3zM9 9h3.8v1.7h.05c.53-1 1.83-2.05 3.77-2.05C20.2 8.65 21 11 21 14v7h-4v-6.2c0-1.48-.03-3.38-2.06-3.38-2.06 0-2.38 1.6-2.38 3.27V21H9z"/></svg></a>
+        </div>
+      <a class="btn" href="https://wa.me/5493434295937?text=Hola%20IEC%2C%20quiero%20informaci%C3%B3n" target="_blank" rel="noopener">Consultar por WhatsApp</a>
+    </div>
+  </div>
+
+<main id="main">
+    <section class="page-hero section--glow">
+      <div class="wrap page-hero__grid">
+        <div>
+          <span class="badge"><span class="dot"></span>Inteligencia Operativa · IO</span>
+          <h1 class="display h-xl" data-split>Tecnología que <span class="text-gradient">se queda funcionando.</span></h1>
+        </div>
+        <div class="page-hero__aside reveal">
+          <p class="lead" style="margin:0">La Inteligencia Operativa convierte la tecnología en resultados medibles para empresas, equipos e instituciones. No es capacitación genérica, ni venta de IA, ni automatización aislada: es capacidad organizacional para transformarse.</p>
+          <div class="actions" style="margin-top:0">
+            <a class="btn" href="https://wa.me/5493434664964?text=Hola%20IEC%2C%20quiero%20un%20diagn%C3%B3stico%20de%20Inteligencia%20Operativa" target="_blank" rel="noopener">Pedir un diagnóstico <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+            <a class="btn btn--ghost" href="#como">Cómo lo hacemos</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" style="padding-top:0">
+      <div class="wrap">
+        <div class="cards cards--4">
+          <div class="card glass reveal"><span class="card__k">01</span><h3>Implementar</h3><p>Diagnóstico y rediseño del proceso, con la tecnología justa para cada caso.</p></div>
+          <div class="card glass reveal d1"><span class="card__k">02</span><h3>Acompañar</h3><p>Formación en el puesto y adopción, para que el equipo use lo nuevo.</p></div>
+          <div class="card glass reveal d2"><span class="card__k">03</span><h3>Medir</h3><p>Línea de base y medición antes y después: menos tiempos y errores.</p></div>
+          <div class="card glass card--hl reveal d3"><span class="card__k">04</span><h3>Mejorar</h3><p>Mejora continua sobre evidencia, con indicadores propios.</p></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section section--alt" id="smarteo">
+      <div class="wrap">
+        <div class="section-head">
+          <div>
+            <span class="eyebrow">Metodología propia · SMARTEO 3.0</span>
+            <h2 class="display h-lg" data-split>La organización <span class="text-gradient">se descubre a sí misma.</span></h2>
+          </div>
+          <p class="lead">Ocho estaciones para diagnosticar, rediseñar, implementar y medir.</p>
+        </div>
+        <div class="stack">
+          <div class="premise glass rim reveal">
+            <div>
+              <span class="card__k">Premisa</span>
+              <p class="q" style="margin-top:14px">La transformación no empieza reemplazando personas ni comprando tecnología. Empieza cuando quienes conocen la organización aprenden a mirar su propio trabajo de otra manera.</p>
+            </div>
+            <div>
+              <div class="eq">PERSONA + IA <span>&gt;</span> PERSONA</div>
+              <p class="muted" style="margin:10px 0 0;font-size:14px">Capacidad organizacional para transformarse, con control humano en cada automatización.</p>
+            </div>
+          </div>
+          <div class="stations reveal d1">
+            <div class="st" style="--i:0"><span class="n">ESTACIÓN 1</span><b>Descubrir</b><span>¿Cómo trabajamos realmente? → Mapa del puesto</span></div>
+            <div class="st" style="--i:1"><span class="n">ESTACIÓN 2</span><b>Redescubrir</b><span>¿Qué hacemos y por qué? → Inventario de tareas</span></div>
+            <div class="st" style="--i:2"><span class="n">ESTACIÓN 3</span><b>Visibilizar</b><span>¿Cómo funciona el proceso? → Mapa AS-IS</span></div>
+            <div class="st" style="--i:3"><span class="n">ESTACIÓN 4</span><b>Cuestionar</b><span>¿Qué sobra? → Fricciones + IPO</span></div>
+            <div class="st" style="--i:4"><span class="n">ESTACIÓN 5</span><b>Aumentar</b><span>¿Dónde suma la IA? → Caso de uso probado</span></div>
+            <div class="st" style="--i:5"><span class="n">ESTACIÓN 6</span><b>Rediseñar</b><span>¿Cómo debería funcionar? → Mapa TO-BE</span></div>
+            <div class="st" style="--i:6"><span class="n">ESTACIÓN 7</span><b>Conectar</b><span>Personas, datos y sistemas → Workflow</span></div>
+            <div class="st" style="--i:7"><span class="n">ESTACIÓN 8</span><b>Transformar</b><span>¿Cómo medimos y escalamos? → KPIs</span></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="como">
+      <div class="wrap">
+        <div class="section-head">
+          <div>
+            <span class="eyebrow">Cómo lo implementamos</span>
+            <h2 class="display h-lg" data-split>Del análisis estratégico <span class="text-gradient">a la implementación.</span></h2>
+          </div>
+          <p class="lead">IEC y Co+nexus analizan los procesos; La FactorIA desarrolla la solución; el equipo de la organización la adopta y la mide.</p>
+        </div>
+        <div class="steps">
+          <i class="steps__line"></i>
+          <div class="step glass reveal"><span class="step__n">01</span><h3>Análisis de procesos</h3><p>Relevamos cómo funciona realmente la organización: procesos, personas, decisiones y fricciones.</p><span class="step__by">IEC &amp; Co+nexus</span></div>
+          <div class="step glass reveal d1"><span class="step__n">02</span><h3>Diseño de la solución</h3><p>Priorizamos con el IPO y definimos una hoja de ruta que une negocio y tecnología.</p><span class="step__by">Negocio + tecnología</span></div>
+          <div class="step glass reveal d2"><span class="step__n">03</span><h3>Desarrollo con IA</h3><p>Sistemas ERP, webapps, integraciones, automatizaciones y asistentes de IA a medida.</p><span class="step__by">La FactorIA</span></div>
+          <div class="step glass reveal d3"><span class="step__n">04</span><h3>Implementación y medición</h3><p>Formación en el puesto, adopción y medición antes y después para mejorar sobre evidencia.</p><span class="step__by">Resultados verificables</span></div>
+        </div>
+
+        <div class="cards" style="margin-top:16px">
+          <div class="card glass reveal"><span class="card__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M3 9h18M8 4v16"/></svg></span><h3>Sistemas ERP</h3><p>Gestión integral: RR. HH., contaduría con IA, conciliación, caja, insumos y accesos por función.</p></div>
+          <div class="card glass reveal d1"><span class="card__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M21 12a8 8 0 0 1-11.7 7.1L4 20l1-4.6A8 8 0 1 1 21 12z"/><path d="M8.5 11h.01M12 11h.01M15.5 11h.01"/></svg></span><h3>Asistentes de IA</h3><p>Atención automatizada por WhatsApp, turnos y consultas, con control humano.</p></div>
+          <div class="card glass reveal d2"><span class="card__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M6 6h15l-1.5 9h-12z"/><circle cx="9" cy="20" r="1.5"/><circle cx="18" cy="20" r="1.5"/><path d="M6 6 5 3H2"/></svg></span><h3>E-commerce inteligente</h3><p>Tiendas online con IA integradas al sistema de gestión.</p></div>
+          <div class="card glass reveal"><span class="card__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 6h10M4 12h6M4 18h10"/><circle cx="18" cy="6" r="2"/><circle cx="14" cy="12" r="2"/><circle cx="18" cy="18" r="2"/></svg></span><h3>Automatizaciones</h3><p>Flujos que conectan personas, datos y sistemas y eliminan tareas repetitivas.</p></div>
+          <div class="card glass reveal d1"><span class="card__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M22 10 12 5 2 10l10 5z"/><path d="M6 12v5c3 2 9 2 12 0v-5"/></svg></span><h3>Campus virtual</h3><p>Plataformas de formación integradas a la gestión de la institución.</p></div>
+          <div class="card glass reveal d2"><span class="card__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 20V10M10 20V4M16 20v-7M22 20H2"/></svg></span><h3>Tableros e indicadores</h3><p>Horas liberadas, errores evitados y evolución de la madurez operativa.</p></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section section--alt">
+      <div class="wrap">
+        <div class="section-head">
+          <div>
+            <span class="eyebrow">Medición propia</span>
+            <h2 class="display h-lg" data-split>Lo que se implementa, <span class="text-gradient">se mide.</span></h2>
+          </div>
+        </div>
+        <div class="cards measure">
+          <div class="card glass reveal">
+            <span class="card__k">IPO · Índice de Potencial de Optimización</span>
+            <h3>Por dónde empezar</h3>
+            <p>Estima de 0 a 100, antes de invertir, cuánto puede mejorar un proceso: tiempo, repetición, errores, carga manual e integración posible.</p>
+            <div class="gauge">
+              <svg viewBox="0 0 220 130"><defs><linearGradient id="gg" x1="0" x2="1"><stop offset="0" stop-color="#22d3ee"/><stop offset="1" stop-color="#8b5cf6"/></linearGradient></defs><path class="bg" d="M20 120 A90 90 0 0 1 200 120" fill="none" stroke-width="16" stroke-linecap="round"/><path class="fg" d="M20 120 A90 90 0 0 1 200 120" fill="none" stroke-width="16"/></svg>
+              <div class="val"><div><b>82</b><small>MÁXIMA PRIORIDAD</small></div></div>
+            </div>
+          </div>
+          <div class="card glass rim reveal d1">
+            <span class="card__k">IIO · Índice de Inteligencia Operativa</span>
+            <h3>Cuánto madura la organización</h3>
+            <p>Procesos documentados, digitalización, automatización, uso de IA e indicadores, en una escala de 0 a 100.</p>
+            <div class="bars"><div class="bar" style="--h:36%"><b>36</b><i>INICIAL</i></div><div class="bar" style="--h:68%"><b>68</b><i>PROCESO</i></div><div class="bar" style="--h:88%"><b>88</b><i>6 MESES</i></div></div>
+          </div>
+          <div class="card glass reveal d2">
+            <span class="card__k">Horas humanas de alto valor</span>
+            <h3>Qué se hace con el tiempo liberado</h3>
+            <p>No solo cuántas horas se automatizaron: cuántas pasan a análisis, atención, decisión e innovación.</p>
+            <div class="hours">
+              <div class="hrow"><span>Repetitivas</span><div class="t"><i style="--w:50%"></i></div><b>20h</b></div>
+              <div class="hrow after"><span>Después</span><div class="t"><i style="--w:20%"></i></div><b>8h</b></div>
+              <div class="hrow"><span>Estratégicas</span><div class="t"><i style="--w:25%"></i></div><b>10h</b></div>
+              <div class="hrow after"><span>Después</span><div class="t"><i style="--w:62%"></i></div><b>25h</b></div>
+            </div>
+          </div>
+        </div>
+        <p class="note">Valores ilustrativos de la metodología. En cada organización se releva la línea de base antes de intervenir y se distingue el ahorro verificado del impacto proyectado.</p>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="wrap">
+        <div class="section-head">
+          <div>
+            <span class="eyebrow">Base tecnológica propia</span>
+            <h2 class="display h-lg" data-split>Metodología, equipo y <span class="text-gradient">producto propios.</span></h2>
+          </div>
+        </div>
+        <div class="cards cards--4">
+          <article class="card glass rim reveal">
+            <div class="product__logo"><img src="/img/logos/factoria.webp" alt="La FactorIA" loading="lazy"></div>
+            <span class="card__k">Equipo de desarrollo</span>
+            <h3>La FactorIA</h3>
+            <p>Profesionales de distintas áreas que saben programar y desarrollan según las necesidades de cada proyecto.</p>
+            <div class="tags"><span>ERP</span><span>Webapps</span><span>Automatización</span><span>IA</span></div>
+          </article>
+          <article class="card glass reveal d1">
+            <div class="product__logo"><img src="/img/logos/odoio.webp" alt="ODO IO" loading="lazy"></div>
+            <span class="card__k">Desarrollo propio</span>
+            <h3>ODO IO</h3>
+            <p>Sistema inteligente operativo para odontólogos: lleva la Inteligencia Operativa a la gestión diaria del consultorio.</p>
+            <div class="tags"><span>Odontología</span><span>IO</span><span>IA</span></div>
+          </article>
+          <article class="card glass reveal d2">
+            <div class="product__logo"><img src="/img/logos/comercia.webp" alt="ComercIA Inteligente Paraná" loading="lazy"></div>
+            <span class="card__k">Producto propio · con CeCIP</span>
+            <h3>ComercIA Inteligente</h3>
+            <p>Programa y plataforma para la transformación tecnológica de comercios y pymes de Paraná: ERP y webapp desarrollados por IEC.</p>
+            <div class="tags"><span>Comercio</span><span>ERP</span><span>Webapp</span></div>
+          </article>
+          <article class="card glass reveal d3">
+            <div class="product__logo"><span class="smarteo-mark">SMARTEO<em>3.0</em></span></div>
+            <span class="card__k">Metodología propietaria</span>
+            <h3>SMARTEO 3.0</h3>
+            <p>Ocho estaciones para diagnosticar, rediseñar, implementar y medir, con índices propios de potencial (IPO) y madurez (IIO).</p>
+            <div class="tags"><span>8 estaciones</span><span>IPO</span><span>IIO</span></div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section section--alt">
+      <div class="wrap">
+        <div class="section-head">
+          <div>
+            <span class="eyebrow">Cómo trabajamos</span>
+            <h2 class="display h-md" data-split>Reglas claras <span class="text-gradient">desde el primer día.</span></h2>
+          </div>
+        </div>
+        <div class="cards">
+          <div class="card glass reveal"><h3>Confidencialidad</h3><p>Permisos y responsabilidades por escrito antes de cada diagnóstico.</p></div>
+          <div class="card glass reveal d1"><h3>Datos protegidos</h3><p>Datos personales conforme a la Ley 25.326, con especial cuidado de los datos sensibles.</p></div>
+          <div class="card glass reveal d2"><h3>IA con control humano</h3><p>Responsables explícitos para cada automatización.</p></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="wrap">
+        <div class="cta glass rim reveal">
+          <span class="badge"><span class="dot"></span>Diagnóstico IO</span>
+          <h2 class="display h-lg" data-split>¿Llevamos la IO <span class="text-gradient">a tu organización?</span></h2>
+          <p class="lead">Relevamos un proceso, estimamos su potencial de optimización y te presentamos una hoja de ruta.</p>
+          <div class="actions">
+            <a class="btn" href="https://wa.me/5493434664964?text=Hola%20IEC%2C%20quiero%20un%20diagn%C3%B3stico%20de%20Inteligencia%20Operativa" target="_blank" rel="noopener">Pedir diagnóstico <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+            <a class="btn btn--ghost" href="/confian">Ver casos</a>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="wrap">
+      <div class="footer-top">
+        <div>
+          <a class="brand" href="/"><img src="/img/logos/iec.webp" alt="" width="40" height="40"><span>IEC<small>Economía del Conocimiento</small></span></a>
+          <p>Instituto privado en Economía del Conocimiento. Robótica, Inteligencia Artificial, capacitación e Inteligencia Operativa para personas y organizaciones de Paraná y la región.</p>
+          <div class="footer-social">
+            <a href="https://www.instagram.com/iecparana/" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg><span>Instagram<small>@iecparana</small></span></a>
+            <a href="https://www.linkedin.com/company/iec-instituto-privado-en-economia-del-conocimiento/" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M4.98 3.5a2.5 2.5 0 1 1 0 5 2.5 2.5 0 0 1 0-5zM3 9h4v12H3zM9 9h3.8v1.7h.05c.53-1 1.83-2.05 3.77-2.05C20.2 8.65 21 11 21 14v7h-4v-6.2c0-1.48-.03-3.38-2.06-3.38-2.06 0-2.38 1.6-2.38 3.27V21H9z"/></svg><span>LinkedIn<small>IEC · Economía del Conocimiento</small></span></a>
+          </div>
+        </div>
+        <div>
+          <h4>Aprender</h4>
+          <ul>
+            <li><a href="/capacitaciones">Todas las capacitaciones</a></li>
+            <li><a href="/capacitaciones?area=ia">Inteligencia Artificial</a></li>
+            <li><a href="/capacitaciones?area=programacion">Programación</a></li>
+            <li><a href="/capacitaciones?area=chicos">Robótica, teens y kids</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4>Ecosistema</h4>
+          <ul>
+            <li><a href="/inteligencia-operativa">Inteligencia Operativa</a></li>
+            <li><a href="/inteligencia-operativa#smarteo">SMARTEO 3.0</a></li>
+            <li><a href="/quienes-somos#factoria">La FactorIA</a></li>
+            <li><a href="/confian">Confían en nosotros</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4>Contacto</h4>
+          <ul>
+            <li><a href="https://maps.google.com/?q=Gualeguaych%C3%BA+449,+Paran%C3%A1,+Entre+R%C3%ADos" target="_blank" rel="noopener">Gualeguaychú 449, Paraná</a></li>
+            <li><a href="mailto:contacto@iec-ia.com.ar">contacto@iec-ia.com.ar</a></li>
+            <li><a href="https://wa.me/5493434295937" target="_blank" rel="noopener">WhatsApp cursos</a></li>
+            <li><a href="https://www.instagram.com/iecparana/" target="_blank" rel="noopener">Instagram @iecparana</a></li>
+            <li><a href="https://www.linkedin.com/company/iec-instituto-privado-en-economia-del-conocimiento/" target="_blank" rel="noopener">LinkedIn</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-word" aria-hidden="true">IEC · IA · IO</div>
+      <div class="footer-bottom">
+        <span>© <span data-year>2026</span> IEC · Instituto privado en Economía del Conocimiento</span>
+        <span>Paraná, Entre Ríos</span>
+      </div>
+    </div>
+  </footer>
+  <a class="wa-float" href="https://wa.me/5493434295937?text=Hola%20IEC%2C%20quiero%20informaci%C3%B3n" target="_blank" rel="noopener" aria-label="Escribinos por WhatsApp"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.5 14.4c-.3-.1-1.7-.8-2-.9-.3-.1-.5-.1-.7.1-.2.3-.8.9-.9 1.1-.2.2-.3.2-.6.1-.3-.1-1.2-.5-2.3-1.4-.9-.8-1.4-1.7-1.6-2-.2-.3 0-.5.1-.6l.4-.5c.1-.2.2-.3.3-.5.1-.2 0-.4 0-.5l-.9-2.2c-.2-.6-.5-.5-.7-.5h-.6c-.2 0-.5.1-.8.4-.3.3-1 1-1 2.4s1 2.8 1.2 3c.1.2 2 3.1 4.9 4.3.7.3 1.2.5 1.6.6.7.2 1.3.2 1.8.1.6-.1 1.7-.7 1.9-1.4.2-.7.2-1.2.2-1.4-.1-.1-.3-.2-.6-.3zM12 21.8c-1.8 0-3.5-.5-5-1.4l-.4-.2-3.7 1 1-3.6-.2-.4C2.7 15.6 2.2 13.8 2.2 12 2.2 6.6 6.6 2.2 12 2.2c2.6 0 5.1 1 6.9 2.9 1.8 1.8 2.9 4.3 2.9 6.9 0 5.4-4.4 9.8-9.8 9.8zm8.4-18.2C18.2 1.3 15.2 0 12 0 5.4 0 0 5.4 0 12c0 2.1.6 4.2 1.6 6L0 24l6.2-1.6c1.8 1 3.8 1.5 5.8 1.5 6.6 0 12-5.4 12-12 0-3.2-1.2-6.2-3.6-8.3z"/></svg></a>
+
+  <script src="/assets/site.js" defer></script>
+  <script src="/assets/assistant.js" defer></script>
+</body>
+</html>
