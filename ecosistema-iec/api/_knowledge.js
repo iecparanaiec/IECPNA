@@ -45,7 +45,7 @@ Página: /quienes-somos
 - Goró Agustín: fundador y CEO de IEC, director general del ecosistema. Técnico en electrónica, más de 20 años de docencia técnica, profesor de Programador Experto con IA en UTN.
 - Marcelo Pérez: socio fundador de Co+nexus. Más de 25 años en dirección comercial y relaciones institucionales.
 - María Paula Acebal: relaciones públicas y desarrollo comercial. Más de 20 años en ventas, comunicación y vinculación institucional. Lic. en Relaciones Públicas.
-- Raúl Stopello: arquitecto, socio de Co+nexus y growth partner. Diseña estructuras de funcionamiento que integran procesos, personas y datos.
+- Raúl Stoppello: arquitecto, socio de Co+nexus y growth partner. Diseña estructuras de funcionamiento que integran procesos, personas y datos.
 - Pablo Lescano: desarrollo institucional y relaciones políticas y comerciales. Articulación gubernamental y comunicación estratégica; fortalece vínculos entre el sector público, empresas e iniciativas de impacto.
 La FactorIA es el equipo de desarrollo: un grupo de profesionales de distintas áreas que saben programar y desarrollan según las necesidades de cada proyecto. Lo dirige Goró Agustín. Profesionales: Sandra Luvino (ingeniera química, más de 33 años en optimización de procesos productivos), Yusleydi Castillo (contadora), Federico Saucedo (licenciado en marketing, especialista en SEO) y Pablo Becker (licenciado en marketing, especialista en ventas de intangibles). Desarrolladores: Rodrigo Frison, Damián Fernández, Daniel Carbonell y Leonel Szpizack.
 
