@@ -22,6 +22,8 @@
     { "source": "/secretariado_medico", "destination": "/secretariado_medico.html" }
   ],
   "redirects": [
+    { "source": "/mundo", "destination": "https://iec-erp.vercel.app/campus", "permanent": false },
+    { "source": "/campus", "destination": "https://iec-erp.vercel.app/campus", "permanent": false },
     { "source": "/cursos.html", "destination": "/capacitaciones", "permanent": true },
     { "source": "/cursos", "destination": "/capacitaciones", "permanent": true },
     { "source": "/soluciones", "destination": "/inteligencia-operativa", "permanent": true },
