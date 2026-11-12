@@ -29,6 +29,9 @@ const IG = "https://www.instagram.com/iecparana/";
 const LI = "https://www.linkedin.com/company/iec-instituto-privado-en-economia-del-conocimiento/";
 const IG_ICON = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg>';
 const LI_ICON = '<svg viewBox="0 0 24 24" fill="currentColor"><path d="M4.98 3.5a2.5 2.5 0 1 1 0 5 2.5 2.5 0 0 1 0-5zM3 9h4v12H3zM9 9h3.8v1.7h.05c.53-1 1.83-2.05 3.77-2.05C20.2 8.65 21 11 21 14v7h-4v-6.2c0-1.48-.03-3.38-2.06-3.38-2.06 0-2.38 1.6-2.38 3.27V21H9z"/></svg>';
+// Mundo IEC: campus virtual de los alumnos (/mundo redirige al campus, ver vercel.json)
+const MUNDO_ICON = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3a14 14 0 0 1 0 18M12 3a14 14 0 0 0 0 18"/></svg>';
+
 const SOCIAL = `<div class="social">
           <a class="social__btn" href="${IG}" target="_blank" rel="noopener" aria-label="Instagram de IEC (@iecparana)" title="Instagram">${IG_ICON}</a>
           <a class="social__btn" href="${LI}" target="_blank" rel="noopener" aria-label="LinkedIn de IEC" title="LinkedIn">${LI_ICON}</a>
@@ -85,6 +88,7 @@ function header(cur) {
       <div class="header-cta">
         ${SOCIAL}
         <a class="btn btn--ghost" href="https://wa.me/5493434664964?text=Hola%20IEC%2C%20quiero%20un%20diagn%C3%B3stico%20de%20Inteligencia%20Operativa" target="_blank" rel="noopener">Para empresas</a>
+        <a class="btn btn--mundo" href="/mundo" title="Campus virtual de los alumnos del IEC">${MUNDO_ICON}<span>Mundo IEC</span></a>
         <a class="btn" href="/capacitaciones">Inscribite</a>
         <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="mobile-menu" aria-label="Abrir menú"><span></span></button>
       </div>
@@ -96,6 +100,7 @@ function header(cur) {
     </nav>
     <div class="mobile-menu__foot">
       ${SOCIAL}
+      <a class="btn btn--mundo" href="/mundo">${MUNDO_ICON}<span>Ingresá al Mundo IEC</span></a>
       <a class="btn" href="https://wa.me/5493434295937?text=Hola%20IEC%2C%20quiero%20informaci%C3%B3n" target="_blank" rel="noopener">Consultar por WhatsApp</a>
     </div>
   </div>`;
