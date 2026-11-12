@@ -88,7 +88,7 @@ function header(cur) {
       <div class="header-cta">
         ${SOCIAL}
         <a class="btn btn--ghost" href="https://wa.me/5493434664964?text=Hola%20IEC%2C%20quiero%20un%20diagn%C3%B3stico%20de%20Inteligencia%20Operativa" target="_blank" rel="noopener">Para empresas</a>
-        <a class="btn btn--mundo" href="/mundo" title="Campus virtual de los alumnos del IEC">${MUNDO_ICON}<span>Mundo IEC</span></a>
+        <a class="btn btn--mundo" href="/campus" title="Campus virtual de los alumnos del IEC">${MUNDO_ICON}<span>Mundo IEC</span></a>
         <a class="btn" href="/capacitaciones">Inscribite</a>
         <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="mobile-menu" aria-label="Abrir menú"><span></span></button>
       </div>
@@ -100,7 +100,7 @@ function header(cur) {
     </nav>
     <div class="mobile-menu__foot">
       ${SOCIAL}
-      <a class="btn btn--mundo" href="/mundo">${MUNDO_ICON}<span>Ingresá al Mundo IEC</span></a>
+      <a class="btn btn--mundo" href="/campus">${MUNDO_ICON}<span>Ingresá al Mundo IEC</span></a>
       <a class="btn" href="https://wa.me/5493434295937?text=Hola%20IEC%2C%20quiero%20informaci%C3%B3n" target="_blank" rel="noopener">Consultar por WhatsApp</a>
     </div>
   </div>`;

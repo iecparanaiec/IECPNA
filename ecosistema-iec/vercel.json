@@ -19,11 +19,13 @@
     { "source": "/weekendclass", "destination": "/weekendclass.html" },
     { "source": "/revit_ia", "destination": "/revit_ia.html" },
     { "source": "/secretariado_odontologico", "destination": "/secretariado_odontologico.html" },
-    { "source": "/secretariado_medico", "destination": "/secretariado_medico.html" }
+    { "source": "/secretariado_medico", "destination": "/secretariado_medico.html" },
+    { "source": "/campus", "destination": "https://iec-erp.vercel.app/campus" },
+    { "source": "/campus/:path*", "destination": "https://iec-erp.vercel.app/campus/:path*" },
+    { "source": "/api/campus/:path*", "destination": "https://iec-erp.vercel.app/api/campus/:path*" }
   ],
   "redirects": [
-    { "source": "/mundo", "destination": "https://iec-erp.vercel.app/campus", "permanent": false },
-    { "source": "/campus", "destination": "https://iec-erp.vercel.app/campus", "permanent": false },
+    { "source": "/mundo", "destination": "/campus", "permanent": false },
     { "source": "/cursos.html", "destination": "/capacitaciones", "permanent": true },
     { "source": "/cursos", "destination": "/capacitaciones", "permanent": true },
     { "source": "/soluciones", "destination": "/inteligencia-operativa", "permanent": true },
