@@ -1,0 +1,529 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <!-- Google Analytics IEC -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-R817QWH97R"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){ dataLayer.push(arguments); }
+    gtag('js', new Date());
+    gtag('config', 'G-R817QWH97R');
+  </script>
+
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Relevamiento FEMER · IPO e IIO de tu proceso | Instituto IEC</title>
+  <meta name="description" content="Experto en IA Nivel I · Comisión FEMER. Calculá el IPO y el IIO estimados del proceso que más te pesa en tu puesto.">
+  <meta name="robots" content="noindex">
+  <meta name="theme-color" content="#05070d">
+  <link rel="icon" href="/favicon.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+
+  <style>
+    :root{
+      --bg:#05070d; --panel:#0c1220; --panel2:#111a2d; --line:rgba(255,255,255,.09); --line2:rgba(255,255,255,.16);
+      --text:#eef2f8; --muted:#97a3b8; --dim:#5d6a80;
+      --cyan:#22d3ee; --blue:#3b82f6; --violet:#8b5cf6; --teal:#2dd4bf; --amber:#f59e0b; --red:#f87171;
+      --grad:linear-gradient(90deg,var(--cyan),var(--blue),var(--violet));
+    }
+    *{box-sizing:border-box}
+    html{scroll-behavior:smooth}
+    body{margin:0;background:var(--bg);color:var(--text);font-family:Inter,system-ui,sans-serif;font-size:16px;line-height:1.5;-webkit-font-smoothing:antialiased}
+    body::before{content:"";position:fixed;inset:0;pointer-events:none;z-index:0;
+      background:radial-gradient(900px 500px at 10% -10%,rgba(34,211,238,.13),transparent 60%),radial-gradient(800px 600px at 110% 10%,rgba(139,92,246,.14),transparent 60%)}
+    .wrap{position:relative;z-index:1;max-width:860px;margin:0 auto;padding:28px 16px 80px}
+    h1,h2,h3{font-family:'Space Grotesk',sans-serif;margin:0;line-height:1.15}
+    .mono{font-family:'JetBrains Mono',monospace}
+    .eyebrow{font-family:'JetBrains Mono',monospace;font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--cyan)}
+    .grad{background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent}
+
+    header.top{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:26px}
+    header.top img{height:34px;width:auto}
+    header.top .tag{font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--muted);border:1px solid var(--line2);border-radius:999px;padding:5px 12px;white-space:nowrap}
+    .hero h1{font-size:clamp(30px,6vw,46px);margin:10px 0 12px}
+    .hero p{color:var(--muted);margin:0;max-width:680px}
+    .rules{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin:22px 0 8px}
+    .rule{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:12px 14px;font-size:14px;color:var(--muted)}
+    .rule b{display:block;color:var(--text);font-size:14px;margin-bottom:2px}
+
+    /* pasos */
+    .steps{display:flex;gap:6px;margin:26px 0 18px;position:sticky;top:0;z-index:5;background:linear-gradient(var(--bg) 70%,transparent);padding:10px 0 12px}
+    .steps button{flex:1;border:0;background:none;padding:0;cursor:pointer;text-align:left;color:var(--dim);font:600 12px 'JetBrains Mono',monospace;letter-spacing:.06em;text-transform:uppercase}
+    .steps button::before{content:"";display:block;height:4px;border-radius:4px;background:var(--line2);margin-bottom:7px;transition:background .3s}
+    .steps button.on{color:var(--text)} .steps button.on::before{background:var(--grad)}
+    .steps button.done::before{background:var(--teal)}
+    .steps button:disabled{cursor:default}
+
+    .card{background:var(--panel);border:1px solid var(--line);border-radius:18px;padding:22px}
+    .step{display:none} .step.on{display:block;animation:in .35s ease}
+    @keyframes in{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+    .step > h2{font-size:26px;margin-bottom:6px}
+    .step > .lead{color:var(--muted);margin:0 0 20px}
+
+    .q{margin-bottom:16px}
+    .q > label,.q > .lbl{display:block;font-weight:600;margin-bottom:6px}
+    .help{display:block;font-weight:400;color:var(--muted);font-size:14px;margin-top:2px}
+    .q .vtag{display:inline-block;font:600 12px 'JetBrains Mono',monospace;color:#04121a;background:var(--teal);border-radius:6px;padding:1px 7px;margin-right:6px;vertical-align:2px}
+    .q .vtag.d{background:var(--violet);color:#fff}
+    input[type=text],input[type=number],textarea,select{width:100%;background:var(--panel2);color:var(--text);border:1px solid var(--line2);border-radius:12px;padding:12px 14px;font:inherit;outline:none;transition:border-color .2s}
+    textarea{min-height:84px;resize:vertical}
+    input:focus,textarea:focus,select:focus{border-color:var(--cyan)}
+    .row2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+    .chips{display:flex;flex-wrap:wrap;gap:8px}
+    .chips label{display:flex;align-items:center;gap:8px;border:1px solid var(--line2);border-radius:999px;padding:7px 13px;cursor:pointer;font-size:14px;color:var(--muted);user-select:none}
+    .chips input{accent-color:var(--cyan)}
+    .chips label:has(input:checked){border-color:var(--cyan);color:var(--text);background:rgba(34,211,238,.08)}
+
+    .ipoq{border:1px solid var(--line);border-radius:16px;padding:16px;margin-bottom:14px;background:rgba(255,255,255,.015)}
+    .ipoq .head{display:flex;justify-content:space-between;gap:12px;align-items:flex-start;margin-bottom:10px}
+    .ipoq .head .t{font-weight:600}
+    .score{flex:none;text-align:center;min-width:66px}
+    .score .n{font:700 28px 'Space Grotesk';color:var(--teal);line-height:1}
+    .score .l{font:11px 'JetBrains Mono';color:var(--dim);letter-spacing:.08em;text-transform:uppercase}
+    .scale{display:grid;grid-template-columns:repeat(6,1fr);gap:4px;margin-top:12px}
+    .scale div{font:11px 'JetBrains Mono';text-align:center;color:var(--dim);border-radius:7px;padding:5px 2px;background:rgba(255,255,255,.03);line-height:1.25}
+    .scale div b{display:block;font-size:13px;color:var(--muted)}
+    .scale div.on{background:rgba(45,212,191,.16);color:var(--text);outline:1px solid rgba(45,212,191,.6)}
+    .scale div.on b{color:var(--teal)}
+    .rng{display:flex;align-items:center;gap:14px}
+    .rng input[type=range]{flex:1;accent-color:var(--cyan);height:28px}
+    .rng output{font:700 22px 'Space Grotesk';min-width:62px;text-align:right}
+    .calcline{font:13px 'JetBrains Mono';color:var(--muted);margin-top:8px}
+    .seg{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}
+    .seg label{flex:1;min-width:140px;border:1px solid var(--line2);border-radius:12px;padding:9px 12px;cursor:pointer;font-size:14px;color:var(--muted)}
+    .seg label:has(input:checked){border-color:var(--amber);color:var(--text);background:rgba(245,158,11,.08)}
+    .seg input{accent-color:var(--amber)}
+
+    .opts{display:flex;flex-direction:column;gap:7px}
+    .opts label{display:flex;gap:12px;align-items:flex-start;border:1px solid var(--line2);border-radius:12px;padding:10px 13px;cursor:pointer;color:var(--muted);font-size:15px;transition:border-color .2s,background .2s}
+    .opts label .k{flex:none;width:26px;height:26px;border-radius:50%;display:grid;place-items:center;font:700 14px 'Space Grotesk';background:rgba(255,255,255,.06);color:var(--text)}
+    .opts input{position:absolute;opacity:0;pointer-events:none}
+    .opts label:has(input:checked){border-color:var(--violet);color:var(--text);background:rgba(139,92,246,.1)}
+    .opts label:has(input:checked) .k{background:var(--violet);color:#fff}
+    .opts label:has(input:focus-visible){outline:2px solid var(--cyan)}
+
+    .live{position:sticky;bottom:12px;z-index:5;margin-top:18px;display:flex;justify-content:space-between;align-items:center;gap:12px;background:rgba(12,18,32,.92);backdrop-filter:blur(10px);border:1px solid var(--line2);border-radius:14px;padding:10px 16px}
+    .live .v{font:700 26px 'Space Grotesk'} .live .s{font-size:13px;color:var(--muted)}
+
+    .nav{display:flex;justify-content:space-between;gap:12px;margin-top:22px}
+    .btn{border:0;border-radius:12px;padding:13px 22px;font:600 15px Inter;cursor:pointer;color:#04121a;background:var(--grad);transition:transform .15s,opacity .2s}
+    .btn:hover{transform:translateY(-1px)} .btn:disabled{opacity:.5;cursor:default;transform:none}
+    .btn.ghost{background:none;color:var(--text);border:1px solid var(--line2)}
+    .err{color:var(--red);font-size:14px;margin-top:10px;min-height:20px}
+
+    /* resultados */
+    .res{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+    .gauge{background:var(--panel2);border:1px solid var(--line);border-radius:16px;padding:18px;text-align:center}
+    .gauge svg{width:170px;height:170px;display:block;margin:0 auto}
+    .gauge .big{font:700 52px 'Space Grotesk';line-height:1}
+    .gauge .lv{display:inline-block;margin-top:8px;font:600 13px 'JetBrains Mono';border-radius:999px;padding:4px 12px}
+    .gauge p{color:var(--muted);font-size:14px;margin:10px 0 0}
+    table.br{width:100%;border-collapse:collapse;font-size:14px;margin-top:6px}
+    table.br th{font:600 11px 'JetBrains Mono';letter-spacing:.08em;text-transform:uppercase;color:var(--dim);text-align:left;padding:8px 6px;border-bottom:1px solid var(--line)}
+    table.br td{padding:8px 6px;border-bottom:1px solid var(--line);color:var(--muted)}
+    table.br td.c,table.br th.c{text-align:center} table.br td.r,table.br th.r{text-align:right}
+    table.br td b{color:var(--text)}
+    table.br tr.tot td{color:var(--text);font-weight:600;border-bottom:0}
+    .box{border-radius:14px;padding:14px 16px;margin-top:14px;font-size:15px}
+    .box.warn{background:rgba(245,158,11,.08);border:1px solid rgba(245,158,11,.35)}
+    .box.ok{background:rgba(45,212,191,.08);border:1px solid rgba(45,212,191,.35)}
+    .box.bad{background:rgba(248,113,113,.08);border:1px solid rgba(248,113,113,.4)}
+    .box b{color:var(--text)}
+    .sent{display:none}
+    footer{color:var(--dim);font-size:13px;text-align:center;margin-top:40px}
+
+    @media (max-width:640px){
+      .rules,.row2,.res{grid-template-columns:1fr}
+      .card{padding:16px}
+      .steps button{font-size:10px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+      .rules{gap:6px} .rule{padding:9px 12px}
+      .scale div{font-size:10px}
+      header.top .tag{display:none}
+    }
+    @media print{
+      body::before,.steps,.nav,.live,header.top .tag,.noprint{display:none!important}
+      body{background:#fff;color:#000}
+      .card,.gauge,.ipoq{background:#fff;border-color:#ccc}
+      .step{display:none!important} #s5{display:block!important}
+      .gauge .big,table.br td b,.box b{color:#000}
+    }
+  </style>
+</head>
+<body>
+<div class="wrap">
+  <header class="top">
+    <a href="/"><img src="/img/logos/iec-lines.webp" alt="Instituto IEC"></a>
+    <span class="tag">Experto en IA Nivel I · Comisión FEMER</span>
+  </header>
+
+  <section class="hero">
+    <div class="eyebrow">Relevamiento AS-IS · Estación 3</div>
+    <h1>El proceso que <span class="grad">más te pesa</span>, en números</h1>
+    <p>Elegí un solo proceso de tu puesto, el que más tiempo te lleva o más errores genera. Respondé cómo se hace hoy, no cómo debería hacerse. Al final vas a ver el IPO del proceso y el IIO de tu puesto, estimados.</p>
+    <div class="rules">
+      <div class="rule"><b>Datos reales, no inventados</b>Si no sabés un número, estimalo y marcalo como estimado.</div>
+      <div class="rule"><b>Sin datos de afiliados</b>No escribas nombres, DNI ni números de pacientes o socios.</div>
+      <div class="rule"><b>10 minutos</b>Cuatro pasos. El resultado te lo llevás y le llega al profe.</div>
+    </div>
+  </section>
+
+  <nav class="steps" id="steps" aria-label="Pasos">
+    <button type="button" data-go="1" class="on">1 · Vos</button>
+    <button type="button" data-go="2" disabled>2 · Proceso</button>
+    <button type="button" data-go="3" disabled>3 · IPO</button>
+    <button type="button" data-go="4" disabled>4 · IIO</button>
+    <button type="button" data-go="5" disabled>Resultado</button>
+  </nav>
+
+  <form id="f" novalidate autocomplete="on">
+
+    <!-- PASO 1 -->
+    <section class="step card on" id="s1" data-step="1">
+      <h2>Vos y tu puesto</h2>
+      <p class="lead">Solo para que el profe sepa de quién es cada relevamiento.</p>
+      <div class="q"><label for="nombre">Nombre y apellido</label><input type="text" id="nombre" name="nombre" required maxlength="80" autocomplete="name"></div>
+      <div class="row2">
+        <div class="q"><label for="entidad">Entidad</label>
+          <select id="entidad" name="entidad" required>
+            <option value="">Elegí…</option>
+            <option>FEMER</option><option>Círculo Médico</option><option>AMPROMER</option><option>Otra</option>
+          </select></div>
+        <div class="q"><label for="area">Área o sector</label><input type="text" id="area" name="area" required maxlength="80" placeholder="Ej.: Facturación, Auditoría, Tesorería"></div>
+      </div>
+      <div class="q"><label for="puesto">¿Qué hacés en tu puesto? <span class="help">Dos o tres tareas principales, en una línea.</span></label><input type="text" id="puesto" name="puesto" required maxlength="200"></div>
+    </section>
+
+    <!-- PASO 2 -->
+    <section class="step card" id="s2" data-step="2">
+      <h2>El proceso que más te pesa</h2>
+      <p class="lead">Uno solo. El que, si desapareciera, más te cambiaría el mes.</p>
+      <div class="q"><label for="proceso">Nombre del proceso <span class="help">Verbo + objeto. Ej.: «Controlar las facturas de compra cargadas».</span></label><input type="text" id="proceso" name="proceso" required maxlength="120"></div>
+      <div class="q"><label for="por_que">¿Por qué es el que más te pesa?</label><textarea id="por_que" name="por_que" required maxlength="500" placeholder="Tiempo, errores, reclamos, apuro a fin de mes…"></textarea></div>
+      <div class="row2">
+        <div class="q"><label for="disparador">¿Qué lo inicia? <span class="help">Un mail, una fecha, un pedido…</span></label><input type="text" id="disparador" name="disparador" required maxlength="160"></div>
+        <div class="q"><label for="resultado">¿Qué tiene que salir al final?</label><input type="text" id="resultado" name="resultado" required maxlength="160"></div>
+      </div>
+      <div class="q"><label for="pasos">Pasos en orden <span class="help">Uno por línea, con la herramienta. Ej.: «Exporto el Excel del sistema».</span></label><textarea id="pasos" name="pasos" required maxlength="1500" style="min-height:130px" placeholder="1. …&#10;2. …&#10;3. …"></textarea></div>
+      <div class="q"><span class="lbl">Herramientas que usás en este proceso</span>
+        <div class="chips" id="herr">
+          <label><input type="checkbox" value="Excel">Excel</label>
+          <label><input type="checkbox" value="Sistema propio">Sistema de la entidad</label>
+          <label><input type="checkbox" value="Tango">Tango</label>
+          <label><input type="checkbox" value="Portal de obra social">Portal de obra social</label>
+          <label><input type="checkbox" value="Correo">Correo</label>
+          <label><input type="checkbox" value="WhatsApp">WhatsApp</label>
+          <label><input type="checkbox" value="Papel">Papel</label>
+          <label><input type="checkbox" value="PDF escaneados">PDF escaneados</label>
+          <label><input type="checkbox" value="IA">IA (ChatGPT, Gemini…)</label>
+        </div>
+      </div>
+    </section>
+
+    <!-- PASO 3: IPO -->
+    <section class="step card" id="s3" data-step="3">
+      <h2>IPO · ¿cuánto se puede optimizar?</h2>
+      <p class="lead">Cinco preguntas. Cada respuesta cae en una columna de 0 a 5: ese es su <b>puntaje</b>. Después se multiplica por su <b>peso</b> (cuánto importa).</p>
+
+      <div class="ipoq">
+        <div class="head"><div class="t"><span class="vtag">V1</span>Tiempo por mes <span class="help">Peso 30 %</span></div><div class="score"><div class="n" id="sc1">0</div><div class="l">puntaje</div></div></div>
+        <div class="row2">
+          <div class="q" style="margin:0"><label for="veces">¿Cuántas veces por mes lo hacés?</label><input type="number" id="veces" name="veces" min="0" max="2000" step="1" inputmode="numeric" required></div>
+          <div class="q" style="margin:0"><label for="minutos">¿Cuántos minutos te lleva cada vez?</label><input type="number" id="minutos" name="minutos" min="0" max="2000" step="1" inputmode="numeric" required></div>
+        </div>
+        <div class="calcline" id="hcalc">= 0 horas por mes</div>
+        <div class="seg">
+          <label><input type="radio" name="medicion" value="Medido" required> Lo medí (con reloj o registro)</label>
+          <label><input type="radio" name="medicion" value="Estimado"> Lo estimo</label>
+        </div>
+        <div class="scale" data-for="1"><div><b>0</b>&lt;10 h</div><div><b>1</b>10–25 h</div><div><b>2</b>25–45 h</div><div><b>3</b>45–70 h</div><div><b>4</b>70–100 h</div><div><b>5</b>&gt;100 h</div></div>
+      </div>
+
+      <div class="ipoq">
+        <div class="head"><div class="t"><span class="vtag">V2</span>¿Qué parte se hace siempre igual? <span class="help">Peso 30 % · Pasos que repetís cada vez sin pensar ni decidir.</span></div><div class="score"><div class="n" id="sc2">0</div><div class="l">puntaje</div></div></div>
+        <div class="rng"><input type="range" id="rep" name="repetitivo" min="0" max="100" step="5" value="50"><output id="repo">50 %</output></div>
+        <div class="scale" data-for="2"><div><b>0</b>&lt;10 %</div><div><b>1</b>10–30 %</div><div><b>2</b>30–50 %</div><div><b>3</b>50–65 %</div><div><b>4</b>65–80 %</div><div><b>5</b>&gt;80 %</div></div>
+      </div>
+
+      <div class="ipoq">
+        <div class="head"><div class="t"><span class="vtag">V3</span>Errores por mes <span class="help">Peso 20 % · Rebotes, correcciones, reclamos, datos mal cargados.</span></div><div class="score"><div class="n" id="sc3">0</div><div class="l">puntaje</div></div></div>
+        <input type="number" id="errores" name="errores" min="0" max="5000" step="1" inputmode="numeric" required placeholder="Cantidad aproximada por mes">
+        <div class="scale" data-for="3"><div><b>0</b>&lt;2</div><div><b>1</b>2–4</div><div><b>2</b>5–7</div><div><b>3</b>8–12</div><div><b>4</b>13–20</div><div><b>5</b>&gt;20</div></div>
+      </div>
+
+      <div class="ipoq">
+        <div class="head"><div class="t"><span class="vtag">V4</span>¿Qué parte es carga manual? <span class="help">Peso 10 % · Tipear, copiar y pegar, o comparar a ojo.</span></div><div class="score"><div class="n" id="sc4">0</div><div class="l">puntaje</div></div></div>
+        <div class="rng"><input type="range" id="man" name="manual" min="0" max="100" step="5" value="50"><output id="mano">50 %</output></div>
+        <div class="scale" data-for="4"><div><b>0</b>&lt;5 %</div><div><b>1</b>5–15 %</div><div><b>2</b>15–30 %</div><div><b>3</b>30–45 %</div><div><b>4</b>45–60 %</div><div><b>5</b>&gt;60 %</div></div>
+      </div>
+
+      <div class="ipoq">
+        <div class="head"><div class="t"><span class="vtag">V5</span>¿Qué permiten los sistemas que usás? <span class="help">Peso 10 % · Elegí lo máximo que pueden hacer.</span></div><div class="score"><div class="n" id="sc5">0</div><div class="l">puntaje</div></div></div>
+        <div class="opts" id="v5">
+          <label><input type="radio" name="v5" value="0" required><span class="k">0</span><span>No hay sistema: todo a mano</span></label>
+          <label><input type="radio" name="v5" value="1"><span class="k">1</span><span>Solo papel o PDF</span></label>
+          <label><input type="radio" name="v5" value="2"><span class="k">2</span><span>El sistema exporta a Excel</span></label>
+          <label><input type="radio" name="v5" value="3"><span class="k">3</span><span>El sistema exporta e importa Excel</span></label>
+          <label><input type="radio" name="v5" value="4"><span class="k">4</span><span>Tiene conectores con otras herramientas</span></label>
+          <label><input type="radio" name="v5" value="5"><span class="k">5</span><span>Tiene API: otro sistema puede leer y escribir</span></label>
+        </div>
+      </div>
+
+      <div class="live"><div><div class="s">IPO estimado de este proceso</div><div class="s mono" id="ipof">—</div></div><div class="v" id="ipolive">0</div></div>
+    </section>
+
+    <!-- PASO 4: IIO -->
+    <section class="step card" id="s4" data-step="4">
+      <h2>IIO · ¿qué tan madura es tu forma de trabajar?</h2>
+      <p class="lead">Cinco dimensiones de tu puesto, de 0 a 5. Elegí la frase que mejor describe <b>hoy</b> tu proceso, no lo que te gustaría.</p>
+      <div id="iioqs"></div>
+      <div class="live"><div><div class="s">IIO estimado de tu puesto</div><div class="s mono" id="iiof">—</div></div><div class="v" id="iiolive">0</div></div>
+    </section>
+
+    <!-- RESULTADO -->
+    <section class="step card" id="s5" data-step="5">
+      <div class="eyebrow">Tu relevamiento</div>
+      <h2 style="margin:6px 0 4px" id="rTitle">—</h2>
+      <p class="lead" id="rSub">—</p>
+      <div class="res">
+        <div class="gauge"><div class="eyebrow" style="color:var(--teal)">IPO del proceso</div><div id="gIpo"></div><p>Potencial de optimización, de 0 a 100.</p></div>
+        <div class="gauge"><div class="eyebrow" style="color:var(--violet)">IIO de tu puesto</div><div id="gIio"></div><p>Madurez operativa, de 0 a 100.</p></div>
+      </div>
+
+      <h3 style="margin:22px 0 4px;font-size:19px">Cómo se calculó el IPO</h3>
+      <table class="br" id="tIpo"></table>
+      <h3 style="margin:22px 0 4px;font-size:19px">Cómo se calculó el IIO</h3>
+      <table class="br" id="tIio"></table>
+
+      <div id="notes"></div>
+
+      <div class="q noprint" style="margin-top:20px"><label for="comentario">¿Algo más para el profe? <span class="help">Opcional.</span></label><textarea id="comentario" name="comentario" maxlength="600"></textarea></div>
+      <div class="box ok sent" id="okBox"><b>Listo, se envió.</b> Guardá también tu resultado con «Descargar PDF».</div>
+      <div class="box bad sent" id="badBox"><b>No se pudo enviar.</b> <span id="badMsg"></span> Probá de nuevo; si sigue fallando, descargá el PDF y subilo a Mundo IEC.</div>
+    </section>
+
+    <div class="err noprint" id="err" role="alert"></div>
+    <div class="nav noprint">
+      <button type="button" class="btn ghost" id="prev" style="visibility:hidden">← Anterior</button>
+      <div style="display:flex;gap:10px;flex-wrap:wrap;justify-content:flex-end">
+        <button type="button" class="btn ghost" id="pdf" style="display:none">Descargar PDF</button>
+        <button type="button" class="btn" id="next">Siguiente →</button>
+      </div>
+    </div>
+  </form>
+
+  <footer>Instituto IEC · Metodología SMARTEO 3.0 · Los índices son estimaciones: el registro semanal del AS-IS los reemplaza por datos medidos.</footer>
+</div>
+
+<script>
+(function(){
+  // Las respuestas van a n8n, como el resto de los formularios del sitio.
+  const WEBHOOK_URL = 'https://n8n.smarteco.com.ar/webhook/relevamiento_femer';
+  const DRAFT_KEY = 'iec-relevamiento-femer';
+
+  const $ = s => document.querySelector(s), $$ = s => [...document.querySelectorAll(s)];
+  const f = $('#f');
+  let step = 1, maxStep = 1, sent = false, sending = false;
+
+  /* ---------- escalas (las mismas de la clase) ---------- */
+  const W = [0.3, 0.3, 0.2, 0.1, 0.1];
+  const sV1 = h => h < 10 ? 0 : h < 25 ? 1 : h < 45 ? 2 : h < 70 ? 3 : h <= 100 ? 4 : 5;
+  const sV2 = p => p < 10 ? 0 : p < 30 ? 1 : p < 50 ? 2 : p < 65 ? 3 : p <= 80 ? 4 : 5;
+  const sV3 = e => e < 2 ? 0 : e <= 4 ? 1 : e <= 7 ? 2 : e <= 12 ? 3 : e <= 20 ? 4 : 5;
+  const sV4 = p => p < 5 ? 0 : p < 15 ? 1 : p < 30 ? 2 : p < 45 ? 3 : p <= 60 ? 4 : 5;
+  const ipoLevel = v => v <= 20 ? 'Bajo' : v <= 40 ? 'Moderado' : v <= 60 ? 'Significativo' : v <= 80 ? 'Alto' : 'Transformacional';
+  const IIO_LEVELS = [[15,0,'Manual'],[30,1,'Digitalización'],[45,2,'IA individual'],[60,3,'IA aplicada'],[75,4,'Automatizado'],[90,5,'IO integrada'],[100,6,'Aumentada']];
+  const iioLevel = v => { const l = IIO_LEVELS.find(([m]) => v <= m); return {n:l[1], t:l[2]}; };
+  const fmt = (n, d=1) => n.toLocaleString('es-AR', {minimumFractionDigits:d, maximumFractionDigits:d});
+
+  /* ---------- preguntas del IIO ---------- */
+  const IIO_Q = [
+    ['D1','Procesos documentados','¿Está escrito cómo se hace este proceso?',
+      ['Nada escrito: lo sé yo','Notas sueltas mías','Un instructivo parcial o viejo','Procedimiento escrito y actualizado: otra persona lo puede seguir','Escrito, con responsables y tiempos, y se revisa','Documentado, medido y mejorado cada cierto tiempo']],
+    ['D2','Digitalización','¿Cuánto del proceso es digital?',
+      ['Todo en papel','Mayormente papel, algo en Excel','Mitad papel, mitad digital','Casi todo digital, con algo de papel o PDF escaneado','Todo digital, en planillas y sistemas','Todo digital y conectado: los datos pasan solos de un sistema a otro']],
+    ['D3','Automatización','¿Qué parte se hace sola?',
+      ['Nada: todo a mano','Algunas fórmulas sueltas de Excel','Plantillas o fórmulas que ahorran pasos','Una parte importante se hace sola (macros, Power Query, reglas)','Casi todo automático: yo controlo','Automático de punta a punta, con alertas']],
+    ['D4','Uso de IA','¿Usás IA en este proceso?',
+      ['No uso IA','La probé alguna vez','La uso a veces, sin método','La uso seguido, con prompts que repito','Está dentro del proceso (asistente o app propia)','La IA propone y yo decido, de forma sistemática']],
+    ['D5','Indicadores','¿Se mide este proceso con números?',
+      ['No se mide nada','Sé más o menos cuánto tardo','Cuento algo a mano de vez en cuando','Tengo números mensuales: cantidad, errores, tiempo','Hay un tablero que se mira para decidir','Metas, tablero y mejora continua']]
+  ];
+  $('#iioqs').innerHTML = IIO_Q.map(([k,t,q,opts],i) => `
+    <div class="ipoq"><div class="head"><div class="t"><span class="vtag d">${k}</span>${t}<span class="help">${q}</span></div><div class="score"><div class="n" id="dsc${i+1}" style="color:var(--violet)">–</div><div class="l">puntaje</div></div></div>
+      <div class="opts">${opts.map((o,v) => `<label><input type="radio" name="d${i+1}" value="${v}" required><span class="k">${v}</span><span>${o}</span></label>`).join('')}</div></div>`).join('');
+
+  /* ---------- cálculo ---------- */
+  const num = id => { const v = parseFloat($(id).value); return isFinite(v) && v >= 0 ? v : null; };
+  const radio = n => { const r = f.querySelector(`input[name="${n}"]:checked`); return r ? r.value : null; };
+
+  function calc(){
+    const veces = num('#veces'), minutos = num('#minutos'), errores = num('#errores');
+    const horas = veces != null && minutos != null ? veces * minutos / 60 : null;
+    const rep = +$('#rep').value, man = +$('#man').value, v5 = radio('v5');
+    const V = [horas == null ? null : sV1(horas), sV2(rep), errores == null ? null : sV3(errores), sV4(man), v5 == null ? null : +v5];
+    const ipoSum = V.reduce((a,v,i) => a + (v ?? 0) * W[i], 0);
+    const ipo = Math.round(ipoSum / 5 * 100);
+    const D = [1,2,3,4,5].map(i => { const r = radio('d'+i); return r == null ? null : +r; });
+    const dSum = D.reduce((a,v) => a + (v ?? 0), 0);
+    const iio = Math.round(dSum / 25 * 100);
+    return {veces, minutos, horas, rep, man, errores, V, ipoSum, ipo, D, dSum, iio,
+      ipoReady: V.every(v => v != null), iioReady: D.every(v => v != null)};
+  }
+
+  function paint(){
+    const c = calc();
+    $('#hcalc').textContent = c.horas == null ? '= completá veces y minutos' : `${fmt(c.veces,0)} × ${fmt(c.minutos,0)} min ÷ 60 = ${fmt(c.horas)} horas por mes`;
+    $('#repo').textContent = c.rep + ' %'; $('#mano').textContent = c.man + ' %';
+    c.V.forEach((v,i) => {
+      $('#sc'+(i+1)).textContent = v ?? '–';
+      $$(`.scale[data-for="${i+1}"] div`).forEach((d,k) => d.classList.toggle('on', v === k));
+    });
+    $('#ipolive').textContent = c.ipoReady ? c.ipo : '…';
+    $('#ipof').textContent = c.ipoReady ? `(${c.V.map((v,i)=>v+'×'+fmt(W[i])).join(' + ')}) ÷ 5 × 100 · ${ipoLevel(c.ipo)}` : 'Completá las cinco preguntas';
+    c.D.forEach((v,i) => $('#dsc'+(i+1)).textContent = v ?? '–');
+    $('#iiolive').textContent = c.iioReady ? c.iio : '…';
+    $('#iiof').textContent = c.iioReady ? `${c.D.join(' + ')} = ${c.dSum} ÷ 25 × 100 · Nivel ${iioLevel(c.iio).n} · ${iioLevel(c.iio).t}` : 'Elegí una opción en cada dimensión';
+    return c;
+  }
+
+  /* ---------- validación por paso ---------- */
+  function validate(n){
+    const sec = $('#s'+n);
+    const bad = [...sec.querySelectorAll('input[required],select[required],textarea[required]')].filter(el => {
+      if (el.type === 'radio') return !sec.querySelector(`input[name="${el.name}"]:checked`);
+      return !el.value.trim() || (el.type === 'number' && !(parseFloat(el.value) >= 0));
+    });
+    if (bad.length){
+      const el = bad[0];
+      const q = el.closest('.ipoq') || el.closest('.q');
+      (q || el).scrollIntoView({behavior:'smooth', block:'center'});
+      if (el.type !== 'radio') el.focus({preventScroll:true});
+      $('#err').textContent = 'Falta completar una respuesta de este paso.';
+      return false;
+    }
+    if (n === 2 && !$$('#herr input:checked').length){ $('#err').textContent = 'Marcá al menos una herramienta.'; return false; }
+    $('#err').textContent = '';
+    return true;
+  }
+
+  /* ---------- resultado ---------- */
+  function gauge(val, color, label){
+    const r = 70, C = 2*Math.PI*r, off = C * (1 - val/100);
+    return `<svg viewBox="0 0 170 170" role="img" aria-label="${label}: ${val}"><circle cx="85" cy="85" r="${r}" fill="none" stroke="rgba(255,255,255,.08)" stroke-width="14"/>
+      <circle cx="85" cy="85" r="${r}" fill="none" stroke="${color}" stroke-width="14" stroke-linecap="round" stroke-dasharray="${C}" stroke-dashoffset="${off}" transform="rotate(-90 85 85)"/>
+      <text x="85" y="96" text-anchor="middle" font-family="Space Grotesk" font-weight="700" font-size="44" fill="currentColor">${val}</text></svg>`;
+  }
+
+  function renderResult(){
+    const c = paint();
+    $('#rTitle').textContent = $('#proceso').value.trim();
+    $('#rSub').textContent = `${$('#nombre').value.trim()} · ${$('#area').value.trim()} · ${$('#entidad').value}`;
+    const il = iioLevel(c.iio);
+    $('#gIpo').innerHTML = gauge(c.ipo, 'var(--teal)', 'IPO') + `<span class="lv" style="background:rgba(45,212,191,.14);color:var(--teal)">${ipoLevel(c.ipo)}</span>`;
+    $('#gIio').innerHTML = gauge(c.iio, 'var(--violet)', 'IIO') + `<span class="lv" style="background:rgba(139,92,246,.16);color:#c4b5fd">Nivel ${il.n} · ${il.t}</span>`;
+
+    const vals = [`${fmt(c.horas)} h/mes${$('input[name=medicion]:checked')?.value === 'Estimado' ? ' (estimado)' : ''}`, `${c.rep} %`, `${fmt(c.errores,0)} por mes`, `${c.man} %`, $('#v5 input:checked').closest('label').lastElementChild.textContent];
+    const names = ['V1 · Tiempo','V2 · Repetitivas','V3 · Errores','V4 · Carga manual','V5 · Integración'];
+    $('#tIpo').innerHTML = `<tr><th>Variable</th><th>Tu respuesta</th><th class="c">Puntaje</th><th class="c">Peso</th><th class="r">Aporte</th></tr>` +
+      c.V.map((v,i) => `<tr><td>${names[i]}</td><td>${esc(vals[i])}</td><td class="c"><b>${v}</b></td><td class="c">× ${fmt(W[i])}</td><td class="r"><b>${fmt(v*W[i],2)}</b></td></tr>`).join('') +
+      `<tr class="tot"><td colspan="4">Suma ${fmt(c.ipoSum,2)} ÷ 5 × 100</td><td class="r">${c.ipo}</td></tr>`;
+    $('#tIio').innerHTML = `<tr><th>Dimensión</th><th>Tu respuesta</th><th class="c">Puntaje</th></tr>` +
+      IIO_Q.map(([k,t,,opts],i) => `<tr><td>${k} · ${t}</td><td>${esc(opts[c.D[i]])}</td><td class="c"><b>${c.D[i]}</b></td></tr>`).join('') +
+      `<tr class="tot"><td colspan="2">Suma ${c.dSum} ÷ 25 × 100</td><td class="c">${c.iio}</td></tr>`;
+
+    const notes = [];
+    const weakest = c.D.indexOf(Math.min(...c.D));
+    if ($('input[name=medicion]:checked')?.value === 'Estimado') notes.push(`<div class="box warn"><b>El tiempo es estimado.</b> Esta semana anotá cada vez que hacés el proceso: hora de inicio, hora de fin y errores. Con eso tu IPO pasa de estimación a dato.</div>`);
+    if (c.V[0] === 0) notes.push(`<div class="box warn"><b>Solo, tu proceso no llega a 10 horas por mes.</b> Si otras personas del área hacen lo mismo, juntas suman más tiempo y el potencial sube. Anotá quiénes lo hacen.</div>`);
+    notes.push(`<div class="box ok"><b>Lo que más falta en tu puesto: ${IIO_Q[weakest][1].toLowerCase()} (${IIO_Q[weakest][0]}).</b> Es el primer lugar donde mejorar para subir el IIO.</div>`);
+    $('#notes').innerHTML = notes.join('');
+  }
+  const esc = s => String(s).replace(/[&<>"]/g, ch => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[ch]));
+
+  function payload(){
+    const c = calc(), il = iioLevel(c.iio);
+    return {
+      formulario:'relevamiento_femer', origen:'Experto en IA Nivel I · Comisión FEMER', fecha_envio:new Date().toISOString(),
+      nombre:$('#nombre').value.trim(), entidad:$('#entidad').value, area:$('#area').value.trim(), puesto:$('#puesto').value.trim(),
+      proceso:$('#proceso').value.trim(), por_que:$('#por_que').value.trim(), disparador:$('#disparador').value.trim(), resultado:$('#resultado').value.trim(),
+      pasos:$('#pasos').value.trim(), herramientas:$$('#herr input:checked').map(i => i.value).join(', '),
+      veces_mes:c.veces, minutos_vez:c.minutos, horas_mes:Math.round(c.horas*10)/10, tiempo:radio('medicion'),
+      repetitivo_pct:c.rep, errores_mes:c.errores, manual_pct:c.man,
+      v1:c.V[0], v2:c.V[1], v3:c.V[2], v4:c.V[3], v5:c.V[4], ipo:c.ipo, ipo_nivel:ipoLevel(c.ipo),
+      d1:c.D[0], d2:c.D[1], d3:c.D[2], d4:c.D[3], d5:c.D[4], iio:c.iio, iio_nivel:`${il.n} · ${il.t}`,
+      comentario:$('#comentario').value.trim() || null
+    };
+  }
+
+  async function send(){
+    if (sending) return;
+    sending = true; $('#next').disabled = true; $('#next').textContent = 'Enviando…';
+    $('#okBox').style.display = 'none'; $('#badBox').style.display = 'none';
+    const data = payload();
+    try{
+      const ctrl = new AbortController(); const t = setTimeout(() => ctrl.abort(), 15000);
+      const r = await fetch(WEBHOOK_URL, {method:'POST', headers:{'Content-Type':'application/json','Accept':'application/json'}, body:JSON.stringify(data), signal:ctrl.signal});
+      clearTimeout(t);
+      if (!r.ok) throw new Error(`El servidor respondió ${r.status}.`);
+      sent = true;
+      $('#okBox').style.display = 'block';
+      $('#next').textContent = 'Enviado ✓';
+      try{ localStorage.removeItem(DRAFT_KEY); }catch(e){}
+      if (window.gtag) gtag('event','form_submit',{form_name:'relevamiento_femer', ipo:data.ipo, iio:data.iio});
+    }catch(e){
+      $('#badMsg').textContent = e.name === 'AbortError' ? 'Tardó demasiado.' : (e.message || '');
+      $('#badBox').style.display = 'block';
+      $('#next').disabled = false; $('#next').textContent = 'Reintentar envío';
+    }
+    sending = false;
+  }
+
+  /* ---------- navegación ---------- */
+  function go(n){
+    step = n; maxStep = Math.max(maxStep, n);
+    $$('.step').forEach(s => s.classList.toggle('on', +s.dataset.step === n));
+    $$('#steps button').forEach(b => { const k = +b.dataset.go; b.classList.toggle('on', k === n); b.classList.toggle('done', k < maxStep && k !== n); b.disabled = k > maxStep || (sent && k !== 5); });
+    $('#prev').style.visibility = n > 1 && !sent ? 'visible' : 'hidden';
+    $('#pdf').style.display = n === 5 ? '' : 'none';
+    if (n === 5){ renderResult(); if (!sent){ $('#next').textContent = 'Enviar al profe'; $('#next').disabled = false; } }
+    else { $('#next').textContent = n === 4 ? 'Ver mi resultado →' : 'Siguiente →'; $('#next').disabled = false; }
+    $('#err').textContent = '';
+    window.scrollTo({top: $('#steps').offsetTop - 4, behavior:'smooth'});
+  }
+  $('#next').addEventListener('click', () => {
+    if (step === 5){ if (!sent) send(); return; }
+    if (validate(step)) go(step + 1);
+  });
+  $('#prev').addEventListener('click', () => go(step - 1));
+  $$('#steps button').forEach(b => b.addEventListener('click', () => {
+    const k = +b.dataset.go;
+    if (k < step || k <= maxStep) { if (k > step && !validate(step)) return; go(k); }
+  }));
+  $('#pdf').addEventListener('click', () => window.print());
+  f.addEventListener('submit', e => e.preventDefault());
+
+  /* ---------- borrador local (si se recarga la página no se pierde) ---------- */
+  function saveDraft(){
+    if (sent) return;
+    const d = {}; new FormData(f).forEach((v,k) => d[k] = v);
+    d._herr = $$('#herr input:checked').map(i => i.value);
+    try{ localStorage.setItem(DRAFT_KEY, JSON.stringify(d)); }catch(e){}
+  }
+  function loadDraft(){
+    let d; try{ d = JSON.parse(localStorage.getItem(DRAFT_KEY) || 'null'); }catch(e){}
+    if (!d) return;
+    Object.entries(d).forEach(([k,v]) => {
+      const els = f.querySelectorAll(`[name="${k}"]`);
+      els.forEach(el => { if (el.type === 'radio') el.checked = el.value === v; else el.value = v; });
+    });
+    (d._herr || []).forEach(v => { const i = $(`#herr input[value="${v}"]`); if (i) i.checked = true; });
+  }
+  f.addEventListener('input', () => { paint(); saveDraft(); });
+  f.addEventListener('change', () => { paint(); saveDraft(); });
+  loadDraft(); paint();
+})();
+</script>
+</body>
+</html>

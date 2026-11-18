@@ -22,7 +22,8 @@
     { "source": "/secretariado_medico", "destination": "/secretariado_medico.html" },
     { "source": "/campus", "destination": "https://iec-erp.vercel.app/campus" },
     { "source": "/campus/:path*", "destination": "https://iec-erp.vercel.app/campus/:path*" },
-    { "source": "/api/campus/:path*", "destination": "https://iec-erp.vercel.app/api/campus/:path*" }
+    { "source": "/api/campus/:path*", "destination": "https://iec-erp.vercel.app/api/campus/:path*" },
+    { "source": "/relevamiento_femer", "destination": "/relevamiento_femer.html" }
   ],
   "redirects": [
     { "source": "/mundo", "destination": "/campus", "permanent": false },
