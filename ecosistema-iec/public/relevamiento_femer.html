@@ -318,8 +318,8 @@
 
 <script>
 (function(){
-  // Las respuestas van a n8n, como el resto de los formularios del sitio.
-  const WEBHOOK_URL = 'https://n8n.smarteco.com.ar/webhook/relevamiento_femer';
+  // Las respuestas van al ERP del IEC (Mundo IEC → la clase → Actividades): la web reenvía /api/campus al ERP.
+  const ENVIO_URL = '/api/campus/formularios/relevamiento_femer';
   const DRAFT_KEY = 'iec-relevamiento-femer';
 
   const $ = s => document.querySelector(s), $$ = s => [...document.querySelectorAll(s)];
@@ -464,9 +464,13 @@
     const data = payload();
     try{
       const ctrl = new AbortController(); const t = setTimeout(() => ctrl.abort(), 15000);
-      const r = await fetch(WEBHOOK_URL, {method:'POST', headers:{'Content-Type':'application/json','Accept':'application/json'}, body:JSON.stringify(data), signal:ctrl.signal});
+      const r = await fetch(ENVIO_URL, {method:'POST', headers:{'Content-Type':'application/json','Accept':'application/json'}, body:JSON.stringify(data), signal:ctrl.signal});
       clearTimeout(t);
-      if (!r.ok) throw new Error(`El servidor respondió ${r.status}.`);
+      if (!r.ok){
+        let msg = `El servidor respondió ${r.status}.`;
+        try{ const j = await r.json(); if (j && j.error) msg = j.error; }catch(e){}
+        throw new Error(msg);
+      }
       sent = true;
       $('#okBox').style.display = 'block';
       $('#next').textContent = 'Enviado ✓';
