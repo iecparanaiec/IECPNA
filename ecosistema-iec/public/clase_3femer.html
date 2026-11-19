@@ -391,6 +391,44 @@ p{font-size:28px;line-height:1.45;color:var(--muted)}
 #ipoStrip .tk{font-size:22px;top:282px}
 .proto .st{align-self:flex-start}
 .proto p{font-size:20px;color:var(--muted);line-height:1.4}
+
+/* ===== explicación de IPO e IIO ===== */
+.tbl{width:100%;border-collapse:collapse;font-size:21px}
+.tbl th{font-family:'JetBrains Mono';font-size:16px;font-weight:500;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);text-align:left;padding:12px 14px;border-bottom:1px solid rgba(255,255,255,.12)}
+.tbl td{padding:12px 14px;border-bottom:1px solid var(--line);color:var(--text);vertical-align:middle}
+.tbl td.c,.tbl th.c{text-align:center}
+.tbl .w{font-weight:700;color:var(--teal);font-family:'Space Grotesk'}
+.tbl td small{display:block;font-size:17px;color:var(--muted)}
+.pband{border:1px solid rgba(45,212,191,.45);background:rgba(45,212,191,.08);border-radius:10px;padding:8px 12px;color:var(--teal);font-size:16px;letter-spacing:.06em;text-align:center}
+.calc{display:flex;flex-direction:column;gap:11px}
+.crow{display:grid;grid-template-columns:360px 1fr 110px 110px 140px;align-items:center;gap:22px;padding:9px 26px;border-radius:16px;background:rgba(255,255,255,.035);border:1px solid var(--line)}
+.crow .vn{font-family:'Space Grotesk';font-size:26px;font-weight:600}
+.crow .vm{font-size:22px;color:var(--muted)}
+.crow .sc{justify-self:center;width:58px;height:58px;border-radius:50%;display:grid;place-items:center;font-family:'Space Grotesk';font-weight:700;font-size:30px;color:#04121A;background:var(--teal)}
+.crow .sc.v{background:#A78BFA}
+.crow .wt{font-family:'JetBrains Mono';font-size:22px;color:var(--muted);text-align:center}
+.crow .ap{font-family:'Space Grotesk';font-size:34px;font-weight:700;text-align:right}
+.crow.hdr{background:none;border:none;padding:0 26px}
+.crow.hdr div{font-family:'JetBrains Mono';font-size:15px;letter-spacing:.1em;text-transform:uppercase;color:var(--dim)}
+.ctot{display:flex;align-items:center;justify-content:space-between;margin-top:8px;padding:18px 26px;border-radius:18px;background:rgba(45,212,191,.08);border:1px solid rgba(45,212,191,.35)}
+.ctot .f{font-family:'JetBrains Mono';font-size:25px;color:var(--text)}
+.ctot .r{display:flex;align-items:baseline;gap:18px}
+.ctot .r .big{font-family:'Space Grotesk';font-weight:700;font-size:92px;line-height:1;color:var(--teal)}
+.ctot.v{background:rgba(167,139,250,.08);border-color:rgba(167,139,250,.4)}
+.ctot.v .r .big{color:#C4B5FD}
+.dgrid{display:grid;grid-template-columns:repeat(5,1fr);gap:18px}
+.dcard{padding:22px 22px;display:flex;flex-direction:column;gap:10px}
+.dcard .k{font-family:'Space Grotesk';font-size:40px;font-weight:700;color:#C4B5FD;line-height:1}
+.dcard h3{font-size:25px}
+.dcard .dq{font-size:19px;color:var(--muted)}
+.dcard .ends{margin-top:auto;padding-top:12px;border-top:1px solid var(--line);font-size:17px;color:var(--muted);line-height:1.45}
+.dcard .ends b{color:var(--text);font-family:'Space Grotesk'}
+.chip.ind{background:rgba(167,139,250,.14);color:#C4B5FD;border-color:rgba(167,139,250,.35)}
+.lvrow{display:grid;grid-template-columns:repeat(7,1fr);gap:8px;margin-top:26px}
+.lvc{padding:14px 14px;border-radius:12px;background:rgba(255,255,255,.035);border:1px solid var(--line)}
+.lvc .n{font-family:'Space Grotesk';font-size:30px;font-weight:700;color:#C4B5FD;line-height:1}
+.lvc .t{font-size:18px;font-weight:600;margin-top:6px}
+.lvc .r{font-family:'JetBrains Mono';font-size:15px;color:var(--dim);margin-top:4px}
 </style>
 </head>
 <body>
@@ -479,6 +517,43 @@ p{font-size:28px;line-height:1.45;color:var(--muted)}
   <div class="foot" data-a style="--d:1500">Valores estimados a partir de los TP · pocos midieron sus tiempos</div>
 </section>
 
+
+<!-- 5b · LAS CINCO VARIABLES -->
+<section class="slide" data-notes="Cada variable se mide en el proceso real y cae en una columna de 0 a 5: ese número es su puntaje. El peso dice cuánto importa cada una. Tiempo y repetición son lo que más pesa.">
+  <div class="head" style="margin-bottom:22px;margin-top:-40px">
+    <div class="eyebrow" data-a>IPO · las cinco variables</div>
+    <h2 data-a style="--d:100;font-size:60px">Qué es V1, V2, V3, V4 y V5</h2>
+    <p class="sub" data-a style="--d:200;font-size:24px">Se mide cada variable, se busca en qué columna cae y ese número de 0 a 5 es su <span class="hl">puntaje</span>.</p>
+  </div>
+  <table class="tbl" data-a style="--d:300">
+    <tr><th style="border:0"></th><th class="c" style="border:0"></th><th colspan="6" style="border:0;padding-bottom:4px"><div class="pband">PUNTAJE · 0 = poco para mejorar → 5 = mucho para mejorar</div></th></tr>
+    <tr><th style="width:30%">Variable · qué mide</th><th class="c" style="width:7%">Peso</th><th class="c">0</th><th class="c">1</th><th class="c">2</th><th class="c">3</th><th class="c">4</th><th class="c">5</th></tr>
+    <tr><td><span class="w">V1</span> Tiempo<small>Horas por mes que lleva el proceso</small></td><td class="c">30 %</td><td class="c">&lt;10 h</td><td class="c">10–25 h</td><td class="c">25–45 h</td><td class="c">45–70 h</td><td class="c">70–100 h</td><td class="c">&gt;100 h</td></tr>
+    <tr><td><span class="w">V2</span> Repetitivas<small>Qué parte se hace siempre igual</small></td><td class="c">30 %</td><td class="c">&lt;10 %</td><td class="c">10–30 %</td><td class="c">30–50 %</td><td class="c">50–65 %</td><td class="c">65–80 %</td><td class="c">&gt;80 %</td></tr>
+    <tr><td><span class="w">V3</span> Errores<small>Rebotes y correcciones por mes</small></td><td class="c">20 %</td><td class="c">&lt;2</td><td class="c">2–4</td><td class="c">5–7</td><td class="c">8–12</td><td class="c">13–20</td><td class="c">&gt;20</td></tr>
+    <tr><td><span class="w">V4</span> Carga manual<small>Qué parte se tipea o compara a ojo</small></td><td class="c">10 %</td><td class="c">&lt;5 %</td><td class="c">5–15 %</td><td class="c">15–30 %</td><td class="c">30–45 %</td><td class="c">45–60 %</td><td class="c">&gt;60 %</td></tr>
+    <tr><td><span class="w">V5</span> Integración<small>Qué permiten los sistemas</small></td><td class="c">10 %</td><td class="c">Nada</td><td class="c">Papel o PDF</td><td class="c">Exporta Excel</td><td class="c">Importa y exporta</td><td class="c">Conectores</td><td class="c">API</td></tr>
+  </table>
+</section>
+
+<!-- 5c · EJEMPLO IPO -->
+<section class="slide" data-notes="Ejemplo inventado, no es de nadie del grupo. Ir variable por variable: el dato, en qué columna cae, por cuánto se multiplica y cuánto aporta. Al final se suman los aportes, se divide por 5 y se multiplica por 100.">
+  <div class="head" style="margin-bottom:22px;margin-top:-40px">
+    <div class="eyebrow" data-a>Ejemplo · IPO paso a paso</div>
+    <h2 data-a style="--d:100;font-size:60px">Conciliar el extracto del banco</h2>
+    <p class="sub" data-a style="--d:200;font-size:23px">Un caso inventado: 4 veces por mes, 3 horas cada vez, comparando el extracto contra la planilla a mano.</p>
+  </div>
+  <div class="calc">
+    <div class="crow hdr" data-a="fade" style="--d:250"><div>Variable</div><div>Dato del proceso</div><div style="text-align:center">Puntaje</div><div style="text-align:center">× Peso</div><div style="text-align:right">Aporte</div></div>
+    <div class="crow" data-a="left" style="--d:300"><div class="vn">V1 · Tiempo</div><div class="vm">4 × 3 h = 12 h por mes → columna «10–25 h»</div><div class="sc">1</div><div class="wt">× 0,3</div><div class="ap">0,3</div></div>
+    <div class="crow" data-a="left" style="--d:420"><div class="vn">V2 · Repetitivas</div><div class="vm">85 %: siempre los mismos pasos → «&gt;80 %»</div><div class="sc">5</div><div class="wt">× 0,3</div><div class="ap">1,5</div></div>
+    <div class="crow" data-a="left" style="--d:540"><div class="vn">V3 · Errores</div><div class="vm">9 diferencias por mes → «8–12»</div><div class="sc">3</div><div class="wt">× 0,2</div><div class="ap">0,6</div></div>
+    <div class="crow" data-a="left" style="--d:660"><div class="vn">V4 · Carga manual</div><div class="vm">70 %: se compara renglón por renglón → «&gt;60 %»</div><div class="sc">5</div><div class="wt">× 0,1</div><div class="ap">0,5</div></div>
+    <div class="crow" data-a="left" style="--d:780"><div class="vn">V5 · Integración</div><div class="vm">El banco y el sistema exportan Excel → «Exporta Excel»</div><div class="sc">2</div><div class="wt">× 0,1</div><div class="ap">0,2</div></div>
+    <div class="ctot" data-a style="--d:950"><div class="f">Suma 3,1 ÷ 5 × 100</div><div class="r"><span class="mono" style="font-size:24px;color:var(--muted)">IPO</span><span class="big"><span data-count="62" data-delay="1050">0</span></span><span class="chip">Alto</span></div></div>
+  </div>
+</section>
+
 <!-- 6 · IPO POR PROCESO -->
 <section class="slide" data-notes="Cada punto es un proceso relevado, sin nombre. Casi todos caen en significativo: hay mucha repetición y carga manual, pero el tiempo de un solo puesto casi nunca pasa las 10 horas por mes. Uno solo llega a alto, y es porque el ciclo le lleva casi dos semanas.">
   <div class="head" style="margin-bottom:40px">
@@ -512,6 +587,48 @@ p{font-size:28px;line-height:1.45;color:var(--muted)}
         <p style="font-size:22px;max-width:420px">de cada puesto por separado a todos juntos</p></div>
       <div class="bars" id="ipoTr" style="gap:14px"></div>
     </div>
+  </div>
+</section>
+
+<!-- 7b · QUÉ ES EL IIO -->
+<section class="slide" data-notes="El IPO mide un proceso; el IIO mide la madurez del puesto. Cinco dimensiones, cada una de 0 a 5. Se suman y se pasan a una escala de 0 a 100.">
+  <div class="head" style="margin-bottom:26px;margin-top:-40px">
+    <div class="eyebrow" data-a>Diagnóstico · IIO</div>
+    <h2 data-a style="--d:100;font-size:60px">IIO: ¿qué tan <span style="color:#C4B5FD">madura</span> es la forma de trabajar?</h2>
+    <p class="sub" data-a style="--d:200;font-size:23px">Índice de Inteligencia Operativa. Cinco dimensiones de 0 a 5. <span class="mono" style="color:var(--text)">IIO = suma ÷ 25 × 100</span></p>
+  </div>
+  <div class="dgrid">
+    <div class="card dcard" data-a style="--d:300"><div class="k">D1</div><h3>Documentado</h3><p class="dq">¿Está escrito cómo se hace?</p><div class="ends"><b>0</b> lo sé yo<br><b>5</b> escrito, medido y mejorado</div></div>
+    <div class="card dcard" data-a style="--d:400"><div class="k">D2</div><h3>Digitalización</h3><p class="dq">¿Cuánto es digital?</p><div class="ends"><b>0</b> todo en papel<br><b>5</b> digital y conectado</div></div>
+    <div class="card dcard" data-a style="--d:500"><div class="k">D3</div><h3>Automatización</h3><p class="dq">¿Qué parte se hace sola?</p><div class="ends"><b>0</b> todo a mano<br><b>5</b> automático con alertas</div></div>
+    <div class="card dcard" data-a style="--d:600"><div class="k">D4</div><h3>Uso de IA</h3><p class="dq">¿Se usa IA con un método?</p><div class="ends"><b>0</b> no se usa<br><b>5</b> la IA propone, la persona decide</div></div>
+    <div class="card dcard" data-a style="--d:700"><div class="k">D5</div><h3>Indicadores</h3><p class="dq">¿Se mide con números?</p><div class="ends"><b>0</b> no se mide nada<br><b>5</b> metas y tablero</div></div>
+  </div>
+  <div class="lvrow" data-a style="--d:900">
+    <div class="lvc"><div class="n">0</div><div class="t">Manual</div><div class="r">0–15</div></div>
+    <div class="lvc"><div class="n">1</div><div class="t">Digitalización</div><div class="r">16–30</div></div>
+    <div class="lvc"><div class="n">2</div><div class="t">IA individual</div><div class="r">31–45</div></div>
+    <div class="lvc"><div class="n">3</div><div class="t">IA aplicada</div><div class="r">46–60</div></div>
+    <div class="lvc"><div class="n">4</div><div class="t">Automatizado</div><div class="r">61–75</div></div>
+    <div class="lvc"><div class="n">5</div><div class="t">IO integrada</div><div class="r">76–90</div></div>
+    <div class="lvc"><div class="n">6</div><div class="t">Aumentada</div><div class="r">91–100</div></div>
+  </div>
+</section>
+
+<!-- 7c · EJEMPLO IIO -->
+<section class="slide" data-notes="El mismo puesto inventado del ejemplo del IPO. Cada dimensión es la frase que mejor describe hoy cómo se trabaja. Lo más bajo marca por dónde empezar: acá, automatización e indicadores.">
+  <div class="head" style="margin-bottom:22px;margin-top:-40px">
+    <div class="eyebrow" data-a>Ejemplo · IIO paso a paso</div>
+    <h2 data-a style="--d:100;font-size:60px">El mismo puesto: conciliación bancaria</h2>
+  </div>
+  <div class="calc">
+    <div class="crow hdr" data-a="fade" style="--d:200" ><div>Dimensión</div><div>Cómo se trabaja hoy</div><div style="text-align:center">Puntaje</div><div></div><div></div></div>
+    <div class="crow" data-a="left" style="--d:300"><div class="vn">D1 · Documentado</div><div class="vm">Notas sueltas propias</div><div class="sc v">1</div><div></div><div></div></div>
+    <div class="crow" data-a="left" style="--d:420"><div class="vn">D2 · Digitalización</div><div class="vm">Casi todo digital, con algún PDF</div><div class="sc v">3</div><div></div><div></div></div>
+    <div class="crow" data-a="left" style="--d:540"><div class="vn">D3 · Automatización</div><div class="vm">Nada: todo a mano</div><div class="sc v" style="background:var(--amber)">0</div><div></div><div></div></div>
+    <div class="crow" data-a="left" style="--d:660"><div class="vn">D4 · Uso de IA</div><div class="vm">La probó alguna vez</div><div class="sc v">1</div><div></div><div></div></div>
+    <div class="crow" data-a="left" style="--d:780"><div class="vn">D5 · Indicadores</div><div class="vm">No se mide nada</div><div class="sc v" style="background:var(--amber)">0</div><div></div><div></div></div>
+    <div class="ctot v" data-a style="--d:950"><div class="f">Suma 5 ÷ 25 × 100</div><div class="r"><span class="mono" style="font-size:24px;color:var(--muted)">IIO</span><span class="big"><span data-count="20" data-delay="1050">0</span></span><span class="chip ind">Nivel 1 · Digitalización</span></div></div>
   </div>
 </section>
 
