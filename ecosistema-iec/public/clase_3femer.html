@@ -1,0 +1,909 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Relevamiento FEMER · Final</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#070B18;
+  --bg2:#0C1328;
+  --panel:rgba(255,255,255,.035);
+  --panel2:rgba(255,255,255,.06);
+  --line:rgba(255,255,255,.09);
+  --text:#EEF2FF;
+  --muted:#93A0C0;
+  --dim:#5B6788;
+  --teal:#2DD4BF;
+  --cyan:#38BDF8;
+  --amber:#F59E0B;
+  --rose:#FB7185;
+  --violet:#A78BFA;
+  --ease:cubic-bezier(.16,.84,.24,1);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%;background:var(--bg);color:var(--text);overflow:hidden;
+  font-family:'Inter',system-ui,Segoe UI,Arial,sans-serif;-webkit-font-smoothing:antialiased}
+
+/* ---------- fondo vivo ---------- */
+#bg{position:fixed;inset:0;z-index:0}
+.glow{position:fixed;width:1100px;height:1100px;border-radius:50%;filter:blur(140px);opacity:.22;z-index:0;
+  transition:transform 1.6s var(--ease),background 1.6s var(--ease);pointer-events:none}
+.glow.g1{background:var(--teal);left:-300px;top:-400px}
+.glow.g2{background:#3B5BDB;right:-350px;bottom:-450px}
+.grain{position:fixed;inset:0;z-index:1;pointer-events:none;opacity:.05;
+  background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='160' height='160'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>")}
+
+/* ---------- escenario 16:9 ---------- */
+#stage{position:fixed;left:50%;top:50%;width:1920px;height:1080px;z-index:2;transform-origin:0 0}
+.slide{position:absolute;inset:0;padding:112px 140px 120px;display:flex;flex-direction:column;
+  opacity:0;visibility:hidden;transform:scale(.985);
+  transition:opacity .7s var(--ease),transform .9s var(--ease),visibility 0s .7s}
+.slide.active{opacity:1;visibility:visible;transform:none;transition:opacity .7s var(--ease),transform .9s var(--ease),visibility 0s}
+
+/* entrada escalonada */
+[data-a]{opacity:0}
+.slide.active [data-a]{animation:enter .9s var(--ease) both;animation-delay:calc(var(--d,0) * 1ms)}
+.slide.active [data-a="fade"]{animation-name:fade}
+.slide.active [data-a="left"]{animation-name:fromLeft}
+.slide.active [data-a="pop"]{animation-name:pop}
+@keyframes enter{from{opacity:0;transform:translateY(34px)}to{opacity:1;transform:none}}
+@keyframes fade{from{opacity:0}to{opacity:1}}
+@keyframes fromLeft{from{opacity:0;transform:translateX(-40px)}to{opacity:1;transform:none}}
+@keyframes pop{0%{opacity:0;transform:scale(.4)}70%{opacity:1;transform:scale(1.12)}100%{opacity:1;transform:scale(1)}}
+
+/* ---------- tipografía ---------- */
+.eyebrow{font-family:'JetBrains Mono',monospace;font-size:21px;letter-spacing:.28em;text-transform:uppercase;color:var(--teal);
+  display:flex;align-items:center;gap:18px;margin-bottom:26px}
+.eyebrow::before{content:"";width:44px;height:2px;background:linear-gradient(90deg,var(--teal),transparent)}
+h1,h2,h3,.disp{font-family:'Space Grotesk',sans-serif;letter-spacing:-.02em}
+h1{font-size:156px;line-height:.95;font-weight:700}
+h2{font-size:74px;line-height:1.04;font-weight:600;max-width:1500px}
+h3{font-size:34px;font-weight:600;line-height:1.15}
+p{font-size:28px;line-height:1.45;color:var(--muted)}
+.grad{background:linear-gradient(100deg,#EEF2FF 0%,var(--teal) 45%,var(--cyan) 75%,var(--violet) 100%);
+  -webkit-background-clip:text;background-clip:text;color:transparent;background-size:200% 100%;animation:shine 8s linear infinite}
+@keyframes shine{to{background-position:-200% 0}}
+.hl{color:var(--teal)}
+.amb{color:var(--amber)}
+.head{margin-bottom:56px}
+.sub{font-size:30px;color:var(--muted);margin-top:22px;max-width:1300px}
+.foot{margin-top:auto;font-size:22px;color:var(--dim);font-family:'JetBrains Mono',monospace;letter-spacing:.04em}
+
+/* ---------- componentes ---------- */
+.card{background:linear-gradient(180deg,var(--panel2),var(--panel));border:1px solid var(--line);border-radius:22px;padding:34px;
+  position:relative;overflow:hidden}
+.card::after{content:"";position:absolute;inset:0;border-radius:inherit;pointer-events:none;
+  background:radial-gradient(600px 200px at 0% 0%,rgba(45,212,191,.10),transparent 60%)}
+.chip{display:inline-flex;align-items:center;gap:10px;font-size:20px;font-weight:600;padding:8px 16px;border-radius:999px;
+  background:rgba(45,212,191,.12);color:var(--teal);border:1px solid rgba(45,212,191,.25);white-space:nowrap}
+.chip.amb{background:rgba(245,158,11,.12);color:var(--amber);border-color:rgba(245,158,11,.28)}
+.chip.dim{background:rgba(255,255,255,.05);color:var(--muted);border-color:var(--line)}
+.mono{font-family:'JetBrains Mono',monospace}
+
+/* portada */
+.cover-meta{display:flex;gap:70px;margin-top:auto}
+.cover-meta .n{font-family:'Space Grotesk';font-size:84px;font-weight:700;line-height:1;color:var(--text)}
+.cover-meta .l{font-size:22px;color:var(--muted);margin-top:10px;font-family:'JetBrains Mono';letter-spacing:.06em;text-transform:uppercase}
+
+/* cita */
+.quote{font-family:'Space Grotesk';font-size:88px;line-height:1.1;font-weight:500;letter-spacing:-.025em;max-width:1600px}
+.quote .w{display:inline-block;opacity:0;transform:translateY(30px);filter:blur(8px)}
+.slide.active .quote .w{animation:word .8s var(--ease) forwards;animation-delay:calc(var(--i)*55ms + 200ms)}
+@keyframes word{to{opacity:1;transform:none;filter:none}}
+.quote .w.k{color:var(--teal)}
+
+/* puestos */
+.people{display:grid;grid-template-columns:repeat(4,1fr);gap:22px}
+.person{display:flex;flex-direction:column;gap:14px;padding:26px 26px}
+.person .chip{white-space:normal}
+.person .top{display:flex;align-items:center;gap:20px}
+.av{width:68px;height:68px;border-radius:50%;display:grid;place-items:center;font-family:'Space Grotesk';font-weight:700;font-size:30px;
+  color:#04121A;background:linear-gradient(135deg,var(--teal),var(--cyan));flex:none}
+.person .nm{font-family:'Space Grotesk';font-size:34px;font-weight:600}
+.person .org{font-size:21px;color:var(--muted)}
+.person .row{font-size:22px;color:var(--muted)}
+.person .row b{color:var(--text);font-weight:500}
+
+/* matriz de dolores */
+.matrix{display:grid;grid-template-columns:230px repeat(6,1fr);row-gap:10px;column-gap:10px;align-items:center}
+.matrix .cell{height:52px}
+.mh{font-size:20px;color:var(--muted);text-align:center;line-height:1.25}
+.mh b{display:block;font-family:'Space Grotesk';font-size:38px;color:var(--text);margin-bottom:4px}
+.mn{font-family:'Space Grotesk';font-size:30px;font-weight:600}
+.cell{height:62px;display:grid;place-items:center;border-radius:14px;background:rgba(255,255,255,.025)}
+.dot{width:30px;height:30px;border-radius:50%;background:var(--teal);box-shadow:0 0 0 7px rgba(45,212,191,.14),0 0 26px rgba(45,212,191,.7);opacity:0}
+.slide.active .dot{animation:pop .6s var(--ease) both;animation-delay:calc(var(--d)*1ms)}
+.tot{font-family:'Space Grotesk';font-size:34px;font-weight:700;text-align:center;color:var(--teal)}
+.mtot{font-size:20px;color:var(--dim);font-family:'JetBrains Mono';text-transform:uppercase;letter-spacing:.08em}
+
+/* barras */
+.bars{display:flex;flex-direction:column;gap:20px}
+.bar{display:grid;grid-template-columns:520px 1fr 120px;align-items:center;gap:30px}
+.bar .lb{font-size:25px;color:var(--text)}
+.bar .lb span{color:var(--muted);font-size:21px;display:block}
+.track{position:relative;height:44px;border-radius:12px;background:rgba(255,255,255,.04);overflow:hidden}
+.track .z{position:absolute;top:0;bottom:0;width:1px;background:rgba(255,255,255,.12)}
+.fill{position:absolute;left:0;top:0;bottom:0;width:0;border-radius:12px;
+  background:linear-gradient(90deg,#3B5BDB,#7C8CF8);transition:width 1.4s var(--ease)}
+.fill.t{background:linear-gradient(90deg,#0E9F8E,var(--teal),#7FF0E0);box-shadow:0 0 30px rgba(45,212,191,.45)}
+.slide.active .fill{width:var(--w);transition-delay:calc(var(--d,0)*1ms)}
+.bar .v{font-family:'Space Grotesk';font-size:40px;font-weight:700;text-align:right}
+.zones{display:grid;grid-template-columns:520px 1fr 120px;gap:30px;margin-bottom:8px}
+.zl{position:relative;height:26px}
+.zl span{position:absolute;transform:translateX(-50%);font-size:18px;color:var(--dim);font-family:'JetBrains Mono'}
+
+/* fórmula */
+.stack{display:flex;height:150px;border-radius:20px;overflow:hidden;gap:6px}
+.seg{display:flex;flex-direction:column;justify-content:center;padding:0 28px;position:relative;transform-origin:left;
+  transform:scaleX(0);transition:transform 1s var(--ease)}
+.slide.active .seg{transform:none;transition-delay:calc(var(--d)*1ms)}
+.seg .p{font-family:'Space Grotesk';font-size:46px;font-weight:700;color:#04121A;line-height:1}
+.seg .t{font-size:21px;color:#062A27;font-weight:600;margin-top:6px}
+.scale{display:grid;grid-template-columns:20fr 20fr 20fr 20fr 20fr;gap:6px;margin-top:22px}
+.sc{padding:20px 22px;border-radius:14px;background:rgba(255,255,255,.04);border:1px solid var(--line)}
+.sc .r{font-family:'JetBrains Mono';font-size:20px;color:var(--dim)}
+.sc .n{font-family:'Space Grotesk';font-size:27px;font-weight:600;margin-top:6px}
+.formula{font-family:'JetBrains Mono';font-size:30px;color:var(--text);padding:26px 34px;border-radius:16px;
+  background:rgba(0,0,0,.25);border:1px solid var(--line);margin-top:34px}
+.formula i{font-style:normal;color:var(--teal)}
+
+/* gauge */
+.gaugewrap{display:grid;grid-template-columns:620px 1fr;gap:90px;align-items:center}
+.gauge{position:relative;width:560px;height:560px}
+.gauge svg{width:100%;height:100%;transform:rotate(-90deg)}
+.gauge .bgc{stroke:rgba(255,255,255,.07)}
+.gauge .fg{stroke:url(#gg);stroke-linecap:round;stroke-dasharray:1508;stroke-dashoffset:1508;transition:stroke-dashoffset 2s var(--ease) .3s;
+  filter:drop-shadow(0 0 18px rgba(45,212,191,.6))}
+.slide.active .gauge .fg{stroke-dashoffset:calc(1508 - 1508 * .88)}
+.gauge .ghost{stroke:rgba(124,140,248,.55);stroke-linecap:round;stroke-dasharray:1508;stroke-dashoffset:1508;transition:stroke-dashoffset 1.2s var(--ease)}
+.slide.active .gauge .ghost{stroke-dashoffset:calc(1508 - 1508 * .5)}
+.gauge .center{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center}
+.gauge .big{font-family:'Space Grotesk';font-size:190px;font-weight:700;line-height:.9}
+.gauge .cap{font-size:24px;color:var(--teal);font-family:'JetBrains Mono';letter-spacing:.2em;text-transform:uppercase;margin-top:8px}
+.vs{display:flex;align-items:center;gap:22px;margin:26px 0 40px}
+.vs .a{font-family:'Space Grotesk';font-size:56px;font-weight:700;color:#7C8CF8}
+.vs .b{font-family:'Space Grotesk';font-size:56px;font-weight:700;color:var(--teal)}
+.vs .ar{font-size:44px;color:var(--dim)}
+
+/* dumbbell IIO */
+.db{display:flex;flex-direction:column;gap:12px}
+.dbr{display:grid;grid-template-columns:210px 1fr;align-items:center;gap:26px;height:56px}
+.dbr .nm{font-size:26px;font-family:'Space Grotesk';font-weight:600}
+.dbr.g .nm{color:var(--teal)}
+.dbt{position:relative;height:62px}
+.band{position:absolute;top:-6px;bottom:-6px}
+.dbline{position:absolute;top:29px;height:4px;border-radius:4px;background:linear-gradient(90deg,var(--amber),var(--teal));
+  transform:scaleX(0);transform-origin:left;transition:transform 1.2s var(--ease)}
+.slide.active .dbline{transform:none;transition-delay:calc(var(--d)*1ms + 300ms)}
+.pt{position:absolute;top:31px;width:26px;height:26px;margin:-13px 0 0 -13px;border-radius:50%}
+.pt.h{background:var(--amber);box-shadow:0 0 18px rgba(245,158,11,.7)}
+.pt.m{background:var(--teal);box-shadow:0 0 22px rgba(45,212,191,.8);opacity:0;transition:opacity .4s}
+.slide.active .pt.m{opacity:1;transition-delay:calc(var(--d)*1ms + 1300ms)}
+.pt .lab{position:absolute;top:-38px;left:50%;transform:translateX(-50%);font-family:'Space Grotesk';font-weight:700;font-size:24px;white-space:nowrap}
+.pt.h .lab{color:var(--amber)}
+.pt.m .lab{color:var(--teal)}
+.lvls{display:grid;grid-template-columns:210px 1fr;gap:26px;margin-top:6px}
+.lvlax{position:relative;height:34px}
+.lvlax span{position:absolute;font-size:18px;color:var(--dim);font-family:'JetBrains Mono';transform:translateX(-50%);white-space:nowrap}
+
+/* horas */
+.hours{display:grid;grid-template-columns:repeat(4,1fr);gap:28px}
+.hcell{padding:38px 34px}
+.hcell .n{font-family:'Space Grotesk';font-size:136px;font-weight:700;line-height:.9;letter-spacing:-.04em}
+.hcell .n small{font-size:52px;color:var(--muted);margin-left:6px}
+.hcell .l{font-size:23px;margin-top:16px;color:var(--muted)}
+.hbar{display:flex;height:70px;border-radius:16px;overflow:hidden;margin-top:56px;background:rgba(255,255,255,.04)}
+.hb{height:100%;display:flex;align-items:center;padding-left:24px;font-size:22px;font-weight:600;white-space:nowrap;
+  transform:scaleX(0);transform-origin:left;transition:transform 1.2s var(--ease)}
+.slide.active .hb{transform:none;transition-delay:calc(var(--d)*1ms)}
+.hb.keep{background:rgba(124,140,248,.35);color:#E0E5FF}
+.hb.hv{background:linear-gradient(90deg,#0E9F8E,var(--teal));color:#04121A}
+.hb.rest{background:rgba(45,212,191,.35);color:#D8FFF8}
+.warn{display:flex;gap:20px;align-items:flex-start;margin-top:40px;padding:24px 30px;border-radius:16px;
+  background:rgba(245,158,11,.08);border:1px solid rgba(245,158,11,.25)}
+.warn p{font-size:24px;color:#F5D7A6}
+
+/* herramientas */
+.tools{display:grid;grid-template-columns:repeat(3,1fr);gap:26px}
+.tool{display:flex;flex-direction:column;gap:10px;padding:26px 30px}
+.tool .L{font-family:'Space Grotesk';font-size:54px;font-weight:700;line-height:.9;color:var(--teal);opacity:.9}
+.tool.star{border-color:rgba(45,212,191,.45);box-shadow:0 0 0 1px rgba(45,212,191,.2),0 30px 80px -30px rgba(45,212,191,.45)}
+.tool .w{font-family:'JetBrains Mono';font-size:20px;color:var(--muted)}
+.avs{display:flex;margin-top:auto;padding-top:6px}
+.avs .av{width:46px;height:46px;font-size:17px;margin-right:-8px;border:3px solid var(--bg2)}
+.person .av{font-size:26px}
+
+/* lo construido */
+.built{display:grid;grid-template-columns:repeat(4,1fr);gap:20px}
+.bcard{display:flex;flex-direction:column;gap:8px;padding:20px 22px}
+.bcard .hd{display:flex;align-items:center;gap:14px}
+.bcard .av{width:52px;height:52px;font-size:21px}
+.bcard .who{font-size:20px;color:var(--muted);font-family:'JetBrains Mono'}
+.bcard h3{font-size:25px;padding-right:46px}
+.bcard .tl2{position:absolute;top:22px;right:24px;font-family:'Space Grotesk';font-weight:700;font-size:30px;color:rgba(45,212,191,.55)}
+.bcard .ds{font-size:20px;line-height:1.4;color:var(--muted)}
+.bcard .nx{font-size:19px;color:var(--text);margin-top:auto;padding-top:10px;border-top:1px solid var(--line)}
+.bcard .nx b{color:var(--teal);font-weight:600}
+.bcard .chip{white-space:normal;font-size:18px;padding:6px 12px;align-self:flex-start}
+.legend{display:flex;gap:28px;margin-top:22px;font-size:20px;color:var(--muted)}
+
+/* matriz impacto esfuerzo */
+.mx{display:grid;grid-template-columns:1080px 1fr;gap:70px}
+.plot{position:relative;height:620px;margin-top:30px;border-left:2px solid rgba(255,255,255,.18);border-bottom:2px solid rgba(255,255,255,.18)}
+.q{position:absolute;width:50%;height:50%;padding:22px 26px;font-family:'JetBrains Mono';font-size:19px;letter-spacing:.12em;text-transform:uppercase;color:var(--dim)}
+.q.qw{left:0;top:0;background:rgba(45,212,191,.06);color:var(--teal)}
+.q.ga{right:0;top:0;background:rgba(124,140,248,.06);color:#9AA6FF;text-align:right}
+.q.bi{left:0;bottom:0}
+.q.ev{right:0;bottom:0;text-align:right}
+.bub{position:absolute;transform:translate(-50%,50%);display:flex;align-items:center;gap:12px}
+.bub .c{width:var(--s);height:var(--s);border-radius:50%;display:grid;place-items:center;font-family:'Space Grotesk';font-weight:700;font-size:28px;color:#04121A;
+  background:var(--teal);box-shadow:0 0 30px rgba(45,212,191,.45)}
+.bub.p .c{background:#7C8CF8;box-shadow:0 0 30px rgba(124,140,248,.45)}
+.bub .t{font-size:21px;color:var(--text);white-space:nowrap;background:rgba(7,11,24,.7);padding:4px 10px;border-radius:8px}
+.axl{position:absolute;font-family:'JetBrains Mono';font-size:19px;color:var(--muted);letter-spacing:.1em;text-transform:uppercase}
+.list{display:flex;flex-direction:column;gap:22px}
+.li{display:flex;gap:18px;align-items:flex-start}
+.li .k{flex:none;width:46px;height:46px;border-radius:12px;display:grid;place-items:center;font-family:'Space Grotesk';font-weight:700;font-size:24px;color:#04121A;background:var(--teal)}
+.li .k.p{background:#7C8CF8}
+.li p{font-size:23px;line-height:1.35}
+.li p b{color:var(--text);font-weight:600}
+
+/* línea de estaciones */
+.tl{position:relative;display:grid;grid-template-columns:repeat(8,1fr);gap:18px;margin-top:20px}
+.tl .rail{position:absolute;left:3%;right:3%;top:44px;height:3px;background:rgba(255,255,255,.08);border-radius:3px}
+.tl .prog{position:absolute;left:3%;top:44px;height:3px;width:0;background:linear-gradient(90deg,var(--teal),var(--cyan));
+  box-shadow:0 0 18px rgba(45,212,191,.7);transition:width 2.4s var(--ease) .3s}
+.slide.active .tl .prog{width:94%}
+.st{position:relative;display:flex;flex-direction:column;align-items:center;text-align:center;gap:14px}
+.node{width:90px;height:90px;border-radius:50%;display:grid;place-items:center;font-family:'Space Grotesk';font-size:40px;font-weight:700;
+  background:var(--bg2);border:2px solid rgba(45,212,191,.5);color:var(--teal);z-index:1}
+.st.done .node{background:rgba(255,255,255,.05);border-color:var(--line);color:var(--dim)}
+.st.now .node{background:var(--teal);color:#04121A;box-shadow:0 0 0 10px rgba(45,212,191,.15),0 0 40px rgba(45,212,191,.8)}
+.st .nm{font-family:'JetBrains Mono';font-size:18px;letter-spacing:.14em;text-transform:uppercase;color:var(--text)}
+.st.done .nm{color:var(--dim)}
+.st .tx{font-size:21px;line-height:1.38;color:var(--muted)}
+.st .here{position:absolute;top:-46px;font-family:'JetBrains Mono';font-size:17px;color:var(--teal);letter-spacing:.14em;text-transform:uppercase;white-space:nowrap}
+.teams{display:flex;gap:22px;margin-top:auto}
+.team{flex:1;padding:22px 26px}
+.team b{font-family:'Space Grotesk';font-size:24px;color:var(--teal)}
+.team p{font-size:21px;margin-top:6px}
+
+/* acuerdos */
+.rules{display:grid;grid-template-columns:repeat(2,1fr);gap:28px}
+.rule{display:flex;gap:28px;padding:38px}
+.ic{flex:none;width:76px;height:76px;border-radius:20px;display:grid;place-items:center;background:rgba(45,212,191,.12);border:1px solid rgba(45,212,191,.3)}
+.ic svg{width:38px;height:38px;stroke:var(--teal);fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.rule p{font-size:24px;margin-top:10px}
+
+/* cierre */
+.measure{display:grid;grid-template-columns:repeat(4,1fr);gap:26px;margin-top:60px}
+.ms{padding:34px}
+.ms .n{font-family:'Space Grotesk';font-size:72px;font-weight:700;color:var(--teal);line-height:1}
+.ms p{font-size:26px;color:var(--text);margin-top:16px}
+
+/* ---------- UI ---------- */
+#ui{position:fixed;left:0;right:0;bottom:0;z-index:5;display:flex;align-items:center;gap:18px;padding:18px 26px;
+  opacity:.25;transition:opacity .3s}
+#ui:hover{opacity:1}
+#dots{display:flex;gap:8px;flex:1}
+#dots button{flex:1;height:5px;border:0;border-radius:4px;background:rgba(255,255,255,.14);cursor:pointer;transition:background .3s}
+#dots button.on{background:var(--teal)}
+#dots button.past{background:rgba(45,212,191,.4)}
+#count{font-family:'JetBrains Mono',monospace;font-size:13px;color:var(--muted);min-width:64px;text-align:right}
+#hint{font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--dim)}
+#notes{position:fixed;left:50%;bottom:54px;transform:translateX(-50%) translateY(20px);width:min(900px,90vw);z-index:6;
+  background:rgba(12,19,40,.94);border:1px solid var(--line);border-radius:14px;padding:18px 22px;font-size:16px;line-height:1.5;
+  color:#C9D3E6;opacity:0;pointer-events:none;transition:.3s;backdrop-filter:blur(10px)}
+#notes.on{opacity:1;transform:translateX(-50%)}
+#notes b{color:var(--teal);font-family:'JetBrains Mono';font-size:12px;letter-spacing:.15em;text-transform:uppercase;display:block;margin-bottom:6px}
+@media (prefers-reduced-motion:reduce){*{animation-duration:.01ms!important;transition-duration:.01ms!important}}
+
+/* ===== versión final ===== */
+.people{grid-template-columns:repeat(5,1fr);gap:16px}
+.person{padding:18px 20px;gap:8px}
+.person .top{gap:14px}
+.person .av{width:46px;height:46px;font-size:19px}
+.person .nm{font-size:26px}
+.person .org{font-size:17px;line-height:1.3}
+.person .row{font-size:18px;line-height:1.35}
+.matrix{row-gap:5px;column-gap:8px;grid-template-columns:230px repeat(6,1fr)}
+.matrix .cell{height:31px;border-radius:9px}
+.mn{font-size:21px}
+.mh{font-size:17px}
+.mh b{font-size:30px;margin-bottom:2px}
+.dot{width:17px;height:17px;box-shadow:0 0 0 5px rgba(45,212,191,.14),0 0 16px rgba(45,212,191,.7)}
+.tot{font-size:26px}
+.mtot{font-size:16px}
+#ipoInd{gap:8px}
+#ipoInd .bar{grid-template-columns:500px 1fr 80px;gap:22px}
+#ipoInd .bar .lb{font-size:20px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+#ipoInd .bar .lb span{font-size:17px}
+#ipoInd .track{height:22px;border-radius:7px}
+#ipoInd .fill{border-radius:7px}
+#ipoInd .bar .v{font-size:27px}
+.zones.cz{grid-template-columns:500px 1fr 80px;gap:22px}
+#dbb{gap:1px}
+#dbb .dbr{height:37px;grid-template-columns:170px 1fr;gap:20px}
+#dbb .dbr .nm{font-size:20px}
+#dbb .dbt{height:37px}
+#dbb .band{top:0;bottom:0}
+#dbb .dbline{top:17px;height:3px}
+#dbb .pt{top:18px;width:17px;height:17px;margin:-8px 0 0 -8px}
+#dbb .pt .lab{top:-4px;font-size:17px;transform:none}
+#dbb .pt.h .lab{left:auto;right:22px}
+#dbb .pt.m .lab{left:22px}
+#dbb .dbr.g .dbline{height:5px;top:16px}
+.lvls.cz{grid-template-columns:170px 1fr;gap:20px}
+.built{grid-template-columns:repeat(5,1fr);gap:16px}
+.bcard{padding:18px 18px;gap:7px}
+.bcard .av{width:44px;height:44px;font-size:18px}
+.bcard h3{font-size:21px;padding-right:58px;line-height:1.15}
+.bcard .who{font-size:16px}
+.bcard .tl2{font-size:22px;top:18px;right:16px}
+.bcard .ds{font-size:17px;line-height:1.35}
+.bcard .nx{font-size:16px}
+.bcard .chip{font-size:15px;padding:4px 10px}
+.tool .cnt{font-family:'Space Grotesk';font-size:30px;font-weight:700;color:var(--text);margin-top:4px}
+.tool .cnt small{font-size:19px;color:var(--muted);font-weight:500;margin-left:6px}
+.tool .names{font-size:17px;color:var(--muted);line-height:1.35}
+.found{display:grid;grid-template-columns:repeat(4,1fr);gap:24px}
+.fcard{padding:30px 30px;display:flex;flex-direction:column;gap:10px}
+.fcard .n{font-family:'Space Grotesk';font-size:120px;font-weight:700;line-height:.9;color:var(--amber)}
+.fcard .n small{font-size:48px;color:var(--muted)}
+.fcard p{font-size:24px;color:var(--text)}
+.fcard .why{font-size:20px;color:var(--muted);margin-top:auto;padding-top:12px;border-top:1px solid var(--line)}
+.fcard.ok .n{color:var(--teal)}
+
+/* ===== versión anónima ===== */
+.ptypes{display:grid;grid-template-columns:repeat(3,1fr);gap:24px}
+.ptype{padding:30px 32px;display:flex;flex-direction:column;gap:12px}
+.ptype .ic{width:56px;height:56px;border-radius:16px;display:grid;place-items:center;background:rgba(45,212,191,.12);color:var(--teal);font-family:'Space Grotesk';font-weight:700;font-size:26px}
+.ptype h3{font-size:30px}
+.ptype p{font-size:21px;color:var(--muted)}
+.freq{display:flex;flex-direction:column;gap:22px}
+.frow{display:grid;grid-template-columns:90px 420px 1fr 260px;align-items:center;gap:26px}
+.frow .k{font-family:'Space Grotesk';font-size:48px;font-weight:700;color:var(--teal);text-align:center}
+.frow .t{font-size:28px;color:var(--text)}
+.frow .fq{font-family:'Space Grotesk';font-size:28px;font-weight:600;color:var(--text);text-align:right}
+.frow .track{height:34px}
+.strip{position:relative;height:150px;margin-top:20px}
+.strip .ax{position:absolute;left:0;right:0;top:70px;height:10px;border-radius:5px;background:linear-gradient(90deg,rgba(255,255,255,.05) 0 40%,rgba(124,140,248,.25) 40% 60%,rgba(45,212,191,.3) 60% 80%,rgba(45,212,191,.5) 80% 100%)}
+.strip .tk{position:absolute;top:calc(100% - 50px);transform:translateX(-50%);font-family:'JetBrains Mono';font-size:18px;color:var(--dim);white-space:nowrap}
+.sdot{position:absolute;width:28px;height:28px;margin-left:-14px;border-radius:50%;background:#7C8CF8;box-shadow:0 0 18px rgba(124,140,248,.7);opacity:0}
+.sdot.t{background:var(--teal);box-shadow:0 0 22px rgba(45,212,191,.8)}
+.sdot.a{background:var(--amber);box-shadow:0 0 18px rgba(245,158,11,.7)}
+.slide.active .sdot{animation:pop .6s var(--ease) both;animation-delay:calc(var(--d)*1ms)}
+.zlab{display:flex;justify-content:space-between;font-family:'JetBrains Mono';font-size:18px;color:var(--dim);margin-top:4px}
+.srow{display:grid;grid-template-columns:150px 1fr 190px;align-items:center;gap:30px}
+.srow .lb{font-family:'Space Grotesk';font-size:30px;font-weight:600}
+.srow .avg{text-align:right}
+.srow .avg .n{font-family:'Space Grotesk';font-size:76px;font-weight:700;line-height:1}
+.srow .avg .l{font-size:18px;color:var(--muted)}
+.srow{align-items:end}
+.srow .strip{height:175px;margin-top:0}
+.srow .strip .ax{top:132px;background:rgba(255,255,255,.07)}
+.srow .strip .tk{top:150px}
+.srow .lb,.srow .avg{padding-bottom:30px}
+#ipoStrip .tk{font-size:22px;top:282px}
+.proto .st{align-self:flex-start}
+.proto p{font-size:20px;color:var(--muted);line-height:1.4}
+</style>
+</head>
+<body>
+<canvas id="bg"></canvas>
+<div class="glow g1"></div><div class="glow g2"></div>
+<div class="grain"></div>
+
+<svg width="0" height="0" style="position:absolute">
+  <defs>
+    <linearGradient id="gg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#0E9F8E"/><stop offset=".6" stop-color="#2DD4BF"/><stop offset="1" stop-color="#38BDF8"/>
+    </linearGradient>
+  </defs>
+</svg>
+
+<main id="stage">
+
+<!-- 1 · PORTADA -->
+<section class="slide" data-notes="Presentación final del relevamiento. Es anónima a propósito: muestra al grupo, no a cada persona. Resume los puestos, los dolores que comparten, el diagnóstico con IPO e IIO y el plan para aplicar Inteligencia Operativa en las estaciones que quedan.">
+  <div class="eyebrow" data-a style="--d:100">Experto en IA Nivel I · Comisión FEMER</div>
+  <h1 data-a style="--d:250"><span class="grad">Inteligencia<br>Operativa</span><br>en FEMER</h1>
+  <p class="sub" data-a style="--d:500">Lo que mostraron sus relevamientos: qué duele, cuánto se puede optimizar y cómo lo vamos a aplicar.</p>
+  <div class="cover-meta">
+    <div data-a style="--d:750"><div class="n"><span data-count="6">0</span></div><div class="l">dolores compartidos</div></div>
+    <div data-a style="--d:850"><div class="n"><span data-count="6">0</span></div><div class="l">herramientas para todos</div></div>
+    <div data-a style="--d:950"><div class="n"><span data-count="88">0</span></div><div class="l">IPO del dolor más común</div></div>
+    <div data-a style="--d:1050"><div class="n"><span data-count="141">0</span><span style="font-size:44px;color:var(--muted)"> h/mes</span></div><div class="l">a recuperar (hipótesis)</div></div>
+  </div>
+</section>
+
+<!-- 2 · PREMISA -->
+<section class="slide" style="justify-content:center" data-notes="Tesis 3 de la metodología. Lo que sigue no es una lista de herramientas: es lo que cada puesto contó sobre su trabajo real, y desde ahí qué conviene optimizar.">
+  <div class="eyebrow" data-a style="--d:0">La premisa</div>
+  <div class="quote" data-words="La IA no viene a sacar al empleado de la operación. Viene a sacarlo de la parte que *no *necesita *su *inteligencia *humana."></div>
+  <p class="sub" data-a style="--d:1900;margin-top:56px">Por eso empezamos por cómo trabaja cada uno <span class="hl">de verdad</span>, no por la tecnología.</p>
+</section>
+
+<!-- 3 · PROCESOS -->
+<section class="slide" data-notes="No mostramos quién relevó qué: el foco está en los procesos. Casi todos trabajan alrededor de la facturación, la liquidación y el control del dinero.">
+  <div class="head" style="margin-bottom:46px">
+    <div class="eyebrow" data-a>Estación 1 · Qué relevaron</div>
+    <h2 data-a style="--d:100">Los procesos que <span class="hl">más les pesan</span></h2>
+    <p class="sub" data-a style="--d:200">Federación, círculos médicos y entidades del sector. Distintos lugares, el mismo tipo de trabajo.</p>
+  </div>
+  <div class="ptypes">
+    <div class="card ptype" data-a style="--d:300"><div class="ic">$</div><h3>Facturación y liquidación</h3><p>Prestaciones y órdenes que hay que controlar, cargar y facturar a cada obra social.</p></div>
+    <div class="card ptype" data-a style="--d:400"><div class="ic">≠</div><h3>Auditoría y débitos</h3><p>Lo facturado contra lo pagado: encontrar diferencias y reclamar.</p></div>
+    <div class="card ptype" data-a style="--d:500"><div class="ic">⇄</div><h3>Bancos y tesorería</h3><p>Extractos contra planillas, pagos por banco, saldos que tienen que cerrar.</p></div>
+    <div class="card ptype" data-a style="--d:600"><div class="ic">↑</div><h3>Carga y transmisión</h3><p>Pasar datos de un archivo a un sistema o portal, uno por uno.</p></div>
+    <div class="card ptype" data-a style="--d:700"><div class="ic">▤</div><h3>Documentación</h3><p>Facturas, certificados, protocolos y papeles que hay que leer y transcribir.</p></div>
+    <div class="card ptype" data-a style="--d:800"><div class="ic">✉</div><h3>Altas, avisos y consultas</h3><p>Fichas, vencimientos y mensajes que se repiten con prestadores.</p></div>
+  </div>
+</section>
+
+<!-- 4 · DOLORES -->
+<section class="slide" data-notes="Este es el hallazgo central: aunque cada uno trabaja en un lugar distinto, los mismos seis dolores se repiten. Cruzar planillas a mano aparece en casi todos los relevamientos. Los sujetos van en un orden que no es el de la lista del curso, para que nadie se identifique. Por eso las herramientas se piensan para todos y no puesto por puesto.">
+  <div class="head" style="margin-bottom:18px;margin-top:-40px">
+    <div class="eyebrow" data-a>Estación 4 · Fricciones</div>
+    <h2 data-a style="--d:100">Lugares distintos, <span class="hl">dolores repetidos</span></h2>
+  </div>
+  <div class="matrix" id="mx"></div>
+</section>
+
+<!-- 5 · IPO QUÉ ES -->
+<section class="slide" data-notes="El cálculo del IPO con datos reales es el entregable de la Estación 4. Lo que mostramos ahora es un borrador para que cada uno lo corrija con lo que mida.">
+  <div class="head">
+    <div class="eyebrow" data-a>Diagnóstico · IPO</div>
+    <h2 data-a style="--d:100">¿Cuánto se puede optimizar un proceso?</h2>
+    <p class="sub" data-a style="--d:200">Índice de Potencial de Optimización: de 0 a 100, medido <span class="hl">antes</span> de aplicar IA.</p>
+  </div>
+  <div class="stack">
+    <div class="seg" style="flex:30;background:var(--teal);--d:300"><div class="p">30%</div><div class="t">V1 · Tiempo mensual</div></div>
+    <div class="seg" style="flex:30;background:#5EEAD4;--d:450"><div class="p">30%</div><div class="t">V2 · Tareas repetitivas</div></div>
+    <div class="seg" style="flex:20;background:#7DD3FC;--d:600"><div class="p">20%</div><div class="t">V3 · Errores</div></div>
+    <div class="seg" style="flex:10;background:#A5B4FC;--d:750;padding:0 18px"><div class="p">10%</div><div class="t">V4 · Manual</div></div>
+    <div class="seg" style="flex:10;background:#C4B5FD;--d:900;padding:0 18px"><div class="p">10%</div><div class="t">V5 · Integrar</div></div>
+  </div>
+  <div class="scale" data-a style="--d:1100">
+    <div class="sc"><div class="r">0–20</div><div class="n">Bajo</div></div>
+    <div class="sc"><div class="r">21–40</div><div class="n">Moderado</div></div>
+    <div class="sc" style="border-color:rgba(124,140,248,.5)"><div class="r">41–60</div><div class="n">Significativo</div></div>
+    <div class="sc" style="border-color:rgba(45,212,191,.5)"><div class="r">61–80</div><div class="n hl">Alto</div></div>
+    <div class="sc"><div class="r">81–100</div><div class="n">Transformacional</div></div>
+  </div>
+  <div class="formula" data-a style="--d:1300">IPO = (<i>V1</i>×0,3 + <i>V2</i>×0,3 + <i>V3</i>×0,2 + <i>V4</i>×0,1 + <i>V5</i>×0,1) ÷ 5 × 100</div>
+  <div class="foot" data-a style="--d:1500">Valores estimados a partir de los TP · pocos midieron sus tiempos</div>
+</section>
+
+<!-- 6 · IPO POR PROCESO -->
+<section class="slide" data-notes="Cada punto es un proceso relevado, sin nombre. Casi todos caen en significativo: hay mucha repetición y carga manual, pero el tiempo de un solo puesto casi nunca pasa las 10 horas por mes. Uno solo llega a alto, y es porque el ciclo le lleva casi dos semanas.">
+  <div class="head" style="margin-bottom:40px">
+    <div class="eyebrow" data-a>Diagnóstico · IPO por proceso</div>
+    <h2 data-a style="--d:100">Solo, casi todo queda en <span style="color:#9AA6FF">«significativo»</span></h2>
+    <p class="sub" data-a style="--d:200">Cada punto es un proceso relevado.</p>
+  </div>
+  <div class="strip" id="ipoStrip" data-a="fade" data-size="44" style="--d:250;height:330px;margin-top:10px"><div class="ax" style="top:250px;height:14px;border-radius:7px"></div></div>
+  <div class="warn" data-a style="--d:1400">
+    <p><b style="color:var(--amber)">¿Por qué?</b> Hay mucha repetición y carga manual, pero el tiempo de una sola persona casi nunca pasa las 10 h por mes. La escala del tiempo está pensada para toda la organización.</p>
+  </div>
+</section>
+
+<!-- 7 · IPO TRANSVERSAL -->
+<section class="slide" data-notes="Individualmente, cruzar planillas rondaba 50 en cada puesto. Sumando todos los puestos que lo hacen llega a 88, transformacional. Las horas son estimadas: el registro semanal del AS-IS las va a corregir. Por eso conviene pensar las herramientas de forma transversal y no puesto por puesto.">
+  <div class="head" style="margin-bottom:30px">
+    <div class="eyebrow" data-a>Diagnóstico · IPO por dolor compartido</div>
+    <h2 data-a style="--d:100">Juntos, el conciliador llega a <span class="hl">88</span></h2>
+  </div>
+  <div class="gaugewrap">
+    <div class="gauge" data-a="pop" style="--d:200">
+      <svg viewBox="0 0 560 560"><circle class="bgc" cx="280" cy="280" r="240" fill="none" stroke-width="34"/>
+        <circle class="ghost" cx="280" cy="280" r="240" fill="none" stroke-width="10"/>
+        <circle class="fg" cx="280" cy="280" r="240" fill="none" stroke-width="34"/></svg>
+      <div class="center"><div class="big"><span data-count="88" data-delay="300" data-dur="2000">0</span></div><div class="cap">IPO · transf.</div></div>
+    </div>
+    <div>
+      <h3 data-a style="--d:400;font-size:44px">A · Cruzar planillas</h3>
+      <p data-a style="--d:500;margin-top:10px">casi todos los puestos · ~90 h/mes · +20 errores/mes</p>
+      <div class="vs" data-a style="--d:700"><span class="a">~50</span><span class="ar">→</span><span class="b">88</span>
+        <p style="font-size:22px;max-width:420px">de cada puesto por separado a todos juntos</p></div>
+      <div class="bars" id="ipoTr" style="gap:14px"></div>
+    </div>
+  </div>
+</section>
+
+<!-- 8 · IIO -->
+<section class="slide" data-notes="Cada punto es un puesto, sin nombre. Hoy casi todos están en digitalización: trabajan en digital pero a mano. Con las herramientas del plan, el grupo llega a IA aplicada. Lo más bajo de todos son los indicadores: casi nadie mide su propio trabajo.">
+  <div class="head" style="margin-bottom:6px;margin-top:-40px">
+    <div class="eyebrow" data-a>Diagnóstico · IIO · Índice de Inteligencia Operativa</div>
+    <h2 data-a style="--d:100">De <span class="amb">23</span> a <span class="hl">54</span>: del nivel 1 al nivel 3</h2>
+    <p class="sub" data-a style="--d:200">Cada punto es un puesto. A la derecha, el promedio del grupo.</p>
+  </div>
+  <div class="srow" data-a style="--d:300"><div class="lb amb">Hoy</div><div class="strip" id="iioHoy"><div class="ax"></div></div>
+    <div class="avg"><div class="n amb"><span data-count="23" data-delay="400">0</span></div><div class="l">Nivel 1 · Digitalización</div></div></div>
+  <div class="srow" data-a style="--d:500;margin-top:6px"><div class="lb hl">Meta</div><div class="strip" id="iioMeta"><div class="ax"></div></div>
+    <div class="avg"><div class="n hl"><span data-count="54" data-delay="900">0</span></div><div class="l">Nivel 3 · IA aplicada</div></div></div>
+  <div class="warn" data-a style="--d:1500;margin-top:30px">
+    <p><b style="color:var(--amber)">Punto más débil: indicadores (D5).</b> Casi nadie mide hoy su propio trabajo. Es lo primero que cambia con el AS-IS.</p>
+  </div>
+</section>
+
+<!-- 9 · HORAS -->
+<section class="slide" data-notes="Las horas de alto valor van a lo que hoy no llegan a hacer: recuperar débitos, cobrar morosos, controlar convenios, atender mejor a los prestadores. Es una hipótesis: pocos dieron tiempos medidos.">
+  <div class="head" style="margin-bottom:46px">
+    <div class="eyebrow" data-a>Proyección a validar</div>
+    <h2 data-a style="--d:100">Lo que el grupo podría recuperar por mes</h2>
+  </div>
+  <div class="hours">
+    <div class="card hcell" data-a style="--d:200"><div class="n"><span data-count="256" data-delay="200">0</span><small>h</small></div><div class="l">en los procesos analizados, hoy</div></div>
+    <div class="card hcell" data-a style="--d:320"><div class="n"><span data-count="115" data-delay="320">0</span><small>h</small></div><div class="l">con las herramientas aplicadas</div></div>
+    <div class="card hcell" data-a style="--d:440"><div class="n hl"><span data-count="141" data-delay="440">0</span><small>h</small></div><div class="l">liberadas por mes</div></div>
+    <div class="card hcell" data-a style="--d:560"><div class="n hl"><span data-count="106" data-delay="560">0</span><small>h</small></div><div class="l">de alto valor (75 % de las liberadas)</div></div>
+  </div>
+  <div class="hbar">
+    <div class="hb keep" style="width:44.9%;--d:900">115 h que siguen siendo operativas</div>
+    <div class="hb hv" style="width:41.4%;--d:1200">106 h de alto valor</div>
+    <div class="hb rest" style="width:13.7%;--d:1400">35 h</div>
+  </div>
+  <div class="warn" data-a style="--d:1600">
+    <p><b style="color:var(--amber)">Es una hipótesis.</b> Pocos dieron sus tiempos, y buena parte de las horas sale de estimaciones. No calculamos ROI: no relevamos el costo real del proceso actual (horas, papel, energía).</p>
+  </div>
+</section>
+
+<!-- 10 · HERRAMIENTAS -->
+<section class="slide" data-notes="La regla de oro del conciliador: la IA ayuda a diseñar la receta una vez, y después la receta corre sola con Power Query o una macro. El resultado es siempre el mismo y no depende de pedírselo a la IA cada mes.">
+  <div class="head" style="margin-bottom:40px">
+    <div class="eyebrow" data-a>Qué aplicamos</div>
+    <h2 data-a style="--d:100">Seis herramientas, <span class="hl">todas compartidas</span></h2>
+  </div>
+  <div class="tools" id="tools"></div>
+</section>
+
+<!-- 10b · LO CONSTRUIDO -->
+<section class="slide" data-notes="Lo que ya existe para cada herramienta, construido por alguien del grupo en AI Studio. Solo falta la F, que es un quick win. Quienes dejaron el prompt listo tienen el próximo paso claro: construirlo.">
+  <div class="head" style="margin-bottom:36px">
+    <div class="eyebrow" data-a>Lo que el grupo ya construyó</div>
+    <h2 data-a style="--d:100"><span class="hl">5 de 6 herramientas</span> ya tienen prototipo</h2>
+  </div>
+  <div class="tools" id="protos"></div>
+</section>
+
+<!-- 10c · MIDIERON POCO -->
+<section class="slide" data-notes="Esta es la razón del AS-IS. Sin medir, los índices de esta presentación son estimaciones nuestras y no de ustedes.">
+  <div class="head" style="margin-bottom:46px">
+    <div class="eyebrow" data-a>Lo que faltó</div>
+    <h2 data-a style="--d:100">Construyeron mucho. <span class="amb">Midieron poco.</span></h2>
+  </div>
+  <div class="found">
+    <div class="card fcard ok" data-a style="--d:250"><div class="n" style="font-size:54px;white-space:nowrap">La mayoría</div><p>construyó una app en AI Studio</p><div class="why">El prototipo ya existe: falta probarlo con datos.</div></div>
+    <div class="card fcard" data-a style="--d:400"><div class="n" style="font-size:54px;white-space:nowrap">Pocos</div><p>dieron cuánto tiempo les lleva su proceso</p><div class="why">Sin tiempos, el IPO es una suposición.</div></div>
+    <div class="card fcard" data-a style="--d:550"><div class="n" style="font-size:54px;white-space:nowrap">Casi nadie</div><p>mide hoy el trabajo de su puesto</p><div class="why">Por eso los indicadores (D5) son lo más bajo.</div></div>
+    <div class="card fcard" data-a style="--d:700"><div class="n" style="font-size:54px;white-space:nowrap">Varios</div><p>trabajaron otro proceso que el que más les duele</p><div class="why">El AS-IS empieza por el dolor real.</div></div>
+  </div>
+</section>
+
+<!-- 11 · PRIORIDAD -->
+<section class="slide" data-notes="Eliminar la doble carga aparece en varios relevamientos: el mismo dato en el sistema y en un Excel paralelo, o impreso para volver a tipearlo. No necesita IA: es una decisión de proceso. Los quick wins generan confianza; las grandes apuestas se trabajan por equipos de dolor.">
+  <div class="head" style="margin-bottom:40px">
+    <div class="eyebrow" data-a>Matriz impacto × esfuerzo</div>
+    <h2 data-a style="--d:100">Qué hacemos primero</h2>
+  </div>
+  <div class="mx">
+    <div class="plot" id="plot" data-a="fade" style="--d:200">
+      <div class="q qw">Quick wins · ya</div><div class="q ga">Grandes apuestas</div>
+      <div class="q bi">Bajo impacto</div><div class="q ev">Evitar</div>
+      <div class="axl" style="left:-10px;top:-44px">↑ Impacto</div>
+      <div class="axl" style="right:0;bottom:-44px">Esfuerzo →</div>
+    </div>
+    <div class="list">
+      <div class="li" data-a style="--d:900"><div class="k">D</div><p><b>Asistente propio</b> para mensajes: lo usa todo el grupo desde el primer día.</p></div>
+      <div class="li" data-a style="--d:1000"><div class="k">F</div><p><b>NotebookLM</b> con convenios y manuales, con respuestas que citan la página.</p></div>
+      <div class="li" data-a style="--d:1100"><div class="k">E</div><p><b>Registro de casos</b> que además genera los indicadores que hoy faltan.</p></div>
+      <div class="li" data-a style="--d:1200"><div class="k">✕</div><p><b>Eliminar la doble carga</b> e imprimir para tipear. Sin IA: decisión de proceso.</p></div>
+      <div class="li" data-a style="--d:1300"><div class="k p">A</div><p><b>Conciliador:</b> el de mayor IPO (88). Lo necesitan casi todos.</p></div>
+      <div class="li" data-a style="--d:1400"><div class="k p">B C</div><p><b>Validador y lector de documentos:</b> necesitan reglas reales.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- 12 · ESTACIONES -->
+<section class="slide" data-notes="Equipos por dolor: cada uno se suma al equipo de su dolor principal, y quien ya construyó algo de esa herramienta lo guía. Los casos de archivos que llegan por mail y se cargan en un sistema o portal son los ejercicios guiados de n8n en la Estación 7.">
+  <div class="head" style="margin-bottom:76px">
+    <div class="eyebrow" data-a>Cómo lo hacemos</div>
+    <h2 data-a style="--d:100">El plan, estación por estación</h2>
+  </div>
+  <div class="tl">
+    <div class="rail"></div><div class="prog"></div>
+    <div class="st done" data-a style="--d:200"><div class="node">1</div><div class="nm">Descubrir</div><div class="tx">Mapa del puesto</div></div>
+    <div class="st done" data-a style="--d:300"><div class="node">2</div><div class="nm">Redescubrir</div><div class="tx">Inventario de tareas</div></div>
+    <div class="st now" data-a style="--d:450"><div class="here">← estamos acá</div><div class="node">3</div><div class="nm">Visibilizar</div><div class="tx">AS-IS con el formulario de relevamiento</div></div>
+    <div class="st" data-a style="--d:600"><div class="node">4</div><div class="nm">Cuestionar</div><div class="tx">1 semana midiendo. IPO con datos reales</div></div>
+    <div class="st" data-a style="--d:750"><div class="node">5</div><div class="nm">Aumentar</div><div class="tx">Quick wins: Gem propio y NotebookLM</div></div>
+    <div class="st" data-a style="--d:900"><div class="node">6</div><div class="nm">Rediseñar</div><div class="tx">TO-BE en equipos por dolor</div></div>
+    <div class="st" data-a style="--d:1050"><div class="node">7</div><div class="nm">Conectar</div><div class="tx">Workflow n8n: mail con adjunto de los círculos</div></div>
+    <div class="st" data-a style="--d:1200"><div class="node">8</div><div class="nm">Transformar</div><div class="tx">KPIs, IIO antes/después, integrador</div></div>
+  </div>
+  <div class="teams">
+    <div class="card team" data-a style="--d:1400"><b>A · Conciliador</b><p>El equipo más grande: casi todos cruzan planillas.</p></div>
+    <div class="card team" data-a style="--d:1500"><b>B · Validador</b><p>Reglas para controlar antes de cargar.</p></div>
+    <div class="card team" data-a style="--d:1600"><b>C · Documentos</b><p>Papel y PDF convertidos en datos.</p></div>
+    <div class="card team" data-a style="--d:1700"><b>D·E·F · Avisos y convenios</b><p>Mensajes, casos abiertos y normas.</p></div>
+  </div>
+</section>
+
+<!-- 13 · ACUERDOS -->
+<section class="slide" data-notes="En algunos trabajos se subieron datos reales de afiliados a herramientas públicas. Este acuerdo tiene que quedar explícito antes de seguir.">
+  <div class="head">
+    <div class="eyebrow" data-a>Reglas para todas las herramientas</div>
+    <h2 data-a style="--d:100">Cuatro acuerdos antes de aplicar</h2>
+  </div>
+  <div class="rules">
+    <div class="card rule" data-a style="--d:250"><div class="ic"><svg viewBox="0 0 24 24"><rect x="4" y="11" width="16" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg></div>
+      <div><h3>Datos sensibles</h3><p>Probar con datos ficticios o anonimizados. Documentos reales, solo en cuentas autorizadas por la institución (Ley 25.326).</p></div></div>
+    <div class="card rule" data-a style="--d:380"><div class="ic"><svg viewBox="0 0 24 24"><circle cx="12" cy="13" r="8"/><path d="M12 9v4l2 2M9 2h6"/></svg></div>
+      <div><h3>Medir antes de prometer</h3><p>Tiempo por tarea, cantidad por mes, errores y rebotes. Sin medición no hay mejora demostrable.</p></div></div>
+    <div class="card rule" data-a style="--d:510"><div class="ic"><svg viewBox="0 0 24 24"><path d="M4 6h16M4 12h10M4 18h6"/><path d="M17 15l3 3-3 3"/></svg></div>
+      <div><h3>La IA diseña, la regla ejecuta</h3><p>Lo que se repite cada mes queda como receta fija (fórmula, macro, workflow), no como un pedido nuevo a la IA.</p></div></div>
+    <div class="card rule" data-a style="--d:640"><div class="ic"><svg viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg></div>
+      <div><h3>La persona valida</h3><p>La IA propone y señala. No completa datos faltantes ni decide coberturas, montos o reclamos.</p></div></div>
+  </div>
+</section>
+
+<!-- 14 · CIERRE -->
+<section class="slide" style="justify-content:center" data-notes="Este es el entregable de la Estación 4. Sin esta medición, las horas y los índices de esta presentación siguen siendo una hipótesis.">
+  <div class="eyebrow" data-a>Próximo paso</div>
+  <h1 data-a style="--d:150;font-size:118px">Una semana<br><span class="grad">midiendo el propio proceso</span></h1>
+  <div class="measure">
+    <div class="card ms" data-a style="--d:500"><div class="n">01</div><p>Tiempo de cada tarea</p></div>
+    <div class="card ms" data-a style="--d:620"><div class="n">02</div><p>Cantidad por mes</p></div>
+    <div class="card ms" data-a style="--d:740"><div class="n">03</div><p>Errores y rebotes</p></div>
+    <div class="card ms" data-a style="--d:860"><div class="n">04</div><p>Veces que se carga el mismo dato</p></div>
+  </div>
+  <p class="sub" data-a style="--d:1100;margin-top:56px">Lo cargan en <span class="hl">iec-ia.com.ar/relevamiento_femer</span> y con esos números reemplazamos las estimaciones por datos reales.</p>
+</section>
+
+</main>
+
+<div id="notes"><b>Notas del presentador</b><span id="notesTxt"></span></div>
+<div id="ui"><div id="dots"></div><span id="hint">← → navegar · F pantalla completa · N notas</span><span id="count"></span></div>
+
+<script>
+/* ================= DATOS ================= */
+// Datos anónimos: solo valores, sin nombres.
+const PAINS = [
+  {k:'A', t:'Cruzar planillas'},
+  {k:'B', t:'Validar antes de cargar'},
+  {k:'C', t:'Papel y PDF a datos'},
+  {k:'D', t:'Mensajes repetitivos'},
+  {k:'E', t:'Casos abiertos'},
+  {k:'F', t:'Normas y convenios'}
+];
+const HAS = ['ABDEF','ACD','ADEF','ABCDF','BCDEF','ABD','ADE','ABC','ABCEF','ABC','ABCDEF','ABCD','ABD','ABCDE','AB'];
+const IPO_VALS = [70,58,56,54,54,54,54,54,50,50,50,48,46,46,44,42];
+const IPO_TR = [['C · Papel y PDF a datos',76],['B · Validar antes de cargar',74],['D · Mensajes repetitivos',64],['E · Casos abiertos',52],['F · Normas y convenios',36]];
+const IIO_PAIRS = [[36,64],[36,60],[28,64],[28,60],[24,52],[24,52],[24,56],[24,48],[20,56],[20,48],[20,48],[20,52],[16,48],[12,52],[12,44]];
+const TOOLS = [
+  {L:'A',t:'Conciliador de planillas',w:'IA + Power Query',o:'Estandarizar · Automatizar',star:true},
+  {L:'B',t:'Validador previo',w:'AI Studio + reglas propias',o:'Asistir · Medir'},
+  {L:'C',t:'Lector de documentos',w:'OCR + IA',o:'Digitalizar · Asistir'},
+  {L:'D',t:'Asistente propio',w:'Gem o GPT por puesto',o:'Asistir con IA'},
+  {L:'E',t:'Registro de casos',w:'Sheets + Looker Studio',o:'Medir · Datos'},
+  {L:'F',t:'Consulta de convenios',w:'NotebookLM',o:'Delegar a agente'}
+];
+const PROTOS = [
+  {L:'A',t:'Conciliador',st:'Varios prototipos',ok:true,d:'Débitos adjudicados con un prompt reutilizable, un Excel por obra social listo para importar, conciliación de bancos y rendición mensual.'},
+  {L:'B',t:'Validador',st:'Varios prototipos',ok:true,d:'CUIT con dígito verificador, duplicados, control de facturas contra el Excel del sistema y validación de archivos.'},
+  {L:'C',t:'Lector de documentos',st:'Un prototipo',ok:true,d:'Lectura de facturas en PDF, con OCR para las escaneadas. Extracción de certificados, en diseño.'},
+  {L:'D',t:'Asistente propio',st:'Un prototipo',ok:true,d:'Borradores de avisos que la persona revisa antes de enviar.'},
+  {L:'E',t:'Registro de casos',st:'Un prototipo',ok:true,d:'Avisos agrupados por obra social y vencimiento, con historial.'},
+  {L:'F',t:'Consulta de convenios',st:'Pendiente',ok:false,d:'NotebookLM con convenios y normas, con respuestas que citan la página. Es un quick win.'}
+];
+const cuanto = r => r >= .85 ? 'Casi todos' : r >= .6 ? 'La mayoría' : r >= .45 ? 'Cerca de la mitad' : 'Algunos';
+/* impacto (1-5) × esfuerzo (1-5) */
+const BUBBLES = [
+  {k:'D',t:'Mensajes',i:3.7,e:1,qw:true},{k:'F',t:'Convenios',i:3.2,e:1.4,qw:true},{k:'E',t:'Seguimiento',i:4.3,e:1.9,qw:true},
+  {k:'✕',t:'Doble carga',i:3.5,e:2.3,qw:true},{k:'A',t:'Conciliador',i:5,e:3.2},{k:'B',t:'Validador',i:4.1,e:3.6},{k:'C',t:'Documentos',i:4.3,e:4.3}
+];
+
+/* ================= CONSTRUCCIÓN ================= */
+const $ = s => document.querySelector(s);
+const el = (tag, cls, html) => { const e = document.createElement(tag); if (cls) e.className = cls; if (html != null) e.innerHTML = html; return e; };
+
+// matriz anónima: cada fila es un sujeto (orden mezclado, no es el de la lista)
+(function(){
+  const ORDEN = [9,3,12,0,7,14,5,10,2,13,6,1,11,8,4];
+  const m = $('#mx');
+  m.appendChild(el('div'));
+  PAINS.forEach((p,j) => { const h = el('div','mh',`<b>${p.k}</b>${p.t}`); h.dataset.a=''; h.style.setProperty('--d',200+j*60); m.appendChild(h); });
+  ORDEN.forEach((k,i) => {
+    const nm = el('div','mn','Sujeto ' + String.fromCharCode(65 + i)); nm.dataset.a='left'; nm.style.setProperty('--d',300+i*45); m.appendChild(nm);
+    PAINS.forEach((p,j) => {
+      const c = el('div','cell');
+      if (HAS[k].includes(p.k)) { const d = el('div','dot'); d.style.setProperty('--d', 700 + j*110 + i*35); c.appendChild(d); }
+      m.appendChild(c);
+    });
+  });
+  const lb = el('div','mtot','En el grupo'); lb.dataset.a='fade'; lb.style.setProperty('--d',1700); m.appendChild(lb);
+  PAINS.forEach((p,j) => {
+    const r = HAS.filter(x => x.includes(p.k)).length / HAS.length;
+    const t = el('div','tot', cuanto(r)); t.style.fontSize = '20px'; t.dataset.a='pop'; t.style.setProperty('--d',1750+j*80); m.appendChild(t);
+  });
+})();
+
+// puntos sobre una escala de 0 a 100 (se apilan los iguales)
+function strip(box, vals, cls, d0, ticks){
+  const seen = {};
+  vals.forEach((v,i) => {
+    const k = Math.round(v); seen[k] = (seen[k] || 0) + 1;
+    const n = el('div','sdot ' + (cls ? cls(v) : ''));
+    const size = +(box.dataset.size || 28), base = box.querySelector('.ax').offsetTop + 5;
+    n.style.width = n.style.height = size + 'px'; n.style.marginLeft = (-size/2) + 'px';
+    n.style.left = v + '%'; n.style.top = (base - size/2 - (seen[k]-1) * (size + 5)) + 'px';
+    n.style.setProperty('--d', d0 + i*60); box.appendChild(n);
+  });
+  ticks.forEach(([v,t]) => box.insertAdjacentHTML('beforeend', `<div class="tk" style="left:${v}%">${t}</div>`));
+}
+function barRow(label, sub, v, d, top){
+  const r = el('div','bar');
+  r.innerHTML = `<div class="lb">${label}${sub?` <span style="display:inline">· ${sub}</span>`:''}</div>
+    <div class="track"><div class="z" style="left:41%"></div><div class="z" style="left:61%"></div><div class="z" style="left:81%"></div>
+    <div class="fill ${top?'t':''}" style="--w:${v}%;--d:${d}"></div></div>
+    <div class="v"><span data-count="${v}" data-delay="${d}">0</span></div>`;
+  return r;
+}
+strip($('#ipoStrip'), IPO_VALS, v => v > 60 ? 't' : '', 400, [[0,'0'],[20,'bajo'],[40,'41'],[50,'significativo'],[60,'61'],[70,'alto'],[80,'81'],[90,'transf.'],[100,'100']]);
+IPO_TR.forEach(([n,v],i) => {
+  const r = barRow(n,null,v,900+i*120);
+  r.style.gridTemplateColumns = '420px 1fr 80px'; r.style.gap = '22px';
+  r.querySelector('.lb').style.fontSize = '22px'; r.querySelector('.v').style.fontSize = '30px';
+  r.querySelector('.track').style.height = '30px';
+  $('#ipoTr').appendChild(r);
+});
+
+// IIO: puntos de hoy y de la meta (escala 0 a 80)
+const iioTicks = [[0,'0'],[19,'Nivel 0'],[37.5,'Nivel 1'],[56,'Nivel 2'],[75,'Nivel 3'],[94,'Nivel 4']];
+strip($('#iioHoy'), IIO_PAIRS.map(x => x[0] / 80 * 100), () => 'a', 400, iioTicks);
+strip($('#iioMeta'), IIO_PAIRS.map(x => x[1] / 80 * 100), () => 't', 900, iioTicks);
+
+// herramientas
+TOOLS.forEach((t,i) => {
+  const c = el('div','card tool' + (t.star?' star':''));
+  c.dataset.a=''; c.style.setProperty('--d', 200 + i*90);
+  const r = HAS.filter(x => x.includes(t.L)).length / HAS.length;
+  c.innerHTML = `<div style="display:flex;justify-content:space-between;align-items:flex-start"><div class="L">${t.L}</div>${t.star?'<span class="chip">IPO 88 · primero</span>':''}</div>
+    <h3>${t.t}</h3><div class="w">${t.w}</div><span class="chip dim">${t.o}</span>
+    <div class="cnt" style="font-size:26px">${cuanto(r)}<small>los puestos</small></div>`;
+  $('#tools').appendChild(c);
+});
+
+// lo construido, por herramienta (sin nombres)
+PROTOS.forEach((t,i) => {
+  const c = el('div','card tool proto' + (t.ok ? '' : ''));
+  c.dataset.a=''; c.style.setProperty('--d', 200 + i*90);
+  if (!t.ok) c.style.borderColor = 'rgba(245,158,11,.4)';
+  c.innerHTML = `<div class="L" style="${t.ok?'':'color:var(--amber)'}">${t.L}</div><h3>${t.t}</h3>
+    <span class="chip st ${t.ok?'':'amb'}">${t.st}</span><p>${t.d}</p>`;
+  $('#protos').appendChild(c);
+});
+
+// burbujas
+BUBBLES.forEach((b,i) => {
+  const x = (b.e - .5) / 5 * 100, y = (b.i - .5) / 5 * 100;
+  const n = el('div','bub' + (b.qw?'':' p'));
+  n.style.left = x+'%'; n.style.bottom = y+'%';
+  n.style.setProperty('--s', (b.k==='A'? 96 : 70) + 'px');
+  n.dataset.a = 'pop'; n.style.setProperty('--d', 400 + i*110);
+  n.innerHTML = `<div class="c">${b.k}</div><div class="t">${b.t}</div>`;
+  $('#plot').appendChild(n);
+});
+
+// cita palabra por palabra
+document.querySelectorAll('[data-words]').forEach(q => {
+  q.innerHTML = q.dataset.words.split(' ').map((w,i) => {
+    const k = w.startsWith('*'); return `<span class="w${k?' k':''}" style="--i:${i}">${k?w.slice(1):w}</span>`;
+  }).join(' ');
+});
+
+/* ================= MOTOR ================= */
+const slides = [...document.querySelectorAll('.slide')];
+let cur = 0;
+const stage = $('#stage');
+function fit(){
+  const s = Math.min(innerWidth / 1920, innerHeight / 1080);
+  stage.style.transformOrigin = 'center';
+  stage.style.transform = `translate(-50%,-50%) scale(${s})`;
+}
+addEventListener('resize', fit); fit();
+
+const dots = $('#dots');
+slides.forEach((_,i) => { const b = el('button'); b.title = `Diapositiva ${i+1}`; b.onclick = e => { e.stopPropagation(); go(i); }; dots.appendChild(b); });
+
+function countUp(scope){
+  scope.querySelectorAll('[data-count]').forEach(n => {
+    const to = +n.dataset.count, delay = +(n.dataset.delay || 0), dur = +(n.dataset.dur || 1300);
+    n.textContent = '0';
+    setTimeout(() => {
+      const t0 = performance.now();
+      const step = now => {
+        const p = Math.min(1, (now - t0) / dur), e = 1 - Math.pow(1 - p, 4);
+        n.textContent = Math.round(to * e);
+        if (p < 1 && slides[cur] === scope) requestAnimationFrame(step); else n.textContent = to;
+      };
+      requestAnimationFrame(step);
+    }, delay);
+  });
+}
+
+const g1 = $('.glow.g1'), g2 = $('.glow.g2');
+function go(i){
+  i = Math.max(0, Math.min(slides.length - 1, i));
+  slides[cur].classList.remove('active');
+  cur = i;
+  const s = slides[cur];
+  void s.offsetWidth;
+  s.classList.add('active');
+  countUp(s);
+  [...dots.children].forEach((d,k) => { d.classList.toggle('on', k === cur); d.classList.toggle('past', k < cur); });
+  $('#count').textContent = `${String(cur+1).padStart(2,'0')} / ${slides.length}`;
+  $('#notesTxt').textContent = s.dataset.notes || '—';
+  g1.style.transform = `translate(${(cur%3)*260}px, ${(cur%4)*120}px)`;
+  g2.style.transform = `translate(${-(cur%4)*200}px, ${-(cur%3)*140}px)`;
+  history.replaceState(null, '', '#' + (cur+1));
+}
+
+addEventListener('keydown', e => {
+  if (['ArrowRight','PageDown',' ','Enter'].includes(e.key)) { e.preventDefault(); go(cur + 1); }
+  else if (['ArrowLeft','PageUp','Backspace'].includes(e.key)) { e.preventDefault(); go(cur - 1); }
+  else if (e.key === 'Home') go(0);
+  else if (e.key === 'End') go(slides.length - 1);
+  else if (e.key.toLowerCase() === 'f') { document.fullscreenElement ? document.exitFullscreen() : document.documentElement.requestFullscreen().catch(()=>{}); }
+  else if (e.key.toLowerCase() === 'n') $('#notes').classList.toggle('on');
+});
+addEventListener('click', e => { if (e.target.closest('#ui')) return; go(e.clientX > innerWidth / 3 ? cur + 1 : cur - 1); });
+let tx = null;
+addEventListener('touchstart', e => tx = e.touches[0].clientX, {passive:true});
+addEventListener('touchend', e => { if (tx == null) return; const dx = e.changedTouches[0].clientX - tx; if (Math.abs(dx) > 50) go(cur + (dx < 0 ? 1 : -1)); tx = null; });
+
+// arranque: la primera diapositiva aparece sin transición del contenedor
+(function(){
+  const first = Math.max(0, (parseInt(location.hash.slice(1)) || 1) - 1);
+  slides.forEach(s => s.style.transition = 'none');
+  go(first);
+  requestAnimationFrame(() => requestAnimationFrame(() => slides.forEach(s => s.style.transition = '')));
+})();
+
+/* ================= FONDO: red de nodos ================= */
+(function(){
+  const c = $('#bg'), x = c.getContext('2d');
+  let W, H, P;
+  const DPR = Math.min(2, devicePixelRatio || 1);
+  function init(){
+    W = c.width = innerWidth * DPR; H = c.height = innerHeight * DPR;
+    c.style.width = innerWidth + 'px'; c.style.height = innerHeight + 'px';
+    const n = Math.round(innerWidth * innerHeight / 22000);
+    P = Array.from({length:n}, () => ({x:Math.random()*W, y:Math.random()*H, vx:(Math.random()-.5)*.25*DPR, vy:(Math.random()-.5)*.25*DPR, r:(Math.random()*1.6+.6)*DPR}));
+  }
+  init(); addEventListener('resize', init);
+  const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  function frame(){
+    x.clearRect(0,0,W,H);
+    const L = 150 * DPR;
+    for (let i=0;i<P.length;i++){
+      const a = P[i];
+      if (!reduce){ a.x += a.vx; a.y += a.vy; if (a.x<0||a.x>W) a.vx*=-1; if (a.y<0||a.y>H) a.vy*=-1; }
+      for (let j=i+1;j<P.length;j++){
+        const b = P[j], dx=a.x-b.x, dy=a.y-b.y, d=Math.hypot(dx,dy);
+        if (d < L){ x.strokeStyle = `rgba(45,212,191,${(1-d/L)*.16})`; x.lineWidth = DPR; x.beginPath(); x.moveTo(a.x,a.y); x.lineTo(b.x,b.y); x.stroke(); }
+      }
+      x.fillStyle = 'rgba(160,240,230,.5)'; x.beginPath(); x.arc(a.x,a.y,a.r,0,Math.PI*2); x.fill();
+    }
+    if (!reduce) requestAnimationFrame(frame);
+  }
+  frame();
+})();
+</script>
+</body>
+</html>
