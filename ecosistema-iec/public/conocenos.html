@@ -1,0 +1,173 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Conocé IEC & Co+nexus · Inteligencia Operativa</title>
+<meta name="description" content="Quiénes somos, qué es la Inteligencia Operativa, cómo la aplicamos y las organizaciones que ya confían en IEC & Co+nexus.">
+<meta name="theme-color" content="#05070d">
+<link rel="canonical" href="https://www.iec-ia.com.ar/conocenos">
+<link rel="icon" type="image/png" href="/favicon.png">
+<meta property="og:title" content="Conocé IEC & Co+nexus">
+<meta property="og:description" content="Inteligencia Operativa en simples palabras: la tecnología justa para que tu organización trabaje mejor.">
+<meta property="og:image" content="https://www.iec-ia.com.ar/img/logos/lockup.webp">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Outfit:wght@500;600;700;800&family=DM+Mono:wght@400;500&display=swap">
+<style>
+:root{--bg:#05070d;--card:rgba(255,255,255,.045);--line:rgba(255,255,255,.09);--txt:#e8eef7;--mut:#94a3b8;--cyan:#22d3ee;--teal:#14b8a6;--vio:#8b5cf6;--wa:#25d366}
+*{box-sizing:border-box;margin:0}
+html{scroll-behavior:smooth}
+body{font-family:Inter,system-ui,sans-serif;background:var(--bg);color:var(--txt);line-height:1.55;overflow-x:hidden;-webkit-font-smoothing:antialiased}
+.aurora{position:fixed;inset:-20%;z-index:-1;filter:blur(70px);opacity:.55;pointer-events:none}
+.aurora i{position:absolute;width:55vmax;height:55vmax;border-radius:50%;animation:drift 22s ease-in-out infinite alternate}
+.aurora i:nth-child(1){background:radial-gradient(circle,#0e7490 0,transparent 60%);top:-10%;left:-15%}
+.aurora i:nth-child(2){background:radial-gradient(circle,#0f766e 0,transparent 60%);bottom:-20%;right:-20%;animation-delay:-8s}
+.aurora i:nth-child(3){background:radial-gradient(circle,#4c1d95 0,transparent 62%);top:30%;left:40%;opacity:.6;animation-delay:-14s}
+@keyframes drift{to{transform:translate(8vmax,6vmax) scale(1.15)}}
+.wrap{max-width:720px;margin:0 auto;padding:0 18px}
+header{padding:22px 0 8px;display:flex;justify-content:center}
+header img{height:38px;width:auto}
+.hero{text-align:center;padding:34px 0 26px}
+.kicker{font-family:'DM Mono',monospace;font-size:11px;letter-spacing:.25em;text-transform:uppercase;color:var(--cyan)}
+h1{font-family:Outfit,sans-serif;font-size:clamp(34px,9vw,52px);line-height:1.03;margin:12px 0 14px;letter-spacing:-.02em}
+.grad{background:linear-gradient(90deg,var(--cyan),var(--teal),var(--vio),var(--cyan));background-size:300% 100%;-webkit-background-clip:text;background-clip:text;color:transparent;animation:shift 8s linear infinite}
+@keyframes shift{to{background-position:300% 0}}
+.lead{color:var(--mut);font-size:17px;max-width:540px;margin:0 auto}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:10px;padding:15px 22px;border-radius:16px;font-weight:700;font-size:16px;text-decoration:none;transition:transform .2s}
+.btn:active{transform:scale(.97)}
+.btn--wa{background:var(--wa);color:#03150a;box-shadow:0 10px 30px -8px rgba(37,211,102,.55);animation:pulse 2.6s ease-in-out infinite}
+@keyframes pulse{50%{box-shadow:0 10px 44px -4px rgba(37,211,102,.8)}}
+.btn--ghost{border:1px solid var(--line);color:var(--txt);background:var(--card)}
+.btn svg{width:22px;height:22px}
+.cta{display:flex;flex-direction:column;gap:10px;margin-top:26px}
+section{padding:30px 0}
+h2{font-family:Outfit,sans-serif;font-size:clamp(25px,6.5vw,34px);line-height:1.1;margin:8px 0 14px;letter-spacing:-.01em}
+.glass{background:var(--card);border:1px solid var(--line);border-radius:22px;backdrop-filter:blur(10px)}
+.io{padding:22px}
+.io p{color:#cbd5e1;font-size:16.5px}
+.io p+p{margin-top:12px}
+.io b{color:#fff}
+.ej{margin-top:16px;display:grid;gap:10px}
+.ej div{display:flex;gap:12px;align-items:flex-start;padding:12px 14px;border-radius:14px;background:rgba(34,211,238,.06);border:1px solid rgba(34,211,238,.15);font-size:15px;color:#dbeafe}
+.ej span{font-size:20px;line-height:1}
+.pasos{display:grid;gap:12px;counter-reset:p}
+.paso{padding:18px 18px 18px 64px;position:relative}
+.paso::before{counter-increment:p;content:"0" counter(p);position:absolute;left:16px;top:16px;font-family:'DM Mono',monospace;font-weight:500;font-size:13px;width:34px;height:34px;border-radius:11px;display:grid;place-items:center;background:linear-gradient(135deg,var(--cyan),var(--vio));color:#05070d}
+.paso h3{font-family:Outfit,sans-serif;font-size:18px}
+.paso p{color:var(--mut);font-size:15px;margin-top:2px}
+.logos{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
+.logos img{width:100%;height:auto;aspect-ratio:1;object-fit:contain;background:#fff;border-radius:14px;padding:6px}
+.equipo{display:grid;gap:12px}
+.persona{display:flex;gap:14px;align-items:center;padding:12px 14px}
+.persona img{width:64px;height:64px;border-radius:50%;object-fit:cover;border:2px solid rgba(34,211,238,.5)}
+.persona b{display:block;font-family:Outfit,sans-serif;font-size:17px}
+.persona small{color:var(--mut);font-size:13.5px;line-height:1.35;display:block}
+.persona a{margin-left:auto;flex:none;width:42px;height:42px;border-radius:12px;display:grid;place-items:center;background:rgba(37,211,102,.12);border:1px solid rgba(37,211,102,.3)}
+.persona a svg{width:20px;height:20px;fill:var(--wa)}
+.marcas{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.marca{padding:16px}
+.marca img{height:34px;width:auto;margin-bottom:10px}
+.marca p{color:var(--mut);font-size:14px}
+footer{text-align:center;padding:34px 0 120px;color:var(--mut);font-size:14px}
+footer a{color:var(--cyan);text-decoration:none;font-weight:600}
+.fab{position:fixed;left:16px;right:16px;bottom:max(16px,env(safe-area-inset-bottom));z-index:5;max-width:688px;margin:0 auto}
+.fab .btn{width:100%}
+.reveal{opacity:0;transform:translateY(22px);animation:up .8s cubic-bezier(.2,.8,.2,1) forwards}
+@supports (animation-timeline:view()){.reveal{animation-timeline:view();animation-range:entry 0% entry 40%}}
+@keyframes up{to{opacity:1;transform:none}}
+@media (prefers-reduced-motion:reduce){*,*::before{animation:none!important}.reveal{opacity:1;transform:none}}
+@media (max-width:340px){.logos{grid-template-columns:repeat(3,1fr)}.marcas{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<div class="aurora" aria-hidden="true"><i></i><i></i><i></i></div>
+<div class="wrap">
+  <header><img src="/img/logos/lockup.webp" alt="IEC & Co+nexus" width="420" height="94"></header>
+
+  <div class="hero">
+    <p class="kicker">Paraná · Entre Ríos</p>
+    <h1>Hacemos que tu organización <span class="grad">trabaje mejor</span></h1>
+    <p class="lead">Somos IEC &amp; Co+nexus: analizamos cómo funciona tu empresa o institución y le sumamos la tecnología justa para ahorrar tiempo, evitar errores y decidir con datos.</p>
+    <div class="cta">
+      <a class="btn btn--wa" href="https://wa.me/5493434295937?text=Hola%20IEC%2C%20nos%20conocimos%20en%20la%20ronda%20de%20negocios%20y%20quiero%20saber%20m%C3%A1s" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.5 14.4c-.3-.1-1.8-.9-2-1-.3-.1-.5-.1-.7.1-.2.3-.8 1-.9 1.2-.2.2-.3.2-.6.1-.3-.1-1.2-.5-2.3-1.4-.9-.8-1.4-1.7-1.6-2-.2-.3 0-.5.1-.6l.4-.5c.2-.2.2-.3.3-.5.1-.2 0-.4 0-.5l-.9-2.2c-.2-.6-.5-.5-.7-.5h-.6c-.2 0-.5.1-.8.4-.3.3-1 1-1 2.5s1.1 2.9 1.2 3.1c.1.2 2.1 3.2 5.1 4.5.7.3 1.3.5 1.7.6.7.2 1.4.2 1.9.1.6-.1 1.8-.7 2-1.4.2-.7.2-1.3.2-1.4-.1-.2-.3-.3-.6-.4zM12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm0 18.2c-1.5 0-3-.4-4.3-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2z"/></svg> Escribinos por WhatsApp</a>
+      <a class="btn btn--ghost" href="https://www.iec-ia.com.ar">Visitá www.iec-ia.com.ar</a>
+    </div>
+  </div>
+
+  <section>
+    <p class="kicker reveal">Qué es la IO</p>
+    <h2 class="reveal">La Inteligencia Operativa, en simples palabras</h2>
+    <div class="io glass reveal">
+      <p>Es usar la tecnología <b>donde de verdad ayuda</b>. Primero entendemos cómo trabaja tu equipo; después ordenamos el proceso y sumamos sistemas, automatizaciones o asistentes de IA a medida.</p>
+      <p>No vendemos "IA por moda": <b>se implementa, se acompaña y se mide</b>. Si no se nota en menos tiempo y menos errores, no sirve.</p>
+      <div class="ej">
+        <div><span>💬</span>Un asistente que responde por WhatsApp y da turnos, con una persona supervisando.</div>
+        <div><span>🧾</span>Facturas que se cargan solas en el sistema con solo mandar una foto.</div>
+        <div><span>📊</span>Un tablero que muestra cuántas horas se liberaron y cuántos errores se evitaron.</div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <p class="kicker reveal">Cómo lo aplicamos</p>
+    <h2 class="reveal">Cuatro pasos, de la idea al resultado</h2>
+    <div class="pasos">
+      <div class="paso glass reveal"><h3>Escuchamos y analizamos</h3><p>Relevamos cómo funciona realmente tu organización: procesos, personas y dónde se pierde tiempo.</p></div>
+      <div class="paso glass reveal"><h3>Diseñamos la solución</h3><p>Priorizamos lo que más impacto tiene y armamos una hoja de ruta que une negocio y tecnología.</p></div>
+      <div class="paso glass reveal"><h3>Desarrollamos con IA</h3><p>Nuestro equipo La FactorIA construye sistemas, integraciones y asistentes a medida.</p></div>
+      <div class="paso glass reveal"><h3>Implementamos y medimos</h3><p>Capacitamos a tu equipo en su puesto y medimos el antes y el después para seguir mejorando.</p></div>
+    </div>
+  </section>
+
+  <section>
+    <p class="kicker reveal">Ya confían en nosotros</p>
+    <h2 class="reveal">Empresas e instituciones que trabajan con IEC</h2>
+    <div class="logos reveal">
+      <img src="/img/logos/eco.webp" alt="Mutual Eco" loading="lazy" width="240" height="240">
+      <img src="/img/logos/ibp.webp" alt="Instituto Bioquímico Privado" loading="lazy" width="240" height="240">
+      <img src="/img/logos/sil.webp" alt="SIL" loading="lazy" width="240" height="240">
+      <img src="/img/logos/cecip.webp" alt="CeCIP" loading="lazy" width="240" height="240">
+      <img src="/img/logos/aei.webp" alt="American English Institute" loading="lazy" width="240" height="240">
+      <img src="/img/logos/drtecno.webp" alt="Dr Tecno" loading="lazy" width="240" height="240">
+      <img src="/img/logos/aroma.webp" alt="Aroma" loading="lazy" width="240" height="240">
+      <img src="/img/logos/debello.webp" alt="De Bello" loading="lazy" width="240" height="240">
+      <img src="/img/logos/apb.webp" alt="APB" loading="lazy" width="240" height="240">
+      <img src="/img/logos/merlin.webp" alt="Cotillón Merlín" loading="lazy" width="240" height="240">
+      <img src="/img/logos/unimedica.webp" alt="Unimédica" loading="lazy" width="240" height="240">
+      <img src="/img/logos/femer.webp" alt="FEMER" loading="lazy" width="240" height="240">
+      <img src="/img/logos/redrural.webp" alt="Red Rural" loading="lazy" width="240" height="240">
+      <img src="/img/logos/cop.webp" alt="COP Paraná" loading="lazy" width="240" height="240">
+      <img src="/img/logos/muni.webp" alt="Municipalidad de Paraná" loading="lazy" width="240" height="240">
+      <img src="/img/logos/mutual16.webp" alt="Mutual 16 de Septiembre" loading="lazy" width="240" height="240">
+      <img src="/img/logos/polo.webp" alt="Polo Tecnológico Paraná" loading="lazy" width="240" height="240">
+      <img src="/img/logos/campus.webp" alt="Campus Party" loading="lazy" width="240" height="240">
+      <img src="/img/logos/lazos.webp" alt="Fundación Lazos" loading="lazy" width="240" height="240">
+      <img src="/img/logos/dj.webp" alt="DJ Consultora" loading="lazy" width="240" height="240">
+    </div>
+  </section>
+
+  <section>
+    <p class="kicker reveal">Quiénes somos</p>
+    <h2 class="reveal">Dos equipos, un mismo objetivo</h2>
+    <div class="marcas">
+      <div class="marca glass reveal"><img src="/img/logos/iec.webp" alt="IEC" width="34" height="34"><p><b style="color:#fff">IEC</b> · Instituto en Economía del Conocimiento: formación en IA y desarrollo de soluciones.</p></div>
+      <div class="marca glass reveal"><img src="/img/logos/cx.webp" alt="Co+nexus" width="95" height="34"><p><b style="color:#fff">Co+nexus</b> · Análisis de organizaciones, desarrollo de negocios y relaciones institucionales.</p></div>
+    </div>
+    <div class="equipo" style="margin-top:14px">
+      <div class="persona glass reveal"><img src="/img/equipo/ga.jpg" alt="Agustín Goró" width="64" height="64" loading="lazy"><div><b>Agustín Goró</b><small>Director general del ecosistema IEC</small></div><a href="https://wa.me/5493434664964?text=Hola%20Agust%C3%ADn%2C%20nos%20conocimos%20en%20la%20ronda%20de%20negocios" target="_blank" rel="noopener" aria-label="WhatsApp de Agustín"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.5 14.4c-.3-.1-1.8-.9-2-1-.3-.1-.5-.1-.7.1-.2.3-.8 1-.9 1.2-.2.2-.3.2-.6.1-.3-.1-1.2-.5-2.3-1.4-.9-.8-1.4-1.7-1.6-2-.2-.3 0-.5.1-.6l.4-.5c.2-.2.2-.3.3-.5.1-.2 0-.4 0-.5l-.9-2.2c-.2-.6-.5-.5-.7-.5h-.6c-.2 0-.5.1-.8.4-.3.3-1 1-1 2.5s1.1 2.9 1.2 3.1c.1.2 2.1 3.2 5.1 4.5.7.3 1.3.5 1.7.6.7.2 1.4.2 1.9.1.6-.1 1.8-.7 2-1.4.2-.7.2-1.3.2-1.4-.1-.2-.3-.3-.6-.4zM12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm0 18.2c-1.5 0-3-.4-4.3-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2z"/></svg></a></div>
+      <div class="persona glass reveal"><img src="/img/equipo/mp.jpg" alt="Marcelo Pérez" width="64" height="64" loading="lazy"><div><b>Marcelo Pérez</b><small>Socio fundador de Co+nexus</small></div><a href="https://wa.me/5493434522115?text=Hola%20Marcelo%2C%20nos%20conocimos%20en%20la%20ronda%20de%20negocios" target="_blank" rel="noopener" aria-label="WhatsApp de Marcelo"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.5 14.4c-.3-.1-1.8-.9-2-1-.3-.1-.5-.1-.7.1-.2.3-.8 1-.9 1.2-.2.2-.3.2-.6.1-.3-.1-1.2-.5-2.3-1.4-.9-.8-1.4-1.7-1.6-2-.2-.3 0-.5.1-.6l.4-.5c.2-.2.2-.3.3-.5.1-.2 0-.4 0-.5l-.9-2.2c-.2-.6-.5-.5-.7-.5h-.6c-.2 0-.5.1-.8.4-.3.3-1 1-1 2.5s1.1 2.9 1.2 3.1c.1.2 2.1 3.2 5.1 4.5.7.3 1.3.5 1.7.6.7.2 1.4.2 1.9.1.6-.1 1.8-.7 2-1.4.2-.7.2-1.3.2-1.4-.1-.2-.3-.3-.6-.4zM12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm0 18.2c-1.5 0-3-.4-4.3-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2z"/></svg></a></div>
+      <div class="persona glass reveal"><img src="/img/equipo/mpa.jpg" alt="Paula Acebal" width="64" height="64" loading="lazy"><div><b>Paula Acebal</b><small>Socia de IEC</small></div><a href="https://wa.me/5493434295937?text=Hola%20Paula%2C%20nos%20conocimos%20en%20la%20ronda%20de%20negocios" target="_blank" rel="noopener" aria-label="WhatsApp de Paula"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.5 14.4c-.3-.1-1.8-.9-2-1-.3-.1-.5-.1-.7.1-.2.3-.8 1-.9 1.2-.2.2-.3.2-.6.1-.3-.1-1.2-.5-2.3-1.4-.9-.8-1.4-1.7-1.6-2-.2-.3 0-.5.1-.6l.4-.5c.2-.2.2-.3.3-.5.1-.2 0-.4 0-.5l-.9-2.2c-.2-.6-.5-.5-.7-.5h-.6c-.2 0-.5.1-.8.4-.3.3-1 1-1 2.5s1.1 2.9 1.2 3.1c.1.2 2.1 3.2 5.1 4.5.7.3 1.3.5 1.7.6.7.2 1.4.2 1.9.1.6-.1 1.8-.7 2-1.4.2-.7.2-1.3.2-1.4-.1-.2-.3-.3-.6-.4zM12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm0 18.2c-1.5 0-3-.4-4.3-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2z"/></svg></a></div>
+      <div class="persona glass reveal"><img src="/img/equipo/rs.jpg" alt="Raúl Stoppello" width="64" height="64" loading="lazy"><div><b>Raúl Stoppello</b><small>Socio de Co+nexus · Growth Partner</small></div><a href="https://wa.me/5493435131415?text=Hola%20Ra%C3%BAl%2C%20nos%20conocimos%20en%20la%20ronda%20de%20negocios" target="_blank" rel="noopener" aria-label="WhatsApp de Raúl"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.5 14.4c-.3-.1-1.8-.9-2-1-.3-.1-.5-.1-.7.1-.2.3-.8 1-.9 1.2-.2.2-.3.2-.6.1-.3-.1-1.2-.5-2.3-1.4-.9-.8-1.4-1.7-1.6-2-.2-.3 0-.5.1-.6l.4-.5c.2-.2.2-.3.3-.5.1-.2 0-.4 0-.5l-.9-2.2c-.2-.6-.5-.5-.7-.5h-.6c-.2 0-.5.1-.8.4-.3.3-1 1-1 2.5s1.1 2.9 1.2 3.1c.1.2 2.1 3.2 5.1 4.5.7.3 1.3.5 1.7.6.7.2 1.4.2 1.9.1.6-.1 1.8-.7 2-1.4.2-.7.2-1.3.2-1.4-.1-.2-.3-.3-.6-.4zM12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm0 18.2c-1.5 0-3-.4-4.3-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2z"/></svg></a></div>
+      <div class="persona glass reveal"><img src="/img/equipo/pl.jpg" alt="Pablo Lescano" width="64" height="64" loading="lazy"><div><b>Pablo Lescano</b><small>Desarrollo institucional</small></div><a href="https://wa.me/5493434486770?text=Hola%20Pablo%2C%20nos%20conocimos%20en%20la%20ronda%20de%20negocios" target="_blank" rel="noopener" aria-label="WhatsApp de Pablo"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.5 14.4c-.3-.1-1.8-.9-2-1-.3-.1-.5-.1-.7.1-.2.3-.8 1-.9 1.2-.2.2-.3.2-.6.1-.3-.1-1.2-.5-2.3-1.4-.9-.8-1.4-1.7-1.6-2-.2-.3 0-.5.1-.6l.4-.5c.2-.2.2-.3.3-.5.1-.2 0-.4 0-.5l-.9-2.2c-.2-.6-.5-.5-.7-.5h-.6c-.2 0-.5.1-.8.4-.3.3-1 1-1 2.5s1.1 2.9 1.2 3.1c.1.2 2.1 3.2 5.1 4.5.7.3 1.3.5 1.7.6.7.2 1.4.2 1.9.1.6-.1 1.8-.7 2-1.4.2-.7.2-1.3.2-1.4-.1-.2-.3-.3-.6-.4zM12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm0 18.2c-1.5 0-3-.4-4.3-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2z"/></svg></a></div>
+    </div>
+  </section>
+
+  <footer>
+    <p>IEC &amp; Co+nexus · Paraná, Entre Ríos</p>
+    <p><a href="https://www.iec-ia.com.ar">www.iec-ia.com.ar</a></p>
+  </footer>
+</div>
+<div class="fab"><a class="btn btn--wa" href="https://wa.me/5493434295937?text=Hola%20IEC%2C%20nos%20conocimos%20en%20la%20ronda%20de%20negocios%20y%20quiero%20saber%20m%C3%A1s" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.5 14.4c-.3-.1-1.8-.9-2-1-.3-.1-.5-.1-.7.1-.2.3-.8 1-.9 1.2-.2.2-.3.2-.6.1-.3-.1-1.2-.5-2.3-1.4-.9-.8-1.4-1.7-1.6-2-.2-.3 0-.5.1-.6l.4-.5c.2-.2.2-.3.3-.5.1-.2 0-.4 0-.5l-.9-2.2c-.2-.6-.5-.5-.7-.5h-.6c-.2 0-.5.1-.8.4-.3.3-1 1-1 2.5s1.1 2.9 1.2 3.1c.1.2 2.1 3.2 5.1 4.5.7.3 1.3.5 1.7.6.7.2 1.4.2 1.9.1.6-.1 1.8-.7 2-1.4.2-.7.2-1.3.2-1.4-.1-.2-.3-.3-.6-.4zM12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm0 18.2c-1.5 0-3-.4-4.3-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2z"/></svg> WhatsApp IEC</a></div>
+</body>
+</html>

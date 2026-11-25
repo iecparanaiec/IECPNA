@@ -8,6 +8,7 @@
     { "source": "/inteligencia-operativa", "destination": "/inteligencia-operativa.html" },
     { "source": "/quienes-somos", "destination": "/quienes-somos.html" },
     { "source": "/confian", "destination": "/confian.html" },
+    { "source": "/conocenos", "destination": "/conocenos.html" },
     { "source": "/novedades", "destination": "/novedades.html" },
     { "source": "/contacto", "destination": "/contacto.html" },
     { "source": "/experto_ia_nivel_1", "destination": "/experto_ia_nivel_1.html" },
