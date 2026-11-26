@@ -49,6 +49,9 @@ h2{font-family:Outfit,sans-serif;font-size:clamp(25px,6.5vw,34px);line-height:1.
 .io p+p{margin-top:12px}
 .io b{color:#fff}
 .iovid{display:block;width:100%;height:auto;aspect-ratio:1;border-radius:22px;border:1px solid var(--line);background:#05070d}
+.vidbox{position:relative}
+.snd{position:absolute;left:50%;bottom:16px;transform:translateX(-50%);display:inline-flex;align-items:center;gap:8px;padding:11px 18px;border-radius:999px;border:1px solid rgba(255,255,255,.25);background:rgba(5,7,13,.72);backdrop-filter:blur(8px);color:#fff;font:600 15px Inter,sans-serif;cursor:pointer;white-space:nowrap}
+.snd[aria-pressed=true]{opacity:.75;bottom:12px;left:auto;right:12px;transform:none;padding:9px 14px;font-size:13px}
 .io__lead{color:#cbd5e1;font-size:17px;margin-top:14px;text-align:center}
 .io__lead b{color:#fff}
 .suena{padding:18px 20px;margin-top:16px}
@@ -137,7 +140,10 @@ footer a{color:var(--cyan);text-decoration:none;font-weight:600}
   <section>
     <p class="kicker reveal">Qué es la IO</p>
     <h2 class="reveal">La Inteligencia Operativa, en 20 segundos</h2>
-    <video class="iovid reveal" muted playsinline loop autoplay preload="metadata" poster="/video/io-en-20-segundos.jpg" width="720" height="720" aria-label="Video: qué es la Inteligencia Operativa. Tu empresa ya sabe cómo trabajar mejor, pero ese saber está desordenado. La IO lo ordena y la IA hace lo repetitivo. Menos tiempo, menos errores, mejores decisiones."><source src="/video/io-en-20-segundos.mp4" type="video/mp4"></video>
+    <div class="vidbox reveal">
+      <video class="iovid" muted playsinline loop autoplay preload="metadata" poster="/video/io-20s-voz.jpg" width="720" height="720" aria-label="Video: qué es la Inteligencia Operativa. Tu empresa ya sabe cómo trabajar mejor, pero ese saber está desordenado. La IO lo ordena y la IA hace lo repetitivo. Menos tiempo, menos errores, mejores decisiones."><source src="/video/io-20s-voz.mp4" type="video/mp4"></video>
+      <button type="button" class="snd" id="snd" aria-pressed="false"><span>🔊</span> Activar sonido</button>
+    </div>
     <p class="io__lead reveal">Ordenamos cómo trabaja tu empresa y sumamos IA para que <b>lo repetitivo lo haga la máquina</b> y tu equipo se dedique a lo que vale.</p>
 
     <div class="suena glass reveal" id="suena">
@@ -249,6 +255,12 @@ if(n===1){res.className='suena__res';res.innerHTML='Marcaste 1. ¿Alguna más?';
 var t=encodeURIComponent('Hola IEC, vi la página de Inteligencia Operativa y en mi empresa nos pasan '+n+' de esas situaciones. Quiero saber cómo nos pueden ayudar.');
 res.className='suena__res on';res.innerHTML='Marcaste '+n+'. <b>Esto es justo lo que resuelve la Inteligencia Operativa.</b><a class="btn btn--wa" target="_blank" rel="noopener" href="'+WA+t+'">Quiero resolverlo · WhatsApp</a>'}
 for(var i=0;i<bs.length;i++)bs[i].addEventListener('click',function(){this.setAttribute('aria-pressed',this.getAttribute('aria-pressed')==='true'?'false':'true');upd()});})();
+</script>
+<script>
+(function(){var b=document.getElementById('snd');if(!b)return;var v=b.parentNode.querySelector('video');
+b.addEventListener('click',function(){var on=b.getAttribute('aria-pressed')!=='true';
+if(on){v.muted=false;v.currentTime=0;v.play();b.innerHTML='<span>🔇</span> Silenciar'}else{v.muted=true;b.innerHTML='<span>🔊</span> Activar sonido'}
+b.setAttribute('aria-pressed',on?'true':'false')});})();
 </script>
 </body>
 </html>
