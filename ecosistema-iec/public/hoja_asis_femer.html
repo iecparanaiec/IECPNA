@@ -186,6 +186,34 @@ html[data-tema="claro"] .insp{background:rgba(255,255,255,.97);box-shadow:0 12px
 .error{margin-top:12px;padding:12px 14px;border-radius:12px;background:var(--errbg);border:1px solid var(--errbd);color:var(--errtx);max-width:900px}
 .enviado b,.error b{color:var(--ink)}
 #imprimir{display:none}
+/* ---------- ejemplos ---------- */
+details.ejemplo{margin:14px 0 6px;border:1px dashed rgba(34,211,238,.45);border-radius:14px;background:linear-gradient(180deg,rgba(34,211,238,.06),rgba(139,92,246,.04));max-width:1200px}
+html[data-tema="claro"] details.ejemplo{border-color:#67e8f9}
+details.ejemplo>summary{cursor:pointer;list-style:none;display:flex;align-items:center;gap:10px;padding:11px 14px;font-weight:600}
+details.ejemplo>summary::-webkit-details-marker{display:none}
+details.ejemplo>summary .chip{font-family:'DM Mono',monospace;font-size:10px;letter-spacing:.14em;text-transform:uppercase;padding:3px 8px;border-radius:999px;background:var(--grad);color:#050505;font-weight:500}
+details.ejemplo>summary .ver{margin-left:auto;font-size:12px;color:var(--acc);font-weight:500}
+details.ejemplo[open]>summary .ver::after{content:" ▲"}
+details.ejemplo:not([open])>summary .ver::after{content:" ▼"}
+.ej{padding:0 14px 14px;display:flex;flex-direction:column;gap:12px}
+.ej .paso{font-family:'DM Mono',monospace;font-size:10.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--acc)}
+.ej .campos{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px}
+.ej .campo{border:1px solid var(--line);border-radius:10px;padding:7px 10px;background:var(--panel2)}
+.ej .campo b{display:block;font-family:'DM Mono',monospace;font-size:9.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);font-weight:500}
+.ej .campo span{font-size:13px}
+.ej .cuento{border-left:3px solid var(--acc);padding:8px 12px;background:var(--panel2);border-radius:0 10px 10px 0;font-size:13px;line-height:1.55}
+.ej .cuento mark{background:rgba(34,211,238,.16);color:var(--ink);padding:0 3px;border-radius:4px}
+.ej .cuento mark.d{background:rgba(56,189,248,.18)}
+.ej .cuento mark.x{background:rgba(251,113,133,.18)}
+.ej .cuento mark.f{background:rgba(245,158,11,.2)}
+.ej .nota{font-size:12px;color:var(--muted)}
+.ej table td{font-size:12.5px;padding:7px 6px}
+.ej .lienzoEj{border:1px solid var(--line);border-radius:12px;background:var(--lienzo);height:420px;overflow:hidden}
+.ej .lienzoEj svg{width:100%;height:100%}
+.ej .claves{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:8px}
+.ej .clave{display:flex;gap:9px;align-items:flex-start;font-size:12.5px;border:1px solid var(--line);border-radius:10px;padding:8px 10px;background:var(--panel2)}
+.ej .clave i{font-style:normal;flex:none;width:22px;height:22px;border-radius:7px;display:grid;place-items:center;font-family:Outfit,sans-serif;font-weight:700;font-size:12px;background:var(--grad);color:#050505}
+@media (max-width:860px){.ej .campos{grid-template-columns:1fr 1fr}}
 ::-webkit-scrollbar{width:7px;height:7px}
 ::-webkit-scrollbar-thumb{background:#1f2937;border-radius:4px}
 @media (max-width:860px){.dia{grid-template-columns:1fr}.g4{grid-template-columns:1fr 1fr}.tblw{overflow-x:auto}.tblw table{min-width:860px}.insp{position:static;width:auto;margin-top:8px}tr.det .detg{grid-template-columns:1fr}}
@@ -225,6 +253,43 @@ html[data-tema="claro"] .insp{background:rgba(255,255,255,.97);box-shadow:0 12px
   <p class="help">Primero listá todos tus procesos. Después, en <b>Diagramas</b>, dibujá cómo es cada uno (como mínimo, los 3 que más tiempo te llevan o más te pesan) y al final envialo para el análisis.</p>
   <p class="anon">Lo que escribís queda guardado en esta compu. No pongas datos reales de afiliados (nombres, DNI, diagnósticos): usá ejemplos inventados. <span id="cuentaCampus"></span></p>
 
+  <details class="ejemplo" id="ej1">
+    <summary><span class="chip">Ejemplo</span> Así lo completó alguien de facturación de un círculo médico <span class="ver">Ver</span></summary>
+    <div class="ej">
+      <div>
+        <div class="paso">1 · Mi puesto</div>
+        <div class="campos" style="margin-top:6px">
+          <div class="campo"><b>Tipo de entidad</b><span>Círculo o colegio médico</span></div>
+          <div class="campo"><b>Área</b><span>Facturación y liquidación</span></div>
+          <div class="campo"><b>Mi puesto</b><span>Administrativo de facturación</span></div>
+          <div class="campo"><b>Horas por día</b><span>6</span></div>
+        </div>
+      </div>
+      <div>
+        <div class="paso">2 · Inventario: una línea por proceso</div>
+        <div class="tblw" style="margin-top:6px"><table>
+          <thead><tr><th>★</th><th>Proceso</th><th>Trigger</th><th>Veces/mes</th><th>Min/vez</th><th>Herramientas</th><th>¿Doble carga?</th><th>Pesa</th><th style="text-align:right">h/mes</th></tr></thead>
+          <tbody>
+            <tr><td>★</td><td><b>Controlar órdenes de prestaciones</b></td><td>Los prestadores traen las órdenes en papel, del 1 al 10</td><td>600</td><td>3</td><td>Papel, sistema propio, Excel</td><td>Sí</td><td>5</td><td style="text-align:right">30</td></tr>
+            <tr><td>★</td><td>Emitir recibos de cobro</td><td>Se acredita un pago en el banco</td><td>80</td><td>6</td><td>Home banking, Tango, mail</td><td>Sí</td><td>3</td><td style="text-align:right">8</td></tr>
+            <tr><td></td><td>Responder consultas de prestadores</td><td>Llega un WhatsApp</td><td>120</td><td>4</td><td>WhatsApp</td><td>No</td><td>2</td><td style="text-align:right">8</td></tr>
+          </tbody>
+        </table></div>
+      </div>
+      <div>
+        <div class="paso">3 · Cómo lo hago hoy, paso a paso (debajo de «Controlar órdenes de prestaciones»)</div>
+        <div class="cuento" style="margin-top:6px">
+          Recibo las órdenes en papel y <mark>las separo por obra social</mark>. <mark>Controlo una por una la firma, el sello, la fecha y el código</mark>.
+          <mark class="d">Si falta algo</mark>, <mark>la devuelvo al prestador</mark> y <mark class="x">espero que la traiga corregida</mark> (2 a 5 días).
+          Si está bien, <mark class="f">la cargo a mano en el sistema y también en un Excel de control</mark>. Al final <mark>armo la factura por obra social</mark>.
+          <br><b>Qué entrego y a quién:</b> la factura, a la obra social.
+        </div>
+        <p class="nota" style="margin-top:6px">Cada parte resaltada se convierte en un símbolo del diagrama: <span style="color:var(--acc)">pasos</span>, una <span style="color:#38bdf8">decisión</span> («si falta algo»), una <span style="color:#fb7185">espera</span> y una <span style="color:#f59e0b">fricción</span> (carga manual y doble carga).</p>
+      </div>
+      <div><button class="pri" onclick="verEjemploDiagrama()">Ver cómo queda este proceso en Diagramas →</button></div>
+    </div>
+  </details>
+
   <h2>Mi puesto</h2>
   <div class="g4">
     <label class="c">Tipo de entidad
@@ -240,7 +305,6 @@ html[data-tema="claro"] .insp{background:rgba(255,255,255,.97);box-shadow:0 12px
   <div class="tblw">
   <table>
     <thead><tr><th>★</th><th>#</th><th style="width:23%">Proceso</th><th style="width:22%">Trigger · qué lo hace arrancar</th><th style="width:7%">Veces por mes</th><th style="width:6%">Min por vez</th><th style="width:14%">Herramientas</th><th style="width:7%">¿Doble carga?</th><th style="width:6%">Pesa 1–5</th><th style="text-align:right">h/mes</th><th></th></tr></thead>
-    <tbody><tr class="ex"><td>★</td><td></td><td>Ejemplo: controlar órdenes de prestaciones</td><td>Llegan las órdenes en papel, del 1 al 10</td><td>600</td><td>3</td><td>Papel, sistema, Excel</td><td>Sí</td><td>5</td><td style="text-align:right">30</td><td></td></tr><tr class="ex"><td></td><td></td><td colspan="9"><b>Cómo lo hago:</b> recibo las órdenes en papel y las separo por obra social. Controlo una por una la firma, el sello y la fecha. Si falta algo, la devuelvo al prestador y espero que la traiga. Si está bien, la cargo en el sistema y también en un Excel. Al final armo la factura. <b>Entrego:</b> la factura a la obra social.</td></tr></tbody>
     <tbody id="filas"></tbody>
   </table>
   </div>
@@ -256,6 +320,27 @@ html[data-tema="claro"] .insp{background:rgba(255,255,255,.97);box-shadow:0 12px
 
 <!-- ============ 2 · DIAGRAMAS ============ -->
 <section class="panel" id="p2" hidden>
+  <details class="ejemplo" id="ej2" style="margin-top:0;max-width:none">
+    <summary><span class="chip">Ejemplo</span> «Controlar órdenes de prestaciones», el proceso del ejemplo de la pestaña 1, dibujado <span class="ver">Ver</span></summary>
+    <div class="ej">
+      <div class="campos">
+        <div class="campo"><b>Trigger</b><span>Los prestadores traen las órdenes en papel, del 1 al 10</span></div>
+        <div class="campo"><b>Salida</b><span>La factura, a la obra social</span></div>
+        <div class="campo"><b>Veces × minutos</b><span>600 × 3 min = 30 h por mes (estimado)</span></div>
+        <div class="campo"><b>Errores o rebotes</b><span>60 por mes (1 de cada 10)</span></div>
+      </div>
+      <div class="lienzoEj" id="ejLienzo"></div>
+      <div class="claves">
+        <div class="clave"><i>1</i><span>Empieza en el <b>trigger</b> (óvalo naranja): lo que hace arrancar el proceso.</span></div>
+        <div class="clave"><i>2</i><span>Cada <b>paso</b> es una acción: verbo + qué + con qué.</span></div>
+        <div class="clave"><i>3</i><span>La <b>decisión</b> (rombo) tiene dos salidas: <b>Sí</b> y <b>No</b>.</span></div>
+        <div class="clave"><i>4</i><span>El camino del <b>No</b> muestra el rebote: devolver, <b>esperar</b> y volver a controlar.</span></div>
+        <div class="clave"><i>5</i><span>Las letras naranjas son <b>fricciones</b>: P papel, R repetitivo, M manual, D doble carga, E error, X espera.</span></div>
+        <div class="clave"><i>6</i><span>Termina en la <b>salida</b> (doble óvalo): qué se entrega y a quién.</span></div>
+      </div>
+      <p class="nota">Tu borrador se arma igual con lo que contaste en la pestaña 1. Corregilo hasta que muestre lo que hacés de verdad, también los atajos y las vueltas.</p>
+    </div>
+  </details>
   <div class="dia">
     <aside class="lista">
       <div class="eyebrow" style="margin-bottom:4px">Mis procesos</div>
@@ -1147,7 +1232,31 @@ let temaAntes = null;
 window.addEventListener('beforeprint', () => { temaAntes = document.documentElement.dataset.tema; document.documentElement.dataset.tema = 'claro'; });
 window.addEventListener('afterprint', () => { if (temaAntes) document.documentElement.dataset.tema = temaAntes; });
 
+/* =================== ejemplo =================== */
+const EJEMPLO = (() => {
+  const n = (id, t, x, y, texto, fr = '') => ({ id, t, x, y, ...tamano(t, texto), texto, fr });
+  const nodos = [
+    n('e0', 'inicio', 120, 140, 'Los prestadores traen las órdenes en papel', 'P'),
+    n('e1', 'paso', 360, 140, 'Separo las órdenes por obra social', 'R'),
+    n('e2', 'paso', 600, 140, 'Controlo firma, sello, fecha y código de cada orden', 'R'),
+    n('e3', 'decision', 850, 140, '¿Está completa?'),
+    n('e4', 'paso', 850, 360, 'Devuelvo la orden al prestador', 'E'),
+    n('e5', 'espera', 600, 360, 'Espero que la traiga corregida (2 a 5 días)', 'X'),
+    n('e6', 'paso', 1100, 140, 'Cargo la orden a mano en el sistema', 'M'),
+    n('e7', 'documento', 1350, 140, 'También la anoto en el Excel de control', 'D'),
+    n('e8', 'paso', 1350, 360, 'Armo la factura por obra social'),
+    n('e9', 'fin', 1100, 360, 'Factura presentada a la obra social'),
+  ];
+  const l = (de, a, texto = '') => ({ id: de + a, de, a, texto, recta: false });
+  return { nombre: 'Controlar órdenes de prestaciones', nodos, lineas: [l('e0', 'e1'), l('e1', 'e2'), l('e2', 'e3'), l('e3', 'e6', 'Sí'), l('e3', 'e4', 'No'), l('e4', 'e5'), l('e5', 'e2'), l('e6', 'e7'), l('e7', 'e8'), l('e8', 'e9')] };
+})();
+function verEjemploDiagrama() { irA(2); $('#ej2').open = true; $('#ej2').scrollIntoView({ behavior: 'smooth', block: 'start' }); }
+
 /* =================== arranque =================== */
+$('#ejLienzo').innerHTML = miniSVG(EJEMPLO);
+// los ejemplos se ven abiertos hasta que la persona empieza a cargar lo suyo
+if (!S.inventario.some((f) => f.proceso.trim())) $('#ej1').open = true;
+if (!S.procesos.some((p) => p.borrador === 'editado')) $('#ej2').open = true;
 // el pase con que Mundo IEC abrió la actividad: se guarda y se saca de la dirección
 {
   const m = location.hash.match(/pase=([A-Za-z0-9_.-]+)/);
