@@ -4,186 +4,191 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Mapa AS-IS de mi puesto</title>
-<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
-:root{--ink:#0F172A;--muted:#5B6478;--line:#D9DEE8;--soft:#F4F6FA;--bg:#E9EDF3;--teal:#0E9F8E;--teal2:#2DD4BF;--amber:#D97706;--rose:#E11D48;--sky:#0284C7;--violet:#7C3AED;--dark:#0B1224}
+/* Estilo de Mundo IEC: Outfit (títulos), Inter (texto), DM Mono (etiquetas); negro, vidrio y degradé cian → azul → violeta */
+:root{
+  --bg:#050505;--panel:rgba(255,255,255,.035);--panel2:rgba(255,255,255,.06);--line:rgba(255,255,255,.08);--line2:rgba(255,255,255,.16);
+  --ink:#e2e8f0;--muted:#94a3b8;--dim:#64748b;--acc:#22d3ee;--acc2:#8b5cf6;--input:rgba(0,0,0,.35);
+  --grad:linear-gradient(90deg,#22d3ee,#3b82f6 50%,#8b5cf6);
+  --lienzo:#08090d;--grid:#1d2433;--flecha:#94a3b8;--et:#0b0d14;
+  --okbg:rgba(34,211,238,.08);--okbd:rgba(34,211,238,.28);--oktx:#a5f3fc;
+  --malbg:rgba(245,158,11,.08);--malbd:rgba(245,158,11,.3);--maltx:#fcd34d;
+  --errbg:rgba(251,113,133,.08);--errbd:rgba(251,113,133,.3);--errtx:#fda4af;
+  --n-inicio:#2a1d06;--s-inicio:#f59e0b;--n-paso:#0f1422;--s-paso:#cbd5e1;--n-decision:#0b2235;--s-decision:#38bdf8;
+  --n-espera:#2a0d17;--s-espera:#fb7185;--n-documento:#1c1236;--s-documento:#a78bfa;--n-fin:#062a2f;--s-fin:#22d3ee;--n-nota:#2a250a;--s-nota:#eab308;
+  --fondo:radial-gradient(600px 400px at 10% -10%,rgba(34,211,238,.14),transparent 60%),radial-gradient(700px 500px at 100% 0%,rgba(139,92,246,.14),transparent 60%),#050505;
+  color-scheme:dark;
+}
+html[data-tema="claro"]{
+  --bg:#f4f6fb;--panel:#ffffff;--panel2:#f1f5f9;--line:#dde3ec;--line2:#c5cedb;
+  --ink:#0f172a;--muted:#5b6478;--dim:#94a3b8;--acc:#0891b2;--acc2:#7c3aed;--input:#ffffff;
+  --lienzo:#fbfcfe;--grid:#d5dbe5;--flecha:#475569;--et:#ffffff;
+  --okbg:#ecfeff;--okbd:#a5f3fc;--oktx:#0e7490;--malbg:#fff7e6;--malbd:#fcd9a0;--maltx:#92400e;--errbg:#fff1f3;--errbd:#f7c4cf;--errtx:#be3455;
+  --n-inicio:#fff7e6;--s-inicio:#d97706;--n-paso:#ffffff;--s-paso:#334155;--n-decision:#eff8ff;--s-decision:#0284c7;
+  --n-espera:#fff1f3;--s-espera:#e11d48;--n-documento:#f5f3ff;--s-documento:#7c3aed;--n-fin:#ecfeff;--s-fin:#0891b2;--n-nota:#fef9c3;--s-nota:#ca8a04;
+  --fondo:radial-gradient(600px 400px at 10% -10%,rgba(34,211,238,.10),transparent 60%),radial-gradient(700px 500px at 100% 0%,rgba(139,92,246,.08),transparent 60%),#f4f6fb;
+  color-scheme:light;
+}
 *{box-sizing:border-box;margin:0;padding:0}
 [hidden]{display:none!important}
 html,body{height:100%}
-body{background:var(--bg);color:var(--ink);font-family:Inter,system-ui,Segoe UI,Arial,sans-serif;font-size:13px;line-height:1.4}
-h1,h2,h3{font-family:'Space Grotesk',sans-serif;letter-spacing:-.01em}
-button{font:inherit;cursor:pointer;border:0;border-radius:8px;padding:7px 12px;background:var(--soft);color:var(--ink);font-weight:600}
+body{background:var(--fondo);background-attachment:fixed;color:var(--ink);font-family:Inter,system-ui,Segoe UI,Arial,sans-serif;font-size:13.5px;line-height:1.45}
+h1,h2,h3{font-family:Outfit,Inter,sans-serif;letter-spacing:-.01em;font-weight:700}
+.mono,.eyebrow,label.c,th,.tab .n,.tot .l,.lista .cnt,.zoom span{font-family:'DM Mono',ui-monospace,monospace}
+button{font:inherit;cursor:pointer;border:1px solid var(--line);border-radius:10px;padding:7px 12px;background:var(--panel2);color:var(--ink);font-weight:600}
+button:hover{border-color:var(--line2)}
 button:disabled{opacity:.45;cursor:default}
-button.pri{background:var(--teal2);color:#04121A}
-button.osc{background:rgba(255,255,255,.1);color:#fff}
-button.peligro{color:var(--rose)}
-input,select,textarea{font:inherit;font-size:13px;color:var(--ink);border:1px solid var(--line);border-radius:7px;padding:6px 8px;background:#fff;width:100%}
+button.pri{background:var(--grad);color:#050505;border:0;font-weight:700}
+button.pri:hover{filter:brightness(1.08)}
+button.osc{background:var(--panel2);color:var(--ink)}
+button.peligro{color:#fb7185;background:transparent;border-color:rgba(251,113,133,.3)}
+html[data-tema="claro"] button.peligro{color:#be3455}
+button.add{margin-top:8px;background:transparent;border:1px dashed var(--line2);color:var(--acc)}
+button.add:hover{border-color:var(--acc);background:var(--okbg)}
+input,select,textarea{font:inherit;font-size:13.5px;color:var(--ink);border:1px solid var(--line);border-radius:9px;padding:7px 9px;background:var(--input);width:100%}
+select option{background:#0b0d14;color:#e2e8f0}
+html[data-tema="claro"] select option{background:#fff;color:#0f172a}
 textarea{resize:vertical;min-height:36px}
-input:focus,select:focus,textarea:focus{outline:2px solid rgba(45,212,191,.45);border-color:var(--teal)}
-label.c{display:flex;flex-direction:column;gap:3px;font-size:10.5px;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:.05em}
-.top{position:sticky;top:0;z-index:20;display:flex;flex-wrap:wrap;align-items:center;gap:8px;padding:10px 16px;background:var(--dark);color:#fff}
-.top b{font-family:'Space Grotesk';font-size:15px}
-.top .est{font-size:11.5px;color:#93A0C0;margin-right:auto}
-.tabs{display:flex;gap:4px;padding:10px 16px 0;max-width:1500px;margin:0 auto}
-.tab{background:transparent;border-radius:10px 10px 0 0;padding:10px 16px;color:var(--muted);font-weight:600}
-.tab.on{background:#fff;color:var(--ink)}
-.tab .n{display:inline-grid;place-items:center;width:20px;height:20px;border-radius:50%;background:var(--line);margin-right:6px;font-size:11px}
-.tab.on .n{background:var(--teal2)}
-.panel{max-width:1500px;margin:0 auto;background:#fff;border-radius:0 12px 12px 12px;padding:18px 20px;min-height:calc(100vh - 110px)}
-.panel[hidden]{display:none}
-.eyebrow{font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:var(--teal);font-weight:700}
-h1{font-size:24px;margin:2px 0 4px}
-h2{font-size:17px;margin:18px 0 4px}
-.help{font-size:12px;color:var(--muted);margin-bottom:8px;max-width:980px}
-.anon{margin:8px 0 4px;padding:8px 10px;border-radius:8px;background:#ECFDF8;border:1px solid #B5EDE2;font-size:12px;max-width:980px}
-.g4{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px 12px}
+input::placeholder,textarea::placeholder{color:var(--dim)}
+input:focus,select:focus,textarea:focus{outline:2px solid rgba(34,211,238,.35);border-color:var(--acc)}
+label.c{display:flex;flex-direction:column;gap:4px;font-size:10.5px;font-weight:500;color:var(--muted);text-transform:uppercase;letter-spacing:.08em}
+label.c input,label.c select,label.c textarea{font-family:Inter,system-ui,sans-serif;text-transform:none;letter-spacing:0}
+.top{position:sticky;top:0;z-index:20;display:flex;flex-wrap:wrap;align-items:center;gap:8px;padding:12px 18px;background:rgba(5,5,5,.82);backdrop-filter:blur(14px);border-bottom:1px solid var(--line)}
+html[data-tema="claro"] .top{background:rgba(255,255,255,.85)}
+.top b{font-family:Outfit,sans-serif;font-size:17px;font-weight:700}
+.top b span{background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent}
+.top .est{font-family:'DM Mono',monospace;font-size:11px;color:var(--muted);margin-right:auto;text-transform:uppercase;letter-spacing:.08em}
+.tabs{display:flex;flex-wrap:wrap;gap:6px;padding:14px 18px 0;max-width:1500px;margin:0 auto}
+.tab{background:transparent;border:1px solid transparent;border-bottom:0;border-radius:12px 12px 0 0;padding:10px 16px;color:var(--muted);font-weight:600}
+.tab.on{background:var(--panel);border-color:var(--line);color:var(--ink)}
+.tab .n{display:inline-grid;place-items:center;width:22px;height:22px;border-radius:50%;background:var(--panel2);margin-right:7px;font-size:11px}
+.tab.on .n{background:var(--grad);color:#050505;font-weight:700}
+.panel{max-width:1500px;margin:0 auto;background:var(--panel);border:1px solid var(--line);border-radius:0 16px 16px 16px;padding:20px 22px;min-height:calc(100vh - 120px);backdrop-filter:blur(14px)}
+.eyebrow{font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--acc);font-weight:500}
+h1{font-size:28px;margin:4px 0 6px}
+h2{font-size:18px;margin:20px 0 6px}
+.help{font-size:12.5px;color:var(--muted);margin-bottom:8px;max-width:980px}
+.anon{margin:10px 0 4px;padding:10px 12px;border-radius:12px;background:var(--okbg);border:1px solid var(--okbd);color:var(--oktx);font-size:12.5px;max-width:980px}
+.anon b{color:var(--ink)}
+.g4{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px 14px}
 table{width:100%;border-collapse:collapse}
-th{font-size:9.5px;text-transform:uppercase;letter-spacing:.05em;color:var(--muted);text-align:left;padding:6px 4px;border-bottom:1.5px solid var(--ink);font-weight:600;vertical-align:bottom}
+th{font-size:10px;text-transform:uppercase;letter-spacing:.08em;color:var(--dim);text-align:left;padding:7px 4px;border-bottom:1px solid var(--line2);font-weight:500;vertical-align:bottom}
 td{border-bottom:1px solid var(--line);padding:3px;vertical-align:top}
-td input,td select,td textarea{border:0;background:transparent;padding:5px 4px}
-td input:hover,td textarea:hover,td select:hover{background:var(--soft)}
-td textarea{min-height:30px;height:30px}
-td.n{width:22px;color:var(--muted);font-size:11px;padding-top:8px;text-align:center}
+td input,td select,td textarea{border-color:transparent;background:transparent;padding:6px 5px}
+td input:hover,td textarea:hover,td select:hover{background:var(--panel2)}
+td textarea{min-height:32px;height:32px;resize:none;overflow:hidden}
+td.n{width:24px;color:var(--dim);font-size:11px;padding-top:9px;text-align:center;font-family:'DM Mono',monospace}
 td.star{width:28px;text-align:center}
-td.star input{width:16px;height:16px;margin-top:6px;accent-color:#F59E0B}
-td.h{width:54px;text-align:right;font-family:'Space Grotesk';font-weight:600;padding-top:8px}
-td.acc{width:118px;white-space:nowrap;padding-top:4px}
-td.acc button{padding:5px 8px;font-size:11.5px}
-.ex td{color:#0B6E62;background:#F0FBF8;font-size:11.5px;padding:6px 4px}
-.tot{display:flex;flex-wrap:wrap;gap:18px;align-items:center;margin-top:10px;padding:10px 12px;border-radius:8px;background:var(--soft)}
-.tot .k{font-family:'Space Grotesk';font-size:20px;font-weight:700}
-.tot .l{font-size:11px;color:var(--muted)}
-.alerta{flex-basis:100%;font-size:12px;padding:7px 10px;border-radius:6px}
-.alerta.mal{background:#FFF1F3;border:1px solid #F7C4CF;color:#BE3455}
-.alerta.ok{background:#ECFDF8;border:1px solid #B5EDE2;color:#0B6E62}
+td.star input{width:16px;height:16px;margin-top:8px;accent-color:#f59e0b}
+td.h{width:56px;text-align:right;font-family:Outfit,sans-serif;font-weight:600;padding-top:9px}
+td.acc{width:122px;white-space:nowrap;padding-top:5px}
+td.acc button{padding:5px 9px;font-size:12px}
+tr.det td{border-bottom:1px solid var(--line2);padding:0 4px 10px 30px}
+tr.det .detg{display:grid;grid-template-columns:minmax(0,3fr) minmax(0,1.2fr);gap:10px}
+tr.det textarea{min-height:64px;height:64px;background:var(--input);border:1px solid var(--line);resize:none}
+tr.det input{background:var(--input);border:1px solid var(--line)}
+.ex td{color:var(--oktx);background:var(--okbg);font-size:12px;padding:7px 5px}
+.tot{display:flex;flex-wrap:wrap;gap:20px;align-items:center;margin-top:12px;padding:12px 14px;border-radius:14px;background:var(--panel2);border:1px solid var(--line)}
+.tot .k{font-family:Outfit,sans-serif;font-size:24px;font-weight:700}
+.tot .l{font-size:10.5px;color:var(--muted);text-transform:uppercase;letter-spacing:.06em}
+.alerta{flex-basis:100%;font-size:12.5px;padding:8px 11px;border-radius:10px}
+.alerta.mal{background:var(--errbg);border:1px solid var(--errbd);color:var(--errtx)}
+.alerta.ok{background:var(--okbg);border:1px solid var(--okbd);color:var(--oktx)}
 
 /* ---------- diagramas ---------- */
-.dia{display:grid;grid-template-columns:230px minmax(0,1fr);gap:14px}
+.dia{display:grid;grid-template-columns:250px minmax(0,1fr);gap:16px}
 .lista{display:flex;flex-direction:column;gap:6px}
-.lista .it{display:flex;align-items:center;gap:8px;width:100%;text-align:left;background:var(--soft);border:1px solid transparent;font-weight:500;padding:9px 10px}
-.lista .it.on{background:#ECFDF8;border-color:var(--teal2);font-weight:600}
-.lista .it .cnt{margin-left:auto;font-size:10.5px;color:var(--muted);font-weight:500}
-.lista .sug{font-size:11px;color:var(--muted);margin-top:10px}
-.lista .chip{display:block;width:100%;text-align:left;background:#fff;border:1px dashed #AEB7C7;font-weight:500;font-size:12px;margin-top:5px}
+.lista .it{display:flex;flex-direction:column;align-items:stretch;gap:2px;width:100%;text-align:left;background:var(--panel2);border:1px solid var(--line);font-weight:500;padding:9px 11px}
+.lista .it .t1{display:flex;align-items:center;gap:8px}
+.lista .it .t1 span:first-child{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.lista .it.on{background:var(--okbg);border-color:var(--acc);font-weight:600}
+.lista .cnt{margin-left:auto;font-size:10px;color:var(--dim);font-weight:400;white-space:nowrap}
+.estado{font-family:'DM Mono',monospace;font-size:9.5px;text-transform:uppercase;letter-spacing:.08em;font-weight:500}
+.estado.tent{color:var(--maltx)}
+.estado.edit{color:var(--oktx)}
+.estado.arm{color:var(--muted)}
 .cab{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
-.cab .nom{flex:1;min-width:220px;font-family:'Space Grotesk';font-size:18px;font-weight:600;border:0;border-bottom:1.5px solid var(--line);border-radius:0;padding:4px 2px}
-details.datos{margin-top:8px;border:1px solid var(--line);border-radius:10px;padding:8px 12px}
-details.datos summary{cursor:pointer;font-weight:600;font-size:12.5px}
-details.datos .g4{margin-top:8px}
-.barra{display:flex;flex-wrap:wrap;gap:6px;align-items:center;margin-top:10px;padding:6px;border-radius:10px;background:var(--soft)}
-.barra .sep{width:1px;height:26px;background:var(--line);margin:0 2px}
-.sim{display:inline-flex;align-items:center;gap:6px;background:#fff;border:1px solid var(--line);padding:5px 9px;font-weight:500;font-size:12px;user-select:none}
+.cab .nom{flex:1;min-width:220px;font-family:Outfit,sans-serif;font-size:21px;font-weight:700;border:0;border-bottom:1px solid var(--line2);border-radius:0;padding:4px 2px;background:transparent}
+.aviso{margin-top:10px;padding:10px 12px;border-radius:12px;background:var(--malbg);border:1px solid var(--malbd);color:var(--maltx);font-size:12.5px;display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+.aviso b{color:var(--ink)}
+.aviso button{padding:5px 10px;font-size:12px}
+details.datos{margin-top:10px;border:1px solid var(--line);border-radius:12px;padding:9px 13px;background:var(--panel)}
+details.datos summary{cursor:pointer;font-weight:600;font-size:13px}
+details.datos .g4{margin-top:10px}
+.barra{display:flex;flex-wrap:wrap;gap:6px;align-items:center;margin-top:10px;padding:7px;border-radius:14px;background:var(--panel);border:1px solid var(--line)}
+.barra .sep{width:1px;height:26px;background:var(--line2);margin:0 2px}
+.sim{display:inline-flex;align-items:center;gap:6px;background:var(--panel2);border:1px solid var(--line);padding:5px 9px;font-weight:500;font-size:12.5px;user-select:none}
 .sim svg{width:26px;height:18px}
-.sim:hover{border-color:var(--teal)}
-.ico{padding:6px 9px;background:#fff;border:1px solid var(--line);font-size:13px;min-width:32px}
-.ico.on{background:var(--dark);color:#fff;border-color:var(--dark)}
-.lienzo{position:relative;margin-top:8px;height:calc(100vh - 290px);min-height:480px;border:1px solid var(--line);border-radius:12px;overflow:hidden;background:#FBFCFE;touch-action:none}
+.sim:hover{border-color:var(--acc)}
+.ico{padding:6px 10px;background:var(--panel2);border:1px solid var(--line);font-size:13px;min-width:34px}
+.ico.on{background:var(--grad);color:#050505;border-color:transparent}
+.lienzo{position:relative;margin-top:10px;height:calc(100vh - 300px);min-height:480px;border:1px solid var(--line);border-radius:16px;overflow:hidden;background:var(--lienzo);touch-action:none}
 .lienzo svg{width:100%;height:100%;display:block;user-select:none}
 .lienzo.mano{cursor:grab}
 .lienzo.arrastra{cursor:grabbing}
-.insp{position:absolute;right:10px;top:10px;width:230px;background:#fff;border:1px solid var(--line);border-radius:12px;box-shadow:0 10px 30px -12px rgba(15,23,42,.3);padding:10px;display:flex;flex-direction:column;gap:8px;font-size:12px}
-.insp[hidden]{display:none}
-.insp h3{font-size:13px}
+.punto{fill:var(--grid)}
+.insp{position:absolute;right:10px;top:10px;width:236px;background:rgba(11,13,20,.96);border:1px solid var(--line2);border-radius:14px;box-shadow:0 18px 40px -18px rgba(0,0,0,.7);padding:11px;display:flex;flex-direction:column;gap:9px;font-size:12.5px;backdrop-filter:blur(14px)}
+html[data-tema="claro"] .insp{background:rgba(255,255,255,.97);box-shadow:0 12px 30px -14px rgba(15,23,42,.3)}
+.insp h3{font-size:15px}
 .insp .fila{display:flex;flex-wrap:wrap;gap:4px}
-.insp .fila button{padding:4px 7px;font-size:11.5px;background:var(--soft);font-weight:600}
-.insp .fila button.on{background:#F59E0B;color:#1A1204}
-.insp .fila button.tipo.on{background:var(--dark);color:#fff}
+.insp .fila button{padding:4px 8px;font-size:11.5px;border-radius:8px}
+.insp .fila button.on{background:#f59e0b;color:#1a1204;border-color:#f59e0b}
+.insp .fila button.tipo.on{background:var(--grad);color:#050505;border-color:transparent}
 .vacio{position:absolute;inset:0;display:grid;place-items:center;pointer-events:none}
-.vacio div{pointer-events:auto;text-align:center;max-width:420px;padding:20px;color:var(--muted)}
-.vacio h3{color:var(--ink);font-size:17px;margin-bottom:6px}
-.zoom{position:absolute;left:10px;bottom:10px;display:flex;gap:4px;align-items:center;background:#fff;border:1px solid var(--line);border-radius:10px;padding:4px}
-.zoom button{padding:4px 9px;background:transparent}
-.zoom span{font-size:11px;color:var(--muted);min-width:40px;text-align:center}
-.ayuda{position:absolute;left:10px;top:10px;font-size:11px;color:var(--muted);background:rgba(255,255,255,.9);border:1px solid var(--line);border-radius:8px;padding:6px 9px;max-width:420px}
+.vacio div{pointer-events:auto;text-align:center;max-width:440px;padding:20px;color:var(--muted)}
+.vacio h3{color:var(--ink);font-size:19px;margin-bottom:6px}
+.zoom{position:absolute;left:10px;bottom:10px;display:flex;gap:4px;align-items:center;background:var(--et);border:1px solid var(--line2);border-radius:12px;padding:4px}
+.zoom button{padding:4px 10px;background:transparent;border:0}
+.zoom span{font-size:11px;color:var(--muted);min-width:44px;text-align:center}
+.ayuda{position:absolute;left:10px;top:10px;font-size:11.5px;color:var(--muted);background:var(--et);border:1px solid var(--line);border-radius:10px;padding:7px 10px;max-width:440px;opacity:.95}
 .ayuda b{color:var(--ink)}
-#editor{position:absolute;z-index:5;resize:none;text-align:center;border:2px solid var(--teal);border-radius:8px;padding:6px;font-size:14px;line-height:1.3;background:#fff;display:none;box-shadow:0 6px 20px -6px rgba(14,159,142,.5)}
+#editor{position:absolute;z-index:5;resize:none;text-align:center;border:2px solid var(--acc);border-radius:10px;padding:6px;font-size:14px;line-height:1.3;background:var(--et);color:var(--ink);display:none;box-shadow:0 8px 24px -8px rgba(34,211,238,.5)}
 /* formas */
 .nodo{cursor:move}
 .nodo .forma{stroke-width:2}
-.f-inicio{fill:#FFF7E6;stroke:#D97706}
-.f-paso{fill:#fff;stroke:#334155}
-.f-decision{fill:#EFF8FF;stroke:#0284C7}
-.f-espera{fill:#FFF1F3;stroke:#E11D48;stroke-dasharray:7 5}
-.f-documento{fill:#F5F3FF;stroke:#7C3AED}
-.f-fin{fill:#ECFDF8;stroke:#0E9F8E}
-.f-nota{fill:#FEF9C3;stroke:#CA8A04}
+.f-inicio{fill:var(--n-inicio);stroke:var(--s-inicio)}
+.f-paso{fill:var(--n-paso);stroke:var(--s-paso)}
+.f-decision{fill:var(--n-decision);stroke:var(--s-decision)}
+.f-espera{fill:var(--n-espera);stroke:var(--s-espera);stroke-dasharray:7 5}
+.f-documento{fill:var(--n-documento);stroke:var(--s-documento)}
+.f-fin{fill:var(--n-fin);stroke:var(--s-fin)}
+.f-nota{fill:var(--n-nota);stroke:var(--s-nota)}
 .nodo.sel .forma{stroke-width:3.5}
-.selbox{fill:none;stroke:#2DD4BF;stroke-width:1.5;stroke-dasharray:5 4;pointer-events:none}
+.selbox{fill:none;stroke:var(--acc);stroke-width:1.5;stroke-dasharray:5 4;pointer-events:none}
 .tx{width:100%;height:100%;display:flex;align-items:center;justify-content:center;text-align:center;font:500 13.5px/1.25 Inter,system-ui,sans-serif;color:var(--ink);overflow:hidden;word-break:break-word;padding:2px}
 .tx.izq{justify-content:flex-start;align-items:flex-start;text-align:left;font-size:12.5px}
-.tx .ph{color:#94A3B8;font-weight:400;font-style:italic;font-size:12px}
-.h-con{fill:#fff;stroke:#0E9F8E;stroke-width:2;opacity:0;cursor:crosshair;transition:opacity .12s}
+.tx .ph{color:var(--dim);font-weight:400;font-style:italic;font-size:12px}
+.h-con{fill:var(--et);stroke:var(--acc);stroke-width:2;opacity:0;cursor:crosshair;transition:opacity .12s}
 .nodo:hover .h-con,.nodo.sel .h-con,.conectando .h-con{opacity:1}
-.h-con:hover{fill:#2DD4BF}
-.h-res{fill:#0E9F8E;cursor:nwse-resize}
-.badge circle{fill:#F59E0B;stroke:#fff;stroke-width:1.5}
-.badge text{font:700 10.5px 'Space Grotesk',sans-serif;fill:#1A1204;text-anchor:middle}
-.linea path.v{fill:none;stroke:#475569;stroke-width:2}
+.h-con:hover{fill:var(--acc)}
+.h-res{fill:var(--acc);cursor:nwse-resize}
+.badge circle{fill:#f59e0b;stroke:var(--lienzo);stroke-width:1.5}
+.badge text{font:700 10.5px Outfit,sans-serif;fill:#1a1204;text-anchor:middle}
+.linea path.v{fill:none;stroke:var(--flecha);stroke-width:2}
+.punta{fill:var(--flecha)}
 .linea path.hit{fill:none;stroke:transparent;stroke-width:16;cursor:pointer}
-.linea.sel path.v{stroke:#0E9F8E;stroke-width:3}
-.linea text{font:600 12.5px Inter,sans-serif;fill:#0F172A;text-anchor:middle;dominant-baseline:middle;pointer-events:none}
-.linea rect.et{fill:#fff;stroke:#CBD5E1}
-.temp{fill:none;stroke:#0E9F8E;stroke-width:2;stroke-dasharray:6 4;pointer-events:none}
-.marq{fill:rgba(45,212,191,.08);stroke:#2DD4BF;stroke-dasharray:4 3;pointer-events:none}
+.linea.sel path.v{stroke:var(--acc);stroke-width:3}
+.linea text{font:600 12.5px Inter,sans-serif;fill:var(--ink);text-anchor:middle;dominant-baseline:middle;pointer-events:none}
+.linea rect.et{fill:var(--et);stroke:var(--line2)}
+.temp{fill:none;stroke:var(--acc);stroke-width:2;stroke-dasharray:6 4;pointer-events:none}
+.marq{fill:rgba(34,211,238,.08);stroke:var(--acc);stroke-dasharray:4 3;pointer-events:none}
 /* enviar */
-.chk{list-style:none;display:flex;flex-direction:column;gap:6px;margin:10px 0;max-width:900px}
-.chk li{padding:8px 10px;border-radius:8px;background:var(--soft);font-size:12.5px}
-.chk li.mal{background:#FFF7E6;color:#92400E}
-.chk li.ok{background:#ECFDF8;color:#0B6E62}
-.res{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:12px;margin-top:12px}
-.res .card{border:1px solid var(--line);border-radius:12px;padding:10px}
-.res .card svg{width:100%;height:160px;background:#FBFCFE;border-radius:8px;margin-top:6px}
-.enviado{margin-top:12px;padding:12px 14px;border-radius:10px;background:#ECFDF8;border:1px solid #B5EDE2;color:#0B6E62;max-width:900px}
-.error{margin-top:12px;padding:12px 14px;border-radius:10px;background:#FFF1F3;border:1px solid #F7C4CF;color:#BE3455;max-width:900px}
+.chk{list-style:none;display:flex;flex-direction:column;gap:6px;margin:12px 0;max-width:900px}
+.chk li{padding:9px 12px;border-radius:10px;background:var(--panel2);border:1px solid var(--line);font-size:13px}
+.chk li.mal{background:var(--malbg);border-color:var(--malbd);color:var(--maltx)}
+.chk li.ok{background:var(--okbg);border-color:var(--okbd);color:var(--oktx)}
+.res{display:grid;grid-template-columns:repeat(auto-fill,minmax(270px,1fr));gap:12px;margin-top:12px}
+.res .card{border:1px solid var(--line);border-radius:14px;padding:11px;background:var(--panel)}
+.res .card b{font-family:Outfit,sans-serif;font-size:15px}
+.res .card svg{width:100%;height:160px;background:var(--lienzo);border-radius:10px;margin-top:6px}
+.enviado{margin-top:12px;padding:12px 14px;border-radius:12px;background:var(--okbg);border:1px solid var(--okbd);color:var(--oktx);max-width:900px}
+.error{margin-top:12px;padding:12px 14px;border-radius:12px;background:var(--errbg);border:1px solid var(--errbd);color:var(--errtx);max-width:900px}
+.enviado b,.error b{color:var(--ink)}
 #imprimir{display:none}
-/* ---------- modo oscuro ---------- */
-html[data-tema="oscuro"]{--ink:#E2E8F0;--muted:#94A3B8;--line:#273247;--soft:#141C2E;--bg:#070B16;color-scheme:dark}
-html[data-tema="oscuro"] body{background:var(--bg);color:var(--ink)}
-html[data-tema="oscuro"] .panel,html[data-tema="oscuro"] .tab.on{background:#0D1424;color:var(--ink)}
-html[data-tema="oscuro"] .tab{color:var(--muted)}
-html[data-tema="oscuro"] .tab .n{background:#273247;color:var(--ink)}
-html[data-tema="oscuro"] .tab.on .n{background:var(--teal2);color:#04121A}
-html[data-tema="oscuro"] input,html[data-tema="oscuro"] select,html[data-tema="oscuro"] textarea{background:#0A1020;color:var(--ink);border-color:var(--line)}
-html[data-tema="oscuro"] td input,html[data-tema="oscuro"] td select,html[data-tema="oscuro"] td textarea{background:transparent}
-html[data-tema="oscuro"] th{border-bottom-color:#64748B}
-html[data-tema="oscuro"] button{background:var(--soft);color:var(--ink)}
-html[data-tema="oscuro"] button.pri{background:var(--teal2);color:#04121A}
-html[data-tema="oscuro"] button.osc{background:rgba(255,255,255,.1);color:#fff}
-html[data-tema="oscuro"] .peligro{color:#FB7185}
-html[data-tema="oscuro"] .sim,html[data-tema="oscuro"] .ico,html[data-tema="oscuro"] .lista .chip,html[data-tema="oscuro"] .insp,html[data-tema="oscuro"] .zoom{background:#0F172A;border-color:var(--line);color:var(--ink)}
-html[data-tema="oscuro"] .ico.on{background:var(--teal2);color:#04121A;border-color:var(--teal2)}
-html[data-tema="oscuro"] .insp .fila button{background:#1E293B}
-html[data-tema="oscuro"] .insp .fila button.on{background:#F59E0B;color:#1A1204}
-html[data-tema="oscuro"] .insp .fila button.tipo.on{background:var(--teal2);color:#04121A}
-html[data-tema="oscuro"] .zoom button{background:transparent}
-html[data-tema="oscuro"] .lista .it{background:#111A2C}
-html[data-tema="oscuro"] .lista .it.on{background:rgba(45,212,191,.12)}
-html[data-tema="oscuro"] .ayuda{background:rgba(13,20,36,.92);border-color:var(--line)}
-html[data-tema="oscuro"] .lienzo,html[data-tema="oscuro"] .res .card svg{background:#0A0F1C}
-html[data-tema="oscuro"] .punto{fill:#24304A}
-html[data-tema="oscuro"] #editor{background:#0F172A;color:var(--ink)}
-html[data-tema="oscuro"] .anon,html[data-tema="oscuro"] .alerta.ok,html[data-tema="oscuro"] .enviado,html[data-tema="oscuro"] .chk li.ok{background:rgba(45,212,191,.1);border-color:rgba(45,212,191,.3);color:#99F6E4}
-html[data-tema="oscuro"] .alerta.mal,html[data-tema="oscuro"] .error{background:rgba(251,113,133,.1);border-color:rgba(251,113,133,.3);color:#FDA4AF}
-html[data-tema="oscuro"] .chk li{background:#111A2C}
-html[data-tema="oscuro"] .chk li.mal{background:rgba(245,158,11,.1);color:#FCD34D}
-html[data-tema="oscuro"] .ex td{background:rgba(45,212,191,.07);color:#99F6E4}
-html[data-tema="oscuro"] details.datos,html[data-tema="oscuro"] .res .card{border-color:var(--line)}
-html[data-tema="oscuro"] .f-inicio{fill:#3A2A0C;stroke:#F59E0B}
-html[data-tema="oscuro"] .f-paso{fill:#16213A;stroke:#CBD5E1}
-html[data-tema="oscuro"] .f-decision{fill:#0C2A40;stroke:#38BDF8}
-html[data-tema="oscuro"] .f-espera{fill:#3A1020;stroke:#FB7185}
-html[data-tema="oscuro"] .f-documento{fill:#24154A;stroke:#A78BFA}
-html[data-tema="oscuro"] .f-fin{fill:#0B3330;stroke:#2DD4BF}
-html[data-tema="oscuro"] .f-nota{fill:#3A330C;stroke:#EAB308}
-html[data-tema="oscuro"] .tx{color:#E2E8F0}
-html[data-tema="oscuro"] .tx .ph{color:#64748B}
-html[data-tema="oscuro"] .h-con{fill:#0F172A}
-html[data-tema="oscuro"] .linea path.v{stroke:#94A3B8}
-html[data-tema="oscuro"] .punta{fill:#94A3B8}
-html[data-tema="oscuro"] .linea.sel path.v{stroke:#2DD4BF}
-html[data-tema="oscuro"] .linea rect.et{fill:#0F172A;stroke:#334155}
-html[data-tema="oscuro"] .linea text{fill:#E2E8F0}
-@media (max-width:860px){.dia{grid-template-columns:1fr}.g4{grid-template-columns:1fr 1fr}.tblw{overflow-x:auto}.tblw table{min-width:860px}.insp{position:static;width:auto;margin-top:8px}}
+::-webkit-scrollbar{width:7px;height:7px}
+::-webkit-scrollbar-thumb{background:#1f2937;border-radius:4px}
+@media (max-width:860px){.dia{grid-template-columns:1fr}.g4{grid-template-columns:1fr 1fr}.tblw{overflow-x:auto}.tblw table{min-width:860px}.insp{position:static;width:auto;margin-top:8px}tr.det .detg{grid-template-columns:1fr}}
 @media print{
   @page{size:A4 landscape;margin:10mm}
   body{background:#fff}
@@ -201,8 +206,8 @@ html[data-tema="oscuro"] .linea text{fill:#E2E8F0}
 </head>
 <body>
 <div class="top">
-  <b>Mapa AS-IS de mi puesto</b>
-  <span class="est" id="est">Comisión FEMER</span>
+  <b>Mapa <span>AS-IS</span> de mi puesto</b>
+  <span class="est" id="est">Mundo IEC · Comisión FEMER</span>
   <button class="osc" id="temaBtn" onclick="alternarTema()" title="Cambiar entre modo claro y oscuro">☾ Oscuro</button>
   <button class="osc" onclick="window.print()">Imprimir o PDF</button>
   <button class="pri" onclick="irA(3)">Enviar para análisis →</button>
@@ -218,13 +223,9 @@ html[data-tema="oscuro"] .linea text{fill:#E2E8F0}
   <div class="eyebrow">Experto en IA Nivel I · Estaciones 2 y 3</div>
   <h1>Cómo trabajo hoy, tal cual es</h1>
   <p class="help">Primero listá todos tus procesos. Después, en <b>Diagramas</b>, dibujá cómo es cada uno (como mínimo, los 3 que más tiempo te llevan o más te pesan) y al final envialo para el análisis.</p>
-  <p class="anon"><b>Tu nombre queda registrado</b> para el seguimiento del curso y lo ve solo el docente. En los análisis que se muestran al grupo no aparecen nombres. No pongas datos reales de afiliados (nombres, DNI, diagnósticos): usá ejemplos inventados. Lo que escribís queda guardado en esta compu.</p>
+  <p class="anon">Lo que escribís queda guardado en esta compu. No pongas datos reales de afiliados (nombres, DNI, diagnósticos): usá ejemplos inventados. <span id="cuentaCampus"></span></p>
 
   <h2>Mi puesto</h2>
-  <div class="g4" style="margin-bottom:8px">
-    <label class="c" style="grid-column:span 2">Nombre y apellido (obligatorio)<input data-k="nombre" maxlength="120" autocomplete="name" placeholder="ej.: Ana Pérez"></label>
-    <p class="help" id="cuentaCampus" style="grid-column:span 2;align-self:end;margin:0"></p>
-  </div>
   <div class="g4">
     <label class="c">Tipo de entidad
       <select data-k="entidad"><option></option><option>Federación</option><option>Círculo o colegio médico</option><option>Mutual</option><option>Hospital o clínica</option><option>Otra</option></select></label>
@@ -235,15 +236,15 @@ html[data-tema="oscuro"] .linea text{fill:#E2E8F0}
   </div>
 
   <h2>Inventario de todos mis procesos</h2>
-  <p class="help">Una línea por proceso. Revisá tu correo, tu WhatsApp, tus planillas y el calendario para no olvidarte de ninguno, incluidos los del cierre o de una vez al año. Si algo pasa todos los días, «veces por mes» es × 20. Marcá con ★ los 3 que más te llevan o más te pesan, y con <b>Diagramar</b> abrís su lienzo.</p>
+  <p class="help">Una línea por proceso. Revisá tu correo, tu WhatsApp, tus planillas y el calendario para no olvidarte de ninguno, incluidos los del cierre o de una vez al año. Si algo pasa todos los días, «veces por mes» es × 20. Marcá con ★ los 3 que más te llevan o más te pesan. Debajo de cada uno, <b>contá paso a paso cómo lo hacés</b>: con eso, en <b>Diagramas</b> te armamos un diagrama tentativo de cada proceso para que lo corrijas.</p>
   <div class="tblw">
   <table>
     <thead><tr><th>★</th><th>#</th><th style="width:23%">Proceso</th><th style="width:22%">Trigger · qué lo hace arrancar</th><th style="width:7%">Veces por mes</th><th style="width:6%">Min por vez</th><th style="width:14%">Herramientas</th><th style="width:7%">¿Doble carga?</th><th style="width:6%">Pesa 1–5</th><th style="text-align:right">h/mes</th><th></th></tr></thead>
-    <tbody><tr class="ex"><td>★</td><td></td><td>Ejemplo: controlar órdenes de prestaciones</td><td>Llegan las órdenes en papel, del 1 al 10</td><td>600</td><td>3</td><td>Papel, sistema, Excel</td><td>Sí</td><td>5</td><td style="text-align:right">30</td><td></td></tr></tbody>
+    <tbody><tr class="ex"><td>★</td><td></td><td>Ejemplo: controlar órdenes de prestaciones</td><td>Llegan las órdenes en papel, del 1 al 10</td><td>600</td><td>3</td><td>Papel, sistema, Excel</td><td>Sí</td><td>5</td><td style="text-align:right">30</td><td></td></tr><tr class="ex"><td></td><td></td><td colspan="9"><b>Cómo lo hago:</b> recibo las órdenes en papel y las separo por obra social. Controlo una por una la firma, el sello y la fecha. Si falta algo, la devuelvo al prestador y espero que la traiga. Si está bien, la cargo en el sistema y también en un Excel. Al final armo la factura. <b>Entrego:</b> la factura a la obra social.</td></tr></tbody>
     <tbody id="filas"></tbody>
   </table>
   </div>
-  <button style="margin-top:8px;border:1px dashed #AEB7C7;background:#fff" onclick="S.inventario.push(filaVacia()); pintarInventario(); guardar()">+ Agregar otro proceso</button>
+  <button class="add" onclick="S.inventario.push(filaVacia()); pintarInventario(); guardar()">+ Agregar otro proceso</button>
   <div class="tot">
     <div><div class="k" id="tProc">0</div><div class="l">procesos</div></div>
     <div><div class="k" id="tHoras">0</div><div class="l">horas por mes en total</div></div>
@@ -270,7 +271,7 @@ html[data-tema="oscuro"] .linea text{fill:#E2E8F0}
 <section class="panel" id="p3" hidden>
   <div class="eyebrow">Último paso</div>
   <h1>Revisar y enviar para el análisis</h1>
-  <p class="help">Se envía con tu nombre, que ve solo el docente. Si después cambiás algo, volvé a enviarlo: se actualiza el mismo envío, no se duplica.</p>
+  <p class="help">Llega al docente con tu cuenta de Mundo IEC. Si después cambiás algo, volvé a enviarlo: se actualiza el mismo envío, no se duplica.</p>
   <ul class="chk" id="chk"></ul>
   <div class="res" id="resumen"></div>
   <div style="margin-top:14px;display:flex;gap:8px;flex-wrap:wrap">
@@ -304,8 +305,8 @@ const uid = () => Math.random().toString(36).slice(2, 10);
 const num = (v) => { const n = parseFloat(String(v ?? '').replace(',', '.')); return isFinite(n) ? n : 0; };
 const fmt = (n) => (Math.round(n * 10) / 10).toLocaleString('es-AR');
 const esc = (s) => String(s ?? '').replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
-const filaVacia = () => ({ id: uid(), proceso: '', trigger: '', veces: '', minutos: '', herr: '', doble: '', pesa: '', star: false });
-const procesoVacio = (nombre = '') => ({ id: uid(), nombre, trigger: '', entradas: '', salida: '', veces: '', minutos: '', errores: '', tiempo: '', doble: '', escrito: '', pesa: '', cambio: '', nodos: [], lineas: [] });
+const filaVacia = () => ({ id: uid(), proceso: '', trigger: '', veces: '', minutos: '', herr: '', doble: '', pesa: '', star: false, desc: '', salida: '' });
+const procesoVacio = (nombre = '') => ({ id: uid(), nombre, trigger: '', entradas: '', salida: '', veces: '', minutos: '', errores: '', tiempo: '', doble: '', escrito: '', pesa: '', cambio: '', descripcion: '', borrador: '', nodos: [], lineas: [] });
 const codigoNuevo = () => Array.from(crypto.getRandomValues(new Uint8Array(8)), (b) => 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789'[b % 32]).join('');
 
 let S = null;
@@ -339,7 +340,7 @@ function irA(n) {
   pestana = n;
   $$('.tab').forEach((t) => t.classList.toggle('on', +t.dataset.tab === n));
   [1, 2, 3].forEach((i) => ($('#p' + i).hidden = i !== n));
-  if (n === 2) { pintarLista(); abrirProceso(S.actual && S.procesos.some((p) => p.id === S.actual) ? S.actual : S.procesos[0]?.id); }
+  if (n === 2) { sincronizar(); pintarLista(); abrirProceso(S.actual && S.procesos.some((p) => p.id === S.actual) ? S.actual : S.procesos[0]?.id); generarPendientes(); }
   if (n === 3) pintarRevision();
   window.scrollTo(0, 0);
 }
@@ -355,13 +356,21 @@ function pintarInventario() {
     <td><select data-c="doble">${['', 'Sí', 'No'].map((o) => `<option ${f.doble === o ? 'selected' : ''}>${o}</option>`).join('')}</select></td>
     <td><select data-c="pesa">${['', '1', '2', '3', '4', '5'].map((o) => `<option ${String(f.pesa) === o ? 'selected' : ''}>${o}</option>`).join('')}</select></td>
     <td class="h"></td>
-    <td class="acc"><button data-diag title="Abrir el lienzo de este proceso">Diagramar →</button></td></tr>`).join('');
+    <td class="acc"><button data-diag title="Abrir el diagrama de este proceso">Diagramar →</button></td></tr>
+    <tr class="det" data-i="${i}" ${f.proceso.trim() ? '' : 'hidden'}><td colspan="11"><div class="detg">
+      <label class="c">Cómo lo hacés hoy, paso a paso<textarea data-c="desc" maxlength="2000" placeholder="Qué recibís, qué hacés y con qué, qué controlás, qué pasa si algo está mal, dónde esperás…">${esc(f.desc)}</textarea></label>
+      <label class="c">Qué entregás y a quién<input data-c="salida" maxlength="300" value="${esc(f.salida)}" placeholder="ej.: la factura, a la obra social"></label>
+    </div></td></tr>`).join('');
+  $$('#filas textarea').forEach(crecer);
   totales();
 }
 $('#filas').addEventListener('input', (e) => {
   const tr = e.target.closest('tr'), c = e.target.dataset.c; if (!tr || !c) return;
   const f = S.inventario[+tr.dataset.i];
   f[c] = e.target.type === 'checkbox' ? e.target.checked : e.target.value;
+  // el «contalo» aparece cuando el proceso tiene nombre
+  if (c === 'proceso') { const det = $(`#filas tr.det[data-i="${tr.dataset.i}"]`); if (det) det.hidden = !e.target.value.trim(); }
+  if (e.target.tagName === 'TEXTAREA') crecer(e.target);
   totales(); guardar();
 });
 $('#filas').addEventListener('change', (e) => { if (e.target.type === 'checkbox' || e.target.tagName === 'SELECT') e.target.dispatchEvent(new Event('input', { bubbles: true })); });
@@ -369,17 +378,20 @@ $('#filas').addEventListener('click', (e) => {
   if (!e.target.closest('[data-diag]')) return;
   const f = S.inventario[+e.target.closest('tr').dataset.i];
   if (!f.proceso.trim()) { alert('Primero escribí el nombre del proceso.'); return; }
-  let p = S.procesos.find((x) => x.desde === f.id || x.nombre.trim().toLowerCase() === f.proceso.trim().toLowerCase());
-  if (!p) { p = { ...procesoVacio(f.proceso.trim()), desde: f.id, trigger: f.trigger, veces: f.veces, minutos: f.minutos, doble: f.doble, pesa: f.pesa }; S.procesos.push(p); guardar(); }
-  S.actual = p.id; irA(2);
+  sincronizar();
+  const p = S.procesos.find((x) => x.desde === f.id);
+  if (p) S.actual = p.id;
+  irA(2);
 });
 $$('[data-k]').forEach((e) => {
   e.value = S.puesto[e.dataset.k] ?? '';
   e.addEventListener('input', () => { S.puesto[e.dataset.k] = e.value; totales(); guardar(); });
 });
+/** Los campos de texto crecen con lo que se escribe (sin manija para agrandarlos). */
+function crecer(t) { t.style.height = 'auto'; t.style.height = Math.max(t.dataset.c === 'desc' ? 64 : 32, t.scrollHeight + 2) + 'px'; }
 function totales() {
   let total = 0, procs = 0, est = 0;
-  $$('#filas tr').forEach((tr) => {
+  $$('#filas tr:not(.det)').forEach((tr) => {
     const f = S.inventario[+tr.dataset.i];
     const h = num(f.veces) * num(f.minutos) / 60;
     $('td.h', tr).textContent = h ? fmt(h) : '';
@@ -398,13 +410,30 @@ function totales() {
 /* =================== 2 · lista de procesos =================== */
 function pintarLista() {
   $('#listaProc').innerHTML = S.procesos.length
-    ? S.procesos.map((p) => `<button class="it ${p.id === S.actual ? 'on' : ''}" data-p="${p.id}"><span style="overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${esc(p.nombre) || '<i>Sin nombre</i>'}</span><span class="cnt">${p.nodos.length} símb.</span></button>`).join('')
-    : '<p class="help">Todavía no agregaste procesos.</p>';
-  const usados = new Set(S.procesos.map((p) => p.desde));
-  const nombres = new Set(S.procesos.map((p) => p.nombre.trim().toLowerCase()));
-  const sug = S.inventario.filter((f) => f.proceso.trim() && !usados.has(f.id) && !nombres.has(f.proceso.trim().toLowerCase()))
-    .sort((a, b) => (b.star - a.star));
-  $('#sugeridos').innerHTML = sug.length ? `<p class="sug">De tu inventario${sug.some((f) => f.star) ? ' (★ primero)' : ''}:</p>` + sug.slice(0, 12).map((f) => `<button class="chip" data-inv="${f.id}">${f.star ? '★ ' : '+ '}${esc(f.proceso)}</button>`).join('') : '';
+    ? S.procesos.map((p) => {
+      const est = generando.has(p.id) ? ['arm', 'armando el borrador…'] : p.borrador === 'tentativo' ? ['tent', 'borrador: revisalo'] : p.nodos.length ? ['edit', 'revisado'] : ['', 'sin diagrama'];
+      return `<button class="it ${p.id === S.actual ? 'on' : ''}" data-p="${p.id}"><span class="t1"><span>${esc(p.nombre) || '<i>Sin nombre</i>'}</span><span class="cnt">${p.nodos.length} símb.</span></span><span class="estado ${est[0]}">${est[1]}</span></button>`;
+    }).join('')
+    : '<p class="help">Cargá tus procesos en la pestaña 1 y aparecen acá, cada uno con su diagrama tentativo.</p>';
+  $('#sugeridos').innerHTML = '';
+}
+/** Cada proceso del inventario tiene su diagrama: se crean y se mantienen al día los datos que vienen de la pestaña 1. */
+function sincronizar() {
+  S.inventario.forEach((f) => {
+    if (!f.proceso.trim()) return;
+    let p = S.procesos.find((x) => x.desde === f.id) || S.procesos.find((x) => !x.desde && x.nombre.trim().toLowerCase() === f.proceso.trim().toLowerCase());
+    if (!p) { if (S.procesos.length >= 20) return; p = procesoVacio(); S.procesos.push(p); }
+    p.desde = f.id;
+    p.nombre = f.proceso.trim(); p.trigger = f.trigger; p.veces = f.veces; p.minutos = f.minutos; p.doble = f.doble; p.pesa = f.pesa;
+    p.descripcion = f.desc || '';
+    if (f.salida) p.salida = f.salida;
+  });
+  // los que se borraron del inventario se van, salvo que ya hayan corregido su diagrama
+  const vivos = new Set(S.inventario.filter((f) => f.proceso.trim()).map((f) => f.id));
+  S.procesos = S.procesos.filter((p) => !p.desde || vivos.has(p.desde) || p.borrador === 'editado');
+  const orden = new Map(S.inventario.map((f, i) => [f.id, i]));
+  S.procesos.sort((a, b) => (orden.get(a.desde) ?? 999) - (orden.get(b.desde) ?? 999));
+  guardar();
 }
 $('#listaProc').addEventListener('click', (e) => { const b = e.target.closest('[data-p]'); if (b) abrirProceso(b.dataset.p); });
 $('#sugeridos').addEventListener('click', (e) => {
@@ -414,7 +443,7 @@ $('#sugeridos').addEventListener('click', (e) => {
   S.procesos.push(p); guardar(); abrirProceso(p.id);
 });
 function nuevoProceso() {
-  if (S.procesos.length >= 12) { alert('Llegaste al máximo de 12 procesos por hoja.'); return; }
+  if (S.procesos.length >= 20) { alert('Llegaste al máximo de 20 procesos por hoja.'); return; }
   const p = procesoVacio(''); S.procesos.push(p); guardar(); abrirProceso(p.id);
   setTimeout(() => $('.cab .nom')?.focus(), 50);
 }
@@ -446,7 +475,8 @@ function abrirProceso(id) {
       <input class="nom" data-f="nombre" maxlength="160" placeholder="Nombre del proceso (ej.: controlar órdenes de prestaciones)" value="${esc(p.nombre)}">
       <button class="peligro" onclick="borrarProceso()">Eliminar proceso</button>
     </div>
-    <details class="datos" ${p.nodos.length ? '' : 'open'}>
+    <div id="avisoBorrador"></div>
+    <details class="datos" ${p.nodos.length || generando.has(p.id) ? '' : 'open'}>
       <summary>Datos del proceso: trigger, salida y números <span id="hProc" style="color:var(--muted);font-weight:500"></span></summary>
       <div class="g4">
         ${campo('trigger', 'Trigger: qué, de quién, por dónde, cuándo', 'text', 'maxlength="400"')}
@@ -459,6 +489,7 @@ function abrirProceso(id) {
         ${opc('pesa', '¿Cuánto me pesa? (1 a 5)', ['', '1', '2', '3', '4', '5'])}
         ${opc('doble', '¿Cargo algo dos veces?', ['', 'Sí', 'No'])}
         ${opc('escrito', '¿Está escrito en algún lado?', ['', 'Sí', 'A medias', 'No'])}
+        <label class="c" style="grid-column:1/-1">Cómo lo hacés hoy (lo que contaste en la pestaña 1)<textarea data-f="descripcion" maxlength="2000" rows="3">${esc(p.descripcion)}</textarea></label>
         <label class="c" style="grid-column:span 2">¿Qué te gustaría que cambie?<input data-f="cambio" maxlength="1000" value="${esc(p.cambio)}"></label>
       </div>
     </details>
@@ -473,6 +504,7 @@ function abrirProceso(id) {
       <button class="ico" onclick="rehacerUno()" title="Rehacer (Ctrl+Y)">↷</button>
       <button class="ico" onclick="borrarSeleccion()" title="Borrar lo seleccionado (Supr)">🗑</button>
       <button class="ico" onclick="ordenar()" title="Ordenar en fila de izquierda a derecha siguiendo las flechas">⇶ Ordenar</button>
+      <button class="ico" onclick="rearmar()" title="Vuelve a armar el diagrama tentativo con lo que contaste">✨ Rearmar borrador</button>
     </div>
     <div class="lienzo" id="lienzo">
       <svg id="svg" xmlns="http://www.w3.org/2000/svg">
@@ -485,7 +517,7 @@ function abrirProceso(id) {
       </svg>
       <textarea id="editor" maxlength="200"></textarea>
       <div class="ayuda" id="ayuda"><b>Doble clic</b> en el lienzo: paso nuevo · <b>arrastrá</b> desde un punto verde: flecha · <b>doble clic</b> en un símbolo o flecha: escribir · <b>Supr</b>: borrar · <b>Ctrl + rueda</b>: zoom</div>
-      <div class="vacio" id="vacio"><div><h3>Lienzo en blanco</h3><p>Agregá los símbolos de la barra, o arrancá con un esqueleto y completalo.</p><p style="margin-top:10px"><button class="pri" onclick="esqueleto()">Empezar con Trigger → Paso → Salida</button></p></div></div>
+      <div class="vacio" id="vacio"><div><h3>Lienzo en blanco</h3><p>Agregá los símbolos de la barra, o arrancá con un esqueleto y completalo.</p><p style="margin-top:10px;display:flex;gap:8px;justify-content:center;flex-wrap:wrap"><button class="pri" onclick="rearmar()">✨ Armar borrador con lo que conté</button><button onclick="esqueleto()">Trigger → Paso → Salida</button></p></div></div>
       <div class="insp" id="insp" hidden></div>
       <div class="zoom"><button onclick="zoomEn(1/1.2)" title="Alejar">−</button><span id="zpct">100%</span><button onclick="zoomEn(1.2)" title="Acercar">+</button><button onclick="ajustar()" title="Ver todo el diagrama">Ver todo</button></div>
     </div>`;
@@ -494,6 +526,7 @@ function abrirProceso(id) {
   dibujar();
   if (!vistas[p.id] && p.nodos.length) ajustar();
   horasProceso();
+  pintarAviso();
 }
 
 function horasProceso() { const p = P(), h = num(p?.veces) * num(p?.minutos) / 60; const el = $('#hProc'); if (el) el.textContent = h ? `· ${fmt(h)} h por mes` : ''; }
@@ -580,7 +613,10 @@ function aplicarVista() {
 
 /* ---------- historia ---------- */
 function foto() { const p = P(); return JSON.stringify({ n: p.nodos, l: p.lineas }); }
-function antes() { hist.push(foto()); if (hist.length > 120) hist.shift(); rehacer = []; }
+function antes() {
+  hist.push(foto()); if (hist.length > 120) hist.shift(); rehacer = [];
+  const p = P(); if (p && p.borrador === 'tentativo') { p.borrador = 'editado'; pintarAviso(); pintarLista(); }
+}
 function restaurar(f) { const p = P(), o = JSON.parse(f); p.nodos = o.n; p.lineas = o.l; sel = new Set([...sel].filter((id) => p.nodos.some((n) => n.id === id))); selLinea = null; dibujar(); guardar(); }
 function deshacer() { if (!hist.length) return; rehacer.push(foto()); restaurar(hist.pop()); }
 function rehacerUno() { if (!rehacer.length) return; hist.push(foto()); restaurar(rehacer.pop()); }
@@ -589,7 +625,7 @@ function rehacerUno() { if (!rehacer.length) return; hist.push(foto()); restaura
 const snap = (v) => Math.round(v / GRILLA) * GRILLA;
 function agregar(t, x, y, conectarDesde) {
   const p = P(); if (!p) return;
-  if (p.nodos.length >= 80) { alert('Este diagrama llegó al máximo de 80 símbolos.'); return; }
+  if (p.nodos.length >= 60) { alert('Este diagrama llegó al máximo de 60 símbolos.'); return; }
   antes();
   const d = TIPOS[t];
   const n = { id: uid(), t, x: snap(x), y: snap(y), w: d.w, h: d.h, texto: '', fr: '' };
@@ -647,7 +683,7 @@ let portapapeles = null;
 function copiar() { const p = P(); if (!sel.size) return; portapapeles = { n: p.nodos.filter((n) => sel.has(n.id)), l: p.lineas.filter((l) => sel.has(l.de) && sel.has(l.a)) }; }
 function pegar(dx = 40) {
   const p = P(); if (!portapapeles || !p) return;
-  if (p.nodos.length + portapapeles.n.length > 80) { alert('Este diagrama llegó al máximo de 80 símbolos.'); return; }
+  if (p.nodos.length + portapapeles.n.length > 60) { alert('Este diagrama llegó al máximo de 60 símbolos.'); return; }
   antes();
   const ids = {};
   const nuevos = portapapeles.n.map((n) => { const id = uid(); ids[n.id] = id; return { ...n, id, x: n.x + dx, y: n.y + dx }; });
@@ -660,7 +696,7 @@ function pegar(dx = 40) {
 function conectar(de, a) {
   const p = P(); if (!de || !a || de === a) return;
   if (p.lineas.some((l) => l.de === de && l.a === a)) return;
-  if (p.lineas.length >= 160) { alert('Este diagrama llegó al máximo de 160 flechas.'); return; }
+  if (p.lineas.length >= 120) { alert('Este diagrama llegó al máximo de 120 flechas.'); return; }
   antes();
   const l = { id: uid(), de, a, texto: '', recta: false };
   // de una decisión: la primera salida es «Sí», la segunda «No»
@@ -671,7 +707,10 @@ function conectar(de, a) {
 /** Ordena de izquierda a derecha por niveles, siguiendo las flechas desde el trigger. */
 function ordenar() {
   const p = P(); if (!p || !p.nodos.length) return;
-  antes();
+  antes(); autoLayout(p); dibujar(); guardar(); ajustar();
+}
+/** Acomoda por niveles siguiendo las flechas desde el trigger; cada 5 niveles baja una fila y vuelve (en zigzag). */
+function autoLayout(p) {
   const sale = {}; p.nodos.forEach((n) => (sale[n.id] = []));
   p.lineas.forEach((l) => sale[l.de]?.push(l.a));
   const entra = new Set(p.lineas.map((l) => l.a));
@@ -681,10 +720,92 @@ function ordenar() {
   while (cola.length) { const id = cola.shift(); sale[id].forEach((h) => { if (nivel[h] == null) { nivel[h] = nivel[id] + 1; cola.push(h); } }); }
   let max = Math.max(0, ...Object.values(nivel));
   p.nodos.forEach((n) => { if (nivel[n.id] == null) nivel[n.id] = ++max; });
-  const filas = {};
-  p.nodos.forEach((n) => { (filas[nivel[n.id]] ||= []).push(n); });
-  Object.entries(filas).forEach(([nv, ns]) => ns.forEach((n, i) => { n.x = snap(120 + nv * 240); n.y = snap(140 + i * 150 - (ns.length - 1) * 75 + 150); }));
-  dibujar(); guardar(); ajustar();
+  const POR_FILA = 5, porNivel = {};
+  p.nodos.forEach((n) => { (porNivel[nivel[n.id]] ||= []).push(n); });
+  const filas = Math.floor(max / POR_FILA) + 1, alto = [];
+  for (let r = 0; r < filas; r++) {
+    let m = 1;
+    for (let nv = r * POR_FILA; nv < (r + 1) * POR_FILA; nv++) m = Math.max(m, (porNivel[nv] || []).length);
+    alto.push(m * 160 + 70);
+  }
+  Object.entries(porNivel).forEach(([nv, ns]) => {
+    nv = +nv;
+    const r = Math.floor(nv / POR_FILA), c0 = nv % POR_FILA, c = r % 2 ? POR_FILA - 1 - c0 : c0;
+    const y0 = 140 + alto.slice(0, r).reduce((a, b) => a + b, 0);
+    ns.forEach((n, i) => { n.x = snap(120 + c * 250); n.y = snap(y0 + i * 160); });
+  });
+}
+/** Tamaño de un símbolo según su texto, para que entre. */
+function tamano(t, texto) {
+  const d = TIPOS[t] || TIPOS.paso, largo = String(texto || '').length;
+  const porLinea = t === 'decision' ? 16 : t === 'inicio' || t === 'fin' ? 18 : 22;
+  const lineas = Math.ceil(largo / porLinea);
+  const extra = t === 'decision' ? 64 : t === 'inicio' || t === 'fin' ? 40 : 26;
+  return { w: d.w + (t === 'decision' && largo > 30 ? 30 : 0), h: Math.max(d.h, snap(lineas * 18 + extra)) };
+}
+
+/* ---------- borradores ---------- */
+const generando = new Set();
+const FR_CLAVE = { P: /papel|imprim|escane|fotocop/i, R: /uno por uno|una por una|cada un[oa]|de a un/i, M: /a mano|tipe|copi[oa]|peg[oa]|transcrib|cargo/i, D: /dos veces|tambi[eé]n en|otra vez en|planilla aparte|excel aparte|duplic/i, E: /error|rechaz|devuelv|correg|rebot|reclam/i, X: /esper|demor|tarda/i };
+/** Borrador sin IA: una frase = un paso; preguntas o «si …» = decisión; «espero» = espera. */
+function borradorLocal(p) {
+  const frases = String(p.descripcion || '').split(/\n+|(?<=[.;])\s+|\s(?=\d+[.)-]\s)/).map((x) => x.trim().replace(/^(\d+[.)-]|[-•*])\s*/, '').replace(/[.;]$/, '')).filter((x) => x.length > 2).slice(0, 12);
+  const fr = (x) => Object.entries(FR_CLAVE).filter(([, r]) => r.test(x)).map(([k]) => k).join('');
+  const nodos = [{ t: 'inicio', texto: p.trigger || '¿Qué lo dispara?', fr: '' }], lineas = [];
+  let ant = 0;
+  (frases.length ? frases : [p.nombre || 'Hago el proceso']).forEach((x) => {
+    const t = /\?|^si\s/i.test(x) ? 'decision' : /^esper/i.test(x) ? 'espera' : 'paso';
+    nodos.push({ t, texto: x.slice(0, 110), fr: t === 'decision' ? '' : fr(x) });
+    const i = nodos.length - 1;
+    lineas.push({ de: ant, a: i, texto: nodos[ant].t === 'decision' ? 'Sí' : '' });
+    if (t === 'decision') { nodos.push({ t: 'paso', texto: 'Si no: qué hago (completá)', fr: '' }); lineas.push({ de: i, a: i + 1, texto: 'No' }, { de: i + 1, a: i, texto: '' }); }
+    ant = i;
+  });
+  nodos.push({ t: 'fin', texto: p.salida || 'Resultado entregado', fr: '' });
+  lineas.push({ de: ant, a: nodos.length - 1, texto: nodos[ant].t === 'decision' ? 'Sí' : '' });
+  return { nodos, lineas };
+}
+async function generar(p, forzar = false) {
+  if (generando.has(p.id)) return;
+  generando.add(p.id); pintarLista(); if (P()?.id === p.id) pintarAviso();
+  const entrada = { nombre: p.nombre, trigger: p.trigger, descripcion: p.descripcion || '', herramientas: S.inventario.find((f) => f.id === p.desde)?.herr || '', salida: p.salida, doble: p.doble };
+  let b = null, ia = false;
+  try {
+    const r = await fetch(`/api/campus/formularios/${FORMULARIO}/borrador`, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(entrada) });
+    if (r.ok) { b = await r.json(); ia = true; }
+  } catch (e) {}
+  if (!b || !Array.isArray(b.nodos) || !b.nodos.length) { b = borradorLocal(p); ia = false; }
+  generando.delete(p.id);
+  // mientras se armaba, la persona empezó a dibujar a mano: se respeta lo suyo
+  if (!forzar && p.nodos.length && p.borrador !== 'tentativo') { pintarLista(); if (P()?.id === p.id) pintarAviso(); return; }
+  const ids = b.nodos.map(() => uid());
+  p.nodos = b.nodos.map((n, i) => ({ id: ids[i], t: TIPOS[n.t] ? n.t : 'paso', x: 0, y: 0, ...tamano(n.t, n.texto), texto: n.texto || '', fr: n.fr || '' }));
+  p.lineas = b.lineas.filter((l) => ids[l.de] && ids[l.a]).map((l) => ({ id: uid(), de: ids[l.de], a: ids[l.a], texto: l.texto || '', recta: false }));
+  autoLayout(p);
+  p.borrador = 'tentativo'; p.borradorIA = ia; p.descBase = p.descripcion || '';
+  guardar(); pintarLista();
+  if (P()?.id === p.id && pestana === 2) { sel = new Set(); selLinea = null; hist = []; rehacer = []; delete vistas[p.id]; dibujar(); ajustar(); pintarAviso(); }
+}
+/** Arma los borradores que faltan (o los que quedaron viejos porque cambió lo que contó), de a tres. */
+async function generarPendientes() {
+  const cola = S.procesos.filter((p) => (p.desde || p.descripcion) && ((!p.nodos.length && !p.borrador) || (p.borrador === 'tentativo' && (p.descripcion || '') !== (p.descBase || ''))));
+  const actual = cola.findIndex((p) => p.id === S.actual);
+  if (actual > 0) cola.unshift(...cola.splice(actual, 1));
+  const trabajar = async () => { while (cola.length) await generar(cola.shift(), true); };
+  await Promise.all([trabajar(), trabajar(), trabajar()]);
+}
+function rearmar() {
+  const p = P(); if (!p) return;
+  if (!p.descripcion && !confirm('Todavía no contaste cómo hacés este proceso (pestaña 1 o «Datos del proceso»). ¿Armo un borrador mínimo igual?')) return;
+  if (p.nodos.length && p.borrador !== 'tentativo' && !confirm('Se reemplaza tu diagrama por un borrador nuevo armado con lo que contaste. Podés volver atrás con «Deshacer». ¿Seguimos?')) return;
+  if (p.nodos.length) hist.push(foto());
+  generar(p, true);
+}
+function pintarAviso() {
+  const box = $('#avisoBorrador'), p = P(); if (!box || !p) return;
+  if (generando.has(p.id)) box.innerHTML = '<div class="aviso">✨ <b>Armando el diagrama tentativo</b> con lo que contaste…</div>';
+  else if (p.borrador === 'tentativo') box.innerHTML = `<div class="aviso"><span>✨ <b>Diagrama tentativo</b>, armado${p.borradorIA ? ' con IA' : ''} a partir de lo que contaste. Revisalo: corregí los pasos, sumá lo que falte y borrá lo que sobre. Cuando lo cambies, deja de ser un borrador.</span></div>`;
+  else box.innerHTML = '';
 }
 
 /* ---------- vista ---------- */
@@ -787,7 +908,10 @@ function enlazarEditor() {
 
   $$('[data-f]').forEach((e) => e.addEventListener('input', () => {
     const p = P(); p[e.dataset.f] = e.value;
-    if (e.dataset.f === 'nombre') { const it = $(`#listaProc [data-p="${p.id}"] span`); if (it) it.textContent = e.value || 'Sin nombre'; }
+    const f = S.inventario.find((x) => x.id === p.desde);
+    const comun = { nombre: 'proceso', trigger: 'trigger', veces: 'veces', minutos: 'minutos', doble: 'doble', pesa: 'pesa', salida: 'salida', descripcion: 'desc' }[e.dataset.f];
+    if (f && comun) f[comun] = e.value;
+    if (e.dataset.f === 'nombre') { const it = $(`#listaProc [data-p="${p.id}"] .t1 span`); if (it) it.textContent = e.value || 'Sin nombre'; }
     horasProceso(); guardar();
   }));
 
@@ -926,7 +1050,6 @@ function enlazarEditor() {
 function avisos() {
   const out = [];
   const inv = S.inventario.filter((f) => f.proceso.trim());
-  if (!String(S.puesto.nombre || '').trim()) out.push(['mal', 'Falta tu nombre y apellido en «Mi puesto»: sin eso no se puede enviar.']);
   if (!S.puesto.entidad || !S.puesto.area) out.push(['mal', 'Completá el tipo de entidad y el área en «Mi puesto».']);
   out.push(inv.length ? ['ok', `Inventario: ${inv.length} procesos.`] : ['mal', 'El inventario está vacío: listá todos tus procesos en la pestaña 1.']);
   const con = S.procesos.filter((p) => p.nodos.length >= 2);
@@ -934,6 +1057,7 @@ function avisos() {
   S.procesos.forEach((p) => {
     const nom = `«${p.nombre || 'sin nombre'}»`;
     if (!p.nodos.length) { out.push(['mal', `${nom}: el diagrama está vacío.`]); return; }
+    if (p.borrador === 'tentativo') out.push(['mal', `${nom}: sigue siendo el borrador automático. Revisalo y corregilo para que muestre lo que hacés de verdad.`]);
     if (!p.nodos.some((n) => n.t === 'inicio')) out.push(['mal', `${nom}: falta el trigger (el círculo naranja donde empieza).`]);
     if (!p.nodos.some((n) => n.t === 'fin')) out.push(['mal', `${nom}: falta la salida (el doble círculo verde donde termina).`]);
     const sueltos = p.nodos.filter((n) => n.t !== 'nota' && !p.lineas.some((l) => l.de === n.id || l.a === n.id));
@@ -968,11 +1092,10 @@ function tokenCampus() {
   } catch (e) { return null; }
 }
 async function enviar() {
-  if (!String(S.puesto.nombre || '').trim()) { $('#resEnvio').innerHTML = '<div class="error"><b>Falta tu nombre.</b> Escribilo en la pestaña «Mi puesto y mis procesos» y volvé a enviar.</div>'; return; }
   const b = $('#btnEnviar'); b.disabled = true; b.textContent = 'Enviando…';
   const { nombre, ...puesto } = S.puesto;
   const cuerpo = {
-    codigo: S.codigo, nombre: String(nombre).trim(), puesto,
+    codigo: S.codigo, pase: S.pase || undefined, puesto,
     inventario: S.inventario.filter((f) => f.proceso.trim()).map(({ id, ...f }) => ({ ...f, star: !!f.star })),
     procesos: S.procesos.map(({ desde, ...p }) => p),
   };
@@ -992,7 +1115,7 @@ async function enviar() {
 window.addEventListener('beforeprint', () => {
   const inv = S.inventario.filter((f) => f.proceso.trim());
   const pz = S.puesto;
-  let h = `<div class="pg"><div class="eyebrow">Mapa AS-IS de mi puesto · ${esc(pz.nombre) || "sin nombre"}</div><h2>Inventario de procesos</h2>
+  let h = `<div class="pg"><div class="eyebrow">Mapa AS-IS de mi puesto</div><h2>Inventario de procesos</h2>
     <div class="meta"><div><b>Entidad</b>${esc(pz.entidad) || '—'}</div><div><b>Área</b>${esc(pz.area) || '—'}</div><div><b>Puesto</b>${esc(pz.puesto) || '—'}</div><div><b>Horas por día</b>${esc(pz.jornada) || '—'}</div></div>
     <table><thead><tr><th>★</th><th>Proceso</th><th>Trigger</th><th>Veces/mes</th><th>Min/vez</th><th>Herramientas</th><th>Doble carga</th><th>Pesa</th><th>h/mes</th></tr></thead><tbody>
     ${inv.map((f) => `<tr><td>${f.star ? '★' : ''}</td><td>${esc(f.proceso)}</td><td>${esc(f.trigger)}</td><td>${esc(f.veces)}</td><td>${esc(f.minutos)}</td><td>${esc(f.herr)}</td><td>${esc(f.doble)}</td><td>${esc(f.pesa)}</td><td>${num(f.veces) * num(f.minutos) ? fmt(num(f.veces) * num(f.minutos) / 60) : ''}</td></tr>`).join('')}
@@ -1017,7 +1140,7 @@ function alternarTema() {
 }
 (function () {
   let t = null; try { t = localStorage.getItem('hoja-asis-tema'); } catch (e) {}
-  aplicarTema(t || (matchMedia('(prefers-color-scheme: dark)').matches ? 'oscuro' : 'claro'));
+  aplicarTema(t || 'oscuro'); // como Mundo IEC
 })();
 // la impresión y el PDF salen siempre en claro
 let temaAntes = null;
@@ -1025,7 +1148,14 @@ window.addEventListener('beforeprint', () => { temaAntes = document.documentElem
 window.addEventListener('afterprint', () => { if (temaAntes) document.documentElement.dataset.tema = temaAntes; });
 
 /* =================== arranque =================== */
-if (tokenCampus()) $('#cuentaCampus').textContent = '✓ Tenés abierta tu sesión de Mundo IEC: el envío va con tu cuenta.';
+// el pase con que Mundo IEC abrió la actividad: se guarda y se saca de la dirección
+{
+  const m = location.hash.match(/pase=([A-Za-z0-9_.-]+)/);
+  if (m) { S.pase = m[1]; guardar(); history.replaceState(null, '', location.pathname + location.search); }
+}
+$('#cuentaCampus').textContent = S.pase || tokenCampus()
+  ? 'La abriste desde Mundo IEC: lo que envíes queda asociado a tu cuenta del campus.'
+  : 'Abrila desde Mundo IEC (en la clase) para que lo que envíes quede asociado a tu cuenta del campus.';
 pintarInventario();
 if (S.procesos.length && location.hash === '#diagramas') irA(2);
 </script>
