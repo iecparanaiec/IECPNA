@@ -19,7 +19,7 @@ IMPORTANTE: las comisiones 2026 ya terminaron o están en curso. Está abierta l
 2. Experto en IA · Nivel II. Agentes, asistentes personalizados, automatización y aplicación estratégica de IA. Intermedio–avanzado, laboratorio aplicado, 8 clases. Comisiones 2027: fechas a confirmar, preinscripción abierta. Detalle: /experto_ia_nivel_2
 3. Programador Experto con IA. Taller continuo de desarrollo de aplicaciones, webs, sistemas, bases de datos y automatizaciones con IA como copiloto. Jueves 18 a 22 h. Detalle: /programador_experto_ia
 4. Programador Teens con IA. Taller continuo para adolescentes: programación, videojuegos, diseño digital y proyectos con IA. Miércoles 14 a 16 h. Detalle: /programador_teens_ia
-5. Robótica Kids. Taller continuo para chicos y chicas: robótica educativa, circuitos, programación, diseño 3D e IA. Sábados 10 a 12 h. Detalle: /robotica_kids
+5. Robótica Kids. Taller para chicos y chicas: robótica educativa, circuitos, programación, diseño 3D e IA. TEMPORADA DE VERANO 2027: inicia la primera semana de enero; días y horarios a confirmar (consultar por WhatsApp de capacitaciones). Detalle: /robotica_kids
 6. QGIS Inicial. Sistemas de Información Geográfica: visualización, edición, análisis y cartografía. 8 clases, presencial o virtual. Comisiones 2027: fechas a confirmar. Detalle: /qgis
 7. WeekClass · De 0 a Producción. Semana intensiva: de la idea a una solución funcional con IA, diseño, programación y automatización. Próximas ediciones 2027: fechas a confirmar. Detalle: /weekendclass
 8. Revit + Inteligencia Artificial. Modelado BIM, documentación técnica y optimización de proyectos de arquitectura. Comisiones 2027: fechas a confirmar. Detalle: /revit_ia
