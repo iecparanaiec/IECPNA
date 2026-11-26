@@ -1145,3 +1145,7 @@ button { font: inherit; color: inherit; cursor: pointer; }
 .cio-place--3 { grid-template-columns: repeat(3, minmax(0, 1fr)); }
 @media (max-width: 900px) { .cafe { grid-template-columns: 1fr; } }
 @media (max-width: 560px) { .cafe__grid, .cio-place--3 { grid-template-columns: 1fr; } }
+.cafe-logo { display: flex; align-items: center; gap: 16px; margin: 12px 0 16px; }
+.cafe-logo__icon { width: clamp(64px, 7vw, 84px); height: auto; flex: none; filter: drop-shadow(0 0 18px rgba(34,211,238,.35)); }
+.cafe-logo__txt b { display: block; font-family: var(--display); font-weight: 700; font-size: clamp(40px, 4.6vw, 60px); letter-spacing: -.04em; line-height: .95; color: #fff; }
+.cafe-logo__txt small { display: inline-block; margin-top: 8px; padding: 4px 10px; border-radius: 999px; font-family: var(--mono); font-size: 10.5px; letter-spacing: .14em; text-transform: uppercase; color: #67e8f9; border: 1px solid rgba(34,211,238,.4); background: rgba(34,211,238,.08); }
