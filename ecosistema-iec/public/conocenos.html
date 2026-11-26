@@ -48,12 +48,12 @@ h2{font-family:Outfit,sans-serif;font-size:clamp(25px,6.5vw,34px);line-height:1.
 .io p{color:#cbd5e1;font-size:16.5px}
 .io p+p{margin-top:12px}
 .io b{color:#fff}
-.io__big{font-family:Outfit,sans-serif;font-size:24px!important;line-height:1.2;color:#fff!important;margin-bottom:4px}
-.io__big b{color:var(--cyan)!important}
-.io__tit{font-family:Outfit,sans-serif;font-weight:600;color:#fff!important}
-.suena{padding:20px;margin-top:12px}
+.iovid{display:block;width:100%;height:auto;aspect-ratio:1;border-radius:22px;border:1px solid var(--line);background:#05070d}
+.io__lead{color:#cbd5e1;font-size:17px;margin-top:14px;text-align:center}
+.io__lead b{color:#fff}
+.suena{padding:18px 20px;margin-top:16px}
 .suena h3{font-family:Outfit,sans-serif;font-size:21px}
-.suena__hint{color:var(--mut);font-size:14px;margin-top:2px}
+.suena h3 small{font-family:Inter,sans-serif;font-weight:400;font-size:14px;color:var(--mut);margin-left:6px}
 .suena ul{list-style:none;padding:0;display:grid;gap:8px;margin-top:12px}
 .suena button{width:100%;text-align:left;font:inherit;font-size:15.5px;color:#e2e8f0;background:rgba(255,255,255,.03);border:1px solid var(--line);border-radius:14px;padding:12px 14px 12px 46px;position:relative;cursor:pointer;transition:background .2s,border-color .2s}
 .suena button::before{content:"";position:absolute;left:14px;top:50%;width:20px;height:20px;margin-top:-10px;border-radius:7px;border:2px solid rgba(255,255,255,.25)}
@@ -63,12 +63,6 @@ h2{font-family:Outfit,sans-serif;font-size:clamp(25px,6.5vw,34px);line-height:1.
 .suena__res b{color:#fff}
 .suena__res.on{color:#fff}
 .suena__res .btn{margin-top:12px;width:100%}
-.claves{display:grid;gap:12px;margin-top:12px}
-.clave{display:flex;gap:14px;padding:16px 18px}
-.clave>span{font-size:24px;line-height:1.2}
-.clave b{font-family:Outfit,sans-serif;font-size:17px;display:block;color:#fff}
-.clave p{color:var(--mut);font-size:15px;margin-top:3px}
-@media (min-width:600px){.claves{grid-template-columns:1fr 1fr}}
 .ej{margin-top:12px;display:grid;gap:10px}
 .ej div{display:flex;gap:12px;align-items:flex-start;padding:12px 14px;border-radius:14px;background:rgba(34,211,238,.06);border:1px solid rgba(34,211,238,.15);font-size:15px;color:#dbeafe}
 .ej span{font-size:20px;line-height:1}
@@ -142,40 +136,19 @@ footer a{color:var(--cyan);text-decoration:none;font-weight:600}
 
   <section>
     <p class="kicker reveal">Qué es la IO</p>
-    <h2 class="reveal">La Inteligencia Operativa, en simples palabras</h2>
-    <div class="io glass reveal">
-      <p class="io__big">Tu empresa <b>ya sabe</b> cómo trabajar mejor.</p>
-      <p>Ese saber está en la cabeza de tu gente, en planillas y en chats de WhatsApp. La Inteligencia Operativa lo ordena y le suma tecnología: <b>lo repetitivo lo hace la máquina y tu equipo se dedica a lo que de verdad vale.</b></p>
-    </div>
+    <h2 class="reveal">La Inteligencia Operativa, en 20 segundos</h2>
+    <video class="iovid reveal" muted playsinline loop autoplay preload="metadata" poster="/video/io-en-20-segundos.jpg" width="720" height="720" aria-label="Video: qué es la Inteligencia Operativa. Tu empresa ya sabe cómo trabajar mejor, pero ese saber está desordenado. La IO lo ordena y la IA hace lo repetitivo. Menos tiempo, menos errores, mejores decisiones."><source src="/video/io-en-20-segundos.mp4" type="video/mp4"></video>
+    <p class="io__lead reveal">Ordenamos cómo trabaja tu empresa y sumamos IA para que <b>lo repetitivo lo haga la máquina</b> y tu equipo se dedique a lo que vale.</p>
 
     <div class="suena glass reveal" id="suena">
-      <h3>¿Te suena alguna?</h3>
-      <p class="suena__hint">Tocá las que pasan en tu empresa.</p>
+      <h3>¿Te suena? <small>Tocá las que te pasan</small></h3>
       <ul>
-        <li><button type="button" aria-pressed="false">Cargamos el mismo dato en dos o tres lugares.</button></li>
-        <li><button type="button" aria-pressed="false">Si falta una persona, nadie sabe cómo se hace su tarea.</button></li>
-        <li><button type="button" aria-pressed="false">Los errores se repiten siempre en el mismo paso.</button></li>
-        <li><button type="button" aria-pressed="false">Tenemos sistemas, pero no se hablan entre sí.</button></li>
-        <li><button type="button" aria-pressed="false">El equipo vive apagando incendios y no tiene tiempo para pensar.</button></li>
-        <li><button type="button" aria-pressed="false">Decidimos a ojo porque los números llegan tarde.</button></li>
+        <li><button type="button" aria-pressed="false">Cargamos el mismo dato varias veces.</button></li>
+        <li><button type="button" aria-pressed="false">Si falta alguien, nadie sabe cómo se hace.</button></li>
+        <li><button type="button" aria-pressed="false">Los errores se repiten siempre igual.</button></li>
+        <li><button type="button" aria-pressed="false">Decidimos a ojo, sin números.</button></li>
       </ul>
       <p class="suena__res" aria-live="polite">Si marcás dos o más, <b>la IO es para tu empresa.</b></p>
-    </div>
-
-    <div class="claves">
-      <div class="clave glass reveal"><span>🔍</span><div><b>Empezamos por tu gente, no por la tecnología</b><p>Los que hacen el trabajo saben dónde se pierde el tiempo. Con ellos mapeamos cómo se trabaja de verdad, no cómo dice el manual.</p></div></div>
-      <div class="clave glass reveal"><span>🔌</span><div><b>No cambiamos tus sistemas: los conectamos</b><p>Seguís con tu sistema de gestión, tus planillas y tu WhatsApp. Les sumamos IA y automatizaciones para que trabajen juntos.</p></div></div>
-      <div class="clave glass reveal"><span>🤝</span><div><b>La IA no reemplaza personas: las libera</b><p>Le saca a tu equipo la parte del trabajo que no necesita su cabeza, para que la use en atender, decidir y mejorar.</p></div></div>
-      <div class="clave glass reveal"><span>📈</span><div><b>Todo se mide</b><p>Antes y después: horas que se liberan, errores que se evitan y plata que se ahorra. Si no se nota, no sirve.</p></div></div>
-    </div>
-
-    <div class="io glass reveal" style="margin-top:12px">
-      <p class="io__tit">Así se ve en el día a día</p>
-      <div class="ej">
-        <div><span>💬</span>Un asistente que responde por WhatsApp y da turnos, con una persona supervisando.</div>
-        <div><span>🧾</span>Facturas que se cargan solas en el sistema con solo mandar una foto.</div>
-        <div><span>📊</span>Un tablero que muestra cuántas horas se liberaron y cuántos errores se evitaron.</div>
-      </div>
     </div>
   </section>
 
