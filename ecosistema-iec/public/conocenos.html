@@ -48,7 +48,28 @@ h2{font-family:Outfit,sans-serif;font-size:clamp(25px,6.5vw,34px);line-height:1.
 .io p{color:#cbd5e1;font-size:16.5px}
 .io p+p{margin-top:12px}
 .io b{color:#fff}
-.ej{margin-top:16px;display:grid;gap:10px}
+.io__big{font-family:Outfit,sans-serif;font-size:24px!important;line-height:1.2;color:#fff!important;margin-bottom:4px}
+.io__big b{color:var(--cyan)!important}
+.io__tit{font-family:Outfit,sans-serif;font-weight:600;color:#fff!important}
+.suena{padding:20px;margin-top:12px}
+.suena h3{font-family:Outfit,sans-serif;font-size:21px}
+.suena__hint{color:var(--mut);font-size:14px;margin-top:2px}
+.suena ul{list-style:none;padding:0;display:grid;gap:8px;margin-top:12px}
+.suena button{width:100%;text-align:left;font:inherit;font-size:15.5px;color:#e2e8f0;background:rgba(255,255,255,.03);border:1px solid var(--line);border-radius:14px;padding:12px 14px 12px 46px;position:relative;cursor:pointer;transition:background .2s,border-color .2s}
+.suena button::before{content:"";position:absolute;left:14px;top:50%;width:20px;height:20px;margin-top:-10px;border-radius:7px;border:2px solid rgba(255,255,255,.25)}
+.suena button[aria-pressed=true]{background:rgba(34,211,238,.1);border-color:rgba(34,211,238,.45);color:#fff}
+.suena button[aria-pressed=true]::before{background:var(--cyan);border-color:var(--cyan);content:"✓";color:#05070d;font-size:13px;font-weight:700;display:grid;place-items:center}
+.suena__res{margin-top:14px;color:#cbd5e1;font-size:15.5px}
+.suena__res b{color:#fff}
+.suena__res.on{color:#fff}
+.suena__res .btn{margin-top:12px;width:100%}
+.claves{display:grid;gap:12px;margin-top:12px}
+.clave{display:flex;gap:14px;padding:16px 18px}
+.clave>span{font-size:24px;line-height:1.2}
+.clave b{font-family:Outfit,sans-serif;font-size:17px;display:block;color:#fff}
+.clave p{color:var(--mut);font-size:15px;margin-top:3px}
+@media (min-width:600px){.claves{grid-template-columns:1fr 1fr}}
+.ej{margin-top:12px;display:grid;gap:10px}
 .ej div{display:flex;gap:12px;align-items:flex-start;padding:12px 14px;border-radius:14px;background:rgba(34,211,238,.06);border:1px solid rgba(34,211,238,.15);font-size:15px;color:#dbeafe}
 .ej span{font-size:20px;line-height:1}
 .pasos{display:grid;gap:12px;counter-reset:p}
@@ -123,8 +144,33 @@ footer a{color:var(--cyan);text-decoration:none;font-weight:600}
     <p class="kicker reveal">Qué es la IO</p>
     <h2 class="reveal">La Inteligencia Operativa, en simples palabras</h2>
     <div class="io glass reveal">
-      <p>Es usar la tecnología <b>donde de verdad ayuda</b>. Primero entendemos cómo trabaja tu equipo; después ordenamos el proceso y sumamos sistemas, automatizaciones o asistentes de IA a medida.</p>
-      <p>No vendemos "IA por moda": <b>se implementa, se acompaña y se mide</b>. Si no se nota en menos tiempo y menos errores, no sirve.</p>
+      <p class="io__big">Tu empresa <b>ya sabe</b> cómo trabajar mejor.</p>
+      <p>Ese saber está en la cabeza de tu gente, en planillas y en chats de WhatsApp. La Inteligencia Operativa lo ordena y le suma tecnología: <b>lo repetitivo lo hace la máquina y tu equipo se dedica a lo que de verdad vale.</b></p>
+    </div>
+
+    <div class="suena glass reveal" id="suena">
+      <h3>¿Te suena alguna?</h3>
+      <p class="suena__hint">Tocá las que pasan en tu empresa.</p>
+      <ul>
+        <li><button type="button" aria-pressed="false">Cargamos el mismo dato en dos o tres lugares.</button></li>
+        <li><button type="button" aria-pressed="false">Si falta una persona, nadie sabe cómo se hace su tarea.</button></li>
+        <li><button type="button" aria-pressed="false">Los errores se repiten siempre en el mismo paso.</button></li>
+        <li><button type="button" aria-pressed="false">Tenemos sistemas, pero no se hablan entre sí.</button></li>
+        <li><button type="button" aria-pressed="false">El equipo vive apagando incendios y no tiene tiempo para pensar.</button></li>
+        <li><button type="button" aria-pressed="false">Decidimos a ojo porque los números llegan tarde.</button></li>
+      </ul>
+      <p class="suena__res" aria-live="polite">Si marcás dos o más, <b>la IO es para tu empresa.</b></p>
+    </div>
+
+    <div class="claves">
+      <div class="clave glass reveal"><span>🔍</span><div><b>Empezamos por tu gente, no por la tecnología</b><p>Los que hacen el trabajo saben dónde se pierde el tiempo. Con ellos mapeamos cómo se trabaja de verdad, no cómo dice el manual.</p></div></div>
+      <div class="clave glass reveal"><span>🔌</span><div><b>No cambiamos tus sistemas: los conectamos</b><p>Seguís con tu sistema de gestión, tus planillas y tu WhatsApp. Les sumamos IA y automatizaciones para que trabajen juntos.</p></div></div>
+      <div class="clave glass reveal"><span>🤝</span><div><b>La IA no reemplaza personas: las libera</b><p>Le saca a tu equipo la parte del trabajo que no necesita su cabeza, para que la use en atender, decidir y mejorar.</p></div></div>
+      <div class="clave glass reveal"><span>📈</span><div><b>Todo se mide</b><p>Antes y después: horas que se liberan, errores que se evitan y plata que se ahorra. Si no se nota, no sirve.</p></div></div>
+    </div>
+
+    <div class="io glass reveal" style="margin-top:12px">
+      <p class="io__tit">Así se ve en el día a día</p>
       <div class="ej">
         <div><span>💬</span>Un asistente que responde por WhatsApp y da turnos, con una persona supervisando.</div>
         <div><span>🧾</span>Facturas que se cargan solas en el sistema con solo mandar una foto.</div>
@@ -221,5 +267,15 @@ footer a{color:var(--cyan);text-decoration:none;font-weight:600}
   </footer>
 </div>
 <div class="fab"><a class="btn btn--wa" href="https://wa.me/5493435301209?text=Hola%20IEC%2C%20nos%20conocimos%20en%20la%20ronda%20de%20negocios%20y%20quiero%20saber%20m%C3%A1s" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.5 14.4c-.3-.1-1.8-.9-2-1-.3-.1-.5-.1-.7.1-.2.3-.8 1-.9 1.2-.2.2-.3.2-.6.1-.3-.1-1.2-.5-2.3-1.4-.9-.8-1.4-1.7-1.6-2-.2-.3 0-.5.1-.6l.4-.5c.2-.2.2-.3.3-.5.1-.2 0-.4 0-.5l-.9-2.2c-.2-.6-.5-.5-.7-.5h-.6c-.2 0-.5.1-.8.4-.3.3-1 1-1 2.5s1.1 2.9 1.2 3.1c.1.2 2.1 3.2 5.1 4.5.7.3 1.3.5 1.7.6.7.2 1.4.2 1.9.1.6-.1 1.8-.7 2-1.4.2-.7.2-1.3.2-1.4-.1-.2-.3-.3-.6-.4zM12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm0 18.2c-1.5 0-3-.4-4.3-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2z"/></svg> WhatsApp IEC</a></div>
+<script>
+(function(){var box=document.getElementById('suena');if(!box)return;var res=box.querySelector('.suena__res');var bs=box.querySelectorAll('button');
+var WA='https://wa.me/5493435301209?text=';
+function upd(){var n=box.querySelectorAll('button[aria-pressed=true]').length;
+if(n===0){res.className='suena__res';res.innerHTML='Si marcás dos o más, <b>la IO es para tu empresa.</b>';return}
+if(n===1){res.className='suena__res';res.innerHTML='Marcaste 1. ¿Alguna más?';return}
+var t=encodeURIComponent('Hola IEC, vi la página de Inteligencia Operativa y en mi empresa nos pasan '+n+' de esas situaciones. Quiero saber cómo nos pueden ayudar.');
+res.className='suena__res on';res.innerHTML='Marcaste '+n+'. <b>Esto es justo lo que resuelve la Inteligencia Operativa.</b><a class="btn btn--wa" target="_blank" rel="noopener" href="'+WA+t+'">Quiero resolverlo · WhatsApp</a>'}
+for(var i=0;i<bs.length;i++)bs[i].addEventListener('click',function(){this.setAttribute('aria-pressed',this.getAttribute('aria-pressed')==='true'?'false':'true');upd()});})();
+</script>
 </body>
 </html>
