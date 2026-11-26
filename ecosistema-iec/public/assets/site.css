@@ -1042,3 +1042,11 @@ button { font: inherit; color: inherit; cursor: pointer; }
   .hero-phone__sound { right: 16px; bottom: 16px; }
 }
 @media (prefers-reduced-motion: reduce) { .hero-phone__shell, .hero-phone::before { animation: none; } }
+
+/* Capacitaciones 2027: que el bloque lateral no se desborde en celulares */
+.last-call__body > * { min-width: 0; }
+.countdown__grid { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+.countdown__grid div { min-width: 0; }
+.countdown__grid span { overflow-wrap: anywhere; }
+@media (max-width: 560px) { .countdown__grid span { font-size: 10px; letter-spacing: .04em; } }
+@media (hover: none) { .lc-course:hover { transform: none; } }
