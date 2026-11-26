@@ -109,7 +109,7 @@ details.datos .g4{margin-top:8px}
 .f-nota{fill:#FEF9C3;stroke:#CA8A04}
 .nodo.sel .forma{stroke-width:3.5}
 .selbox{fill:none;stroke:#2DD4BF;stroke-width:1.5;stroke-dasharray:5 4;pointer-events:none}
-.tx{width:100%;height:100%;display:flex;align-items:center;justify-content:center;text-align:center;font:500 13.5px/1.25 Inter,system-ui,sans-serif;color:#0F172A;overflow:hidden;word-break:break-word;padding:2px}
+.tx{width:100%;height:100%;display:flex;align-items:center;justify-content:center;text-align:center;font:500 13.5px/1.25 Inter,system-ui,sans-serif;color:var(--ink);overflow:hidden;word-break:break-word;padding:2px}
 .tx.izq{justify-content:flex-start;align-items:flex-start;text-align:left;font-size:12.5px}
 .tx .ph{color:#94A3B8;font-weight:400;font-style:italic;font-size:12px}
 .h-con{fill:#fff;stroke:#0E9F8E;stroke-width:2;opacity:0;cursor:crosshair;transition:opacity .12s}
@@ -136,6 +136,53 @@ details.datos .g4{margin-top:8px}
 .enviado{margin-top:12px;padding:12px 14px;border-radius:10px;background:#ECFDF8;border:1px solid #B5EDE2;color:#0B6E62;max-width:900px}
 .error{margin-top:12px;padding:12px 14px;border-radius:10px;background:#FFF1F3;border:1px solid #F7C4CF;color:#BE3455;max-width:900px}
 #imprimir{display:none}
+/* ---------- modo oscuro ---------- */
+html[data-tema="oscuro"]{--ink:#E2E8F0;--muted:#94A3B8;--line:#273247;--soft:#141C2E;--bg:#070B16;color-scheme:dark}
+html[data-tema="oscuro"] body{background:var(--bg);color:var(--ink)}
+html[data-tema="oscuro"] .panel,html[data-tema="oscuro"] .tab.on{background:#0D1424;color:var(--ink)}
+html[data-tema="oscuro"] .tab{color:var(--muted)}
+html[data-tema="oscuro"] .tab .n{background:#273247;color:var(--ink)}
+html[data-tema="oscuro"] .tab.on .n{background:var(--teal2);color:#04121A}
+html[data-tema="oscuro"] input,html[data-tema="oscuro"] select,html[data-tema="oscuro"] textarea{background:#0A1020;color:var(--ink);border-color:var(--line)}
+html[data-tema="oscuro"] td input,html[data-tema="oscuro"] td select,html[data-tema="oscuro"] td textarea{background:transparent}
+html[data-tema="oscuro"] th{border-bottom-color:#64748B}
+html[data-tema="oscuro"] button{background:var(--soft);color:var(--ink)}
+html[data-tema="oscuro"] button.pri{background:var(--teal2);color:#04121A}
+html[data-tema="oscuro"] button.osc{background:rgba(255,255,255,.1);color:#fff}
+html[data-tema="oscuro"] .peligro{color:#FB7185}
+html[data-tema="oscuro"] .sim,html[data-tema="oscuro"] .ico,html[data-tema="oscuro"] .lista .chip,html[data-tema="oscuro"] .insp,html[data-tema="oscuro"] .zoom{background:#0F172A;border-color:var(--line);color:var(--ink)}
+html[data-tema="oscuro"] .ico.on{background:var(--teal2);color:#04121A;border-color:var(--teal2)}
+html[data-tema="oscuro"] .insp .fila button{background:#1E293B}
+html[data-tema="oscuro"] .insp .fila button.on{background:#F59E0B;color:#1A1204}
+html[data-tema="oscuro"] .insp .fila button.tipo.on{background:var(--teal2);color:#04121A}
+html[data-tema="oscuro"] .zoom button{background:transparent}
+html[data-tema="oscuro"] .lista .it{background:#111A2C}
+html[data-tema="oscuro"] .lista .it.on{background:rgba(45,212,191,.12)}
+html[data-tema="oscuro"] .ayuda{background:rgba(13,20,36,.92);border-color:var(--line)}
+html[data-tema="oscuro"] .lienzo,html[data-tema="oscuro"] .res .card svg{background:#0A0F1C}
+html[data-tema="oscuro"] .punto{fill:#24304A}
+html[data-tema="oscuro"] #editor{background:#0F172A;color:var(--ink)}
+html[data-tema="oscuro"] .anon,html[data-tema="oscuro"] .alerta.ok,html[data-tema="oscuro"] .enviado,html[data-tema="oscuro"] .chk li.ok{background:rgba(45,212,191,.1);border-color:rgba(45,212,191,.3);color:#99F6E4}
+html[data-tema="oscuro"] .alerta.mal,html[data-tema="oscuro"] .error{background:rgba(251,113,133,.1);border-color:rgba(251,113,133,.3);color:#FDA4AF}
+html[data-tema="oscuro"] .chk li{background:#111A2C}
+html[data-tema="oscuro"] .chk li.mal{background:rgba(245,158,11,.1);color:#FCD34D}
+html[data-tema="oscuro"] .ex td{background:rgba(45,212,191,.07);color:#99F6E4}
+html[data-tema="oscuro"] details.datos,html[data-tema="oscuro"] .res .card{border-color:var(--line)}
+html[data-tema="oscuro"] .f-inicio{fill:#3A2A0C;stroke:#F59E0B}
+html[data-tema="oscuro"] .f-paso{fill:#16213A;stroke:#CBD5E1}
+html[data-tema="oscuro"] .f-decision{fill:#0C2A40;stroke:#38BDF8}
+html[data-tema="oscuro"] .f-espera{fill:#3A1020;stroke:#FB7185}
+html[data-tema="oscuro"] .f-documento{fill:#24154A;stroke:#A78BFA}
+html[data-tema="oscuro"] .f-fin{fill:#0B3330;stroke:#2DD4BF}
+html[data-tema="oscuro"] .f-nota{fill:#3A330C;stroke:#EAB308}
+html[data-tema="oscuro"] .tx{color:#E2E8F0}
+html[data-tema="oscuro"] .tx .ph{color:#64748B}
+html[data-tema="oscuro"] .h-con{fill:#0F172A}
+html[data-tema="oscuro"] .linea path.v{stroke:#94A3B8}
+html[data-tema="oscuro"] .punta{fill:#94A3B8}
+html[data-tema="oscuro"] .linea.sel path.v{stroke:#2DD4BF}
+html[data-tema="oscuro"] .linea rect.et{fill:#0F172A;stroke:#334155}
+html[data-tema="oscuro"] .linea text{fill:#E2E8F0}
 @media (max-width:860px){.dia{grid-template-columns:1fr}.g4{grid-template-columns:1fr 1fr}.tblw{overflow-x:auto}.tblw table{min-width:860px}.insp{position:static;width:auto;margin-top:8px}}
 @media print{
   @page{size:A4 landscape;margin:10mm}
@@ -155,7 +202,8 @@ details.datos .g4{margin-top:8px}
 <body>
 <div class="top">
   <b>Mapa AS-IS de mi puesto</b>
-  <span class="est" id="est">Comisión FEMER · anónimo</span>
+  <span class="est" id="est">Comisión FEMER</span>
+  <button class="osc" id="temaBtn" onclick="alternarTema()" title="Cambiar entre modo claro y oscuro">☾ Oscuro</button>
   <button class="osc" onclick="window.print()">Imprimir o PDF</button>
   <button class="pri" onclick="irA(3)">Enviar para análisis →</button>
 </div>
@@ -170,9 +218,13 @@ details.datos .g4{margin-top:8px}
   <div class="eyebrow">Experto en IA Nivel I · Estaciones 2 y 3</div>
   <h1>Cómo trabajo hoy, tal cual es</h1>
   <p class="help">Primero listá todos tus procesos. Después, en <b>Diagramas</b>, dibujá cómo es cada uno (como mínimo, los 3 que más tiempo te llevan o más te pesan) y al final envialo para el análisis.</p>
-  <p class="anon"><b>Es anónimo:</b> no pongas tu nombre. Tampoco datos reales de afiliados (nombres, DNI, diagnósticos): usá ejemplos inventados. Lo que escribís queda guardado en esta compu.</p>
+  <p class="anon"><b>Tu nombre queda registrado</b> para el seguimiento del curso y lo ve solo el docente. En los análisis que se muestran al grupo no aparecen nombres. No pongas datos reales de afiliados (nombres, DNI, diagnósticos): usá ejemplos inventados. Lo que escribís queda guardado en esta compu.</p>
 
   <h2>Mi puesto</h2>
+  <div class="g4" style="margin-bottom:8px">
+    <label class="c" style="grid-column:span 2">Nombre y apellido (obligatorio)<input data-k="nombre" maxlength="120" autocomplete="name" placeholder="ej.: Ana Pérez"></label>
+    <p class="help" id="cuentaCampus" style="grid-column:span 2;align-self:end;margin:0"></p>
+  </div>
   <div class="g4">
     <label class="c">Tipo de entidad
       <select data-k="entidad"><option></option><option>Federación</option><option>Círculo o colegio médico</option><option>Mutual</option><option>Hospital o clínica</option><option>Otra</option></select></label>
@@ -218,7 +270,7 @@ details.datos .g4{margin-top:8px}
 <section class="panel" id="p3" hidden>
   <div class="eyebrow">Último paso</div>
   <h1>Revisar y enviar para el análisis</h1>
-  <p class="help">Se envía sin tu nombre. Si después cambiás algo, volvé a enviarlo: se actualiza el mismo envío, no se duplica.</p>
+  <p class="help">Se envía con tu nombre, que ve solo el docente. Si después cambiás algo, volvé a enviarlo: se actualiza el mismo envío, no se duplica.</p>
   <ul class="chk" id="chk"></ul>
   <div class="res" id="resumen"></div>
   <div style="margin-top:14px;display:flex;gap:8px;flex-wrap:wrap">
@@ -425,8 +477,8 @@ function abrirProceso(id) {
     <div class="lienzo" id="lienzo">
       <svg id="svg" xmlns="http://www.w3.org/2000/svg">
         <defs>
-          <pattern id="gr" width="20" height="20" patternUnits="userSpaceOnUse"><circle cx="1" cy="1" r="1" fill="#D5DBE5"/></pattern>
-          <marker id="fl" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="9" markerHeight="9" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#475569"/></marker>
+          <pattern id="gr" width="20" height="20" patternUnits="userSpaceOnUse"><circle class="punto" cx="1" cy="1" r="1" fill="#D5DBE5"/></pattern>
+          <marker id="fl" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="9" markerHeight="9" orient="auto-start-reverse"><path class="punta" d="M0 0L10 5L0 10z" fill="#475569"/></marker>
           <marker id="flSel" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="9" markerHeight="9" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#0E9F8E"/></marker>
         </defs>
         <g id="vista"><rect id="fondo" x="-20000" y="-20000" width="40000" height="40000" fill="url(#gr)"/><g id="gLineas"></g><g id="gNodos"></g><g id="gTemp"></g></g>
@@ -874,6 +926,7 @@ function enlazarEditor() {
 function avisos() {
   const out = [];
   const inv = S.inventario.filter((f) => f.proceso.trim());
+  if (!String(S.puesto.nombre || '').trim()) out.push(['mal', 'Falta tu nombre y apellido en «Mi puesto»: sin eso no se puede enviar.']);
   if (!S.puesto.entidad || !S.puesto.area) out.push(['mal', 'Completá el tipo de entidad y el área en «Mi puesto».']);
   out.push(inv.length ? ['ok', `Inventario: ${inv.length} procesos.`] : ['mal', 'El inventario está vacío: listá todos tus procesos en la pestaña 1.']);
   const con = S.procesos.filter((p) => p.nodos.length >= 2);
@@ -899,26 +952,37 @@ function miniSVG(p, alto = 160) {
   sel = prevSel; selLinea = prevL;
   // cada miniatura con su propia punta de flecha: las del lienzo no se ven si su pestaña está oculta
   const fid = 'fm' + uid();
-  return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="${b.x - m} ${b.y - m} ${b.w + m * 2} ${b.h + m * 2}" preserveAspectRatio="xMidYMid meet"><defs><marker id="${fid}" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="9" markerHeight="9" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#475569"/></marker></defs>${cuerpo.replace(/<circle class="h-con"[^>]*\/>/g, '').replace(/url\(#fl\)/g, `url(#${fid})`)}</svg>`;
+  return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="${b.x - m} ${b.y - m} ${b.w + m * 2} ${b.h + m * 2}" preserveAspectRatio="xMidYMid meet"><defs><marker id="${fid}" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="9" markerHeight="9" orient="auto-start-reverse"><path class="punta" d="M0 0L10 5L0 10z" fill="#475569"/></marker></defs>${cuerpo.replace(/<circle class="h-con"[^>]*\/>/g, '').replace(/url\(#fl\)/g, `url(#${fid})`)}</svg>`;
 }
 function pintarRevision() {
   $('#chk').innerHTML = avisos().map(([c, t]) => `<li class="${c}">${c === 'ok' ? '✓' : '!'} ${esc(t)}</li>`).join('');
   $('#resumen').innerHTML = S.procesos.map((p) => `<div class="card"><b>${esc(p.nombre) || '<i>Sin nombre</i>'}</b><div style="font-size:11px;color:var(--muted)">${p.nodos.length} símbolos · ${p.lineas.length} flechas${num(p.veces) && num(p.minutos) ? ` · ${fmt(num(p.veces) * num(p.minutos) / 60)} h/mes` : ''}</div>${miniSVG(p)}</div>`).join('');
   $('#resEnvio').innerHTML = S.enviado ? `<div class="enviado">✓ Enviado el ${new Date(S.enviado).toLocaleString('es-AR', { dateStyle: 'short', timeStyle: 'short' })}. Si cambiaste algo después, enviálo de nuevo y se actualiza.</div>` : '';
 }
+/** Si la persona tiene abierta su sesión de Mundo IEC en este navegador, el envío va con su cuenta. */
+function tokenCampus() {
+  try {
+    const s = JSON.parse(localStorage.getItem('mundo-iec-auth') || 'null');
+    const t = s?.access_token || s?.currentSession?.access_token;
+    return t && (!s.expires_at || s.expires_at * 1000 > Date.now()) ? t : null;
+  } catch (e) { return null; }
+}
 async function enviar() {
+  if (!String(S.puesto.nombre || '').trim()) { $('#resEnvio').innerHTML = '<div class="error"><b>Falta tu nombre.</b> Escribilo en la pestaña «Mi puesto y mis procesos» y volvé a enviar.</div>'; return; }
   const b = $('#btnEnviar'); b.disabled = true; b.textContent = 'Enviando…';
+  const { nombre, ...puesto } = S.puesto;
   const cuerpo = {
-    codigo: S.codigo, puesto: S.puesto,
+    codigo: S.codigo, nombre: String(nombre).trim(), puesto,
     inventario: S.inventario.filter((f) => f.proceso.trim()).map(({ id, ...f }) => ({ ...f, star: !!f.star })),
     procesos: S.procesos.map(({ desde, ...p }) => p),
   };
   try {
-    const r = await fetch(`/api/campus/formularios/${FORMULARIO}/mapa`, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(cuerpo) });
+    const tk = tokenCampus();
+    const r = await fetch(`/api/campus/formularios/${FORMULARIO}/mapa`, { method: 'POST', headers: { 'Content-Type': 'application/json', ...(tk ? { Authorization: 'Bearer ' + tk } : {}) }, body: JSON.stringify(cuerpo) });
     const j = await r.json().catch(() => ({}));
     if (!r.ok) throw new Error(j.error || 'No se pudo enviar.');
     S.enviado = new Date().toISOString(); guardar(); pintarRevision();
-    $('#resEnvio').innerHTML = `<div class="enviado"><b>${j.actualizado ? '✓ Actualizado.' : '✓ ¡Enviado!'}</b> Tu mapa llegó para el análisis, sin tu nombre. Si cambiás algo, volvé a enviarlo y se actualiza.</div>`;
+    $('#resEnvio').innerHTML = `<div class="enviado"><b>${j.actualizado ? '✓ Actualizado.' : '✓ ¡Enviado!'}</b> Tu mapa llegó para el análisis. Si cambiás algo, volvé a enviarlo y se actualiza.</div>`;
   } catch (e) {
     $('#resEnvio').innerHTML = `<div class="error"><b>No se pudo enviar.</b> ${esc(e.message)} Probá de nuevo; si sigue fallando, usá «Imprimir o guardar en PDF» y entregalo en clase.</div>`;
   } finally { b.disabled = false; b.textContent = 'Enviar para análisis'; }
@@ -928,7 +992,7 @@ async function enviar() {
 window.addEventListener('beforeprint', () => {
   const inv = S.inventario.filter((f) => f.proceso.trim());
   const pz = S.puesto;
-  let h = `<div class="pg"><div class="eyebrow">Mapa AS-IS de mi puesto · anónimo</div><h2>Inventario de procesos</h2>
+  let h = `<div class="pg"><div class="eyebrow">Mapa AS-IS de mi puesto · ${esc(pz.nombre) || "sin nombre"}</div><h2>Inventario de procesos</h2>
     <div class="meta"><div><b>Entidad</b>${esc(pz.entidad) || '—'}</div><div><b>Área</b>${esc(pz.area) || '—'}</div><div><b>Puesto</b>${esc(pz.puesto) || '—'}</div><div><b>Horas por día</b>${esc(pz.jornada) || '—'}</div></div>
     <table><thead><tr><th>★</th><th>Proceso</th><th>Trigger</th><th>Veces/mes</th><th>Min/vez</th><th>Herramientas</th><th>Doble carga</th><th>Pesa</th><th>h/mes</th></tr></thead><tbody>
     ${inv.map((f) => `<tr><td>${f.star ? '★' : ''}</td><td>${esc(f.proceso)}</td><td>${esc(f.trigger)}</td><td>${esc(f.veces)}</td><td>${esc(f.minutos)}</td><td>${esc(f.herr)}</td><td>${esc(f.doble)}</td><td>${esc(f.pesa)}</td><td>${num(f.veces) * num(f.minutos) ? fmt(num(f.veces) * num(f.minutos) / 60) : ''}</td></tr>`).join('')}
@@ -942,7 +1006,26 @@ window.addEventListener('beforeprint', () => {
   $('#imprimir').innerHTML = h;
 });
 
+/* =================== tema claro / oscuro =================== */
+function aplicarTema(t) {
+  document.documentElement.dataset.tema = t;
+  $('#temaBtn').textContent = t === 'oscuro' ? '☀ Claro' : '☾ Oscuro';
+}
+function alternarTema() {
+  const t = document.documentElement.dataset.tema === 'oscuro' ? 'claro' : 'oscuro';
+  aplicarTema(t); try { localStorage.setItem('hoja-asis-tema', t); } catch (e) {}
+}
+(function () {
+  let t = null; try { t = localStorage.getItem('hoja-asis-tema'); } catch (e) {}
+  aplicarTema(t || (matchMedia('(prefers-color-scheme: dark)').matches ? 'oscuro' : 'claro'));
+})();
+// la impresión y el PDF salen siempre en claro
+let temaAntes = null;
+window.addEventListener('beforeprint', () => { temaAntes = document.documentElement.dataset.tema; document.documentElement.dataset.tema = 'claro'; });
+window.addEventListener('afterprint', () => { if (temaAntes) document.documentElement.dataset.tema = temaAntes; });
+
 /* =================== arranque =================== */
+if (tokenCampus()) $('#cuentaCampus').textContent = '✓ Tenés abierta tu sesión de Mundo IEC: el envío va con tu cuenta.';
 pintarInventario();
 if (S.procesos.length && location.hash === '#diagramas') irA(2);
 </script>
