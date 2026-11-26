@@ -1,0 +1,305 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Hoja de relevamiento AS-IS</title>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{--ink:#0F172A;--muted:#5B6478;--line:#D9DEE8;--soft:#F4F6FA;--teal:#0E9F8E;--teal2:#2DD4BF;--amber:#C27803;--rose:#BE3455;--bg:#E9EDF3}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--bg);color:var(--ink);font-family:Inter,system-ui,Segoe UI,Arial,sans-serif;font-size:13px;line-height:1.4}
+h1,h2,h3{font-family:'Space Grotesk',sans-serif;letter-spacing:-.01em}
+.bar{position:sticky;top:0;z-index:5;display:flex;flex-wrap:wrap;gap:8px;align-items:center;padding:10px 16px;background:#0B1224;color:#fff}
+.bar b{font-family:'Space Grotesk';font-size:15px;margin-right:auto}
+.bar span{font-size:12px;color:#93A0C0}
+button{font:inherit;cursor:pointer;border:0;border-radius:8px;padding:8px 14px;background:var(--teal2);color:#04121A;font-weight:600}
+button.sec{background:rgba(255,255,255,.1);color:#fff}
+button.add{background:var(--soft);color:var(--ink);border:1px dashed #AEB7C7;margin-top:8px}
+.page{width:210mm;max-width:100%;margin:16px auto;background:#fff;padding:14mm 13mm;box-shadow:0 10px 30px -12px rgba(15,23,42,.25)}
+.eyebrow{font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:var(--teal);font-weight:600}
+h1{font-size:26px;margin:2px 0 4px}
+.lead{color:var(--muted);font-size:12.5px;max-width:160mm}
+.anon{margin-top:8px;padding:8px 10px;border-radius:8px;background:#ECFDF8;border:1px solid #B5EDE2;font-size:12px}
+h2{font-size:17px;margin:18px 0 4px;display:flex;align-items:baseline;gap:10px}
+h2 small{font-family:Inter;font-size:11.5px;font-weight:500;color:var(--muted)}
+.help{font-size:11.5px;color:var(--muted);margin-bottom:8px}
+.grid{display:grid;gap:8px 12px}
+.g4{grid-template-columns:repeat(4,1fr)}.g3{grid-template-columns:repeat(3,1fr)}.g2{grid-template-columns:1fr 1fr}
+label{display:flex;flex-direction:column;gap:3px;font-size:10.5px;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:.05em}
+label.full{grid-column:1/-1}
+input,select,textarea{font:inherit;font-size:12.5px;color:var(--ink);border:1px solid var(--line);border-radius:6px;padding:5px 7px;background:#fff;width:100%;text-transform:none;letter-spacing:0;font-weight:400}
+textarea{resize:vertical;min-height:38px}
+input:focus,select:focus,textarea:focus{outline:2px solid rgba(45,212,191,.45);border-color:var(--teal)}
+table{width:100%;border-collapse:collapse}
+th{font-size:9.5px;text-transform:uppercase;letter-spacing:.05em;color:var(--muted);text-align:left;padding:5px 4px;border-bottom:1.5px solid var(--ink);font-weight:600;vertical-align:bottom}
+td{border-bottom:1px solid var(--line);padding:3px 3px;vertical-align:top}
+td input,td select,td textarea{border:0;border-radius:4px;padding:4px 4px;background:transparent}
+td input:hover,td textarea:hover,td select:hover{background:var(--soft)}
+td.n{width:22px;color:var(--muted);font-size:11px;padding-top:7px;text-align:center}
+td.star{width:26px;text-align:center}
+td.star input{width:16px;height:16px;margin-top:5px;accent-color:#F59E0B}
+td.h{width:52px;text-align:right;font-family:'Space Grotesk';font-weight:600;padding-top:7px}
+td textarea{min-height:28px;height:28px}
+.ex td{color:#0B6E62;background:#F0FBF8;font-size:11.5px;padding:5px 4px}
+.tot{display:flex;flex-wrap:wrap;gap:10px;align-items:center;margin-top:10px;padding:10px 12px;border-radius:8px;background:var(--soft)}
+.tot .k{font-family:'Space Grotesk';font-size:20px;font-weight:700}
+.tot .l{font-size:11px;color:var(--muted)}
+.alerta{flex-basis:100%;font-size:12px;padding:7px 10px;border-radius:6px;display:none}
+.alerta.on{display:block}
+.alerta.mal{background:#FFF1F3;border:1px solid #F7C4CF;color:var(--rose)}
+.alerta.ok{background:#ECFDF8;border:1px solid #B5EDE2;color:#0B6E62}
+.ficha{border:1.5px solid var(--ink);border-radius:10px;padding:12px 12px 10px;margin-top:12px}
+.ficha h3{font-size:15px;display:flex;align-items:center;gap:8px;margin-bottom:8px}
+.ficha h3 .num{display:inline-grid;place-items:center;width:24px;height:24px;border-radius:50%;background:#F59E0B;color:#1A1204;font-size:13px}
+.sub{font-size:10.5px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--teal);margin:12px 0 4px}
+.fr{display:flex;flex-wrap:wrap;gap:6px}
+.fr label{flex-direction:row;align-items:center;gap:5px;text-transform:none;letter-spacing:0;font-weight:500;font-size:12px;color:var(--ink);border:1px solid var(--line);border-radius:999px;padding:4px 10px;cursor:pointer}
+.fr label b{display:inline-grid;place-items:center;width:18px;height:18px;border-radius:5px;background:#F59E0B;color:#1A1204;font-size:11px}
+.fr input{width:auto;accent-color:#F59E0B}
+.dibujo{border:1.5px dashed #AEB7C7;border-radius:8px;height:55mm;position:relative;background-image:radial-gradient(#D9DEE8 1px,transparent 1px);background-size:6mm 6mm}
+.dibujo span{position:absolute;left:8px;top:6px;font-size:10.5px;color:var(--muted)}
+.simbolos{display:flex;flex-wrap:wrap;gap:12px;font-size:11px;color:var(--muted);margin-top:4px;align-items:center}
+.simbolos svg{width:26px;height:18px;vertical-align:middle;margin-right:3px}
+.pie{margin-top:14px;font-size:10.5px;color:var(--muted);border-top:1px solid var(--line);padding-top:8px}
+.guardado{font-size:11px;color:#93A0C0}
+@media (max-width:640px){.page{padding:16px}.g4,.g3{grid-template-columns:1fr 1fr}.tblwrap{overflow-x:auto}.tblwrap table{min-width:720px}}
+@media print{
+  @page{size:A4;margin:10mm}
+  body{background:#fff}
+  .bar,.noprint,button.add{display:none!important}
+  .page{margin:0;padding:0;box-shadow:none;width:auto}
+  .page+.page{break-before:page}
+  input,select,textarea{border-color:#C9D0DC}
+  td input,td textarea,td select{border:0}
+  textarea{resize:none;overflow:hidden}
+  .alerta{display:none!important}
+}
+</style>
+</head>
+<body>
+<div class="bar">
+  <b>Hoja de relevamiento AS-IS · Comisión FEMER</b>
+  <span class="guardado" id="guardado"></span>
+  <button class="sec" onclick="if(confirm('¿Borrar todo lo que completaste en esta hoja?')){borrar()}">Empezar de cero</button>
+  <button onclick="window.print()">Imprimir o guardar en PDF</button>
+</div>
+
+<!-- ============ PÁGINA 1 · INVENTARIO ============ -->
+<div class="page">
+  <div class="eyebrow">Experto en IA Nivel I · Estaciones 2 y 3</div>
+  <h1>El mapa AS-IS de mi puesto</h1>
+  <p class="lead">Cómo trabajo hoy, tal cual es. Primero listo todos mis procesos (Parte 1) y después mapeo en detalle los 3 que más tiempo me llevan o más me pesan (Parte 2).</p>
+  <p class="anon"><b>Es anónimo:</b> no pongas tu nombre. Tampoco datos reales de afiliados (nombres, DNI, diagnósticos): usá ejemplos inventados.</p>
+
+  <h2>Mi puesto</h2>
+  <div class="grid g4">
+    <label>Tipo de entidad
+      <select data-k="entidad"><option></option><option>Federación</option><option>Círculo o colegio médico</option><option>Mutual</option><option>Hospital o clínica</option><option>Otra</option></select>
+    </label>
+    <label>Área
+      <select data-k="area"><option></option><option>Facturación y liquidación</option><option>Auditoría y débitos</option><option>Tesorería y bancos</option><option>Administración general</option><option>Gerencia</option><option>Atención a prestadores o afiliados</option><option>Otra</option></select>
+    </label>
+    <label>Mi puesto (sin nombre)<input data-k="puesto" placeholder="ej.: administrativo de facturación"></label>
+    <label>Horas de trabajo por día<input data-k="jornada" type="number" min="1" max="12" step="0.5" placeholder="ej.: 6"></label>
+  </div>
+
+  <h2>Parte 1 · Inventario de todos mis procesos <small>≈ 25 min</small></h2>
+  <p class="help">Una línea por proceso. Revisá tu correo, tu WhatsApp, tus planillas y el calendario para no olvidarte de ninguno, incluidos los del cierre o de una vez al año. Si algo pasa todos los días, «veces por mes» es × 20. Marcá con ★ los 3 que más te llevan o más te pesan.</p>
+  <div class="tblwrap">
+  <table id="inv">
+    <thead><tr><th>★</th><th>#</th><th style="width:24%">Proceso</th><th style="width:24%">Trigger · qué lo hace arrancar</th><th style="width:8%">Veces por mes</th><th style="width:7%">Min por vez</th><th style="width:16%">Herramientas</th><th style="width:8%">¿Doble carga?</th><th style="width:7%">Pesa 1–5</th><th style="text-align:right">h/mes</th></tr></thead>
+    <tbody>
+      <tr class="ex"><td>★</td><td></td><td>Ejemplo: controlar órdenes de prestaciones</td><td>Llegan las órdenes en papel, del 1 al 10</td><td>600</td><td>3</td><td>Papel, sistema, Excel</td><td>Sí</td><td>5</td><td style="text-align:right">30</td></tr>
+    </tbody>
+    <tbody id="filas"></tbody>
+  </table>
+  </div>
+  <button class="add" onclick="agregarFila(); guardar()">+ Agregar otro proceso</button>
+  <div class="tot">
+    <div><div class="k" id="tProc">0</div><div class="l">procesos</div></div>
+    <div><div class="k" id="tHoras">0</div><div class="l">horas por mes en total</div></div>
+    <div><div class="k" id="tJor">—</div><div class="l">horas de tu jornada por mes</div></div>
+    <div><div class="k" id="tEst">0</div><div class="l">marcados con ★</div></div>
+    <div class="alerta" id="alerta"></div>
+  </div>
+  <p class="pie">h/mes = veces por mes × minutos por vez ÷ 60. Si es una estimación está bien: la semana que viene medimos los 3 elegidos con reloj.</p>
+</div>
+
+<!-- ============ PÁGINAS 2–4 · FICHAS ============ -->
+<div id="fichas"></div>
+
+<template id="tFicha">
+<div class="page">
+  <div class="eyebrow">Parte 2 · Mapa AS-IS · ≈ 13 min por proceso</div>
+  <div class="ficha">
+    <h3><span class="num"></span><input data-f="nombre" placeholder="Nombre del proceso (uno de los marcados con ★)" style="font-family:'Space Grotesk';font-size:15px;font-weight:600;border:0;border-bottom:1px solid var(--line);border-radius:0"></h3>
+
+    <div class="sub">1 · Inicio y fin</div>
+    <div class="grid g2">
+      <label class="full">Trigger: qué llega o qué pasa, de quién, por dónde y cuándo<input data-f="trigger" placeholder="ej.: llega por mail el listado de prestaciones de la obra social, el día 2 de cada mes"></label>
+      <label>Entradas: con qué trabajo<input data-f="entradas" placeholder="ej.: órdenes en papel, listado en Excel"></label>
+      <label>Salida: qué entrego y a quién<input data-f="salida" placeholder="ej.: factura presentada a la obra social"></label>
+    </div>
+
+    <div class="sub">2 · Los pasos, en orden <span style="text-transform:none;letter-spacing:0;font-weight:500;color:var(--muted)">· verbo + qué + con qué · fricciones: P papel, R repetitivo, M carga manual, D doble carga, E error o rebote, X espera</span></div>
+    <table class="pasos">
+      <thead><tr><th>#</th><th style="width:60%">Paso</th><th style="width:22%">Herramienta</th><th>Fricción</th></tr></thead>
+      <tbody></tbody>
+    </table>
+    <button class="add" data-mas>+ Agregar paso</button>
+    <div class="grid g2" style="margin-top:8px">
+      <label>Decisiones: ¿dónde se abre el camino y qué pasa en cada caso?<textarea data-f="decisiones" placeholder="ej.: ¿está completa? Sí → la cargo. No → la devuelvo al prestador."></textarea></label>
+      <label>Esperas: ¿dónde queda parado y esperando a quién?<textarea data-f="esperas" placeholder="ej.: espero que el prestador traiga la orden corregida, 2 a 5 días"></textarea></label>
+    </div>
+
+    <div class="sub">El mapa dibujado</div>
+    <div class="dibujo"><span>Dibujalo con los seis símbolos (o hacelo en papel y adjuntalo)</span></div>
+    <div class="simbolos">
+      <span><svg viewBox="0 0 26 18"><circle cx="13" cy="9" r="7.5" fill="none" stroke="#C27803" stroke-width="1.8"/></svg>Trigger</span>
+      <span><svg viewBox="0 0 26 18"><rect x="2" y="3" width="22" height="12" rx="3" fill="none" stroke="#0F172A" stroke-width="1.8"/></svg>Paso</span>
+      <span><svg viewBox="0 0 26 18"><path d="M13 1L24 9L13 17L2 9Z" fill="none" stroke="#0369A1" stroke-width="1.8"/></svg>Decisión</span>
+      <span><svg viewBox="0 0 26 18"><path d="M8 2h10M8 16h10M9 2c0 6 8 8 8 14M17 2c0 6-8 8-8 14" fill="none" stroke="#BE3455" stroke-width="1.8"/></svg>Espera</span>
+      <span><svg viewBox="0 0 26 18"><path d="M4 2h18v12c-3-2-6 2-9 0s-6 2-9 0z" fill="none" stroke="#6D28D9" stroke-width="1.8"/></svg>Documento</span>
+      <span><svg viewBox="0 0 26 18"><circle cx="13" cy="9" r="7.5" fill="none" stroke="#0E9F8E" stroke-width="1.8"/><circle cx="13" cy="9" r="4.5" fill="none" stroke="#0E9F8E" stroke-width="1.5"/></svg>Salida</span>
+    </div>
+
+    <div class="sub">3 · Los números</div>
+    <div class="grid g4">
+      <label>Veces por mes<input data-f="veces" type="number" min="0"></label>
+      <label>Minutos por vez<input data-f="minutos" type="number" min="0"></label>
+      <label>Errores o rebotes por mes<input data-f="errores" type="number" min="0"></label>
+      <label>Horas por mes<input data-f="horas" readonly tabindex="-1" style="background:var(--soft);font-weight:600"></label>
+      <label>¿Medido o estimado?<select data-f="tiempo"><option></option><option>Estimado</option><option>Medido</option></select></label>
+      <label>¿Cargo algo dos veces?<select data-f="doble"><option></option><option>Sí</option><option>No</option></select></label>
+      <label>¿Está escrito en algún lado?<select data-f="escrito"><option></option><option>Sí</option><option>A medias</option><option>No</option></select></label>
+      <label>¿Cuánto me pesa? (1 a 5)<select data-f="pesa"><option></option><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option></select></label>
+    </div>
+    <div class="sub">Fricciones de este proceso</div>
+    <div class="fr">
+      <label><input type="checkbox" data-f="fP"><b>P</b> Papel o PDF escaneado</label>
+      <label><input type="checkbox" data-f="fR"><b>R</b> Repetitivo, uno por uno</label>
+      <label><input type="checkbox" data-f="fM"><b>M</b> Carga manual, copiar y pegar</label>
+      <label><input type="checkbox" data-f="fD"><b>D</b> Doble carga</label>
+      <label><input type="checkbox" data-f="fE"><b>E</b> Errores o rebotes</label>
+      <label><input type="checkbox" data-f="fX"><b>X</b> Esperas</label>
+    </div>
+    <div class="grid g2" style="margin-top:10px">
+      <label class="full">¿Qué te gustaría que cambie de este proceso?<textarea data-f="cambio"></textarea></label>
+    </div>
+  </div>
+</div>
+</template>
+
+<script>
+const CLAVE = 'hoja-asis-femer-v1';
+const FILAS_INICIALES = 12, PASOS_INICIALES = 8;
+const $ = (s, r = document) => r.querySelector(s);
+const $$ = (s, r = document) => [...r.querySelectorAll(s)];
+const num = (v) => { const n = parseFloat(String(v || '').replace(',', '.')); return isFinite(n) ? n : 0; };
+const fmt = (n) => n.toLocaleString('es-AR', { maximumFractionDigits: 1 });
+
+function agregarFila(d = {}) {
+  const tb = $('#filas'), i = tb.children.length + 1, tr = document.createElement('tr');
+  tr.innerHTML = `<td class="star"><input type="checkbox" data-c="star" title="Uno de mis 3 elegidos"></td><td class="n">${i}</td>
+    <td><textarea data-c="proceso"></textarea></td><td><textarea data-c="trigger"></textarea></td>
+    <td><input data-c="veces" type="number" min="0"></td><td><input data-c="minutos" type="number" min="0"></td>
+    <td><textarea data-c="herr"></textarea></td>
+    <td><select data-c="doble"><option></option><option>Sí</option><option>No</option></select></td>
+    <td><select data-c="pesa"><option></option><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option></select></td>
+    <td class="h" data-c-h></td>`;
+  tb.appendChild(tr);
+  $$('[data-c]', tr).forEach((e) => { const v = d[e.dataset.c]; if (v == null) return; e.type === 'checkbox' ? (e.checked = !!v) : (e.value = v); });
+}
+
+function agregarPaso(tb, d = {}) {
+  const i = tb.children.length + 1, tr = document.createElement('tr');
+  tr.innerHTML = `<td class="n">${i}</td><td><textarea data-p="paso"></textarea></td><td><input data-p="herr"></td><td><input data-p="fr" placeholder="P R M D E X" style="text-transform:uppercase"></td>`;
+  tb.appendChild(tr);
+  $$('[data-p]', tr).forEach((e) => { if (d[e.dataset.p] != null) e.value = d[e.dataset.p]; });
+}
+
+function crearFichas(datos = []) {
+  const cont = $('#fichas');
+  for (let k = 0; k < 3; k++) {
+    const nodo = $('#tFicha').content.cloneNode(true), f = nodo.querySelector('.ficha'), d = datos[k] || {};
+    f.dataset.i = k;
+    $('.num', f).textContent = k + 1;
+    const tb = $('.pasos tbody', f);
+    const pasos = d.pasos && d.pasos.length ? d.pasos : [];
+    for (let j = 0; j < Math.max(PASOS_INICIALES, pasos.length); j++) agregarPaso(tb, pasos[j]);
+    $('[data-mas]', f).onclick = () => { agregarPaso(tb); guardar(); };
+    $$('[data-f]', f).forEach((e) => { const v = d[e.dataset.f]; if (v == null) return; e.type === 'checkbox' ? (e.checked = !!v) : (e.value = v); });
+    cont.appendChild(nodo);
+  }
+}
+
+function recalcular() {
+  let total = 0, procs = 0;
+  const estrellas = [];
+  $$('#filas tr').forEach((tr) => {
+    const h = num($('[data-c=veces]', tr).value) * num($('[data-c=minutos]', tr).value) / 60;
+    $('[data-c-h]', tr).textContent = h ? fmt(h) : '';
+    const nombre = $('[data-c=proceso]', tr).value.trim();
+    if (nombre) procs++;
+    total += h;
+    if ($('[data-c=star]', tr).checked && nombre) estrellas.push(nombre);
+  });
+  const jornada = num($('[data-k=jornada]').value) * 20;
+  $('#tProc').textContent = procs;
+  $('#tHoras').textContent = fmt(total);
+  $('#tJor').textContent = jornada ? fmt(jornada) : '—';
+  $('#tEst').textContent = estrellas.length;
+  const a = $('#alerta');
+  a.className = 'alerta';
+  if (jornada && total > jornada * 1.1) { a.className = 'alerta on mal'; a.textContent = `Tus procesos suman ${fmt(total)} h por mes y tu jornada tiene unas ${fmt(jornada)} h. Revisá las veces y los minutos: puede que algún número sea del sector completo o esté contado dos veces.`; }
+  else if (estrellas.length > 3) { a.className = 'alerta on mal'; a.textContent = 'Marcaste más de 3 con ★: elegí solo los 3 que más te llevan o más te pesan.'; }
+  else if (jornada && total) { a.className = 'alerta on ok'; a.textContent = `Tus procesos ocupan el ${Math.round(total / jornada * 100)}% de tu jornada. Lo que falta suele ser lo que todavía no listaste: revisá tu correo y tu WhatsApp.`; }
+  // las fichas toman el nombre de los elegidos si están vacías
+  $$('.ficha').forEach((f, k) => {
+    const inp = $('[data-f=nombre]', f);
+    if (estrellas[k] && (!inp.value.trim() || inp.dataset.auto === '1')) { inp.value = estrellas[k]; inp.dataset.auto = '1'; }
+    const h = num($('[data-f=veces]', f).value) * num($('[data-f=minutos]', f).value) / 60;
+    $('[data-f=horas]', f).value = h ? fmt(h) : '';
+  });
+}
+
+function leer() {
+  const o = { puesto: {}, filas: [], fichas: [] };
+  $$('[data-k]').forEach((e) => (o.puesto[e.dataset.k] = e.value));
+  $$('#filas tr').forEach((tr) => { const r = {}; $$('[data-c]', tr).forEach((e) => (r[e.dataset.c] = e.type === 'checkbox' ? e.checked : e.value)); o.filas.push(r); });
+  $$('.ficha').forEach((f) => {
+    const r = { pasos: [] };
+    $$('[data-f]', f).forEach((e) => (r[e.dataset.f] = e.type === 'checkbox' ? e.checked : e.value));
+    $$('.pasos tbody tr', f).forEach((tr) => { const p = {}; $$('[data-p]', tr).forEach((e) => (p[e.dataset.p] = e.value)); r.pasos.push(p); });
+    o.fichas.push(r);
+  });
+  return o;
+}
+
+let reloj;
+function guardar() {
+  recalcular();
+  clearTimeout(reloj);
+  reloj = setTimeout(() => {
+    try { localStorage.setItem(CLAVE, JSON.stringify(leer())); $('#guardado').textContent = 'Guardado en esta compu ' + new Date().toLocaleTimeString('es-AR', { hour: '2-digit', minute: '2-digit' }); } catch (e) { $('#guardado').textContent = ''; }
+  }, 400);
+}
+
+function borrar() { try { localStorage.removeItem(CLAVE); } catch (e) {} location.reload(); }
+
+(function iniciar() {
+  let d = null;
+  try { d = JSON.parse(localStorage.getItem(CLAVE) || 'null'); } catch (e) {}
+  if (d && d.puesto) $$('[data-k]').forEach((e) => { if (d.puesto[e.dataset.k] != null) e.value = d.puesto[e.dataset.k]; });
+  const filas = (d && d.filas) || [];
+  for (let i = 0; i < Math.max(FILAS_INICIALES, filas.length); i++) agregarFila(filas[i]);
+  crearFichas((d && d.fichas) || []);
+  $$('.ficha [data-f=nombre]').forEach((e) => e.addEventListener('input', () => (e.dataset.auto = '0')));
+  document.addEventListener('input', guardar);
+  document.addEventListener('change', guardar);
+  recalcular();
+})();
+</script>
+</body>
+</html>

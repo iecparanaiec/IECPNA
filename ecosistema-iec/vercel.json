@@ -25,7 +25,8 @@
     { "source": "/campus", "destination": "https://iec-erp.vercel.app/campus" },
     { "source": "/campus/:path*", "destination": "https://iec-erp.vercel.app/campus/:path*" },
     { "source": "/api/campus/:path*", "destination": "https://iec-erp.vercel.app/api/campus/:path*" },
-    { "source": "/relevamiento_femer", "destination": "/relevamiento_femer.html" }
+    { "source": "/relevamiento_femer", "destination": "/relevamiento_femer.html" },
+    { "source": "/hoja_asis_femer", "destination": "/hoja_asis_femer.html" }
   ],
   "redirects": [
     { "source": "/mundo", "destination": "/campus", "permanent": false },
