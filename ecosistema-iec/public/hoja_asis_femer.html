@@ -3,303 +3,948 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Hoja de relevamiento AS-IS</title>
+<title>Mapa AS-IS de mi puesto</title>
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
-:root{--ink:#0F172A;--muted:#5B6478;--line:#D9DEE8;--soft:#F4F6FA;--teal:#0E9F8E;--teal2:#2DD4BF;--amber:#C27803;--rose:#BE3455;--bg:#E9EDF3}
+:root{--ink:#0F172A;--muted:#5B6478;--line:#D9DEE8;--soft:#F4F6FA;--bg:#E9EDF3;--teal:#0E9F8E;--teal2:#2DD4BF;--amber:#D97706;--rose:#E11D48;--sky:#0284C7;--violet:#7C3AED;--dark:#0B1224}
 *{box-sizing:border-box;margin:0;padding:0}
+[hidden]{display:none!important}
+html,body{height:100%}
 body{background:var(--bg);color:var(--ink);font-family:Inter,system-ui,Segoe UI,Arial,sans-serif;font-size:13px;line-height:1.4}
 h1,h2,h3{font-family:'Space Grotesk',sans-serif;letter-spacing:-.01em}
-.bar{position:sticky;top:0;z-index:5;display:flex;flex-wrap:wrap;gap:8px;align-items:center;padding:10px 16px;background:#0B1224;color:#fff}
-.bar b{font-family:'Space Grotesk';font-size:15px;margin-right:auto}
-.bar span{font-size:12px;color:#93A0C0}
-button{font:inherit;cursor:pointer;border:0;border-radius:8px;padding:8px 14px;background:var(--teal2);color:#04121A;font-weight:600}
-button.sec{background:rgba(255,255,255,.1);color:#fff}
-button.add{background:var(--soft);color:var(--ink);border:1px dashed #AEB7C7;margin-top:8px}
-.page{width:210mm;max-width:100%;margin:16px auto;background:#fff;padding:14mm 13mm;box-shadow:0 10px 30px -12px rgba(15,23,42,.25)}
-.eyebrow{font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:var(--teal);font-weight:600}
-h1{font-size:26px;margin:2px 0 4px}
-.lead{color:var(--muted);font-size:12.5px;max-width:160mm}
-.anon{margin-top:8px;padding:8px 10px;border-radius:8px;background:#ECFDF8;border:1px solid #B5EDE2;font-size:12px}
-h2{font-size:17px;margin:18px 0 4px;display:flex;align-items:baseline;gap:10px}
-h2 small{font-family:Inter;font-size:11.5px;font-weight:500;color:var(--muted)}
-.help{font-size:11.5px;color:var(--muted);margin-bottom:8px}
-.grid{display:grid;gap:8px 12px}
-.g4{grid-template-columns:repeat(4,1fr)}.g3{grid-template-columns:repeat(3,1fr)}.g2{grid-template-columns:1fr 1fr}
-label{display:flex;flex-direction:column;gap:3px;font-size:10.5px;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:.05em}
-label.full{grid-column:1/-1}
-input,select,textarea{font:inherit;font-size:12.5px;color:var(--ink);border:1px solid var(--line);border-radius:6px;padding:5px 7px;background:#fff;width:100%;text-transform:none;letter-spacing:0;font-weight:400}
-textarea{resize:vertical;min-height:38px}
+button{font:inherit;cursor:pointer;border:0;border-radius:8px;padding:7px 12px;background:var(--soft);color:var(--ink);font-weight:600}
+button:disabled{opacity:.45;cursor:default}
+button.pri{background:var(--teal2);color:#04121A}
+button.osc{background:rgba(255,255,255,.1);color:#fff}
+button.peligro{color:var(--rose)}
+input,select,textarea{font:inherit;font-size:13px;color:var(--ink);border:1px solid var(--line);border-radius:7px;padding:6px 8px;background:#fff;width:100%}
+textarea{resize:vertical;min-height:36px}
 input:focus,select:focus,textarea:focus{outline:2px solid rgba(45,212,191,.45);border-color:var(--teal)}
+label.c{display:flex;flex-direction:column;gap:3px;font-size:10.5px;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:.05em}
+.top{position:sticky;top:0;z-index:20;display:flex;flex-wrap:wrap;align-items:center;gap:8px;padding:10px 16px;background:var(--dark);color:#fff}
+.top b{font-family:'Space Grotesk';font-size:15px}
+.top .est{font-size:11.5px;color:#93A0C0;margin-right:auto}
+.tabs{display:flex;gap:4px;padding:10px 16px 0;max-width:1500px;margin:0 auto}
+.tab{background:transparent;border-radius:10px 10px 0 0;padding:10px 16px;color:var(--muted);font-weight:600}
+.tab.on{background:#fff;color:var(--ink)}
+.tab .n{display:inline-grid;place-items:center;width:20px;height:20px;border-radius:50%;background:var(--line);margin-right:6px;font-size:11px}
+.tab.on .n{background:var(--teal2)}
+.panel{max-width:1500px;margin:0 auto;background:#fff;border-radius:0 12px 12px 12px;padding:18px 20px;min-height:calc(100vh - 110px)}
+.panel[hidden]{display:none}
+.eyebrow{font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:var(--teal);font-weight:700}
+h1{font-size:24px;margin:2px 0 4px}
+h2{font-size:17px;margin:18px 0 4px}
+.help{font-size:12px;color:var(--muted);margin-bottom:8px;max-width:980px}
+.anon{margin:8px 0 4px;padding:8px 10px;border-radius:8px;background:#ECFDF8;border:1px solid #B5EDE2;font-size:12px;max-width:980px}
+.g4{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px 12px}
 table{width:100%;border-collapse:collapse}
-th{font-size:9.5px;text-transform:uppercase;letter-spacing:.05em;color:var(--muted);text-align:left;padding:5px 4px;border-bottom:1.5px solid var(--ink);font-weight:600;vertical-align:bottom}
-td{border-bottom:1px solid var(--line);padding:3px 3px;vertical-align:top}
-td input,td select,td textarea{border:0;border-radius:4px;padding:4px 4px;background:transparent}
+th{font-size:9.5px;text-transform:uppercase;letter-spacing:.05em;color:var(--muted);text-align:left;padding:6px 4px;border-bottom:1.5px solid var(--ink);font-weight:600;vertical-align:bottom}
+td{border-bottom:1px solid var(--line);padding:3px;vertical-align:top}
+td input,td select,td textarea{border:0;background:transparent;padding:5px 4px}
 td input:hover,td textarea:hover,td select:hover{background:var(--soft)}
-td.n{width:22px;color:var(--muted);font-size:11px;padding-top:7px;text-align:center}
-td.star{width:26px;text-align:center}
-td.star input{width:16px;height:16px;margin-top:5px;accent-color:#F59E0B}
-td.h{width:52px;text-align:right;font-family:'Space Grotesk';font-weight:600;padding-top:7px}
-td textarea{min-height:28px;height:28px}
-.ex td{color:#0B6E62;background:#F0FBF8;font-size:11.5px;padding:5px 4px}
-.tot{display:flex;flex-wrap:wrap;gap:10px;align-items:center;margin-top:10px;padding:10px 12px;border-radius:8px;background:var(--soft)}
+td textarea{min-height:30px;height:30px}
+td.n{width:22px;color:var(--muted);font-size:11px;padding-top:8px;text-align:center}
+td.star{width:28px;text-align:center}
+td.star input{width:16px;height:16px;margin-top:6px;accent-color:#F59E0B}
+td.h{width:54px;text-align:right;font-family:'Space Grotesk';font-weight:600;padding-top:8px}
+td.acc{width:118px;white-space:nowrap;padding-top:4px}
+td.acc button{padding:5px 8px;font-size:11.5px}
+.ex td{color:#0B6E62;background:#F0FBF8;font-size:11.5px;padding:6px 4px}
+.tot{display:flex;flex-wrap:wrap;gap:18px;align-items:center;margin-top:10px;padding:10px 12px;border-radius:8px;background:var(--soft)}
 .tot .k{font-family:'Space Grotesk';font-size:20px;font-weight:700}
 .tot .l{font-size:11px;color:var(--muted)}
-.alerta{flex-basis:100%;font-size:12px;padding:7px 10px;border-radius:6px;display:none}
-.alerta.on{display:block}
-.alerta.mal{background:#FFF1F3;border:1px solid #F7C4CF;color:var(--rose)}
+.alerta{flex-basis:100%;font-size:12px;padding:7px 10px;border-radius:6px}
+.alerta.mal{background:#FFF1F3;border:1px solid #F7C4CF;color:#BE3455}
 .alerta.ok{background:#ECFDF8;border:1px solid #B5EDE2;color:#0B6E62}
-.ficha{border:1.5px solid var(--ink);border-radius:10px;padding:12px 12px 10px;margin-top:12px}
-.ficha h3{font-size:15px;display:flex;align-items:center;gap:8px;margin-bottom:8px}
-.ficha h3 .num{display:inline-grid;place-items:center;width:24px;height:24px;border-radius:50%;background:#F59E0B;color:#1A1204;font-size:13px}
-.sub{font-size:10.5px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--teal);margin:12px 0 4px}
-.fr{display:flex;flex-wrap:wrap;gap:6px}
-.fr label{flex-direction:row;align-items:center;gap:5px;text-transform:none;letter-spacing:0;font-weight:500;font-size:12px;color:var(--ink);border:1px solid var(--line);border-radius:999px;padding:4px 10px;cursor:pointer}
-.fr label b{display:inline-grid;place-items:center;width:18px;height:18px;border-radius:5px;background:#F59E0B;color:#1A1204;font-size:11px}
-.fr input{width:auto;accent-color:#F59E0B}
-.dibujo{border:1.5px dashed #AEB7C7;border-radius:8px;height:55mm;position:relative;background-image:radial-gradient(#D9DEE8 1px,transparent 1px);background-size:6mm 6mm}
-.dibujo span{position:absolute;left:8px;top:6px;font-size:10.5px;color:var(--muted)}
-.simbolos{display:flex;flex-wrap:wrap;gap:12px;font-size:11px;color:var(--muted);margin-top:4px;align-items:center}
-.simbolos svg{width:26px;height:18px;vertical-align:middle;margin-right:3px}
-.pie{margin-top:14px;font-size:10.5px;color:var(--muted);border-top:1px solid var(--line);padding-top:8px}
-.guardado{font-size:11px;color:#93A0C0}
-@media (max-width:640px){.page{padding:16px}.g4,.g3{grid-template-columns:1fr 1fr}.tblwrap{overflow-x:auto}.tblwrap table{min-width:720px}}
+
+/* ---------- diagramas ---------- */
+.dia{display:grid;grid-template-columns:230px minmax(0,1fr);gap:14px}
+.lista{display:flex;flex-direction:column;gap:6px}
+.lista .it{display:flex;align-items:center;gap:8px;width:100%;text-align:left;background:var(--soft);border:1px solid transparent;font-weight:500;padding:9px 10px}
+.lista .it.on{background:#ECFDF8;border-color:var(--teal2);font-weight:600}
+.lista .it .cnt{margin-left:auto;font-size:10.5px;color:var(--muted);font-weight:500}
+.lista .sug{font-size:11px;color:var(--muted);margin-top:10px}
+.lista .chip{display:block;width:100%;text-align:left;background:#fff;border:1px dashed #AEB7C7;font-weight:500;font-size:12px;margin-top:5px}
+.cab{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+.cab .nom{flex:1;min-width:220px;font-family:'Space Grotesk';font-size:18px;font-weight:600;border:0;border-bottom:1.5px solid var(--line);border-radius:0;padding:4px 2px}
+details.datos{margin-top:8px;border:1px solid var(--line);border-radius:10px;padding:8px 12px}
+details.datos summary{cursor:pointer;font-weight:600;font-size:12.5px}
+details.datos .g4{margin-top:8px}
+.barra{display:flex;flex-wrap:wrap;gap:6px;align-items:center;margin-top:10px;padding:6px;border-radius:10px;background:var(--soft)}
+.barra .sep{width:1px;height:26px;background:var(--line);margin:0 2px}
+.sim{display:inline-flex;align-items:center;gap:6px;background:#fff;border:1px solid var(--line);padding:5px 9px;font-weight:500;font-size:12px;user-select:none}
+.sim svg{width:26px;height:18px}
+.sim:hover{border-color:var(--teal)}
+.ico{padding:6px 9px;background:#fff;border:1px solid var(--line);font-size:13px;min-width:32px}
+.ico.on{background:var(--dark);color:#fff;border-color:var(--dark)}
+.lienzo{position:relative;margin-top:8px;height:calc(100vh - 290px);min-height:480px;border:1px solid var(--line);border-radius:12px;overflow:hidden;background:#FBFCFE;touch-action:none}
+.lienzo svg{width:100%;height:100%;display:block;user-select:none}
+.lienzo.mano{cursor:grab}
+.lienzo.arrastra{cursor:grabbing}
+.insp{position:absolute;right:10px;top:10px;width:230px;background:#fff;border:1px solid var(--line);border-radius:12px;box-shadow:0 10px 30px -12px rgba(15,23,42,.3);padding:10px;display:flex;flex-direction:column;gap:8px;font-size:12px}
+.insp[hidden]{display:none}
+.insp h3{font-size:13px}
+.insp .fila{display:flex;flex-wrap:wrap;gap:4px}
+.insp .fila button{padding:4px 7px;font-size:11.5px;background:var(--soft);font-weight:600}
+.insp .fila button.on{background:#F59E0B;color:#1A1204}
+.insp .fila button.tipo.on{background:var(--dark);color:#fff}
+.vacio{position:absolute;inset:0;display:grid;place-items:center;pointer-events:none}
+.vacio div{pointer-events:auto;text-align:center;max-width:420px;padding:20px;color:var(--muted)}
+.vacio h3{color:var(--ink);font-size:17px;margin-bottom:6px}
+.zoom{position:absolute;left:10px;bottom:10px;display:flex;gap:4px;align-items:center;background:#fff;border:1px solid var(--line);border-radius:10px;padding:4px}
+.zoom button{padding:4px 9px;background:transparent}
+.zoom span{font-size:11px;color:var(--muted);min-width:40px;text-align:center}
+.ayuda{position:absolute;left:10px;top:10px;font-size:11px;color:var(--muted);background:rgba(255,255,255,.9);border:1px solid var(--line);border-radius:8px;padding:6px 9px;max-width:420px}
+.ayuda b{color:var(--ink)}
+#editor{position:absolute;z-index:5;resize:none;text-align:center;border:2px solid var(--teal);border-radius:8px;padding:6px;font-size:14px;line-height:1.3;background:#fff;display:none;box-shadow:0 6px 20px -6px rgba(14,159,142,.5)}
+/* formas */
+.nodo{cursor:move}
+.nodo .forma{stroke-width:2}
+.f-inicio{fill:#FFF7E6;stroke:#D97706}
+.f-paso{fill:#fff;stroke:#334155}
+.f-decision{fill:#EFF8FF;stroke:#0284C7}
+.f-espera{fill:#FFF1F3;stroke:#E11D48;stroke-dasharray:7 5}
+.f-documento{fill:#F5F3FF;stroke:#7C3AED}
+.f-fin{fill:#ECFDF8;stroke:#0E9F8E}
+.f-nota{fill:#FEF9C3;stroke:#CA8A04}
+.nodo.sel .forma{stroke-width:3.5}
+.selbox{fill:none;stroke:#2DD4BF;stroke-width:1.5;stroke-dasharray:5 4;pointer-events:none}
+.tx{width:100%;height:100%;display:flex;align-items:center;justify-content:center;text-align:center;font:500 13.5px/1.25 Inter,system-ui,sans-serif;color:#0F172A;overflow:hidden;word-break:break-word;padding:2px}
+.tx.izq{justify-content:flex-start;align-items:flex-start;text-align:left;font-size:12.5px}
+.tx .ph{color:#94A3B8;font-weight:400;font-style:italic;font-size:12px}
+.h-con{fill:#fff;stroke:#0E9F8E;stroke-width:2;opacity:0;cursor:crosshair;transition:opacity .12s}
+.nodo:hover .h-con,.nodo.sel .h-con,.conectando .h-con{opacity:1}
+.h-con:hover{fill:#2DD4BF}
+.h-res{fill:#0E9F8E;cursor:nwse-resize}
+.badge circle{fill:#F59E0B;stroke:#fff;stroke-width:1.5}
+.badge text{font:700 10.5px 'Space Grotesk',sans-serif;fill:#1A1204;text-anchor:middle}
+.linea path.v{fill:none;stroke:#475569;stroke-width:2}
+.linea path.hit{fill:none;stroke:transparent;stroke-width:16;cursor:pointer}
+.linea.sel path.v{stroke:#0E9F8E;stroke-width:3}
+.linea text{font:600 12.5px Inter,sans-serif;fill:#0F172A;text-anchor:middle;dominant-baseline:middle;pointer-events:none}
+.linea rect.et{fill:#fff;stroke:#CBD5E1}
+.temp{fill:none;stroke:#0E9F8E;stroke-width:2;stroke-dasharray:6 4;pointer-events:none}
+.marq{fill:rgba(45,212,191,.08);stroke:#2DD4BF;stroke-dasharray:4 3;pointer-events:none}
+/* enviar */
+.chk{list-style:none;display:flex;flex-direction:column;gap:6px;margin:10px 0;max-width:900px}
+.chk li{padding:8px 10px;border-radius:8px;background:var(--soft);font-size:12.5px}
+.chk li.mal{background:#FFF7E6;color:#92400E}
+.chk li.ok{background:#ECFDF8;color:#0B6E62}
+.res{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:12px;margin-top:12px}
+.res .card{border:1px solid var(--line);border-radius:12px;padding:10px}
+.res .card svg{width:100%;height:160px;background:#FBFCFE;border-radius:8px;margin-top:6px}
+.enviado{margin-top:12px;padding:12px 14px;border-radius:10px;background:#ECFDF8;border:1px solid #B5EDE2;color:#0B6E62;max-width:900px}
+.error{margin-top:12px;padding:12px 14px;border-radius:10px;background:#FFF1F3;border:1px solid #F7C4CF;color:#BE3455;max-width:900px}
+#imprimir{display:none}
+@media (max-width:860px){.dia{grid-template-columns:1fr}.g4{grid-template-columns:1fr 1fr}.tblw{overflow-x:auto}.tblw table{min-width:860px}.insp{position:static;width:auto;margin-top:8px}}
 @media print{
-  @page{size:A4;margin:10mm}
+  @page{size:A4 landscape;margin:10mm}
   body{background:#fff}
-  .bar,.noprint,button.add{display:none!important}
-  .page{margin:0;padding:0;box-shadow:none;width:auto}
-  .page+.page{break-before:page}
-  input,select,textarea{border-color:#C9D0DC}
-  td input,td textarea,td select{border:0}
-  textarea{resize:none;overflow:hidden}
-  .alerta{display:none!important}
+  .top,.tabs,.panel{display:none!important}
+  #imprimir{display:block}
+  .pg{break-after:page}
+  .pg:last-child{break-after:auto}
+  .pg h2{margin-top:0}
+  .pg svg{width:100%;height:150mm}
+  .pg table td,.pg table th{font-size:10.5px;padding:4px}
+  .meta{display:grid;grid-template-columns:repeat(4,1fr);gap:4px 14px;font-size:11px;margin:6px 0}
+  .meta b{display:block;font-size:9px;text-transform:uppercase;color:#5B6478}
 }
 </style>
 </head>
 <body>
-<div class="bar">
-  <b>Hoja de relevamiento AS-IS · Comisión FEMER</b>
-  <span class="guardado" id="guardado"></span>
-  <button class="sec" onclick="if(confirm('¿Borrar todo lo que completaste en esta hoja?')){borrar()}">Empezar de cero</button>
-  <button onclick="window.print()">Imprimir o guardar en PDF</button>
+<div class="top">
+  <b>Mapa AS-IS de mi puesto</b>
+  <span class="est" id="est">Comisión FEMER · anónimo</span>
+  <button class="osc" onclick="window.print()">Imprimir o PDF</button>
+  <button class="pri" onclick="irA(3)">Enviar para análisis →</button>
+</div>
+<div class="tabs" role="tablist">
+  <button class="tab on" data-tab="1" onclick="irA(1)"><span class="n">1</span>Mi puesto y mis procesos</button>
+  <button class="tab" data-tab="2" onclick="irA(2)"><span class="n">2</span>Diagramas</button>
+  <button class="tab" data-tab="3" onclick="irA(3)"><span class="n">3</span>Revisar y enviar</button>
 </div>
 
-<!-- ============ PÁGINA 1 · INVENTARIO ============ -->
-<div class="page">
+<!-- ============ 1 · PUESTO E INVENTARIO ============ -->
+<section class="panel" id="p1">
   <div class="eyebrow">Experto en IA Nivel I · Estaciones 2 y 3</div>
-  <h1>El mapa AS-IS de mi puesto</h1>
-  <p class="lead">Cómo trabajo hoy, tal cual es. Primero listo todos mis procesos (Parte 1) y después mapeo en detalle los 3 que más tiempo me llevan o más me pesan (Parte 2).</p>
-  <p class="anon"><b>Es anónimo:</b> no pongas tu nombre. Tampoco datos reales de afiliados (nombres, DNI, diagnósticos): usá ejemplos inventados.</p>
+  <h1>Cómo trabajo hoy, tal cual es</h1>
+  <p class="help">Primero listá todos tus procesos. Después, en <b>Diagramas</b>, dibujá cómo es cada uno (como mínimo, los 3 que más tiempo te llevan o más te pesan) y al final envialo para el análisis.</p>
+  <p class="anon"><b>Es anónimo:</b> no pongas tu nombre. Tampoco datos reales de afiliados (nombres, DNI, diagnósticos): usá ejemplos inventados. Lo que escribís queda guardado en esta compu.</p>
 
   <h2>Mi puesto</h2>
-  <div class="grid g4">
-    <label>Tipo de entidad
-      <select data-k="entidad"><option></option><option>Federación</option><option>Círculo o colegio médico</option><option>Mutual</option><option>Hospital o clínica</option><option>Otra</option></select>
-    </label>
-    <label>Área
-      <select data-k="area"><option></option><option>Facturación y liquidación</option><option>Auditoría y débitos</option><option>Tesorería y bancos</option><option>Administración general</option><option>Gerencia</option><option>Atención a prestadores o afiliados</option><option>Otra</option></select>
-    </label>
-    <label>Mi puesto (sin nombre)<input data-k="puesto" placeholder="ej.: administrativo de facturación"></label>
-    <label>Horas de trabajo por día<input data-k="jornada" type="number" min="1" max="12" step="0.5" placeholder="ej.: 6"></label>
+  <div class="g4">
+    <label class="c">Tipo de entidad
+      <select data-k="entidad"><option></option><option>Federación</option><option>Círculo o colegio médico</option><option>Mutual</option><option>Hospital o clínica</option><option>Otra</option></select></label>
+    <label class="c">Área
+      <select data-k="area"><option></option><option>Facturación y liquidación</option><option>Auditoría y débitos</option><option>Tesorería y bancos</option><option>Administración general</option><option>Gerencia</option><option>Atención a prestadores o afiliados</option><option>Otra</option></select></label>
+    <label class="c">Mi puesto (sin nombre)<input data-k="puesto" maxlength="120" placeholder="ej.: administrativo de facturación"></label>
+    <label class="c">Horas de trabajo por día<input data-k="jornada" type="number" min="1" max="12" step="0.5" placeholder="ej.: 6"></label>
   </div>
 
-  <h2>Parte 1 · Inventario de todos mis procesos <small>≈ 25 min</small></h2>
-  <p class="help">Una línea por proceso. Revisá tu correo, tu WhatsApp, tus planillas y el calendario para no olvidarte de ninguno, incluidos los del cierre o de una vez al año. Si algo pasa todos los días, «veces por mes» es × 20. Marcá con ★ los 3 que más te llevan o más te pesan.</p>
-  <div class="tblwrap">
-  <table id="inv">
-    <thead><tr><th>★</th><th>#</th><th style="width:24%">Proceso</th><th style="width:24%">Trigger · qué lo hace arrancar</th><th style="width:8%">Veces por mes</th><th style="width:7%">Min por vez</th><th style="width:16%">Herramientas</th><th style="width:8%">¿Doble carga?</th><th style="width:7%">Pesa 1–5</th><th style="text-align:right">h/mes</th></tr></thead>
-    <tbody>
-      <tr class="ex"><td>★</td><td></td><td>Ejemplo: controlar órdenes de prestaciones</td><td>Llegan las órdenes en papel, del 1 al 10</td><td>600</td><td>3</td><td>Papel, sistema, Excel</td><td>Sí</td><td>5</td><td style="text-align:right">30</td></tr>
-    </tbody>
+  <h2>Inventario de todos mis procesos</h2>
+  <p class="help">Una línea por proceso. Revisá tu correo, tu WhatsApp, tus planillas y el calendario para no olvidarte de ninguno, incluidos los del cierre o de una vez al año. Si algo pasa todos los días, «veces por mes» es × 20. Marcá con ★ los 3 que más te llevan o más te pesan, y con <b>Diagramar</b> abrís su lienzo.</p>
+  <div class="tblw">
+  <table>
+    <thead><tr><th>★</th><th>#</th><th style="width:23%">Proceso</th><th style="width:22%">Trigger · qué lo hace arrancar</th><th style="width:7%">Veces por mes</th><th style="width:6%">Min por vez</th><th style="width:14%">Herramientas</th><th style="width:7%">¿Doble carga?</th><th style="width:6%">Pesa 1–5</th><th style="text-align:right">h/mes</th><th></th></tr></thead>
+    <tbody><tr class="ex"><td>★</td><td></td><td>Ejemplo: controlar órdenes de prestaciones</td><td>Llegan las órdenes en papel, del 1 al 10</td><td>600</td><td>3</td><td>Papel, sistema, Excel</td><td>Sí</td><td>5</td><td style="text-align:right">30</td><td></td></tr></tbody>
     <tbody id="filas"></tbody>
   </table>
   </div>
-  <button class="add" onclick="agregarFila(); guardar()">+ Agregar otro proceso</button>
+  <button style="margin-top:8px;border:1px dashed #AEB7C7;background:#fff" onclick="S.inventario.push(filaVacia()); pintarInventario(); guardar()">+ Agregar otro proceso</button>
   <div class="tot">
     <div><div class="k" id="tProc">0</div><div class="l">procesos</div></div>
     <div><div class="k" id="tHoras">0</div><div class="l">horas por mes en total</div></div>
     <div><div class="k" id="tJor">—</div><div class="l">horas de tu jornada por mes</div></div>
     <div><div class="k" id="tEst">0</div><div class="l">marcados con ★</div></div>
-    <div class="alerta" id="alerta"></div>
+    <div class="alerta" id="alerta" hidden></div>
   </div>
-  <p class="pie">h/mes = veces por mes × minutos por vez ÷ 60. Si es una estimación está bien: la semana que viene medimos los 3 elegidos con reloj.</p>
-</div>
+</section>
 
-<!-- ============ PÁGINAS 2–4 · FICHAS ============ -->
-<div id="fichas"></div>
-
-<template id="tFicha">
-<div class="page">
-  <div class="eyebrow">Parte 2 · Mapa AS-IS · ≈ 13 min por proceso</div>
-  <div class="ficha">
-    <h3><span class="num"></span><input data-f="nombre" placeholder="Nombre del proceso (uno de los marcados con ★)" style="font-family:'Space Grotesk';font-size:15px;font-weight:600;border:0;border-bottom:1px solid var(--line);border-radius:0"></h3>
-
-    <div class="sub">1 · Inicio y fin</div>
-    <div class="grid g2">
-      <label class="full">Trigger: qué llega o qué pasa, de quién, por dónde y cuándo<input data-f="trigger" placeholder="ej.: llega por mail el listado de prestaciones de la obra social, el día 2 de cada mes"></label>
-      <label>Entradas: con qué trabajo<input data-f="entradas" placeholder="ej.: órdenes en papel, listado en Excel"></label>
-      <label>Salida: qué entrego y a quién<input data-f="salida" placeholder="ej.: factura presentada a la obra social"></label>
-    </div>
-
-    <div class="sub">2 · Los pasos, en orden <span style="text-transform:none;letter-spacing:0;font-weight:500;color:var(--muted)">· verbo + qué + con qué · fricciones: P papel, R repetitivo, M carga manual, D doble carga, E error o rebote, X espera</span></div>
-    <table class="pasos">
-      <thead><tr><th>#</th><th style="width:60%">Paso</th><th style="width:22%">Herramienta</th><th>Fricción</th></tr></thead>
-      <tbody></tbody>
-    </table>
-    <button class="add" data-mas>+ Agregar paso</button>
-    <div class="grid g2" style="margin-top:8px">
-      <label>Decisiones: ¿dónde se abre el camino y qué pasa en cada caso?<textarea data-f="decisiones" placeholder="ej.: ¿está completa? Sí → la cargo. No → la devuelvo al prestador."></textarea></label>
-      <label>Esperas: ¿dónde queda parado y esperando a quién?<textarea data-f="esperas" placeholder="ej.: espero que el prestador traiga la orden corregida, 2 a 5 días"></textarea></label>
-    </div>
-
-    <div class="sub">El mapa dibujado</div>
-    <div class="dibujo"><span>Dibujalo con los seis símbolos (o hacelo en papel y adjuntalo)</span></div>
-    <div class="simbolos">
-      <span><svg viewBox="0 0 26 18"><circle cx="13" cy="9" r="7.5" fill="none" stroke="#C27803" stroke-width="1.8"/></svg>Trigger</span>
-      <span><svg viewBox="0 0 26 18"><rect x="2" y="3" width="22" height="12" rx="3" fill="none" stroke="#0F172A" stroke-width="1.8"/></svg>Paso</span>
-      <span><svg viewBox="0 0 26 18"><path d="M13 1L24 9L13 17L2 9Z" fill="none" stroke="#0369A1" stroke-width="1.8"/></svg>Decisión</span>
-      <span><svg viewBox="0 0 26 18"><path d="M8 2h10M8 16h10M9 2c0 6 8 8 8 14M17 2c0 6-8 8-8 14" fill="none" stroke="#BE3455" stroke-width="1.8"/></svg>Espera</span>
-      <span><svg viewBox="0 0 26 18"><path d="M4 2h18v12c-3-2-6 2-9 0s-6 2-9 0z" fill="none" stroke="#6D28D9" stroke-width="1.8"/></svg>Documento</span>
-      <span><svg viewBox="0 0 26 18"><circle cx="13" cy="9" r="7.5" fill="none" stroke="#0E9F8E" stroke-width="1.8"/><circle cx="13" cy="9" r="4.5" fill="none" stroke="#0E9F8E" stroke-width="1.5"/></svg>Salida</span>
-    </div>
-
-    <div class="sub">3 · Los números</div>
-    <div class="grid g4">
-      <label>Veces por mes<input data-f="veces" type="number" min="0"></label>
-      <label>Minutos por vez<input data-f="minutos" type="number" min="0"></label>
-      <label>Errores o rebotes por mes<input data-f="errores" type="number" min="0"></label>
-      <label>Horas por mes<input data-f="horas" readonly tabindex="-1" style="background:var(--soft);font-weight:600"></label>
-      <label>¿Medido o estimado?<select data-f="tiempo"><option></option><option>Estimado</option><option>Medido</option></select></label>
-      <label>¿Cargo algo dos veces?<select data-f="doble"><option></option><option>Sí</option><option>No</option></select></label>
-      <label>¿Está escrito en algún lado?<select data-f="escrito"><option></option><option>Sí</option><option>A medias</option><option>No</option></select></label>
-      <label>¿Cuánto me pesa? (1 a 5)<select data-f="pesa"><option></option><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option></select></label>
-    </div>
-    <div class="sub">Fricciones de este proceso</div>
-    <div class="fr">
-      <label><input type="checkbox" data-f="fP"><b>P</b> Papel o PDF escaneado</label>
-      <label><input type="checkbox" data-f="fR"><b>R</b> Repetitivo, uno por uno</label>
-      <label><input type="checkbox" data-f="fM"><b>M</b> Carga manual, copiar y pegar</label>
-      <label><input type="checkbox" data-f="fD"><b>D</b> Doble carga</label>
-      <label><input type="checkbox" data-f="fE"><b>E</b> Errores o rebotes</label>
-      <label><input type="checkbox" data-f="fX"><b>X</b> Esperas</label>
-    </div>
-    <div class="grid g2" style="margin-top:10px">
-      <label class="full">¿Qué te gustaría que cambie de este proceso?<textarea data-f="cambio"></textarea></label>
-    </div>
+<!-- ============ 2 · DIAGRAMAS ============ -->
+<section class="panel" id="p2" hidden>
+  <div class="dia">
+    <aside class="lista">
+      <div class="eyebrow" style="margin-bottom:4px">Mis procesos</div>
+      <div id="listaProc"></div>
+      <button class="pri" onclick="nuevoProceso()">+ Agregar proceso</button>
+      <div id="sugeridos"></div>
+    </aside>
+    <div id="editorProc"></div>
   </div>
-</div>
-</template>
+</section>
+
+<!-- ============ 3 · REVISAR Y ENVIAR ============ -->
+<section class="panel" id="p3" hidden>
+  <div class="eyebrow">Último paso</div>
+  <h1>Revisar y enviar para el análisis</h1>
+  <p class="help">Se envía sin tu nombre. Si después cambiás algo, volvé a enviarlo: se actualiza el mismo envío, no se duplica.</p>
+  <ul class="chk" id="chk"></ul>
+  <div class="res" id="resumen"></div>
+  <div style="margin-top:14px;display:flex;gap:8px;flex-wrap:wrap">
+    <button class="pri" id="btnEnviar" onclick="enviar()" style="padding:11px 18px;font-size:14px">Enviar para análisis</button>
+    <button onclick="window.print()">Imprimir o guardar en PDF</button>
+  </div>
+  <div id="resEnvio"></div>
+  <p class="help" style="margin-top:16px">¿Querés empezar una hoja nueva en esta compu? <button class="peligro" style="padding:3px 8px" onclick="if(confirm('¿Borrar todo lo de esta hoja? No se puede deshacer.')){try{localStorage.removeItem(CLAVE)}catch(e){};location.reload()}">Empezar de cero</button></p>
+</section>
+
+<div id="imprimir"></div>
 
 <script>
-const CLAVE = 'hoja-asis-femer-v1';
-const FILAS_INICIALES = 12, PASOS_INICIALES = 8;
+/* =================== estado =================== */
+const CLAVE = 'hoja-asis-femer-v2';
+const FORMULARIO = 'hoja_asis_femer';
+const TIPOS = {
+  inicio:    { n: 'Trigger',   w: 150, h: 80 },
+  paso:      { n: 'Paso',      w: 170, h: 70 },
+  decision:  { n: 'Decisión',  w: 160, h: 110 },
+  espera:    { n: 'Espera',    w: 160, h: 66 },
+  documento: { n: 'Documento', w: 160, h: 78 },
+  fin:       { n: 'Salida',    w: 150, h: 80 },
+  nota:      { n: 'Nota',      w: 190, h: 84 },
+};
+const FR = { P: 'Papel', R: 'Repetitivo', M: 'Carga manual', D: 'Doble carga', E: 'Error o rebote', X: 'Espera' };
+const GRILLA = 10;
 const $ = (s, r = document) => r.querySelector(s);
 const $$ = (s, r = document) => [...r.querySelectorAll(s)];
-const num = (v) => { const n = parseFloat(String(v || '').replace(',', '.')); return isFinite(n) ? n : 0; };
-const fmt = (n) => n.toLocaleString('es-AR', { maximumFractionDigits: 1 });
+const uid = () => Math.random().toString(36).slice(2, 10);
+const num = (v) => { const n = parseFloat(String(v ?? '').replace(',', '.')); return isFinite(n) ? n : 0; };
+const fmt = (n) => (Math.round(n * 10) / 10).toLocaleString('es-AR');
+const esc = (s) => String(s ?? '').replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+const filaVacia = () => ({ id: uid(), proceso: '', trigger: '', veces: '', minutos: '', herr: '', doble: '', pesa: '', star: false });
+const procesoVacio = (nombre = '') => ({ id: uid(), nombre, trigger: '', entradas: '', salida: '', veces: '', minutos: '', errores: '', tiempo: '', doble: '', escrito: '', pesa: '', cambio: '', nodos: [], lineas: [] });
+const codigoNuevo = () => Array.from(crypto.getRandomValues(new Uint8Array(8)), (b) => 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789'[b % 32]).join('');
 
-function agregarFila(d = {}) {
-  const tb = $('#filas'), i = tb.children.length + 1, tr = document.createElement('tr');
-  tr.innerHTML = `<td class="star"><input type="checkbox" data-c="star" title="Uno de mis 3 elegidos"></td><td class="n">${i}</td>
-    <td><textarea data-c="proceso"></textarea></td><td><textarea data-c="trigger"></textarea></td>
-    <td><input data-c="veces" type="number" min="0"></td><td><input data-c="minutos" type="number" min="0"></td>
-    <td><textarea data-c="herr"></textarea></td>
-    <td><select data-c="doble"><option></option><option>Sí</option><option>No</option></select></td>
-    <td><select data-c="pesa"><option></option><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option></select></td>
-    <td class="h" data-c-h></td>`;
-  tb.appendChild(tr);
-  $$('[data-c]', tr).forEach((e) => { const v = d[e.dataset.c]; if (v == null) return; e.type === 'checkbox' ? (e.checked = !!v) : (e.value = v); });
+let S = null;
+try { S = JSON.parse(localStorage.getItem(CLAVE) || 'null'); } catch (e) {}
+if (!S || !S.codigo) {
+  S = { codigo: codigoNuevo(), puesto: {}, inventario: [], procesos: [], actual: null, enviado: null };
+  // si usó la hoja anterior (sin diagramas), trae lo que ya cargó
+  try {
+    const v1 = JSON.parse(localStorage.getItem('hoja-asis-femer-v1') || 'null');
+    if (v1) {
+      S.puesto = v1.puesto || {};
+      S.inventario = (v1.filas || []).filter((f) => f.proceso).map((f) => ({ ...filaVacia(), ...f, id: uid() }));
+      (v1.fichas || []).filter((f) => f.nombre).forEach((f) => S.procesos.push({ ...procesoVacio(f.nombre), trigger: f.trigger || '', entradas: f.entradas || '', salida: f.salida || '', veces: f.veces || '', minutos: f.minutos || '', errores: f.errores || '', tiempo: f.tiempo || '', doble: f.doble || '', escrito: f.escrito || '', pesa: f.pesa || '', cambio: f.cambio || '' }));
+    }
+  } catch (e) {}
+}
+while (S.inventario.length < 10) S.inventario.push(filaVacia());
+
+let relojG;
+function guardar() {
+  clearTimeout(relojG);
+  relojG = setTimeout(() => {
+    try { localStorage.setItem(CLAVE, JSON.stringify(S)); $('#est').textContent = 'Guardado en esta compu · ' + new Date().toLocaleTimeString('es-AR', { hour: '2-digit', minute: '2-digit' }); }
+    catch (e) { $('#est').textContent = 'No se pudo guardar en esta compu: imprimí o enviá antes de cerrar.'; }
+  }, 300);
 }
 
-function agregarPaso(tb, d = {}) {
-  const i = tb.children.length + 1, tr = document.createElement('tr');
-  tr.innerHTML = `<td class="n">${i}</td><td><textarea data-p="paso"></textarea></td><td><input data-p="herr"></td><td><input data-p="fr" placeholder="P R M D E X" style="text-transform:uppercase"></td>`;
-  tb.appendChild(tr);
-  $$('[data-p]', tr).forEach((e) => { if (d[e.dataset.p] != null) e.value = d[e.dataset.p]; });
+/* =================== pestañas =================== */
+let pestana = 1;
+function irA(n) {
+  pestana = n;
+  $$('.tab').forEach((t) => t.classList.toggle('on', +t.dataset.tab === n));
+  [1, 2, 3].forEach((i) => ($('#p' + i).hidden = i !== n));
+  if (n === 2) { pintarLista(); abrirProceso(S.actual && S.procesos.some((p) => p.id === S.actual) ? S.actual : S.procesos[0]?.id); }
+  if (n === 3) pintarRevision();
+  window.scrollTo(0, 0);
 }
 
-function crearFichas(datos = []) {
-  const cont = $('#fichas');
-  for (let k = 0; k < 3; k++) {
-    const nodo = $('#tFicha').content.cloneNode(true), f = nodo.querySelector('.ficha'), d = datos[k] || {};
-    f.dataset.i = k;
-    $('.num', f).textContent = k + 1;
-    const tb = $('.pasos tbody', f);
-    const pasos = d.pasos && d.pasos.length ? d.pasos : [];
-    for (let j = 0; j < Math.max(PASOS_INICIALES, pasos.length); j++) agregarPaso(tb, pasos[j]);
-    $('[data-mas]', f).onclick = () => { agregarPaso(tb); guardar(); };
-    $$('[data-f]', f).forEach((e) => { const v = d[e.dataset.f]; if (v == null) return; e.type === 'checkbox' ? (e.checked = !!v) : (e.value = v); });
-    cont.appendChild(nodo);
+/* =================== 1 · inventario =================== */
+function pintarInventario() {
+  const tb = $('#filas');
+  tb.innerHTML = S.inventario.map((f, i) => `<tr data-i="${i}">
+    <td class="star"><input type="checkbox" data-c="star" ${f.star ? 'checked' : ''} title="Uno de mis 3 elegidos"></td><td class="n">${i + 1}</td>
+    <td><textarea data-c="proceso" maxlength="200">${esc(f.proceso)}</textarea></td><td><textarea data-c="trigger" maxlength="300">${esc(f.trigger)}</textarea></td>
+    <td><input data-c="veces" type="number" min="0" value="${esc(f.veces)}"></td><td><input data-c="minutos" type="number" min="0" value="${esc(f.minutos)}"></td>
+    <td><textarea data-c="herr" maxlength="200">${esc(f.herr)}</textarea></td>
+    <td><select data-c="doble">${['', 'Sí', 'No'].map((o) => `<option ${f.doble === o ? 'selected' : ''}>${o}</option>`).join('')}</select></td>
+    <td><select data-c="pesa">${['', '1', '2', '3', '4', '5'].map((o) => `<option ${String(f.pesa) === o ? 'selected' : ''}>${o}</option>`).join('')}</select></td>
+    <td class="h"></td>
+    <td class="acc"><button data-diag title="Abrir el lienzo de este proceso">Diagramar →</button></td></tr>`).join('');
+  totales();
+}
+$('#filas').addEventListener('input', (e) => {
+  const tr = e.target.closest('tr'), c = e.target.dataset.c; if (!tr || !c) return;
+  const f = S.inventario[+tr.dataset.i];
+  f[c] = e.target.type === 'checkbox' ? e.target.checked : e.target.value;
+  totales(); guardar();
+});
+$('#filas').addEventListener('change', (e) => { if (e.target.type === 'checkbox' || e.target.tagName === 'SELECT') e.target.dispatchEvent(new Event('input', { bubbles: true })); });
+$('#filas').addEventListener('click', (e) => {
+  if (!e.target.closest('[data-diag]')) return;
+  const f = S.inventario[+e.target.closest('tr').dataset.i];
+  if (!f.proceso.trim()) { alert('Primero escribí el nombre del proceso.'); return; }
+  let p = S.procesos.find((x) => x.desde === f.id || x.nombre.trim().toLowerCase() === f.proceso.trim().toLowerCase());
+  if (!p) { p = { ...procesoVacio(f.proceso.trim()), desde: f.id, trigger: f.trigger, veces: f.veces, minutos: f.minutos, doble: f.doble, pesa: f.pesa }; S.procesos.push(p); guardar(); }
+  S.actual = p.id; irA(2);
+});
+$$('[data-k]').forEach((e) => {
+  e.value = S.puesto[e.dataset.k] ?? '';
+  e.addEventListener('input', () => { S.puesto[e.dataset.k] = e.value; totales(); guardar(); });
+});
+function totales() {
+  let total = 0, procs = 0, est = 0;
+  $$('#filas tr').forEach((tr) => {
+    const f = S.inventario[+tr.dataset.i];
+    const h = num(f.veces) * num(f.minutos) / 60;
+    $('td.h', tr).textContent = h ? fmt(h) : '';
+    if (f.proceso.trim()) procs++;
+    if (f.star && f.proceso.trim()) est++;
+    total += h;
+  });
+  const jor = num(S.puesto.jornada) * 20;
+  $('#tProc').textContent = procs; $('#tHoras').textContent = fmt(total); $('#tJor').textContent = jor ? fmt(jor) : '—'; $('#tEst').textContent = est;
+  const a = $('#alerta'); a.hidden = true;
+  if (jor && total > jor * 1.1) { a.hidden = false; a.className = 'alerta mal'; a.textContent = `Tus procesos suman ${fmt(total)} h por mes y tu jornada tiene unas ${fmt(jor)} h. Revisá las veces y los minutos: puede que algún número sea del sector completo o esté contado dos veces.`; }
+  else if (est > 3) { a.hidden = false; a.className = 'alerta mal'; a.textContent = 'Marcaste más de 3 con ★: elegí los 3 que más te llevan o más te pesan.'; }
+  else if (jor && total) { a.hidden = false; a.className = 'alerta ok'; a.textContent = `Tus procesos ocupan el ${Math.round(total / jor * 100)}% de tu jornada. Lo que falta suele ser lo que todavía no listaste: revisá tu correo y tu WhatsApp.`; }
+}
+
+/* =================== 2 · lista de procesos =================== */
+function pintarLista() {
+  $('#listaProc').innerHTML = S.procesos.length
+    ? S.procesos.map((p) => `<button class="it ${p.id === S.actual ? 'on' : ''}" data-p="${p.id}"><span style="overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${esc(p.nombre) || '<i>Sin nombre</i>'}</span><span class="cnt">${p.nodos.length} símb.</span></button>`).join('')
+    : '<p class="help">Todavía no agregaste procesos.</p>';
+  const usados = new Set(S.procesos.map((p) => p.desde));
+  const nombres = new Set(S.procesos.map((p) => p.nombre.trim().toLowerCase()));
+  const sug = S.inventario.filter((f) => f.proceso.trim() && !usados.has(f.id) && !nombres.has(f.proceso.trim().toLowerCase()))
+    .sort((a, b) => (b.star - a.star));
+  $('#sugeridos').innerHTML = sug.length ? `<p class="sug">De tu inventario${sug.some((f) => f.star) ? ' (★ primero)' : ''}:</p>` + sug.slice(0, 12).map((f) => `<button class="chip" data-inv="${f.id}">${f.star ? '★ ' : '+ '}${esc(f.proceso)}</button>`).join('') : '';
+}
+$('#listaProc').addEventListener('click', (e) => { const b = e.target.closest('[data-p]'); if (b) abrirProceso(b.dataset.p); });
+$('#sugeridos').addEventListener('click', (e) => {
+  const b = e.target.closest('[data-inv]'); if (!b) return;
+  const f = S.inventario.find((x) => x.id === b.dataset.inv);
+  const p = { ...procesoVacio(f.proceso.trim()), desde: f.id, trigger: f.trigger, veces: f.veces, minutos: f.minutos, doble: f.doble, pesa: f.pesa };
+  S.procesos.push(p); guardar(); abrirProceso(p.id);
+});
+function nuevoProceso() {
+  if (S.procesos.length >= 12) { alert('Llegaste al máximo de 12 procesos por hoja.'); return; }
+  const p = procesoVacio(''); S.procesos.push(p); guardar(); abrirProceso(p.id);
+  setTimeout(() => $('.cab .nom')?.focus(), 50);
+}
+function borrarProceso() {
+  const p = P(); if (!p) return;
+  if (!confirm(`¿Eliminar el proceso «${p.nombre || 'sin nombre'}» y su diagrama?`)) return;
+  S.procesos = S.procesos.filter((x) => x.id !== p.id); S.actual = S.procesos[0]?.id || null; guardar(); pintarLista(); abrirProceso(S.actual);
+}
+
+/* =================== 2 · editor de un proceso =================== */
+const P = () => S.procesos.find((p) => p.id === S.actual);
+const vistas = {};       // zoom y posición de cada lienzo
+let V = { k: 1, tx: 40, ty: 40 };
+let sel = new Set();     // ids de símbolos seleccionados
+let selLinea = null;
+let herramienta = 'mover';
+let hist = [], rehacer = [];
+
+function abrirProceso(id) {
+  S.actual = id || null; sel = new Set(); selLinea = null; hist = []; rehacer = [];
+  pintarLista();
+  const p = P(), cont = $('#editorProc');
+  if (!p) { cont.innerHTML = '<div class="vacio" style="position:static;min-height:300px"><div><h3>Agregá tu primer proceso</h3><p>Con «+ Agregar proceso» o desde los procesos de tu inventario.</p></div></div>'; return; }
+  const campo = (k, et, tipo = 'text', extra = '') => `<label class="c">${et}<input data-f="${k}" type="${tipo}" ${extra} value="${esc(p[k])}"></label>`;
+  const opc = (k, et, ops) => `<label class="c">${et}<select data-f="${k}">${ops.map((o) => `<option ${String(p[k]) === o ? 'selected' : ''}>${o}</option>`).join('')}</select></label>`;
+  const simb = (t) => `<button class="sim" draggable="true" data-add="${t}" title="Agregar ${TIPOS[t].n} (o arrastralo al lienzo)">${iconoSimbolo(t)}${TIPOS[t].n}</button>`;
+  cont.innerHTML = `
+    <div class="cab">
+      <input class="nom" data-f="nombre" maxlength="160" placeholder="Nombre del proceso (ej.: controlar órdenes de prestaciones)" value="${esc(p.nombre)}">
+      <button class="peligro" onclick="borrarProceso()">Eliminar proceso</button>
+    </div>
+    <details class="datos" ${p.nodos.length ? '' : 'open'}>
+      <summary>Datos del proceso: trigger, salida y números <span id="hProc" style="color:var(--muted);font-weight:500"></span></summary>
+      <div class="g4">
+        ${campo('trigger', 'Trigger: qué, de quién, por dónde, cuándo', 'text', 'maxlength="400"')}
+        ${campo('entradas', 'Entradas: con qué trabajo', 'text', 'maxlength="400"')}
+        ${campo('salida', 'Salida: qué entrego y a quién', 'text', 'maxlength="400"')}
+        ${opc('tiempo', '¿Tiempo medido o estimado?', ['', 'Estimado', 'Medido'])}
+        ${campo('veces', 'Veces por mes', 'number', 'min="0"')}
+        ${campo('minutos', 'Minutos por vez', 'number', 'min="0"')}
+        ${campo('errores', 'Errores o rebotes por mes', 'number', 'min="0"')}
+        ${opc('pesa', '¿Cuánto me pesa? (1 a 5)', ['', '1', '2', '3', '4', '5'])}
+        ${opc('doble', '¿Cargo algo dos veces?', ['', 'Sí', 'No'])}
+        ${opc('escrito', '¿Está escrito en algún lado?', ['', 'Sí', 'A medias', 'No'])}
+        <label class="c" style="grid-column:span 2">¿Qué te gustaría que cambie?<input data-f="cambio" maxlength="1000" value="${esc(p.cambio)}"></label>
+      </div>
+    </details>
+    <div class="barra">
+      ${Object.keys(TIPOS).map(simb).join('')}
+      <span class="sep"></span>
+      <button class="ico" data-tool="mover" title="Seleccionar y mover (V)">↖</button>
+      <button class="ico" data-tool="conectar" title="Conectar: clic en un símbolo y después en otro (C)">⤳ Conectar</button>
+      <button class="ico" data-tool="mano" title="Mover el lienzo (mantené la barra espaciadora)">✋</button>
+      <span class="sep"></span>
+      <button class="ico" onclick="deshacer()" title="Deshacer (Ctrl+Z)">↶</button>
+      <button class="ico" onclick="rehacerUno()" title="Rehacer (Ctrl+Y)">↷</button>
+      <button class="ico" onclick="borrarSeleccion()" title="Borrar lo seleccionado (Supr)">🗑</button>
+      <button class="ico" onclick="ordenar()" title="Ordenar en fila de izquierda a derecha siguiendo las flechas">⇶ Ordenar</button>
+    </div>
+    <div class="lienzo" id="lienzo">
+      <svg id="svg" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <pattern id="gr" width="20" height="20" patternUnits="userSpaceOnUse"><circle cx="1" cy="1" r="1" fill="#D5DBE5"/></pattern>
+          <marker id="fl" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="9" markerHeight="9" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#475569"/></marker>
+          <marker id="flSel" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="9" markerHeight="9" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#0E9F8E"/></marker>
+        </defs>
+        <g id="vista"><rect id="fondo" x="-20000" y="-20000" width="40000" height="40000" fill="url(#gr)"/><g id="gLineas"></g><g id="gNodos"></g><g id="gTemp"></g></g>
+      </svg>
+      <textarea id="editor" maxlength="200"></textarea>
+      <div class="ayuda" id="ayuda"><b>Doble clic</b> en el lienzo: paso nuevo · <b>arrastrá</b> desde un punto verde: flecha · <b>doble clic</b> en un símbolo o flecha: escribir · <b>Supr</b>: borrar · <b>Ctrl + rueda</b>: zoom</div>
+      <div class="vacio" id="vacio"><div><h3>Lienzo en blanco</h3><p>Agregá los símbolos de la barra, o arrancá con un esqueleto y completalo.</p><p style="margin-top:10px"><button class="pri" onclick="esqueleto()">Empezar con Trigger → Paso → Salida</button></p></div></div>
+      <div class="insp" id="insp" hidden></div>
+      <div class="zoom"><button onclick="zoomEn(1/1.2)" title="Alejar">−</button><span id="zpct">100%</span><button onclick="zoomEn(1.2)" title="Acercar">+</button><button onclick="ajustar()" title="Ver todo el diagrama">Ver todo</button></div>
+    </div>`;
+  V = vistas[p.id] || { k: 1, tx: 40, ty: 40 };
+  enlazarEditor();
+  dibujar();
+  if (!vistas[p.id] && p.nodos.length) ajustar();
+  horasProceso();
+}
+
+function horasProceso() { const p = P(), h = num(p?.veces) * num(p?.minutos) / 60; const el = $('#hProc'); if (el) el.textContent = h ? `· ${fmt(h)} h por mes` : ''; }
+
+function iconoSimbolo(t) {
+  const s = { inicio: '<ellipse cx="13" cy="9" rx="11" ry="7.5" fill="#FFF7E6" stroke="#D97706" stroke-width="1.8"/>',
+    paso: '<rect x="2" y="3" width="22" height="12" rx="3" fill="#fff" stroke="#334155" stroke-width="1.8"/>',
+    decision: '<path d="M13 1L24 9L13 17L2 9Z" fill="#EFF8FF" stroke="#0284C7" stroke-width="1.8"/>',
+    espera: '<rect x="2" y="3" width="22" height="12" rx="3" fill="#FFF1F3" stroke="#E11D48" stroke-width="1.6" stroke-dasharray="3 2"/>',
+    documento: '<path d="M3 2h20v12c-3.5-2.5-6.5 2.5-10 0s-6.5 2.5-10 0z" fill="#F5F3FF" stroke="#7C3AED" stroke-width="1.8"/>',
+    fin: '<ellipse cx="13" cy="9" rx="11" ry="7.5" fill="#ECFDF8" stroke="#0E9F8E" stroke-width="1.8"/><ellipse cx="13" cy="9" rx="7.5" ry="4.5" fill="none" stroke="#0E9F8E" stroke-width="1.4"/>',
+    nota: '<path d="M3 2h16l4 4v10H3z" fill="#FEF9C3" stroke="#CA8A04" stroke-width="1.6"/>' }[t];
+  return `<svg viewBox="0 0 26 18">${s}</svg>`;
+}
+
+/* ---------- dibujo ---------- */
+function formaSVG(n) {
+  const { x, y, w, h } = n, L = x - w / 2, T = y - h / 2;
+  switch (n.t) {
+    case 'inicio': return `<ellipse class="forma f-inicio" cx="${x}" cy="${y}" rx="${w / 2}" ry="${h / 2}"/>`;
+    case 'fin': return `<ellipse class="forma f-fin" cx="${x}" cy="${y}" rx="${w / 2}" ry="${h / 2}"/><ellipse class="f-fin" fill="none" stroke-width="1.5" cx="${x}" cy="${y}" rx="${w / 2 - 6}" ry="${h / 2 - 6}"/>`;
+    case 'decision': return `<polygon class="forma f-decision" points="${x},${T} ${L + w},${y} ${x},${T + h} ${L},${y}"/>`;
+    case 'espera': return `<rect class="forma f-espera" x="${L}" y="${T}" width="${w}" height="${h}" rx="12"/><path d="M${L + 10} ${T + 7}h10M${L + 10} ${T + 21}h10M${L + 11} ${T + 7}c0 5 8 7 8 14M${L + 19} ${T + 7}c0 5-8 7-8 14" fill="none" stroke="#E11D48" stroke-width="1.5"/>`;
+    case 'documento': return `<path class="forma f-documento" d="M${L},${T} H${L + w} V${T + h - 10} C${L + w * 0.72},${T + h - 26} ${L + w * 0.28},${T + h + 8} ${L},${T + h - 10} Z"/>`;
+    case 'nota': return `<path class="forma f-nota" d="M${L},${T} H${L + w - 16} L${L + w},${T + 16} V${T + h} H${L} Z"/>`;
+    default: return `<rect class="forma f-paso" x="${L}" y="${T}" width="${w}" height="${h}" rx="10"/>`;
   }
 }
-
-function recalcular() {
-  let total = 0, procs = 0;
-  const estrellas = [];
-  $$('#filas tr').forEach((tr) => {
-    const h = num($('[data-c=veces]', tr).value) * num($('[data-c=minutos]', tr).value) / 60;
-    $('[data-c-h]', tr).textContent = h ? fmt(h) : '';
-    const nombre = $('[data-c=proceso]', tr).value.trim();
-    if (nombre) procs++;
-    total += h;
-    if ($('[data-c=star]', tr).checked && nombre) estrellas.push(nombre);
-  });
-  const jornada = num($('[data-k=jornada]').value) * 20;
-  $('#tProc').textContent = procs;
-  $('#tHoras').textContent = fmt(total);
-  $('#tJor').textContent = jornada ? fmt(jornada) : '—';
-  $('#tEst').textContent = estrellas.length;
-  const a = $('#alerta');
-  a.className = 'alerta';
-  if (jornada && total > jornada * 1.1) { a.className = 'alerta on mal'; a.textContent = `Tus procesos suman ${fmt(total)} h por mes y tu jornada tiene unas ${fmt(jornada)} h. Revisá las veces y los minutos: puede que algún número sea del sector completo o esté contado dos veces.`; }
-  else if (estrellas.length > 3) { a.className = 'alerta on mal'; a.textContent = 'Marcaste más de 3 con ★: elegí solo los 3 que más te llevan o más te pesan.'; }
-  else if (jornada && total) { a.className = 'alerta on ok'; a.textContent = `Tus procesos ocupan el ${Math.round(total / jornada * 100)}% de tu jornada. Lo que falta suele ser lo que todavía no listaste: revisá tu correo y tu WhatsApp.`; }
-  // las fichas toman el nombre de los elegidos si están vacías
-  $$('.ficha').forEach((f, k) => {
-    const inp = $('[data-f=nombre]', f);
-    if (estrellas[k] && (!inp.value.trim() || inp.dataset.auto === '1')) { inp.value = estrellas[k]; inp.dataset.auto = '1'; }
-    const h = num($('[data-f=veces]', f).value) * num($('[data-f=minutos]', f).value) / 60;
-    $('[data-f=horas]', f).value = h ? fmt(h) : '';
-  });
+function cajaTexto(n) {
+  const f = { decision: [0.62, 0.6], inicio: [0.76, 0.7], fin: [0.7, 0.62], documento: [0.92, 0.68] }[n.t] || [1, 1];
+  const pad = n.t === 'paso' || n.t === 'espera' || n.t === 'nota' ? 10 : 0;
+  const w = n.w * f[0] - pad * 2, h = n.h * f[1] - (n.t === 'espera' ? 16 : pad);
+  const dy = n.t === 'documento' ? -6 : n.t === 'espera' ? 6 : 0;
+  return { x: n.x - w / 2, y: n.y - h / 2 + dy, w, h };
+}
+function nodoSVG(n) {
+  const c = cajaTexto(n), s = sel.has(n.id), L = n.x - n.w / 2, T = n.y - n.h / 2;
+  const fr = (n.fr || '').split('').filter(Boolean);
+  return `<g class="nodo${s ? ' sel' : ''}" data-nodo="${n.id}">
+    ${formaSVG(n)}
+    <foreignObject x="${c.x}" y="${c.y}" width="${Math.max(10, c.w)}" height="${Math.max(10, c.h)}"><div xmlns="http://www.w3.org/1999/xhtml" class="tx${n.t === 'nota' ? ' izq' : ''}">${n.texto ? esc(n.texto) : `<span class="ph">${TIPOS[n.t].n}: doble clic</span>`}</div></foreignObject>
+    ${fr.map((l, i) => `<g class="badge"><circle cx="${L + n.w - 6 - i * 21}" cy="${T - 3}" r="10"/><text x="${L + n.w - 6 - i * 21}" y="${T + 1}">${l}</text></g>`).join('')}
+    ${s && sel.size === 1 ? `<rect class="selbox" x="${L - 6}" y="${T - 6}" width="${n.w + 12}" height="${n.h + 12}" rx="8"/><rect class="h-res" data-h="res" x="${L + n.w + 1}" y="${T + n.h + 1}" width="10" height="10" rx="2"/>` : ''}
+    ${['n', 'e', 's', 'o'].map((l) => { const a = anclaLado(n, l); return `<circle class="h-con" data-h="con" data-lado="${l}" cx="${a.x}" cy="${a.y}" r="6"/>`; }).join('')}
+  </g>`;
+}
+function anclaLado(n, l) {
+  return { n: { x: n.x, y: n.y - n.h / 2 }, s: { x: n.x, y: n.y + n.h / 2 }, e: { x: n.x + n.w / 2, y: n.y }, o: { x: n.x - n.w / 2, y: n.y } }[l];
+}
+/** Recorrido de una flecha: sale del lado que mira al otro símbolo; en ángulo recto o recta. */
+function recorrido(a, b, recta) {
+  const dx = b.x - a.x, dy = b.y - a.y;
+  const horiz = Math.abs(dx) / ((a.w + b.w) / 2 || 1) >= Math.abs(dy) / ((a.h + b.h) / 2 || 1);
+  let s, e;
+  if (horiz) { s = anclaLado(a, dx >= 0 ? 'e' : 'o'); e = anclaLado(b, dx >= 0 ? 'o' : 'e'); }
+  else { s = anclaLado(a, dy >= 0 ? 's' : 'n'); e = anclaLado(b, dy >= 0 ? 'n' : 's'); }
+  if (recta) return { d: `M${s.x},${s.y} L${e.x},${e.y}`, mx: (s.x + e.x) / 2, my: (s.y + e.y) / 2 };
+  if (horiz) { const m = (s.x + e.x) / 2; return { d: `M${s.x},${s.y} H${m} V${e.y} H${e.x}`, mx: m, my: (s.y + e.y) / 2 }; }
+  const m = (s.y + e.y) / 2; return { d: `M${s.x},${s.y} V${m} H${e.x} V${e.y}`, mx: (s.x + e.x) / 2, my: m };
+}
+function lineaSVG(l, mapa) {
+  const a = mapa[l.de], b = mapa[l.a]; if (!a || !b) return '';
+  const r = recorrido(a, b, l.recta), s = selLinea === l.id;
+  const ancho = Math.max(24, l.texto.length * 7.4 + 14);
+  return `<g class="linea${s ? ' sel' : ''}" data-linea="${l.id}"><path class="hit" d="${r.d}"/><path class="v" d="${r.d}" marker-end="url(#${s ? 'flSel' : 'fl'})"/>
+    ${l.texto ? `<rect class="et" x="${r.mx - ancho / 2}" y="${r.my - 11}" width="${ancho}" height="22" rx="6"/><text x="${r.mx}" y="${r.my + 1}">${esc(l.texto)}</text>` : ''}</g>`;
+}
+function dibujar() {
+  const p = P(); if (!p || !$('#svg')) return;
+  const mapa = Object.fromEntries(p.nodos.map((n) => [n.id, n]));
+  $('#gLineas').innerHTML = p.lineas.map((l) => lineaSVG(l, mapa)).join('');
+  $('#gNodos').innerHTML = p.nodos.map(nodoSVG).join('');
+  aplicarVista();
+  $('#vacio').hidden = p.nodos.length > 0;
+  $('#ayuda').hidden = p.nodos.length === 0;
+  pintarInspector();
+  const it = $(`#listaProc [data-p="${p.id}"] .cnt`); if (it) it.textContent = `${p.nodos.length} símb.`;
+}
+function aplicarVista() {
+  $('#vista').setAttribute('transform', `translate(${V.tx},${V.ty}) scale(${V.k})`);
+  $('#zpct').textContent = Math.round(V.k * 100) + '%';
+  if (P()) vistas[P().id] = V;
 }
 
-function leer() {
-  const o = { puesto: {}, filas: [], fichas: [] };
-  $$('[data-k]').forEach((e) => (o.puesto[e.dataset.k] = e.value));
-  $$('#filas tr').forEach((tr) => { const r = {}; $$('[data-c]', tr).forEach((e) => (r[e.dataset.c] = e.type === 'checkbox' ? e.checked : e.value)); o.filas.push(r); });
-  $$('.ficha').forEach((f) => {
-    const r = { pasos: [] };
-    $$('[data-f]', f).forEach((e) => (r[e.dataset.f] = e.type === 'checkbox' ? e.checked : e.value));
-    $$('.pasos tbody tr', f).forEach((tr) => { const p = {}; $$('[data-p]', tr).forEach((e) => (p[e.dataset.p] = e.value)); r.pasos.push(p); });
-    o.fichas.push(r);
+/* ---------- historia ---------- */
+function foto() { const p = P(); return JSON.stringify({ n: p.nodos, l: p.lineas }); }
+function antes() { hist.push(foto()); if (hist.length > 120) hist.shift(); rehacer = []; }
+function restaurar(f) { const p = P(), o = JSON.parse(f); p.nodos = o.n; p.lineas = o.l; sel = new Set([...sel].filter((id) => p.nodos.some((n) => n.id === id))); selLinea = null; dibujar(); guardar(); }
+function deshacer() { if (!hist.length) return; rehacer.push(foto()); restaurar(hist.pop()); }
+function rehacerUno() { if (!rehacer.length) return; hist.push(foto()); restaurar(rehacer.pop()); }
+
+/* ---------- operaciones ---------- */
+const snap = (v) => Math.round(v / GRILLA) * GRILLA;
+function agregar(t, x, y, conectarDesde) {
+  const p = P(); if (!p) return;
+  if (p.nodos.length >= 80) { alert('Este diagrama llegó al máximo de 80 símbolos.'); return; }
+  antes();
+  const d = TIPOS[t];
+  const n = { id: uid(), t, x: snap(x), y: snap(y), w: d.w, h: d.h, texto: '', fr: '' };
+  p.nodos.push(n);
+  if (conectarDesde) {
+    const origen = p.nodos.find((x) => x.id === conectarDesde), salen = p.lineas.filter((x) => x.de === conectarDesde).length;
+    p.lineas.push({ id: uid(), de: conectarDesde, a: n.id, texto: origen?.t === 'decision' ? (salen === 0 ? 'Sí' : salen === 1 ? 'No' : '') : '', recta: false });
+  }
+  sel = new Set([n.id]); selLinea = null;
+  dibujar(); guardar();
+  return n;
+}
+/** Desde la barra: si hay un símbolo elegido, el nuevo va a su derecha y queda conectado. */
+function agregarDesdeBarra(t) {
+  const p = P(); if (!p) return;
+  const base = sel.size === 1 ? p.nodos.find((n) => sel.has(n.id)) : null;
+  let x, y;
+  if (base) { x = base.x + base.w / 2 + 80 + TIPOS[t].w / 2; y = base.y; }
+  else { const r = $('#lienzo').getBoundingClientRect(); x = (r.width / 2 - 120 - V.tx) / V.k; y = (r.height / 2 - V.ty) / V.k; }
+  ({ x, y } = lugarLibre(x, y, TIPOS[t].w, TIPOS[t].h));
+  const n = agregar(t, x, y, base?.id);
+  if (n) asegurarVisible(n);
+}
+/** Primer lugar cerca de (x, y) donde el símbolo nuevo no tapa a otro: prueba abajo y arriba. */
+function lugarLibre(x, y, w, h) {
+  const p = P();
+  const choca = (cx, cy) => p.nodos.some((n) => Math.abs(n.x - cx) < (n.w + w) / 2 + 20 && Math.abs(n.y - cy) < (n.h + h) / 2 + 20);
+  for (const d of [0, 150, -150, 300, -300, 450, 600]) if (!choca(x, y + d)) return { x, y: y + d };
+  return { x: x + 60, y: y + 60 };
+}
+function asegurarVisible(n) {
+  const r = $('#lienzo').getBoundingClientRect();
+  const sx = n.x * V.k + V.tx, sy = n.y * V.k + V.ty;
+  if (sx < 60 || sx > r.width - 260 || sy < 60 || sy > r.height - 60) { V.tx = r.width / 2 - 120 - n.x * V.k; V.ty = r.height / 2 - n.y * V.k; aplicarVista(); }
+}
+function esqueleto() {
+  const p = P(); antes();
+  const a = { id: uid(), t: 'inicio', x: 140, y: 160, w: 150, h: 80, texto: p.trigger || '', fr: '' };
+  const b = { id: uid(), t: 'paso', x: 380, y: 160, w: 170, h: 70, texto: '', fr: '' };
+  const c = { id: uid(), t: 'fin', x: 620, y: 160, w: 150, h: 80, texto: p.salida || '', fr: '' };
+  p.nodos.push(a, b, c);
+  p.lineas.push({ id: uid(), de: a.id, a: b.id, texto: '', recta: false }, { id: uid(), de: b.id, a: c.id, texto: '', recta: false });
+  sel = new Set([b.id]); dibujar(); guardar(); ajustar();
+}
+function borrarSeleccion() {
+  const p = P(); if (!p) return;
+  if (selLinea) { antes(); p.lineas = p.lineas.filter((l) => l.id !== selLinea); selLinea = null; dibujar(); guardar(); return; }
+  if (!sel.size) return;
+  antes();
+  p.nodos = p.nodos.filter((n) => !sel.has(n.id));
+  p.lineas = p.lineas.filter((l) => !sel.has(l.de) && !sel.has(l.a));
+  sel = new Set(); dibujar(); guardar();
+}
+let portapapeles = null;
+function copiar() { const p = P(); if (!sel.size) return; portapapeles = { n: p.nodos.filter((n) => sel.has(n.id)), l: p.lineas.filter((l) => sel.has(l.de) && sel.has(l.a)) }; }
+function pegar(dx = 40) {
+  const p = P(); if (!portapapeles || !p) return;
+  if (p.nodos.length + portapapeles.n.length > 80) { alert('Este diagrama llegó al máximo de 80 símbolos.'); return; }
+  antes();
+  const ids = {};
+  const nuevos = portapapeles.n.map((n) => { const id = uid(); ids[n.id] = id; return { ...n, id, x: n.x + dx, y: n.y + dx }; });
+  p.nodos.push(...nuevos);
+  portapapeles.l.forEach((l) => p.lineas.push({ ...l, id: uid(), de: ids[l.de], a: ids[l.a] }));
+  sel = new Set(nuevos.map((n) => n.id)); selLinea = null;
+  portapapeles = { n: nuevos, l: portapapeles.l.map((l) => ({ ...l, de: ids[l.de], a: ids[l.a] })) };
+  dibujar(); guardar();
+}
+function conectar(de, a) {
+  const p = P(); if (!de || !a || de === a) return;
+  if (p.lineas.some((l) => l.de === de && l.a === a)) return;
+  if (p.lineas.length >= 160) { alert('Este diagrama llegó al máximo de 160 flechas.'); return; }
+  antes();
+  const l = { id: uid(), de, a, texto: '', recta: false };
+  // de una decisión: la primera salida es «Sí», la segunda «No»
+  const origen = p.nodos.find((n) => n.id === de);
+  if (origen?.t === 'decision') { const salen = p.lineas.filter((x) => x.de === de).length; l.texto = salen === 0 ? 'Sí' : salen === 1 ? 'No' : ''; }
+  p.lineas.push(l); selLinea = l.id; sel = new Set(); dibujar(); guardar();
+}
+/** Ordena de izquierda a derecha por niveles, siguiendo las flechas desde el trigger. */
+function ordenar() {
+  const p = P(); if (!p || !p.nodos.length) return;
+  antes();
+  const sale = {}; p.nodos.forEach((n) => (sale[n.id] = []));
+  p.lineas.forEach((l) => sale[l.de]?.push(l.a));
+  const entra = new Set(p.lineas.map((l) => l.a));
+  const raices = p.nodos.filter((n) => n.t === 'inicio' || !entra.has(n.id)).sort((a, b) => (a.t === 'inicio' ? -1 : 0) - (b.t === 'inicio' ? -1 : 0));
+  const nivel = {}, cola = (raices.length ? raices : [p.nodos[0]]).map((n) => n.id);
+  cola.forEach((id) => (nivel[id] = 0));
+  while (cola.length) { const id = cola.shift(); sale[id].forEach((h) => { if (nivel[h] == null) { nivel[h] = nivel[id] + 1; cola.push(h); } }); }
+  let max = Math.max(0, ...Object.values(nivel));
+  p.nodos.forEach((n) => { if (nivel[n.id] == null) nivel[n.id] = ++max; });
+  const filas = {};
+  p.nodos.forEach((n) => { (filas[nivel[n.id]] ||= []).push(n); });
+  Object.entries(filas).forEach(([nv, ns]) => ns.forEach((n, i) => { n.x = snap(120 + nv * 240); n.y = snap(140 + i * 150 - (ns.length - 1) * 75 + 150); }));
+  dibujar(); guardar(); ajustar();
+}
+
+/* ---------- vista ---------- */
+function zoomEn(f, cx, cy) {
+  const r = $('#lienzo').getBoundingClientRect();
+  cx ??= r.width / 2; cy ??= r.height / 2;
+  const k = Math.min(3, Math.max(0.25, V.k * f));
+  V.tx = cx - (cx - V.tx) * (k / V.k); V.ty = cy - (cy - V.ty) * (k / V.k); V.k = k; aplicarVista();
+}
+function limites(nodos) {
+  const xs = nodos.flatMap((n) => [n.x - n.w / 2, n.x + n.w / 2]), ys = nodos.flatMap((n) => [n.y - n.h / 2 - 14, n.y + n.h / 2]);
+  return { x: Math.min(...xs), y: Math.min(...ys), w: Math.max(...xs) - Math.min(...xs), h: Math.max(...ys) - Math.min(...ys) };
+}
+function ajustar() {
+  const p = P(); if (!p || !p.nodos.length) return;
+  const r = $('#lienzo').getBoundingClientRect(), b = limites(p.nodos);
+  const k = Math.min(1.4, Math.max(0.25, Math.min((r.width - 80) / (b.w || 1), (r.height - 110) / (b.h || 1))));
+  V = { k, tx: (r.width - b.w * k) / 2 - b.x * k, ty: (r.height - b.h * k) / 2 - b.y * k + 10 }; aplicarVista();
+}
+
+/* ---------- inspector ---------- */
+function pintarInspector() {
+  const p = P(), box = $('#insp'); if (!box) return;
+  if (selLinea) {
+    const l = p.lineas.find((x) => x.id === selLinea); if (!l) { box.hidden = true; return; }
+    box.hidden = false;
+    box.innerHTML = `<h3>Flecha</h3>
+      <label class="c">Texto (ej.: Sí, No, si falta la firma)<input id="iTexto" maxlength="60" value="${esc(l.texto)}"></label>
+      <div class="fila"><button data-q="Sí">Sí</button><button data-q="No">No</button><button data-q="">Sin texto</button></div>
+      <div class="fila"><button class="tipo ${l.recta ? '' : 'on'}" data-recta="0">En ángulo</button><button class="tipo ${l.recta ? 'on' : ''}" data-recta="1">Recta</button><button data-inv>Invertir ⇄</button></div>
+      <button class="peligro" data-del>Borrar flecha</button>`;
+    $('#iTexto').oninput = (e) => { l.texto = e.target.value.slice(0, 60); dibujarSinInspector(); guardar(); };
+    $('#iTexto').onfocus = () => antes();
+    $$('[data-q]', box).forEach((b) => (b.onclick = () => { antes(); l.texto = b.dataset.q; dibujar(); guardar(); }));
+    $$('[data-recta]', box).forEach((b) => (b.onclick = () => { antes(); l.recta = b.dataset.recta === '1'; dibujar(); guardar(); }));
+    $('[data-inv]', box).onclick = () => { antes(); [l.de, l.a] = [l.a, l.de]; dibujar(); guardar(); };
+    $('[data-del]', box).onclick = borrarSeleccion;
+    return;
+  }
+  if (sel.size !== 1) {
+    if (sel.size > 1) { box.hidden = false; box.innerHTML = `<h3>${sel.size} símbolos</h3><p class="help" style="margin:0">Arrastralos juntos, copialos con Ctrl+C / Ctrl+V o borralos con Supr.</p><button class="peligro" data-del>Borrar los ${sel.size}</button>`; $('[data-del]', box).onclick = borrarSeleccion; }
+    else box.hidden = true;
+    return;
+  }
+  const n = p.nodos.find((x) => sel.has(x.id)); if (!n) { box.hidden = true; return; }
+  box.hidden = false;
+  box.innerHTML = `<h3>${TIPOS[n.t].n}</h3>
+    <label class="c">Texto<textarea id="iTexto" maxlength="200" rows="3" placeholder="${n.t === 'decision' ? '¿Está completa?' : n.t === 'inicio' ? 'Qué lo dispara' : 'Verbo + qué + con qué'}">${esc(n.texto)}</textarea></label>
+    <div><div class="c" style="margin-bottom:4px">Cambiar a</div><div class="fila">${Object.keys(TIPOS).map((t) => `<button class="tipo ${n.t === t ? 'on' : ''}" data-tipo="${t}">${TIPOS[t].n}</button>`).join('')}</div></div>
+    <div><div class="c" style="margin-bottom:4px">Fricciones de este paso</div><div class="fila">${Object.entries(FR).map(([k, t]) => `<button class="${(n.fr || '').includes(k) ? 'on' : ''}" data-fr="${k}" title="${t}">${k} · ${t}</button>`).join('')}</div></div>
+    <div class="fila"><button data-sig title="Agrega un paso a la derecha, conectado">+ Paso siguiente</button><button data-dup>Duplicar</button></div>
+    <button class="peligro" data-del>Borrar símbolo</button>`;
+  $('#iTexto').oninput = (e) => { n.texto = e.target.value.slice(0, 200); dibujarSinInspector(); guardar(); };
+  $('#iTexto').onfocus = () => antes();
+  $$('[data-tipo]', box).forEach((b) => (b.onclick = () => { antes(); n.t = b.dataset.tipo; const d = TIPOS[n.t]; n.w = d.w; n.h = d.h; dibujar(); guardar(); }));
+  $$('[data-fr]', box).forEach((b) => (b.onclick = () => { antes(); const k = b.dataset.fr; n.fr = (n.fr || '').includes(k) ? n.fr.replace(k, '') : (n.fr || '') + k; n.fr = 'PRMDEX'.split('').filter((c) => n.fr.includes(c)).join(''); dibujar(); guardar(); }));
+  $('[data-sig]', box).onclick = () => agregarDesdeBarra('paso');
+  $('[data-dup]', box).onclick = () => { copiar(); pegar(); };
+  $('[data-del]', box).onclick = borrarSeleccion;
+}
+function dibujarSinInspector() {
+  const p = P(), mapa = Object.fromEntries(p.nodos.map((n) => [n.id, n]));
+  $('#gLineas').innerHTML = p.lineas.map((l) => lineaSVG(l, mapa)).join('');
+  $('#gNodos').innerHTML = p.nodos.map(nodoSVG).join('');
+}
+
+/* ---------- edición de texto sobre el lienzo ---------- */
+let editando = null;
+function editarTexto(obj, tipo) {
+  const ed = $('#editor'), p = P();
+  let x, y, w, h;
+  if (tipo === 'nodo') { const c = cajaTexto(obj); x = c.x; y = c.y; w = Math.max(120, c.w); h = Math.max(44, c.h); }
+  else { const mapa = Object.fromEntries(p.nodos.map((n) => [n.id, n])), r = recorrido(mapa[obj.de], mapa[obj.a], obj.recta); w = 140; h = 36; x = r.mx - 70; y = r.my - 18; }
+  Object.assign(ed.style, { display: 'block', left: x * V.k + V.tx + 'px', top: y * V.k + V.ty + 'px', width: w * V.k + 'px', height: h * V.k + 'px', fontSize: Math.max(11, 14 * V.k) + 'px' });
+  ed.maxLength = tipo === 'nodo' ? 200 : 60;
+  ed.value = obj.texto || '';
+  editando = { obj, previo: foto() };
+  ed.focus(); ed.select();
+}
+function cerrarEditor(guardarlo) {
+  const ed = $('#editor'); if (!editando) return;
+  if (guardarlo && ed.value !== (editando.obj.texto || '')) { hist.push(editando.previo); rehacer = []; editando.obj.texto = ed.value.trim(); guardar(); }
+  editando = null; ed.style.display = 'none'; dibujar();
+}
+
+/* ---------- puntero ---------- */
+function enlazarEditor() {
+  const svg = $('#svg'), lz = $('#lienzo'), ed = $('#editor');
+  const mundo = (e) => { const r = svg.getBoundingClientRect(); return { x: (e.clientX - r.left - V.tx) / V.k, y: (e.clientY - r.top - V.ty) / V.k }; };
+  let arr = null, espacio = false, origenConexion = null, ultimoClic = null;
+
+  $$('[data-add]').forEach((b) => {
+    b.onclick = () => agregarDesdeBarra(b.dataset.add);
+    b.ondragstart = (e) => { e.dataTransfer.setData('text/plain', b.dataset.add); e.dataTransfer.effectAllowed = 'copy'; };
   });
-  return o;
+  lz.ondragover = (e) => { e.preventDefault(); e.dataTransfer.dropEffect = 'copy'; };
+  lz.ondrop = (e) => { e.preventDefault(); const t = e.dataTransfer.getData('text/plain'); if (TIPOS[t]) { const m = mundo(e); agregar(t, m.x, m.y); } };
+  $$('[data-tool]').forEach((b) => (b.onclick = () => elegirHerramienta(b.dataset.tool)));
+  elegirHerramienta(herramienta);
+
+  $$('[data-f]').forEach((e) => e.addEventListener('input', () => {
+    const p = P(); p[e.dataset.f] = e.value;
+    if (e.dataset.f === 'nombre') { const it = $(`#listaProc [data-p="${p.id}"] span`); if (it) it.textContent = e.value || 'Sin nombre'; }
+    horasProceso(); guardar();
+  }));
+
+  ed.onkeydown = (e) => { if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); cerrarEditor(true); } if (e.key === 'Escape') cerrarEditor(false); e.stopPropagation(); };
+  ed.onblur = () => cerrarEditor(true);
+
+  svg.addEventListener('wheel', (e) => {
+    e.preventDefault();
+    const r = svg.getBoundingClientRect();
+    if (e.ctrlKey || e.metaKey) zoomEn(e.deltaY < 0 ? 1.1 : 1 / 1.1, e.clientX - r.left, e.clientY - r.top);
+    else { V.tx -= e.deltaX; V.ty -= e.deltaY; aplicarVista(); }
+  }, { passive: false });
+
+  svg.addEventListener('pointerdown', (e) => {
+    if (editando) cerrarEditor(true);
+    const p = P(), m = mundo(e);
+    const hCon = e.target.closest('[data-h="con"]'), hRes = e.target.closest('[data-h="res"]');
+    const gN = e.target.closest('[data-nodo]'), gL = e.target.closest('[data-linea]');
+    // doble clic propio: el primer clic redibuja y el navegador pierde el «dblclick»
+    const ahora = performance.now(), clave = gN ? 'n' + gN.dataset.nodo : gL ? 'l' + gL.dataset.linea : 'v';
+    const doble = ultimoClic && e.button === 0 && ahora - ultimoClic.t < 400 && ultimoClic.k === clave && Math.hypot(e.clientX - ultimoClic.x, e.clientY - ultimoClic.y) < 10;
+    ultimoClic = { t: ahora, k: clave, x: e.clientX, y: e.clientY };
+    if (doble && !hCon && !hRes && herramienta !== 'conectar') {
+      e.preventDefault(); ultimoClic = null; arr = null;
+      if (gN) { const n = p.nodos.find((x) => x.id === gN.dataset.nodo); sel = new Set([n.id]); selLinea = null; dibujar(); setTimeout(() => editarTexto(n, 'nodo')); }
+      else if (gL) { const l = p.lineas.find((x) => x.id === gL.dataset.linea); selLinea = l.id; sel = new Set(); dibujar(); setTimeout(() => editarTexto(l, 'linea')); }
+      else { const n = agregar('paso', m.x, m.y); if (n) setTimeout(() => editarTexto(n, 'nodo')); }
+      return;
+    }
+    svg.setPointerCapture(e.pointerId);
+    if (e.button === 1 || e.button === 2 || espacio || herramienta === 'mano' || (!gN && !gL && e.pointerType === 'touch' && herramienta !== 'conectar')) {
+      arr = { modo: 'pan', sx: e.clientX, sy: e.clientY, tx: V.tx, ty: V.ty }; lz.classList.add('arrastra'); return;
+    }
+    if (hRes && gN) { const n = p.nodos.find((x) => x.id === gN.dataset.nodo); arr = { modo: 'res', n, w: n.w, h: n.h, m, previo: foto() }; return; }
+    if ((hCon && gN) || (herramienta === 'conectar' && gN)) {
+      const n = p.nodos.find((x) => x.id === gN.dataset.nodo);
+      if (herramienta === 'conectar' && !hCon && origenConexion && origenConexion !== n.id) { conectar(origenConexion, n.id); origenConexion = null; lz.classList.remove('conectando'); $('#gTemp').innerHTML = ''; return; }
+      arr = { modo: 'con', de: n, m }; lz.classList.add('conectando'); return;
+    }
+    if (gN) {
+      const id = gN.dataset.nodo;
+      if (e.shiftKey) { sel.has(id) ? sel.delete(id) : sel.add(id); }
+      else if (!sel.has(id)) sel = new Set([id]);
+      selLinea = null;
+      const movibles = p.nodos.filter((n) => sel.has(n.id));
+      arr = { modo: 'mover', m, ini: movibles.map((n) => ({ n, x: n.x, y: n.y })), previo: foto(), movio: false };
+      dibujar(); return;
+    }
+    if (gL) { selLinea = gL.dataset.linea; sel = new Set(); dibujar(); arr = null; return; }
+    arr = { modo: 'marco', m, sh: e.shiftKey };
+    if (!e.shiftKey) { sel = new Set(); selLinea = null; dibujar(); }
+  });
+
+  svg.addEventListener('pointermove', (e) => {
+    if (!arr) return;
+    const m = mundo(e);
+    if (arr.modo === 'pan') { V.tx = arr.tx + e.clientX - arr.sx; V.ty = arr.ty + e.clientY - arr.sy; aplicarVista(); return; }
+    if (arr.modo === 'mover') {
+      const dx = m.x - arr.m.x, dy = m.y - arr.m.y;
+      if (Math.abs(dx) + Math.abs(dy) > 2) arr.movio = true;
+      arr.ini.forEach((o) => { o.n.x = snap(o.x + dx); o.n.y = snap(o.y + dy); });
+      dibujarSinInspector(); return;
+    }
+    if (arr.modo === 'res') { arr.n.w = Math.max(60, snap(arr.w + (m.x - arr.m.x) * 2)); arr.n.h = Math.max(40, snap(arr.h + (m.y - arr.m.y) * 2)); dibujarSinInspector(); return; }
+    if (arr.modo === 'con') {
+      const a = arr.de, dx = m.x - a.x, dy = m.y - a.y;
+      const s = Math.abs(dx) / a.w >= Math.abs(dy) / a.h ? anclaLado(a, dx >= 0 ? 'e' : 'o') : anclaLado(a, dy >= 0 ? 's' : 'n');
+      $('#gTemp').innerHTML = `<path class="temp" d="M${s.x},${s.y} L${m.x},${m.y}" marker-end="url(#flSel)"/>`; return;
+    }
+    if (arr.modo === 'marco') {
+      const x = Math.min(m.x, arr.m.x), y = Math.min(m.y, arr.m.y), w = Math.abs(m.x - arr.m.x), h = Math.abs(m.y - arr.m.y);
+      arr.caja = { x, y, w, h };
+      $('#gTemp').innerHTML = `<rect class="marq" x="${x}" y="${y}" width="${w}" height="${h}"/>`;
+    }
+  });
+
+  const soltar = (e) => {
+    if (!arr) return;
+    const p = P(), a = arr; arr = null;
+    lz.classList.remove('arrastra');
+    if (a.modo === 'mover' && a.movio) { hist.push(a.previo); rehacer = []; guardar(); dibujar(); }
+    if (a.modo === 'res') { hist.push(a.previo); rehacer = []; guardar(); dibujar(); }
+    if (a.modo === 'con') {
+      $('#gTemp').innerHTML = '';
+      const destino = document.elementsFromPoint(e.clientX, e.clientY).map((el) => el.closest && el.closest('[data-nodo]')).find(Boolean);
+      if (destino && destino.dataset.nodo !== a.de.id) { conectar(a.de.id, destino.dataset.nodo); lz.classList.remove('conectando'); origenConexion = null; }
+      else if (!destino && Math.hypot(mundo(e).x - a.m.x, mundo(e).y - a.m.y) > 30) {
+        // soltó en el vacío: crea un paso ahí, conectado
+        const m = mundo(e); agregar('paso', m.x, m.y, a.de.id); lz.classList.remove('conectando'); origenConexion = null;
+      } else if (herramienta === 'conectar') { origenConexion = a.de.id; sel = new Set([a.de.id]); dibujar(); }
+      else lz.classList.remove('conectando');
+    }
+    if (a.modo === 'marco') {
+      $('#gTemp').innerHTML = '';
+      if (a.caja && a.caja.w > 4) { p.nodos.forEach((n) => { if (n.x >= a.caja.x && n.x <= a.caja.x + a.caja.w && n.y >= a.caja.y && n.y <= a.caja.y + a.caja.h) sel.add(n.id); }); dibujar(); }
+    }
+  };
+  svg.addEventListener('pointerup', soltar);
+  svg.addEventListener('pointercancel', soltar);
+  svg.addEventListener('contextmenu', (e) => e.preventDefault());
+
+
+  document.onkeydown = (e) => {
+    if (pestana !== 2 || !P()) return;
+    const enCampo = /^(INPUT|TEXTAREA|SELECT)$/.test(document.activeElement?.tagName);
+    if (e.key === ' ' && !enCampo) { espacio = true; lz.classList.add('mano'); e.preventDefault(); return; }
+    if (enCampo) return;
+    const ctrl = e.ctrlKey || e.metaKey, k = e.key.toLowerCase();
+    if (k === 'delete' || k === 'backspace') { e.preventDefault(); borrarSeleccion(); }
+    else if (ctrl && k === 'z' && !e.shiftKey) { e.preventDefault(); deshacer(); }
+    else if (ctrl && (k === 'y' || (k === 'z' && e.shiftKey))) { e.preventDefault(); rehacerUno(); }
+    else if (ctrl && k === 'c') copiar();
+    else if (ctrl && k === 'v') { e.preventDefault(); pegar(); }
+    else if (ctrl && k === 'd') { e.preventDefault(); copiar(); pegar(); }
+    else if (ctrl && k === 'a') { e.preventDefault(); sel = new Set(P().nodos.map((n) => n.id)); selLinea = null; dibujar(); }
+    else if (k === 'escape') { sel = new Set(); selLinea = null; origenConexion = null; lz.classList.remove('conectando'); $('#gTemp').innerHTML = ''; dibujar(); }
+    else if (k === 'enter' && sel.size === 1) { e.preventDefault(); editarTexto(P().nodos.find((n) => sel.has(n.id)), 'nodo'); }
+    else if (k === 'v' && !ctrl) elegirHerramienta('mover');
+    else if (k === 'c' && !ctrl) elegirHerramienta('conectar');
+    else if (k.startsWith('arrow') && sel.size) {
+      e.preventDefault(); antes();
+      const d = e.shiftKey ? 50 : GRILLA, dx = k === 'arrowleft' ? -d : k === 'arrowright' ? d : 0, dy = k === 'arrowup' ? -d : k === 'arrowdown' ? d : 0;
+      P().nodos.forEach((n) => { if (sel.has(n.id)) { n.x += dx; n.y += dy; } }); dibujar(); guardar();
+    }
+  };
+  document.onkeyup = (e) => { if (e.key === ' ') { espacio = false; lz.classList.remove('mano'); } };
+  function elegirHerramienta(t) {
+    herramienta = t; origenConexion = null;
+    $$('[data-tool]').forEach((b) => b.classList.toggle('on', b.dataset.tool === t));
+    lz.classList.toggle('mano', t === 'mano'); lz.classList.toggle('conectando', t === 'conectar');
+  }
+  window.elegirHerramienta = elegirHerramienta;
 }
 
-let reloj;
-function guardar() {
-  recalcular();
-  clearTimeout(reloj);
-  reloj = setTimeout(() => {
-    try { localStorage.setItem(CLAVE, JSON.stringify(leer())); $('#guardado').textContent = 'Guardado en esta compu ' + new Date().toLocaleTimeString('es-AR', { hour: '2-digit', minute: '2-digit' }); } catch (e) { $('#guardado').textContent = ''; }
-  }, 400);
+/* =================== 3 · revisar y enviar =================== */
+function avisos() {
+  const out = [];
+  const inv = S.inventario.filter((f) => f.proceso.trim());
+  if (!S.puesto.entidad || !S.puesto.area) out.push(['mal', 'Completá el tipo de entidad y el área en «Mi puesto».']);
+  out.push(inv.length ? ['ok', `Inventario: ${inv.length} procesos.`] : ['mal', 'El inventario está vacío: listá todos tus procesos en la pestaña 1.']);
+  const con = S.procesos.filter((p) => p.nodos.length >= 2);
+  out.push(con.length >= 3 ? ['ok', `Diagramas: ${con.length} procesos dibujados.`] : ['mal', `Dibujaste ${con.length} ${con.length === 1 ? 'proceso' : 'procesos'}: la consigna pide al menos los 3 elegidos con ★.`]);
+  S.procesos.forEach((p) => {
+    const nom = `«${p.nombre || 'sin nombre'}»`;
+    if (!p.nodos.length) { out.push(['mal', `${nom}: el diagrama está vacío.`]); return; }
+    if (!p.nodos.some((n) => n.t === 'inicio')) out.push(['mal', `${nom}: falta el trigger (el círculo naranja donde empieza).`]);
+    if (!p.nodos.some((n) => n.t === 'fin')) out.push(['mal', `${nom}: falta la salida (el doble círculo verde donde termina).`]);
+    const sueltos = p.nodos.filter((n) => n.t !== 'nota' && !p.lineas.some((l) => l.de === n.id || l.a === n.id));
+    if (sueltos.length && p.nodos.length > 1) out.push(['mal', `${nom}: ${sueltos.length} ${sueltos.length === 1 ? 'símbolo quedó' : 'símbolos quedaron'} sin flechas.`]);
+    p.nodos.filter((n) => n.t === 'decision').forEach((d) => { if (p.lineas.filter((l) => l.de === d.id).length < 2) out.push(['mal', `${nom}: la decisión «${d.texto || 'sin texto'}» tiene que tener dos salidas (Sí y No).`]); });
+    if (p.nodos.some((n) => !n.texto.trim() && n.t !== 'nota')) out.push(['mal', `${nom}: hay símbolos sin texto.`]);
+    if (!num(p.veces) || !num(p.minutos)) out.push(['mal', `${nom}: faltan las veces por mes o los minutos por vez (en «Datos del proceso»).`]);
+  });
+  return out;
+}
+function miniSVG(p, alto = 160) {
+  if (!p.nodos.length) return `<svg viewBox="0 0 300 ${alto}"><text x="150" y="${alto / 2}" text-anchor="middle" fill="#94A3B8" font-size="13">Sin diagrama</text></svg>`;
+  const b = limites(p.nodos), m = 30, mapa = Object.fromEntries(p.nodos.map((n) => [n.id, n]));
+  const prevSel = sel, prevL = selLinea; sel = new Set(); selLinea = null;
+  const cuerpo = p.lineas.map((l) => lineaSVG(l, mapa)).join('') + p.nodos.map(nodoSVG).join('');
+  sel = prevSel; selLinea = prevL;
+  // cada miniatura con su propia punta de flecha: las del lienzo no se ven si su pestaña está oculta
+  const fid = 'fm' + uid();
+  return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="${b.x - m} ${b.y - m} ${b.w + m * 2} ${b.h + m * 2}" preserveAspectRatio="xMidYMid meet"><defs><marker id="${fid}" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="9" markerHeight="9" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#475569"/></marker></defs>${cuerpo.replace(/<circle class="h-con"[^>]*\/>/g, '').replace(/url\(#fl\)/g, `url(#${fid})`)}</svg>`;
+}
+function pintarRevision() {
+  $('#chk').innerHTML = avisos().map(([c, t]) => `<li class="${c}">${c === 'ok' ? '✓' : '!'} ${esc(t)}</li>`).join('');
+  $('#resumen').innerHTML = S.procesos.map((p) => `<div class="card"><b>${esc(p.nombre) || '<i>Sin nombre</i>'}</b><div style="font-size:11px;color:var(--muted)">${p.nodos.length} símbolos · ${p.lineas.length} flechas${num(p.veces) && num(p.minutos) ? ` · ${fmt(num(p.veces) * num(p.minutos) / 60)} h/mes` : ''}</div>${miniSVG(p)}</div>`).join('');
+  $('#resEnvio').innerHTML = S.enviado ? `<div class="enviado">✓ Enviado el ${new Date(S.enviado).toLocaleString('es-AR', { dateStyle: 'short', timeStyle: 'short' })}. Si cambiaste algo después, enviálo de nuevo y se actualiza.</div>` : '';
+}
+async function enviar() {
+  const b = $('#btnEnviar'); b.disabled = true; b.textContent = 'Enviando…';
+  const cuerpo = {
+    codigo: S.codigo, puesto: S.puesto,
+    inventario: S.inventario.filter((f) => f.proceso.trim()).map(({ id, ...f }) => ({ ...f, star: !!f.star })),
+    procesos: S.procesos.map(({ desde, ...p }) => p),
+  };
+  try {
+    const r = await fetch(`/api/campus/formularios/${FORMULARIO}/mapa`, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(cuerpo) });
+    const j = await r.json().catch(() => ({}));
+    if (!r.ok) throw new Error(j.error || 'No se pudo enviar.');
+    S.enviado = new Date().toISOString(); guardar(); pintarRevision();
+    $('#resEnvio').innerHTML = `<div class="enviado"><b>${j.actualizado ? '✓ Actualizado.' : '✓ ¡Enviado!'}</b> Tu mapa llegó para el análisis, sin tu nombre. Si cambiás algo, volvé a enviarlo y se actualiza.</div>`;
+  } catch (e) {
+    $('#resEnvio').innerHTML = `<div class="error"><b>No se pudo enviar.</b> ${esc(e.message)} Probá de nuevo; si sigue fallando, usá «Imprimir o guardar en PDF» y entregalo en clase.</div>`;
+  } finally { b.disabled = false; b.textContent = 'Enviar para análisis'; }
 }
 
-function borrar() { try { localStorage.removeItem(CLAVE); } catch (e) {} location.reload(); }
+/* =================== impresión =================== */
+window.addEventListener('beforeprint', () => {
+  const inv = S.inventario.filter((f) => f.proceso.trim());
+  const pz = S.puesto;
+  let h = `<div class="pg"><div class="eyebrow">Mapa AS-IS de mi puesto · anónimo</div><h2>Inventario de procesos</h2>
+    <div class="meta"><div><b>Entidad</b>${esc(pz.entidad) || '—'}</div><div><b>Área</b>${esc(pz.area) || '—'}</div><div><b>Puesto</b>${esc(pz.puesto) || '—'}</div><div><b>Horas por día</b>${esc(pz.jornada) || '—'}</div></div>
+    <table><thead><tr><th>★</th><th>Proceso</th><th>Trigger</th><th>Veces/mes</th><th>Min/vez</th><th>Herramientas</th><th>Doble carga</th><th>Pesa</th><th>h/mes</th></tr></thead><tbody>
+    ${inv.map((f) => `<tr><td>${f.star ? '★' : ''}</td><td>${esc(f.proceso)}</td><td>${esc(f.trigger)}</td><td>${esc(f.veces)}</td><td>${esc(f.minutos)}</td><td>${esc(f.herr)}</td><td>${esc(f.doble)}</td><td>${esc(f.pesa)}</td><td>${num(f.veces) * num(f.minutos) ? fmt(num(f.veces) * num(f.minutos) / 60) : ''}</td></tr>`).join('')}
+    </tbody></table></div>`;
+  S.procesos.forEach((p) => {
+    h += `<div class="pg"><h2>${esc(p.nombre) || 'Proceso sin nombre'}</h2>
+      <div class="meta"><div><b>Trigger</b>${esc(p.trigger) || '—'}</div><div><b>Entradas</b>${esc(p.entradas) || '—'}</div><div><b>Salida</b>${esc(p.salida) || '—'}</div><div><b>Veces × minutos</b>${esc(p.veces) || '—'} × ${esc(p.minutos) || '—'} (${esc(p.tiempo) || '—'})</div>
+      <div><b>Errores por mes</b>${esc(p.errores) || '—'}</div><div><b>Doble carga</b>${esc(p.doble) || '—'}</div><div><b>¿Escrito?</b>${esc(p.escrito) || '—'}</div><div><b>Pesa</b>${esc(p.pesa) || '—'}</div></div>
+      ${miniSVG(p)}${p.cambio ? `<p style="font-size:11px;margin-top:4px"><b>Qué cambiaría:</b> ${esc(p.cambio)}</p>` : ''}</div>`;
+  });
+  $('#imprimir').innerHTML = h;
+});
 
-(function iniciar() {
-  let d = null;
-  try { d = JSON.parse(localStorage.getItem(CLAVE) || 'null'); } catch (e) {}
-  if (d && d.puesto) $$('[data-k]').forEach((e) => { if (d.puesto[e.dataset.k] != null) e.value = d.puesto[e.dataset.k]; });
-  const filas = (d && d.filas) || [];
-  for (let i = 0; i < Math.max(FILAS_INICIALES, filas.length); i++) agregarFila(filas[i]);
-  crearFichas((d && d.fichas) || []);
-  $$('.ficha [data-f=nombre]').forEach((e) => e.addEventListener('input', () => (e.dataset.auto = '0')));
-  document.addEventListener('input', guardar);
-  document.addEventListener('change', guardar);
-  recalcular();
-})();
+/* =================== arranque =================== */
+pintarInventario();
+if (S.procesos.length && location.hash === '#diagramas') irA(2);
 </script>
 </body>
 </html>
