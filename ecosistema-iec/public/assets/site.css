@@ -1050,3 +1050,27 @@ button { font: inherit; color: inherit; cursor: pointer; }
 .countdown__grid span { overflow-wrap: anywhere; }
 @media (max-width: 560px) { .countdown__grid span { font-size: 10px; letter-spacing: .04em; } }
 @media (hover: none) { .lc-course:hover { transform: none; } }
+
+/* ComercIO junto al CeCIP (inicio) */
+.comercio__card { display: grid; grid-template-columns: 1.05fr .95fr; gap: clamp(24px, 4vw, 52px); padding: clamp(24px, 4vw, 48px); border-radius: 30px; align-items: center; }
+.comercio__card > * { min-width: 0; }
+.comercio__head .display { margin: 18px 0 16px; }
+.comercio__head .lead { margin: 0; color: #d4d4d8; }
+.comercio__head .lead b { color: #fff; font-weight: 600; }
+.comercio__partners { display: flex; align-items: center; gap: 12px; margin-top: 22px; flex-wrap: wrap; }
+.comercio__partners img { height: 48px; width: auto; border-radius: 12px; background: #fff; padding: 5px; }
+.comercio__partners img.comercio__cx { height: 40px; background: none; padding: 0; border-radius: 0; }
+.comercio__actions { display: flex; gap: 12px; flex-wrap: wrap; margin-top: 24px; }
+.comercio__ejes { display: grid; gap: 12px; }
+.comercio__eje { display: grid; grid-template-columns: 128px minmax(0, 1fr); gap: 16px; align-items: center; padding: 12px; border-radius: 20px; border: 1px solid var(--line-2); background: rgba(255,255,255,.035); }
+.comercio__logo { height: 84px; border-radius: 14px; display: grid; place-items: center; padding: 8px; overflow: hidden; }
+.comercio__logo img { max-width: 100%; max-height: 68px; width: auto; height: auto; }
+.comercio__logo--ciec { background: #fff; }
+.comercio__logo--conecta { background: linear-gradient(135deg, #1e40af, #2563eb); color: #fff; display: flex; flex-direction: column; gap: 4px; font-family: var(--display); font-weight: 700; font-size: 13px; text-align: center; line-height: 1.1; }
+.comercio__logo--conecta svg { width: 28px; height: 28px; }
+.comercio__logo--comercia { background: #0a1022; }
+.comercio__k { display: block; font-family: var(--mono); font-size: 10.5px; letter-spacing: .16em; text-transform: uppercase; color: #67e8f9; }
+.comercio__eje b { display: block; font-family: var(--display); font-size: 20px; font-weight: 600; color: #fff; margin: 2px 0 3px; }
+.comercio__eje p { margin: 0; font-size: 14px; line-height: 1.45; color: #a1a1aa; }
+@media (max-width: 900px) { .comercio__card { grid-template-columns: 1fr; } }
+@media (max-width: 480px) { .comercio__eje { grid-template-columns: 96px minmax(0, 1fr); gap: 12px; } .comercio__logo { height: 72px; } }
