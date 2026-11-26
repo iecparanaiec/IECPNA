@@ -1066,8 +1066,8 @@ button { font: inherit; color: inherit; cursor: pointer; }
 .comercio__logo { height: 84px; border-radius: 14px; display: grid; place-items: center; padding: 8px; overflow: hidden; }
 .comercio__logo img { max-width: 100%; max-height: 68px; width: auto; height: auto; }
 .comercio__logo--ciec { background: #fff; }
-.comercio__logo--conecta { background: linear-gradient(135deg, #1e40af, #2563eb); color: #fff; display: flex; flex-direction: column; gap: 4px; font-family: var(--display); font-weight: 700; font-size: 13px; text-align: center; line-height: 1.1; }
-.comercio__logo--conecta svg { width: 28px; height: 28px; }
+.comercio__logo--conecta { background: linear-gradient(120deg, #0c2a5e, #1559b8 60%, #1f74dc); color: #fff; display: flex; flex-direction: column; gap: 5px; font-family: var(--display); font-weight: 800; font-size: 13px; text-align: center; line-height: 1.1; }
+.comercio__logo--conecta svg { width: 24px; height: 27px; }
 .comercio__logo--comercia { background: #0a1022; }
 .comercio__k { display: block; font-family: var(--mono); font-size: 10.5px; letter-spacing: .16em; text-transform: uppercase; color: #67e8f9; }
 .comercio__eje b { display: block; font-family: var(--display); font-size: 20px; font-weight: 600; color: #fff; margin: 2px 0 3px; }
