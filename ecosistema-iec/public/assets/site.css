@@ -1125,3 +1125,5 @@ button { font: inherit; color: inherit; cursor: pointer; }
 @media (max-width: 1000px) { .cio-place, .cio-road { grid-template-columns: repeat(2, minmax(0, 1fr)); } .cio-roles { grid-template-columns: 1fr; } }
 @media (max-width: 800px) { .cio-eje { grid-template-columns: 1fr; } .cio-eje__logo { height: 150px; } .cio-vs, .cio-extra, .cio-cta { grid-template-columns: 1fr; } }
 @media (max-width: 560px) { .cio-numbers { grid-template-columns: 1fr; } .cio-place, .cio-road { grid-template-columns: 1fr; } }
+.cio-place__hl { background: linear-gradient(150deg, rgba(34,211,238,.12), rgba(139,92,246,.08)); border-color: rgba(34,211,238,.35); }
+.cio-place b span.text-gradient { display: inline; margin: 0; font-size: inherit; color: transparent; }
