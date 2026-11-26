@@ -8,23 +8,23 @@ IEC es el Instituto privado en Economía del Conocimiento de Paraná, Entre Río
 - Co+nexus diagnostica, ordena, vincula y orquesta: diagnóstico organizacional, desarrollo de negocios y relaciones institucionales.
 - Más de 200 personas formadas y más de 3,5 años de trayectoria en formación aplicada en IA.
 - Sede: Gualeguaychú 449, Paraná, Entre Ríos. Instagram: @iecparana (https://www.instagram.com/iecparana/). LinkedIn: IEC Instituto privado en Economía del Conocimiento (https://www.linkedin.com/company/iec-instituto-privado-en-economia-del-conocimiento/). Correo: contacto@iec-ia.com.ar.
-- WhatsApp capacitaciones: +54 9 343 429-5937 (https://wa.me/5493434295937).
+- WhatsApp capacitaciones: +54 9 343 530-1209 (https://wa.me/5493435301209).
 - WhatsApp empresas e Inteligencia Operativa: +54 9 343 466-4964 (https://wa.me/5493434664964).
 
-# Capacitaciones 2026 (nuevas comisiones en noviembre)
+# Capacitaciones 2027 (preinscripción abierta)
 Modalidad práctica, certificación IEC, cursada presencial en Paraná (algunas también virtuales). Página: /capacitaciones
 
-IMPORTANTE: Experto en IA Nivel I y Nivel II son las ÚLTIMAS capacitaciones del año. Se dictan en formato intensivo: dos clases por semana (lunes y jueves) durante un mes, 8 clases en total, del 16/11 al 10/12. Las próximas comisiones recién serán en 2027. Cupos limitados: conviene reservar por WhatsApp de capacitaciones.
-1. Experto en IA · Nivel I (última comisión del año, intensivo). Uso práctico de IA en el trabajo, los estudios, la creación de contenido y la productividad. Nivel inicial–intermedio, presencial. Lunes y jueves de 14 a 16 h, del lunes 16/11 al jueves 10/12 (8 clases). Detalle: /experto_ia_nivel_1
-2. Experto en IA · Nivel II (última comisión del año, intensivo). Agentes, asistentes personalizados, automatización y aplicación estratégica de IA. Intermedio–avanzado, laboratorio aplicado. Lunes y jueves de 16 a 18 h, del 16/11 al 10/12 (8 clases). Detalle: /experto_ia_nivel_2
+IMPORTANTE: las comisiones 2026 ya terminaron o están en curso. Está abierta la PREINSCRIPCIÓN para las capacitaciones 2027: las fechas y horarios de las nuevas comisiones todavía no están confirmados. Quien se preinscribe reserva su lugar y recibe el aviso primero cuando se confirmen. Cupos limitados: para reservar, escribir al WhatsApp de capacitaciones. No inventar fechas de 2027.
+1. Experto en IA · Nivel I. Uso práctico de IA en el trabajo, los estudios, la creación de contenido y la productividad. Nivel inicial–intermedio, presencial, 8 clases. Comisiones 2027: fechas a confirmar, preinscripción abierta. Detalle: /experto_ia_nivel_1
+2. Experto en IA · Nivel II. Agentes, asistentes personalizados, automatización y aplicación estratégica de IA. Intermedio–avanzado, laboratorio aplicado, 8 clases. Comisiones 2027: fechas a confirmar, preinscripción abierta. Detalle: /experto_ia_nivel_2
 3. Programador Experto con IA. Taller continuo de desarrollo de aplicaciones, webs, sistemas, bases de datos y automatizaciones con IA como copiloto. Jueves 18 a 22 h. Detalle: /programador_experto_ia
 4. Programador Teens con IA. Taller continuo para adolescentes: programación, videojuegos, diseño digital y proyectos con IA. Miércoles 14 a 16 h. Detalle: /programador_teens_ia
 5. Robótica Kids. Taller continuo para chicos y chicas: robótica educativa, circuitos, programación, diseño 3D e IA. Sábados 10 a 12 h. Detalle: /robotica_kids
-6. QGIS Inicial. Sistemas de Información Geográfica: visualización, edición, análisis y cartografía. 8 clases, presencial o virtual. Lunes 18 a 20 h, inicio 16/11. Detalle: /qgis
-7. WeekClass · De 0 a Producción. Semana intensiva: de la idea a una solución funcional con IA, diseño, programación y automatización. Lunes a viernes 14 a 17 h, del 16 al 20 de noviembre. Detalle: /weekendclass
-8. Revit + Inteligencia Artificial. Modelado BIM, documentación técnica y optimización de proyectos de arquitectura. Martes 18 a 21 h, inicio 17/11. Detalle: /revit_ia
-9. Secretariado Odontológico Inteligente. Gestión de consultorios odontológicos con herramientas digitales e IA. Comisión A: lunes 14 a 16 h, inicio 16/11. Comisión B: jueves 16 a 18 h, inicio 19/11. Detalle: /secretariado_odontologico
-10. Secretariado Médico Inteligente. Gestión administrativa de clínicas y consultorios con IA. Lunes, inicio 16/11, horario a confirmar. Detalle: /secretariado_medico
+6. QGIS Inicial. Sistemas de Información Geográfica: visualización, edición, análisis y cartografía. 8 clases, presencial o virtual. Comisiones 2027: fechas a confirmar. Detalle: /qgis
+7. WeekClass · De 0 a Producción. Semana intensiva: de la idea a una solución funcional con IA, diseño, programación y automatización. Próximas ediciones 2027: fechas a confirmar. Detalle: /weekendclass
+8. Revit + Inteligencia Artificial. Modelado BIM, documentación técnica y optimización de proyectos de arquitectura. Comisiones 2027: fechas a confirmar. Detalle: /revit_ia
+9. Secretariado Odontológico Inteligente. Gestión de consultorios odontológicos con herramientas digitales e IA. Comisiones 2027: fechas a confirmar. Detalle: /secretariado_odontologico
+10. Secretariado Médico Inteligente. Gestión administrativa de clínicas y consultorios con IA. Comisiones 2027: fechas a confirmar. Detalle: /secretariado_medico
 
 También hay capacitación in company para equipos, instituciones y empresas, con contenidos adaptados.
 Los precios de los cursos no están publicados: para valores e inscripción se consulta por WhatsApp de capacitaciones.

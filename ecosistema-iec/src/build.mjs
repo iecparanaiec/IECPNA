@@ -101,7 +101,7 @@ function header(cur) {
     <div class="mobile-menu__foot">
       ${SOCIAL}
       <a class="btn btn--mundo" href="/campus">${MUNDO_ICON}<span>Ingresá al Mundo IEC</span></a>
-      <a class="btn" href="https://wa.me/5493434295937?text=Hola%20IEC%2C%20quiero%20informaci%C3%B3n" target="_blank" rel="noopener">Consultar por WhatsApp</a>
+      <a class="btn" href="https://wa.me/5493435301209?text=Hola%20IEC%2C%20quiero%20informaci%C3%B3n" target="_blank" rel="noopener">Consultar por WhatsApp</a>
     </div>
   </div>`;
 }
@@ -141,7 +141,7 @@ const FOOTER = `
           <ul>
             <li><a href="https://maps.google.com/?q=Gualeguaych%C3%BA+449,+Paran%C3%A1,+Entre+R%C3%ADos" target="_blank" rel="noopener">Gualeguaychú 449, Paraná</a></li>
             <li><a href="mailto:contacto@iec-ia.com.ar">contacto@iec-ia.com.ar</a></li>
-            <li><a href="https://wa.me/5493434295937" target="_blank" rel="noopener">WhatsApp cursos</a></li>
+            <li><a href="https://wa.me/5493435301209" target="_blank" rel="noopener">WhatsApp cursos</a></li>
             <li><a href="${IG}" target="_blank" rel="noopener">Instagram @iecparana</a></li>
             <li><a href="${LI}" target="_blank" rel="noopener">LinkedIn</a></li>
           </ul>
@@ -154,7 +154,7 @@ const FOOTER = `
       </div>
     </div>
   </footer>
-  <a class="wa-float" href="https://wa.me/5493434295937?text=Hola%20IEC%2C%20quiero%20informaci%C3%B3n" target="_blank" rel="noopener" aria-label="Escribinos por WhatsApp">${waIcon}</a>`;
+  <a class="wa-float" href="https://wa.me/5493435301209?text=Hola%20IEC%2C%20quiero%20informaci%C3%B3n" target="_blank" rel="noopener" aria-label="Escribinos por WhatsApp">${waIcon}</a>`;
 
 function page(meta, main) {
   const url = SITE + (meta.path === "/" ? "/" : meta.path);

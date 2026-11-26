@@ -7,14 +7,14 @@
   const canSpeak = "speechSynthesis" in window;
   const STORE = "iec-ai";
   const SUGGESTIONS = [
-    "¿Cuáles son las últimas capacitaciones del año?",
+    "¿Qué capacitaciones hay en 2027?",
     "¿Qué es la Inteligencia Operativa?",
     "Quiero capacitar a mi equipo",
     "¿Hay cursos para chicos y adolescentes?",
     "¿Quiénes forman el ecosistema?",
     "¿Dónde están y cómo me inscribo?",
   ];
-  const WA_CURSOS = "https://wa.me/5493434295937";
+  const WA_CURSOS = "https://wa.me/5493435301209";
   const WA_EMPRESAS = "https://wa.me/5493434664964";
 
   // Respuestas locales para cuando /api/chat no está disponible
@@ -22,16 +22,16 @@
     { k: ["instagram", "linkedin", "redes", "seguir", "red social"], a: "Seguinos en Instagram como @iecparana y en LinkedIn como IEC Instituto privado en Economía del Conocimiento: ahí publicamos cursos, eventos y novedades. [Instagram](https://www.instagram.com/iecparana/) [LinkedIn](https://www.linkedin.com/company/iec-instituto-privado-en-economia-del-conocimiento/)" },
     { k: ["lescano", "pablo"], a: "Pablo Lescano lleva el desarrollo institucional y las relaciones políticas y comerciales del ecosistema: articula con el sector público, empresas e instituciones. [Quiénes somos](/quienes-somos)" },
     { k: ["whattson", "quién sos", "quien sos", "quién eres", "tu nombre", "cómo te llamás", "como te llamas"], a: "¡Soy Whattson, el robot asistente del IEC! Te ayudo con cursos, fechas, Inteligencia Operativa y todo lo que quieras saber del Ecosistema IEC & Co+nexus. [Quiénes somos](/quienes-somos)" },
-    { k: ["nivel ii", "nivel 2", "avanzad", "agente"], a: "Experto en IA Nivel II es la última comisión del año, en formato intensivo: lunes y jueves de 16 a 18 h, del 16/11 al 10/12 (8 clases). Es para profundizar en agentes, asistentes y automatización. ¡Quedan pocos lugares! [Ver programa](/experto_ia_nivel_2) [Reservar mi lugar](" + WA_CURSOS + ")" + WA_CURSOS + ")" },
-    { k: ["ia", "inteligencia artificial", "experto", "curso", "empiez", "pronto", "comisi", "último", "ultimo", "fin de año", "intensivo"], a: "¡Son las últimas capacitaciones del año! Experto en IA Nivel I y II se dictan en formato intensivo: dos clases por semana (lunes y jueves) durante un mes, del 16/11 al 10/12. Nivel I: lunes y jueves de 14 a 16 h. Nivel II: lunes y jueves de 16 a 18 h. [Últimas del año](/capacitaciones#experto-ia-1) [Reservar mi lugar](" + WA_CURSOS + ")" },
+    { k: ["nivel ii", "nivel 2", "avanzad", "agente"], a: "Experto en IA Nivel II es para profundizar en agentes, asistentes y automatización (8 clases). Las comisiones 2027 tienen fechas a confirmar y ya está abierta la preinscripción: reservá tu lugar y te avisamos primero. [Ver programa](/experto_ia_nivel_2) [Reservar mi lugar](" + WA_CURSOS + ")" },
+    { k: ["ia", "inteligencia artificial", "experto", "curso", "empiez", "pronto", "comisi", "2027", "próxim", "proxim", "preinscrip", "reserv"], a: "¡Ya está abierta la preinscripción para las capacitaciones 2027! Experto en IA Nivel I (inicial) y Nivel II (avanzado), 8 clases cada uno, con certificación IEC. Las fechas y horarios se confirman pronto: si reservás ahora, te avisamos primero. [Capacitaciones 2027](/#capacitaciones-2027) [Reservar mi lugar](" + WA_CURSOS + ")" },
     { k: ["chic", "niñ", "kids", "adolesc", "teen", "robót", "robot"], a: "Sí: Robótica Kids es un taller los sábados de 10 a 12 h, y Programador Teens con IA es los miércoles de 14 a 16 h. Los dos son talleres continuos, así que se pueden sumar en cualquier momento. [Robótica Kids](/robotica_kids) [Programador Teens](/programador_teens_ia)" },
     { k: ["io", "operativa", "smarteo", "implement", "empresa", "diagnóst", "automatiz"], a: "La Inteligencia Operativa convierte la tecnología en resultados medibles: relevamos tus procesos, diseñamos la solución, La FactorIA la desarrolla y la medimos antes y después con la metodología SMARTEO 3.0. Para empezar, pedí un diagnóstico. [Qué es la IO](/inteligencia-operativa) [Pedir diagnóstico](" + WA_EMPRESAS + ")" },
     { k: ["equipo", "in company", "capacitar a mi", "institución", "empleados"], a: "Armamos capacitaciones in company adaptadas a las tareas reales de tu equipo, en IEC o en tu organización, y se pueden combinar con la implementación de Inteligencia Operativa. [Pedir propuesta](" + WA_EMPRESAS + ") [Ver capacitaciones](/capacitaciones)" },
     { k: ["quién", "quien", "conexus", "co+nexus", "ecosistema", "equipo de", "factoria"], a: "El Ecosistema IEC & Co+nexus une a IEC, el Instituto privado en Economía del Conocimiento, que forma, desarrolla, implementa y mide, con Co+nexus, que diagnostica, ordena, vincula y orquesta. La FactorIA es nuestro equipo de desarrollo. [Quiénes somos](/quienes-somos)" },
     { k: ["dónde", "donde", "dirección", "ubic", "inscrib", "contact", "whatsapp", "precio", "cuesta", "valor"], a: "Estamos en Gualeguaychú 449, Paraná. Para inscripciones y valores de los cursos escribinos al WhatsApp de capacitaciones; para empresas, al de Inteligencia Operativa. [WhatsApp cursos](" + WA_CURSOS + ") [Contacto](/contacto)" },
-    { k: ["qgis", "revit", "bim", "arquitect", "mapa"], a: "QGIS Inicial empieza el lunes 16/11 de 18 a 20 h (8 clases) y Revit + IA el martes 17/11 de 18 a 21 h. [QGIS](/qgis) [Revit + IA](/revit_ia)" },
-    { k: ["odont", "médic", "medic", "secretar", "salud", "consultorio"], a: "Secretariado Odontológico Inteligente tiene comisión los lunes de 14 a 16 h (desde el 16/11) y los jueves de 16 a 18 h (desde el 19/11). Secretariado Médico Inteligente arranca el lunes 16/11. [Ver capacitaciones](/capacitaciones?area=salud)" },
-    { k: ["weekclass", "intensiv", "semana"], a: "La WeekClass De 0 a Producción es una semana intensiva, del 16 al 20 de noviembre de 14 a 17 h: de la idea a una solución funcional con IA. [Ver WeekClass](/weekendclass)" },
+    { k: ["qgis", "revit", "bim", "arquitect", "mapa"], a: "QGIS Inicial y Revit + IA tendrán nuevas comisiones en 2027, con fechas a confirmar. Escribinos para reservar tu lugar y te avisamos apenas estén. [QGIS](/qgis) [Revit + IA](/revit_ia) [Reservar](" + WA_CURSOS + ")" },
+    { k: ["odont", "médic", "medic", "secretar", "salud", "consultorio"], a: "Secretariado Odontológico Inteligente y Secretariado Médico Inteligente tendrán nuevas comisiones en 2027, con fechas a confirmar. Reservá tu lugar y te avisamos primero. [Ver capacitaciones](/capacitaciones?area=salud) [Reservar](" + WA_CURSOS + ")" },
+    { k: ["weekclass", "intensiv", "semana"], a: "La WeekClass De 0 a Producción es una semana intensiva: de la idea a una solución funcional con IA. Las próximas ediciones 2027 tienen fechas a confirmar. [Ver WeekClass](/weekendclass) [Reservar](" + WA_CURSOS + ")" },
     { k: ["confían", "confian", "clientes", "casos"], a: "Trabajamos con Mutual Eco, el Instituto Bioquímico Privado, SIL, CeCIP, American English Institute, Dr Tecno, Aroma, Unimédica, FEMER, la Municipalidad de Paraná, la Mutual Entrerriana 16 de Septiembre, el Polo Tecnológico Paraná y más. [Ver casos](/confian)" },
   ];
 

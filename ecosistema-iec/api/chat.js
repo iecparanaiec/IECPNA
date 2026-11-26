@@ -133,7 +133,7 @@ export default async function handler(req, res) {
     if (!sent) {
       send({ t: blocked
         ? "Sobre eso no puedo ayudarte. Si querés, te cuento sobre los cursos o la Inteligencia Operativa."
-        : "No pude armar la respuesta. Probá de nuevo o escribinos por WhatsApp: [WhatsApp cursos](https://wa.me/5493434295937)" });
+        : "No pude armar la respuesta. Probá de nuevo o escribinos por WhatsApp: [WhatsApp cursos](https://wa.me/5493435301209)" });
     }
     send({ done: true });
   } catch (err) {
