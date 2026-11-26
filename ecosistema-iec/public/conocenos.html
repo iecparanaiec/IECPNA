@@ -77,6 +77,30 @@ footer a{color:var(--cyan);text-decoration:none;font-weight:600}
 @supports (animation-timeline:view()){.reveal{animation-timeline:view();animation-range:entry 0% entry 40%}}
 @keyframes up{to{opacity:1;transform:none}}
 @media (prefers-reduced-motion:reduce){*,*::before{animation:none!important}.reveal{opacity:1;transform:none}}
+.proy{padding:22px}
+.proy__brand{display:flex;align-items:baseline;gap:10px;flex-wrap:wrap}
+.proy__brand b{font-family:Outfit,sans-serif;font-size:34px;font-weight:800;letter-spacing:-.02em;line-height:1}
+.proy__brand b span{color:var(--teal)}
+.proy__brand em{font-style:normal;color:var(--mut);font-size:14px}
+.proy>p{color:#cbd5e1;font-size:16px;margin-top:12px}
+.proy>p b{color:#fff}
+.socios{display:flex;align-items:center;gap:10px;margin-top:16px;flex-wrap:wrap}
+.socios img{height:44px;width:auto;background:#fff;border-radius:12px;padding:5px}
+.socios img.cx{background:none;padding:0;height:38px}
+.socios small{font-family:'DM Mono',monospace;font-size:11px;letter-spacing:.15em;text-transform:uppercase;color:var(--mut)}
+.ejes{display:grid;gap:12px;margin-top:12px}
+.eje{overflow:hidden;padding:0}
+.eje__logo{height:110px;display:grid;place-items:center;padding:12px}
+.eje__logo img{max-height:86px;width:auto;max-width:100%}
+.eje__logo--ciec{background:#fff}
+.eje__logo--conecta{background:linear-gradient(135deg,#1e40af,#2563eb);color:#fff;font-family:Outfit,sans-serif;font-weight:700;font-size:22px;white-space:nowrap;display:flex;justify-content:center;align-items:center;gap:10px}
+.eje__logo--conecta svg{width:34px;height:34px}
+.eje__logo--comercia{background:#0a1022}
+.eje__txt{padding:14px 16px 16px}
+.eje__txt small{font-family:'DM Mono',monospace;font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--cyan)}
+.eje__txt h3{font-family:Outfit,sans-serif;font-size:19px;margin:2px 0 4px}
+.eje__txt p{color:var(--mut);font-size:15px}
+@media (min-width:600px){.ejes{grid-template-columns:repeat(3,1fr)}}
 @media (max-width:340px){.logos{grid-template-columns:repeat(3,1fr)}.marcas{grid-template-columns:1fr}}
 </style>
 </head>
@@ -117,6 +141,34 @@ footer a{color:var(--cyan);text-decoration:none;font-weight:600}
       <div class="paso glass reveal"><h3>Diseñamos la solución</h3><p>Priorizamos lo que más impacto tiene y armamos una hoja de ruta que une negocio y tecnología.</p></div>
       <div class="paso glass reveal"><h3>Desarrollamos con IA</h3><p>Nuestro equipo La FactorIA construye sistemas, integraciones y asistentes a medida.</p></div>
       <div class="paso glass reveal"><h3>Implementamos y medimos</h3><p>Capacitamos a tu equipo en su puesto y medimos el antes y el después para seguir mejorando.</p></div>
+    </div>
+  </section>
+
+  <section>
+    <p class="kicker reveal">Proyecto junto al CeCIP</p>
+    <h2 class="reveal">Somos los responsables de ComercIO</h2>
+    <div class="proy glass reveal">
+      <div class="proy__brand"><b>Comerc<span>IO</span></b><em>Siempre estuvo ahí.</em></div>
+      <p>Junto al <b>Centro Comercial e Industrial de Paraná (CeCIP)</b>, IEC &amp; Co+nexus llevamos adelante el ecosistema que conecta a <b>más de 250 comercios socios</b>: capacitarse, hacer negocios entre socios, llegar a toda la ciudad, enviar pedidos y tener un lugar donde trabajar. Todo con <b>un solo perfil</b> por comercio.</p>
+      <div class="socios">
+        <img src="/img/logos/cecip.webp" alt="CeCIP" width="44" height="44" loading="lazy">
+        <img src="/img/logos/iec.webp" alt="IEC" width="44" height="44" loading="lazy">
+        <img class="cx" src="/img/logos/cx.webp" alt="Co+nexus" width="106" height="38" loading="lazy">
+      </div>
+    </div>
+    <div class="ejes">
+      <div class="eje glass reveal">
+        <div class="eje__logo eje__logo--ciec"><img src="/img/logos/ciec.webp" alt="CIEC · Centro de Entrenamiento e Innovación Comercial" width="480" height="229" loading="lazy"></div>
+        <div class="eje__txt"><small>Crecer</small><h3>CIEC</h3><p>Centro de Entrenamiento e Innovación Comercial en la sede del CeCIP: capacitación, diagnóstico y soluciones tecnológicas en un mismo lugar.</p></div>
+      </div>
+      <div class="eje glass reveal">
+        <div class="eje__logo eje__logo--conecta"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 5.5 12 2 4 6.6v10.8L12 22l6-3.5"/><circle cx="18" cy="5.5" r="1.6" fill="currentColor"/><circle cx="18" cy="18.5" r="1.6" fill="currentColor"/></svg>CECIP Conecta</div>
+        <div class="eje__txt"><small>Hacer negocios</small><h3>CECIP Conecta</h3><p>La red de negocios entre socios: ofrecemos y necesitamos, oportunidades, beneficios, mensajes y compras conjuntas.</p></div>
+      </div>
+      <div class="eje glass reveal">
+        <div class="eje__logo eje__logo--comercia"><img src="/img/logos/comercia.webp" alt="ComercIA · Comercia Inteligente Paraná" width="420" height="330" loading="lazy"></div>
+        <div class="eje__txt"><small>Vender</small><h3>ComercIA</h3><p>La guía inteligente de comercios de Paraná: el vecino encuentra al comercio local, sus promociones, turnos y envíos.</p></div>
+      </div>
     </div>
   </section>
 
